@@ -1,0 +1,10 @@
+.dockerignore
+.cache
+.vscode
+.idea
+.readmes
+.env
+
+build
+node_modules
+out
