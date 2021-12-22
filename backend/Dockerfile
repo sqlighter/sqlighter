@@ -1,7 +1,6 @@
-# Latest version of node
-# FROM node
-# https://github.com/strapi/strapi-docker/blob/master/examples/custom/Dockerfile
-FROM strapi/strapi
+# Use the official lightweight Node.js image
+FROM node:16-slim
+WORKDIR /app
 
 # Add environment variables to production image
 # https://docs.docker.com/docker-hub/builds/advanced/
@@ -13,17 +12,13 @@ ENV SOURCE_COMMIT=${SOURCE_COMMIT}
 ENV SOURCE_BRANCH=${SOURCE_BRANCH}
 ENV NODE_ENV production
 
-WORKDIR /app
+# Copy application dependency manifests to the container image.
+# Copying this separately prevents re-running yarn install on every code change.
+COPY package.json ./
+COPY yarn.lock ./
 
-# Copy only what we need (no node_modules)
-COPY package.json .
-COPY yarn.lock .
-COPY favicon.ico .
-COPY config config
-COPY data data
-COPY database database
-COPY public public
-COPY src src
+# Copy everything except what is in .dockerignore (eg node_modules, etc)
+COPY . ./
 
 # Install production packages + compiled apps
 RUN yarn install --production
