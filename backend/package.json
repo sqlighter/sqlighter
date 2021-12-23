@@ -6,7 +6,8 @@
     "@strapi/strapi": "4.0.1",
     "lodash.set": "^4.3.2",
     "mime-types": "^2.1.27",
-    "mysql": "2.18.1"
+    "mysql": "2.18.1",
+    "strapi-provider-upload-google-cloud-storage": "^4.0.0"
   },
   "name": "backend",
   "private": true,
