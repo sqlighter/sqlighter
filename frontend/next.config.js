@@ -4,7 +4,13 @@
 const nextConfig = {
   images: {
     loader: "default",
-    domains: ["localhost"],
+    domains: [
+      "localhost",
+      "insieme-api-zs2nymj7ga-ew.a.run.app",
+      "storage.googleapis.com",
+      "api.insieme.app",
+      "insieme.app",
+    ],
   },
   eslint: {
     // Warning: This allows production builds to successfully complete even if
