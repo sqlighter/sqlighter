@@ -1,0 +1,11 @@
+.dockerignore
+.cache
+.vscode
+.idea
+.readmes
+
+.env
+google-keys.json
+
+build
+node_modules
