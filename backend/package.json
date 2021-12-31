@@ -1,0 +1,38 @@
+{
+  "name": "insieme",
+  "version": "2.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "directus start",
+    "develop": "nodemon --exec 'directus start' --watch extensions",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --write \"**/*.{js,ts,vue,md,yaml}\""
+  },
+  "keywords": [],
+  "author": "Gionata Mettifogo",
+  "license": "MIT",
+  "dependencies": {
+    "directus": "^9.4.0",
+    "mysql": "^2.18.1"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=7.0.0"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npx lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,ts,vue}": "eslint --fix",
+    "*.{md,yaml}": "prettier --write",
+    "*.{css,scss,vue}": "stylelint --fix --custom-syntax postcss-html"
+  },
+  "devDependencies": {
+    "eslint": "^8.5.0",
+    "lerna": "^4.0.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.5.1",
+    "stylelint": "^14.2.0"
+  }
+}
