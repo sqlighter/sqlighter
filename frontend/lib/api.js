@@ -6,10 +6,7 @@ import qs from "qs"
  * @returns {string} Full Strapi URL
  */
 export function getStrapiURL(path = "") {
-// TODO figure out how to get this ENV variable while building dockerfile
-//  https://insieme-api-zs2nymj7ga-ew.a.run.app/
-//  return `${process.env.NEXT_PUBLIC_STRAPI_API
-    return `https://insieme-api-zs2nymj7ga-ew.a.run.app${path}`
+  return `${process.env.NEXT_STRAPI_URL}${path}`
 }
 
 /**
