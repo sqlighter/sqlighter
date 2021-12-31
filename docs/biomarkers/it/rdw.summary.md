@@ -1,0 +1,1 @@
+L'RDW misura la variabilità della dimensione dei Globuli Rossi. Se vi è una grande variabilità significa che è presente una combinazione di Globuli Rossi molto grandi e Globuli Rossi molto piccoli e questo comporta uno stato di anemia.

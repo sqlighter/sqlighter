@@ -1,0 +1,2 @@
+- Aumentare l'assunzione di Verdura Verde, Fagioli e Noci
+- Se l'apporto dai Cibi non è sufficiente è necessario assumere Integratori contenenti Folati

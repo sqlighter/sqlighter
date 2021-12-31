@@ -1,0 +1,3 @@
+- Evitare l'utilizzo promiscuo di strumenti usati per iniettarsi droghe in vena
+- Eseguire interventi chirurgici presso centri accreditati e sicuri
+- In caso test positivo recarsi da un medico che farà eseguire ulteriori indagini e con cui si concorderà il trattamento migliore.

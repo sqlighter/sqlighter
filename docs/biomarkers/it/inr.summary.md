@@ -1,0 +1,1 @@
+E' il rapporto tra gli indici di coagulazione PT e PTT e viene utilizzato per valutare l'effetto della terapia anticoagulante.

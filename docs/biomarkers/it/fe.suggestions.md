@@ -1,0 +1,3 @@
+- Aumentare l'assunzione di Carne, Cereali Integrali e Verdura Verde.
+- Se dal Cibo non si riesce ad assumere Ferro a sufficienza sono necessari degli Integratori del Ferro come ad esempio i multivitamici.
+- E' importante assumere solo la quantità prescritta di Ferro in quanto l'eccesso può diventare tossico.

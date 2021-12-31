@@ -1,0 +1,3 @@
+- Aumentare l'apporto di Magnesio assumendo cibi come la crusca, le noci e semi
+- Se non si può assumere Magnesio per bocca, sono necessari Integratori salinici
+- Attenzione all'assunzione eccessiva di Magnesio, a dosi elevate diventa pericoloso per la salute

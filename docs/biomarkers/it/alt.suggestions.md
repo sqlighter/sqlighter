@@ -1,0 +1,2 @@
+- Evitare sostanze tossiche per il fegato come l'alcol e farmaci come il Paracetamolo.
+- Perdere il peso in eccesso perchè i grassi in più si accumolano nel Fegato.

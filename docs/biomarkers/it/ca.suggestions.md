@@ -1,0 +1,3 @@
+- Aumentare l'assunzione di Cibo ricco di Calcio come Verdura Verde, Cereali Integrali e Alimenti Freschi
+- Se il Calcio assunto con la Dieta non è sufficiente, prendere degli Integratori di Calcio
+- Aumentare l'assunzione di Vitamina D con gli Alimenti o con Integratori e restare più a lungo al sole per far aumentare l'assorbimento del Calcio

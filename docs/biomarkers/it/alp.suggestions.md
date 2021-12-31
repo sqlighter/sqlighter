@@ -1,0 +1,1 @@
+Un rialzo moderato può essere causato da uno sforzo o da un trauma,  se l'innalzamento è superiore a 2 o 3 volte il valore normale è indispensabile prestare molta attenzione e consultarsi con un medico.

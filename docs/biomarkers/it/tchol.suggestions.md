@@ -1,0 +1,1 @@
+La sola presenza di una quantità elevata di Colesterolo totale non è sufficiente ad iniziare una dieta o una cura. Prima si devono andare a controllare le quantità di Colesterolo Cattivo (LDL) e Colesterolo Buono (HDL) e metterle a confronto.
