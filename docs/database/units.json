@@ -1,0 +1,49 @@
+[
+	{
+		"id": "%",
+		"description": "percentage",
+		"extras": {
+			"references": [
+				"https://unitslab.com/node/16"
+			],
+			"conversions": {
+				"fraction": 0.01,
+				"proportion of 1": 0.01
+			}
+		}
+	},
+	{
+		"id": "10^12/L",
+		"description": "units per liter",
+		"extras": {
+			"references": [
+				"https://unitslab.com/node/9"
+			],
+			"conversions": {
+				"T/L": 1,
+				"M/µL": 1,
+				"Tpt/L": 1,
+				"M/mm^3": 1,
+				"cells/L": 1000000000000,
+				"10^6/µL": 1,
+				"10^6/mm^3": 1,
+				"cells/µL": 1000000,
+				"cells/mm^3": 1000000
+			}
+		}
+	},
+	{
+		"id": "fL",
+		"description": "femtoliters",
+		"extras": {
+			"references": [
+				"https://unitslab.com/node/3"
+			],
+			"conversions": {
+				"µm^3": 1,
+				"cu µm": 1,
+				"cubic µm": 1
+			}
+		}
+	}
+]
