@@ -7,6 +7,8 @@
 28/12 chosen directus, deployed on google cloudrun, google login
 29/12 schema trials, testing translations, contents scouting
 30/12 draft schema for biomarkers (types, units) and records with lab results
-31/12 adding custom route for directus, setting up js debugging in vs code, porting data
+31/12 adding custom route for directus data import, setting up js debugging in vs code, porting data
 ## 2022
 
+01/02 entering more biomarkers contents, links, ranges for basic biomarkers
+02/02 more biomarkers contents
