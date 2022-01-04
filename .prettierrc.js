@@ -1,6 +1,6 @@
 module.exports = {
 	htmlWhitespaceSensitivity: 'ignore',
-	printWidth: 120,
+	printWidth: 150,
 	singleQuote: true,
 	useTabs: true,
 	proseWrap: 'always',
