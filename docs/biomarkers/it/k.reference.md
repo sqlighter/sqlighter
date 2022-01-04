@@ -1,6 +1,7 @@
 I livelli di potassio sono generalmente molto bassi in età avanzata.
 
 I sintomi dell'insufficienza di potassio sono:
+
 - Acne
 - Stitichezza
 - Depressione
@@ -16,6 +17,7 @@ I sintomi dell'insufficienza di potassio sono:
 - Riflessi Rallentati
 
 ### Alimenti Raccomandati
+
 - Bietole
 - Funghi
 - Spinaci

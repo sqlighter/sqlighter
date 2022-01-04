@@ -1,38 +1,39 @@
 {
-  "name": "insieme",
+  "name": "insieme-backend",
   "version": "2.0.0",
   "description": "",
+  "author": "Gionata Mettifogo <gmettifogo@gmail.com>",
+  "license": "MIT",
   "main": "index.js",
+  "packageManager": "yarn@3.1.1",
+  "workspaces": [
+    "./source/extensions/endpoints/insieme",
+    "./source/extensions/modules/insieme"
+  ],
   "scripts": {
+    "build": "yarn workspaces foreach run build",
+    "develop": "nodemon --exec 'yarn workspaces foreach run develop && directus start'",
     "start": "directus start",
-    "develop": "nodemon --exec 'directus start' --watch extensions",
     "test": "echo \"Error: no test specified\" && exit 1",
     "format": "prettier --write \"**/*.{js,ts,vue,md,yaml}\""
   },
   "keywords": [],
-  "author": "Gionata Mettifogo",
-  "license": "MIT",
   "dependencies": {
+    "@babel/types": "^7.16.7",
     "directus": "^9.4.0",
+    "express": "^4.17.2",
     "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "@types/node": "^17.0.6",
+    "eslint": "^8.5.0",
+    "prettier": "^2.5.1",
+    "stylelint": "^14.2.0",
+    "typescript": "^4.5.4"
   },
   "engines": {
     "node": ">=16.0.0",
     "npm": ">=7.0.0"
-  },
-  "simple-git-hooks": {
-    "pre-commit": "npx lint-staged"
-  },
-  "lint-staged": {
-    "*.{js,ts,vue}": "eslint --fix",
-    "*.{md,yaml}": "prettier --write",
-    "*.{css,scss,vue}": "stylelint --fix --custom-syntax postcss-html"
-  },
-  "devDependencies": {
-    "eslint": "^8.5.0",
-    "lerna": "^4.0.0",
-    "npm-run-all": "^4.1.5",
-    "prettier": "^2.5.1",
-    "stylelint": "^14.2.0"
   }
 }

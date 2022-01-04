@@ -28,7 +28,7 @@ const options = {
       from: 'NextAuth.js <no-reply@example.com>'
     }),*/
   ],
- // database: process.env.NEXT_PUBLIC_DATABASE_URL,
+  // database: process.env.NEXT_PUBLIC_DATABASE_URL,
   secret: "+gtNMHCJPom2TY/xMITimlselSkoZjg9wOMUgJ1qh1Q=",
 
   session: {
@@ -36,34 +36,33 @@ const options = {
   },
   callbacks: {
     session: async (session, user) => {
-      console.log(`auth.js[session] - session: ${session}, user: ${user}`);
-      session.jwt = user.jwt;
-      session.id = user.id;
-      return Promise.resolve(session);
+      console.log(`auth.js[session] - session: ${session}, user: ${user}`)
+      session.jwt = user.jwt
+      session.id = user.id
+      return Promise.resolve(session)
     },
     jwt: async (token, user, account) => {
       user = token.user
       account = token.account
       var accessToken = account?.access_token
-      console.log(`auth.js[jwt] - token: ${token}, user: ${user}, account: ${account}, access_token: ${accessToken}`);
-      console.log(token);
-      const isSignIn = user ? true : false;
+      console.log(`auth.js[jwt] - token: ${token}, user: ${user}, account: ${account}, access_token: ${accessToken}`)
+      console.log(token)
+      const isSignIn = user ? true : false
       if (isSignIn) {
         var callbackUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/auth/${account.provider}/callback?access_token=${accessToken}`
-        console.log(`auth.js[jwt] - callbackUrl: ${callbackUrl}`);
-        const response = await fetch(callbackUrl);
-        const data = await response.json();
-        console.log(`auth.js[jwt] - response: ${data}`);
-        console.log(data);
-        token.jwt = data.jwt;
-        token.id = data.user.id;
+        console.log(`auth.js[jwt] - callbackUrl: ${callbackUrl}`)
+        const response = await fetch(callbackUrl)
+        const data = await response.json()
+        console.log(`auth.js[jwt] - response: ${data}`)
+        console.log(data)
+        token.jwt = data.jwt
+        token.id = data.user.id
       }
-      return Promise.resolve(token);
+      return Promise.resolve(token)
     },
   },
 }
 
-const Auth = (req, res) =>
-  NextAuth(req, res, options);
+const Auth = (req, res) => NextAuth(req, res, options)
 
-export default Auth;
+export default Auth

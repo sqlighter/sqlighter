@@ -4,4 +4,5 @@ Il PSA Legato è invece prodotto prevalentemente dal Cellule del Cancro alla Pro
 
 Di fondamentale importanza è il rapporto tra PSA Libero e PSA Totale.
 
-Quando il PSA Totale è superiore a 4 ed rapporto Libero/Totale è inferiore al 10% è molto alta la probabilità della presenza di un Cancro alla Prostata.
+Quando il PSA Totale è superiore a 4 ed rapporto Libero/Totale è inferiore al 10% è molto alta la probabilità della presenza di un Cancro alla
+Prostata.

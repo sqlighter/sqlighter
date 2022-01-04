@@ -1,4 +1,4 @@
-- Il test dell'hCG viene solitamente eseguito per verificare l'inizio di una Gravidanza. 
+- Il test dell'hCG viene solitamente eseguito per verificare l'inizio di una Gravidanza.
 - Se il valore è eleveto è necessario recarsi da un medico per proseguire le indagini che solitamente si eseguono in questo stato.
 - Un valore prossimo a zero non è indice certo di assenza di gravidanza in quanto il test si eleva solo dopo alcune settimane.
 - Un valore elevato con la certezza di non essere in gravidanza necessita di immediate analisi di approfondimento.

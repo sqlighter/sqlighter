@@ -1,5 +1,5 @@
-Il 62% delle diete delle donne anziane non contiente vitamina D a sufficienza.
-I segnali che indicano una possibile insufficienza di vitamina D sono:
+Il 62% delle diete delle donne anziane non contiente vitamina D a sufficienza. I segnali che indicano una possibile insufficienza di vitamina D sono:
+
 - Sensazione di bruciore in bocca
 - Dissenteria
 - Insonnia
@@ -11,9 +11,9 @@ I segnali che indicano una possibile insufficienza di vitamina D sono:
 - Abbondante sudorazione del cuoio capelluto
 
 Alimenti consigliati
+
 - Gamberi
 - Latte
-- Olio di fegato di merluzzo
-uova
+- Olio di fegato di merluzzo uova
 
 E' da ricordare che l'esposizione al sole favorisce l'assorbimento e la produzione endogena di vitamina D

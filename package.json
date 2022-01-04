@@ -1,15 +1,13 @@
 {
   "name": "insieme",
-  "private": true,
-  "version": "2.0.0",
+  "packageManager": "yarn@3.1.1",
+  "workspaces": [
+    "./backend",
+    "./frontend"
+  ],
   "scripts": {
     "develop:backend": "yarn --cwd backend develop",
-    "develop:frontend": "wait-on http://localhost:1337/admin && yarn --cwd frontend develop",
+    "develop:frontend": "wait-on http://localhost:8055/admin && yarn --cwd frontend develop",
     "develop": "cross-env FORCE_COLOR=1 npm-run-all -l -p develop:*"
-  },
-  "devDependencies": {
-    "npm-run-all": "4.1.5",
-    "wait-on": "5.2.1",
-    "cross-env": "7.0.3"
   }
 }

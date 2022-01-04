@@ -1,4 +1,3 @@
-
 ## Content
 
 MedlinePlus/NIH (medical tests)  
@@ -14,4 +13,3 @@ https://www.analisiclinichederrico.it/rdw-cv-alto-e-basso/
 
 HTML to markdown  
 https://www.browserling.com/tools/html-to-markdown
-

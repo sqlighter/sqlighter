@@ -1,1 +1,2 @@
-Storicamente questo dato era importante solo se si vi era anemia o era basso il numero di Globuli Rossi. Ricerche più recenti legano un RDW elevato ad un alto rischio di malattie cardiovascolari anche se ne conosce il motivo.
+Storicamente questo dato era importante solo se si vi era anemia o era basso il numero di Globuli Rossi. Ricerche più recenti legano un RDW elevato ad
+un alto rischio di malattie cardiovascolari anche se ne conosce il motivo.

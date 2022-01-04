@@ -1,5 +1,5 @@
-L'insufficienza più comune è quella del ferro.
-I suoi sintomi sono:
+L'insufficienza più comune è quella del ferro. I suoi sintomi sono:
+
 - Anemia
 - Unghie fragili
 - Confusione
@@ -10,7 +10,9 @@ I suoi sintomi sono:
 - Cefalea
 - Glossiti - Infiammazioni alla lingua
 - Lesioni alla bocca
+
 ## Alimenti raccomandati
+
 - Bietole
 - Spinaci
 - Curcuma

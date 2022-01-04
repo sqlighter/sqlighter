@@ -1,0 +1,15 @@
+{
+	"packages": [
+		"backend/source/extensions/*/*",
+		"backend"
+	],
+	"version": "9.4.2",
+	"command": {
+		"bootstrap": {
+			"npmClientArgs": [
+				"--no-package-lock",
+				"--legacy-peer-deps"
+			]
+		}
+	}
+}
