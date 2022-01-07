@@ -11,7 +11,7 @@
 		"noImplicitReturns": true,
 		"noUnusedLocals": false,
 		"noUncheckedIndexedAccess": true,
-		"noUnusedParameters": true,
+		"noUnusedParameters": false,
 		"alwaysStrict": true,
 		"strictNullChecks": true,
 		"strictFunctionTypes": true,

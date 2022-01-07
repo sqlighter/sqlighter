@@ -1,5 +1,5 @@
 // scan.ts tests
-import { getGoogleVisionAnnotations, normalizeGoogleVisionAnnotations, annotationsToHtml } from './scan';
+import { getGoogleVisionAnnotations, normalizeGoogleVisionAnnotations, annotationsToHtml, processAnnotations } from './scan';
 const { resolve } = require('path');
 import fs from 'fs/promises';
 import exp from 'constants';
@@ -7,9 +7,11 @@ import exp from 'constants';
 // external APIs require longer timeouts
 jest.setTimeout(30 * 1000);
 
+const TEST_PDF_PATH = "assets/analisi02.pdf"
+
 describe('scan tests', () => {
 	test('getGoogleVisionAnnotations (pdf from local file)', async () => {
-		const sourcePath = resolve('assets/analisi01.pdf');
+		const sourcePath = resolve(TEST_PDF_PATH);
 		const results = await getGoogleVisionAnnotations(sourcePath);
 
 		expect(results).toBeTruthy();
@@ -23,7 +25,7 @@ describe('scan tests', () => {
 	});
 
 	test('getGoogleVisionAnnotations (pdf from google storage)', async () => {
-		const sourceUri = 'gs://insieme/f0a29218-269b-42a8-95b7-2da2d5b46bf7.pdf';
+		const sourceUri = 'gs://insieme/test/analisi02.pdf';
 		const results = await getGoogleVisionAnnotations(sourceUri);
 
 		expect(results).toBeTruthy();
@@ -34,7 +36,7 @@ describe('scan tests', () => {
 	});
 
 	test('normalizeAnnotations', async () => {
-		const sourcePath = resolve('assets/analisi01.pdf.googlevision.json');
+		const sourcePath = resolve(TEST_PDF_PATH + '.googlevision.json');
 		const googleAnnotations = JSON.parse((await fs.readFile(sourcePath)).toString());
 		const annotations = await normalizeGoogleVisionAnnotations(googleAnnotations);
 
@@ -42,18 +44,26 @@ describe('scan tests', () => {
 		expect(annotations.pages.length).toBe(2);
 
 		for (const page of annotations.pages) {
-			expect(page.width).toBe(595);
-			expect(page.height).toBe(842);
+			expect(page.width).toBe(594);
+			expect(page.height).toBe(841);
 			expect(page.pageNumber).toBeGreaterThan(0);
 			expect(page.detectedLanguages[0].languageCode).toBe('it');
 			expect(page.detectedLanguages[0].confidence).toBeGreaterThan(0.5);
 			expect(page.words.length).toBeGreaterThan(20);
 
 			const svg = annotationsToHtml(annotations, page.pageNumber);
-			const svgPath = resolve(`assets/analisi01.pdf.p${page.pageNumber}.html`);
+			const svgPath = resolve(TEST_PDF_PATH + `.p${page.pageNumber}-before.html`);
 			await fs.writeFile(svgPath, svg);
 		}
 
-		expect(1).toBe(1);
+		await processAnnotations(annotations);
+		const normalizedPath = resolve(TEST_PDF_PATH + '.normalized.json');
+		await fs.writeFile(normalizedPath, JSON.stringify(annotations));
+
+		for (const page of annotations.pages) {
+			const svg = annotationsToHtml(annotations, page.pageNumber);
+			const svgPath = resolve(`assets/analisi02.pdf.p${page.pageNumber}-after.html`);
+			await fs.writeFile(svgPath, svg);
+		}
 	});
 });
