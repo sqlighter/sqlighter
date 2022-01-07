@@ -19,7 +19,7 @@ exports.default = (0, extensions_sdk_1.defineEndpoint)(function (router, _a) {
     });
     router.get('/', function (_req, res) { return res.send('Hello, World!'); });
     router.get('/version', function (req, res) {
-        var version = (0, pino_1.addOne)(8);
+        var version = (0, pino_1.addOne)(9);
         res.json({ version: "v".concat(version), method: req.method });
     });
 });

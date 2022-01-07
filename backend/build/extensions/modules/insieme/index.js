@@ -1,18 +1,1 @@
-import { defineModule } from '@directus/extensions-sdk';
-import ModuleComponent from './module.vue';
-export default defineModule({
-    id: 'biomarkers',
-    name: 'Biomarkers',
-    icon: 'biotech',
-    routes: [
-        {
-            path: '',
-            component: ModuleComponent,
-        },
-        {
-            path: 'v2',
-            component: ModuleComponent,
-        },
-    ],
-});
-//# sourceMappingURL=index.js.map
+import{defineModule as e}from"@directus/extensions-sdk";import{defineComponent as t,resolveComponent as o,openBlock as r,createBlock as i,withCtx as n,createElementVNode as s}from"vue";var a=t({});const m=s("div",null,"This is the content, v6",-1);a.render=function(e,t,s,a,c,u){const v=o("private-view");return r(),i(v,{title:"Biomarkers"},{default:n((()=>[m])),_:1})},a.__file="src/module.vue";var c=e({id:"biomarkers",name:"Biomarkers",icon:"biotech",routes:[{path:"",component:a},{path:"v2",component:a}]});export{c as default};

@@ -1,5 +1,7 @@
 <template>
-	<private-view title="Biomarkers">Content goes here...</private-view>
+	<private-view title="Biomarkers">
+		<div>This is the content, v6</div>
+	</private-view>
 </template>
 
 <script lang="ts">

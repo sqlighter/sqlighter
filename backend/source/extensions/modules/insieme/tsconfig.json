@@ -22,9 +22,7 @@
 		"forceConsistentCasingInFileNames": true,
 		"allowSyntheticDefaultImports": true,
 		"isolatedModules": true,
-    "sourceMap": true,
-		"rootDir": "./src",
-    "outDir": "../../../../build/extensions/modules/insieme"
+		"outDir": "../../../../build/extensions/modules/insieme"
 	},
 	"include": ["./src/**/*.ts"]
 }

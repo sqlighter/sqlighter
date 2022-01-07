@@ -24,7 +24,7 @@ export default defineEndpoint((router: Router, { services, exceptions }) => {
 	router.get('/', (_req, res) => res.send('Hello, World!'));
 
 	router.get('/version', (req: Request, res: Response) => {
-		const version = addOne(8);
+		const version = addOne(9);
 		res.json({ version: `v${version}`, method: req.method });
 	});
 });
