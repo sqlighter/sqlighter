@@ -1,15 +1,14 @@
 // scan.ts tests
-import { getGoogleVisionAnnotations, normalizeGoogleVisionAnnotations, annotationsToHtml, processAnnotations } from './scan';
+import { getGoogleVisionAnnotations, normalizeGoogleVisionAnnotations, annotationsToHtml, processAnnotations } from './reports';
 const { resolve } = require('path');
 import fs from 'fs/promises';
-import exp from 'constants';
 
 // external APIs require longer timeouts
 jest.setTimeout(30 * 1000);
 
 const TEST_PDF_PATH = "assets/analisi02.pdf"
 
-describe('scan tests', () => {
+describe('reports tests', () => {
 	test('getGoogleVisionAnnotations (pdf from local file)', async () => {
 		const sourcePath = resolve(TEST_PDF_PATH);
 		const results = await getGoogleVisionAnnotations(sourcePath);
@@ -47,9 +46,9 @@ describe('scan tests', () => {
 			expect(page.width).toBe(594);
 			expect(page.height).toBe(841);
 			expect(page.pageNumber).toBeGreaterThan(0);
-			expect(page.detectedLanguages[0].languageCode).toBe('it');
-			expect(page.detectedLanguages[0].confidence).toBeGreaterThan(0.5);
-			expect(page.words.length).toBeGreaterThan(20);
+			expect(page.languages[0]?.languageCode).toBe('it');
+			expect(page.languages[0]?.confidence).toBeGreaterThan(0.5);
+			expect(page.words?.length).toBeGreaterThan(20);
 
 			const svg = annotationsToHtml(annotations, page.pageNumber);
 			const svgPath = resolve(TEST_PDF_PATH + `.p${page.pageNumber}-before.html`);

@@ -2,11 +2,81 @@
 
 const vision = require('@google-cloud/vision').v1;
 import fs from 'fs/promises';
-import { text } from 'stream/consumers';
+
+import { Point, BoundingBox, getDistance } from './geometry';
 
 function assert(value: unknown) {
 	if (!value) throw 'An error occoured';
 }
+
+//
+// Types
+//
+
+/** A word or short sentence detected by OCR in a page */
+export class Word {
+	constructor(text: string, bbox: BoundingBox, confidence: number) {
+		this.text = text;
+		this.bbox = bbox;
+		this.confidence = confidence;
+	}
+
+	/** Text in this word */
+	text: string;
+
+	/** Bounding box of this word or sentence */
+	bbox: BoundingBox;
+
+	/** OCR confidence in this text (0 to 1) */
+	confidence: number;
+}
+
+/** A language code and its detection confidence */
+export type Language = { languageCode: string; confidence: number };
+
+/** A page in a report document, contains OCR results, metadata, etc */
+export class Page {
+	constructor(pageNumber: number, width: number, height: number, languages: Language[], words: Word[], text: string) {
+		this.pageNumber = pageNumber;
+		this.width = width;
+		this.height = height;
+		this.languages = languages;
+		this.words = words;
+		this.text = text;
+	}
+
+	/** Page number in the document (1 based) */
+	pageNumber: number;
+
+	/** Languages detected by OCR and confidence */
+	languages: Language[];
+
+	/** Page's height in its own coordinate system */
+	width: number;
+
+	/** Page's height in its own coordinate system */
+	height: number;
+
+	/** Individual words or short sentences in the page */
+	words: Word[];
+
+	/** Text in the page */
+	text: string;
+}
+
+/** A report inclusive of a number of pages, OCR information, metadata, etc */
+export class Report {
+	constructor(pages: Page[]) {
+		this.pages = pages;
+	}
+
+	/** Pages in this report with fulltext, OCR words, etc */
+	pages: Page[];
+}
+
+//
+// Google Vision
+//
 
 // create a google vision client located in the EU
 const imageAnnotatorClientOptions = { apiEndpoint: 'eu-vision.googleapis.com' };
@@ -52,27 +122,17 @@ export async function getGoogleVisionAnnotations(sourceUri: string): Promise<any
  * @param responses The original google vision response from getGoogleVisionAnnotations
  * @returns A normalized and simplified version of the annotations
  */
-export async function normalizeGoogleVisionAnnotations(responses: any) {
-	// https://cloud.google.com/vision/docs/reference/rest/v1/AnnotateImageResponse#TextAnnotation
-	const normalized = { pages: new Array<any>() };
-
+export async function normalizeGoogleVisionAnnotations(responses: any): Promise<Report> {
+	const pages: Page[] = [];
 	for (const response of responses) {
 		assert(!response.error);
-		const normalizedPage: any = {};
-		normalized.pages.push(normalizedPage);
-
+		// https://cloud.google.com/vision/docs/reference/rest/v1/AnnotateImageResponse#TextAnnotation
 		const fullTextAnnotation = response.fullTextAnnotation;
 		const page = fullTextAnnotation.pages[0];
 		assert(fullTextAnnotation.pages.length == 1);
 		assert(page.width > 0 && page.height > 0);
 
-		normalizedPage.pageNumber = response.context.pageNumber;
-		normalizedPage.detectedLanguages = page?.property?.detectedLanguages.slice(0, 3);
-		normalizedPage.text = fullTextAnnotation.text;
-		normalizedPage.width = page.width;
-		normalizedPage.height = page.height;
-		normalizedPage.words = new Array();
-
+		const words: Word[] = [];
 		for (const block of page.blocks) {
 			// skipping blocks as they are huge and useless
 			for (const paragraph of block.paragraphs) {
@@ -104,120 +164,93 @@ export async function normalizeGoogleVisionAnnotations(responses: any) {
 						}
 					}
 
-					normalizedPage.words.push({
+					words.push({
 						text: word_text,
 						bbox: word.boundingBox.normalizedVertices,
-						confidence: word.confidence.toFixed(3),
+						confidence: word.confidence,
 					});
 				}
 			}
 		}
+
+		pages.push({
+			pageNumber: response.context.pageNumber,
+			width: page.width,
+			height: page.height,
+			languages: page.property?.detectedLanguages.slice(0, 3), // keep only most likely
+			words: words,
+			text: fullTextAnnotation.text,
+		});
 	}
 
-	return normalized;
+	const report: Report = {
+		pages,
+	};
+
+	return report;
 }
 
 //
 // further processing of ocr results...
 //
 
-function getBoundingBoxSize(bbox: any) {
-	const xMax = Math.max(bbox[0].x, bbox[1].x, bbox[2].x, bbox[3].x);
-	const xMin = Math.min(bbox[0].x, bbox[1].x, bbox[2].x, bbox[3].x);
-	const yMax = Math.max(bbox[0].y, bbox[1].y, bbox[2].y, bbox[3].y);
-	const yMin = Math.min(bbox[0].y, bbox[1].y, bbox[2].y, bbox[3].y);
-	return { width: xMax - xMin, height: yMax - yMin };
-}
-
-function canMergeWords(word1: any, word2: any): boolean {
-	if (word1.text.length > 0) {
-		const size1 = getBoundingBoxSize(word1.bbox);
-		const spaceWidth = size1.height * 0.7;
-
-		const d1 = getPointsDistance(word1.bbox[1], word2.bbox[0]);
-		const d2 = getPointsDistance(word1.bbox[2], word2.bbox[3]);
-		if (d1 < spaceWidth && d2 < spaceWidth) {
-			return true;
-		}
-	}
-
-	return false;
-}
-
-function getPointsDistance(p1: any, p2: any): number {
-	const dx = p1.x - p2.x;
-	const dy = p1.y - p2.y;
-	return Math.sqrt(dx * dx + dy * dy);
-}
-
-/** Returns the distance of p0 from the line formed by p1 and p2 */
-function getDistanceFromLine(p1: any, p2: any, p0: any): number {
-	return (
-		Math.abs((p2.y - p1.y) * p0.x - (p2.x - p1.x) * p0.y + p2.x * p1.y - p2.y * p1.x) /
-		Math.pow(Math.pow(p2.y - p1.y, 2) + Math.pow(p2.x - p1.x, 2), 0.5)
-	);
-}
-
-function getWordsDistance(word1: any, word2: any): number {
-	const size1 = getBoundingBoxSize(word1.bbox);
-
-	const p1 = { x: (word1.bbox[0].x + word1.bbox[3].x) / 2, y: (word1.bbox[0].y + word1.bbox[3].y) / 2 };
-	const p2 = { x: (word1.bbox[1].x + word1.bbox[2].x) / 2, y: (word1.bbox[1].y + word1.bbox[2].y) / 2 };
-	const p0 = { x: (word2.bbox[0].x + word2.bbox[3].x) / 2, y: (word1.bbox[0].y + word1.bbox[3].y) / 2 };
-
-	const alignment = getDistanceFromLine(p1, p2, p0);
-	if (alignment < size1.width * 0.5 && p0.x > p2.x) {
-		return getPointsDistance(p2, p0);
-	}
-
-	return Number.POSITIVE_INFINITY;
-}
-
 /**
  * Merge words in a sentence or sequence into a single word
  * @param page Annotations for a specific page
  * @returns Number of words that have been merged
  */
-function mergeWords(page: any): number {
+function mergeWords(page: Page): number {
+	if (!page.words) {
+		console.warn(`mergeWords - page ${page} has no words`, page);
+		return 0;
+	}
+
 	// TODO could sort words by x position to make sure joined words are in proper order
 	let merged = 0;
 
 	for (let i = 0; i < page.words.length; i++) {
 		const word1 = page.words[i];
+		if (word1) {
+			const lineHeight = getDistance(word1.bbox[1], word1.bbox[2]);
+			const xTolerance = lineHeight * 0.8; // distance between words up to 80% of line height
+			const yTolerance = lineHeight * 0.4; // vertical distance between lines max 40% of line height
 
-		const lineHeight = getPointsDistance(word1.bbox[1], word1.bbox[2]);
-		const xTolerance = lineHeight * 0.8; // distance between words up to 80% of line height
-		const yTolerance = lineHeight * 0.4; // vertical distance between lines max 40% of line height
+			for (let j = 0; j < page.words.length; j++) {
+				if (i != j) {
+					const word2 = page.words[j];
+					if (word2) {
+						const canMerge =
+							// topRight of first and topLeft of second word more or less in line?
+							Math.abs(word1.bbox[1].y - word2.bbox[0].y) < yTolerance &&
+							// bottomRight of first and bottomLeft of second word more or less in line?
+							Math.abs(word1.bbox[2].y - word2.bbox[3].y) < yTolerance &&
+							// horizontal distance between top of words within range?
+							getDistance(word1.bbox[1], word2.bbox[0]) < xTolerance &&
+							// horizontal distance between bottom of words within range?
+							getDistance(word1.bbox[2], word2.bbox[3]) < xTolerance;
 
-		for (let j = 0; j < page.words.length; j++) {
-			if (i != j) {
-				const word2 = page.words[j];
+						if (canMerge) {
+							// weighted confidence level
+							const l1 = word1.text.length;
+							const l2 = word2.text.length;
+							word1.confidence = (word1.confidence * l1 + word2.confidence * l2) / (l1 + l2);
 
-				const canMerge =
-					// topRight of first and topLeft of second word more or less in line?
-					Math.abs(word1.bbox[1].y - word2.bbox[0].y) < yTolerance &&
-					// bottomRight of first and bottomLeft of second word more or less in line?
-					Math.abs(word1.bbox[2].y - word2.bbox[3].y) < yTolerance &&
-					// horizontal distance between words within range?
-					getPointsDistance(word1.bbox[1], word2.bbox[0]) < xTolerance &&
-					getPointsDistance(word1.bbox[2], word2.bbox[3]) < xTolerance;
+							// merge words
+							word1.text += word2.text;
 
-				if (canMerge) {
-					// merge words
-					word1.confidence = (word1.confidence * word1.text.length + word2.confidence * word2.text.length) / (word1.text.length + word2.text.length);
-					word1.text += word2.text;
+							// enlarge word's bounding box to include second word
+							word1.bbox[1] = word2.bbox[1];
+							word1.bbox[2] = word2.bbox[2];
 
-					// enlarge word's bounding box to include second word
-					word1.bbox[1] = word2.bbox[1];
-					word1.bbox[2] = word2.bbox[2];
+							// remove second word
+							page.words.splice(j, 1);
 
-					// remove merged word
-					page.words.splice(j, 1);
-
-					// process word1 again
-					i--;
-					merged++;
-					break;
+							// reprocess first word
+							i--;
+							merged++;
+							break;
+						}
+					}
 				}
 			}
 		}
@@ -238,6 +271,10 @@ export async function processAnnotations(annotations: any) {
 	}
 }
 
+//
+// Render to html for debugging, development
+//
+
 function htmlEntities(str?: string) {
 	if (str) {
 		return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -245,20 +282,23 @@ function htmlEntities(str?: string) {
 	return null;
 }
 
-function bboxToSvg(bbox: any, w: number, h: number, tooltip?: string) {
-	const v = [
-		(bbox[0].x * w).toFixed(4), // top left
-		(bbox[0].y * h).toFixed(4),
-		(bbox[1].x * w).toFixed(4), // top right
-		(bbox[1].y * h).toFixed(4),
-		(bbox[2].x * w).toFixed(4), // bottom right
-		(bbox[2].y * h).toFixed(4),
-		(bbox[3].x * w).toFixed(4), // bottom left
-		(bbox[3].y * h).toFixed(4),
-	];
-	return `<polygon points='${v[0]},${v[1]} ${v[2]},${v[3]} ${v[4]},${v[5]} ${v[6]},${v[7]}' class='word'><title>'${htmlEntities(
-		tooltip
-	)}'</title></polygon>\n`;
+function bboxToSvg(bbox: BoundingBox, w: number, h: number, tooltip?: string) {
+	if (bbox) {
+		const v = [
+			(bbox[0].x * w).toFixed(4), // top left
+			(bbox[0].y * h).toFixed(4),
+			(bbox[1].x * w).toFixed(4), // top right
+			(bbox[1].y * h).toFixed(4),
+			(bbox[2].x * w).toFixed(4), // bottom right
+			(bbox[2].y * h).toFixed(4),
+			(bbox[3].x * w).toFixed(4), // bottom left
+			(bbox[3].y * h).toFixed(4),
+		];
+		return `<polygon points='${v[0]},${v[1]} ${v[2]},${v[3]} ${v[4]},${v[5]} ${v[6]},${v[7]}' class='word'><title>'${htmlEntities(
+			tooltip
+		)}'</title></polygon>\n`;
+	}
+	return '';
 }
 
 /**
