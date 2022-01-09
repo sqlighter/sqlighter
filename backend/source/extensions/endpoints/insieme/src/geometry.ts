@@ -11,6 +11,14 @@ export type Size = { width: number; height: number };
 /** Bounding box has top left, top right, bottom right and bottom left vertexes */
 export type BoundingBox = [Point, Point, Point, Point];
 
+/** Returns the average coordinates of the given array of points */
+export function getAverage(...points: Point[]): Point {
+	return {
+		x: points.reduce((a, b) => a + b.x, 0) / points.length,
+		y: points.reduce((a, b) => a + b.y, 0) / points.length,
+	};
+}
+
 /** Distance between two points */
 export function getDistance(p1: Point | undefined, p2: Point | undefined): number {
 	if (p1 && p2) {

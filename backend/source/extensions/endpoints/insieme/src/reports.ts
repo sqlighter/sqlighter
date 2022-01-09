@@ -3,7 +3,7 @@
 const vision = require('@google-cloud/vision').v1;
 import fs from 'fs/promises';
 
-import { Point, BoundingBox, getDistance } from './geometry';
+import { Point, BoundingBox, getDistance, getAverage, getBoundingBoxSize } from './geometry';
 
 function assert(value: unknown) {
 	if (!value) throw 'An error occoured';
@@ -213,17 +213,14 @@ function mergeWords(page: Page): number {
 		if (word1) {
 			const lineHeight = getDistance(word1.bbox[1], word1.bbox[2]);
 			const xTolerance = lineHeight * 0.8; // distance between words up to 80% of line height
-			const yTolerance = lineHeight * 0.4; // vertical distance between lines max 40% of line height
 
 			for (let j = 0; j < page.words.length; j++) {
 				if (i != j) {
 					const word2 = page.words[j];
 					if (word2) {
 						const canMerge =
-							// topRight of first and topLeft of second word more or less in line?
-							Math.abs(word1.bbox[1].y - word2.bbox[0].y) < yTolerance &&
-							// bottomRight of first and bottomLeft of second word more or less in line?
-							Math.abs(word1.bbox[2].y - word2.bbox[3].y) < yTolerance &&
+							// words on the same line?
+							areWordsOnSameLine(word1, word2) &&
 							// horizontal distance between top of words within range?
 							getDistance(word1.bbox[1], word2.bbox[0]) < xTolerance &&
 							// horizontal distance between bottom of words within range?
@@ -264,10 +261,73 @@ function mergeWords(page: Page): number {
 	return merged;
 }
 
-export async function processAnnotations(annotations: any) {
-	for (const page of annotations.pages) {
+/** Returns true if both words can be considered part of the same line */
+function areWordsOnSameLine(word1: Word, word2: Word): boolean {
+	if (word1 && word2) {
+		const yMiddle = getAverage(...word1.bbox).y;
+
+		// TODO instead of considering words to be on horizontal lines, could deal with lines at an angle
+		return word2.bbox[0].y < yMiddle && word2.bbox[1].y < yMiddle && word2.bbox[2].y > yMiddle && word2.bbox[3].y > yMiddle;
+	}
+
+	return false;
+}
+
+/** Group words (or small fragments) into arrays that belong to the same line on the document */
+function groupWordsByLine(words: Word[]): Word[][] {
+	// sort words top to bottom
+	words = [...words];
+	words.sort((a, b) => getAverage(...a.bbox).y - getAverage(...b.bbox).y);
+
+	const lines = Array<Word[]>();
+	for (let i = 0; i < words.length; i++) {
+		const word1 = words[i];
+		if (word1) {
+			const line = Array<Word>(word1);
+			lines.push(line);
+			for (let j = i + 1; j < words.length; j++) {
+				const word2 = words[j];
+				if (word2 && areWordsOnSameLine(word1, word2)) {
+					line.push(word2);
+					words.splice(j, 1);
+					j--;
+				}
+			}
+		}
+	}
+
+	// sort lines left to right
+	lines.forEach((line) => {
+		line.sort((a, b) => getAverage(...a.bbox).x - getAverage(...b.bbox).x);
+	});
+
+	return lines;
+}
+
+export async function processAnnotations(report: Report) {
+	for (const page of report.pages) {
+		// first merge words into short sentences or little chunks of text
 		const mergedWords = mergeWords(page);
 		console.log(`processAnnotations - page: ${page.pageNumber}, merged: ${mergedWords} words`);
+	}
+
+	// TODO find words that could match this document to an existing template
+	// look on all pages although we're most likely to find headers on page 1
+
+	// find items on lines that seem to be formatted in a table-ish manner
+	for (const page of report.pages) {
+		// group words that are on the same line
+		const lines = groupWordsByLine(page.words);
+		console.log(`processAnnotations - page: ${page.pageNumber} has ${lines.length} lines`);
+
+		// see if the group of words contains:
+		// 1 item that could be mapped to a biomarker
+		// 1 item that could be mapped to a quantity
+		// 1 item that could be mapped to measurements units (optional)
+		// 1 item that could be mapped to suggested range (optional)
+
+		// if biomarker name + quantity, add to list of possible biomarkers
+		// if has units and/or range, add properties, raise confidence
 	}
 }
 
