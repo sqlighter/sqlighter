@@ -191,23 +191,45 @@ export async function normalizeGoogleVisionAnnotations(responses: any): Promise<
 }
 
 //
-// further processing of ocr results...
+// Words - cleaning, merging, organizing in lines, etc.
 //
+
+/** Remove words that are not horizontal, too large, too small, etc */
+function words_cleanup(page: Page): number {
+	let cleaned = 0;
+	for (let i = 0; i < page.words.length; i++) {
+		const word = page.words[i];
+		if (word) {
+			const wordHeight = getBoundingBoxSize(word.bbox).height;
+			const leftMidY = word.bbox[0].y + word.bbox[3].y;
+			const rightMidY = word.bbox[1].y + word.bbox[2].y;
+
+			// TODO could look at angle rather than absolute difference
+			if (Math.abs(leftMidY - rightMidY) > wordHeight * 0.5) {
+				console.debug(`words_clean - removing '${word.text}' because word is not horizontal`);
+				cleaned++;
+				page.words.splice(i, 1);
+				i--;
+			}
+		}
+	}
+
+	console.debug(`words_clean - page: ${page.pageNumber}, cleaned: ${cleaned} words`);
+	return cleaned;
+}
 
 /**
  * Merge words in a sentence or sequence into a single word
  * @param page Annotations for a specific page
  * @returns Number of words that have been merged
  */
-function mergeWords(page: Page): number {
+function words_merge(page: Page): number {
 	if (!page.words) {
-		console.warn(`mergeWords - page ${page} has no words`, page);
+		console.warn(`words_merge - page ${page} has no words`, page);
 		return 0;
 	}
 
-	// TODO could sort words by x position to make sure joined words are in proper order
 	let merged = 0;
-
 	for (let i = 0; i < page.words.length; i++) {
 		const word1 = page.words[i];
 		if (word1) {
@@ -220,7 +242,7 @@ function mergeWords(page: Page): number {
 					if (word2) {
 						const canMerge =
 							// words on the same line?
-							areWordsOnSameLine(word1, word2) &&
+							words_areOnSameLine(word1, word2) &&
 							// horizontal distance between top of words within range?
 							getDistance(word1.bbox[1], word2.bbox[0]) < xTolerance &&
 							// horizontal distance between bottom of words within range?
@@ -258,11 +280,27 @@ function mergeWords(page: Page): number {
 		word.text = word.text.trim();
 	}
 
+	console.debug(`words_merge - page: ${page.pageNumber}, merged: ${merged} words`);
 	return merged;
 }
 
+/** Sort words top to bottom and left to right */
+function words_sort(words: Word[]) {
+	words.sort((word1, word2) => {
+		if (words_areOnSameLine(word1, word2)) {
+			// sort left to right, consider only left edge of bbox
+			const x1 = (word1.bbox[0].x + word1.bbox[3].x) / 2;
+			const x2 = (word2.bbox[0].x + word2.bbox[3].x) / 2;
+			return x1 - x2;
+		}
+
+		// sort top to bottom if not on the same line
+		return getAverage(...word1.bbox).y - getAverage(...word2.bbox).y;
+	});
+}
+
 /** Returns true if both words can be considered part of the same line */
-function areWordsOnSameLine(word1: Word, word2: Word): boolean {
+function words_areOnSameLine(word1: Word, word2: Word): boolean {
 	if (word1 && word2) {
 		const yMiddle = getAverage(...word1.bbox).y;
 
@@ -274,11 +312,8 @@ function areWordsOnSameLine(word1: Word, word2: Word): boolean {
 }
 
 /** Group words (or small fragments) into arrays that belong to the same line on the document */
-function groupWordsByLine(words: Word[]): Word[][] {
-	// sort words top to bottom
+function words_groupByLine(words: Word[]): Word[][] {
 	words = [...words];
-	words.sort((a, b) => getAverage(...a.bbox).y - getAverage(...b.bbox).y);
-
 	const lines = Array<Word[]>();
 	for (let i = 0; i < words.length; i++) {
 		const word1 = words[i];
@@ -287,7 +322,7 @@ function groupWordsByLine(words: Word[]): Word[][] {
 			lines.push(line);
 			for (let j = i + 1; j < words.length; j++) {
 				const word2 = words[j];
-				if (word2 && areWordsOnSameLine(word1, word2)) {
+				if (word2 && words_areOnSameLine(word1, word2)) {
 					line.push(word2);
 					words.splice(j, 1);
 					j--;
@@ -296,19 +331,17 @@ function groupWordsByLine(words: Word[]): Word[][] {
 		}
 	}
 
-	// sort lines left to right
-	lines.forEach((line) => {
-		line.sort((a, b) => getAverage(...a.bbox).x - getAverage(...b.bbox).x);
-	});
-
 	return lines;
 }
 
 export async function processAnnotations(report: Report) {
 	for (const page of report.pages) {
-		// first merge words into short sentences or little chunks of text
-		const mergedWords = mergeWords(page);
-		console.log(`processAnnotations - page: ${page.pageNumber}, merged: ${mergedWords} words`);
+		// remove words which aren't horizontal or are too small, etc
+		words_cleanup(page);
+		// merge words into short sentences or little chunks of text
+		words_merge(page);
+		// sort top to bottom, left to right
+		words_sort(page.words);
 	}
 
 	// TODO find words that could match this document to an existing template
@@ -317,8 +350,8 @@ export async function processAnnotations(report: Report) {
 	// find items on lines that seem to be formatted in a table-ish manner
 	for (const page of report.pages) {
 		// group words that are on the same line
-		const lines = groupWordsByLine(page.words);
-		console.log(`processAnnotations - page: ${page.pageNumber} has ${lines.length} lines`);
+		const lines = words_groupByLine(page.words);
+		console.debug(`words_groupByLine - page: ${page.pageNumber} has ${lines.length} lines`);
 
 		// see if the group of words contains:
 		// 1 item that could be mapped to a biomarker
