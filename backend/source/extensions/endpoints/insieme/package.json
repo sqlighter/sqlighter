@@ -37,6 +37,7 @@
 	},
 	"dependencies": {
 		"@google-cloud/vision": "^2.4.1",
+		"fuse.js": "^6.5.3",
 		"pdf2json": "^2.0.0"
 	}
 }

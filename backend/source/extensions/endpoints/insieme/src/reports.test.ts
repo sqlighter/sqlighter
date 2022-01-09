@@ -6,7 +6,7 @@ import fs from 'fs/promises';
 // external APIs require longer timeouts
 jest.setTimeout(30 * 1000);
 
-const TEST_PDF_PATH = "assets/analisi02.pdf"
+const TEST_PDF_PATH = "./test/analisi02.pdf"
 
 describe('reports tests', () => {
 	test('getGoogleVisionAnnotations (pdf from local file)', async () => {
@@ -61,7 +61,7 @@ describe('reports tests', () => {
 
 		for (const page of annotations.pages) {
 			const svg = annotationsToHtml(annotations, page.pageNumber);
-			const svgPath = resolve(`assets/analisi02.pdf.p${page.pageNumber}-after.html`);
+			const svgPath = resolve(TEST_PDF_PATH + `.p${page.pageNumber}-after.html`);
 			await fs.writeFile(svgPath, svg);
 		}
 	});
