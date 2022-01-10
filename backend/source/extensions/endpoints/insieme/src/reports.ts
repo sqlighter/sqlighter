@@ -3,7 +3,11 @@
 const vision = require('@google-cloud/vision').v1;
 import fs from 'fs/promises';
 
-import { Point, BoundingBox, getDistance, getAverage, getBoundingBoxSize } from './geometry';
+// https://fusejs.io/api/methods.html
+import Fuse from 'fuse.js';
+
+import { BoundingBox, getDistance, getAverage, getBoundingBoxSize } from './geometry';
+import { searchBiomarkers } from './biomarkers';
 
 function assert(value: unknown) {
 	if (!value) throw 'An error occoured';
@@ -59,6 +63,9 @@ export class Page {
 
 	/** Individual words or short sentences in the page */
 	words: Word[];
+
+	/** Words grouped by line */
+	lines?: Word[][];
 
 	/** Text in the page */
 	text: string;
@@ -334,6 +341,73 @@ function words_groupByLine(words: Word[]): Word[][] {
 	return lines;
 }
 
+//
+// Biomarkers - detecting in reports, etc.
+//
+
+const BIOMARKER_SCORE_THRESHOLD = 0.2;
+const UNITS_SCORE_THRESHOLD = 0.3;
+
+function biomarker_detectUnits(biomarker: any, line: Word[]): { units: string; conversion: number; score: number } | null {
+	assert(biomarker.units);
+
+	const unitsCandidates = new Array<string>(biomarker.units.id);
+	if (biomarker.units?.extras?.conversions) {
+		unitsCandidates.push(...Object.keys(biomarker.units.extras.conversions));
+	}
+	const unitsFuse = new Fuse(unitsCandidates, { includeScore: true });
+
+	let match = null;
+	for (const word of line) {
+		const unitsResults = unitsFuse.search(word.text);
+		if (unitsResults.length > 0 && unitsResults[0]) {
+			const resultScore = unitsResults[0].score as number;
+			if (resultScore < UNITS_SCORE_THRESHOLD && (!match || resultScore < match.score)) {
+				match = {
+					units: unitsResults[0].item,
+					conversion: unitsResults[0].refIndex > 0 ? biomarker.units.extras.conversions[unitsResults[0].item] : 1,
+					score: resultScore,
+				};
+			}
+		}
+	}
+
+	if (match) {
+		console.debug(`biomarker_detectUnits - ${JSON.stringify(match)}`);
+	}
+
+	return match;
+}
+
+async function biomarkers_detect(report: Report) {
+	const biomarkers = [];
+
+	for (const page of report.pages) {
+		if (page.lines) {
+			for (const line of page.lines) {
+				if (line && line[0]) {
+					const res = await searchBiomarkers(line[0].text);
+					if (res && res.length > 0) {
+						// TODO threshold could be a dynamic value?
+						if (res[0].score < BIOMARKER_SCORE_THRESHOLD) {
+							const item = res[0].item;
+							const itemScore = 1.0 - res[0].score;
+
+							console.debug(`biomarkers_detect - text: ${line[0].text}, id: ${item.id}/${item.translations[0].name}, score: ${res[0].score}`);
+
+							// find compatible measurement unit on the same line
+							const units = biomarker_detectUnits(item, line);
+
+							// see if we can find a value
+							// see if we can find a suggested range
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
 export async function processAnnotations(report: Report) {
 	for (const page of report.pages) {
 		// remove words which aren't horizontal or are too small, etc
@@ -353,6 +427,8 @@ export async function processAnnotations(report: Report) {
 		const lines = words_groupByLine(page.words);
 		console.debug(`words_groupByLine - page: ${page.pageNumber} has ${lines.length} lines`);
 
+		page.lines = lines;
+
 		// see if the group of words contains:
 		// 1 item that could be mapped to a biomarker
 		// 1 item that could be mapped to a quantity
@@ -362,6 +438,8 @@ export async function processAnnotations(report: Report) {
 		// if biomarker name + quantity, add to list of possible biomarkers
 		// if has units and/or range, add properties, raise confidence
 	}
+
+	await biomarkers_detect(report);
 }
 
 //
