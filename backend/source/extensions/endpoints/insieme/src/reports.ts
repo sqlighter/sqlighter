@@ -7,7 +7,7 @@ import fs from 'fs/promises';
 import Fuse from 'fuse.js';
 
 import { BoundingBox, getDistance, getAverage, getBoundingBoxSize } from './geometry';
-import { searchBiomarkers } from './biomarkers';
+import { searchBiomarkers, parseRange } from './biomarkers';
 
 function assert(value: unknown) {
 	if (!value) throw 'An error occoured';
@@ -348,9 +348,11 @@ function words_groupByLine(words: Word[]): Word[][] {
 const BIOMARKER_SCORE_THRESHOLD = 0.2;
 const UNITS_SCORE_THRESHOLD = 0.3;
 
-function biomarker_detectUnits(biomarker: any, line: Word[]): { units: string; conversion: number; score: number } | null {
+function biomarker_detectUnits(biomarker: any, line: Word[]): { units: string; conversion: number; score: number; word: Word } | null {
 	assert(biomarker.units);
 
+	// each biomarker has a main unit of measurement which is preferred (normally the SI unit)
+	// and a number of available conversions that can also be read
 	const unitsCandidates = new Array<string>(biomarker.units.id);
 	if (biomarker.units?.extras?.conversions) {
 		unitsCandidates.push(...Object.keys(biomarker.units.extras.conversions));
@@ -362,11 +364,13 @@ function biomarker_detectUnits(biomarker: any, line: Word[]): { units: string; c
 		const unitsResults = unitsFuse.search(word.text);
 		if (unitsResults.length > 0 && unitsResults[0]) {
 			const resultScore = unitsResults[0].score as number;
+			// in case of multiple matches, retain the one with the best (lowest) score
 			if (resultScore < UNITS_SCORE_THRESHOLD && (!match || resultScore < match.score)) {
 				match = {
 					units: unitsResults[0].item,
 					conversion: unitsResults[0].refIndex > 0 ? biomarker.units.extras.conversions[unitsResults[0].item] : 1,
 					score: resultScore,
+					word,
 				};
 			}
 		}
@@ -377,6 +381,65 @@ function biomarker_detectUnits(biomarker: any, line: Word[]): { units: string; c
 	}
 
 	return match;
+}
+
+// match integer or floating point with dot or comma + whitespace and nothing else
+const RE_FLOAT_VALUE = /^\s*(\d+([\.,]\d+)?)\s*$/;
+
+const RE_POSITIVE = /^\s*(positive|positivo)\s*$/;
+
+const RE_NEGATIVE = /^\s*(negative|negativo|assente|assenti)\s*$/;
+
+function biomarker_detectValue(biomarker: any, words: Word[]): any | null {
+	// first parse possible numerical results
+	for (const word of words) {
+		let text = word.text.trim();
+		if (text.length > 0) {
+			// is this a float number? (and nothing else)
+			let match = RE_FLOAT_VALUE.exec(text);
+			if (match) {
+				let value = Number.parseFloat(text.replace(',', '.'));
+				return { value, text, word, confidence: 1 };
+			}
+		}
+	}
+
+	// then parse potential string matches like positive or negative, etc.
+	for (const word of words) {
+		let text = word.text.trim().toLowerCase();
+
+		// is this a positive result?
+		if (RE_POSITIVE.exec(text)) {
+			return { value: 1, text, word, confidence: 1 };
+		}
+
+		// a negative result?
+		if (RE_NEGATIVE.exec(text)) {
+			return { value: 0, text, word, confidence: 1 };
+		}
+	}
+
+	return null;
+}
+
+const RE_RANGE_MIN_MAX = /^\s*\[?(\d+([\.,]\d+)?)\s+-?\s*(\d+([\.,]\d+)?)\s*\]?$/;
+
+function biomarker_detectRange(biomarker: any, words: Word[]): any | null {
+	// first parse possible numerical results
+	for (const word of words) {
+		let text = word.text.trim();
+		if (text.length > 0) {
+			// is this a range, eg: 3,40-12
+			let match = RE_RANGE_MIN_MAX.exec(text);
+			if (match && match[1] && match[3]) {
+				let min = Number.parseFloat(match[1].replace(",","."))
+				let max = Number.parseFloat(match[3].replace(",","."))
+				return { range: `${min}-${max}`, text, word, confidence: 1 };
+			}
+		}
+	}
+
+	return null;
 }
 
 async function biomarkers_detect(report: Report) {
@@ -397,6 +460,16 @@ async function biomarkers_detect(report: Report) {
 
 							// find compatible measurement unit on the same line
 							const units = biomarker_detectUnits(item, line);
+
+							const range = biomarker_detectRange(item, line);
+							if (range) {
+								console.debug(`range: ${range.range}`)
+							}
+
+							const value = biomarker_detectValue(item, line);
+							if (value) {
+								console.debug(`value: ${value.value} '${value.text}'`);
+							}
 
 							// see if we can find a value
 							// see if we can find a suggested range

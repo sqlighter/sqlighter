@@ -2309,13 +2309,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xmldom/xmldom@npm:^0.7.5":
-  version: 0.7.5
-  resolution: "@xmldom/xmldom@npm:0.7.5"
-  checksum: 8d7ec35c1ef6183b4f621df08e01d7e61f244fb964a4719025e65fe6ac06fac418919be64fb40fe5908e69158ef728f2d936daa082db326fe04603012b5f2a84
-  languageName: node
-  linkType: hard
-
 "@yarn-tool/resolve-package@npm:^1.0.36":
   version: 1.0.41
   resolution: "@yarn-tool/resolve-package@npm:1.0.41"
@@ -4737,9 +4730,9 @@ __metadata:
     babel-jest: ^27.4.6
     fuse.js: ^6.5.3
     jest: ^27.4.7
-    pdf2json: ^2.0.0
     superagent: ^6.1.0
     supertest: ^6.1.6
+    tokenizr: ^1.6.5
     ts-jest: ^27.1.2
     ts-node: ^10.4.0
     typescript: ^4.5.4
@@ -6645,17 +6638,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pdf2json@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "pdf2json@npm:2.0.0"
-  dependencies:
-    "@xmldom/xmldom": ^0.7.5
-  bin:
-    pdf2json: bin/pdf2json
-  checksum: 7ec1f040b042857475d0604f2c2afc30675768b75b56fb9fc7d7adedbb6aa99cfae4b153047861e4f9d2b877f3e752362f5c9816c2361974f0c0d3870ef2cf9e
-  languageName: node
-  linkType: hard
-
 "pg-connection-string@npm:2.5.0":
   version: 2.5.0
   resolution: "pg-connection-string@npm:2.5.0"
@@ -8299,6 +8281,13 @@ __metadata:
   version: 1.0.1
   resolution: "toidentifier@npm:1.0.1"
   checksum: 952c29e2a85d7123239b5cfdd889a0dde47ab0497f0913d70588f19c53f7e0b5327c95f4651e413c74b785147f9637b17410ac8c846d5d4a20a5a33eb6dc3a45
+  languageName: node
+  linkType: hard
+
+"tokenizr@npm:^1.6.5":
+  version: 1.6.5
+  resolution: "tokenizr@npm:1.6.5"
+  checksum: 625ba6fb4a7ae66338646db1686987635b0d95c9a58fe6ea15c58d10c8857fd9496d1c05152edd55b4103301c2152b0314289691ffe2bac99b10924077789177
   languageName: node
   linkType: hard
 

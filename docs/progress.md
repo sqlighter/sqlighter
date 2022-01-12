@@ -25,4 +25,5 @@ Jan
 07/01 parsing pdf documents, retrieving words, creating annotations.json  
 08/01 refactoring code, apply ts types, types for OCR reports
 09/01 find lines in reports, add fuse.js for fuzzy search of biomarker names
-
+10/01 parser for biomarker units, corrected units in directus
+11/01 parser for biomarker ranges and values

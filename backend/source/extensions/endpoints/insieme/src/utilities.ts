@@ -5,6 +5,7 @@ import { assert } from 'console';
 export async function getApiJson(relativeUrl: string) {
 	assert(relativeUrl.startsWith('/'));
 	const url = 'https://api.insieme.app' + relativeUrl;
+//	const url = 'http://localhost:8055' + relativeUrl;
 	const token = 'topolino';
 	try {
 		const results = await axios.get(url, {
