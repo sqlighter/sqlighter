@@ -39,6 +39,7 @@
 		"@google-cloud/vision": "^2.4.1",
 		"axios": "^0.24.0",
 		"fuse.js": "^6.5.3",
+		"set-clustering": "^1.1.0",
 		"tokenizr": "^1.6.5"
 	}
 }

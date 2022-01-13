@@ -6,8 +6,9 @@ import fs from 'fs/promises';
 // https://fusejs.io/api/methods.html
 import Fuse from 'fuse.js';
 
-import { BoundingBox, getDistance, getAverage, getBoundingBoxSize } from './geometry';
-import { searchBiomarkers, parseRange } from './biomarkers';
+import { BoundingBox, getDistance, getAverage, getBoundingBoxSize, getBoundingBoxAlignments, bboxToString, mergeBoundingBoxes } from './geometry';
+import { searchBiomarkers, searchUnits, parseRange, parseValue, parseUnits } from './biomarkers';
+import { stringify } from 'querystring';
 
 function assert(value: unknown) {
 	if (!value) throw 'An error occoured';
@@ -79,6 +80,11 @@ export class Report {
 
 	/** Pages in this report with fulltext, OCR words, etc */
 	pages: Page[];
+
+	/** Biomarker results detected in this report */
+	results?: any[];
+
+	extras?: any;
 }
 
 //
@@ -171,11 +177,8 @@ export async function normalizeGoogleVisionAnnotations(responses: any): Promise<
 						}
 					}
 
-					words.push({
-						text: word_text,
-						bbox: word.boundingBox.normalizedVertices,
-						confidence: word.confidence,
-					});
+					const bbox = word.boundingBox.normalizedVertices.map((a: any) => [a.x, a.y]);
+					words.push({ text: word_text, confidence: word.confidence, bbox: bbox });
 				}
 			}
 		}
@@ -208,8 +211,8 @@ function words_cleanup(page: Page): number {
 		const word = page.words[i];
 		if (word) {
 			const wordHeight = getBoundingBoxSize(word.bbox).height;
-			const leftMidY = word.bbox[0].y + word.bbox[3].y;
-			const rightMidY = word.bbox[1].y + word.bbox[2].y;
+			const leftMidY = word.bbox[0][1] + word.bbox[3][1];
+			const rightMidY = word.bbox[1][1] + word.bbox[2][1];
 
 			// TODO could look at angle rather than absolute difference
 			if (Math.abs(leftMidY - rightMidY) > wordHeight * 0.5) {
@@ -296,23 +299,23 @@ function words_sort(words: Word[]) {
 	words.sort((word1, word2) => {
 		if (words_areOnSameLine(word1, word2)) {
 			// sort left to right, consider only left edge of bbox
-			const x1 = (word1.bbox[0].x + word1.bbox[3].x) / 2;
-			const x2 = (word2.bbox[0].x + word2.bbox[3].x) / 2;
+			const x1 = (word1.bbox[0][0] + word1.bbox[3][0]) / 2;
+			const x2 = (word2.bbox[0][0] + word2.bbox[3][0]) / 2;
 			return x1 - x2;
 		}
 
 		// sort top to bottom if not on the same line
-		return getAverage(...word1.bbox).y - getAverage(...word2.bbox).y;
+		return getAverage(...word1.bbox)[1] - getAverage(...word2.bbox)[1];
 	});
 }
 
 /** Returns true if both words can be considered part of the same line */
 function words_areOnSameLine(word1: Word, word2: Word): boolean {
 	if (word1 && word2) {
-		const yMiddle = getAverage(...word1.bbox).y;
+		const yMiddle = getAverage(...word1.bbox)[1];
 
 		// TODO instead of considering words to be on horizontal lines, could deal with lines at an angle
-		return word2.bbox[0].y < yMiddle && word2.bbox[1].y < yMiddle && word2.bbox[2].y > yMiddle && word2.bbox[3].y > yMiddle;
+		return word2.bbox[0][1] < yMiddle && word2.bbox[1][1] < yMiddle && word2.bbox[2][1] > yMiddle && word2.bbox[3][1] > yMiddle;
 	}
 
 	return false;
@@ -345,140 +348,135 @@ function words_groupByLine(words: Word[]): Word[][] {
 // Biomarkers - detecting in reports, etc.
 //
 
-const BIOMARKER_SCORE_THRESHOLD = 0.2;
-const UNITS_SCORE_THRESHOLD = 0.3;
-
-function biomarker_detectUnits(biomarker: any, line: Word[]): { units: string; conversion: number; score: number; word: Word } | null {
-	assert(biomarker.units);
-
-	// each biomarker has a main unit of measurement which is preferred (normally the SI unit)
-	// and a number of available conversions that can also be read
-	const unitsCandidates = new Array<string>(biomarker.units.id);
-	if (biomarker.units?.extras?.conversions) {
-		unitsCandidates.push(...Object.keys(biomarker.units.extras.conversions));
-	}
-	const unitsFuse = new Fuse(unitsCandidates, { includeScore: true });
-
-	let match = null;
-	for (const word of line) {
-		const unitsResults = unitsFuse.search(word.text);
-		if (unitsResults.length > 0 && unitsResults[0]) {
-			const resultScore = unitsResults[0].score as number;
-			// in case of multiple matches, retain the one with the best (lowest) score
-			if (resultScore < UNITS_SCORE_THRESHOLD && (!match || resultScore < match.score)) {
-				match = {
-					units: unitsResults[0].item,
-					conversion: unitsResults[0].refIndex > 0 ? biomarker.units.extras.conversions[unitsResults[0].item] : 1,
-					score: resultScore,
-					word,
-				};
-			}
-		}
-	}
-
-	if (match) {
-		console.debug(`biomarker_detectUnits - ${JSON.stringify(match)}`);
-	}
-
-	return match;
-}
-
-// match integer or floating point with dot or comma + whitespace and nothing else
-const RE_FLOAT_VALUE = /^\s*(\d+([\.,]\d+)?)\s*$/;
-
-const RE_POSITIVE = /^\s*(positive|positivo)\s*$/;
-
-const RE_NEGATIVE = /^\s*(negative|negativo|assente|assenti)\s*$/;
-
-function biomarker_detectValue(biomarker: any, words: Word[]): any | null {
-	// first parse possible numerical results
-	for (const word of words) {
-		let text = word.text.trim();
-		if (text.length > 0) {
-			// is this a float number? (and nothing else)
-			let match = RE_FLOAT_VALUE.exec(text);
-			if (match) {
-				let value = Number.parseFloat(text.replace(',', '.'));
-				return { value, text, word, confidence: 1 };
-			}
-		}
-	}
-
-	// then parse potential string matches like positive or negative, etc.
-	for (const word of words) {
-		let text = word.text.trim().toLowerCase();
-
-		// is this a positive result?
-		if (RE_POSITIVE.exec(text)) {
-			return { value: 1, text, word, confidence: 1 };
-		}
-
-		// a negative result?
-		if (RE_NEGATIVE.exec(text)) {
-			return { value: 0, text, word, confidence: 1 };
-		}
-	}
-
-	return null;
-}
-
-const RE_RANGE_MIN_MAX = /^\s*\[?(\d+([\.,]\d+)?)\s+-?\s*(\d+([\.,]\d+)?)\s*\]?$/;
-
-function biomarker_detectRange(biomarker: any, words: Word[]): any | null {
-	// first parse possible numerical results
-	for (const word of words) {
-		let text = word.text.trim();
-		if (text.length > 0) {
-			// is this a range, eg: 3,40-12
-			let match = RE_RANGE_MIN_MAX.exec(text);
-			if (match && match[1] && match[3]) {
-				let min = Number.parseFloat(match[1].replace(",","."))
-				let max = Number.parseFloat(match[3].replace(",","."))
-				return { range: `${min}-${max}`, text, word, confidence: 1 };
-			}
-		}
-	}
-
-	return null;
-}
+const BIOMARKERS_SEARCH_CONFIDENCE = 0.7;
+const UNITS_SEARCH_CONFIDENCE = 0.7;
 
 async function biomarkers_detect(report: Report) {
-	const biomarkers = [];
+	const results = [];
+	const warnings: { message: string; pageNumber?: number, bbox?: BoundingBox }[] = [];
 
 	for (const page of report.pages) {
+		// determine which words on the page could be possible biomarker labels,
+		// measurement units, values and ranges of values. then see if these words
+		// are aligned. since biomarkers are often in table format, we should find
+		// that some of these are aligned for example on the left (for names) or
+		// on the right (for values) or center (ranges), etc.
+		const biomarkersWords = [];
+		const unitsWords = [];
+		const rangesWords = [];
+		const valuesWords = [];
+
+		for (const word of page.words) {
+			const biomarkersMatches = await searchBiomarkers(word.text, BIOMARKERS_SEARCH_CONFIDENCE);
+			if (biomarkersMatches.length > 0) {
+				biomarkersWords.push(word);
+			}
+			const unitsMatches = await searchUnits(word.text, UNITS_SEARCH_CONFIDENCE);
+			if (unitsMatches.length > 0) {
+				unitsWords.push(word);
+			}
+			if (parseValue(word.text)) {
+				valuesWords.push(word);
+			}
+			if (parseRange(word.text)) {
+				rangesWords.push(word);
+			}
+		}
+
+		// determine if each category of words has a main alignment (column)
+		// console.debug('unitsBoxes', unitsWords.map((w) => bboxToString(w.bbox)).join(', '));
+		// console.debug('rangesBoxes', rangesWords.map((w) => bboxToString(w.bbox)).join(', '));
+		const biomarkersAlign = getBoundingBoxAlignments(biomarkersWords.map((w) => w.bbox));
+		const unitsAlign = getBoundingBoxAlignments(unitsWords.map((w) => w.bbox));
+		const rangesAlign = getBoundingBoxAlignments(rangesWords.map((w) => w.bbox));
+		const valueAlign = getBoundingBoxAlignments(valuesWords.map((w) => w.bbox));
+
 		if (page.lines) {
 			for (const line of page.lines) {
 				if (line && line[0]) {
-					const res = await searchBiomarkers(line[0].text);
-					if (res && res.length > 0) {
-						// TODO threshold could be a dynamic value?
-						if (res[0].score < BIOMARKER_SCORE_THRESHOLD) {
-							const item = res[0].item;
-							const itemScore = 1.0 - res[0].score;
+					const biomarkersMatches = await searchBiomarkers(line[0].text, BIOMARKERS_SEARCH_CONFIDENCE);
+					if (biomarkersMatches.length > 0 && biomarkersMatches[0]) {
+						const item = biomarkersMatches[0].item;
+						const itemConfidence = biomarkersMatches[0].confidence;
+						const itemWord = line[0];
 
-							console.debug(`biomarkers_detect - text: ${line[0].text}, id: ${item.id}/${item.translations[0].name}, score: ${res[0].score}`);
+						console.debug(`biomarkers_detect - text: ${line[0].text}, id: ${item.id}/${item.translations[0].name}, confidence: ${itemConfidence}`);
 
-							// find compatible measurement unit on the same line
-							const units = biomarker_detectUnits(item, line);
+						// find compatible measurement unit on the same line
+						let units = null;
+						for (const word of line) {
+							const u = parseUnits(word.text, item);
+							if (u && (units == null || units.confidence < u.confidence)) {
+								units = { ...u, word };
+							}
+						}
 
-							const range = biomarker_detectRange(item, line);
-							if (range) {
-								console.debug(`range: ${range.range}`)
+						let range = null;
+						for (const word of line) {
+							const r = parseRange(word.text);
+							// TODO or this range is closer to range's column than previous match
+							if (r && range == null) {
+								range = { ...r, word };
+							}
+						}
+
+						let value = null;
+						for (const word of line) {
+							if (!range || word != range.word) {
+								const v = parseValue(word.text);
+								// TODO this value is closer to value's column than previous value
+								if (v && value == null) {
+									value = { ...v, word };
+								}
+							}
+						}
+
+						if (value != null) {
+							const bbox = mergeBoundingBoxes(line.map((w) => w.bbox))
+
+							// add entry for this biomarker results with units, etc
+							results.push({
+								biomarker: { id: item.id, name: item.translations[0].name },
+								value: value.value / (units?.conversion || 1),
+								units: item.units?.id,
+								extras: {
+									id: itemWord.text,
+									value: value.text,
+									units: units?.units,
+									conversion: units?.conversion,
+									range: range?.text,
+									pageNumber: page.pageNumber,
+									bbox
+								},
+							});
+
+							if (units == null) {
+								warnings.push({ message: `E002: Can't find units for biomarker: ${item.id}, text: ${itemWord.text}`, pageNumber: page.pageNumber, bbox });
 							}
 
-							const value = biomarker_detectValue(item, line);
-							if (value) {
-								console.debug(`value: ${value.value} '${value.text}'`);
+							// track that this biomarker has been consumed
+							const wordIdx: number = biomarkersWords.indexOf(itemWord);
+							if (wordIdx != -1) {
+								biomarkersWords.splice(wordIdx, 1);
 							}
-
-							// see if we can find a value
-							// see if we can find a suggested range
 						}
 					}
 				}
 			}
 		}
+
+		// create warnings for words that sounded like biomarkers but where not processed
+		biomarkersWords.forEach((word) => {
+			warnings.push({ message: `E001: '${word.text}' sounded like a biomarker but could not be processed`, pageNumber: page.pageNumber, bbox: word.bbox });
+		});
 	}
+
+	report.results = results;
+	if (warnings.length > 0) {
+		report.extras = { ...report.extras, warnings };
+	}
+
+	console.log(results);
 }
 
 export async function processAnnotations(report: Report) {
@@ -528,19 +526,8 @@ function htmlEntities(str?: string) {
 
 function bboxToSvg(bbox: BoundingBox, w: number, h: number, tooltip?: string) {
 	if (bbox) {
-		const v = [
-			(bbox[0].x * w).toFixed(4), // top left
-			(bbox[0].y * h).toFixed(4),
-			(bbox[1].x * w).toFixed(4), // top right
-			(bbox[1].y * h).toFixed(4),
-			(bbox[2].x * w).toFixed(4), // bottom right
-			(bbox[2].y * h).toFixed(4),
-			(bbox[3].x * w).toFixed(4), // bottom left
-			(bbox[3].y * h).toFixed(4),
-		];
-		return `<polygon points='${v[0]},${v[1]} ${v[2]},${v[3]} ${v[4]},${v[5]} ${v[6]},${v[7]}' class='word'><title>'${htmlEntities(
-			tooltip
-		)}'</title></polygon>\n`;
+		const points = bbox.map((p) => `${(p[0] * w).toFixed(2)},${(p[1] * h).toFixed(2)}`).join(' ');
+		return `<polygon points='${points}' class='word'><title>${htmlEntities(tooltip)}</title></polygon>\n`;
 	}
 	return '';
 }
