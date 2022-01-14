@@ -7,7 +7,8 @@ import fs from 'fs/promises';
 import Fuse from 'fuse.js';
 
 import { BoundingBox, getDistance, getAverage, getBoundingBoxSize, getBoundingBoxAlignments, bboxToString, mergeBoundingBoxes } from './geometry';
-import { searchBiomarkers, searchUnits, parseRange, parseValue, parseUnits } from './biomarkers';
+import { Unit } from "./units"
+import { searchBiomarkers, parseRange, parseValue, parseUnits } from './biomarkers';
 import { stringify } from 'querystring';
 
 function assert(value: unknown) {
@@ -353,7 +354,7 @@ const UNITS_SEARCH_CONFIDENCE = 0.7;
 
 async function biomarkers_detect(report: Report) {
 	const results = [];
-	const warnings: { message: string; pageNumber?: number, bbox?: BoundingBox }[] = [];
+	const warnings: { message: string; pageNumber?: number; bbox?: BoundingBox }[] = [];
 
 	for (const page of report.pages) {
 		// determine which words on the page could be possible biomarker labels,
@@ -371,7 +372,7 @@ async function biomarkers_detect(report: Report) {
 			if (biomarkersMatches.length > 0) {
 				biomarkersWords.push(word);
 			}
-			const unitsMatches = await searchUnits(word.text, UNITS_SEARCH_CONFIDENCE);
+			const unitsMatches = Unit.searchUnits(word.text);
 			if (unitsMatches.length > 0) {
 				unitsWords.push(word);
 			}
@@ -432,26 +433,40 @@ async function biomarkers_detect(report: Report) {
 						}
 
 						if (value != null) {
-							const bbox = mergeBoundingBoxes(line.map((w) => w.bbox))
+							const bbox = mergeBoundingBoxes(line.map((w) => w.bbox));
 
 							// add entry for this biomarker results with units, etc
-							results.push({
-								biomarker: { id: item.id, name: item.translations[0].name },
+							const result = {
+								id: item.id,
+								name: item.translations[0].name,
 								value: value.value / (units?.conversion || 1),
 								units: item.units?.id,
 								extras: {
-									id: itemWord.text,
-									value: value.text,
-									units: units?.units,
-									conversion: units?.conversion,
-									range: range?.text,
-									pageNumber: page.pageNumber,
-									bbox
+									original:
+										item.units && units && item.units.id != units.id
+											? {
+													units: units.id,
+													value: value.value,
+													conversion: units.conversion,
+											  }
+											: undefined,
+									ocr: {
+										name: itemWord.text,
+										value: value.word.text,
+										units: units?.word.text,
+										range: range?.word.text,
+										conversion: units?.conversion != 1 ? units?.conversion : undefined,
+									},
 								},
-							});
+							};
+							results.push(result);
 
 							if (units == null) {
-								warnings.push({ message: `E002: Can't find units for biomarker: ${item.id}, text: ${itemWord.text}`, pageNumber: page.pageNumber, bbox });
+								warnings.push({
+									message: `E002: Can't find units for biomarker: ${item.id}, text: ${itemWord.text}`,
+									pageNumber: page.pageNumber,
+									bbox,
+								});
 							}
 
 							// track that this biomarker has been consumed
@@ -467,7 +482,11 @@ async function biomarkers_detect(report: Report) {
 
 		// create warnings for words that sounded like biomarkers but where not processed
 		biomarkersWords.forEach((word) => {
-			warnings.push({ message: `E001: '${word.text}' sounded like a biomarker but could not be processed`, pageNumber: page.pageNumber, bbox: word.bbox });
+			warnings.push({
+				message: `E001: '${word.text}' sounded like a biomarker but could not be processed`,
+				pageNumber: page.pageNumber,
+				bbox: word.bbox,
+			});
 		});
 	}
 

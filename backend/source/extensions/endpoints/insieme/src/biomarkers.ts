@@ -3,12 +3,15 @@
 //
 
 import { getApiJson } from './utilities';
+import fs from 'fs/promises';
 
 // https://fusejs.io/api/methods.html
 import Fuse from 'fuse.js';
 
 // https://www.npmjs.com/package/tokenizr
 import Tokenizr from 'tokenizr';
+import { fstat } from 'fs';
+import { identifier } from '@babel/types';
 
 // static list of biomarkers used for search is derived from this query:
 // http://api.insieme.app/items/biomarkers?fields=id,description,translations.languageCode,translations.name,translations.description,translations.summary&limit=1000&filter={"status":{"_contains": "published"}}
@@ -62,31 +65,6 @@ export async function searchBiomarkers(query: string, confidence: number = 0.7):
 	}
 
 	const matches: any = biomarkersFuse.search(query);
-	return filterMatches(matches, confidence);
-}
-
-let unitsFuse: Fuse<any> | null = null;
-
-export async function searchUnits(text: string, confidence: number = 0.7): Promise<any> {
-	if (!unitsFuse) {
-		const unitsUrl = '/items/units?fields=id,name,extras&limit=1000';
-
-		let units = await getApiJson(unitsUrl);
-		units = units.data.map((unit: any) => {
-			return { id: unit.id, conversions: unit?.extras?.conversions && Object.keys(unit?.extras?.conversions) };
-		});
-
-		unitsFuse = new Fuse<any>(units, {
-			minMatchCharLength: 1,
-			includeScore: true,
-			keys: [
-				{ name: 'id', weight: 1.0 },
-				{ name: 'conversions', weight: 0.8 },
-			],
-		});
-	}
-
-	const matches = unitsFuse.search(text);
 	return filterMatches(matches, confidence);
 }
 
@@ -209,9 +187,9 @@ const UNITS_CONFIDENCE_THRESHOLD = 0.7;
  * @param biomarker A biomarker as returned by searchBiomarkers
  * @returns A unit and its optional conversion ratio to the biomarker's base unit
  */
-export function parseUnits(text: string, biomarker: any): { units: string; conversion: number; confidence: number } | null {
+export function parseUnits(text: string, biomarker: any): { id: string; conversion: number; confidence: number } | null {
 	if (!biomarker.units) {
-		console.warn(`parseUnits - biomarker: ${biomarker.id} does not have a unit of measurement set`)
+		console.warn(`parseUnits - biomarker: ${biomarker.id} does not have a unit of measurement set`);
 		return null;
 	}
 
@@ -229,7 +207,7 @@ export function parseUnits(text: string, biomarker: any): { units: string; conve
 		const confidence = 1 - (unitsMatches[0].score as number);
 		if (confidence > UNITS_CONFIDENCE_THRESHOLD) {
 			return {
-				units: unitsMatches[0].item,
+				id: unitsMatches[0].item,
 				conversion: unitsMatches[0].refIndex > 0 ? biomarker.units.extras.conversions[unitsMatches[0].item] : 1,
 				confidence,
 			};

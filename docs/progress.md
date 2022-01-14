@@ -27,3 +27,5 @@ Jan
 09/01 find lines in reports, add fuse.js for fuzzy search of biomarker names
 10/01 parser for biomarker units, corrected units in directus
 11/01 parser for biomarker ranges and values
+13/01 complete parsing of biomarker name, value, units and range
+14/01 refactoring, adding tests for complete reports
