@@ -1,67 +1,48 @@
 // scan.ts tests
-import { getGoogleVisionAnnotations, normalizeGoogleVisionAnnotations, annotationsToHtml, processAnnotations } from './reports';
-const { resolve } = require('path');
+
+import { resolve } from 'path';
 import fs from 'fs/promises';
+import { normalizeOcrAnnotations} from "./ocr"
+import { Report, annotationsToHtml } from './reports';
 
 // external APIs require longer timeouts
 jest.setTimeout(30 * 1000);
 
 const TEST_PDF_PATH = "./test/analisi02.pdf"
+function toArtifacts(path:string) {
+	return resolve(path).replace("/test/", "/test/artifacts/")
+}
 
-describe('reports tests', () => {
-	test('getGoogleVisionAnnotations (pdf from local file)', async () => {
-		const sourcePath = resolve(TEST_PDF_PATH);
-		const results = await getGoogleVisionAnnotations(sourcePath);
+describe('reports.ts', () => {
+	test('Report.processOcr', async () => {
+		// file created by ocr.test.ts
+		const sourcePath = toArtifacts(TEST_PDF_PATH + '.ocr.json');
+		const rawOcr = JSON.parse((await fs.readFile(sourcePath)).toString());
+		const pages = normalizeOcrAnnotations(rawOcr);
 
-		expect(results).toBeTruthy();
-		expect(results.length).toBe(2);
-		expect(results[0].fullTextAnnotation).toBeTruthy();
-		expect(results[0].fullTextAnnotation.text).toContain('AZIENDA OSPEDALIERA UNIVERSITARIA INTEGRATA');
-		expect(results[1].fullTextAnnotation).toBeTruthy();
+		expect(pages).toBeTruthy();
+		expect(pages.length).toBe(2);
 
-		const destinationPath = sourcePath + '.googlevision.json';
-		await fs.writeFile(destinationPath, JSON.stringify(results));
-	});
-
-	test('getGoogleVisionAnnotations (pdf from google storage)', async () => {
-		const sourceUri = 'gs://insieme/test/analisi02.pdf';
-		const results = await getGoogleVisionAnnotations(sourceUri);
-
-		expect(results).toBeTruthy();
-		expect(results.length).toBe(2);
-		expect(results[0].fullTextAnnotation).toBeTruthy();
-		expect(results[0].fullTextAnnotation.text).toContain('AZIENDA OSPEDALIERA UNIVERSITARIA INTEGRATA');
-		expect(results[1].fullTextAnnotation).toBeTruthy();
-	});
-
-	test('normalizeAnnotations', async () => {
-		const sourcePath = resolve(TEST_PDF_PATH + '.googlevision.json');
-		const googleAnnotations = JSON.parse((await fs.readFile(sourcePath)).toString());
-		const annotations = await normalizeGoogleVisionAnnotations(googleAnnotations);
-
-		expect(annotations).toBeTruthy();
-		expect(annotations.pages.length).toBe(2);
-
-		for (const page of annotations.pages) {
+		for (const page of pages) {
 			expect(page.width).toBe(594);
 			expect(page.height).toBe(841);
 			expect(page.pageNumber).toBeGreaterThan(0);
-			expect(page.languages[0]?.languageCode).toBe('it');
-			expect(page.languages[0]?.confidence).toBeGreaterThan(0.5);
+			expect(page.locale).toBe('it');
 			expect(page.words?.length).toBeGreaterThan(20);
 
-			const svg = annotationsToHtml(annotations, page.pageNumber);
-			const svgPath = resolve(TEST_PDF_PATH + `.p${page.pageNumber}-before.html`);
+			const svg = annotationsToHtml(page);
+			const svgPath = toArtifacts(TEST_PDF_PATH + `.page${page.pageNumber}.before.html`);
 			await fs.writeFile(svgPath, svg);
 		}
 
-		await processAnnotations(annotations);
-		const normalizedPath = resolve(TEST_PDF_PATH + '.normalized.json');
-		await fs.writeFile(normalizedPath, JSON.stringify(annotations));
+		const report = new Report(pages);
+		await report.analyzeOcr();
+		const normalizedPath = toArtifacts(TEST_PDF_PATH + '.report.json');
+		await fs.writeFile(normalizedPath, JSON.stringify(report));
 
-		for (const page of annotations.pages) {
-			const svg = annotationsToHtml(annotations, page.pageNumber);
-			const svgPath = resolve(TEST_PDF_PATH + `.p${page.pageNumber}-after.html`);
+		for (const page of report.pages) {
+			const svg = annotationsToHtml(page);
+			const svgPath = toArtifacts(TEST_PDF_PATH + `.page${page.pageNumber}.after.html`);
 			await fs.writeFile(svgPath, svg);
 		}
 	});

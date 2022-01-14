@@ -11,67 +11,13 @@ import { Unit } from "./units"
 import { searchBiomarkers, parseRange, parseValue, parseUnits } from './biomarkers';
 import { stringify } from 'querystring';
 
-function assert(value: unknown) {
-	if (!value) throw 'An error occoured';
-}
+import assert from "assert/strict"
+import { Page, Word} from "./ocr"
 
 //
 // Types
 //
 
-/** A word or short sentence detected by OCR in a page */
-export class Word {
-	constructor(text: string, bbox: BoundingBox, confidence: number) {
-		this.text = text;
-		this.bbox = bbox;
-		this.confidence = confidence;
-	}
-
-	/** Text in this word */
-	text: string;
-
-	/** Bounding box of this word or sentence */
-	bbox: BoundingBox;
-
-	/** OCR confidence in this text (0 to 1) */
-	confidence: number;
-}
-
-/** A language code and its detection confidence */
-export type Language = { languageCode: string; confidence: number };
-
-/** A page in a report document, contains OCR results, metadata, etc */
-export class Page {
-	constructor(pageNumber: number, width: number, height: number, languages: Language[], words: Word[], text: string) {
-		this.pageNumber = pageNumber;
-		this.width = width;
-		this.height = height;
-		this.languages = languages;
-		this.words = words;
-		this.text = text;
-	}
-
-	/** Page number in the document (1 based) */
-	pageNumber: number;
-
-	/** Languages detected by OCR and confidence */
-	languages: Language[];
-
-	/** Page's height in its own coordinate system */
-	width: number;
-
-	/** Page's height in its own coordinate system */
-	height: number;
-
-	/** Individual words or short sentences in the page */
-	words: Word[];
-
-	/** Words grouped by line */
-	lines?: Word[][];
-
-	/** Text in the page */
-	text: string;
-}
 
 /** A report inclusive of a number of pages, OCR information, metadata, etc */
 export class Report {
@@ -86,119 +32,49 @@ export class Report {
 	results?: any[];
 
 	extras?: any;
-}
 
-//
-// Google Vision
-//
+	//
+	// static methods
+	//
 
-// create a google vision client located in the EU
-const imageAnnotatorClientOptions = { apiEndpoint: 'eu-vision.googleapis.com' };
-const imageAnnotatorClient = new vision.ImageAnnotatorClient(imageAnnotatorClientOptions);
+	public async generateOcr(url: string, analyze: boolean = true) {
 
-/**
- * Calls Google Vision APIs to perform OCR on a pdf document and return annotations
- * @see https://console.cloud.google.com/apis/library/vision.googleapis.com
- * @see https://cloud.google.com/vision/docs/pdf
- * @param sourceUri Url of a pdf document in google storage gs:// or local path
- * @returns The response from Google Vision APIs
- */
-export async function getGoogleVisionAnnotations(sourceUri: string): Promise<any> {
-	try {
-		let inputConfig;
-		if (sourceUri.startsWith('gs://')) {
-			// reading a file stored in an accessible google storage bucket
-			// supported mime_types are: 'application/pdf' and 'image/tiff'
-			inputConfig = { mimeType: 'application/pdf', gcsSource: { uri: sourceUri } };
-		} else {
-			// read file from local filesystem and send along with request to annotate
-			inputConfig = { mimeType: 'application/pdf', content: await fs.readFile(sourceUri) };
-		}
 
-		// make the synchronous batch request, process the results
-		// just get the first result since only one file was sent
-		const [result] = await imageAnnotatorClient.batchAnnotateFiles({
-			requests: [{ inputConfig, features: [{ type: 'DOCUMENT_TEXT_DETECTION' }] }],
-		});
-
-		assert(result.responses[0].responses);
-		return result.responses[0].responses;
-	} catch (exception) {
-		console.error(exception);
-		throw exception;
-	}
-}
-
-/**
- * Takes a google vision fullTextAnnotation response and converts it to
- * an internal format that we use we block and paragraph information is
- * dropped and everything is converted to pages and words on page.
- * @param responses The original google vision response from getGoogleVisionAnnotations
- * @returns A normalized and simplified version of the annotations
- */
-export async function normalizeGoogleVisionAnnotations(responses: any): Promise<Report> {
-	const pages: Page[] = [];
-	for (const response of responses) {
-		assert(!response.error);
-		// https://cloud.google.com/vision/docs/reference/rest/v1/AnnotateImageResponse#TextAnnotation
-		const fullTextAnnotation = response.fullTextAnnotation;
-		const page = fullTextAnnotation.pages[0];
-		assert(fullTextAnnotation.pages.length == 1);
-		assert(page.width > 0 && page.height > 0);
-
-		const words: Word[] = [];
-		for (const block of page.blocks) {
-			// skipping blocks as they are huge and useless
-			for (const paragraph of block.paragraphs) {
-				// skipping paragraphs as they are quite large and useless
-				for (const word of paragraph.words) {
-					let word_text = '';
-					for (const symbol of word.symbols) {
-						word_text += symbol.text;
-
-						// is there a space or other break?
-						if (symbol.property?.detectedBreak) {
-							// https://cloud.google.com/vision/docs/reference/rest/v1/AnnotateImageResponse#breaktype
-							let breakSymbol = null;
-							switch (symbol.property?.detectedBreak?.type) {
-								case 'SPACE':
-									breakSymbol = ' ';
-									break;
-								case 'SURE_SPACE':
-									breakSymbol = '  ';
-									break;
-								case 'LINE_BREAK':
-									breakSymbol = '\n';
-									break;
-							}
-							if (breakSymbol) {
-								if (symbol.property.detectedBreak.isPrefix) word_text = breakSymbol + word_text;
-								else word_text += breakSymbol;
-							}
-						}
-					}
-
-					const bbox = word.boundingBox.normalizedVertices.map((a: any) => [a.x, a.y]);
-					words.push({ text: word_text, confidence: word.confidence, bbox: bbox });
-				}
-			}
-		}
-
-		pages.push({
-			pageNumber: response.context.pageNumber,
-			width: page.width,
-			height: page.height,
-			languages: page.property?.detectedLanguages.slice(0, 3), // keep only most likely
-			words: words,
-			text: fullTextAnnotation.text,
-		});
 	}
 
-	const report: Report = {
-		pages,
-	};
-
-	return report;
+	public async analyzeOcr() {
+		for (const page of this.pages) {
+			// remove words which aren't horizontal or are too small, etc
+			words_cleanup(page);
+			// merge words into short sentences or little chunks of text
+			words_merge(page);
+			// sort top to bottom, left to right
+			words_sort(page.words);
+		}
+	
+		// TODO find words that could match this document to an existing template
+		// look on all pages although we're most likely to find headers on page 1
+	
+		// find items on lines that seem to be formatted in a table-ish manner
+		for (const page of this.pages) {
+			// group words that are on the same line
+			const lines = words_groupByLine(page.words);
+			console.debug(`words_groupByLine - page: ${page.pageNumber} has ${lines.length} lines`);
+	
+			page.lines = lines;
+	
+			// see if the group of words contains:
+			// 1 item that could be mapped to a biomarker
+			// 1 item that could be mapped to a quantity
+			// 1 item that could be mapped to measurements units (optional)
+			// 1 item that could be mapped to suggested range (optional)
+	
+			// if biomarker name + quantity, add to list of possible biomarkers
+			// if has units and/or range, add properties, raise confidence
+		}
+	
+		await biomarkers_detect(this);
+	}
 }
 
 //
@@ -498,39 +374,6 @@ async function biomarkers_detect(report: Report) {
 	console.log(results);
 }
 
-export async function processAnnotations(report: Report) {
-	for (const page of report.pages) {
-		// remove words which aren't horizontal or are too small, etc
-		words_cleanup(page);
-		// merge words into short sentences or little chunks of text
-		words_merge(page);
-		// sort top to bottom, left to right
-		words_sort(page.words);
-	}
-
-	// TODO find words that could match this document to an existing template
-	// look on all pages although we're most likely to find headers on page 1
-
-	// find items on lines that seem to be formatted in a table-ish manner
-	for (const page of report.pages) {
-		// group words that are on the same line
-		const lines = words_groupByLine(page.words);
-		console.debug(`words_groupByLine - page: ${page.pageNumber} has ${lines.length} lines`);
-
-		page.lines = lines;
-
-		// see if the group of words contains:
-		// 1 item that could be mapped to a biomarker
-		// 1 item that could be mapped to a quantity
-		// 1 item that could be mapped to measurements units (optional)
-		// 1 item that could be mapped to suggested range (optional)
-
-		// if biomarker name + quantity, add to list of possible biomarkers
-		// if has units and/or range, add properties, raise confidence
-	}
-
-	await biomarkers_detect(report);
-}
 
 //
 // Render to html for debugging, development
@@ -557,7 +400,19 @@ function bboxToSvg(bbox: BoundingBox, w: number, h: number, tooltip?: string) {
  * @param pageNumber Page number is 1 based
  * @returns A simple html page with an svg image showing words in the document
  */
-export function annotationsToHtml(annotations: any, pageNumber?: number): string {
+export function annotationsToHtml(page: Page): string {
+	let svg = '';
+	for (const word of page.words) {
+		svg += bboxToSvg(word.bbox, page.width, page.height, word.text);
+	}
+
+	svg = `<html><head><style>.word {fill: red; fill-opacity: .1; stroke: green; stroke-width: 1; stroke-opacity: .5;}</style></head>\
+    <body><svg height='${page.height}' width='${page.width}'>${svg}</svg></body></html>`;
+	return svg;
+}
+
+
+export function annotationsToHtmlPFF(annotations: any, pageNumber?: number): string {
 	const page = annotations.pages[(pageNumber || 1) - 1];
 
 	let svg = '';

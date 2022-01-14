@@ -10,8 +10,6 @@ import Fuse from 'fuse.js';
 
 // https://www.npmjs.com/package/tokenizr
 import Tokenizr from 'tokenizr';
-import { fstat } from 'fs';
-import { identifier } from '@babel/types';
 
 // static list of biomarkers used for search is derived from this query:
 // http://api.insieme.app/items/biomarkers?fields=id,description,translations.languageCode,translations.name,translations.description,translations.summary&limit=1000&filter={"status":{"_contains": "published"}}

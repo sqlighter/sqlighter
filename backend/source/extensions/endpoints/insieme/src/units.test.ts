@@ -39,4 +39,6 @@ describe('units.ts', () => {
 			expect(u1.toString()).toBe('μg/L: micrograms per liter');
 		}
 	});
+
+	// TODO test conversions, add cross pairs, find missing conversions
 });

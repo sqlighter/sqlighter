@@ -1,5 +1,5 @@
 //
-// units.ts - measurement units data and utilities
+// units.ts - measurement units utilities
 //
 
 // https://fusejs.io/api/methods.html
@@ -33,6 +33,9 @@ export class Unit {
 	/** External references and related contents */
 	readonly references: string[];
 
+    //
+    // public methods
+    //
 
 	public toString(): string {
 		return `${this.id}: ${this.description}`;
