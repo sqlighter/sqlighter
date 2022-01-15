@@ -1,45 +1,50 @@
+//
 // biomarkers.ts test
-import { searchBiomarkers, parseRange, parseValue } from './biomarkers';
+//
+
+import assert from 'assert/strict';
+import { Biomarker, parseRange, parseValue } from './biomarkers';
+import { Translation } from './translations';
 
 // external APIs require longer timeouts
 jest.setTimeout(30 * 1000);
 
 describe('biomarkers.ts', () => {
 	test('searchBiomarkers (exact)', async () => {
-		let b1s = await searchBiomarkers('glucose');
+		let b1s = await Biomarker.searchBiomarkers('glucose');
 		expect(b1s[0]?.item.id).toBe('glucose');
-		expect(b1s[0]?.item.translations[0].name).toBe('Glucose');
+		expect(b1s[0]?.item.translations?.[0]?.name).toBe('Glucose');
 		expect(b1s[0]?.confidence).toBeCloseTo(1);
 
-		b1s = await searchBiomarkers('Glucosio');
+		b1s = await Biomarker.searchBiomarkers('Glucosio');
 		expect(b1s[0]?.item.id).toBe('glucose');
-		expect(b1s[0]?.item.translations[1].name).toBe('Glucosio');
+		expect(b1s[0]?.item.translations?.[1]?.name).toBe('Glucosio');
 		expect(b1s[0]?.confidence).toBeCloseTo(1);
 
-		b1s = await searchBiomarkers('Urine Glucose');
+		b1s = await Biomarker.searchBiomarkers('Urine Glucose');
 		expect(b1s[0]?.item.id).toBe('urine-glu');
-		expect(b1s[0]?.item.translations[0].name).toBe('Urine Glucose');
+		expect(b1s[0]?.item.translations?.[0]?.name).toBe('Urine Glucose');
 		expect(b1s[0]?.confidence).toBeCloseTo(1);
 	});
 
 	test('searchBiomarkers (partial)', async () => {
-		let b1s = await searchBiomarkers('Leucociti');
+		let b1s = await Biomarker.searchBiomarkers('Leucociti');
 		expect(b1s[0]?.item.id).toBe('wbc');
-		expect(b1s[0]?.item.translations[1].name).toBe('Leucociti (globuli bianchi)');
+		expect(b1s[0]?.item.translations?.[1]?.name).toBe('Leucociti (globuli bianchi)');
 		expect(b1s[0]?.confidence).toBeGreaterThan(0.5);
 	});
 
 	test('searchBiomarkers (mispelled)', async () => {
-		let b1s = await searchBiomarkers('glucoze'); // glucose
+		let b1s = await Biomarker.searchBiomarkers('glucoze'); // glucose
 		expect(b1s[0]?.item.id).toBe('glucose');
 
-		b1s = await searchBiomarkers('Glucoso'); // glucosio
+		b1s = await Biomarker.searchBiomarkers('Glucoso'); // glucosio
 		expect(b1s[0]?.item.id).toBe('glucose');
 
-		b1s = await searchBiomarkers('ematocreep'); // hematocrit
+		b1s = await Biomarker.searchBiomarkers('ematocreep'); // hematocrit
 		expect(b1s[0]?.item.id).toBe('hct');
 
-		b1s = await searchBiomarkers('Ematocripo'); // ematocrito
+		b1s = await Biomarker.searchBiomarkers('Ematocripo'); // ematocrito
 		expect(b1s[0]?.item.id).toBe('hct');
 
 		//	b1s = await searchBiomarkers('Leucocizi'); // leuco
@@ -79,24 +84,24 @@ describe('biomarkers.ts', () => {
 		expect(res && res.max).toBe(20);
 
 		res = parseRange('[10.632 - 20,34');
-		expect(res).toBeNull()
+		expect(res).toBeNull();
 
 		res = parseRange(' < 10.50 ');
 		expect(res && res.text).toBe('< 10.5');
-		expect(res && res.min).toBeUndefined()
-		expect(res && res.max).toBe(10.50);
+		expect(res && res.min).toBeUndefined();
+		expect(res && res.max).toBe(10.5);
 
 		res = parseRange('[ < 10.50] ');
 		expect(res && res.text).toBe('< 10.5');
-		expect(res && res.min).toBeUndefined()
-		expect(res && res.max).toBe(10.50);
+		expect(res && res.min).toBeUndefined();
+		expect(res && res.max).toBe(10.5);
 
 		res = parseRange('[ >=20,50] ');
 		expect(res && res.text).toBe('>= 20.5');
-		expect(res && res.min).toBe(20.50)
+		expect(res && res.min).toBe(20.5);
 		expect(res && res.max).toBeUndefined();
 
-		res = parseRange("Mickey")
+		res = parseRange('Mickey');
 		expect(res).toBeNull();
 	});
 
@@ -132,7 +137,7 @@ describe('biomarkers.ts', () => {
 		expect(res && res.value).toBe(0);
 		expect(res && res.text).toBe('negative');
 
-		res = parseValue("this is not a value")
+		res = parseValue('this is not a value');
 		expect(res).toBeNull();
 	});
 });

@@ -38,7 +38,7 @@ describe('reports.ts', () => {
 		const report = new Report(pages);
 		await report.analyzeOcr();
 		const normalizedPath = toArtifacts(TEST_PDF_PATH + '.report.json');
-		await fs.writeFile(normalizedPath, JSON.stringify(report));
+		await fs.writeFile(normalizedPath, JSON.stringify(report, null, '\t'));
 
 		for (const page of report.pages) {
 			const svg = annotationsToHtml(page);

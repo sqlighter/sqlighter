@@ -2,72 +2,153 @@
 // biomarkers.ts
 //
 
-import { getApiJson } from './utilities';
 import fs from 'fs/promises';
-
-// https://fusejs.io/api/methods.html
+import { resolve } from 'path';
 import Fuse from 'fuse.js';
-
-// https://www.npmjs.com/package/tokenizr
 import Tokenizr from 'tokenizr';
+import assert from 'assert/strict';
 
-// static list of biomarkers used for search is derived from this query:
-// http://api.insieme.app/items/biomarkers?fields=id,description,translations.languageCode,translations.name,translations.description,translations.summary&limit=1000&filter={"status":{"_contains": "published"}}
-//import biomarkers from './assets/biomarkers.json';
+import { getApiJson } from './utilities';
+import { Unit } from './units';
+import { Translation } from './translations';
 
-let biomarkersData: any = null;
-let biomarkersFuse: Fuse<any> | null = null;
+export const BIOMARKERS_SEARCH_CONFIDENCE = 0.7;
 
-function filterMatches<T>(matches: Fuse.FuseResult<T>[], confidence: number) {
-	if (matches) {
-		let filtered = matches.map((m: any) => {
-			return { item: m.item, confidence: 1 - (m.score as number) };
-		});
-		filtered = filtered.filter((m: any) => m.confidence > confidence);
-		return filtered;
-	}
+/** Additional information on a biomarker */
+class Extras {
+	/** Internal notes, not for user's display */
+	notes?: string;
 
-	return [];
+	/** Other synomims for this biomarker's name */
+	aliases?: string[];
+
+	/** Links that can be used to provide more information on this biomarker */
+	references?: string[];
+
+	/** Extras are open ended */
+	[key: string]: any;
 }
 
-/**
- * Will fuzzy search a biomarker by id, name or words in its description
- * and return a ranked list of possible biomarkers hits including a score
- * where zero is a perfect match.
- * @see https://fusejs.io/examples.html#extended-search
- * @param query A name to search (may contain wildcards for extended search)
- * @param confidence Will return only results exceeding this confidence level (0 to 1)
- * @returns A ranked list of possible matches
- */
-export async function searchBiomarkers(query: string, confidence: number = 0.7): Promise<{ item: any; confidence: number }[]> {
-	if (!biomarkersFuse) {
-		const biomarkersUrl =
-			'/items/biomarkers?fields=id,description,translations.languageCode,translations.name,translations.description,extras,units.id,units.description,units.extras,translations.summary&limit=1000'; //&filter={'status':{'_contains': 'published'}}"
-		//        const biomarkersUrl = "/items/biomarkers?fields=id,description,translations.languageCode,translations.name,translations.description,extras,units.id,units.description,units.extras,translations.summary&limit=1000&filter=%7B%27status%27%3A%7B%27_contains%27%3A%20%27published%27%7D%7D"
-
-		const biomarkers = await getApiJson(biomarkersUrl);
-		biomarkersData = biomarkers.data;
-
-		biomarkersFuse = new Fuse<any>(biomarkersData, {
-			minMatchCharLength: 4,
-			includeScore: true,
-			keys: [
-				{ name: 'id', weight: 1.0 },
-				{ name: 'translations.name', weight: 1.0 },
-				{ name: 'extras.aliases', weight: 1.0 },
-				{ name: 'translations.description', weight: 0.5 },
-				{ name: 'translations.summary', weight: 0.25 },
-				// TODO could have aliases for names, etc.
-			],
-		});
+/** A biomarker, eg. glucose, hdl, ldl, weight, etc */
+export class Biomarker {
+	constructor(id: string, units?: string, range?: string, translations?: Translation[], extras?: Extras) {
+		this.id = id;
+		this.translations = translations || [];
+		this.extras = extras || {};
+		this.range = range;
+		if (units) {
+			this.units = Unit.getUnit(units);
+		}
 	}
 
-	const matches: any = biomarkersFuse.search(query);
-	return filterMatches(matches, confidence);
+	/** Biomarker id, eg. glucose */
+	id: string;
+
+	/** Translations for biomaker's name, description and summary */
+	translations: Translation[];
+
+	/** Measurement unit for this biomarker */
+	units?: Unit;
+
+	/** Range for this biomarker, eg. 120-150 */
+	range?: string;
+
+	/** Additional information like references, etc */
+	extras: Extras;
+
+	//
+	// static methods
+	//
+
+	/** Returns list of all available biomarkers */
+	public static async getBiomarkers(): Promise<Biomarker[]> {
+		if (!_biomarkers) {
+			const biomarkersUrl =
+				'/items/biomarkers?fields=id,description,translations.languages_code,translations.name,translations.description,translations.summary,extras,units.id&limit=1000';
+			// &filter={'status':{'_contains': 'published'}}"
+			const biomarkers = await getApiJson(biomarkersUrl);
+
+			// save to disk during development so we can backup contents along with source
+			const biomarkersPath = resolve('./src/biomarkers.json');
+			await fs.writeFile(biomarkersPath, JSON.stringify(biomarkers.data, null, '\t'));
+
+			_biomarkers = {};
+			biomarkers.data.forEach((b: any) => {
+				assert(_biomarkers);
+				const biomarker = Biomarker.fromObject(b);
+				_biomarkers[biomarker.id] = biomarker;
+			});
+		}
+
+		return Object.values(_biomarkers);
+	}
+
+	/** Returns biomarker by id (or undefined) */
+	public static async getBiomarker(biomarkerId: string): Promise<Biomarker | undefined> {
+		if (_biomarkers) {
+			await Biomarker.getBiomarkers();
+		}
+		return _biomarkers && _biomarkers[biomarkerId];
+	}
+
+	/**
+	 * Will fuzzy search a biomarker by id, name or words in its description
+	 * and return a ranked list of possible biomarkers hits including a score
+	 * where zero is a perfect match.
+	 * @see https://fusejs.io/examples.html#extended-search
+	 * @param query A name to search (may contain wildcards for extended search)
+	 * @param confidence Will return only results exceeding this confidence level (0 to 1)
+	 * @returns A ranked list of possible matches
+	 */
+	public static async searchBiomarkers(
+		query: string,
+		confidence: number = BIOMARKERS_SEARCH_CONFIDENCE
+	): Promise<{ item: Biomarker; confidence: number }[]> {
+		if (!_biomarkersFuse) {
+			const biomarkers = await Biomarker.getBiomarkers();
+
+			// https://fusejs.io/api/methods.html
+			_biomarkersFuse = new Fuse<Biomarker>(Object.values(biomarkers), {
+				minMatchCharLength: 4,
+				includeScore: true,
+				keys: [
+					{ name: 'id', weight: 1.0 },
+					{ name: 'translations.name', weight: 1.0 },
+					{ name: 'extras.aliases', weight: 1.0 },
+					{ name: 'translations.description', weight: 0.5 },
+					{ name: 'translations.summary', weight: 0.25 },
+					// TODO could have aliases for names, etc.
+				],
+			});
+		}
+
+		const matches = _biomarkersFuse.search(query);
+		if (matches) {
+			let filtered = matches.map((m) => {
+				return { item: _biomarkers?.[m.item.id] as Biomarker, confidence: 1 - (m.score as number) };
+			});
+			filtered = filtered.filter((m) => m.confidence >= confidence);
+			return filtered;
+		}
+
+		return [];
+	}
+
+	/** Creates a biomarker from an object */
+	public static fromObject(obj: any): Biomarker {
+		assert(obj.id);
+		const translations = obj.translations && Translation.fromObject(obj.translations);
+		return new Biomarker(obj.id, obj.units?.id, obj.range, translations, obj.extras);
+	}
 }
+
+// static list of available biomarkers and search index
+let _biomarkers: { [key: string]: Biomarker } | undefined;
+let _biomarkersFuse: Fuse<any> | undefined;
 
 //
 // Parsing of biomarker values and ranges
+// https://www.npmjs.com/package/tokenizr
 //
 
 const lexer = new Tokenizr();

@@ -1,18 +1,15 @@
-// Imports the Google Cloud client libraries
+//
+// reports.ts
+//
 
-const vision = require('@google-cloud/vision').v1;
 import fs from 'fs/promises';
-
-// https://fusejs.io/api/methods.html
 import Fuse from 'fuse.js';
+import assert from "assert/strict"
 
 import { BoundingBox, getDistance, getAverage, getBoundingBoxSize, getBoundingBoxAlignments, bboxToString, mergeBoundingBoxes } from './geometry';
 import { Unit } from "./units"
-import { searchBiomarkers, parseRange, parseValue, parseUnits } from './biomarkers';
-import { stringify } from 'querystring';
-
-import assert from "assert/strict"
 import { Page, Word} from "./ocr"
+import { Biomarker, parseRange, parseValue, parseUnits } from './biomarkers';
 
 //
 // Types
@@ -244,7 +241,7 @@ async function biomarkers_detect(report: Report) {
 		const valuesWords = [];
 
 		for (const word of page.words) {
-			const biomarkersMatches = await searchBiomarkers(word.text, BIOMARKERS_SEARCH_CONFIDENCE);
+			const biomarkersMatches = await Biomarker.searchBiomarkers(word.text);
 			if (biomarkersMatches.length > 0) {
 				biomarkersWords.push(word);
 			}
@@ -271,13 +268,13 @@ async function biomarkers_detect(report: Report) {
 		if (page.lines) {
 			for (const line of page.lines) {
 				if (line && line[0]) {
-					const biomarkersMatches = await searchBiomarkers(line[0].text, BIOMARKERS_SEARCH_CONFIDENCE);
+					const biomarkersMatches = await Biomarker.searchBiomarkers(line[0].text, BIOMARKERS_SEARCH_CONFIDENCE);
 					if (biomarkersMatches.length > 0 && biomarkersMatches[0]) {
 						const item = biomarkersMatches[0].item;
 						const itemConfidence = biomarkersMatches[0].confidence;
 						const itemWord = line[0];
 
-						console.debug(`biomarkers_detect - text: ${line[0].text}, id: ${item.id}/${item.translations[0].name}, confidence: ${itemConfidence}`);
+						console.debug(`biomarkers_detect - text: ${line[0].text}, id: ${item.id}/${item.translations?.[0]?.name}, confidence: ${itemConfidence}`);
 
 						// find compatible measurement unit on the same line
 						let units = null;
@@ -314,7 +311,7 @@ async function biomarkers_detect(report: Report) {
 							// add entry for this biomarker results with units, etc
 							const result = {
 								id: item.id,
-								name: item.translations[0].name,
+								name: item.translations?.[0]?.name,
 								value: value.value / (units?.conversion || 1),
 								units: item.units?.id,
 								extras: {
