@@ -3,7 +3,7 @@
 import { resolve } from 'path';
 import fs from 'fs/promises';
 import { normalizeOcrAnnotations} from "./ocr"
-import { Report, annotationsToHtml } from './reports';
+import { Report } from './reports';
 
 // external APIs require longer timeouts
 jest.setTimeout(30 * 1000);
@@ -22,6 +22,7 @@ describe('reports.ts', () => {
 
 		expect(pages).toBeTruthy();
 		expect(pages.length).toBe(2);
+		const report = new Report(pages);
 
 		for (const page of pages) {
 			expect(page.width).toBe(594);
@@ -30,18 +31,17 @@ describe('reports.ts', () => {
 			expect(page.locale).toBe('it');
 			expect(page.words?.length).toBeGreaterThan(20);
 
-			const svg = annotationsToHtml(page);
+			const svg = report.toHtml(page.pageNumber);
 			const svgPath = toArtifacts(TEST_PDF_PATH + `.page${page.pageNumber}.before.html`);
 			await fs.writeFile(svgPath, svg);
 		}
 
-		const report = new Report(pages);
 		await report.analyzeOcr();
 		const normalizedPath = toArtifacts(TEST_PDF_PATH + '.report.json');
-		await fs.writeFile(normalizedPath, JSON.stringify(report, null, '\t'));
+		await fs.writeFile(normalizedPath, JSON.stringify(report, null, '  '));
 
 		for (const page of report.pages) {
-			const svg = annotationsToHtml(page);
+			const svg = report.toHtml(page.pageNumber);
 			const svgPath = toArtifacts(TEST_PDF_PATH + `.page${page.pageNumber}.after.html`);
 			await fs.writeFile(svgPath, svg);
 		}

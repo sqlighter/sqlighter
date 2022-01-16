@@ -2,11 +2,11 @@
 // ocr.ts - optical character recognition via Google Vision
 //
 
-import { strict as assert } from 'assert';
+import assert from 'assert/strict';
 const vision = require('@google-cloud/vision').v1;
 import fs from 'fs/promises';
-import { BoundingBox, getDistance, getAverage, getBoundingBoxSize, getBoundingBoxAlignments, bboxToString, mergeBoundingBoxes } from './geometry';
 
+import { BoundingBox, getDistance, getAverage, getBoundingBoxSize, getBoundingBoxAlignments, bboxToString, mergeBoundingBoxes } from './geometry';
 
 /** A word or short sentence detected by OCR in a page */
 export class Word {
@@ -24,6 +24,18 @@ export class Word {
 
 	/** OCR confidence in this text (0 to 1) */
 	confidence: number;
+}
+
+/** Returns true if both words can be considered part of the same line */
+function words_areOnSameLine(word1: Word, word2: Word): boolean {
+	if (word1 && word2) {
+		const yMiddle = getAverage(...word1.bbox)[1];
+
+		// TODO instead of considering words to be on horizontal lines, could deal with lines at an angle
+		return word2.bbox[0][1] < yMiddle && word2.bbox[1][1] < yMiddle && word2.bbox[2][1] > yMiddle && word2.bbox[3][1] > yMiddle;
+	}
+
+	return false;
 }
 
 /** A page in a report document, contains OCR results, metadata, etc */
@@ -57,6 +69,137 @@ export class Page {
 
 	/** Locale for this page, eg. en_US, it_IT */
 	locale?: string;
+
+	//
+	// public methods
+	//
+
+	/** Remove words that are not horizontal, too large, too small, etc */
+	public cleanupWords(): number {
+		let cleaned = 0;
+		for (let i = 0; i < this.words.length; i++) {
+			const word = this.words[i];
+			if (word) {
+				const wordHeight = getBoundingBoxSize(word.bbox).height;
+				const leftMidY = word.bbox[0][1] + word.bbox[3][1];
+				const rightMidY = word.bbox[1][1] + word.bbox[2][1];
+
+				// TODO could look at angle rather than absolute difference
+				if (Math.abs(leftMidY - rightMidY) > wordHeight * 0.5) {
+					console.debug(`cleanupWords - removing '${word.text}' because word is not horizontal`);
+					cleaned++;
+					this.words.splice(i, 1);
+					i--;
+				}
+			}
+		}
+
+		console.debug(`cleanupWords - page: ${this.pageNumber}, cleaned: ${cleaned} words`);
+		return cleaned;
+	}
+
+	/**
+	 * Merge words in a sentence or sequence into a single word
+	 * @param page Annotations for a specific page
+	 * @returns Number of words that have been merged
+	 */
+	public mergeWords(): number {
+		if (!this.words) {
+			console.warn(`mergeWords - page ${this} has no words`, this);
+			return 0;
+		}
+
+		let merged = 0;
+		for (let i = 0; i < this.words.length; i++) {
+			const word1 = this.words[i];
+			if (word1) {
+				const lineHeight = getDistance(word1.bbox[1], word1.bbox[2]);
+				const xTolerance = lineHeight * 0.8; // distance between words up to 80% of line height
+
+				for (let j = 0; j < this.words.length; j++) {
+					if (i != j) {
+						const word2 = this.words[j];
+						if (word2) {
+							const canMerge =
+								// words on the same line?
+								words_areOnSameLine(word1, word2) &&
+								// horizontal distance between top of words within range?
+								getDistance(word1.bbox[1], word2.bbox[0]) < xTolerance &&
+								// horizontal distance between bottom of words within range?
+								getDistance(word1.bbox[2], word2.bbox[3]) < xTolerance;
+
+							if (canMerge) {
+								// weighted confidence level
+								const l1 = word1.text.length;
+								const l2 = word2.text.length;
+								word1.confidence = (word1.confidence * l1 + word2.confidence * l2) / (l1 + l2);
+
+								// merge words
+								word1.text += word2.text;
+
+								// enlarge word's bounding box to include second word
+								word1.bbox[1] = word2.bbox[1];
+								word1.bbox[2] = word2.bbox[2];
+
+								// remove second word
+								this.words.splice(j, 1);
+
+								// reprocess first word
+								i--;
+								merged++;
+								break;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		// remove whitespace after joining
+		for (const word of this.words) {
+			word.text = word.text.trim();
+		}
+
+		console.debug(`mergeWords - page: ${this.pageNumber}, merged: ${merged} words`);
+		return merged;
+	}
+
+	/** Sort words top to bottom and left to right */
+	public sortWords() {
+		this.words.sort((word1, word2) => {
+			if (words_areOnSameLine(word1, word2)) {
+				// sort left to right, consider only left edge of bbox
+				const x1 = (word1.bbox[0][0] + word1.bbox[3][0]) / 2;
+				const x2 = (word2.bbox[0][0] + word2.bbox[3][0]) / 2;
+				return x1 - x2;
+			}
+
+			// sort top to bottom if not on the same line
+			return getAverage(...word1.bbox)[1] - getAverage(...word2.bbox)[1];
+		});
+	}
+
+	/** Group words (or small fragments) into arrays that belong to the same line on the document */
+	public groupWordsIntoLines() {
+		let words = [...this.words];
+		const lines = Array<Word[]>();
+		for (let i = 0; i < words.length; i++) {
+			const word1 = words[i];
+			if (word1) {
+				const line = Array<Word>(word1);
+				lines.push(line);
+				for (let j = i + 1; j < words.length; j++) {
+					const word2 = words[j];
+					if (word2 && words_areOnSameLine(word1, word2)) {
+						line.push(word2);
+						words.splice(j, 1);
+						j--;
+					}
+				}
+			}
+		}
+		console.debug(`groupWordsIntoLines - page: ${this.pageNumber} has ${lines.length} lines`);
+	}
 }
 
 //
@@ -76,7 +219,7 @@ const imageAnnotatorClient = new vision.ImageAnnotatorClient(imageAnnotatorClien
  * @param sourceUri Url of a pdf document in google storage gs:// or local path
  * @returns An array of Page objects, plus the raw response from Google Vision APIs
  */
-export async function getOcrAnnotations(sourceUri: string): Promise<{ pages: Page[]; rawOcr: any }> {
+export async function getOcrAnnotations(sourceUri: string): Promise<{ pages: Page[]; rawOcr: any; extras?: any }> {
 	try {
 		let inputConfig;
 		if (sourceUri.startsWith('gs://')) {
@@ -96,7 +239,7 @@ export async function getOcrAnnotations(sourceUri: string): Promise<{ pages: Pag
 
 		const rawOcr = result.responses[0].responses;
 		const pages = normalizeOcrAnnotations(rawOcr);
-		return { pages, rawOcr };
+		return { pages, rawOcr, extras: null };
 	} catch (exception) {
 		console.error(`getOcrAnnotations('${sourceUri}') - exception: ${exception}`, exception);
 		throw exception;
@@ -115,19 +258,19 @@ export function normalizeOcrAnnotations(rawOcr: any): Page[] {
 	for (const response of rawOcr) {
 		assert(!response.error, `OCR returned an error: ${response.error}`);
 		// https://cloud.google.com/vision/docs/reference/rest/v1/AnnotateImageResponse#TextAnnotation
-		const fullTextAnnotation = response.fullTextAnnotation;
-		const page = fullTextAnnotation.pages[0];
-		assert(fullTextAnnotation.pages.length == 1, 'OCR returned zero pages');
-		assert(page.width > 0 && page.height > 0, 'OCR returned empty pages');
+		const ocrAnnotations = response.fullTextAnnotation;
+		const ocrPage = ocrAnnotations.pages[0];
+		assert(ocrAnnotations.pages.length == 1, 'OCR returned zero pages');
+		assert(ocrPage.width > 0 && ocrPage.height > 0, 'OCR returned empty pages');
 
 		const words: Word[] = [];
-		for (const block of page.blocks) {
+		for (const ocrBlock of ocrPage.blocks) {
 			// skipping blocks as they are huge and useless
-			for (const paragraph of block.paragraphs) {
+			for (const ocrParagraph of ocrBlock.paragraphs) {
 				// skipping paragraphs as they are quite large and useless
-				for (const word of paragraph.words) {
+				for (const ocrWord of ocrParagraph.words) {
 					let word_text = '';
-					for (const symbol of word.symbols) {
+					for (const symbol of ocrWord.symbols) {
 						word_text += symbol.text;
 
 						// is there a space or other break?
@@ -152,23 +295,16 @@ export function normalizeOcrAnnotations(rawOcr: any): Page[] {
 						}
 					}
 
-					const bbox = word.boundingBox.normalizedVertices.map((a: any) => [a.x, a.y]);
-					words.push({ text: word_text, confidence: word.confidence, bbox: bbox });
+					const bbox = ocrWord.boundingBox.normalizedVertices.map((a: any) => [a.x, a.y]);
+					words.push({ text: word_text, confidence: ocrWord.confidence, bbox: bbox });
 				}
 			}
 		}
 
 		// locale detected with highest confidence on page
-		const locale = page.property?.detectedLanguages[0].languageCode
-
-		pages.push({
-			pageNumber: response.context.pageNumber,
-			width: page.width,
-			height: page.height,
-			words: words,
-			text: fullTextAnnotation.text,
-			locale
-		});
+		const locale = ocrPage.property?.detectedLanguages[0].languageCode;
+		const page = new Page(response.context.pageNumber, ocrPage.width, ocrPage.height, words, ocrAnnotations.text, locale);
+		pages.push(page);
 	}
 
 	return pages;

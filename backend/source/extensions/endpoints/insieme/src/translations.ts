@@ -24,8 +24,8 @@ export class Translation {
 
 	public static fromObject(translations: any[]): Translation[] {
 		return translations.map((t) => {
-			const { languages_code, id, ...keys } = t;
-			return new Translation({ locale: languages_code, ...keys });
+			const { languages_code, locale, id, ...keys } = t;
+			return new Translation({ locale: languages_code || locale, ...keys });
 		});
 	}
 }

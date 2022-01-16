@@ -63,6 +63,7 @@ export class Biomarker {
 	/** Returns list of all available biomarkers */
 	public static async getBiomarkers(): Promise<Biomarker[]> {
 		if (!_biomarkers) {
+      // TODO move url in environment variable, load from file when not configured
 			const biomarkersUrl =
 				'/items/biomarkers?fields=id,description,translations.languages_code,translations.name,translations.description,translations.summary,extras,units.id&limit=1000';
 			// &filter={'status':{'_contains': 'published'}}"
