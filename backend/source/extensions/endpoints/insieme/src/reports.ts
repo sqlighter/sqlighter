@@ -7,7 +7,8 @@ import assert from 'assert/strict';
 import { BoundingBox, getBoundingBoxAlignments, mergeBoundingBoxes } from './geometry';
 import { Unit } from './units';
 import { Page, Ocr } from './ocr';
-import { Biomarker, parseRange, parseValue, parseUnits } from './biomarkers';
+import { Biomarker } from './biomarkers';
+import { Metadata } from './metadata';
 
 //
 // Types
@@ -15,10 +16,10 @@ import { Biomarker, parseRange, parseValue, parseUnits } from './biomarkers';
 
 /** A report inclusive of a number of pages, OCR information, metadata, etc */
 export class Report {
-	constructor(pages: Page[], extras?: any) {
+	constructor(pages: Page[], metadata?: any) {
     assert(pages && pages.length > 0, "Report - pages is empty")
 		this.pages = pages;
-		this.extras = extras;
+		this.metadata = new Metadata(metadata);
 	}
 
 	/** Pages in this report with fulltext, OCR words, etc */
@@ -27,7 +28,8 @@ export class Report {
 	/** Biomarker results detected in this report */
 	results?: any[];
 
-	extras?: any;
+  /** Additional metadata on this report */
+	metadata: Metadata;
 
 	//
 	// methods
@@ -58,10 +60,10 @@ export class Report {
 				if (unitsMatches.length > 0) {
 					unitsWords.push(word);
 				}
-				if (parseValue(word.text)) {
+				if (Biomarker.parseValue(word.text)) {
 					valuesWords.push(word);
 				}
-				if (parseRange(word.text)) {
+				if (Biomarker.parseRange(word.text)) {
 					rangesWords.push(word);
 				}
 			}
@@ -90,7 +92,7 @@ export class Report {
 							// find compatible measurement unit on the same line
 							let units = null;
 							for (const word of line) {
-								const u = parseUnits(word.text, item);
+								const u = Biomarker.parseUnits(word.text, item);
 								if (u && (units == null || units.confidence < u.confidence)) {
 									units = { ...u, word };
 								}
@@ -98,7 +100,7 @@ export class Report {
 
 							let range = null;
 							for (const word of line) {
-								const r = parseRange(word.text);
+								const r = Biomarker.parseRange(word.text);
 								// TODO or this range is closer to range's column than previous match
 								if (r && range == null) {
 									range = { ...r, word };
@@ -108,7 +110,7 @@ export class Report {
 							let value = null;
 							for (const word of line) {
 								if (!range || word != range.word) {
-									const v = parseValue(word.text);
+									const v = Biomarker.parseValue(word.text);
 									// TODO this value is closer to value's column than previous value
 									if (v && value == null) {
 										value = { ...v, word };
@@ -176,7 +178,7 @@ export class Report {
 
 		this.results = results;
 		if (warnings.length > 0) {
-			this.extras = { ...this.extras, warnings };
+			this.metadata = { ...this.metadata, warnings };
 		}
 
 		console.log(results);
@@ -231,7 +233,7 @@ export class Report {
    * @returns A report with OCR annotations and possibly biomarker results and more metadata
    */
 	public static async fromOcr(sourceUri: string, analyze: boolean = true): Promise<Report> {
-		const { pages, extras } = await Ocr.scanPages(sourceUri);
+		const { pages, metadata: extras } = await Ocr.scanPages(sourceUri);
 		const report = new Report(pages, extras);
 		if (analyze) {
 			await report.analyzeOcr();

@@ -6,7 +6,8 @@ import assert from 'assert/strict';
 const vision = require('@google-cloud/vision').v1;
 import fs from 'fs/promises';
 
-import { BoundingBox, getDistance, getAverage, getBoundingBoxSize, getBoundingBoxAlignments, bboxToString, mergeBoundingBoxes } from './geometry';
+import { BoundingBox, getDistance, getAverage, getBoundingBoxSize } from './geometry';
+import { Metadata } from './metadata';
 
 /** A word or short sentence detected by OCR in a page */
 export class Word {
@@ -220,8 +221,9 @@ export class Ocr {
 	 * @param sourceUri Url of a pdf document in google storage gs:// or local path
 	 * @returns An array of Page objects, plus the raw response from Google Vision APIs
 	 */
-	static async scanPages(sourceUri: string): Promise<{ pages: Page[]; rawOcr: any; extras?: any }> {
+	static async scanPages(sourceUri: string): Promise<{ pages: Page[]; rawOcr: any; metadata: Metadata }> {
 		try {
+      console.time("scanPages")
 			let inputConfig;
 			if (sourceUri.startsWith('gs://')) {
 				// reading a file stored in an accessible google storage bucket
@@ -237,10 +239,13 @@ export class Ocr {
 			const [result] = await imageAnnotatorClient.batchAnnotateFiles({
 				requests: [{ inputConfig, features: [{ type: 'DOCUMENT_TEXT_DETECTION' }] }],
 			});
+      console.timeEnd("scanPages")
 
 			const rawOcr = result.responses[0].responses;
-			const pages = Ocr.normalizeAnnotations(rawOcr);
-			return { pages, rawOcr, extras: null };
+      const pages = Ocr.normalizeAnnotations(rawOcr);
+			const metadata = new Metadata({ ocr: { sourceUri, ...imageAnnotatorClientOptions } });
+
+			return { pages, rawOcr, metadata };
 		} catch (exception) {
 			console.error(`getOcrAnnotations('${sourceUri}') - exception: ${exception}`, exception);
 			throw exception;

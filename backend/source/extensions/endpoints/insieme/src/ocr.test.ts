@@ -16,14 +16,17 @@ function toArtifacts(path:string) {
 
 describe('ocr.ts', () => {
 	test('getOcrAnnotations (pdf from local file)', async () => {
-		const sourcePath = resolve(TEST_PDF_PATH);
-		const { pages, rawOcr, extras } = await Ocr.scanPages(sourcePath);
+		const sourceUri = resolve(TEST_PDF_PATH);
+		const { pages, rawOcr, metadata } = await Ocr.scanPages(sourceUri);
 
 		expect(rawOcr).toBeTruthy();
 		expect(rawOcr.length).toBe(2);
 		expect(rawOcr[0].fullTextAnnotation).toBeTruthy();
 		expect(rawOcr[0].fullTextAnnotation.text).toContain('AZIENDA OSPEDALIERA UNIVERSITARIA INTEGRATA');
 		expect(rawOcr[1].fullTextAnnotation).toBeTruthy();
+
+    expect(metadata.ocr?.sourceUri).toBe(sourceUri)
+    expect(metadata.ocr?.apiEndpoint).toBe("eu-vision.googleapis.com")
 
 		expect(pages).toBeTruthy();
 		expect(pages.length).toBe(2);
@@ -34,19 +37,22 @@ describe('ocr.ts', () => {
 			expect(page.locale).toBe('it');
 		}
 
-		const destinationPath = toArtifacts(sourcePath + '.ocr.json');
+		const destinationPath = toArtifacts(sourceUri + '.ocr.json');
 		await fs.writeFile(destinationPath, JSON.stringify(rawOcr));
 	});
 
 	test('getOcrAnnotations (pdf from google storage)', async () => {
 		const sourceUri = 'gs://insieme/test/analisi02.pdf';
-		const { pages, rawOcr, extras } = await Ocr.scanPages(sourceUri);
+		const { pages, rawOcr, metadata } = await Ocr.scanPages(sourceUri);
 
 		expect(rawOcr).toBeTruthy();
 		expect(rawOcr.length).toBe(2);
 		expect(rawOcr[0].fullTextAnnotation).toBeTruthy();
 		expect(rawOcr[0].fullTextAnnotation.text).toContain('AZIENDA OSPEDALIERA UNIVERSITARIA INTEGRATA');
 		expect(rawOcr[1].fullTextAnnotation).toBeTruthy();
+
+    expect(metadata.ocr?.sourceUri).toBe(sourceUri)
+    expect(metadata.ocr?.apiEndpoint).toBe("eu-vision.googleapis.com")
 
 		expect(pages).toBeTruthy();
 		expect(pages.length).toBe(2);
