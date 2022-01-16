@@ -6,7 +6,7 @@ import assert from 'assert/strict';
 
 import { BoundingBox, getBoundingBoxAlignments, mergeBoundingBoxes } from './geometry';
 import { Unit } from './units';
-import { Page, getOcrAnnotations } from './ocr';
+import { Page, Ocr } from './ocr';
 import { Biomarker, parseRange, parseValue, parseUnits } from './biomarkers';
 
 //
@@ -231,7 +231,7 @@ export class Report {
    * @returns A report with OCR annotations and possibly biomarker results and more metadata
    */
 	public static async fromOcr(sourceUri: string, analyze: boolean = true): Promise<Report> {
-		const { pages, extras } = await getOcrAnnotations(sourceUri);
+		const { pages, extras } = await Ocr.scanPages(sourceUri);
 		const report = new Report(pages, extras);
 		if (analyze) {
 			await report.analyzeOcr();

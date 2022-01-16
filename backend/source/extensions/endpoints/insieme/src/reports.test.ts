@@ -2,7 +2,7 @@
 
 import { resolve } from 'path';
 import fs from 'fs/promises';
-import { normalizeOcrAnnotations} from "./ocr"
+import { Ocr }  from "./ocr"
 import { Report } from './reports';
 
 // external APIs require longer timeouts
@@ -14,11 +14,11 @@ function toArtifacts(path:string) {
 }
 
 describe('reports.ts', () => {
-	test('Report.processOcr', async () => {
+	test('Report.analyzeOcr', async () => {
 		// file created by ocr.test.ts
 		const sourcePath = toArtifacts(TEST_PDF_PATH + '.ocr.json');
 		const rawOcr = JSON.parse((await fs.readFile(sourcePath)).toString());
-		const pages = normalizeOcrAnnotations(rawOcr);
+		const pages = Ocr.normalizeAnnotations(rawOcr);
 
 		expect(pages).toBeTruthy();
 		expect(pages.length).toBe(2);

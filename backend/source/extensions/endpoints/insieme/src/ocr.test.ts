@@ -4,7 +4,7 @@
 
 import { resolve } from 'path';
 import fs from 'fs/promises';
-import { getOcrAnnotations } from './ocr';
+import { Ocr } from './ocr';
 
 // external APIs require longer timeouts
 jest.setTimeout(30 * 1000);
@@ -17,7 +17,7 @@ function toArtifacts(path:string) {
 describe('ocr.ts', () => {
 	test('getOcrAnnotations (pdf from local file)', async () => {
 		const sourcePath = resolve(TEST_PDF_PATH);
-		const { pages, rawOcr } = await getOcrAnnotations(sourcePath);
+		const { pages, rawOcr, extras } = await Ocr.scanPages(sourcePath);
 
 		expect(rawOcr).toBeTruthy();
 		expect(rawOcr.length).toBe(2);
@@ -40,7 +40,7 @@ describe('ocr.ts', () => {
 
 	test('getOcrAnnotations (pdf from google storage)', async () => {
 		const sourceUri = 'gs://insieme/test/analisi02.pdf';
-		const { pages, rawOcr } = await getOcrAnnotations(sourceUri);
+		const { pages, rawOcr, extras } = await Ocr.scanPages(sourceUri);
 
 		expect(rawOcr).toBeTruthy();
 		expect(rawOcr.length).toBe(2);

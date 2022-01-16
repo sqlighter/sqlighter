@@ -210,102 +210,104 @@ export class Page {
 const imageAnnotatorClientOptions = { apiEndpoint: 'eu-vision.googleapis.com' };
 const imageAnnotatorClient = new vision.ImageAnnotatorClient(imageAnnotatorClientOptions);
 
-/**
- * Calls Google Vision APIs to perform OCR on a pdf document and return annotations
- * with pages and words on pages plus some document level metadata. Also returns
- * the raw response from Google Vision which can be used for debugging.
- * @see https://console.cloud.google.com/apis/library/vision.googleapis.com
- * @see https://cloud.google.com/vision/docs/pdf
- * @param sourceUri Url of a pdf document in google storage gs:// or local path
- * @returns An array of Page objects, plus the raw response from Google Vision APIs
- */
-export async function getOcrAnnotations(sourceUri: string): Promise<{ pages: Page[]; rawOcr: any; extras?: any }> {
-	try {
-		let inputConfig;
-		if (sourceUri.startsWith('gs://')) {
-			// reading a file stored in an accessible google storage bucket
-			// supported mime_types are: 'application/pdf' and 'image/tiff'
-			inputConfig = { mimeType: 'application/pdf', gcsSource: { uri: sourceUri } };
-		} else {
-			// read file from local filesystem and send along with request to annotate
-			inputConfig = { mimeType: 'application/pdf', content: await fs.readFile(sourceUri) };
+export class Ocr {
+	/**
+	 * Calls Google Vision APIs to perform OCR on a pdf document and return annotations
+	 * with pages and words on pages plus some document level metadata. Also returns
+	 * the raw response from Google Vision which can be used for debugging.
+	 * @see https://console.cloud.google.com/apis/library/vision.googleapis.com
+	 * @see https://cloud.google.com/vision/docs/pdf
+	 * @param sourceUri Url of a pdf document in google storage gs:// or local path
+	 * @returns An array of Page objects, plus the raw response from Google Vision APIs
+	 */
+	static async scanPages(sourceUri: string): Promise<{ pages: Page[]; rawOcr: any; extras?: any }> {
+		try {
+			let inputConfig;
+			if (sourceUri.startsWith('gs://')) {
+				// reading a file stored in an accessible google storage bucket
+				// supported mime_types are: 'application/pdf' and 'image/tiff'
+				inputConfig = { mimeType: 'application/pdf', gcsSource: { uri: sourceUri } };
+			} else {
+				// read file from local filesystem and send along with request to annotate
+				inputConfig = { mimeType: 'application/pdf', content: await fs.readFile(sourceUri) };
+			}
+
+			// make the synchronous batch request, process the results
+			// just get the first result since only one file was sent
+			const [result] = await imageAnnotatorClient.batchAnnotateFiles({
+				requests: [{ inputConfig, features: [{ type: 'DOCUMENT_TEXT_DETECTION' }] }],
+			});
+
+			const rawOcr = result.responses[0].responses;
+			const pages = Ocr.normalizeAnnotations(rawOcr);
+			return { pages, rawOcr, extras: null };
+		} catch (exception) {
+			console.error(`getOcrAnnotations('${sourceUri}') - exception: ${exception}`, exception);
+			throw exception;
 		}
-
-		// make the synchronous batch request, process the results
-		// just get the first result since only one file was sent
-		const [result] = await imageAnnotatorClient.batchAnnotateFiles({
-			requests: [{ inputConfig, features: [{ type: 'DOCUMENT_TEXT_DETECTION' }] }],
-		});
-
-		const rawOcr = result.responses[0].responses;
-		const pages = normalizeOcrAnnotations(rawOcr);
-		return { pages, rawOcr, extras: null };
-	} catch (exception) {
-		console.error(`getOcrAnnotations('${sourceUri}') - exception: ${exception}`, exception);
-		throw exception;
 	}
-}
 
-/**
- * Takes a google vision fullTextAnnotation response and converts it to
- * an internal format that we use where block and paragraph information is
- * dropped and everything is converted to pages and words on pages.
- * @param rawOcr The original google vision response from getOcrAnnotations
- * @returns A normalized and simplified version of the annotations
- */
-export function normalizeOcrAnnotations(rawOcr: any): Page[] {
-	const pages: Page[] = [];
-	for (const response of rawOcr) {
-		assert(!response.error, `OCR returned an error: ${response.error}`);
-		// https://cloud.google.com/vision/docs/reference/rest/v1/AnnotateImageResponse#TextAnnotation
-		const ocrAnnotations = response.fullTextAnnotation;
-		const ocrPage = ocrAnnotations.pages[0];
-		assert(ocrAnnotations.pages.length == 1, 'OCR returned zero pages');
-		assert(ocrPage.width > 0 && ocrPage.height > 0, 'OCR returned empty pages');
+	/**
+	 * Takes a google vision fullTextAnnotation response and converts it to
+	 * an internal format that we use where block and paragraph information is
+	 * dropped and everything is converted to pages and words on pages.
+	 * @param rawOcr The original google vision response from getOcrAnnotations
+	 * @returns A normalized and simplified version of the annotations
+	 */
+	public static normalizeAnnotations(rawOcr: any): Page[] {
+		const pages: Page[] = [];
+		for (const response of rawOcr) {
+			assert(!response.error, `OCR returned an error: ${response.error}`);
+			// https://cloud.google.com/vision/docs/reference/rest/v1/AnnotateImageResponse#TextAnnotation
+			const ocrAnnotations = response.fullTextAnnotation;
+			const ocrPage = ocrAnnotations.pages[0];
+			assert(ocrAnnotations.pages.length == 1, 'OCR returned zero pages');
+			assert(ocrPage.width > 0 && ocrPage.height > 0, 'OCR returned empty pages');
 
-		const words: Word[] = [];
-		for (const ocrBlock of ocrPage.blocks) {
-			// skipping blocks as they are huge and useless
-			for (const ocrParagraph of ocrBlock.paragraphs) {
-				// skipping paragraphs as they are quite large and useless
-				for (const ocrWord of ocrParagraph.words) {
-					let word_text = '';
-					for (const symbol of ocrWord.symbols) {
-						word_text += symbol.text;
+			const words: Word[] = [];
+			for (const ocrBlock of ocrPage.blocks) {
+				// skipping blocks as they are huge and useless
+				for (const ocrParagraph of ocrBlock.paragraphs) {
+					// skipping paragraphs as they are quite large and useless
+					for (const ocrWord of ocrParagraph.words) {
+						let word_text = '';
+						for (const symbol of ocrWord.symbols) {
+							word_text += symbol.text;
 
-						// is there a space or other break?
-						if (symbol.property?.detectedBreak) {
-							// https://cloud.google.com/vision/docs/reference/rest/v1/AnnotateImageResponse#breaktype
-							let breakSymbol = null;
-							switch (symbol.property?.detectedBreak?.type) {
-								case 'SPACE':
-									breakSymbol = ' ';
-									break;
-								case 'SURE_SPACE':
-									breakSymbol = '  ';
-									break;
-								case 'LINE_BREAK':
-									breakSymbol = '\n';
-									break;
-							}
-							if (breakSymbol) {
-								if (symbol.property.detectedBreak.isPrefix) word_text = breakSymbol + word_text;
-								else word_text += breakSymbol;
+							// is there a space or other break?
+							if (symbol.property?.detectedBreak) {
+								// https://cloud.google.com/vision/docs/reference/rest/v1/AnnotateImageResponse#breaktype
+								let breakSymbol = null;
+								switch (symbol.property?.detectedBreak?.type) {
+									case 'SPACE':
+										breakSymbol = ' ';
+										break;
+									case 'SURE_SPACE':
+										breakSymbol = '  ';
+										break;
+									case 'LINE_BREAK':
+										breakSymbol = '\n';
+										break;
+								}
+								if (breakSymbol) {
+									if (symbol.property.detectedBreak.isPrefix) word_text = breakSymbol + word_text;
+									else word_text += breakSymbol;
+								}
 							}
 						}
-					}
 
-					const bbox = ocrWord.boundingBox.normalizedVertices.map((a: any) => [a.x, a.y]);
-					words.push({ text: word_text, confidence: ocrWord.confidence, bbox: bbox });
+						const bbox = ocrWord.boundingBox.normalizedVertices.map((a: any) => [a.x, a.y]);
+						words.push({ text: word_text, confidence: ocrWord.confidence, bbox: bbox });
+					}
 				}
 			}
+
+			// locale detected with highest confidence on page
+			const locale = ocrPage.property?.detectedLanguages[0].languageCode;
+			const page = new Page(response.context.pageNumber, ocrPage.width, ocrPage.height, words, ocrAnnotations.text, locale);
+			pages.push(page);
 		}
 
-		// locale detected with highest confidence on page
-		const locale = ocrPage.property?.detectedLanguages[0].languageCode;
-		const page = new Page(response.context.pageNumber, ocrPage.width, ocrPage.height, words, ocrAnnotations.text, locale);
-		pages.push(page);
+		return pages;
 	}
-
-	return pages;
 }
