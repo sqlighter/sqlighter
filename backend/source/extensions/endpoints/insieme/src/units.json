@@ -179,7 +179,10 @@
   },
   {
     "id": "mL/min/1.73m2",
-    "description": null
+    "description": "milliliters per minute",
+    "conversions": {
+      "mg/L": 0.013846579894766
+    }
   },
   {
     "id": "mm/hr",
