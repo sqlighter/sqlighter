@@ -102,7 +102,7 @@ export class Biomarker {
 				keys: [
 					{ name: 'id', weight: 1.0 },
 					{ name: 'translations.name', weight: 1.0 },
-					{ name: 'extras.aliases', weight: 1.0 },
+					{ name: 'metadata.aliases', weight: 1.0 },
 					{ name: 'translations.description', weight: 0.5 },
 					{ name: 'translations.summary', weight: 0.25 },
 					// TODO could have aliases for names, etc.

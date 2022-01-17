@@ -9,7 +9,7 @@ import { Unit } from './units';
 import { Page, Ocr } from './ocr';
 import { Biomarker, Measurement, Range } from './biomarkers';
 import { Metadata } from './metadata';
-import {round } from "./utilities"
+import { round } from './utilities';
 
 /** A report inclusive of a number of pages, OCR information, metadata, etc */
 export class Report {
@@ -77,7 +77,16 @@ export class Report {
 			if (page.lines) {
 				for (const line of page.lines) {
 					if (line && line[0]) {
-						const biomarkersMatches = await Biomarker.searchBiomarkers(line[0].text);
+						let text = line[0].text;
+            
+						// remove unwanted prefixes, eg. Sg-ERITROCITI, P-CREATININA, S-Tirotropina
+						for (const prefix of ['Sg-', 'P-', 'S-']) {
+							if (text.startsWith(prefix)) {
+								text = text.substring(prefix.length);
+							}
+						}
+
+						const biomarkersMatches = await Biomarker.searchBiomarkers(text);
 						if (biomarkersMatches.length > 0 && biomarkersMatches[0]) {
 							const item = biomarkersMatches[0].item;
 							const itemConfidence = biomarkersMatches[0].confidence;
@@ -101,10 +110,10 @@ export class Report {
 								const r = Range.parseRange(word.text);
 								// TODO or this range is closer to range's column than previous match
 								if (r && rangeMatch == null) {
-                  if (unitMatch?.conversion) {
-                    r.convert(unitMatch.conversion)
-                  }
-                rangeMatch = { range: r, word };
+									if (unitMatch?.conversion) {
+										r.convert(unitMatch.conversion);
+									}
+									rangeMatch = { range: r, word };
 								}
 							}
 
@@ -123,6 +132,7 @@ export class Report {
 								const bbox = mergeBoundingBoxes(line.map((w) => w.bbox));
 
 								const medatata = new Metadata({
+									name: item.translations?.[0]?.name,
 									ocr: {
 										name: itemWord.text,
 										value: valueMatch.word.text,
@@ -133,7 +143,14 @@ export class Report {
 								});
 
 								// add entry for this biomarker results with units, etc
-								const measurement = new Measurement(item, round(valueMatch.value / (unitMatch?.conversion || 1.0)), valueMatch.text, item.unit, rangeMatch?.range, medatata);
+								const measurement = new Measurement(
+									item,
+									round(valueMatch.value / (unitMatch?.conversion || 1.0)),
+									valueMatch.text,
+									item.unit,
+									rangeMatch?.range,
+									medatata
+								);
 								measurements.push(measurement);
 
 								if (unitMatch == null) {

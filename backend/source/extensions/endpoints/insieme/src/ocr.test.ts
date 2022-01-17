@@ -9,7 +9,7 @@ import { Ocr } from './ocr';
 // external APIs require longer timeouts
 jest.setTimeout(30 * 1000);
 
-const TEST_PDF_PATH = './test/analisi02.pdf';
+const TEST_PDF_PATH = './test/report01.pdf';
 function toArtifacts(path:string) {
 	return resolve(path).replace("/test/", "/test/artifacts/")
 }
