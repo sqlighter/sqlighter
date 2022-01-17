@@ -18,3 +18,8 @@ export async function getApiJson(relativeUrl: string) {
 		throw exception;
 	}
 }
+
+/** Rounds number to two decimal digits at most */
+export function round(value: number) {
+  return Math.round(value * 100.0) / 100.0;
+}

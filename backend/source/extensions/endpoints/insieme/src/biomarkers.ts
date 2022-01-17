@@ -8,23 +8,23 @@ import Fuse from 'fuse.js';
 import Tokenizr from 'tokenizr';
 import assert from 'assert/strict';
 
-import { getApiJson } from './utilities';
+import { getApiJson, round } from './utilities';
 import { Unit } from './units';
 import { Translation } from './translations';
-import { Metadata } from "./metadata"
+import { Metadata } from './metadata';
 
 export const BIOMARKERS_SEARCH_CONFIDENCE = 0.7;
 export const UNITS_SEARCH_CONFIDENCE = 0.7;
 
 /** A biomarker, eg. glucose, hdl, ldl, weight, etc */
 export class Biomarker {
-	constructor(id: string, units?: string, range?: string, translations?: Translation[], metadata?: any) {
+	constructor(id: string, unit?: string, range?: string, translations?: Translation[], metadata?: any) {
 		this.id = id;
 		this.translations = translations || [];
 		this.metadata = new Metadata(metadata);
 		this.range = range;
-		if (units) {
-			this.units = Unit.getUnit(units);
+		if (unit) {
+			this.unit = Unit.getUnit(unit);
 		}
 	}
 
@@ -35,7 +35,7 @@ export class Biomarker {
 	translations: Translation[];
 
 	/** Measurement unit for this biomarker */
-	units?: Unit;
+	unit?: Unit;
 
 	/** Range for this biomarker, eg. 120-150 */
 	range?: string;
@@ -73,7 +73,7 @@ export class Biomarker {
 
 	/** Returns biomarker by id (or undefined) */
 	public static async getBiomarker(biomarkerId: string): Promise<Biomarker | undefined> {
-		if (_biomarkers) {
+		if (!_biomarkers) {
 			await Biomarker.getBiomarkers();
 		}
 		return _biomarkers && _biomarkers[biomarkerId];
@@ -123,61 +123,19 @@ export class Biomarker {
 	}
 
 	/**
-	 * Parse a biomarkers range string like 10-20 into its components
-	 * @param text A range string like [10,20-20,80] or 345-500 etc
-	 * @returns Structured range or null
-	 */
-	public static parseRange(text: string): { text: string; min?: number; max?: number } | null {
-		const { sequence, tokens } = parseTokens(text.toLowerCase());
-		if (sequence && tokens) {
-			// eg. [10-20]
-			if (sequence == 'startrange-number-dash-number-endrange-eof') {
-				return { text: `${tokens[1]?.value} - ${tokens[3]?.value}`, min: tokens[1]?.value, max: tokens[3]?.value };
-			}
-			// eg. 10-20
-			if (sequence == 'number-dash-number-eof') {
-				return { text: `${tokens[0]?.value} - ${tokens[2]?.value}`, min: tokens[0]?.value, max: tokens[2]?.value };
-			}
-			// eg. [assenti]
-			if (sequence == 'startrange-number-endrange-eof') {
-				return { text: `${tokens[1]?.value}`, min: tokens[1]?.value, max: tokens[1]?.value };
-			}
-			// eg. <20 or <=20
-			if (sequence == 'lessthan-number-eof') {
-				return { text: `${tokens[0]?.value} ${tokens[1]?.value}`, max: tokens[1]?.value };
-			}
-			// eg. [<20]
-			if (sequence == 'startrange-lessthan-number-endrange-eof') {
-				return { text: `${tokens[1]?.value} ${tokens[2]?.value}`, max: tokens[2]?.value };
-			}
-			// eg. >20 or ≥20
-			if (sequence == 'morethan-number-eof') {
-				return { text: `${tokens[0]?.value} ${tokens[1]?.value}`, min: tokens[1]?.value };
-			}
-			// eg. [>50]
-			if (sequence == 'startrange-morethan-number-endrange-eof') {
-				return { text: `${tokens[1]?.value} ${tokens[2]?.value}`, min: tokens[2]?.value };
-			}
-		}
-		return null;
-	}
-
-	/**
 	 * Parse a biomarker value like 10.40 or 234,34 or positive or negative or assente
 	 * @param text A value string
 	 * @returns Parsed value or null
 	 */
-	public static parseValue(text: string): { value: number; text: string } | null {
+	public static parseValue(text: string): { value: number; text?: string } | null {
 		const { sequence, tokens } = parseTokens(text.toLowerCase());
 		if (sequence && tokens) {
-			if (sequence == 'number-eof') {
-				return { text: tokens[0]?.text || '', value: tokens[0]?.value };
-			}
-			if (sequence == 'positive-eof') {
-				return { text: 'positive', value: 1 };
-			}
-			if (sequence == 'negative-eof') {
-				return { text: 'negative', value: 0 };
+			switch (sequence) {
+				case 'number-eof':
+				case 'positive-eof':
+				case 'negative-eof':
+				case 'missing-eof':
+					return tokens[0]?.value;
 			}
 		}
 		return null;
@@ -189,17 +147,17 @@ export class Biomarker {
 	 * @param biomarker A biomarker as returned by searchBiomarkers
 	 * @returns A unit and its optional conversion ratio to the biomarker's base unit
 	 */
-	public static parseUnits(text: string, biomarker: any): { id: string; conversion: number; confidence: number } | null {
-		if (!biomarker.units) {
+	public static parseUnits(text: string, biomarker: Biomarker): { id: string; conversion: number; confidence: number } | null {
+		if (!biomarker.unit) {
 			console.warn(`parseUnits - biomarker: ${biomarker.id} does not have a measurement unit of measurement`);
 			return null;
 		}
 
 		// each biomarker has a main unit of measurement which is preferred (normally the SI unit)
 		// and a number of available conversions that can also be read
-		const unitsCandidates = new Array<string>(biomarker.units.id);
-		if (biomarker.units?.extras?.conversions) {
-			unitsCandidates.push(...Object.keys(biomarker.units.extras.conversions));
+		const unitsCandidates = new Array<string>(biomarker.unit.id);
+		if (biomarker.unit?.conversions) {
+			unitsCandidates.push(...Object.keys(biomarker.unit.conversions));
 		}
 
 		const unitsFuse = new Fuse(unitsCandidates, { minMatchCharLength: 1, includeScore: true });
@@ -210,7 +168,7 @@ export class Biomarker {
 			if (confidence > UNITS_SEARCH_CONFIDENCE) {
 				return {
 					id: unitsMatches[0].item,
-					conversion: unitsMatches[0].refIndex > 0 ? biomarker.units.extras.conversions[unitsMatches[0].item] : 1,
+					conversion: unitsMatches[0].refIndex > 0 ? (biomarker.unit.conversions[unitsMatches[0].item] as number) : 1,
 					confidence,
 				};
 			}
@@ -225,15 +183,135 @@ export class Biomarker {
 		const translations = obj.translations && Translation.fromObject(obj.translations);
 		return new Biomarker(obj.id, obj.units?.id, obj.range, translations, obj.extras);
 	}
+
+	/**
+	 * Will render to id if nested in a json
+	 * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#tojson_behavior
+	 */
+	public toJSON(key: any) {
+		return key ? this.id : this;
+	}
+}
+
+/** A suggested range for a biomarker */
+export class Range {
+	constructor(min?: number, max?: number, text?: string, custom?: { tags: string[]; min?: number; max?: number; text?: string }[]) {
+		this.min = min;
+		this.max = max;
+		this.text = text;
+	}
+
+	/** Minimum value for range */
+	min?: number;
+
+	/** Maximum value for range */
+	max?: number;
+
+	/** Textual value, eg. 'positive' */
+	text?: string;
+
+	/** TODO Custom ranges for custom tags, eg. "men", "women", "kids", "30-40", etc */
+	custom?: { tags: string[]; min?: number; max?: number; text?: string }[];
+
+	//
+	// methods
+	//
+
+	/** Apply conversion factor to this range */
+	public convert(conversion: number) {
+		if (conversion != 1) {
+			this.min = this.min !== undefined ? round(this.min / conversion) : undefined;
+			this.max = this.max !== undefined ? round(this.max / conversion) : undefined;
+			this.text = undefined;
+			if (this.custom) {
+				this.custom.forEach((r) => {
+					r.min = r.min !== undefined ? round(r.min / conversion) : undefined;
+					r.max = r.max !== undefined ? round(r.max / conversion) : undefined;
+					r.text = undefined;
+				});
+			}
+		}
+	}
+
+	public toString() {
+		if (this.text) {
+			return this.text;
+		}
+
+		if (this.min != undefined) {
+			if (this.max != undefined) {
+				return `[${this.min} - ${this.max}]`;
+			}
+			return `[> ${this.min}]`;
+		}
+
+		assert(this.max != undefined);
+		return `[< ${this.max}]`;
+	}
+
+	/** Will render to string if nested in a json */
+	public toJSON(key: any) {
+		return key != undefined ? this.toString() : this;
+	}
+
+	//
+	// static methods
+	//
+
+	/**
+	 * Parse a biomarkers range string like 10-20 into its components
+	 * @param text A range string like [10,20-20,80] or 345-500 etc
+	 * @returns Structured range or null
+	 */
+	public static parseRange(text: string): Range | null {
+		const { sequence, tokens } = parseTokens(text.toLowerCase());
+		if (sequence && tokens) {
+			tokens.forEach((t) => {
+				if (t.type == 'number' && t.value.text == undefined) {
+					t.value.text = t.value.value;
+				}
+			});
+
+			// eg. [10-20]
+			if (sequence == 'startrange-number-dash-number-endrange-eof') {
+				return new Range(tokens[1]?.value.value, tokens[3]?.value.value, `[${tokens[1]?.value.text} - ${tokens[3]?.value.text}]`);
+			}
+			// eg. 10-20
+			if (sequence == 'number-dash-number-eof') {
+				return new Range(tokens[0]?.value.value, tokens[2]?.value.value, `[${tokens[0]?.value.text} - ${tokens[2]?.value.text}]`);
+			}
+			// eg. [assenti]
+			if (sequence == 'startrange-number-endrange-eof') {
+				return new Range(tokens[1]?.value.value, tokens[1]?.value.value, `[${tokens[1]?.value.text}]`);
+			}
+			// eg. <20 or <=20
+			if (sequence == 'lessthan-number-eof') {
+				return new Range(undefined, tokens[1]?.value.value, `[< ${tokens[1]?.value.text}]`);
+			}
+			// eg. [<20]
+			if (sequence == 'startrange-lessthan-number-endrange-eof') {
+				return new Range(undefined, tokens[2]?.value.value, `[< ${tokens[2]?.value.text}]`);
+			}
+			// eg. >20 or ≥20
+			if (sequence == 'morethan-number-eof') {
+				return new Range(tokens[1]?.value.value, undefined, `[> ${tokens[1]?.value.text}]`);
+			}
+			// eg. [>50]
+			if (sequence == 'startrange-morethan-number-endrange-eof') {
+				return new Range(tokens[2]?.value.value, undefined, `[> ${tokens[2]?.value.text}]`);
+			}
+		}
+		return null;
+	}
 }
 
 /** A biomarker measurement, eg. current glucose level */
-export class Measure {
-	constructor(biomarker: Biomarker, unit?: Unit, value?: number, text?: string, range?: string, metadata?: any) {
+export class Measurement {
+	constructor(biomarker: Biomarker, value?: number, text?: string, unit?: Unit, range?: Range, metadata?: any) {
 		this.biomarker = biomarker;
-		this.unit = unit;
 		this.value = value;
 		this.text = text;
+		this.unit = unit;
 		this.range = range;
 		this.metadata = new Metadata(metadata);
 	}
@@ -241,32 +319,20 @@ export class Measure {
 	/** The biomarker that was measured */
 	biomarker: Biomarker;
 
-  /** The measurement unit (normally matches biomarker.unit) */
-	unit?: Unit;
-
-  /** Numeric value of the measurement expressed in units */
+	/** Numeric value of the measurement expressed in units */
 	value?: number;
 
-  /** Textual value of the measurement, if applicable. Eg. negative */
+	/** Textual value of the measurement, if applicable. Eg. negative */
 	text?: string;
 
-  /** Suggested range for this measure, eg. 120-150 */
-	range?: string;
+	/** The measurement unit (normally matches biomarker.unit) */
+	unit?: Unit;
 
-  /** Additional metadata, for example the OCR information that this measure derives from */
+	/** Optional range suggested by the lab. May differ from range in biomarker card itself. */
+	range?: Range;
+
+	/** Additional metadata, for example the OCR information that this measure derives from */
 	metadata: Metadata;
-
-  /** Returns an object that is suitable for json serialization */
-	public toJson() {
-		return {
-			biomarkerdId: this.biomarker.id,
-			unitId: this.unit?.id,
-			value: this.value,
-			text: this.text,
-			range: this.range,
-			metadata: this.metadata,
-		};
-	}
 }
 
 //
@@ -285,10 +351,16 @@ let _biomarkersFuse: Fuse<any> | undefined;
 const lexer = new Tokenizr();
 lexer.rule(/(\d+([\.,]\d+)?)/, (ctx, match) => {
 	// accept floating point with both . and , decimals
-	ctx.accept('number', match[0] && parseFloat(match[0].replace(',', '.')));
+	ctx.accept('number', { value: match[0] && parseFloat(match[0].replace(',', '.')) });
 });
 lexer.rule(/assente|assenti/, (ctx, match) => {
-	ctx.accept('number', 0);
+	ctx.accept('number', { value: 0, text: 'missing' });
+});
+lexer.rule(/negative|negativo/, (ctx, match) => {
+	ctx.accept('number', { value: 0, text: 'negative' });
+});
+lexer.rule(/positive|positivo/, (ctx, match) => {
+	ctx.accept('number', { value: 1, text: 'positive' });
 });
 lexer.rule(/<=|≤|</, (ctx, match) => {
 	ctx.accept('lessthan');
@@ -304,12 +376,6 @@ lexer.rule(/\]/, (ctx, match) => {
 });
 lexer.rule(/-/, (ctx, match) => {
 	ctx.accept('dash');
-});
-lexer.rule(/positive|positivo/, (ctx, match) => {
-	ctx.accept('positive');
-});
-lexer.rule(/negative|negativo/, (ctx, match) => {
-	ctx.accept('negative');
 });
 lexer.rule(/\s+/, (ctx, match) => {
 	ctx.ignore();
@@ -327,3 +393,4 @@ function parseTokens(text: string) {
 	}
 	return { sequence: null, tokens: null };
 }
+

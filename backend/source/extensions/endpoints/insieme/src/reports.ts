@@ -7,17 +7,14 @@ import assert from 'assert/strict';
 import { BoundingBox, getBoundingBoxAlignments, mergeBoundingBoxes } from './geometry';
 import { Unit } from './units';
 import { Page, Ocr } from './ocr';
-import { Biomarker } from './biomarkers';
+import { Biomarker, Measurement, Range } from './biomarkers';
 import { Metadata } from './metadata';
-
-//
-// Types
-//
+import {round } from "./utilities"
 
 /** A report inclusive of a number of pages, OCR information, metadata, etc */
 export class Report {
 	constructor(pages: Page[], metadata?: any) {
-    assert(pages && pages.length > 0, "Report - pages is empty")
+		assert(pages && pages.length > 0, 'Report - pages is empty');
 		this.pages = pages;
 		this.metadata = new Metadata(metadata);
 	}
@@ -25,10 +22,10 @@ export class Report {
 	/** Pages in this report with fulltext, OCR words, etc */
 	pages: Page[];
 
-	/** Biomarker results detected in this report */
-	results?: any[];
+	/** Biomarker measurements detected in this report */
+	biomarkers?: Measurement[];
 
-  /** Additional metadata on this report */
+	/** Additional metadata on this report */
 	metadata: Metadata;
 
 	//
@@ -37,7 +34,8 @@ export class Report {
 
 	/** Detect biomarker readings in OCR words */
 	private async detectBiomarkers() {
-		const results = [];
+		console.time('detectBiomarkers');
+		const measurements = new Array<Measurement>();
 		const warnings: { message: string; pageNumber?: number; bbox?: BoundingBox }[] = [];
 
 		for (const page of this.pages) {
@@ -63,7 +61,7 @@ export class Report {
 				if (Biomarker.parseValue(word.text)) {
 					valuesWords.push(word);
 				}
-				if (Biomarker.parseRange(word.text)) {
+				if (Range.parseRange(word.text)) {
 					rangesWords.push(word);
 				}
 			}
@@ -86,68 +84,59 @@ export class Report {
 							const itemWord = line[0];
 
 							console.debug(
-								`biomarkers_detect - text: ${line[0].text}, id: ${item.id}/${item.translations?.[0]?.name}, confidence: ${itemConfidence}`
+								`detectBiomarkers - text: ${line[0].text}, id: ${item.id}/${item.translations?.[0]?.name}, confidence: ${itemConfidence}`
 							);
 
 							// find compatible measurement unit on the same line
-							let units = null;
+							let unitMatch = null;
 							for (const word of line) {
 								const u = Biomarker.parseUnits(word.text, item);
-								if (u && (units == null || units.confidence < u.confidence)) {
-									units = { ...u, word };
+								if (u && (unitMatch == null || unitMatch.confidence < u.confidence)) {
+									unitMatch = { ...u, word };
 								}
 							}
 
-							let range = null;
+							let rangeMatch = null;
 							for (const word of line) {
-								const r = Biomarker.parseRange(word.text);
+								const r = Range.parseRange(word.text);
 								// TODO or this range is closer to range's column than previous match
-								if (r && range == null) {
-									range = { ...r, word };
+								if (r && rangeMatch == null) {
+                  if (unitMatch?.conversion) {
+                    r.convert(unitMatch.conversion)
+                  }
+                rangeMatch = { range: r, word };
 								}
 							}
 
-							let value = null;
+							let valueMatch = null;
 							for (const word of line) {
-								if (!range || word != range.word) {
+								if (!rangeMatch || word != rangeMatch.word) {
 									const v = Biomarker.parseValue(word.text);
 									// TODO this value is closer to value's column than previous value
-									if (v && value == null) {
-										value = { ...v, word };
+									if (v && valueMatch == null) {
+										valueMatch = { ...v, word };
 									}
 								}
 							}
 
-							if (value != null) {
+							if (valueMatch != null) {
 								const bbox = mergeBoundingBoxes(line.map((w) => w.bbox));
 
-								// add entry for this biomarker results with units, etc
-								const result = {
-									id: item.id,
-									name: item.translations?.[0]?.name,
-									value: value.value / (units?.conversion || 1),
-									units: item.units?.id,
-									extras: {
-										original:
-											item.units && units && item.units.id != units.id
-												? {
-														units: units.id,
-														value: value.value,
-														conversion: units.conversion,
-												  }
-												: undefined,
-										ocr: {
-											name: itemWord.text,
-											value: value.word.text,
-											units: units?.word.text,
-											range: range?.word.text,
-											conversion: units?.conversion != 1 ? units?.conversion : undefined,
-										},
+								const medatata = new Metadata({
+									ocr: {
+										name: itemWord.text,
+										value: valueMatch.word.text,
+										range: rangeMatch?.word.text,
+										unit: unitMatch?.word.text,
+										conversion: unitMatch?.conversion != 1 ? unitMatch?.conversion : undefined,
 									},
-								};
-								results.push(result);
+								});
 
-								if (units == null) {
+								// add entry for this biomarker results with units, etc
+								const measurement = new Measurement(item, round(valueMatch.value / (unitMatch?.conversion || 1.0)), valueMatch.text, item.unit, rangeMatch?.range, medatata);
+								measurements.push(measurement);
+
+								if (unitMatch == null) {
 									warnings.push({
 										message: `E002: Can't find units for biomarker: ${item.id}, text: ${itemWord.text}`,
 										pageNumber: page.pageNumber,
@@ -176,12 +165,11 @@ export class Report {
 			});
 		}
 
-		this.results = results;
+		this.biomarkers = measurements;
 		if (warnings.length > 0) {
 			this.metadata = { ...this.metadata, warnings };
 		}
-
-		console.log(results);
+		console.timeEnd('detectBiomarkers');
 	}
 
 	/** Analyze an OCR generated report and extract metadata and biomarkers reading */
@@ -226,12 +214,12 @@ export class Report {
 	// static methods
 	//
 
-  /**
-   * Will run optical character recognition on the given pdf or tiff document located
-   * on the local disk or in Google Storage. Will then process ocr annotations and, 
-   * if requested, analyze the document looking for biomarker reading results.
-   * @returns A report with OCR annotations and possibly biomarker results and more metadata
-   */
+	/**
+	 * Will run optical character recognition on the given pdf or tiff document located
+	 * on the local disk or in Google Storage. Will then process ocr annotations and,
+	 * if requested, analyze the document looking for biomarker reading results.
+	 * @returns A report with OCR annotations and possibly biomarker results and more metadata
+	 */
 	public static async fromOcr(sourceUri: string, analyze: boolean = true): Promise<Report> {
 		const { pages, metadata: extras } = await Ocr.scanPages(sourceUri);
 		const report = new Report(pages, extras);

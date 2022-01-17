@@ -33,24 +33,32 @@ export class Unit {
 	/** External references and related contents */
 	readonly references: string[];
 
-    //
-    // public methods
-    //
+	//
+	// public methods
+	//
 
 	public toString(): string {
 		return `${this.id}: ${this.description}`;
 	}
 
-    //
-    // static methods
-    //
+	/**
+	 * Will render to id if nested in a json
+	 * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#tojson_behavior
+	 */
+	public toJSON(key: any) {
+		return key ? this.id : this;
+	}
+
+	//
+	// static methods
+	//
 
 	/** Returns list of all available measurement units */
 	public static getUnits(): Unit[] {
 		return Object.values(_units);
 	}
 
-    /** Returns measurement unit by id (or undefined) */
+	/** Returns measurement unit by id (or undefined) */
 	public static getUnit(unitId: string): Unit | undefined {
 		return _units[unitId];
 	}

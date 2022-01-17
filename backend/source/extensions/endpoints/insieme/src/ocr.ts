@@ -183,12 +183,12 @@ export class Page {
 	/** Group words (or small fragments) into arrays that belong to the same line on the document */
 	public groupWordsIntoLines() {
 		let words = [...this.words];
-		const lines = Array<Word[]>();
+		this.lines = [];
 		for (let i = 0; i < words.length; i++) {
 			const word1 = words[i];
 			if (word1) {
-				const line = Array<Word>(word1);
-				lines.push(line);
+				const line = [word1];
+				this.lines.push(line);
 				for (let j = i + 1; j < words.length; j++) {
 					const word2 = words[j];
 					if (word2 && words_areOnSameLine(word1, word2)) {
@@ -199,7 +199,7 @@ export class Page {
 				}
 			}
 		}
-		console.debug(`groupWordsIntoLines - page: ${this.pageNumber} has ${lines.length} lines`);
+		console.debug(`groupWordsIntoLines - page: ${this.pageNumber} has ${this.lines.length} lines`);
 	}
 }
 
@@ -247,7 +247,7 @@ export class Ocr {
 
 			return { pages, rawOcr, metadata };
 		} catch (exception) {
-			console.error(`getOcrAnnotations('${sourceUri}') - exception: ${exception}`, exception);
+			console.error(`scanPages('${sourceUri}') - exception: ${exception}`, exception);
 			throw exception;
 		}
 	}

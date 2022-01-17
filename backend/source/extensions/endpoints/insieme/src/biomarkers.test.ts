@@ -1,10 +1,9 @@
 //
-// biomarkers.ts test
+// biomarkers.test.ts
 //
 
 import assert from 'assert/strict';
-import { Biomarker, parseRange, parseValue } from './biomarkers';
-import { Translation } from './translations';
+import { Biomarker, Range } from './biomarkers';
 
 // external APIs require longer timeouts
 jest.setTimeout(30 * 1000);
@@ -32,6 +31,11 @@ describe('biomarkers.ts', () => {
 		expect(b1s[0]?.item.id).toBe('wbc');
 		expect(b1s[0]?.item.translations?.[1]?.name).toBe('Leucociti (globuli bianchi)');
 		expect(b1s[0]?.confidence).toBeGreaterThan(0.5);
+
+		b1s = await Biomarker.searchBiomarkers('Sg-ERITROCITI');
+		expect(b1s[0]?.item.id).toBe('rbc');
+		expect(b1s[0]?.item.translations?.[1]?.name).toBe('Eritrociti');
+		expect(b1s[0]?.confidence).toBeGreaterThan(0.5);
 	});
 
 	test('searchBiomarkers (mispelled)', async () => {
@@ -57,87 +61,146 @@ describe('biomarkers.ts', () => {
 		//	expect(b1s[0].item.id).toBe('wbc');
 	});
 
-	test('parseRange', async () => {
-		let res = parseRange('[10-20]');
-		expect(res && res.text).toBe('10 - 20');
+	test('parseRange (numerical values)', async () => {
+		// from - to
+		let res = Range.parseRange('[10-20]');
+		expect(res && res.text).toBe('[10 - 20]');
 		expect(res && res.min).toBe(10);
 		expect(res && res.max).toBe(20);
 
-		res = parseRange('10- 20');
-		expect(res && res.text).toBe('10 - 20');
+		res = Range.parseRange('10- 20');
+		expect(res && res.text).toBe('[10 - 20]');
 		expect(res && res.min).toBe(10);
 		expect(res && res.max).toBe(20);
 
-		res = parseRange('[ assenti]');
-		expect(res && res.text).toBe('0');
-		expect(res && res.min).toBe(0);
-		expect(res && res.max).toBe(0);
-
-		res = parseRange('10.632 - 20,34');
-		expect(res && res.text).toBe('10.632 - 20.34');
+		res = Range.parseRange('10.632 - 20,34');
+		expect(res && res.text).toBe('[10.632 - 20.34]');
 		expect(res && res.min).toBe(10.632);
 		expect(res && res.max).toBe(20.34);
 
-		res = parseRange('10-20');
-		expect(res && res.text).toBe('10 - 20');
+		res = Range.parseRange('10-20');
+		expect(res && res.text).toBe('[10 - 20]');
 		expect(res && res.min).toBe(10);
 		expect(res && res.max).toBe(20);
 
-		res = parseRange('[10.632 - 20,34');
+		res = Range.parseRange('[10.632 - 20,34');
 		expect(res).toBeNull();
 
-		res = parseRange(' < 10.50 ');
-		expect(res && res.text).toBe('< 10.5');
+		// < to
+		res = Range.parseRange('[ < 10.50] ');
+		expect(res && res.text).toBe('[< 10.5]');
 		expect(res && res.min).toBeUndefined();
 		expect(res && res.max).toBe(10.5);
 
-		res = parseRange('[ < 10.50] ');
-		expect(res && res.text).toBe('< 10.5');
+		res = Range.parseRange(' < 10.50 ');
+		expect(res && res.text).toBe('[< 10.5]');
 		expect(res && res.min).toBeUndefined();
 		expect(res && res.max).toBe(10.5);
 
-		res = parseRange('[ >=20,50] ');
-		expect(res && res.text).toBe('>= 20.5');
-		expect(res && res.min).toBe(20.5);
+		res = Range.parseRange(' ≤ 10.50 ');
+		expect(res && res.text).toBe('[< 10.5]');
+		expect(res && res.min).toBeUndefined();
+		expect(res && res.max).toBe(10.5);
+
+		res = Range.parseRange(' <= 10.50 ');
+		expect(res && res.text).toBe('[< 10.5]');
+		expect(res && res.min).toBeUndefined();
+		expect(res && res.max).toBe(10.5);
+
+		// > from
+		res = Range.parseRange('[ > 10.50] ');
+		expect(res && res.text).toBe('[> 10.5]');
 		expect(res && res.max).toBeUndefined();
+		expect(res && res.min).toBe(10.5);
 
-		res = parseRange('Mickey');
+		res = Range.parseRange(' > 10.50 ');
+		expect(res && res.text).toBe('[> 10.5]');
+		expect(res && res.max).toBeUndefined();
+		expect(res && res.min).toBe(10.5);
+
+		res = Range.parseRange(' ≥ 10.50 ');
+		expect(res && res.text).toBe('[> 10.5]');
+		expect(res && res.max).toBeUndefined();
+		expect(res && res.min).toBe(10.5);
+
+		res = Range.parseRange(' >= 10.50 ');
+		expect(res && res.text).toBe('[> 10.5]');
+		expect(res && res.max).toBeUndefined();
+		expect(res && res.min).toBe(10.5);
+	});
+
+	test('parseRange (string values)', async () => {
+		let res = Range.parseRange('[ assenti]');
+		expect(res && res.text).toBe('[missing]');
+		expect(res && res.min).toBe(0);
+		expect(res && res.max).toBe(0);
+
+		res = Range.parseRange('Mickey');
 		expect(res).toBeNull();
 	});
 
-	test('parseValue', async () => {
-		let res = parseValue('10');
+	test('parseValue (numerical)', async () => {
+		let res = Biomarker.parseValue('10');
 		expect(res && res.value).toBe(10);
+		expect(res && res.text).toBeFalsy();
 
-		res = parseValue('10,3200  '); // with comma
+		res = Biomarker.parseValue('10,3200  '); // with comma
 		expect(res && res.value).toBe(10.32);
-		expect(res && res.text).toBe('10,3200');
+		expect(res && res.text).toBeFalsy();
 
-		res = parseValue(' 010.32100  ');
+		res = Biomarker.parseValue(' 010.32100  ');
 		expect(res && res.value).toBe(10.321);
-		expect(res && res.text).toBe('010.32100');
+		expect(res && res.text).toBeFalsy();
+	});
 
-		res = parseValue(' assenti  ');
+	test('parseValue (strings)', async () => {
+		let res = Biomarker.parseValue(' assenti  ');
 		expect(res && res.value).toBe(0);
-		expect(res && res.text).toBe('assenti');
+		expect(res && res.text).toBe('missing');
 
-		res = parseValue(' positivo  ');
+		res = Biomarker.parseValue(' positivo  ');
 		expect(res && res.value).toBe(1);
 		expect(res && res.text).toBe('positive');
 
-		res = parseValue(' Positivo  '); // uppercase
+		res = Biomarker.parseValue(' Positivo  '); // uppercase
 		expect(res && res.value).toBe(1);
 		expect(res && res.text).toBe('positive');
 
-		res = parseValue(' Positive');
+		res = Biomarker.parseValue(' Positive');
 		expect(res && res.value).toBe(1);
 		expect(res && res.text).toBe('positive');
 
-		res = parseValue(' NEGATIVE'); // allcaps
+		res = Biomarker.parseValue(' NEGATIVE'); // allcaps
 		expect(res && res.value).toBe(0);
 		expect(res && res.text).toBe('negative');
 
-		res = parseValue('this is not a value');
+		res = Biomarker.parseValue('this is not a value');
 		expect(res).toBeNull();
+	});
+
+	test('parseUnits', async () => {
+		let biomarker = await Biomarker.getBiomarker('hgb'); // native unit is g/L
+		assert(biomarker);
+
+		// parse native unit for biomarker
+		let unit = Biomarker.parseUnits('g/L', biomarker);
+		expect(unit?.id).toBe('g/L');
+		expect(unit?.confidence).toBe(1);
+
+		// parse a unit that can be converted to native unit
+		unit = Biomarker.parseUnits('g/100mL', biomarker);
+		expect(unit?.id).toBe('g/100mL');
+		expect(unit?.conversion).toBe(0.1);
+		expect(unit?.confidence).toBe(1);
+
+		// parse a unit that CANNOT be converted to native unit
+		unit = Biomarker.parseUnits('%', biomarker);
+		expect(unit).toBeNull();
+
+		// parse unparseable strings
+		unit = Biomarker.parseUnits('5,0', biomarker);
+		expect(unit).toBeNull();
+		unit = Biomarker.parseUnits('fake', biomarker);
+		expect(unit).toBeNull();
 	});
 });
