@@ -2,14 +2,14 @@
 import { Unit, UNITS_SEARCH_CONFIDENCE } from './units';
 
 describe('units.ts', () => {
-	test('getUnits', async () => {
+	test('getUnits', () => {
 		const units = Unit.getUnits();
 		expect(units).toBeTruthy();
 		expect(units.length).toBeGreaterThan(10);
 		expect(units[0]?.toString()).toContain(':');
 	});
 
-	test('getUnit', async () => {
+	test('getUnit', () => {
 		const u1 = Unit.getUnit('μg/L');
 		expect(u1).toBeTruthy();
 		if (u1) {
@@ -22,7 +22,7 @@ describe('units.ts', () => {
 		}
 	});
 
-	test('searchUnit', async () => {
+	test('searchUnit', () => {
 		const matches = Unit.searchUnits('μg/L');
 		expect(matches).toBeTruthy();
 		expect(matches.length).toBeGreaterThanOrEqual(1);
@@ -38,6 +38,10 @@ describe('units.ts', () => {
 			expect(u1.conversions['mg/L']).toBe(0.001);
 			expect(u1.toString()).toBe('μg/L: micrograms per liter');
 		}
+	});
+
+	test('updateUnits', async () => {
+		await Unit.updateUnits();
 	});
 
 	// TODO test conversions, add cross pairs, find missing conversions
