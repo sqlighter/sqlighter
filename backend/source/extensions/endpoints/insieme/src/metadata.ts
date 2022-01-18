@@ -7,7 +7,7 @@ export type Entry = { [key: string]: string | number | any | Entry | Entry[] };
 
 /** Additional metadata for an object */
 export class Metadata {
-	constructor(args: any) {
+	constructor(args?: any) {
 		if (args) {
 			Object.assign(this, args);
 		}
