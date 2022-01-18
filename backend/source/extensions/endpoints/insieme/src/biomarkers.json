@@ -1294,21 +1294,6 @@
 			}
 		],
 		"unit": {
-			"id": "mg/L"
-		}
-	},
-	{
-		"id": "egfraa",
-		"metadata": null,
-		"translations": [
-			{
-				"languages_code": "en-US",
-				"name": "eGFR (African American ethnicity)",
-				"description": "eGFR if African American",
-				"summary": null
-			}
-		],
-		"unit": {
 			"id": "mL/min/1.73m2"
 		}
 	},

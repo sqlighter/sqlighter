@@ -6,10 +6,6 @@ import path from 'path';
 
 import { Ocr } from './ocr';
 import { Report } from './reports';
-import { assert } from 'console';
-
-// external APIs require longer timeouts
-jest.setTimeout(30 * 1000);
 
 describe('reports.ts', () => {
 	// the test directory contains a number of xxx.pdf and xxx.pdf.report.json

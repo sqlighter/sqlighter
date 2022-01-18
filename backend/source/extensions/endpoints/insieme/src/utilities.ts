@@ -1,7 +1,10 @@
+//
+// utilities.ts
+//
+
 // https://www.npmjs.com/package/axios
 import axios from 'axios';
 import { assert } from 'console';
-import { fstat } from 'fs';
 import fs from 'fs/promises';
 
 export class Api {
@@ -45,7 +48,7 @@ export async function writeJson(jsonPath: string, jsonData: any) {
 		const stringified = JSON.stringify(jsonData, null, '\t');
 		await fs.writeFile(jsonPath, stringified);
 	} catch (exception) {
-		console.error(`writeJson - an exception occoured while writing ${jsonPath}, exception: ${exception}`, exception);
+		console.error(`writeJson - ${jsonPath}, exception: ${exception}`, exception);
 		throw exception;
 	}
 }
@@ -56,7 +59,7 @@ export async function readJson(jsonPath: string) {
 		const stringified = (await fs.readFile(jsonPath)).toString();
 		return JSON.parse(stringified);
 	} catch (exception) {
-		console.error(`readJson - an exception occoured while reading ${jsonPath}, exception: ${exception}`, exception);
+		console.error(`readJson - ${jsonPath}, exception: ${exception}`, exception);
 		throw exception;
 	}
 }
