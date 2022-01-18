@@ -20,6 +20,8 @@ export default {
     ],
     // A preset that is used as a base for Jest's configuration
     preset: 'ts-jest',  
+    // long timeout
+    testTimeout: 60 * 1000
   };
 
   
