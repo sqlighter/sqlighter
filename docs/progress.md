@@ -29,3 +29,4 @@ Jan
 11/01 parser for biomarker ranges and values
 13/01 complete parsing of biomarker name, value, units and range
 14/01 refactoring, adding tests for complete reports
+17/01 finalized format for reports, biomarkers, ranges, more testing

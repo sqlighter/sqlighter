@@ -1,7 +1,7 @@
 [
 	{
 		"id": "1-25-vitamin-d2",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -10,13 +10,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "pg/mL"
 		}
 	},
 	{
 		"id": "1-25-vitamin-d3",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -25,13 +25,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "pg/mL"
 		}
 	},
 	{
 		"id": "a1c-perc",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -40,13 +40,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "%"
 		}
 	},
 	{
 		"id": "aa-epa-ratio",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -55,11 +55,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "aaq",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -68,13 +68,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "%"
 		}
 	},
 	{
 		"id": "acth",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -83,13 +83,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "pg/mL"
 		}
 	},
 	{
 		"id": "adipoq",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -98,13 +98,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "μg/mL"
 		}
 	},
 	{
 		"id": "adsf",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -113,11 +113,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "afp",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -126,13 +126,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "ng/mL"
 		}
 	},
 	{
 		"id": "albumin",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -141,13 +141,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "g/dL"
 		}
 	},
 	{
 		"id": "albumin-globulin-ratio",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -156,11 +156,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "almond-ige",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -169,11 +169,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "alp",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -182,13 +182,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "IU/L"
 		}
 	},
 	{
 		"id": "alt",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -197,13 +197,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "IU/L"
 		}
 	},
 	{
 		"id": "anion-gap",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -212,13 +212,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "mmol/L"
 		}
 	},
 	{
 		"id": "anti-tg",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -227,13 +227,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "IU/mL"
 		}
 	},
 	{
 		"id": "anti-tpo",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -242,13 +242,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "IU/mL"
 		}
 	},
 	{
 		"id": "apo-a1",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -257,13 +257,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "mg/dL"
 		}
 	},
 	{
 		"id": "apo-b",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -272,13 +272,13 @@
 				"summary": "About Apo B_x000D_\n_x000D_\nApolipoprotein B, or Apo B, is the protein in bad LDL cholesterol that helps these particles bind to and clog blood vessels. Because ApoB increases this clogging, your ApoB level may be a better measure of cardiovascular risk than even LDL cholesterol. High levels of ApoB increases your risk of cardiovascular disease, and by lowering your ApoB, you can reduce your risk for a heart attack and stroke. Note: We have recently adjusted our risk range to be more consistent with most national laboratories, though some labs recommend ApoB to be less than 60."
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "mg/dL"
 		}
 	},
 	{
 		"id": "apo-b-a1-ratio",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -287,11 +287,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "apo-e",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -300,11 +300,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "aspirinworks",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -313,13 +313,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "pg/mg"
 		}
 	},
 	{
 		"id": "ast",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -328,13 +328,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "IU/L"
 		}
 	},
 	{
 		"id": "b1b",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -343,13 +343,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "nmol/L"
 		}
 	},
 	{
 		"id": "b1p",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -358,13 +358,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "nmol/L"
 		}
 	},
 	{
 		"id": "b2",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -373,13 +373,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "nmol/L"
 		}
 	},
 	{
 		"id": "b3",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -388,13 +388,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "ng/mL"
 		}
 	},
 	{
 		"id": "b5",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -403,13 +403,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "ng/mL"
 		}
 	},
 	{
 		"id": "ba-abs",
-		"extras": {
+		"metadata": {
 			"references": [
 				"https://www.valorinormali.com/sangue/basofili/",
 				"https://www.webmd.com/a-to-z-guides/what-are-basophils",
@@ -431,13 +431,13 @@
 				"summary": "I granulociti basofili sono dei globuli bianchi, ossia cellule deputate alla difesa dell’organismo. \n\nVengono prodotti dal midollo osseo a partire da cellule staminali comuni alle altre cellule del sangue: globuli bianchi (neutrofili, eosinofili, monociti, linfociti,),\nglobuli rossi e piastrine.\n\nLa loro funzione prevede per esempio il rilascio di mediatori (quali istamina, bradichinina, serotonina) in caso di infortunio o infezione: queste sostanze sono importanti per il processo infiammatorio poiché aumentano la permeabilità capillare\ne quindi aumentano il flusso di sangue nella zona interessata, favorendo l’arrivo delle altre molecole e cellule coinvolte.\n\nSono anche importanti intermediari nella produzione di reazioni allergiche e sono inoltre in grado di secernere eparina, una sostanza anticoagulante naturale coinvolta in numerosi e delicati equilibri di coagulazione.\n\nPer basofilia s’intende una elevata concentrazione dei basofili nel sangue. Valori aumentati rispetto alla norma, ma senza ulteriori anomalie negli esami del sangue, sono rari, mentre molto più spesso rappresenta una delle numerose alterazioni in corso di patologie come infezioni virali (tra cui la varicella), leucemia, colite ulcerosa ed\nalcune forme di reazione allergica."
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "10^9/L"
 		}
 	},
 	{
 		"id": "ba-perc",
-		"extras": {
+		"metadata": {
 			"references": [
 				"https://www.valorinormali.com/sangue/basofili/",
 				"https://www.webmd.com/a-to-z-guides/what-are-basophils",
@@ -459,13 +459,13 @@
 				"summary": "I granulociti basofili sono dei globuli bianchi, ossia cellule deputate alla difesa dell’organismo. \n\nVengono prodotti dal midollo osseo a partire da cellule staminali comuni alle altre cellule del sangue: globuli bianchi (neutrofili, eosinofili, monociti, linfociti,),\nglobuli rossi e piastrine.\n\nLa loro funzione prevede per esempio il rilascio di mediatori (quali istamina, bradichinina, serotonina) in caso di infortunio o infezione: queste sostanze sono importanti per il processo infiammatorio poiché aumentano la permeabilità capillare\ne quindi aumentano il flusso di sangue nella zona interessata, favorendo l’arrivo delle altre molecole e cellule coinvolte.\n\nSono anche importanti intermediari nella produzione di reazioni allergiche e sono inoltre in grado di secernere eparina, una sostanza anticoagulante naturale coinvolta in numerosi e delicati equilibri di coagulazione.\n\nPer basofilia s’intende una elevata concentrazione dei basofili nel sangue. Valori aumentati rispetto alla norma, ma senza ulteriori anomalie negli esami del sangue, sono rari, mentre molto più spesso rappresenta una delle numerose alterazioni in corso di patologie come infezioni virali (tra cui la varicella), leucemia, colite ulcerosa ed\nalcune forme di reazione allergica."
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "%"
 		}
 	},
 	{
 		"id": "bes",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -474,11 +474,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "beta-cross",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -487,13 +487,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "pg/mL"
 		}
 	},
 	{
 		"id": "bfp",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -502,13 +502,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "%"
 		}
 	},
 	{
 		"id": "bglap",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -517,13 +517,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "ng/mL"
 		}
 	},
 	{
 		"id": "bilirubin-direct",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -532,13 +532,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "mg/dL"
 		}
 	},
 	{
 		"id": "bilirubin-indirect",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -547,13 +547,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "mg/dL"
 		}
 	},
 	{
 		"id": "blood-type",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -562,11 +562,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "bmi",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -575,13 +575,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "Kg/m2"
 		}
 	},
 	{
 		"id": "bmi-score",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -590,11 +590,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "bun",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -603,13 +603,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "mg/dL"
 		}
 	},
 	{
 		"id": "bun-creatinine-ratio",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -618,11 +618,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "c-pep",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -631,13 +631,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "ng/mL"
 		}
 	},
 	{
 		"id": "ca",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -646,13 +646,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "mg/dL"
 		}
 	},
 	{
 		"id": "ca125",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -661,13 +661,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "ng/mL"
 		}
 	},
 	{
 		"id": "ca15-3",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -676,13 +676,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "U/mL"
 		}
 	},
 	{
 		"id": "ca19-9",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -691,13 +691,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "U/mL"
 		}
 	},
 	{
 		"id": "campesterol",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -706,11 +706,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "cardiac-troponin",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -719,11 +719,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "cashew-nut-ige",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -732,13 +732,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "kU/L"
 		}
 	},
 	{
 		"id": "ccp-ab",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -747,13 +747,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "Units"
 		}
 	},
 	{
 		"id": "cea",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -762,13 +762,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "ng/mL"
 		}
 	},
 	{
 		"id": "cholesterol",
-		"extras": {
+		"metadata": {
 			"references": [
 				"https://www.valorinormali.com/sangue/colesterolo-totale/",
 				"https://medlineplus.gov/cholesterol.html"
@@ -788,13 +788,13 @@
 				"summary": "Il colesterolo è una sostanza essenziale per la vita, in quanto costituente delle membrane cellulari in tutti gli organi e tessuti del corpo. Viene inoltre usato dall’organismo per la sintesi di ormoni, sostanze indispensabili per lo sviluppo, la crescita e la riproduzione e permette la sintesi degli acidi biliari che sono necessari per assorbire le sostanze nutrienti dal cibo.\n\nIl corpo produce circa il 75% della quantità necessaria alle diverse funzioni metaboliche, ma il restante 25% è assunto con la dieta. In caso di una predisposizione ereditaria a produrne troppo, oppure quando si consumano quantità eccessive di alimenti ricchi di grassi di cattiva qualità (grassi saturi, soprattutto di origine animale), i livelli circolanti nel sangue aumentano e con essi anche il rischio di avere un impatto negativo sulla salute.\n\nIl colesterolo in eccesso nel sangue può venire quindi depositato sotto forma di placche sulle pareti dei vasi sanguigni e questi accumuli possono diminuire o addirittura arrivare ad impedire del tutto il passaggio di sangue.\n\nL’esame che valuta il colesterolo totale nel sangue fa parte del cosiddetto profilo lipidico, un insieme di parametri che permettono al medico di capire quanti grassi circolano nel sangue e di che tipo: il colesterolo totale rappresenta la somma di questi grassi e permette una stima del rischio di complicazioni cardiovascolari (per esempio ictus ed infarti).\n\nIn genere livelli alti non causano alcun sintomo, quindi il paziente non può accorgersi dell’eventuale rischio."
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "mg/dL"
 		}
 	},
 	{
 		"id": "ck",
-		"extras": {
+		"metadata": {
 			"notes": "Risk range varies by sex and age",
 			"references": [
 				"https://medlineplus.gov/lab-tests/creatinine-test/",
@@ -817,13 +817,13 @@
 				"summary": "Si tratta di una sostanza di rifiuto prodotta dal metabolismo energetico muscolare in seguito al consumo di creatina oppure come conseguenza del consumo di carne (ma con impatto inferiore al precedente punto).\n\nSe i reni sono in salute sono in grado di filtrare la creatinina e gli altri prodotti di rifiuto dal sangue, eliminandoli poi attraverso l’urina; poiché la quantità di creatinina prodotta quotidianamente è ragionevolmente prevedibile e viene poi smaltita interamente dai reni, si tratta di un marcatore utile a stimare la velocità di filtrazione glomerulare, ossia un’indicazione sulla funzionalità renale.\n\nQuando questa è compromessa, la concentrazione di creatinina nel sangue aumenta, perché ne viene smaltita di meno con le urine.\n\nPuò essere utile in numerose situazioni, ma tra i motivi principali per cui viene richiesta ricordiamo:\n\n- controllo di routine\n- verifica prima di esami strumentali che richiedano la somministrazione di mezzi di contrasto\n- monitoraggio dei pazienti a rischio di malattie renali (per esempio pazienti diabetici)\n- verifica periodica di pazienti affetti da insufficienza renale.\n\nLa quantità di creatinina prodotta dall’organismo dipende dal peso della persona e dalla sua massa muscolare, per questo la concentrazione è leggermente superiore negli uomini rispetto alle donne e ai bambini."
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "μmol/L"
 		}
 	},
 	{
 		"id": "cl",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -832,13 +832,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "mmol/L"
 		}
 	},
 	{
 		"id": "cmsfa",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -847,13 +847,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "%"
 		}
 	},
 	{
 		"id": "cmsfa-e",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -862,13 +862,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "%"
 		}
 	},
 	{
 		"id": "cmsfa-n",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -877,13 +877,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "%"
 		}
 	},
 	{
 		"id": "cmsfa-o",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -892,13 +892,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "%"
 		}
 	},
 	{
 		"id": "cmsfa-p",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -907,13 +907,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "%"
 		}
 	},
 	{
 		"id": "co2",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -922,13 +922,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "mmol/L"
 		}
 	},
 	{
 		"id": "codfish-ige",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -937,13 +937,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "kU/L"
 		}
 	},
 	{
 		"id": "coq10",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -952,13 +952,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "ug/mL"
 		}
 	},
 	{
 		"id": "cortisol",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -967,13 +967,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "μg/dL"
 		}
 	},
 	{
 		"id": "cows-milk-ige",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -982,13 +982,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "kU/L"
 		}
 	},
 	{
 		"id": "cr",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -997,11 +997,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "cu",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1010,13 +1010,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "mcg/dL"
 		}
 	},
 	{
 		"id": "cyp2c19",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1025,11 +1025,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "cyp2c19-17rr",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1038,11 +1038,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "cyp2c19-2",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1051,11 +1051,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "cyp2c19-2rr",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1064,11 +1064,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "cyp2c19-3",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1077,11 +1077,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "cyp2c19-3rr",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1090,11 +1090,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "cyp2c9",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1103,11 +1103,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "cys-c",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1116,13 +1116,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "mg/L"
 		}
 	},
 	{
 		"id": "d-dimer",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1131,11 +1131,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "des",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1144,11 +1144,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "dhahdl",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1157,13 +1157,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "%"
 		}
 	},
 	{
 		"id": "dhea",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1172,13 +1172,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "μg/dL"
 		}
 	},
 	{
 		"id": "dht",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1187,13 +1187,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "ng/dL"
 		}
 	},
 	{
 		"id": "dhtf",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1202,13 +1202,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "pg/mL"
 		}
 	},
 	{
 		"id": "diastolic-pressure",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1217,13 +1217,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "mmHg"
 		}
 	},
 	{
 		"id": "diastolic-pressure-points",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1232,13 +1232,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "points"
 		}
 	},
 	{
 		"id": "e2",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1247,13 +1247,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "pg/mL"
 		}
 	},
 	{
 		"id": "eag",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1262,20 +1262,19 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "mg/dL"
 		}
 	},
 	{
 		"id": "egfr",
-		"extras": {
+		"metadata": {
 			"aliases": [
 				"eGFR (formula CKD-EPI)"
 			],
 			"references": [
 				"https://medlineplus.gov/lab-tests/glomerular-filtration-rate-gfr-test/",
 				"https://www.kidney.org/atoz/content/gfr",
-				"http://unitslab.com/node/44",
 				"https://unitslab.com/node/82",
 				"https://www.valorinormali.com/sangue/egfr/"
 			]
@@ -1294,13 +1293,28 @@
 				"summary": "La stima del tasso di filtrazione glomerulare (eGFR) è una misura usata per valutare la salute dei reni.\n \nI reni sono due organi a forma di fagiolo, ciascuno delle dimensioni di un pugno. Si trovano appena sotto la gabbia toracica, su ciascun lato della colonna vertebrale. Ogni giorno filtrano circa 120-150 litri di sangue producendo circa 1-2 litri di urina, il mezzo che ha l’organismo per eliminare sostanze di rifiuto e i liquidi in eccesso.\n\nQuando un rene si ammala non è più in grado di filtrare il sangue come dovrebbe e questo danno può causare l’accumulo delle sostanze di rifiuto nell’organismo e, di conseguenza, creare grossi pericoli per la salute.\n\nIl test più importante da questo punto di vista è l’eGFR, un esame del sangue che controlla la velocità di filtrazione glomerulare e permette una valutazione di quanto bene i reni filtrano le sostanze di rifiuto.\n\neGFR è l’abbreviazione inglese di velocità di filtrazione glomerulare stimata (Estimated Glomerular Filtration Rate) e indica la quantità di sangue filtrata al minuto; viene calcolato con una formula basata sulla creatinina sierica."
 			}
 		],
-		"units": {
+		"unit": {
+			"id": "mg/L"
+		}
+	},
+	{
+		"id": "egfraa",
+		"metadata": null,
+		"translations": [
+			{
+				"languages_code": "en-US",
+				"name": "eGFR (African American ethnicity)",
+				"description": "eGFR if African American",
+				"summary": null
+			}
+		],
+		"unit": {
 			"id": "mL/min/1.73m2"
 		}
 	},
 	{
 		"id": "egg-white-ige",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1309,13 +1323,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "kU/L"
 		}
 	},
 	{
 		"id": "endo",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1324,11 +1338,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "eo-abs",
-		"extras": {
+		"metadata": {
 			"references": [
 				"https://www.valorinormali.com/sangue/eosinofili/",
 				"https://www.youtube.it/watch?v=whMBHl90oEo",
@@ -1350,13 +1364,13 @@
 				"summary": "I granulociti eosinofili sono un tipo di globulo bianco, ossia una cellula facente parte del sistema immunitario, che viene prodotto dal midollo osseo, partendo da cellule staminali comuni alle altre cellule del sangue (globuli bianchi, globuli rossi e piastrine); il nome deriva dalla presenza al loro interno di granuli in grado di legare fortemente l’eosina, una sostanza colorante (rosso-arancio) usata durante l’analisi di laboratorio.\n\nUna volta maturi circolano nel sangue per 6-10 ore, per migrare poi nei tessuti dove svolgono la loro funzione per ulteriori 8-12 giorni.\n\nHanno funzione di difesa dell’organismo, ricoprendo importanti ruoli nei meccanismi di reazione allergica e nella difesa da parassiti ed elminti (vermi). Sono inoltre in grado di rilasciare mediatori per i processi infiammatori e l’uccisione dei microbi.\n\nUna seconda importante funzione, benché negativa per l’uomo, è la secrezione di leucotrieni, molecole coinvolte nella patogenesi dell’asma in grado di stimolare tra l’altro la secrezione di muco e favorire lo sviluppo di broncocostrizione."
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "10^9/L"
 		}
 	},
 	{
 		"id": "eo-perc",
-		"extras": {
+		"metadata": {
 			"aliases": [
 				"Eosinofili (%)"
 			],
@@ -1381,13 +1395,13 @@
 				"summary": "I granulociti eosinofili sono un tipo di globulo bianco, ossia una cellula facente parte del sistema immunitario, che viene prodotto dal midollo osseo, partendo da cellule staminali comuni alle altre cellule del sangue (globuli bianchi, globuli rossi e piastrine); il nome deriva dalla presenza al loro interno di granuli in grado di legare fortemente l’eosina, una sostanza colorante (rosso-arancio) usata durante l’analisi di laboratorio.\n\nUna volta maturi circolano nel sangue per 6-10 ore, per migrare poi nei tessuti dove svolgono la loro funzione per ulteriori 8-12 giorni.\n\nHanno funzione di difesa dell’organismo, ricoprendo importanti ruoli nei meccanismi di reazione allergica e nella difesa da parassiti ed elminti (vermi). Sono inoltre in grado di rilasciare mediatori per i processi infiammatori e l’uccisione dei microbi.\n\nUna seconda importante funzione, benché negativa per l’uomo, è la secrezione di leucotrieni, molecole coinvolte nella patogenesi dell’asma in grado di stimolare tra l’altro la secrezione di muco e favorire lo sviluppo di broncocostrizione."
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "%"
 		}
 	},
 	{
 		"id": "epa-aa",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1396,11 +1410,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "epaq",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1409,13 +1423,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "%"
 		}
 	},
 	{
 		"id": "epat",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1424,11 +1438,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "epats",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1437,11 +1451,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "esens",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1450,13 +1464,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "pg/mL"
 		}
 	},
 	{
 		"id": "esr",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1465,13 +1479,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "mm/hr"
 		}
 	},
 	{
 		"id": "estrasal",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1480,13 +1494,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "pg/mL"
 		}
 	},
 	{
 		"id": "estri",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1495,13 +1509,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "ng/mL"
 		}
 	},
 	{
 		"id": "estrogen-total",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1510,13 +1524,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "pg/mL"
 		}
 	},
 	{
 		"id": "estrone",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1525,13 +1539,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "pg/mL"
 		}
 	},
 	{
 		"id": "estsal",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1540,13 +1554,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "pg/mL"
 		}
 	},
 	{
 		"id": "f-",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1555,11 +1569,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "f2-isop",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1568,13 +1582,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "ng/mL"
 		}
 	},
 	{
 		"id": "f2ic",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1583,13 +1597,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "ng/mg"
 		}
 	},
 	{
 		"id": "fa-ratio-o6-o3-quantity",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1598,11 +1612,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "fa-ratio-o6-o3-ratio",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1611,11 +1625,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "fe",
-		"extras": {
+		"metadata": {
 			"aliases": [
 				"P-Ferro"
 			],
@@ -1638,13 +1652,13 @@
 				"summary": "Il metabolismo di quasi qualsiasi organismo vivente richiede necessariamente la presenza di ferro per numerosi processi metabolici e biochimici.\n\nQuello che ingeriamo attraverso l’alimentazione viene assorbito a livello intestinale e temporaneamente immagazzinato grazie alla ferritina nel fegato (ed in minor misura anche in midollo osseo, milza e muscolo scheletrico); nel momento in cui l’organismo lo richiede, il metallo viene invece rilasciato legato alla transferrina, una proteina di trasporto prodotta dal fegato.\n\nQuando si complessa con la porfirina forma l’eme, una struttura alla base di numerose proteine tra cui l’emoglobina; la caratteristica saliente dell’eme è la capacità di legare l’ossigeno, proprietà che viene per esempio sfruttata dai globuli rossi per trasportare l’ossigeno che respiriamo verso tutte le cellule dell’organismo.\n\nSe con l’alimentazione non viene fornito un sufficiente apporto di questo oligoelemento, i livelli di concentrazione nel sangue scenderanno e verranno progressivamente utilizzate le scorte accumulate nei tessuti, determinando nel tempo una situazione di carenza.\n\nD’altra parte, l’introduzione di un’eccessiva quantità di ferro può portare ad un progressivo accumulo in grado di causare danni a diversi organi, quali il fegato, cuore e pancreas.\n\nL’esame del ferro nel sangue ne misura la quantità circolante legata alla transferrina, ma la richiesta del medico prevede in genere anche il dosaggio di altri parametri (ferritina, ad esempio) in modo da ottenere un quadro complessivo più accurato ed affidabile."
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "μg/dL"
 		}
 	},
 	{
 		"id": "ferritin",
-		"extras": {
+		"metadata": {
 			"references": [
 				"https://www.valorinormali.com/sangue/ferritina/",
 				"https://medlineplus.gov/lab-tests/ferritin-blood-test/"
@@ -1664,13 +1678,13 @@
 				"summary": "La ferritina, misurata attraverso l’omonimo esame del sangue, è una proteina che contiene ferro; la sua valutazione fornisce importanti informazioni relative alle scorti disponibili nell’organismo.\n\nSi trova accumulata principalmente nel fegato, nella milza, nel midollo osseo e nei muscoli scheletrici e di fatto è la principale proteina responsabile dell’immagazzinamento del ferro; benché la frazione circolante sia molto piccola rispetto alle quantità accumulate, la sua concentrazione varia in proporzione al totale presente nel corpo, risultandone quindi un’accurata approssimazione.\n\nSe il risultato dell’esame è un valore basso significa che la concentrazione nel sangue è inferiore al normale, indicazione del fatto che anche i depositi sono bassi (carenza di ferro).\n\nSe al contrario il risultato è un valore alto potrebbe essere indicativo della presenza di una qualche malattia che causa un eccessivo immagazzinamento di ferro (ad esempio l’emocromatosi)."
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "μg/L"
 		}
 	},
 	{
 		"id": "ffa",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1679,13 +1693,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "mmol/L"
 		}
 	},
 	{
 		"id": "fibrinc",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1694,13 +1708,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "mg/dL"
 		}
 	},
 	{
 		"id": "folate",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1709,13 +1723,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "ng/mL"
 		}
 	},
 	{
 		"id": "free-thyroxine-index",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1724,11 +1738,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "fruc",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1737,13 +1751,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "μmol/L"
 		}
 	},
 	{
 		"id": "fsh",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1752,13 +1766,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "mIU/mL"
 		}
 	},
 	{
 		"id": "ft",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1767,13 +1781,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "ng/dL"
 		}
 	},
 	{
 		"id": "ft3",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1782,13 +1796,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "pg/mL"
 		}
 	},
 	{
 		"id": "ft4",
-		"extras": {
+		"metadata": {
 			"aliases": [
 				"S-Tiroxina libera (fT4)"
 			],
@@ -1813,13 +1827,13 @@
 				"summary": "La tiroide è una piccola ma potente ghiandola a forma di farfalla che trova posto nella parte anteriore del collo; controlla molte delle più importanti funzioni dell’organismo, produce infatti ormoni che influenzano parametri vitali come frequenza cardiaca e temperatura corporea, regola processi come respirazione e digestione, ma più in generale supervisiona i meccanismi alla base di\n\nsviluppo\nmetabolismo\nsistema neurologico.\nBanalizzando un po’, le reazioni biochimiche su cui agisce tendono ad accelerare quando i livelli di ormoni tiroidei aumentano, quindi in caso di produzione alterata (troppo o troppo poco) si possono sviluppare disturbi e problemi legati alla perdita di un corretto equilibrio (omeostasi).\n\nI due ormoni principali prodotti dalla tiroide, dietro stimolazione dell’ormone tireostimolante (TSH), sono la tiroxina (T4) e la triiodotironina (T3).\n\nL’esame del T4 di solito viene usato come esame di seconda linea dopo quello del TSH (ormone tireostimolante); il T4 totale e il T4 libero (FT4) sono due esami diversi che aiutano il medico a valutare la funzionalità della tiroide, per evidenziare eventuali anomalie nel funzionamento della ghiandola."
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "pmol/L"
 		}
 	},
 	{
 		"id": "ftestq",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1828,13 +1842,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "pg/mL"
 		}
 	},
 	{
 		"id": "fv",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1843,11 +1857,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "gal-3",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1856,13 +1870,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "ng/mL"
 		}
 	},
 	{
 		"id": "ggt",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1871,13 +1885,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "IU/L"
 		}
 	},
 	{
 		"id": "ghr",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1886,13 +1900,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "pg/mL"
 		}
 	},
 	{
 		"id": "gliadin-antibody-iga",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1901,13 +1915,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "U"
 		}
 	},
 	{
 		"id": "gliadin-antibody-igg",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1916,13 +1930,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "U"
 		}
 	},
 	{
 		"id": "globulin",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1931,13 +1945,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "g/dL"
 		}
 	},
 	{
 		"id": "glucose",
-		"extras": {
+		"metadata": {
 			"aliases": [
 				"P-GLUCOSIO"
 			],
@@ -1962,13 +1976,13 @@
 				"summary": "In campo medico la quantità di glucosio (zucchero) nel sangue prende il nome di glicemia ed è in genere il primo esame che viene richiesto quando si sospetta la presenza di diabete.\n\nIl glucosio rappresenta la principale fonte di energia per la maggior parte delle cellule del corpo, comprese quelle del cervello che sono tra l’altro tra le poche a non poterne fare a meno, non essendo in grado di usare fonti energetiche alternative.\n\nI carboidrati (o glucidi) si trovano ad esempio in frutta, cereali (pane, pasta, riso, …) e vengono più o meno rapidamente trasformati in glucosio a seguito della loro introduzione attraverso la dieta; l’assorbimento che si verifica durante e dopo un pasto ha come conseguenza un aumento della quantità circolante di zucchero nel sangue e, nel caso si raggiungano valori eccessivi (iperglicemia), possono verificarsi sintomi di vario genere.\n\nIn caso di risultati oltre i valori normali, la diagnosi di diabete o pre-diabete deve sempre essere confermata con nuove analisi, a meno di presenza inequivocabile dei sintomi caratteristici della malattia."
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "mg/dL"
 		}
 	},
 	{
 		"id": "glucose-points",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1977,13 +1991,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "points"
 		}
 	},
 	{
 		"id": "gluten",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -1992,13 +2006,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "mcg/mL"
 		}
 	},
 	{
 		"id": "hazelnut-ige",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2007,13 +2021,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "kU/L"
 		}
 	},
 	{
 		"id": "hct",
-		"extras": {
+		"metadata": {
 			"aliases": [
 				"Sg-EMATOCRITO"
 			],
@@ -2037,13 +2051,13 @@
 				"summary": "La valutazione dell’ematocrito è una misura della percentuale del volume di sangue occupata dai globuli rossi, le cellule responsabili del trasporto di ossigeno in tutto il corpo, un valore utile alla valutazione dello stato di salute generale del paziente."
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "%"
 		}
 	},
 	{
 		"id": "hcy",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2052,13 +2066,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "μmol/L"
 		}
 	},
 	{
 		"id": "hcy-score",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2067,11 +2081,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "hdl",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2080,13 +2094,13 @@
 				"summary": "NULLHDL, or high-density lipoprotein, or \"good\" cholesterol, is the one type of cholesterol that is helpful. HDL cholesterol acts as a \"scavenger\" of excess cholesterol, bringing extra cholesterol from arteries and the body back to the liver to be metabolized. This means that higher levels of HDL cholesterol are actually better. HDL cholesterol greater than 60 milligrams per deciliter (mg/dL) can help protect you against heart disease, with higher levels even more protective."
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "mg/dL"
 		}
 	},
 	{
 		"id": "hdl-large-risk",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2095,11 +2109,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "hdl-p",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2108,13 +2122,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "μmol/L"
 		}
 	},
 	{
 		"id": "hdl-particles",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2123,13 +2137,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "nmol/L"
 		}
 	},
 	{
 		"id": "hdl-points",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2138,13 +2152,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "points"
 		}
 	},
 	{
 		"id": "hdl-score",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2153,13 +2167,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "nm"
 		}
 	},
 	{
 		"id": "hdl-small-risk",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2168,11 +2182,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "hdl2",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2181,13 +2195,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "mg/dL"
 		}
 	},
 	{
 		"id": "health-points",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2196,13 +2210,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "points"
 		}
 	},
 	{
 		"id": "height",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2211,13 +2225,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "meters"
 		}
 	},
 	{
 		"id": "hgb",
-		"extras": {
+		"metadata": {
 			"notes": "Risks differ by sex and age",
 			"aliases": [
 				"Sg-EMOGLOBINA"
@@ -2244,13 +2258,13 @@
 				"summary": "L’emoglobina è una proteina solubile di colore rosso che troviamo nei globuli rossi del sangue; la sua funzione è quella di legare l’ossigeno, che potrà così essere trasportato dai globuli rossi in tutti i tessuti dell’organismo, ceduto in cambio dell’anidride carbonica da smaltire.\n\nQuando il dosaggio nel sangue ne evidenzia una concentrazione inferiore al normale, il paziente presenta un insufficiente numero di globuli rossi nel sangue (anemia); questo può avere numerose cause, tra cui carenze vitaminiche, emorragie ed alcune malattie croniche.\n\nSe al contrario troviamo un livello superiore al normale, condizione peraltro decisamente più rara, le potenziali cause devono essere cercate nella policitemia vera (una malattia del sangue), o in fattori quali la vita ad alta quota, il fumo e la disidratazione."
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "g/L"
 		}
 	},
 	{
 		"id": "homa-ir",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2259,11 +2273,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "hs-crp",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2272,13 +2286,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "mg/L"
 		}
 	},
 	{
 		"id": "hs-crp-score",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2287,11 +2301,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "hs-o3-index",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2300,13 +2314,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "%"
 		}
 	},
 	{
 		"id": "i",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2315,11 +2329,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "idl-large-risk",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2328,11 +2342,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "idl-small-risk",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2341,11 +2355,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "ig",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2354,13 +2368,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "%"
 		}
 	},
 	{
 		"id": "iga",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2369,13 +2383,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "x10E3/μL"
 		}
 	},
 	{
 		"id": "iga1",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2384,13 +2398,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "mg/dL"
 		}
 	},
 	{
 		"id": "igf-1",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2399,13 +2413,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "ng/mL"
 		}
 	},
 	{
 		"id": "igf-1-z",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2414,11 +2428,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "igg",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2427,13 +2441,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "mg/dL"
 		}
 	},
 	{
 		"id": "igm",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2442,13 +2456,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "mg/dL"
 		}
 	},
 	{
 		"id": "il-10",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2457,13 +2471,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "pg/mL"
 		}
 	},
 	{
 		"id": "il-6p",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2472,13 +2486,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "pg/mL"
 		}
 	},
 	{
 		"id": "il-6s",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2487,13 +2501,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "pg/mL"
 		}
 	},
 	{
 		"id": "il17",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2502,11 +2516,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "inr",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2515,11 +2529,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "insulin",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2528,13 +2542,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "mIU/L"
 		}
 	},
 	{
 		"id": "insulin-score",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2543,11 +2557,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "iron-saturation",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2556,13 +2570,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "%"
 		}
 	},
 	{
 		"id": "iron-score",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2571,11 +2585,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "k",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2584,13 +2598,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "mmol/L"
 		}
 	},
 	{
 		"id": "large-hdl",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2599,13 +2613,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "nmol/L"
 		}
 	},
 	{
 		"id": "large-hdl-p",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2614,13 +2628,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "μmol/L"
 		}
 	},
 	{
 		"id": "large-hdlq",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2629,13 +2643,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "nmol/L"
 		}
 	},
 	{
 		"id": "large-idl",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2644,13 +2658,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "nmol/L"
 		}
 	},
 	{
 		"id": "large-ldl-a",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2659,13 +2673,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "nmol/L"
 		}
 	},
 	{
 		"id": "large-ldl-b",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2674,13 +2688,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "nmol/L"
 		}
 	},
 	{
 		"id": "large-vldl",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2689,13 +2703,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "nmol/L"
 		}
 	},
 	{
 		"id": "large-vldl-p",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2704,13 +2718,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "nmol/L"
 		}
 	},
 	{
 		"id": "lathosterol",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2719,11 +2733,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "ldh",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2732,13 +2746,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "IU/L"
 		}
 	},
 	{
 		"id": "ldl",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2747,13 +2761,13 @@
 				"summary": "LDL,which stands for low-density lipoprotein, is considered the less helpful type of cholesterol because it can transport cholesterol to the walls of arteries, forming clogging plaques that put you at risk for heart disease and stroke. Specifically, greater numbers of small dense LDL particles increase this risk as compared to lesser numbers of large less dense particles. By lowering your LDL cholesterol, you can decrease your risk of cardiovascular disease."
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "mg/dL"
 		}
 	},
 	{
 		"id": "ldl-large-a-risk",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2762,11 +2776,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "ldl-large-b-risk",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2775,11 +2789,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "ldl-medium-and-small-risk",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2788,11 +2802,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "ldl-medium-risk",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2801,11 +2815,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "ldl-particle-count",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2814,13 +2828,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "nmol/L"
 		}
 	},
 	{
 		"id": "ldl-particle-size-risk",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2829,11 +2843,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "ldl-phenotype",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2842,11 +2856,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "ldl-phenotype-risk",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2855,11 +2869,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "ldl-points",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2868,13 +2882,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "points"
 		}
 	},
 	{
 		"id": "ldl-size",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2883,13 +2897,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "nm"
 		}
 	},
 	{
 		"id": "ldl-small-risk",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2898,11 +2912,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "ldl-to-hdl-ratio",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2911,11 +2925,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "ldl-total-risk",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2924,11 +2938,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "ldl-versus-total-risk",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2937,11 +2951,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "ldl-very-small-a-risk",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2950,11 +2964,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "ldl-very-small-b-risk",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2963,11 +2977,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "ldl-very-small-c-risk",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2976,11 +2990,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "ldl-very-small-d-risk",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -2989,11 +3003,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "ldlpq",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -3002,13 +3016,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "nmol/L"
 		}
 	},
 	{
 		"id": "ldlq",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -3017,13 +3031,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "nmol/L"
 		}
 	},
 	{
 		"id": "ldlsq",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -3032,13 +3046,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "Angstrom"
 		}
 	},
 	{
 		"id": "lead",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -3047,13 +3061,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "μg/dL"
 		}
 	},
 	{
 		"id": "lep",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -3062,13 +3076,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "ng/mL"
 		}
 	},
 	{
 		"id": "lh",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -3077,13 +3091,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "mIU/mL"
 		}
 	},
 	{
 		"id": "lp-a",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -3092,13 +3106,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "nmol/L"
 		}
 	},
 	{
 		"id": "lp-a-mass",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -3107,13 +3121,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "mg/dL"
 		}
 	},
 	{
 		"id": "lp-a-particle-mass",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -3122,13 +3136,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "mg/dL"
 		}
 	},
 	{
 		"id": "lp-a-particles",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -3137,13 +3151,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "nmol/L"
 		}
 	},
 	{
 		"id": "lp-ir-score",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -3152,11 +3166,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "lp-pla2-dsx",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -3165,13 +3179,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "ng/mL"
 		}
 	},
 	{
 		"id": "ly-abs",
-		"extras": {
+		"metadata": {
 			"references": [
 				"https://www.genome.gov/genetics-glossary/Lymphocyte",
 				"https://www.valorinormali.com/sangue/linfociti/"
@@ -3191,13 +3205,13 @@
 				"summary": "I linfociti sono globuli bianchi, cellule presenti nel sangue e facenti parte del sistema immunitario, una complessa rete integrata cellule, tessuti e meccanismi biologici volta della difesa dell’organismo.\n\nSono prodotti nel midollo osseo e possono essere classificati in due grandi categorie in base al tessuto dove avviene la loro maturazione finale: linfociti B (maturazione nel midollo osseo), linfociti T (maturazione nel timo).\n\nAlla luce della loro funzione è quindi del tutto prevedibile osservare temporanei aumenti della loro presenza nel sangue, ma l’entità e la durata di queste variazioni può aiutare il medico nei diversi processi diagnostici.\n\nL’esame fa generalmente parte dei test richiesti durante l’esecuzione dell’emocromo.\n\nUn elevato valore dei linfociti (linfocitosi) viene in genere rilevato a seguito di esami richiesti per sintomi già emersi, mentre è rara una scoperta inaspettata o casuale; di norma si parla di linfocitosi quando il risultato supera i 4.000 per microlitro, sebbene il numero possa di gran lunga aumentare, soprattutto nei bambini e nei neonati.\n\nLa linfocitosi è spesso indicativa di infezioni virali (come ad esempio la mononucleosi), ma può essere osservata anche in casi di infezioni batteriche intracellulari, ad esempio per tubercolosi."
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "10^9/L"
 		}
 	},
 	{
 		"id": "ly-perc",
-		"extras": {
+		"metadata": {
 			"references": [
 				"https://www.genome.gov/genetics-glossary/Lymphocyte",
 				"https://www.valorinormali.com/sangue/linfociti/"
@@ -3217,13 +3231,13 @@
 				"summary": "I linfociti sono globuli bianchi, cellule presenti nel sangue e facenti parte del sistema immunitario, una complessa rete integrata cellule, tessuti e meccanismi biologici volta della difesa dell’organismo.\n\nSono prodotti nel midollo osseo e possono essere classificati in due grandi categorie in base al tessuto dove avviene la loro maturazione finale: linfociti B (maturazione nel midollo osseo), linfociti T (maturazione nel timo).\n\nAlla luce della loro funzione è quindi del tutto prevedibile osservare temporanei aumenti della loro presenza nel sangue, ma l’entità e la durata di queste variazioni può aiutare il medico nei diversi processi diagnostici.\n\nL’esame fa generalmente parte dei test richiesti durante l’esecuzione dell’emocromo.\n\nUn elevato valore dei linfociti (linfocitosi) viene in genere rilevato a seguito di esami richiesti per sintomi già emersi, mentre è rara una scoperta inaspettata o casuale; di norma si parla di linfocitosi quando il risultato supera i 4.000 per microlitro, sebbene il numero possa di gran lunga aumentare, soprattutto nei bambini e nei neonati.\n\nLa linfocitosi è spesso indicativa di infezioni virali (come ad esempio la mononucleosi), ma può essere osservata anche in casi di infezioni batteriche intracellulari, ad esempio per tubercolosi."
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "%"
 		}
 	},
 	{
 		"id": "magnesium-rbc",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -3232,13 +3246,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "mg/dL"
 		}
 	},
 	{
 		"id": "mch",
-		"extras": {
+		"metadata": {
 			"references": [
 				"https://en.wikipedia.org/wiki/Mean_corpuscular_hemoglobin",
 				"https://www.webmd.com/a-to-z-guides/what-are-mch-levels",
@@ -3262,13 +3276,13 @@
 				"summary": "La quantità media di emoglobina eritrocitaria (MCH) è il calcolo della quantità media di emoglobina trasportante ossigeno nei globuli rossi. Questo valore è calcolato automaticamente dai conta cellule elettronici, ma può essere ricavato conoscendo il numero di globuli rossi e la concentrazione dell'emoglobina. L'analisi degli indici corpuscolari può essere prescritta quando il paziente manifesta un certo numero di segni e sintomi che possono essere messi in relazione con patologie che interessano le cellule del sangue. "
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "pg"
 		}
 	},
 	{
 		"id": "mchc",
-		"extras": {
+		"metadata": {
 			"references": [
 				"https://en.wikipedia.org/wiki/Mean_corpuscular_hemoglobin_concentration",
 				"https://unitslab.com/node/5",
@@ -3291,13 +3305,13 @@
 				"summary": "La Concentrazione Emoglobinica Corpuscolare Media (MCHC, dall'inglese \"Mean Corpuscolar Hemoglobin Concentration\") è la misurazione della quantità di emoglobina (Hb) presente in ogni singolo globulo rosso, in relazione alle dimensioni dell'eritrocita stesso.\n\nIn laboratorio, il valore di MCHC viene fornito in modo automatico dai conta-cellule elettronici, ma è calcolabile anche secondo la formula: Hb (g/dl) x 100/valore ematocrito.\n\nL'interpretazione del risultato di MCHC riveste un'importante utilità nella diagnosi e nel monitoraggio di numerose condizioni patologiche, fra cui le anemie ipocromiche, i deficit di vitamina B12 e le disfunzioni della tiroide."
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "g/dL"
 		}
 	},
 	{
 		"id": "mcv",
-		"extras": {
+		"metadata": {
 			"references": [
 				"https://www.valorinormali.com/sangue/volume-corpuscolare-medio/",
 				"https://medlineplus.gov/lab-tests/mcv-mean-corpuscular-volume/"
@@ -3317,13 +3331,13 @@
 				"summary": "Il volume corpuscolare medio (MCV) rappresenta il volume medio dei globuli rossi in un campione di sangue. \n\nQuesto parametro è utile principalmente per una miglior comprensione della forma di anemia, una condizione caratterizzata dalla riduzione dei valori di emoglobina."
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "fL"
 		}
 	},
 	{
 		"id": "mean-plasma-glucose",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -3332,13 +3346,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "mg/dL"
 		}
 	},
 	{
 		"id": "measies-igm-ab",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -3347,13 +3361,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "AU/mL"
 		}
 	},
 	{
 		"id": "measles-igg-ab",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -3362,13 +3376,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "AU/mL"
 		}
 	},
 	{
 		"id": "medium-and-small-ldl",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -3377,13 +3391,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "nmol/L"
 		}
 	},
 	{
 		"id": "medium-ldl",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -3392,13 +3406,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "nmol/L"
 		}
 	},
 	{
 		"id": "medium-vldl",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -3407,13 +3421,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "nmol/L"
 		}
 	},
 	{
 		"id": "mercury",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -3422,13 +3436,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "μg/L"
 		}
 	},
 	{
 		"id": "mg",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -3437,13 +3451,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "mg/dL"
 		}
 	},
 	{
 		"id": "microalb",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -3452,13 +3466,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "mg albumin / g creatinine"
 		}
 	},
 	{
 		"id": "mma",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -3467,13 +3481,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "nmol/L"
 		}
 	},
 	{
 		"id": "mn",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -3482,11 +3496,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "mo",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -3495,11 +3509,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "mo-abs",
-		"extras": {
+		"metadata": {
 			"references": [
 				"https://www.valorinormali.com/sangue/monociti/",
 				"https://medlineplus.gov/lab-tests/white-blood-count-wbc/",
@@ -3521,13 +3535,13 @@
 				"summary": "I globuli bianchi sono cellule del sistema immunitario che si occupano della difesa dell’organismo; la loro concentrazione nel sangue rappresenta un utile parametro indicativo dello stato di salute di un individuo, perché un aumento significativo è generalmente suggestivo di infezione in corso; rappresentano quindi una sorta di marker d’infiammazione.\n \nTra i diversi tipi di globuli bianchi, i monociti sono quelli più voluminosi; è possibile misurarne la quantità circolante ed il risultato viene in genere espresso sia in termini percentuali (ossia quanti monociti ci sono rispetto a tutti i globuli bianchi),\nsia in termini assoluti (ossia quanti monociti ci sono per ogni litro di sangue).\n\nSi tratta di cellule prodotte dal midollo osseo e che, attraverso il torrente sanguigno, raggiungono ogni tessuto dove venga richiesto il loro intervento, che consiste principalmente nel proteggere l’organismo dall’aggressione dei batteri.\n\nSono anche coinvolti nella riparazione dei tessuti e in altre funzioni, come per esempio la difesa verso parassiti intestinali (vermi).\n\nI monociti aumentano in caso di infezioni di ogni genere, oltre che in presenza di condizioni infiammatorie, ma valori alti fanno in genere pensare alla presenza di malattie croniche più che episodi acuti; possono aumentare anche in presenza di malattie intestinali come il colon irritabile."
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "10^9/L"
 		}
 	},
 	{
 		"id": "mo-perc",
-		"extras": {
+		"metadata": {
 			"references": [
 				"https://www.valorinormali.com/sangue/monociti/",
 				"https://medlineplus.gov/lab-tests/white-blood-count-wbc/",
@@ -3549,13 +3563,13 @@
 				"summary": "I globuli bianchi sono cellule del sistema immunitario che si occupano della difesa dell’organismo; la loro concentrazione nel sangue rappresenta un utile parametro indicativo dello stato di salute di un individuo, perché un aumento significativo è generalmente suggestivo di infezione in corso; rappresentano quindi una sorta di marker d’infiammazione.\n \nTra i diversi tipi di globuli bianchi, i monociti sono quelli più voluminosi; è possibile misurarne la quantità circolante ed il risultato viene in genere espresso sia in termini percentuali (ossia quanti monociti ci sono rispetto a tutti i globuli bianchi),\nsia in termini assoluti (ossia quanti monociti ci sono per ogni litro di sangue).\n\nSi tratta di cellule prodotte dal midollo osseo e che, attraverso il torrente sanguigno, raggiungono ogni tessuto dove venga richiesto il loro intervento, che consiste principalmente nel proteggere l’organismo dall’aggressione dei batteri.\n\nSono anche coinvolti nella riparazione dei tessuti e in altre funzioni, come per esempio la difesa verso parassiti intestinali (vermi).\n\nI monociti aumentano in caso di infezioni di ogni genere, oltre che in presenza di condizioni infiammatorie, ma valori alti fanno in genere pensare alla presenza di malattie croniche più che episodi acuti; possono aumentare anche in presenza di malattie intestinali come il colon irritabile."
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "%"
 		}
 	},
 	{
 		"id": "monounsaturatedfa",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -3564,11 +3578,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "mpo",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -3577,13 +3591,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "pmol/L"
 		}
 	},
 	{
 		"id": "mpv",
-		"extras": {
+		"metadata": {
 			"references": [
 				"https://www.valorinormali.com/sangue/mpv/",
 				"https://medlineplus.gov/lab-tests/mpv-blood-test/"
@@ -3603,13 +3617,13 @@
 				"summary": "Il parametro MPV è una stima del volume medio delle piastrine, piccoli frammenti cellulari privi di nucleo e circolanti nel sangue.\n\nLe piastrine, anche chiamate trombociti, ricoprono un ruolo chiave nella formazione di coaguli per fermare eventuali sanguinamenti; quando un vaso sanguigno viene danneggiato vengono inviati segnali che inducono le piastrine a precipitarsi rapidamente nel distretto interessato con l’obiettivo di formare un coagulo (il primo passo nella riparazione).\n\nÈ chiaramente vantaggioso per il processo di coagulazione che le piastrine siano il più grandi possibile, ma in presenza di una ridotta funzionalità del midollo osseo diminuiscono di volume.\n\nNel caso in cui la conta delle piastrine sia inferiore ai valori normali per cause diverse da un malfunzionamento del midollo osseo, quest’ultimo proverà a compensare la ridotta quantità producendo cellule dal volume superiore.\n\nPoiché la dimensione media delle piastrine è maggiore quando il corpo produce un numero superiore di piastrine, i risultati di questo esame possono essere utilizzati per capire l’origine di eventuali anomalie nella quantità circolante."
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "fL"
 		}
 	},
 	{
 		"id": "mthfr",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -3618,11 +3632,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "mthfra1298",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -3631,11 +3645,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "mum-igg-ab",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -3644,13 +3658,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "AU/mL"
 		}
 	},
 	{
 		"id": "n-hdl-c",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -3659,13 +3673,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "mg/dL"
 		}
 	},
 	{
 		"id": "na",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -3674,13 +3688,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "mmol/L"
 		}
 	},
 	{
 		"id": "ne-count",
-		"extras": {
+		"metadata": {
 			"references": [
 				"https://www.valorinormali.com/sangue/neutrofili/",
 				"https://www.youtube.it/watch?v=CZaIXdh4zqs",
@@ -3703,13 +3717,13 @@
 				"summary": "I granulociti neutrofili sono un tipo di leucocita (globulo bianco) che viene attivato in difesa dell’organismo quando questo viene attaccato da batteri e/o funghi; la loro funzione è quella di catturare e distruggere sostanze estranee attraverso il meccanismo della fagocitosi, che prevede l’ingestione e la successiva distruzione di materiale estraneo.\n\nVengono chiamati neutrofili perché in analisi di laboratorio non incorporano alcun tipo di colorante (rimangono cioè neutri).\n\nRappresentano circa il 50-70% dei globuli bianchi ed ogni giorno il midollo osseo ne produce circa 100 miliardi, poiché hanno una vita limitata a circa 7-10 ore nel sangue e di pochi giorni nei tessuti."
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "10^9/L"
 		}
 	},
 	{
 		"id": "ne-perc",
-		"extras": {
+		"metadata": {
 			"references": [
 				"https://www.valorinormali.com/sangue/neutrofili/",
 				"https://www.youtube.it/watch?v=CZaIXdh4zqs",
@@ -3732,13 +3746,13 @@
 				"summary": "I granulociti neutrofili sono un tipo di leucocita (globulo bianco) che viene attivato in difesa dell’organismo quando questo viene attaccato da batteri e/o funghi; la loro funzione è quella di catturare e distruggere sostanze estranee attraverso il meccanismo della fagocitosi, che prevede l’ingestione e la successiva distruzione di materiale estraneo.\n\nVengono chiamati neutrofili perché in analisi di laboratorio non incorporano alcun tipo di colorante (rimangono cioè neutri).\n\nRappresentano circa il 50-70% dei globuli bianchi ed ogni giorno il midollo osseo ne produce circa 100 miliardi, poiché hanno una vita limitata a circa 7-10 ore nel sangue e di pochi giorni nei tessuti."
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "%"
 		}
 	},
 	{
 		"id": "nic",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -3747,13 +3761,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "ng/mL"
 		}
 	},
 	{
 		"id": "nrbc",
-		"extras": {
+		"metadata": {
 			"references": [
 				"https://labs.selfdecode.com/blog/nrbc/",
 				"https://en.wikipedia.org/wiki/Nucleated_red_blood_cell"
@@ -3773,13 +3787,13 @@
 				"summary": "I globuli rossi nucleati sono globuli rossi immaturi. Negli adulti, la loro presenza nel sangue indica un problema.\n\nQuando i globuli rossi maturano, perdono il loro nucleo, una parte della cellula in cui è immagazzinato il DNA. Ciò consente loro di trasportare più emoglobina (e quindi più ossigeno) e di assumere una forma altamente flessibile.\n\nI globuli rossi nucleati (NRBC, normoblasti) sono globuli rossi immaturi (RBC) che contengono ancora un nucleo. A differenza di quelli maturi, i globuli rossi nucleati non sono in grado di \"spremere\" attraverso gli oblò nel midollo osseo ed entrare in circolazione.\n\nNegli adulti e nei bambini sani, i NRBC si trovano solitamente solo nel midollo osseo dove si sviluppano e maturano. La loro presenza nel sangue indica l'interruzione della barriera emato-midollare o l'aumento della produzione di globuli rossi al di fuori del midollo osseo.\n\nTuttavia, gli NRBC sono comuni nel sangue dei feti e dei neonati, soprattutto se stanno vivendo un ritardo della crescita o una mancanza di ossigeno."
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "10^9/L"
 		}
 	},
 	{
 		"id": "nrbc-perc",
-		"extras": {
+		"metadata": {
 			"references": [
 				"https://labs.selfdecode.com/blog/nrbc/",
 				"https://en.wikipedia.org/wiki/Nucleated_red_blood_cell"
@@ -3799,13 +3813,13 @@
 				"summary": "I globuli rossi nucleati sono globuli rossi immaturi. Negli adulti, la loro presenza nel sangue indica un problema.\n\nQuando i globuli rossi maturano, perdono il loro nucleo, una parte della cellula in cui è immagazzinato il DNA. Ciò consente loro di trasportare più emoglobina (e quindi più ossigeno) e di assumere una forma altamente flessibile.\n\nI globuli rossi nucleati (NRBC, normoblasti) sono globuli rossi immaturi (RBC) che contengono ancora un nucleo. A differenza di quelli maturi, i globuli rossi nucleati non sono in grado di \"spremere\" attraverso gli oblò nel midollo osseo ed entrare in circolazione.\n\nNegli adulti e nei bambini sani, i NRBC si trovano solitamente solo nel midollo osseo dove si sviluppano e maturano. La loro presenza nel sangue indica l'interruzione della barriera emato-midollare o l'aumento della produzione di globuli rossi al di fuori del midollo osseo.\n\nTuttavia, gli NRBC sono comuni nel sangue dei feti e dei neonati, soprattutto se stanno vivendo un ritardo della crescita o una mancanza di ossigeno."
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "%"
 		}
 	},
 	{
 		"id": "ntprobnp",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -3814,13 +3828,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "pg/mL"
 		}
 	},
 	{
 		"id": "o6fa",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -3829,13 +3843,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "%"
 		}
 	},
 	{
 		"id": "o6fa-a",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -3844,13 +3858,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "%"
 		}
 	},
 	{
 		"id": "o6fa-d-y-l",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -3859,13 +3873,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "%"
 		}
 	},
 	{
 		"id": "o6fa-dp",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -3874,13 +3888,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "%"
 		}
 	},
 	{
 		"id": "o6fa-dt",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -3889,13 +3903,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "%"
 		}
 	},
 	{
 		"id": "o6fa-e",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -3904,13 +3918,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "%"
 		}
 	},
 	{
 		"id": "o6fa-g-l",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -3919,13 +3933,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "%"
 		}
 	},
 	{
 		"id": "o6fa-l",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -3934,13 +3948,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "%"
 		}
 	},
 	{
 		"id": "omega-index-quest",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -3949,13 +3963,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "%"
 		}
 	},
 	{
 		"id": "omega6sanis",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -3964,13 +3978,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "%"
 		}
 	},
 	{
 		"id": "omegar",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -3979,11 +3993,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "oxidized-ldl",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -3992,13 +4006,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "U/L"
 		}
 	},
 	{
 		"id": "p",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4007,13 +4021,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "mg/dL"
 		}
 	},
 	{
 		"id": "peanut-ige",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4022,13 +4036,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "kU/L"
 		}
 	},
 	{
 		"id": "pgsn",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4037,13 +4051,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "ng/mL"
 		}
 	},
 	{
 		"id": "platelet-fake",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4052,11 +4066,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "plt",
-		"extras": {
+		"metadata": {
 			"aliases": [
 				"Sg-PIASTRINE"
 			],
@@ -4081,13 +4095,13 @@
 				"summary": "Le piastrine, note anche come trombociti, sono piccole cellule del sangue essenziali per la coagulazione del sangue. La coagulazione è il processo che ti aiuta a fermare l'emorragia dopo un infortunio. Esistono due tipi di test piastrinici: un test della conta piastrinica e un test di funzionalità piastrinica.\n\nUn test della conta piastrinica misura il numero di piastrine nel sangue. Una conta piastrinica inferiore al normale è chiamata trombocitopenia. Questa condizione può farti sanguinare troppo dopo un taglio o altre lesioni che causano sanguinamento. Una conta piastrinica superiore al normale è chiamata trombocitosi. Questo può far coagulare il sangue più del necessario. I coaguli di sangue possono essere pericolosi perché possono bloccare il flusso sanguigno."
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "10^9/L"
 		}
 	},
 	{
 		"id": "pp",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4096,13 +4110,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "mmHg"
 		}
 	},
 	{
 		"id": "prgnl",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4111,13 +4125,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "ng/dL"
 		}
 	},
 	{
 		"id": "pro-mut",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4126,11 +4140,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "prolactin",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4139,13 +4153,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "ng/mL"
 		}
 	},
 	{
 		"id": "psa",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4154,13 +4168,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "ng/mL"
 		}
 	},
 	{
 		"id": "pt",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4169,13 +4183,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "seconds"
 		}
 	},
 	{
 		"id": "pth",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4184,13 +4198,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "pg/mL"
 		}
 	},
 	{
 		"id": "ptt",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4199,13 +4213,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "seconds"
 		}
 	},
 	{
 		"id": "rbc",
-		"extras": {
+		"metadata": {
 			"aliases": [
 				"Sg-ERITROCITI"
 			],
@@ -4229,13 +4243,13 @@
 				"summary": "Un conteggio dei globuli rossi (RBC) misura il numero di globuli rossi, noti anche come eritrociti, nel sangue. I globuli rossi trasportano l'ossigeno dai polmoni a ogni cellula del corpo. Le tue cellule hanno bisogno di ossigeno per crescere, riprodursi e rimanere in salute. Un numero di globuli rossi superiore o inferiore al normale è spesso il primo segno di una malattia. Quindi il test potrebbe consentirti di ottenere un trattamento anche prima di avere sintomi."
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "10^12/L"
 		}
 	},
 	{
 		"id": "rbc-fo",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4244,13 +4258,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "ng/mL"
 		}
 	},
 	{
 		"id": "rdw",
-		"extras": {
+		"metadata": {
 			"references": [
 				"https://medlineplus.gov/lab-tests/rdw-red-cell-distribution-width/",
 				"https://www.valorinormali.com/sangue/rdw/",
@@ -4271,13 +4285,13 @@
 				"summary": "L’RDW (Red Cell Distribution Width), in italiano ampiezza di distribuzione eritrocitaria, è un indice che fa parte dell’emocromo ed in grado di stimare la variabilità di volume dei globuli rossi. Permette quindi una stima della cosiddetta anisocitosi, ossia della presenza nel sangue di globuli rossi di diversa dimensione (gli eritrociti immaturi sono più grandi) e rappresenta un’informazione complementare all’indice MCV, che rappresenta invece la dimensione media dei globuli rossi.\n\nL’RDW viene tipicamente utilizzata per la diagnosi differenziale di alcuni tipi di anemia."
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "%"
 		}
 	},
 	{
 		"id": "rdw-sd",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4286,13 +4300,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "fL"
 		}
 	},
 	{
 		"id": "reverset3",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4301,13 +4315,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "ng/dL"
 		}
 	},
 	{
 		"id": "rh-type",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4316,11 +4330,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "rub-igg-ab",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4329,13 +4343,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "AU/mL"
 		}
 	},
 	{
 		"id": "salmon-ige",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4344,13 +4358,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "kU/L"
 		}
 	},
 	{
 		"id": "sc",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4359,11 +4373,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "scallop-ige",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4372,13 +4386,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "kU/L"
 		}
 	},
 	{
 		"id": "scot",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4387,13 +4401,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "ng/mL"
 		}
 	},
 	{
 		"id": "sdldl",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4402,13 +4416,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "mg/dL"
 		}
 	},
 	{
 		"id": "sdldl-ldl-ratio",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4417,13 +4431,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "%"
 		}
 	},
 	{
 		"id": "se",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4432,13 +4446,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "ng/mL"
 		}
 	},
 	{
 		"id": "serumfe",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4447,13 +4461,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "μg/dL"
 		}
 	},
 	{
 		"id": "sesame-seed-ige",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4462,13 +4476,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "kU/L"
 		}
 	},
 	{
 		"id": "sfa",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4477,13 +4491,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "%"
 		}
 	},
 	{
 		"id": "sfa-a",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4492,13 +4506,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "%"
 		}
 	},
 	{
 		"id": "sfa-b",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4507,13 +4521,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "%"
 		}
 	},
 	{
 		"id": "sfa-l",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4522,13 +4536,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "%"
 		}
 	},
 	{
 		"id": "sfa-m",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4537,13 +4551,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "%"
 		}
 	},
 	{
 		"id": "sfa-p",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4552,13 +4566,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "%"
 		}
 	},
 	{
 		"id": "sfa-s",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4567,13 +4581,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "%"
 		}
 	},
 	{
 		"id": "shbg",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4582,13 +4596,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "nmol/L"
 		}
 	},
 	{
 		"id": "shrimp-ige",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4597,13 +4611,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "kU/L"
 		}
 	},
 	{
 		"id": "small-hdl",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4612,13 +4626,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "nmol/L"
 		}
 	},
 	{
 		"id": "small-idl",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4627,13 +4641,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "nmol/L"
 		}
 	},
 	{
 		"id": "small-ldl",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4642,13 +4656,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "nmol/L"
 		}
 	},
 	{
 		"id": "small-ldl-particle-number",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4657,13 +4671,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "nmol/L"
 		}
 	},
 	{
 		"id": "small-vldl",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4672,13 +4686,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "nmol/L"
 		}
 	},
 	{
 		"id": "smoking-points",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4687,13 +4701,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "points"
 		}
 	},
 	{
 		"id": "snic",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4702,13 +4716,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "ng/mL"
 		}
 	},
 	{
 		"id": "soybean-ige",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4717,13 +4731,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "kU/L"
 		}
 	},
 	{
 		"id": "systolic-pressure",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4732,13 +4746,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "mmHg"
 		}
 	},
 	{
 		"id": "systolic-pressure-points",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4747,13 +4761,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "points"
 		}
 	},
 	{
 		"id": "t3",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4762,13 +4776,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "ng/dL"
 		}
 	},
 	{
 		"id": "t3up",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4777,13 +4791,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "%"
 		}
 	},
 	{
 		"id": "t3upsanis",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4792,13 +4806,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "ug/dl"
 		}
 	},
 	{
 		"id": "t4",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4807,13 +4821,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "μg/dL"
 		}
 	},
 	{
 		"id": "t4-uptake",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4822,11 +4836,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "tbd1",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4835,11 +4849,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "tbd2",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4848,11 +4862,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "tbil",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4861,13 +4875,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "mg/dL"
 		}
 	},
 	{
 		"id": "tchol",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4876,13 +4890,13 @@
 				"summary": "While we all need some cholesterol to make sure our bodies stay healthy and function correctly, too much bad (LDL) cholesterol can be dangerous, and increases the risk for heart disease and stroke, otherwise known as cardiovascular disease. LDL Cholesterol can be deposited in arteries and clog them, obstructing the transport of oxygen-rich blood, essential for a healthy and functioning heart and brain. A simple way to understand if you have the proper amount of good cholesterol, the ideal Total Cholesterol to HDL Cholesterol ratio is less than 3.5:1. If your ratio is greater than 5:1, this is considered very high-risk."
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "mg/dL"
 		}
 	},
 	{
 		"id": "tcholhdlc",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4891,11 +4905,11 @@
 				"summary": "Not all cholesterol increases your risk of atherosclerosis and cardiovascular disease. HDL cholesterol, the healthier cholesterol, helps carry artery-clogging substances away from your blood vessels and back to your liver to get metabolized. The Total Cholesterol/HDL Cholesterol ratio assesses what portion of all of your cholesterol is healthy and unhealthy cholesterol. A higher ratio means more cholesterol is unhealthy artery-clogging LDL cholesterol, while a lower ratio means more is your good HDL cholesterol. By lowering your ratio, you can decrease your risk of cardiovascular disease."
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "test",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4904,13 +4918,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "ng/dL"
 		}
 	},
 	{
 		"id": "testsal",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4919,13 +4933,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "pg/mL"
 		}
 	},
 	{
 		"id": "tf",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4934,13 +4948,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "mg/dL"
 		}
 	},
 	{
 		"id": "tfa",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4949,13 +4963,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "%"
 		}
 	},
 	{
 		"id": "tfa-tl",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4964,13 +4978,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "%"
 		}
 	},
 	{
 		"id": "tfa-to",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4979,13 +4993,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "%"
 		}
 	},
 	{
 		"id": "tfa-tp",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -4994,13 +5008,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "%"
 		}
 	},
 	{
 		"id": "tfi",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5009,13 +5023,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "%"
 		}
 	},
 	{
 		"id": "thr",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5024,11 +5038,11 @@
 				"summary": "Excess triglycerides can be stored in blood vessels, contributing to atherosclerosis and cardiovascular disease. Higher amounts of HDL can carry these fatty deposits away from blood vessels and be protective. Therefore, the ratio of triglycerides to HDL can be a valuable measure to help predict cardiovascular risk."
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "tibc",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5037,13 +5051,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "μg/dL"
 		}
 	},
 	{
 		"id": "tissue-transglutaminase-antibody-iga",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5052,13 +5066,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "U/mL"
 		}
 	},
 	{
 		"id": "tissue-transglutaminase-antibody-igg",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5067,13 +5081,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "U/mL"
 		}
 	},
 	{
 		"id": "tnf-a",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5082,11 +5096,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "to3fa",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5095,13 +5109,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "%"
 		}
 	},
 	{
 		"id": "to3fa-al",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5110,13 +5124,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "%"
 		}
 	},
 	{
 		"id": "to3fa-dh",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5125,13 +5139,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "%"
 		}
 	},
 	{
 		"id": "to3fa-dhq",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5140,13 +5154,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "%"
 		}
 	},
 	{
 		"id": "to3fa-dp",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5155,13 +5169,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "%"
 		}
 	},
 	{
 		"id": "to3fa-e",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5170,13 +5184,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "%"
 		}
 	},
 	{
 		"id": "to3fa-wb-e-d",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5185,13 +5199,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "%"
 		}
 	},
 	{
 		"id": "total-hdl-risk",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5200,11 +5214,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "total-ldl-risk",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5213,11 +5227,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "total-non-hdl",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5226,13 +5240,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "nmol/L"
 		}
 	},
 	{
 		"id": "total-non-hdl-risk",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5241,11 +5255,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "tp",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5254,13 +5268,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "g/dL"
 		}
 	},
 	{
 		"id": "trasat-perc",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5269,13 +5283,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "%"
 		}
 	},
 	{
 		"id": "trig",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5284,13 +5298,13 @@
 				"summary": "Triglycerides are the main type of fat found in the blood. Excess food that you don't use right away is stored in the form of triglycerides. Too high a level of triglycerides can raise your risk for heart disease and stroke. While <150mg/dL is considered normal, many recommend a triglycerides goal of <100mg/dL. Since triglycerides contribute to atherosclerosis, it is important to have the proper balance of triglycerides with artery-clearing HDL cholesterol. The ideal ratio of Triglycerides to HDL cholesterol is less than 2:1, while a ratio greater than 6:1 is considered very high risk. By lowering your triglycerides and this ratio, you can decrease your risk of cardiovascular disease, such as a heart attack and stroke."
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "mg/dL"
 		}
 	},
 	{
 		"id": "trig-points",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5299,13 +5313,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "points"
 		}
 	},
 	{
 		"id": "tsh",
-		"extras": {
+		"metadata": {
 			"aliases": [
 				"S-Tirotropina (TSH)"
 			],
@@ -5330,13 +5344,13 @@
 				"summary": "L’esame misura la quantità di ormone TSH (ormone tireotropo o tireostimolante) presente nel sangue.\n \nL’ormone è prodotto dall’ipofisi, una piccola ghiandola che si trova alla base della scatola cranica,  e costituisce solo una parte del complesso meccanismo di regolazione sanguigna dei due ormoni tiroidei: il T4 (tiroxina) e il T3 (triiodotironina).\n\nLa tiroide è una ghiandola a forma di farfalla che si trova nella parte anteriore del collo, appoggiata sulla trachea. Ha il compito di secernere gli ormoni tiroidei che, dal sangue,  raggiungono tutti i tessuti dell’organismo.\n\nGli ormoni tiroidei contribuiscono a numerosi funzioni, tra cui regolazione dell’utilizzo dell’energia disponibile (metabolismo),\nil mantenimento della corretta temperatura corporea, il funzionamento ottimale di cervello, cuore, muscoli e altri organi.\n\nQuando la loro concentrazione nel sangue diminuisce, l’ipotalamo secerne l’ormone TRH (ormone di rilascio della tireotropina) che a sua volta stimola l’ipofisi a secernere il TSH,\nche induce la tiroide a rilasciare in circolo il T3 e il T4.\n\nGli ormoni tiroidei agiscono su ipotalamo e ipofisi attraverso un meccanismo di feedback negativo, ossia favorendo una riduzione della produzione di TRH e TSH. Quando tiroide, ipotalamo e ipofisi funzionano correttamente la tiroide riesce a mantenere costanti i livelli di ormoni tiroidei i circolo, attivandosi solo al bisogno, grazie a questo semplice ma sensibile meccanismo di controllo ed equilibrio.\n\nSe l’ipofisi non funziona bene la quantità di TSH circolante si allontana dalla normalità"
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "mIU/L"
 		}
 	},
 	{
 		"id": "tuna-ige",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5345,13 +5359,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "kU/L"
 		}
 	},
 	{
 		"id": "uibc",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5360,13 +5374,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "μg/dL"
 		}
 	},
 	{
 		"id": "uric-acid",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5375,13 +5389,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "mg/dL"
 		}
 	},
 	{
 		"id": "urine-app",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5390,11 +5404,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "urine-as",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5403,11 +5417,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "urine-bac",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5416,13 +5430,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "/HPF"
 		}
 	},
 	{
 		"id": "urine-bili",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5431,11 +5445,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "urine-casts",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5444,11 +5458,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "urine-coc",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5457,11 +5471,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "urine-col",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5470,11 +5484,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "urine-com",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5483,11 +5497,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "urine-cr",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5496,13 +5510,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "mg/dL"
 		}
 	},
 	{
 		"id": "urine-cry",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5511,11 +5525,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "urine-gc",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5524,11 +5538,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "urine-glu",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5537,11 +5551,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "urine-hc",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5550,13 +5564,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "/LPF"
 		}
 	},
 	{
 		"id": "urine-ket",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5565,11 +5579,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "urine-le",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5578,11 +5592,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "urine-nit",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5591,11 +5605,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "urine-not",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5604,11 +5618,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "urine-ob",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5617,11 +5631,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "urine-ph",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5630,11 +5644,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "urine-pro",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5643,11 +5657,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "urine-rbc",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5656,13 +5670,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "/HPF"
 		}
 	},
 	{
 		"id": "urine-rec",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5671,11 +5685,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "urine-rs",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5684,11 +5698,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "urine-sec",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5697,13 +5711,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "/HPF"
 		}
 	},
 	{
 		"id": "urine-sg",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5712,11 +5726,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "urine-tec",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5725,11 +5739,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "urine-tpc",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5738,11 +5752,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "urine-uac",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5751,11 +5765,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "urine-wbc",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5764,13 +5778,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "/HPF"
 		}
 	},
 	{
 		"id": "urine-yeast",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5779,11 +5793,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "very-small-ldl",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5792,13 +5806,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "nmol/L"
 		}
 	},
 	{
 		"id": "very-small-ldl-a",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5807,13 +5821,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "nmol/L"
 		}
 	},
 	{
 		"id": "very-small-ldl-b",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5822,13 +5836,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "nmol/L"
 		}
 	},
 	{
 		"id": "very-small-ldl-c",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5837,13 +5851,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "nmol/L"
 		}
 	},
 	{
 		"id": "very-small-ldl-d",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5852,13 +5866,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "nmol/L"
 		}
 	},
 	{
 		"id": "vit-b12",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5867,13 +5881,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "pg/mL"
 		}
 	},
 	{
 		"id": "vit-d",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5882,13 +5896,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "ng/mL"
 		}
 	},
 	{
 		"id": "vita",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5897,13 +5911,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "μg/dL"
 		}
 	},
 	{
 		"id": "vitamin-d",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5912,13 +5926,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "pg/mL"
 		}
 	},
 	{
 		"id": "vitamin-d2",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5927,13 +5941,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "ng/mL"
 		}
 	},
 	{
 		"id": "vitamin-d3",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5942,13 +5956,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "ng/mL"
 		}
 	},
 	{
 		"id": "vitb6",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5957,11 +5971,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "vite",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5970,13 +5984,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "mg/L"
 		}
 	},
 	{
 		"id": "vkorc1",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5985,11 +5999,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "vldl-c",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -5998,13 +6012,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "mg/dL"
 		}
 	},
 	{
 		"id": "vldl-large-risk",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -6013,11 +6027,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "vldl-medium-risk",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -6026,11 +6040,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "vldl-size",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -6039,13 +6053,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "nm"
 		}
 	},
 	{
 		"id": "vldl-small-risk",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -6054,11 +6068,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "waist",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -6067,13 +6081,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "inches"
 		}
 	},
 	{
 		"id": "walnut-ige",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -6082,13 +6096,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "kU/L"
 		}
 	},
 	{
 		"id": "wbc",
-		"extras": {
+		"metadata": {
 			"aliases": [
 				"Sg-LEUCOCITI"
 			],
@@ -6111,13 +6125,13 @@
 				"summary": "I leucociti, conosciuti anche con il nome di globuli bianchi, sono cellule presenti nel sangue la cui funzione principale è proteggere l’organismo attraverso l’attuazione di meccanismi di difesa contro microorganismi di varia natura (virus, batteri, miceti, parassiti) e contro corpi estranei penetrati nell’organismo; rappresentano quindi uno degli elementi più importanti dell nostro sistema immunitario.\n\nSi possono differenziare diversi tipi di globuli bianchi. Contare quanti leucociti sono presenti nel sangue e la loro suddivisione percentuale (conta leucocitaria) ci permette quindi di avere informazioni sullo stato di salute dell’organismo.\n\nUn basso numero di globuli bianchi, condizione definita leucopenia, significa disporre di un ridotto numero di cellule nel sangue in grado di contrastare eventuali minacce."
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "10^9/L"
 		}
 	},
 	{
 		"id": "wbc-diff",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -6126,11 +6140,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "weight",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -6139,13 +6153,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "pounds"
 		}
 	},
 	{
 		"id": "wheat-ige",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -6154,13 +6168,13 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "kU/L"
 		}
 	},
 	{
 		"id": "whr",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -6169,11 +6183,11 @@
 				"summary": null
 			}
 		],
-		"units": null
+		"unit": null
 	},
 	{
 		"id": "zn",
-		"extras": null,
+		"metadata": null,
 		"translations": [
 			{
 				"languages_code": "en-US",
@@ -6182,7 +6196,7 @@
 				"summary": null
 			}
 		],
-		"units": {
+		"unit": {
 			"id": "mcg/dL"
 		}
 	}

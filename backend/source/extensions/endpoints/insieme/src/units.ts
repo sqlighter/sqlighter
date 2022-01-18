@@ -101,7 +101,6 @@ export class Unit {
 
 // initialize units data from units.json
 const _units: { [unit: string]: Unit } = {};
-
 const _unitsJson = require('./units.json');
 _unitsJson.forEach((u: any) => (_units[u.id] = new Unit(u.id, u.description, u.metadata)));
 

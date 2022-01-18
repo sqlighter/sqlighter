@@ -5,50 +5,47 @@
 import assert from 'assert/strict';
 import { Biomarker, Range } from './biomarkers';
 
-// external APIs require longer timeouts
-jest.setTimeout(30 * 1000);
-
 describe('biomarkers.ts', () => {
-	test('searchBiomarkers (exact)', async () => {
-		let b1s = await Biomarker.searchBiomarkers('glucose');
+	test('searchBiomarkers (exact)', () => {
+		let b1s = Biomarker.searchBiomarkers('glucose');
 		expect(b1s[0]?.item.id).toBe('glucose');
 		expect(b1s[0]?.item.translations?.[0]?.name).toBe('Glucose');
 		expect(b1s[0]?.confidence).toBeCloseTo(1);
 
-		b1s = await Biomarker.searchBiomarkers('Glucosio');
+		b1s = Biomarker.searchBiomarkers('Glucosio');
 		expect(b1s[0]?.item.id).toBe('glucose');
 		expect(b1s[0]?.item.translations?.[1]?.name).toBe('Glucosio');
 		expect(b1s[0]?.confidence).toBeCloseTo(1);
 
-		b1s = await Biomarker.searchBiomarkers('Urine Glucose');
+		b1s = Biomarker.searchBiomarkers('Urine Glucose');
 		expect(b1s[0]?.item.id).toBe('urine-glu');
 		expect(b1s[0]?.item.translations?.[0]?.name).toBe('Urine Glucose');
 		expect(b1s[0]?.confidence).toBeCloseTo(1);
 	});
 
-	test('searchBiomarkers (partial)', async () => {
-		let b1s = await Biomarker.searchBiomarkers('Leucociti');
+	test('searchBiomarkers (partial)', () => {
+		let b1s = Biomarker.searchBiomarkers('Leucociti');
 		expect(b1s[0]?.item.id).toBe('wbc');
 		expect(b1s[0]?.item.translations?.[1]?.name).toBe('Leucociti (globuli bianchi)');
 		expect(b1s[0]?.confidence).toBeGreaterThan(0.5);
 
-		b1s = await Biomarker.searchBiomarkers('Sg-ERITROCITI');
+		b1s = Biomarker.searchBiomarkers('Sg-ERITROCITI');
 		expect(b1s[0]?.item.id).toBe('rbc');
 		expect(b1s[0]?.item.translations?.[1]?.name).toBe('Eritrociti');
 		expect(b1s[0]?.confidence).toBeGreaterThan(0.5);
 	});
 
-	test('searchBiomarkers (mispelled)', async () => {
-		let b1s = await Biomarker.searchBiomarkers('glucoze'); // glucose
+	test('searchBiomarkers (mispelled)', () => {
+		let b1s = Biomarker.searchBiomarkers('glucoze'); // glucose
 		expect(b1s[0]?.item.id).toBe('glucose');
 
-		b1s = await Biomarker.searchBiomarkers('Glucoso'); // glucosio
+		b1s = Biomarker.searchBiomarkers('Glucoso'); // glucosio
 		expect(b1s[0]?.item.id).toBe('glucose');
 
-		b1s = await Biomarker.searchBiomarkers('ematocreep'); // hematocrit
+		b1s = Biomarker.searchBiomarkers('ematocreep'); // hematocrit
 		expect(b1s[0]?.item.id).toBe('hct');
 
-		b1s = await Biomarker.searchBiomarkers('Ematocripo'); // ematocrito
+		b1s = Biomarker.searchBiomarkers('Ematocripo'); // ematocrito
 		expect(b1s[0]?.item.id).toBe('hct');
 
 		//	b1s = await searchBiomarkers('Leucocizi'); // leuco
@@ -153,7 +150,7 @@ describe('biomarkers.ts', () => {
 		expect(res && res.text).toBeFalsy();
 	});
 
-	test('parseValue (strings)', async () => {
+	test('parseValue (strings)', () => {
 		let res = Biomarker.parseValue(' assenti  ');
 		expect(res && res.value).toBe(0);
 		expect(res && res.text).toBe('missing');
@@ -178,8 +175,8 @@ describe('biomarkers.ts', () => {
 		expect(res).toBeNull();
 	});
 
-	test('parseUnits', async () => {
-		let biomarker = await Biomarker.getBiomarker('hgb'); // native unit is g/L
+	test('parseUnits', () => {
+		let biomarker = Biomarker.getBiomarker('hgb'); // native unit is g/L
 		assert(biomarker);
 
 		// parse native unit for biomarker
@@ -202,5 +199,9 @@ describe('biomarkers.ts', () => {
 		expect(unit).toBeNull();
 		unit = Biomarker.parseUnits('fake', biomarker);
 		expect(unit).toBeNull();
+	});
+
+	test('updateBiomarkers', async () => {
+		await Biomarker.updateBiomarkers();
 	});
 });

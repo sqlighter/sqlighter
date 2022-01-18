@@ -2,13 +2,12 @@
 // biomarkers.ts
 //
 
-import fs from 'fs/promises';
 import { resolve } from 'path';
 import Fuse from 'fuse.js';
 import Tokenizr from 'tokenizr';
 import assert from 'assert/strict';
 
-import { getApiJson, round } from './utilities';
+import { Api, writeJson, round } from './utilities';
 import { Unit } from './units';
 import { Translation } from './translations';
 import { Metadata } from './metadata';
@@ -48,35 +47,13 @@ export class Biomarker {
 	//
 
 	/** Returns list of all available biomarkers */
-	public static async getBiomarkers(): Promise<Biomarker[]> {
-		if (!_biomarkers) {
-			// TODO move url in environment variable, load from file when not configured
-			const biomarkersUrl =
-				'/items/biomarkers?fields=id,description,translations.languages_code,translations.name,translations.description,translations.summary,extras,units.id&limit=1000';
-			// &filter={'status':{'_contains': 'published'}}"
-			const biomarkers = await getApiJson(biomarkersUrl);
-
-			// save to disk during development so we can backup contents along with source
-			const biomarkersPath = resolve('./src/biomarkers.json');
-			await fs.writeFile(biomarkersPath, JSON.stringify(biomarkers.data, null, '\t'));
-
-			_biomarkers = {};
-			biomarkers.data.forEach((b: any) => {
-				assert(_biomarkers);
-				const biomarker = Biomarker.fromObject(b);
-				_biomarkers[biomarker.id] = biomarker;
-			});
-		}
-
+	public static getBiomarkers(): Biomarker[] {
 		return Object.values(_biomarkers);
 	}
 
 	/** Returns biomarker by id (or undefined) */
-	public static async getBiomarker(biomarkerId: string): Promise<Biomarker | undefined> {
-		if (!_biomarkers) {
-			await Biomarker.getBiomarkers();
-		}
-		return _biomarkers && _biomarkers[biomarkerId];
+	public static getBiomarker(biomarkerId: string): Biomarker | undefined {
+		return _biomarkers[biomarkerId];
 	}
 
 	/**
@@ -88,28 +65,7 @@ export class Biomarker {
 	 * @param confidence Will return only results exceeding this confidence level (0 to 1)
 	 * @returns A ranked list of possible matches
 	 */
-	public static async searchBiomarkers(
-		query: string,
-		confidence: number = BIOMARKERS_SEARCH_CONFIDENCE
-	): Promise<{ item: Biomarker; confidence: number }[]> {
-		if (!_biomarkersFuse) {
-			const biomarkers = await Biomarker.getBiomarkers();
-
-			// https://fusejs.io/api/methods.html
-			_biomarkersFuse = new Fuse<Biomarker>(Object.values(biomarkers), {
-				minMatchCharLength: 4,
-				includeScore: true,
-				keys: [
-					{ name: 'id', weight: 1.0 },
-					{ name: 'translations.name', weight: 1.0 },
-					{ name: 'metadata.aliases', weight: 1.0 },
-					{ name: 'translations.description', weight: 0.5 },
-					{ name: 'translations.summary', weight: 0.25 },
-					// TODO could have aliases for names, etc.
-				],
-			});
-		}
-
+	public static searchBiomarkers(query: string, confidence: number = BIOMARKERS_SEARCH_CONFIDENCE): { item: Biomarker; confidence: number }[] {
 		const matches = _biomarkersFuse.search(query);
 		if (matches) {
 			let filtered = matches.map((m) => {
@@ -120,6 +76,20 @@ export class Biomarker {
 		}
 
 		return [];
+	}
+
+	/** Updates to latest version of biomarkers.json (requires a restart) */
+	public static async updateBiomarkers() {
+		const jsonPath = resolve('./src/biomarkers.json');
+		const jsonUrl =
+			'/items/biomarkers?fields=id,description,translations.languages_code,translations.name,translations.description,translations.summary,metadata,unit.id&limit=1000';
+		try {
+			const json = (await Api.getJson(jsonUrl)).data;
+			await writeJson(jsonPath, json);
+		} catch (exception) {
+			console.error(`Biomarkers.updateBiomarkers - could not read biomarkers from network, exception: ${exception}`, exception);
+			throw exception;
+		}
 	}
 
 	/**
@@ -181,7 +151,7 @@ export class Biomarker {
 	public static fromObject(obj: any): Biomarker {
 		assert(obj.id);
 		const translations = obj.translations && Translation.fromObject(obj.translations);
-		return new Biomarker(obj.id, obj.units?.id, obj.range, translations, obj.extras);
+		return new Biomarker(obj.id, obj.unit?.id, obj.range, translations, obj.metadata);
 	}
 
 	/**
@@ -322,7 +292,7 @@ export class Measurement {
 	/** Numeric value of the measurement expressed in units */
 	value?: number;
 
-	/** Textual value of the measurement, if applicable. Eg. negative */
+	/** Textual value of the measurement, if applicable. Eg. 'negative' */
 	text?: string;
 
 	/** The measurement unit (normally matches biomarker.unit) */
@@ -340,8 +310,25 @@ export class Measurement {
 //
 
 // static list of available biomarkers and search index
-let _biomarkers: { [key: string]: Biomarker } | undefined;
-let _biomarkersFuse: Fuse<any> | undefined;
+const _biomarkers: { [key: string]: Biomarker } = {};
+const _biomarkersJson = require('./biomarkers.json');
+_biomarkersJson.forEach((b: any) => {
+	const biomarker = Biomarker.fromObject(b);
+	_biomarkers[biomarker.id] = biomarker;
+});
+
+// fuse index used for searches
+const _biomarkersFuse = new Fuse<Biomarker>(Object.values(_biomarkers), {
+	minMatchCharLength: 4,
+	includeScore: true,
+	keys: [
+		{ name: 'id', weight: 1.0 },
+		{ name: 'translations.name', weight: 1.0 },
+		{ name: 'metadata.aliases', weight: 1.0 },
+		{ name: 'translations.description', weight: 0.5 },
+		{ name: 'translations.summary', weight: 0.25 },
+	],
+});
 
 //
 // Parsing of biomarker values and ranges
@@ -394,3 +381,5 @@ function parseTokens(text: string) {
 	return { sequence: null, tokens: null };
 }
 
+// class also acts as default export for module
+export default Unit;
