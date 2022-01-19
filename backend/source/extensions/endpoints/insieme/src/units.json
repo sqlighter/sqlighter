@@ -120,13 +120,21 @@
 	},
 	{
 		"id": "IU/L",
-		"description": null,
-		"metadata": null
+		"description": "international units per liter",
+		"metadata": {
+			"aliases": [
+				"UI/L"
+			]
+		}
 	},
 	{
 		"id": "IU/mL",
-		"description": null,
-		"metadata": null
+		"description": "international units per milliliter",
+		"metadata": {
+			"aliases": [
+				"UI/mL"
+			]
+		}
 	},
 	{
 		"id": "Kg/m2",
@@ -140,11 +148,6 @@
 	},
 	{
 		"id": "mcg/dL",
-		"description": null,
-		"metadata": null
-	},
-	{
-		"id": "mcg/mL",
 		"description": null,
 		"metadata": null
 	},
@@ -200,8 +203,11 @@
 	},
 	{
 		"id": "mIU/mL",
-		"description": "milli-international units per milliliter",
+		"description": "milli international units per milliliter",
 		"metadata": {
+			"aliases": [
+				"mUI/mL"
+			],
 			"references": [
 				"https://unitslab.com/node/140"
 			],
@@ -294,13 +300,14 @@
 	},
 	{
 		"id": "seconds",
-		"description": null,
-		"metadata": null
-	},
-	{
-		"id": "U",
-		"description": null,
-		"metadata": null
+		"description": "seconds",
+		"metadata": {
+			"aliases": [
+				"s",
+				"sec",
+				"secs"
+			]
+		}
 	},
 	{
 		"id": "U/L",
@@ -313,19 +320,13 @@
 		"metadata": null
 	},
 	{
-		"id": "ug/dl",
-		"description": null,
-		"metadata": null
-	},
-	{
-		"id": "ug/mL",
-		"description": null,
-		"metadata": null
-	},
-	{
 		"id": "Units",
-		"description": null,
-		"metadata": null
+		"description": "units",
+		"metadata": {
+			"aliases": [
+				"U"
+			]
+		}
 	},
 	{
 		"id": "x10E3/μL",
@@ -341,6 +342,10 @@
 		"id": "μg/dL",
 		"description": "micrograms per deciliter",
 		"metadata": {
+			"aliases": [
+				"ug/dL",
+				"mcg/dL"
+			],
 			"references": [
 				"http://unitslab.com/node/41"
 			],
@@ -349,7 +354,6 @@
 				"µg%": 1,
 				"ng/mL": 10,
 				"µg/L": 10,
-				"mcg/dL": 1,
 				"mmol/L": 0.0001791,
 				"umol/L": 0.1791,
 				"µmol/L": 0.1791,
@@ -379,14 +383,21 @@
 	},
 	{
 		"id": "μg/mL",
-		"description": null,
-		"metadata": null
+		"description": "micrograms per milliliter",
+		"metadata": {
+			"aliases": [
+				"ug/mL",
+				"mcg/mL"
+			]
+		}
 	},
 	{
 		"id": "μmol/L",
 		"description": "micromoles per liter",
 		"metadata": {
-			"notes": "Conversions for creatinine",
+			"aliases": [
+				"umol/L"
+			],
 			"references": [
 				"https://unitslab.com/node/44"
 			],
