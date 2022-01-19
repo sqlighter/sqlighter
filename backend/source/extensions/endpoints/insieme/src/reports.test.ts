@@ -6,8 +6,16 @@ import path from 'path';
 
 import { Ocr } from './ocr';
 import { Report } from './reports';
+import { writeJson, readJson } from './utilities';
+import { Biomarker } from './biomarkers';
+import { Unit } from './units';
 
 describe('reports.ts', () => {
+	beforeAll(async () => {
+		await Unit.updateUnits();
+		await Biomarker.updateBiomarkers();
+	});
+
 	// the test directory contains a number of xxx.pdf and xxx.pdf.report.json
 	// files where the second file contains a completed report containing the
 	// biomarkers that are expected to be found in the report. we can analyze
@@ -36,13 +44,12 @@ async function analyzePdf(file: string) {
 	// if the ocr file is missing just create it once, we don't need to test ocr over and over
 	let rawOcr;
 	try {
-		rawOcr = JSON.parse((await fs.readFile(ocrFile)).toString());
+		rawOcr = await readJson(ocrFile);
 	} catch {
 		let scan = await Ocr.scanPages(pdfFile);
 		rawOcr = scan.rawOcr;
 		expect(rawOcr).toBeTruthy();
-		const ocrJson = JSON.stringify(rawOcr, null, '  ');
-		await fs.writeFile(ocrFile, ocrJson);
+		await writeJson(ocrFile, rawOcr);
 		console.warn(`${ocrFile} was missing and has been generated`);
 	}
 
@@ -63,19 +70,18 @@ async function analyzePdf(file: string) {
 	}
 
 	// write actual report to artifacts, stringify/parse report so it's comparable
-	const reportJson = JSON.stringify(report);
 	const reportFile = toArtifacts(pdfFile + '.actual.json');
-	await fs.writeFile(reportFile, reportJson);
-	report = JSON.parse(JSON.stringify(report)); // parse via json so is comparable to .report.json
+	await writeJson(reportFile, report);
+	report = await readJson(reportFile); // parse via json so is comparable to .report.json
 
 	let expectedReport;
 	try {
-		expectedReport = JSON.parse((await fs.readFile(expectedFile)).toString());
+		expectedReport = await readJson(expectedFile);
 	} catch (error) {
 		// to simplify adding new reports we save the current results which can be hand edited, etc
-		await fs.writeFile(expectedFile, JSON.stringify(report, null, '  '));
+		await writeJson(expectedFile, report);
 		console.warn(`${expectedFile} was missing and has been generated`);
-		expectedReport = JSON.parse((await fs.readFile(expectedFile)).toString());
+		expectedReport = await readJson(expectedFile);
 	}
 
 	// check pages
@@ -99,20 +105,38 @@ async function analyzePdf(file: string) {
 	}
 
 	// check measurements
+  let failed = false
 	const numBiomarkers = expectedReport.biomarkers?.length;
 	expect(numBiomarkers).toBeGreaterThan(0);
-	expect(report.biomarkers?.length).toBe(numBiomarkers);
-	if (report.biomarkers && expectedReport.biomarkers) {
-		for (let i = 0; i < numBiomarkers; i++) {
-			const bActual = report.biomarkers[i];
-			const bExpected = expectedReport.biomarkers[i];
+  if (numBiomarkers != report.biomarkers?.length) {
+    console.error(`Biomarkers, expected: ${numBiomarkers}, actual: ${report.biomarkers?.length}`)
+    failed = true;
+  }
 
-			expect(bActual?.biomarker).toBe(bExpected.biomarker);
-			expect(bActual?.value).toBe(bExpected.value);
-			expect(bActual?.range).toBe(bExpected.range);
-			expect(bActual?.unit).toBe(bExpected.unit);
-		}
-	}
+  for (const expected of expectedReport.biomarkers) {
+    const actual = report.biomarkers?.find(b => b.biomarker == expected.biomarker)
+    if (actual) {
+      if (actual.value != expected.value) {
+        console.error(`Biomarker: '${expected.biomarker}', value differs, expected: ${expected.value}, actual: ${actual.value}`)
+        failed = true;
+      }
+      if (actual.range != expected.range) {
+        console.error(`Biomarker: '${expected.biomarker}', range differs, expected: ${expected.range}, actual: ${actual.range}`)
+        failed = true;
+      }
+      if (actual.unit != expected.unit) {
+        console.error(`Biomarker: '${expected.biomarker}', unit differs, expected: ${expected.unit}, actual: ${actual.unit}`)
+        failed = true;
+      }
+    }
+    else {
+      console.error(`Biomarker: '${expected.biomarker}' is missing`)
+      failed = true;
+    }
+  }
+  if (failed) {
+    throw new Error("One or more errors while comparing expected vs actual biomarkers, see log")
+  }
 }
 
 const TEST_PDF_PATH = './test/analisi02.pdf';

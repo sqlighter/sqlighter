@@ -124,10 +124,20 @@ export class Biomarker {
 		}
 
 		// each biomarker has a main unit of measurement which is preferred (normally the SI unit)
-		// and a number of available conversions that can also be read
-		const unitsCandidates = new Array<string>(biomarker.unit.id);
-		if (biomarker.unit?.conversions) {
+		// and a number of available conversions that can also be read. normally the conversion
+    // factors are stored in unit.metadata.conversion. however, some conversions like mmol/L
+    // (a quantity of molecules) to mg/L (a weight) require a conversion ratio that is specific
+    // to the biomarker and is therefore stored in biomarker.metadata.conversions.
+		const unitsCandidates = [biomarker.unit.id];
+    const unitsConversions = [1]
+
+    if (biomarker.metadata?.conversions) {
+			unitsCandidates.push(...Object.keys(biomarker.metadata.conversions));
+      unitsConversions.push(...Object.values(biomarker.metadata.conversions))
+    }
+    if (biomarker.unit?.conversions) {
 			unitsCandidates.push(...Object.keys(biomarker.unit.conversions));
+      unitsConversions.push(...Object.values(biomarker.unit.conversions))
 		}
 
 		const unitsFuse = new Fuse(unitsCandidates, { minMatchCharLength: 1, includeScore: true });
@@ -138,7 +148,7 @@ export class Biomarker {
 			if (confidence > UNITS_SEARCH_CONFIDENCE) {
 				return {
 					id: unitsMatches[0].item,
-					conversion: unitsMatches[0].refIndex > 0 ? (biomarker.unit.conversions[unitsMatches[0].item] as number) : 1,
+					conversion: unitsConversions[unitsMatches[0].refIndex] as number,
 					confidence,
 				};
 			}

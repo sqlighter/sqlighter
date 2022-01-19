@@ -8,6 +8,7 @@ import fs from 'fs/promises';
 
 import { BoundingBox, getDistance, getAverage, getBoundingBoxSize } from './geometry';
 import { Metadata } from './metadata';
+import { round } from './utilities';
 
 /** A word or short sentence detected by OCR in a page */
 export class Word {
@@ -223,7 +224,7 @@ export class Ocr {
 	 */
 	static async scanPages(sourceUri: string): Promise<{ pages: Page[]; rawOcr: any; metadata: Metadata }> {
 		try {
-      console.time("scanPages")
+			console.time('scanPages');
 			let inputConfig;
 			if (sourceUri.startsWith('gs://')) {
 				// reading a file stored in an accessible google storage bucket
@@ -239,10 +240,10 @@ export class Ocr {
 			const [result] = await imageAnnotatorClient.batchAnnotateFiles({
 				requests: [{ inputConfig, features: [{ type: 'DOCUMENT_TEXT_DETECTION' }] }],
 			});
-      console.timeEnd("scanPages")
+			console.timeEnd('scanPages');
 
 			const rawOcr = result.responses[0].responses;
-      const pages = Ocr.normalizeAnnotations(rawOcr);
+			const pages = Ocr.normalizeAnnotations(rawOcr);
 			const metadata = new Metadata({ ocr: { sourceUri, ...imageAnnotatorClientOptions } });
 
 			return { pages, rawOcr, metadata };
@@ -302,7 +303,7 @@ export class Ocr {
 						}
 
 						const bbox = ocrWord.boundingBox.normalizedVertices.map((a: any) => [a.x, a.y]);
-						words.push({ text: word_text, confidence: ocrWord.confidence, bbox: bbox });
+						words.push(new Word(word_text, bbox, ocrWord.confidence));
 					}
 				}
 			}

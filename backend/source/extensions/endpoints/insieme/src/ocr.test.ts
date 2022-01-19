@@ -5,9 +5,7 @@
 import { resolve } from 'path';
 import fs from 'fs/promises';
 import { Ocr } from './ocr';
-
-// external APIs require longer timeouts
-jest.setTimeout(30 * 1000);
+import { writeJson } from "./utilities"
 
 const TEST_PDF_PATH = './test/report01.pdf';
 function toArtifacts(path:string) {
@@ -38,7 +36,7 @@ describe('ocr.ts', () => {
 		}
 
 		const destinationPath = toArtifacts(sourceUri + '.ocr.json');
-		await fs.writeFile(destinationPath, JSON.stringify(rawOcr));
+    await writeJson(destinationPath, rawOcr);
 	});
 
 	test('getOcrAnnotations (pdf from google storage)', async () => {

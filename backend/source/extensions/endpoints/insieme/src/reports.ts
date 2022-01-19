@@ -6,10 +6,10 @@ import assert from 'assert/strict';
 
 import { BoundingBox, getBoundingBoxAlignments, mergeBoundingBoxes } from './geometry';
 import { Unit } from './units';
-import { Page, Ocr } from './ocr';
+import { Page, Ocr, Word } from './ocr';
 import { Biomarker, Measurement, Range } from './biomarkers';
 import { Metadata } from './metadata';
-import { round } from './utilities';
+import { round, HIGH_CONFIDENCE, MEDIUM_CONFIDENCE, LOW_CONFIDENCE } from './utilities';
 
 /** A report inclusive of a number of pages, OCR information, metadata, etc */
 export class Report {
@@ -32,13 +32,100 @@ export class Report {
 	// methods
 	//
 
+	private _detectBiomarker(line: Word[]) {
+		// for now we assume that the leftmost word on the line is the one containing
+		// the biomarkers' name. so we only check the first word on the line since
+		// lines are sorted. in the future we may want to scan other words too.
+		if (line.length > 0 && line[0]?.text) {
+			let text = line[0].text;
+
+			// remove unwanted prefixes, eg. Sg-ERITROCITI, P-CREATININA, S-Tirotropina
+			for (const prefix of ['Sg-', 'P-', 'S-']) {
+				if (text.startsWith(prefix)) {
+					text = text.substring(prefix.length);
+				}
+			}
+
+			// TODO could check if text is in list of common words or blocked words for language or template
+
+			const biomarkersMatches = Biomarker.searchBiomarkers(text);
+			if (biomarkersMatches.length > 0 && biomarkersMatches[0]) {
+				return {
+					item: biomarkersMatches[0].item,
+					confidence: biomarkersMatches[0].confidence,
+					word: line[0],
+				};
+			}
+		}
+
+		return null;
+	}
+
+	private _detectUnit(line: Word[], biomarkerMatch: any) {
+		let bestMatch = null;
+		for (const word of line) {
+			const u = Biomarker.parseUnits(word.text, biomarkerMatch.item);
+			if (u && (bestMatch == null || bestMatch.confidence < u.confidence)) {
+				bestMatch = { ...u, word };
+
+				// lower confidence in the unit match if it occours in the same word as the biomarker's name
+				// TODO check if close to units column or has same alignment
+				if (word == biomarkerMatch.word) {
+					bestMatch.confidence = Math.min(bestMatch.confidence, MEDIUM_CONFIDENCE);
+				}
+			}
+			// TODO find units for which there isn't a direct conversion BUT add low confidence
+		}
+		return bestMatch;
+	}
+
+	private _detectRange(line: Word[], biomarkerMatch: any, unitMatch: any) {
+		// overall confidence in this match is average of different factors
+		let bestMatch = null;
+		for (const word of line) {
+			const r = Range.parseRange(word.text);
+			if (r) {
+				const confidence = word != biomarkerMatch.word && word != unitMatch?.word ? HIGH_CONFIDENCE : MEDIUM_CONFIDENCE;
+				if (bestMatch == null || confidence > bestMatch?.confidence) {
+					if (unitMatch?.conversion) {
+						r.convert(unitMatch.conversion);
+					}
+					// TODO or this range is closer to range's column than previous match
+					bestMatch = { range: r, word, confidence };
+				}
+			}
+		}
+		return bestMatch;
+	}
+
+	private _detectValue(line: Word[], biomarkerMatch: any, unitMatch: any, rangeMatch: any) {
+		let bestMatch = null;
+		for (const word of line) {
+			if (word != rangeMatch?.word) {
+				const v = Biomarker.parseValue(word.text);
+				if (v) {
+					// TODO this value is closer to value's column than previous value
+					const confidence = word != biomarkerMatch.word && word && unitMatch?.word ? HIGH_CONFIDENCE : LOW_CONFIDENCE;
+					if (bestMatch == null || confidence > bestMatch.confidence) {
+						bestMatch = { ...v, word, confidence };
+					}
+				}
+			}
+		}
+		return bestMatch;
+	}
+
 	/** Detect biomarker readings in OCR words */
 	private async detectBiomarkers() {
 		console.time('detectBiomarkers');
-		const measurements = new Array<Measurement>();
-		const warnings: { message: string; pageNumber?: number; bbox?: BoundingBox }[] = [];
+		const measurements = [];
+		const warnings = [];
 
 		for (const page of this.pages) {
+			if (!page.lines) {
+				break;
+			}
+
 			// determine which words on the page could be possible biomarker labels,
 			// measurement units, values and ranges of values. then see if these words
 			// are aligned. since biomarkers are often in table format, we should find
@@ -74,118 +161,76 @@ export class Report {
 			const rangesAlign = getBoundingBoxAlignments(rangesWords.map((w) => w.bbox));
 			const valueAlign = getBoundingBoxAlignments(valuesWords.map((w) => w.bbox));
 
-			if (page.lines) {
-				for (const line of page.lines) {
-					if (line && line[0]) {
-						let text = line[0].text;
-            
-						// remove unwanted prefixes, eg. Sg-ERITROCITI, P-CREATININA, S-Tirotropina
-						for (const prefix of ['Sg-', 'P-', 'S-']) {
-							if (text.startsWith(prefix)) {
-								text = text.substring(prefix.length);
-							}
-						}
+			for (const line of page.lines) {
+				const biomarkerMatch = this._detectBiomarker(line);
+				if (biomarkerMatch) {
+					const biomarker = biomarkerMatch.item;
+					const biomarkerWord = biomarkerMatch.word;
+					const biomarkerName = biomarker.translations?.[0]?.name;
 
-						const biomarkersMatches = await Biomarker.searchBiomarkers(text);
-						if (biomarkersMatches.length > 0 && biomarkersMatches[0]) {
-							const item = biomarkersMatches[0].item;
-							const itemConfidence = biomarkersMatches[0].confidence;
-							const itemWord = line[0];
+					// track that this biomarker word has been consumed
+					const wordIdx: number = biomarkersWords.indexOf(biomarkerWord);
+					if (wordIdx != -1) {
+						biomarkersWords.splice(wordIdx, 1);
+					}
 
-							console.debug(
-								`detectBiomarkers - text: ${line[0].text}, id: ${item.id}/${item.translations?.[0]?.name}, confidence: ${itemConfidence}`
-							);
+					// find compatible measurement unit, range and value on the same line
+					const unitMatch = this._detectUnit(line, biomarkerMatch);
+					const rangeMatch = this._detectRange(line, biomarkerMatch, unitMatch);
+					const valueMatch = this._detectValue(line, biomarkerMatch, unitMatch, rangeMatch);
 
-							// find compatible measurement unit on the same line
-							let unitMatch = null;
-							for (const word of line) {
-								const u = Biomarker.parseUnits(word.text, item);
-								if (u && (unitMatch == null || unitMatch.confidence < u.confidence)) {
-									unitMatch = { ...u, word };
-								}
-							}
+					const confidence =
+						biomarkerMatch.confidence * 0.55 +
+						(unitMatch?.confidence || 0) * 0.15 +
+						(rangeMatch?.confidence || 0) * 0.15 +
+						(valueMatch?.confidence || 0) * 0.15;
 
-							let rangeMatch = null;
-							for (const word of line) {
-								const r = Range.parseRange(word.text);
-								// TODO or this range is closer to range's column than previous match
-								if (r && rangeMatch == null) {
-									if (unitMatch?.conversion) {
-										r.convert(unitMatch.conversion);
-									}
-									rangeMatch = { range: r, word };
-								}
-							}
+					console.debug(
+						`detectBiomarkers - text: ${biomarkerWord.text}, id: ${biomarker.id}/${biomarkerName}, unit: ${unitMatch?.id}, range: ${rangeMatch?.range}, value: ${valueMatch?.value}, confidence: ${confidence}`
+					);
 
-							let valueMatch = null;
-							for (const word of line) {
-								if (!rangeMatch || word != rangeMatch.word) {
-									const v = Biomarker.parseValue(word.text);
-									// TODO this value is closer to value's column than previous value
-									if (v && valueMatch == null) {
-										valueMatch = { ...v, word };
-									}
-								}
-							}
+					// create entry for measurements or warnings
+					const bbox = mergeBoundingBoxes(line.map((w) => w.bbox));
+					const medatata = new Metadata({
+						name: biomarkerName,
+						confidence: confidence,
+						ocr: {
+							name: biomarkerWord.text,
+							value: valueMatch?.word.text,
+							range: rangeMatch?.word.text,
+							unit: unitMatch?.word.text,
+							conversion: unitMatch?.conversion != 1 ? unitMatch?.conversion : undefined,
+						},
+					});
+					const measurement = new Measurement(
+						biomarker,
+						valueMatch ? round(valueMatch.value / (unitMatch?.conversion || 1.0)) : undefined,
+						valueMatch ? valueMatch.text : undefined,
+						unitMatch ? biomarker.unit : undefined,
+						rangeMatch?.range,
+						medatata
+					);
 
-							if (valueMatch != null) {
-								const bbox = mergeBoundingBoxes(line.map((w) => w.bbox));
-
-								const medatata = new Metadata({
-									name: item.translations?.[0]?.name,
-									ocr: {
-										name: itemWord.text,
-										value: valueMatch.word.text,
-										range: rangeMatch?.word.text,
-										unit: unitMatch?.word.text,
-										conversion: unitMatch?.conversion != 1 ? unitMatch?.conversion : undefined,
-									},
-								});
-
-								// add entry for this biomarker results with units, etc
-								const measurement = new Measurement(
-									item,
-									round(valueMatch.value / (unitMatch?.conversion || 1.0)),
-									valueMatch.text,
-									item.unit,
-									rangeMatch?.range,
-									medatata
-								);
-								measurements.push(measurement);
-
-								if (unitMatch == null) {
-									warnings.push({
-										message: `E002: Can't find units for biomarker: ${item.id}, text: ${itemWord.text}`,
-										pageNumber: page.pageNumber,
-										bbox,
-									});
-								}
-
-								// track that this biomarker has been consumed
-								const wordIdx: number = biomarkersWords.indexOf(itemWord);
-								if (wordIdx != -1) {
-									biomarkersWords.splice(wordIdx, 1);
-								}
-							}
-						}
+					if (valueMatch && unitMatch) {
+						measurements.push(measurement);
+					} else {
+						warnings.push({
+							message: `E001: Biomarker '${biomarker.id}', text: ${biomarkerWord.text} is missing value or unit`,
+							confidence,
+							measurement,
+							pageNumber: page.pageNumber,
+							bbox,
+						});
 					}
 				}
 			}
-
-			// create warnings for words that sounded like biomarkers but where not processed
-			biomarkersWords.forEach((word) => {
-				warnings.push({
-					message: `E001: '${word.text}' sounded like a biomarker but could not be processed`,
-					pageNumber: page.pageNumber,
-					bbox: word.bbox,
-				});
-			});
 		}
 
 		this.biomarkers = measurements;
 		if (warnings.length > 0) {
 			this.metadata = { ...this.metadata, warnings };
 		}
+
 		console.timeEnd('detectBiomarkers');
 	}
 
@@ -219,7 +264,7 @@ export class Report {
 		let svg = '';
 		const page: Page = this.pages[pageNumber - 1] as Page;
 		for (const word of page.words) {
-			svg += bboxToSvg(word.bbox, page.width, page.height, word.text);
+			svg += _bboxToSvg(word.bbox, page.width, page.height, word.text);
 		}
 
 		svg = `<html><head><style>.word {fill: red; fill-opacity: .1; stroke: green; stroke-width: 1; stroke-opacity: .5;}</style></head>\
@@ -251,17 +296,17 @@ export class Report {
 // Utilities
 //
 
-function htmlEntities(str?: string) {
+function _htmlEntities(str?: string) {
 	if (str) {
 		return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 	}
 	return null;
 }
 
-function bboxToSvg(bbox: BoundingBox, w: number, h: number, tooltip?: string) {
+function _bboxToSvg(bbox: BoundingBox, w: number, h: number, tooltip?: string) {
 	if (bbox) {
 		const points = bbox.map((p) => `${(p[0] * w).toFixed(2)},${(p[1] * h).toFixed(2)}`).join(' ');
-		return `<polygon points='${points}' class='word'><title>${htmlEntities(tooltip)}</title></polygon>\n`;
+		return `<polygon points='${points}' class='word'><title>${_htmlEntities(tooltip)}</title></polygon>\n`;
 	}
 	return '';
 }

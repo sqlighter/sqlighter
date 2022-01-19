@@ -4,6 +4,7 @@
 
 // https://www.npmjs.com/package/set-clustering
 const cluster = require('set-clustering');
+import { round } from './utilities';
 
 /** Point has x and y coordinates */
 export type Point = [number, number];
@@ -120,6 +121,22 @@ export function mergeBoundingBoxes(bboxes: BoundingBox[]): BoundingBox {
 	];
 }
 
-export function bboxToString(bbox: BoundingBox) {
-	return '[' + bbox.map((p) => `[${p[0]},${p[1]}]`).join(', ') + ']';
+/** Bounding box to string */
+export function stringifyBoundingBox(bbox: BoundingBox) {
+	return '[' + bbox.map((p) => `[${round(p[0], 4)},${round(p[1], 4)}]`).join(', ') + ']';
+}
+
+/** String to bounding box */
+export function parseBoundingBox(bbox: string): BoundingBox {
+	const c1 = bbox
+		.replace(/[\[\],]+/g, ' ')
+		.trim()
+		.split(' ');
+	const c2 = c1.map((c) => parseFloat(c));
+	return [
+		[c2[0] as number, c2[1] as number],
+		[c2[2] as number, c2[3] as number],
+		[c2[4] as number, c2[5] as number],
+		[c2[6] as number, c2[7] as number],
+	];
 }

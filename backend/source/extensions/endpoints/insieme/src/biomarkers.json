@@ -594,17 +594,39 @@
 	},
 	{
 		"id": "bun",
-		"metadata": null,
+		"metadata": {
+			"references": [
+				"https://medlineplus.gov/lab-tests/bun-blood-urea-nitrogen/",
+				"https://www.mayoclinic.org/tests-procedures/blood-urea-nitrogen/about/pac-20384821",
+				"https://www.valorinormali.com/sangue/azotemia/",
+				"http://unitslab.com/node/52"
+			],
+			"conversions": {
+				"mg%": 6.006,
+				"mg/L": 60.06,
+				"mg/dL": 6.006,
+				"ug/mL": 60.06,
+				"mcg/mL": 60.06,
+				"µg/mL": 60.06,
+				"mg/100mL": 6.006
+			}
+		},
 		"translations": [
 			{
 				"languages_code": "en-US",
 				"name": "BUN",
 				"description": "Blood Urea Nitrogen",
-				"summary": null
+				"summary": "A BUN, or blood urea nitrogen test, can provide important information about your kidney function. The main job of your kidneys is to remove waste and extra fluid from your body. If you have kidney disease, this waste material can build up in your blood and may lead to serious health problems, including high blood pressure, anemia, and heart disease.\n\nThe test measures the amount of urea nitrogen in your blood. Urea nitrogen is one of the waste products removed from your blood by your kidneys. Higher than normal BUN levels may be a sign that your kidneys aren't working efficiently.\n\nPeople with early kidney disease may not have any symptoms. A BUN test can help uncover kidney problems at an early stage when treatment can be more effective."
+			},
+			{
+				"languages_code": "it-IT",
+				"name": "Urea",
+				"description": "Urea nel Sangue",
+				"summary": "L’esame denominato azotemia consiste in realtà nella misurazione della quantità di urea nel sangue; la maggior parte dell’azoto circolante è infatti contenuto proprio nelle molecole di urea, una sostanza innocua di rifiuto prodotta dalla trasformazione organica dell’ammoniaca, che deriva a sua volta dalla degradazione degli aminoacidi (i mattoni costituenti delle proteine).\n\nLe proteine che assumiamo con la dieta contengono mediamente il 16% in peso di azoto; se una parte viene riciclata dall’organismo per costruire nuove proteine secondo le proprie necessità, la frazione rimanente non immediatamente necessaria va incontro a distruzione nel fegato. L’azoto proveniente dallo smaltimento delle proteine (vecchie o nuove che siano) viene quindi riversato nel sangue sotto forma di urea (una sostanza di scarto), in questo modo i reni saranno in grado di prelevarla ed eliminarla attraverso le urine.\n\nL’importanza della valutazione di questo parametro è legata al fatto che la quantità di azoto presente nel sangue rappresenta un’affidabile indice della salute e del buon funzionamento dei reni, perché se i valori sono più alti del normale significa che l’organismo non è più in grado di smaltire adeguatamente l’urea e l’azoto circolanti; rappresenta in altre parole un utile indice dell’efficienza dei reni.\n\nSe un rene è perfettamente funzionante le concentrazioni di azotemia possono essere mantenute normali anche quando sia presente una disfunzione significativa nell’altro rene.\n\nCosa significa BUN?\nSoprattutto nei Paesi anglosassoni viene spesso espresso come B.U.N. (Blood Urea Nitrogen, o azoto ureico), attraverso l’esecuzione di un semplice calcolo matematico che tiene in considerazione il peso dell’azoto rispetto a quello totale della molecola di urea che lo contiene."
 			}
 		],
 		"unit": {
-			"id": "mg/dL"
+			"id": "mmol/L"
 		}
 	},
 	{
@@ -952,9 +974,7 @@
 				"summary": null
 			}
 		],
-		"unit": {
-			"id": "ug/mL"
-		}
+		"unit": null
 	},
 	{
 		"id": "cortisol",
@@ -1900,9 +1920,7 @@
 				"summary": null
 			}
 		],
-		"unit": {
-			"id": "U"
-		}
+		"unit": null
 	},
 	{
 		"id": "gliadin-antibody-igg",
@@ -1915,9 +1933,7 @@
 				"summary": null
 			}
 		],
-		"unit": {
-			"id": "U"
-		}
+		"unit": null
 	},
 	{
 		"id": "globulin",
@@ -1945,7 +1961,11 @@
 				"https://www.youtube.it/watch?v=xNgwZFP5A9s",
 				"https://unitslab.com/node/1",
 				"https://medlineplus.gov/lab-tests/blood-glucose-test/"
-			]
+			],
+			"conversions": {
+				"mmol/L": 0.05550622,
+				"µmol/L": 55.50622
+			}
 		},
 		"translations": [
 			{
@@ -1991,9 +2011,7 @@
 				"summary": null
 			}
 		],
-		"unit": {
-			"id": "mcg/mL"
-		}
+		"unit": null
 	},
 	{
 		"id": "hazelnut-ige",
@@ -4791,9 +4809,7 @@
 				"summary": null
 			}
 		],
-		"unit": {
-			"id": "ug/dl"
-		}
+		"unit": null
 	},
 	{
 		"id": "t4",
