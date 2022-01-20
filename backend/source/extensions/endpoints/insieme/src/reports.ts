@@ -162,11 +162,11 @@ export class Report {
 			const valueAlign = getBoundingBoxAlignments(valuesWords.map((w) => w.bbox));
 
 			for (const line of page.lines) {
-				const biomarkerMatch = this._detectBiomarker(line);
+				let biomarkerMatch = this._detectBiomarker(line);
 				if (biomarkerMatch) {
-					const biomarker = biomarkerMatch.item;
+					let biomarker = biomarkerMatch.item;
+					let biomarkerName = biomarker.translations?.[0]?.name;
 					const biomarkerWord = biomarkerMatch.word;
-					const biomarkerName = biomarker.translations?.[0]?.name;
 
 					// track that this biomarker word has been consumed
 					const wordIdx: number = biomarkersWords.indexOf(biomarkerWord);
@@ -175,7 +175,35 @@ export class Report {
 					}
 
 					// find compatible measurement unit, range and value on the same line
-					const unitMatch = this._detectUnit(line, biomarkerMatch);
+					let unitMatch = this._detectUnit(line, biomarkerMatch);
+					if (!unitMatch) {
+						// if a biomarker's measurement unit was not found but we have the same biomarker
+						// in percentage and absolute form, like for example ba-abs and ba-perc then let's try
+						// the other biomarker and see if that works.
+            const isAbs = biomarker.id.endsWith('-abs'), isPerc = biomarker.id.endsWith('-perc')
+						if (isAbs || isPerc) {
+							const altId = biomarker.id.substring(0, biomarker.id.indexOf('-')) + (isPerc ? '-abs' : '-perc');
+							const alt = Biomarker.getBiomarker(altId);
+							if (alt) {
+								const altMatch = { item: alt, confidence: biomarkerMatch.confidence, word: biomarkerMatch.word };
+								let altUnitMatch = this._detectUnit(line, altMatch);
+/*
+                if (!altUnitMatch && isPerc) {
+                  // if target unit is % we can assume it was missed by OCR although with lower confidence
+                  altUnitMatch = {id: "%", word: biomarkerMatch.word, confidence: LOW_CONFIDENCE, conversion: 1}
+                }
+*/
+                if (altUnitMatch) {
+									biomarker = alt;
+									biomarkerMatch = altMatch;
+									biomarkerName = biomarker.translations?.[0]?.name;
+									unitMatch = altUnitMatch;
+									unitMatch.confidence = Math.min(unitMatch.confidence, MEDIUM_CONFIDENCE);
+								}
+							}
+						}
+					}
+
 					const rangeMatch = this._detectRange(line, biomarkerMatch, unitMatch);
 					const valueMatch = this._detectValue(line, biomarkerMatch, unitMatch, rangeMatch);
 
@@ -215,7 +243,7 @@ export class Report {
 						measurements.push(measurement);
 					} else {
 						warnings.push({
-							message: `E001: Biomarker '${biomarker.id}', text: ${biomarkerWord.text} is missing value or unit`,
+							message: `E001: Biomarker '${biomarker.id}', text: '${biomarkerWord.text}' is missing value or unit`,
 							confidence,
 							measurement,
 							pageNumber: page.pageNumber,

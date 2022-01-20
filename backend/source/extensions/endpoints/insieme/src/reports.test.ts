@@ -1,4 +1,4 @@
-// scan.ts tests
+// scan.ts testsn
 
 import { resolve } from 'path';
 import fs from 'fs/promises';

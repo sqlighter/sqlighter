@@ -2496,7 +2496,7 @@
 			}
 		},
 		{
-			"biomarker": "nrbc",
+			"biomarker": "nrbc-abs",
 			"value": 0,
 			"text": "missing",
 			"unit": "10^9/L",
@@ -2518,7 +2518,7 @@
 			"unit": "10^9/L",
 			"range": "[150 - 400]",
 			"metadata": {
-				"name": "Platelet Count",
+				"name": "Platelet",
 				"confidence": 1,
 				"ocr": {
 					"name": "Sg-PIASTRINE",
@@ -2561,12 +2561,12 @@
 			}
 		},
 		{
-			"biomarker": "ne-count",
+			"biomarker": "ne-abs",
 			"value": 3.41,
 			"unit": "10^9/L",
 			"range": "[1.8 - 8]",
 			"metadata": {
-				"name": "Neutrophil (absolute)",
+				"name": "Neutrophils",
 				"confidence": 1,
 				"ocr": {
 					"name": "Neutrofili",
@@ -2582,7 +2582,7 @@
 			"unit": "10^9/L",
 			"range": "[1.2 - 4]",
 			"metadata": {
-				"name": "Lymphocyte (absolute)",
+				"name": "Lymphocytes",
 				"confidence": 1,
 				"ocr": {
 					"name": "Linfociti",
@@ -2598,7 +2598,7 @@
 			"unit": "10^9/L",
 			"range": "[0.2 - 1]",
 			"metadata": {
-				"name": "Monocytes (absolute)",
+				"name": "Monocytes",
 				"confidence": 1,
 				"ocr": {
 					"name": "Monociti",
@@ -2630,7 +2630,7 @@
 			"unit": "10^9/L",
 			"range": "[< 0.2]",
 			"metadata": {
-				"name": "Basophil (absolute)",
+				"name": "Basophils",
 				"confidence": 1,
 				"ocr": {
 					"name": "Basofili",

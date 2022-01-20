@@ -2496,7 +2496,7 @@
 			}
 		},
 		{
-			"biomarker": "nrbc",
+			"biomarker": "nrbc-abs",
 			"value": 0,
 			"text": "missing",
 			"unit": "10^9/L",
@@ -2561,7 +2561,7 @@
 			}
 		},
 		{
-			"biomarker": "ne-count",
+			"biomarker": "ne-abs",
 			"value": 3.41,
 			"unit": "10^9/L",
 			"range": "[1.8 - 8]",

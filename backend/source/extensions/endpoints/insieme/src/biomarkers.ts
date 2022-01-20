@@ -66,7 +66,8 @@ export class Biomarker {
 	 * @returns A ranked list of possible matches
 	 */
 	public static searchBiomarkers(query: string, confidence: number = BIOMARKERS_SEARCH_CONFIDENCE): { item: Biomarker; confidence: number }[] {
-		const matches = _biomarkersFuse.search(query);
+    assert (_biomarkersFuse)
+    const matches = _biomarkersFuse.search(query);
 		if (matches) {
 			let filtered = matches.map((m) => {
 				return { item: _biomarkers?.[m.item.id] as Biomarker, confidence: 1 - (m.score as number) };
@@ -82,10 +83,11 @@ export class Biomarker {
 	public static async updateBiomarkers() {
 		const jsonPath = resolve('./src/biomarkers.json');
 		const jsonUrl =
-			'/items/biomarkers?fields=id,description,translations.languages_code,translations.name,translations.description,translations.summary,metadata,unit.id&limit=1000';
+			'/items/biomarkers?fields=id,status,description,range,unit.id,translations.languages_code,translations.name,translations.description,translations.summary,metadata&limit=1000';
 		try {
-			const json = (await Api.getJson(jsonUrl)).data;
-			await writeJson(jsonPath, json);
+			const biomarkersJson = (await Api.getJson(jsonUrl)).data;
+			await writeJson(jsonPath, biomarkersJson);
+			_initializeBiomarkers(biomarkersJson);
 		} catch (exception) {
 			console.error(`Biomarkers.updateBiomarkers - could not read biomarkers from network, exception: ${exception}`, exception);
 			throw exception;
@@ -119,25 +121,25 @@ export class Biomarker {
 	 */
 	public static parseUnits(text: string, biomarker: Biomarker): { id: string; conversion: number; confidence: number } | null {
 		if (!biomarker.unit) {
-			console.warn(`parseUnits - biomarker: ${biomarker.id} does not have a measurement unit of measurement`);
+			console.warn(`parseUnits - biomarker: ${biomarker.id} does not have a measurement unit`);
 			return null;
 		}
 
 		// each biomarker has a main unit of measurement which is preferred (normally the SI unit)
 		// and a number of available conversions that can also be read. normally the conversion
-    // factors are stored in unit.metadata.conversion. however, some conversions like mmol/L
-    // (a quantity of molecules) to mg/L (a weight) require a conversion ratio that is specific
-    // to the biomarker and is therefore stored in biomarker.metadata.conversions.
+		// factors are stored in unit.metadata.conversion. however, some conversions like mmol/L
+		// (a quantity of molecules) to mg/L (a weight) require a conversion ratio that is specific
+		// to the biomarker and is therefore stored in biomarker.metadata.conversions.
 		const unitsCandidates = [biomarker.unit.id];
-    const unitsConversions = [1]
+		const unitsConversions = [1];
 
-    if (biomarker.metadata?.conversions) {
+		if (biomarker.metadata?.conversions) {
 			unitsCandidates.push(...Object.keys(biomarker.metadata.conversions));
-      unitsConversions.push(...Object.values(biomarker.metadata.conversions))
-    }
-    if (biomarker.unit?.conversions) {
+			unitsConversions.push(...Object.values(biomarker.metadata.conversions));
+		}
+		if (biomarker.unit?.conversions) {
 			unitsCandidates.push(...Object.keys(biomarker.unit.conversions));
-      unitsConversions.push(...Object.values(biomarker.unit.conversions))
+			unitsConversions.push(...Object.values(biomarker.unit.conversions));
 		}
 
 		const unitsFuse = new Fuse(unitsCandidates, { minMatchCharLength: 1, includeScore: true });
@@ -322,23 +324,31 @@ export class Measurement {
 // static list of available biomarkers and search index
 const _biomarkers: { [key: string]: Biomarker } = {};
 const _biomarkersJson = require('./biomarkers.json');
-_biomarkersJson.forEach((b: any) => {
-	const biomarker = Biomarker.fromObject(b);
-	_biomarkers[biomarker.id] = biomarker;
-});
 
 // fuse index used for searches
-const _biomarkersFuse = new Fuse<Biomarker>(Object.values(_biomarkers), {
-	minMatchCharLength: 4,
-	includeScore: true,
-	keys: [
-		{ name: 'id', weight: 1.0 },
-		{ name: 'translations.name', weight: 1.0 },
-		{ name: 'metadata.aliases', weight: 1.0 },
-		{ name: 'translations.description', weight: 0.5 },
-		{ name: 'translations.summary', weight: 0.25 },
-	],
-});
+let _biomarkersFuse: Fuse<Biomarker> | undefined;
+
+function _initializeBiomarkers(biomarkersJson: any) {
+	biomarkersJson.forEach((b: any) => {
+		const biomarker = Biomarker.fromObject(b);
+		_biomarkers[biomarker.id] = biomarker;
+	});
+
+	// fuse index used for searches
+	_biomarkersFuse = new Fuse<Biomarker>(Object.values(_biomarkers), {
+		minMatchCharLength: 4,
+		includeScore: true,
+		keys: [
+			{ name: 'id', weight: 1.0 },
+			{ name: 'translations.name', weight: 1.0 },
+			{ name: 'metadata.aliases', weight: 0.9 },
+			{ name: 'translations.description', weight: 0.5 },
+			{ name: 'translations.summary', weight: 0.25 },
+		],
+	});
+}
+
+_initializeBiomarkers(_biomarkersJson);
 
 //
 // Parsing of biomarker values and ranges

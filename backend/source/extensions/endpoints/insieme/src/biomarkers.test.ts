@@ -191,7 +191,7 @@ describe('biomarkers.ts', () => {
 		expect(unit?.confidence).toBe(1);
 
 		// parse a unit that CANNOT be converted to native unit
-		unit = Biomarker.parseUnits('%', biomarker);
+		unit = Biomarker.parseUnits('mmol/L', biomarker);
 		expect(unit).toBeNull();
 
 		// parse unparseable strings
