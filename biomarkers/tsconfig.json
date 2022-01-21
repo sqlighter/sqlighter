@@ -23,8 +23,8 @@
 		"allowSyntheticDefaultImports": true,
 		"isolatedModules": true,
 		"sourceMap": true,
-		"rootDir": "./src",
-    "outDir": "../../../../build/extensions/endpoints/insieme"
+		"rootDir": "source",
+    "outDir": "../backend/build/extensions/endpoints/insieme"
 	},
-	"include": ["./src/**/*.ts"]
+	"include": ["source/**/*.ts"]
 }

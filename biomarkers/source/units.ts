@@ -88,7 +88,7 @@ export class Unit {
 
 	/** Updates to latest version of units.json (requires a restart) */
 	public static async updateUnits() {
-		const unitsPath = resolve('./src/units.json');
+		const unitsPath = resolve('./source/assets/units.json');
 		try {
 			const units = (await Api.getJson('/items/units?fields=*&limit=1000')).data;
 			await writeJson(unitsPath, units);
@@ -101,7 +101,7 @@ export class Unit {
 
 // initialize units data from units.json
 const _units: { [unit: string]: Unit } = {};
-const _unitsJson = require('./units.json');
+const _unitsJson = require('./assets/units.json');
 _unitsJson.forEach((u: any) => (_units[u.id] = new Unit(u.id, u.description, u.metadata)));
 
 // index used for searching

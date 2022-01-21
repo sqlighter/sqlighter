@@ -36,8 +36,8 @@ async function analyzePdf(file: string) {
 	// biomarkers that are expected to be found in the report. we can analyze
 	// the pdf and then match against the expected results to see if anything
 	// has gone missing
-	const pdfFile = path.resolve('./test/' + file);
-	const expectedFile = toArtifacts(pdfFile + '.expected.json');
+	const pdfFile = path.resolve('./source/test/' + file);
+	const expectedFile = pdfFile + '.expected.json';
 	const ocrFile = toArtifacts(pdfFile + '.ocr.json');
 	console.log(`checking file ${pdfFile}`);
 

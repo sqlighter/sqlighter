@@ -7,7 +7,7 @@ import fs from 'fs/promises';
 import { Ocr } from './ocr';
 import { writeJson } from "./utilities"
 
-const TEST_PDF_PATH = './test/report01.pdf';
+const TEST_PDF_PATH = './source/test/report01.pdf';
 function toArtifacts(path:string) {
 	return resolve(path).replace("/test/", "/test/artifacts/")
 }

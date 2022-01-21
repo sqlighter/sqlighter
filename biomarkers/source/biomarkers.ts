@@ -81,7 +81,7 @@ export class Biomarker {
 
 	/** Updates to latest version of biomarkers.json (requires a restart) */
 	public static async updateBiomarkers() {
-		const jsonPath = resolve('./src/biomarkers.json');
+		const jsonPath = resolve('./source/assets/biomarkers.json');
 		const jsonUrl =
 			'/items/biomarkers?fields=id,status,description,range,unit.id,translations.languages_code,translations.name,translations.description,translations.summary,metadata&limit=1000';
 		try {
@@ -323,7 +323,7 @@ export class Measurement {
 
 // static list of available biomarkers and search index
 const _biomarkers: { [key: string]: Biomarker } = {};
-const _biomarkersJson = require('./biomarkers.json');
+const _biomarkersJson = require('./assets/biomarkers.json');
 
 // fuse index used for searches
 let _biomarkersFuse: Fuse<Biomarker> | undefined;
