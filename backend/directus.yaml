@@ -1,0 +1,2631 @@
+version: 1
+directus: 9.4.2
+collections:
+  - collection: biomarkers
+    meta:
+      collection: biomarkers
+      icon: biotech
+      note: Biomarkers from laboratory exams like glucose, cholesterol, etc.
+      display_template: null
+      hidden: false
+      singleton: false
+      translations: null
+      archive_field: status
+      archive_app_filter: true
+      archive_value: archived
+      unarchive_value: draft
+      sort_field: null
+      accountability: all
+      color: null
+      item_duplication_fields: null
+      sort: 2
+      group: lab
+      collapse: open
+    schema:
+      name: biomarkers
+      schema: insieme
+      comment: ''
+      collation: utf8_general_ci
+      engine: InnoDB
+  - collection: biomarkers_translations
+    meta:
+      collection: biomarkers_translations
+      icon: import_export
+      note: null
+      display_template: '{{name}}{{description}}'
+      hidden: true
+      singleton: false
+      translations: null
+      archive_field: null
+      archive_app_filter: true
+      archive_value: null
+      unarchive_value: null
+      sort_field: null
+      accountability: all
+      color: null
+      item_duplication_fields: null
+      sort: 3
+      group: lab
+      collapse: open
+    schema:
+      name: biomarkers_translations
+      schema: insieme
+      comment: ''
+      collation: utf8_general_ci
+      engine: InnoDB
+  - collection: contents
+    meta:
+      collection: contents
+      icon: folder
+      note: null
+      display_template: null
+      hidden: false
+      singleton: false
+      translations: null
+      archive_field: null
+      archive_app_filter: true
+      archive_value: null
+      unarchive_value: null
+      sort_field: null
+      accountability: all
+      color: null
+      item_duplication_fields: null
+      sort: 4
+      group: null
+      collapse: open
+    schema: null
+  - collection: lab
+    meta:
+      collection: lab
+      icon: folder
+      note: null
+      display_template: null
+      hidden: false
+      singleton: false
+      translations: null
+      archive_field: null
+      archive_app_filter: true
+      archive_value: null
+      unarchive_value: null
+      sort_field: null
+      accountability: all
+      color: null
+      item_duplication_fields: null
+      sort: 3
+      group: null
+      collapse: open
+    schema: null
+  - collection: languages
+    meta:
+      collection: languages
+      icon: flag
+      note: null
+      display_template: null
+      hidden: true
+      singleton: false
+      translations: null
+      archive_field: null
+      archive_app_filter: true
+      archive_value: null
+      unarchive_value: null
+      sort_field: null
+      accountability: all
+      color: null
+      item_duplication_fields: null
+      sort: 3
+      group: contents
+      collapse: open
+    schema:
+      name: languages
+      schema: insieme
+      comment: ''
+      collation: utf8_general_ci
+      engine: InnoDB
+  - collection: posts
+    meta:
+      collection: posts
+      icon: article
+      note: null
+      display_template: null
+      hidden: false
+      singleton: false
+      translations: null
+      archive_field: status
+      archive_app_filter: true
+      archive_value: archived
+      unarchive_value: draft
+      sort_field: null
+      accountability: all
+      color: null
+      item_duplication_fields: null
+      sort: 1
+      group: contents
+      collapse: open
+    schema:
+      name: posts
+      schema: insieme
+      comment: ''
+      collation: utf8_general_ci
+      engine: InnoDB
+  - collection: posts_translations
+    meta:
+      collection: posts_translations
+      icon: article
+      note: Blog posts
+      display_template: '{{title}}'
+      hidden: true
+      singleton: false
+      translations: null
+      archive_field: null
+      archive_app_filter: true
+      archive_value: null
+      unarchive_value: null
+      sort_field: null
+      accountability: all
+      color: null
+      item_duplication_fields: null
+      sort: 2
+      group: contents
+      collapse: open
+    schema:
+      name: posts_translations
+      schema: insieme
+      comment: ''
+      collation: utf8_general_ci
+      engine: InnoDB
+  - collection: records
+    meta:
+      collection: records
+      icon: file_present
+      note: null
+      display_template: null
+      hidden: false
+      singleton: false
+      translations: null
+      archive_field: status
+      archive_app_filter: true
+      archive_value: archived
+      unarchive_value: draft
+      sort_field: null
+      accountability: all
+      color: null
+      item_duplication_fields:
+        - status
+        - user_id
+        - user_created
+        - description
+        - name
+        - summary
+        - documents
+        - results
+      sort: 1
+      group: null
+      collapse: open
+    schema:
+      name: records
+      schema: insieme
+      comment: ''
+      collation: utf8_general_ci
+      engine: InnoDB
+  - collection: records_files
+    meta:
+      collection: records_files
+      icon: import_export
+      note: null
+      display_template: null
+      hidden: true
+      singleton: false
+      translations: null
+      archive_field: null
+      archive_app_filter: true
+      archive_value: null
+      unarchive_value: null
+      sort_field: null
+      accountability: all
+      color: null
+      item_duplication_fields: null
+      sort: 2
+      group: null
+      collapse: open
+    schema:
+      name: records_files
+      schema: insieme
+      comment: ''
+      collation: utf8_general_ci
+      engine: InnoDB
+  - collection: results
+    meta:
+      collection: results
+      icon: biotech
+      note: null
+      display_template: null
+      hidden: false
+      singleton: false
+      translations: null
+      archive_field: null
+      archive_app_filter: true
+      archive_value: null
+      unarchive_value: null
+      sort_field: null
+      accountability: all
+      color: null
+      item_duplication_fields: null
+      sort: 1
+      group: lab
+      collapse: open
+    schema:
+      name: results
+      schema: insieme
+      comment: ''
+      collation: utf8_general_ci
+      engine: InnoDB
+  - collection: units
+    meta:
+      collection: units
+      icon: biotech
+      note: null
+      display_template: null
+      hidden: false
+      singleton: false
+      translations: null
+      archive_field: null
+      archive_app_filter: true
+      archive_value: null
+      unarchive_value: null
+      sort_field: null
+      accountability: all
+      color: null
+      item_duplication_fields: null
+      sort: 4
+      group: lab
+      collapse: open
+    schema:
+      name: units
+      schema: insieme
+      comment: ''
+      collation: utf8_general_ci
+      engine: InnoDB
+fields:
+  - collection: biomarkers
+    field: id
+    type: string
+    schema:
+      name: id
+      table: biomarkers
+      data_type: varchar
+      default_value: null
+      generation_expression: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_generated: false
+      is_nullable: false
+      is_unique: false
+      is_primary_key: true
+      has_auto_increment: false
+      foreign_key_column: null
+      foreign_key_table: null
+      comment: ''
+    meta:
+      collection: biomarkers
+      field: id
+      special: null
+      interface: input
+      options: null
+      display: null
+      display_options: null
+      readonly: false
+      hidden: false
+      sort: null
+      width: half
+      translations: null
+      note: null
+      conditions: null
+      required: false
+      group: null
+  - collection: biomarkers
+    field: status
+    type: string
+    schema:
+      name: status
+      table: biomarkers
+      data_type: varchar
+      default_value: draft
+      generation_expression: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_generated: false
+      is_nullable: false
+      is_unique: false
+      is_primary_key: false
+      has_auto_increment: false
+      foreign_key_column: null
+      foreign_key_table: null
+      comment: ''
+    meta:
+      collection: biomarkers
+      field: status
+      special: null
+      interface: select-dropdown
+      options:
+        choices:
+          - text: $t:published
+            value: published
+          - text: $t:draft
+            value: draft
+          - text: $t:archived
+            value: archived
+      display: labels
+      display_options:
+        choices:
+          - value: published
+            background: '#00C897'
+          - value: draft
+            background: '#D3DAE4'
+          - value: archived
+            background: '#F7971C'
+        showAsDot: true
+      readonly: false
+      hidden: false
+      sort: null
+      width: half
+      translations: null
+      note: null
+      conditions: null
+      required: false
+      group: null
+  - collection: biomarkers
+    field: unit
+    type: string
+    schema:
+      name: unit
+      table: biomarkers
+      data_type: varchar
+      default_value: null
+      generation_expression: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_generated: false
+      is_nullable: true
+      is_unique: false
+      is_primary_key: false
+      has_auto_increment: false
+      foreign_key_column: id
+      foreign_key_table: units
+      comment: ''
+    meta:
+      collection: biomarkers
+      field: unit
+      special:
+        - m2o
+      interface: select-dropdown-m2o
+      options:
+        template: '{{id}}'
+      display: null
+      display_options: null
+      readonly: false
+      hidden: false
+      sort: null
+      width: full
+      translations: null
+      note: null
+      conditions: null
+      required: false
+      group: null
+  - collection: biomarkers
+    field: range
+    type: string
+    schema:
+      name: range
+      table: biomarkers
+      data_type: varchar
+      default_value: null
+      generation_expression: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_generated: false
+      is_nullable: true
+      is_unique: false
+      is_primary_key: false
+      has_auto_increment: false
+      foreign_key_column: null
+      foreign_key_table: null
+      comment: ''
+    meta:
+      collection: biomarkers
+      field: range
+      special: null
+      interface: input
+      options: null
+      display: null
+      display_options: null
+      readonly: false
+      hidden: false
+      sort: null
+      width: full
+      translations: null
+      note: null
+      conditions: null
+      required: false
+      group: null
+  - collection: biomarkers
+    field: tags
+    type: json
+    schema:
+      name: tags
+      table: biomarkers
+      data_type: json
+      default_value: null
+      generation_expression: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_generated: false
+      is_nullable: true
+      is_unique: false
+      is_primary_key: false
+      has_auto_increment: false
+      foreign_key_column: null
+      foreign_key_table: null
+      comment: ''
+    meta:
+      collection: biomarkers
+      field: tags
+      special:
+        - json
+      interface: tags
+      options: null
+      display: null
+      display_options: null
+      readonly: false
+      hidden: false
+      sort: null
+      width: full
+      translations: null
+      note: null
+      conditions: null
+      required: false
+      group: null
+  - collection: biomarkers
+    field: metadata
+    type: json
+    schema:
+      name: metadata
+      table: biomarkers
+      data_type: json
+      default_value: null
+      generation_expression: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_generated: false
+      is_nullable: true
+      is_unique: false
+      is_primary_key: false
+      has_auto_increment: false
+      foreign_key_column: null
+      foreign_key_table: null
+      comment: ''
+    meta:
+      collection: biomarkers
+      field: metadata
+      special:
+        - json
+      interface: input-code
+      options: null
+      display: null
+      display_options: null
+      readonly: false
+      hidden: false
+      sort: null
+      width: full
+      translations: null
+      note: null
+      conditions: null
+      required: false
+      group: null
+  - collection: biomarkers_translations
+    field: id
+    type: integer
+    schema:
+      name: id
+      table: biomarkers_translations
+      data_type: int unsigned
+      default_value: null
+      generation_expression: null
+      max_length: null
+      numeric_precision: 10
+      numeric_scale: 0
+      is_generated: false
+      is_nullable: false
+      is_unique: false
+      is_primary_key: true
+      has_auto_increment: true
+      foreign_key_column: null
+      foreign_key_table: null
+      comment: ''
+    meta:
+      collection: biomarkers_translations
+      field: id
+      special: null
+      interface: null
+      options: null
+      display: null
+      display_options: null
+      readonly: false
+      hidden: true
+      sort: null
+      width: full
+      translations: null
+      note: null
+      conditions: null
+      required: false
+      group: null
+  - collection: biomarkers_translations
+    field: biomarkers_id
+    type: string
+    schema:
+      name: biomarkers_id
+      table: biomarkers_translations
+      data_type: varchar
+      default_value: null
+      generation_expression: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_generated: false
+      is_nullable: true
+      is_unique: false
+      is_primary_key: false
+      has_auto_increment: false
+      foreign_key_column: id
+      foreign_key_table: biomarkers
+      comment: ''
+    meta:
+      collection: biomarkers_translations
+      field: biomarkers_id
+      special: null
+      interface: null
+      options: null
+      display: null
+      display_options: null
+      readonly: false
+      hidden: true
+      sort: null
+      width: full
+      translations: null
+      note: null
+      conditions: null
+      required: false
+      group: null
+  - collection: biomarkers_translations
+    field: languages_code
+    type: string
+    schema:
+      name: languages_code
+      table: biomarkers_translations
+      data_type: varchar
+      default_value: null
+      generation_expression: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_generated: false
+      is_nullable: true
+      is_unique: false
+      is_primary_key: false
+      has_auto_increment: false
+      foreign_key_column: code
+      foreign_key_table: languages
+      comment: ''
+    meta:
+      collection: biomarkers_translations
+      field: languages_code
+      special: null
+      interface: null
+      options: null
+      display: null
+      display_options: null
+      readonly: false
+      hidden: true
+      sort: null
+      width: full
+      translations: null
+      note: null
+      conditions: null
+      required: false
+      group: null
+  - collection: biomarkers_translations
+    field: name
+    type: string
+    schema:
+      name: name
+      table: biomarkers_translations
+      data_type: varchar
+      default_value: null
+      generation_expression: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_generated: false
+      is_nullable: true
+      is_unique: false
+      is_primary_key: false
+      has_auto_increment: false
+      foreign_key_column: null
+      foreign_key_table: null
+      comment: ''
+    meta:
+      collection: biomarkers_translations
+      field: name
+      special: null
+      interface: input
+      options: null
+      display: null
+      display_options: null
+      readonly: false
+      hidden: false
+      sort: null
+      width: full
+      translations: null
+      note: null
+      conditions: null
+      required: true
+      group: null
+  - collection: biomarkers_translations
+    field: description
+    type: string
+    schema:
+      name: description
+      table: biomarkers_translations
+      data_type: varchar
+      default_value: null
+      generation_expression: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_generated: false
+      is_nullable: true
+      is_unique: false
+      is_primary_key: false
+      has_auto_increment: false
+      foreign_key_column: null
+      foreign_key_table: null
+      comment: ''
+    meta:
+      collection: biomarkers_translations
+      field: description
+      special: null
+      interface: input
+      options: null
+      display: null
+      display_options: null
+      readonly: false
+      hidden: false
+      sort: null
+      width: full
+      translations: null
+      note: null
+      conditions: null
+      required: false
+      group: null
+  - collection: biomarkers_translations
+    field: summary
+    type: text
+    schema:
+      name: summary
+      table: biomarkers_translations
+      data_type: text
+      default_value: null
+      generation_expression: null
+      max_length: 65535
+      numeric_precision: null
+      numeric_scale: null
+      is_generated: false
+      is_nullable: true
+      is_unique: false
+      is_primary_key: false
+      has_auto_increment: false
+      foreign_key_column: null
+      foreign_key_table: null
+      comment: ''
+    meta:
+      collection: biomarkers_translations
+      field: summary
+      special: null
+      interface: input-rich-text-md
+      options:
+        folder: 3b10ae8e-9f8a-4e41-bd6b-92b6dd1518b1
+      display: null
+      display_options: null
+      readonly: false
+      hidden: false
+      sort: null
+      width: full
+      translations: null
+      note: null
+      conditions: null
+      required: false
+      group: null
+  - collection: languages
+    field: code
+    type: string
+    schema:
+      name: code
+      table: languages
+      data_type: varchar
+      default_value: null
+      generation_expression: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_generated: false
+      is_nullable: false
+      is_unique: false
+      is_primary_key: true
+      has_auto_increment: false
+      foreign_key_column: null
+      foreign_key_table: null
+      comment: ''
+    meta:
+      collection: languages
+      field: code
+      special: null
+      interface: null
+      options: null
+      display: null
+      display_options: null
+      readonly: false
+      hidden: false
+      sort: null
+      width: full
+      translations: null
+      note: null
+      conditions: null
+      required: false
+      group: null
+  - collection: languages
+    field: name
+    type: string
+    schema:
+      name: name
+      table: languages
+      data_type: varchar
+      default_value: null
+      generation_expression: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_generated: false
+      is_nullable: true
+      is_unique: false
+      is_primary_key: false
+      has_auto_increment: false
+      foreign_key_column: null
+      foreign_key_table: null
+      comment: ''
+    meta:
+      collection: languages
+      field: name
+      special: null
+      interface: null
+      options: null
+      display: null
+      display_options: null
+      readonly: false
+      hidden: false
+      sort: null
+      width: full
+      translations: null
+      note: null
+      conditions: null
+      required: false
+      group: null
+  - collection: posts
+    field: id
+    type: integer
+    schema:
+      name: id
+      table: posts
+      data_type: int unsigned
+      default_value: null
+      generation_expression: null
+      max_length: null
+      numeric_precision: 10
+      numeric_scale: 0
+      is_generated: false
+      is_nullable: false
+      is_unique: false
+      is_primary_key: true
+      has_auto_increment: true
+      foreign_key_column: null
+      foreign_key_table: null
+      comment: ''
+    meta:
+      collection: posts
+      field: id
+      special: null
+      interface: input
+      options: null
+      display: null
+      display_options: null
+      readonly: true
+      hidden: true
+      sort: 1
+      width: half
+      translations: null
+      note: null
+      conditions: null
+      required: false
+      group: null
+  - collection: posts
+    field: status
+    type: string
+    schema:
+      name: status
+      table: posts
+      data_type: varchar
+      default_value: draft
+      generation_expression: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_generated: false
+      is_nullable: false
+      is_unique: false
+      is_primary_key: false
+      has_auto_increment: false
+      foreign_key_column: null
+      foreign_key_table: null
+      comment: ''
+    meta:
+      collection: posts
+      field: status
+      special: null
+      interface: select-dropdown
+      options:
+        choices:
+          - text: $t:published
+            value: published
+          - text: $t:draft
+            value: draft
+          - text: $t:archived
+            value: archived
+      display: labels
+      display_options:
+        choices:
+          - value: published
+            background: '#00C897'
+          - value: draft
+            background: '#D3DAE4'
+          - value: archived
+            background: '#F7971C'
+        showAsDot: true
+      readonly: false
+      hidden: false
+      sort: 2
+      width: half
+      translations: null
+      note: null
+      conditions: null
+      required: false
+      group: null
+  - collection: posts
+    field: user_created
+    type: string
+    schema:
+      name: user_created
+      table: posts
+      data_type: char
+      default_value: null
+      generation_expression: null
+      max_length: 36
+      numeric_precision: null
+      numeric_scale: null
+      is_generated: false
+      is_nullable: true
+      is_unique: false
+      is_primary_key: false
+      has_auto_increment: false
+      foreign_key_column: id
+      foreign_key_table: directus_users
+      comment: ''
+    meta:
+      collection: posts
+      field: user_created
+      special:
+        - user-created
+      interface: select-dropdown-m2o
+      options:
+        template: '{{avatar.$thumbnail}} {{first_name}} {{last_name}}'
+      display: user
+      display_options: null
+      readonly: true
+      hidden: true
+      sort: 4
+      width: half
+      translations: null
+      note: null
+      conditions: null
+      required: false
+      group: null
+  - collection: posts
+    field: date_created
+    type: timestamp
+    schema:
+      name: date_created
+      table: posts
+      data_type: timestamp
+      default_value: null
+      generation_expression: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_generated: false
+      is_nullable: true
+      is_unique: false
+      is_primary_key: false
+      has_auto_increment: false
+      foreign_key_column: null
+      foreign_key_table: null
+      comment: ''
+    meta:
+      collection: posts
+      field: date_created
+      special:
+        - date-created
+      interface: datetime
+      options: null
+      display: datetime
+      display_options:
+        relative: true
+      readonly: true
+      hidden: true
+      sort: 3
+      width: half
+      translations: null
+      note: null
+      conditions: null
+      required: false
+      group: null
+  - collection: posts
+    field: user_updated
+    type: string
+    schema:
+      name: user_updated
+      table: posts
+      data_type: char
+      default_value: null
+      generation_expression: null
+      max_length: 36
+      numeric_precision: null
+      numeric_scale: null
+      is_generated: false
+      is_nullable: true
+      is_unique: false
+      is_primary_key: false
+      has_auto_increment: false
+      foreign_key_column: id
+      foreign_key_table: directus_users
+      comment: ''
+    meta:
+      collection: posts
+      field: user_updated
+      special:
+        - user-updated
+      interface: select-dropdown-m2o
+      options:
+        template: '{{avatar.$thumbnail}} {{first_name}} {{last_name}}'
+      display: user
+      display_options: null
+      readonly: true
+      hidden: true
+      sort: 6
+      width: half
+      translations: null
+      note: null
+      conditions: null
+      required: false
+      group: null
+  - collection: posts
+    field: date_updated
+    type: timestamp
+    schema:
+      name: date_updated
+      table: posts
+      data_type: timestamp
+      default_value: null
+      generation_expression: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_generated: false
+      is_nullable: true
+      is_unique: false
+      is_primary_key: false
+      has_auto_increment: false
+      foreign_key_column: null
+      foreign_key_table: null
+      comment: ''
+    meta:
+      collection: posts
+      field: date_updated
+      special:
+        - date-updated
+      interface: datetime
+      options: null
+      display: datetime
+      display_options:
+        relative: true
+      readonly: true
+      hidden: true
+      sort: 5
+      width: half
+      translations: null
+      note: null
+      conditions: null
+      required: false
+      group: null
+  - collection: posts
+    field: slug
+    type: string
+    schema:
+      name: slug
+      table: posts
+      data_type: varchar
+      default_value: null
+      generation_expression: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_generated: false
+      is_nullable: true
+      is_unique: false
+      is_primary_key: false
+      has_auto_increment: false
+      foreign_key_column: null
+      foreign_key_table: null
+      comment: ''
+    meta:
+      collection: posts
+      field: slug
+      special: null
+      interface: input
+      options: null
+      display: null
+      display_options: null
+      readonly: false
+      hidden: false
+      sort: null
+      width: full
+      translations: null
+      note: null
+      conditions: null
+      required: false
+      group: null
+  - collection: posts_translations
+    field: id
+    type: integer
+    schema:
+      name: id
+      table: posts_translations
+      data_type: int unsigned
+      default_value: null
+      generation_expression: null
+      max_length: null
+      numeric_precision: 10
+      numeric_scale: 0
+      is_generated: false
+      is_nullable: false
+      is_unique: false
+      is_primary_key: true
+      has_auto_increment: true
+      foreign_key_column: null
+      foreign_key_table: null
+      comment: ''
+    meta:
+      collection: posts_translations
+      field: id
+      special: null
+      interface: null
+      options: null
+      display: null
+      display_options: null
+      readonly: false
+      hidden: true
+      sort: null
+      width: full
+      translations: null
+      note: null
+      conditions: null
+      required: false
+      group: null
+  - collection: posts_translations
+    field: posts_id
+    type: integer
+    schema:
+      name: posts_id
+      table: posts_translations
+      data_type: int unsigned
+      default_value: null
+      generation_expression: null
+      max_length: null
+      numeric_precision: 10
+      numeric_scale: 0
+      is_generated: false
+      is_nullable: true
+      is_unique: false
+      is_primary_key: false
+      has_auto_increment: false
+      foreign_key_column: id
+      foreign_key_table: posts
+      comment: ''
+    meta:
+      collection: posts_translations
+      field: posts_id
+      special: null
+      interface: null
+      options: null
+      display: null
+      display_options: null
+      readonly: false
+      hidden: true
+      sort: null
+      width: full
+      translations: null
+      note: null
+      conditions: null
+      required: false
+      group: null
+  - collection: posts_translations
+    field: languages_code
+    type: string
+    schema:
+      name: languages_code
+      table: posts_translations
+      data_type: varchar
+      default_value: null
+      generation_expression: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_generated: false
+      is_nullable: true
+      is_unique: false
+      is_primary_key: false
+      has_auto_increment: false
+      foreign_key_column: code
+      foreign_key_table: languages
+      comment: ''
+    meta:
+      collection: posts_translations
+      field: languages_code
+      special: null
+      interface: null
+      options: null
+      display: null
+      display_options: null
+      readonly: false
+      hidden: true
+      sort: null
+      width: full
+      translations: null
+      note: null
+      conditions: null
+      required: false
+      group: null
+  - collection: posts_translations
+    field: title
+    type: string
+    schema:
+      name: title
+      table: posts_translations
+      data_type: varchar
+      default_value: null
+      generation_expression: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_generated: false
+      is_nullable: true
+      is_unique: false
+      is_primary_key: false
+      has_auto_increment: false
+      foreign_key_column: null
+      foreign_key_table: null
+      comment: ''
+    meta:
+      collection: posts_translations
+      field: title
+      special: null
+      interface: input
+      options: null
+      display: null
+      display_options: null
+      readonly: false
+      hidden: false
+      sort: null
+      width: full
+      translations: null
+      note: null
+      conditions: null
+      required: true
+      group: null
+  - collection: posts_translations
+    field: subtitle
+    type: string
+    schema:
+      name: subtitle
+      table: posts_translations
+      data_type: varchar
+      default_value: null
+      generation_expression: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_generated: false
+      is_nullable: true
+      is_unique: false
+      is_primary_key: false
+      has_auto_increment: false
+      foreign_key_column: null
+      foreign_key_table: null
+      comment: ''
+    meta:
+      collection: posts_translations
+      field: subtitle
+      special: null
+      interface: input
+      options: null
+      display: null
+      display_options: null
+      readonly: false
+      hidden: false
+      sort: null
+      width: full
+      translations: null
+      note: null
+      conditions: null
+      required: false
+      group: null
+  - collection: posts_translations
+    field: body
+    type: text
+    schema:
+      name: body
+      table: posts_translations
+      data_type: text
+      default_value: null
+      generation_expression: null
+      max_length: 65535
+      numeric_precision: null
+      numeric_scale: null
+      is_generated: false
+      is_nullable: true
+      is_unique: false
+      is_primary_key: false
+      has_auto_increment: false
+      foreign_key_column: null
+      foreign_key_table: null
+      comment: ''
+    meta:
+      collection: posts_translations
+      field: body
+      special: null
+      interface: input-rich-text-md
+      options:
+        folder: 18b8c070-99c3-478e-b95f-cbc19c4b653f
+      display: null
+      display_options: null
+      readonly: false
+      hidden: false
+      sort: null
+      width: full
+      translations: null
+      note: null
+      conditions: null
+      required: true
+      group: null
+  - collection: posts_translations
+    field: tags
+    type: json
+    schema:
+      name: tags
+      table: posts_translations
+      data_type: json
+      default_value: null
+      generation_expression: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_generated: false
+      is_nullable: true
+      is_unique: false
+      is_primary_key: false
+      has_auto_increment: false
+      foreign_key_column: null
+      foreign_key_table: null
+      comment: ''
+    meta:
+      collection: posts_translations
+      field: tags
+      special:
+        - json
+      interface: tags
+      options:
+        iconRight: local_offer
+        whitespace: '-'
+        capitalization: lowercase
+      display: null
+      display_options: null
+      readonly: false
+      hidden: false
+      sort: null
+      width: full
+      translations: null
+      note: null
+      conditions: null
+      required: false
+      group: null
+  - collection: records
+    field: id
+    type: integer
+    schema:
+      name: id
+      table: records
+      data_type: int unsigned
+      default_value: null
+      generation_expression: null
+      max_length: null
+      numeric_precision: 10
+      numeric_scale: 0
+      is_generated: false
+      is_nullable: false
+      is_unique: false
+      is_primary_key: true
+      has_auto_increment: true
+      foreign_key_column: null
+      foreign_key_table: null
+      comment: ''
+    meta:
+      collection: records
+      field: id
+      special: null
+      interface: input
+      options:
+        min: null
+      display: null
+      display_options: null
+      readonly: true
+      hidden: false
+      sort: 1
+      width: half
+      translations: null
+      note: null
+      conditions: null
+      required: false
+      group: null
+  - collection: records
+    field: status
+    type: string
+    schema:
+      name: status
+      table: records
+      data_type: varchar
+      default_value: draft
+      generation_expression: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_generated: false
+      is_nullable: false
+      is_unique: false
+      is_primary_key: false
+      has_auto_increment: false
+      foreign_key_column: null
+      foreign_key_table: null
+      comment: ''
+    meta:
+      collection: records
+      field: status
+      special: null
+      interface: select-dropdown
+      options:
+        choices:
+          - text: $t:published
+            value: published
+          - text: $t:draft
+            value: draft
+          - text: $t:archived
+            value: archived
+      display: labels
+      display_options:
+        choices:
+          - value: published
+            background: '#00C897'
+          - value: draft
+            background: '#D3DAE4'
+          - value: archived
+            background: '#F7971C'
+        showAsDot: true
+      readonly: false
+      hidden: false
+      sort: 2
+      width: half
+      translations: null
+      note: null
+      conditions: null
+      required: false
+      group: null
+  - collection: records
+    field: user_created
+    type: string
+    schema:
+      name: user_created
+      table: records
+      data_type: char
+      default_value: null
+      generation_expression: null
+      max_length: 36
+      numeric_precision: null
+      numeric_scale: null
+      is_generated: false
+      is_nullable: true
+      is_unique: false
+      is_primary_key: false
+      has_auto_increment: false
+      foreign_key_column: id
+      foreign_key_table: directus_users
+      comment: ''
+    meta:
+      collection: records
+      field: user_created
+      special:
+        - user-created
+      interface: select-dropdown-m2o
+      options:
+        template: '{{email}}'
+      display: user
+      display_options: null
+      readonly: true
+      hidden: false
+      sort: 5
+      width: half
+      translations: null
+      note: User who created this record
+      conditions: null
+      required: false
+      group: null
+  - collection: records
+    field: date_created
+    type: timestamp
+    schema:
+      name: date_created
+      table: records
+      data_type: timestamp
+      default_value: null
+      generation_expression: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_generated: false
+      is_nullable: true
+      is_unique: false
+      is_primary_key: false
+      has_auto_increment: false
+      foreign_key_column: null
+      foreign_key_table: null
+      comment: ''
+    meta:
+      collection: records
+      field: date_created
+      special:
+        - date-created
+      interface: datetime
+      options: null
+      display: datetime
+      display_options:
+        relative: true
+      readonly: true
+      hidden: false
+      sort: 4
+      width: half
+      translations: null
+      note: null
+      conditions: null
+      required: false
+      group: null
+  - collection: records
+    field: date_updated
+    type: timestamp
+    schema:
+      name: date_updated
+      table: records
+      data_type: timestamp
+      default_value: null
+      generation_expression: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_generated: false
+      is_nullable: true
+      is_unique: false
+      is_primary_key: false
+      has_auto_increment: false
+      foreign_key_column: null
+      foreign_key_table: null
+      comment: ''
+    meta:
+      collection: records
+      field: date_updated
+      special:
+        - date-updated
+      interface: datetime
+      options: null
+      display: datetime
+      display_options:
+        relative: true
+      readonly: true
+      hidden: false
+      sort: 6
+      width: half
+      translations: null
+      note: null
+      conditions: null
+      required: false
+      group: null
+  - collection: records
+    field: user_id
+    type: string
+    schema:
+      name: user_id
+      table: records
+      data_type: char
+      default_value: null
+      generation_expression: null
+      max_length: 36
+      numeric_precision: null
+      numeric_scale: null
+      is_generated: false
+      is_nullable: true
+      is_unique: false
+      is_primary_key: false
+      has_auto_increment: false
+      foreign_key_column: id
+      foreign_key_table: directus_users
+      comment: ''
+    meta:
+      collection: records
+      field: user_id
+      special:
+        - m2o
+      interface: select-dropdown-m2o
+      options:
+        template: '{{email}}'
+      display: related-values
+      display_options:
+        template: '{{email}}'
+      readonly: false
+      hidden: false
+      sort: 3
+      width: half
+      translations: null
+      note: User who owns this record
+      conditions: null
+      required: true
+      group: null
+  - collection: records
+    field: name
+    type: string
+    schema:
+      name: name
+      table: records
+      data_type: varchar
+      default_value: null
+      generation_expression: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_generated: false
+      is_nullable: true
+      is_unique: false
+      is_primary_key: false
+      has_auto_increment: false
+      foreign_key_column: null
+      foreign_key_table: null
+      comment: ''
+    meta:
+      collection: records
+      field: name
+      special: null
+      interface: input
+      options: null
+      display: null
+      display_options: null
+      readonly: false
+      hidden: false
+      sort: 8
+      width: full
+      translations: null
+      note: null
+      conditions: null
+      required: false
+      group: null
+  - collection: records
+    field: description
+    type: string
+    schema:
+      name: description
+      table: records
+      data_type: varchar
+      default_value: null
+      generation_expression: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_generated: false
+      is_nullable: true
+      is_unique: false
+      is_primary_key: false
+      has_auto_increment: false
+      foreign_key_column: null
+      foreign_key_table: null
+      comment: ''
+    meta:
+      collection: records
+      field: description
+      special: null
+      interface: input
+      options: null
+      display: null
+      display_options: null
+      readonly: false
+      hidden: false
+      sort: 9
+      width: full
+      translations: null
+      note: null
+      conditions: null
+      required: false
+      group: null
+  - collection: records
+    field: summary
+    type: text
+    schema:
+      name: summary
+      table: records
+      data_type: text
+      default_value: null
+      generation_expression: null
+      max_length: 65535
+      numeric_precision: null
+      numeric_scale: null
+      is_generated: false
+      is_nullable: true
+      is_unique: false
+      is_primary_key: false
+      has_auto_increment: false
+      foreign_key_column: null
+      foreign_key_table: null
+      comment: ''
+    meta:
+      collection: records
+      field: summary
+      special: null
+      interface: input-rich-text-md
+      options:
+        folder: 08eb2e18-06af-4c1b-9bf5-b0499ce8eb74
+      display: null
+      display_options: null
+      readonly: false
+      hidden: false
+      sort: 10
+      width: full
+      translations: null
+      note: null
+      conditions: null
+      required: false
+      group: null
+  - collection: records
+    field: type
+    type: string
+    schema:
+      name: type
+      table: records
+      data_type: varchar
+      default_value: null
+      generation_expression: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_generated: false
+      is_nullable: true
+      is_unique: false
+      is_primary_key: false
+      has_auto_increment: false
+      foreign_key_column: null
+      foreign_key_table: null
+      comment: ''
+    meta:
+      collection: records
+      field: type
+      special: null
+      interface: select-dropdown
+      options:
+        choices:
+          - text: laboratory
+            value: laboratory
+        allowOther: true
+      display: null
+      display_options: null
+      readonly: false
+      hidden: false
+      sort: 7
+      width: full
+      translations: null
+      note: null
+      conditions: null
+      required: false
+      group: null
+  - collection: records
+    field: metadata
+    type: json
+    schema:
+      name: metadata
+      table: records
+      data_type: json
+      default_value: null
+      generation_expression: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_generated: false
+      is_nullable: true
+      is_unique: false
+      is_primary_key: false
+      has_auto_increment: false
+      foreign_key_column: null
+      foreign_key_table: null
+      comment: ''
+    meta:
+      collection: records
+      field: metadata
+      special:
+        - json
+      interface: input-code
+      options: null
+      display: null
+      display_options: null
+      readonly: false
+      hidden: false
+      sort: null
+      width: full
+      translations: null
+      note: null
+      conditions: null
+      required: false
+      group: null
+  - collection: records_files
+    field: id
+    type: integer
+    schema:
+      name: id
+      table: records_files
+      data_type: int unsigned
+      default_value: null
+      generation_expression: null
+      max_length: null
+      numeric_precision: 10
+      numeric_scale: 0
+      is_generated: false
+      is_nullable: false
+      is_unique: false
+      is_primary_key: true
+      has_auto_increment: true
+      foreign_key_column: null
+      foreign_key_table: null
+      comment: ''
+    meta:
+      collection: records_files
+      field: id
+      special: null
+      interface: null
+      options: null
+      display: null
+      display_options: null
+      readonly: false
+      hidden: true
+      sort: null
+      width: full
+      translations: null
+      note: null
+      conditions: null
+      required: false
+      group: null
+  - collection: records_files
+    field: records_id
+    type: integer
+    schema:
+      name: records_id
+      table: records_files
+      data_type: int unsigned
+      default_value: null
+      generation_expression: null
+      max_length: null
+      numeric_precision: 10
+      numeric_scale: 0
+      is_generated: false
+      is_nullable: true
+      is_unique: false
+      is_primary_key: false
+      has_auto_increment: false
+      foreign_key_column: id
+      foreign_key_table: records
+      comment: ''
+    meta:
+      collection: records_files
+      field: records_id
+      special: null
+      interface: null
+      options: null
+      display: null
+      display_options: null
+      readonly: false
+      hidden: true
+      sort: null
+      width: full
+      translations: null
+      note: null
+      conditions: null
+      required: false
+      group: null
+  - collection: records_files
+    field: directus_files_id
+    type: string
+    schema:
+      name: directus_files_id
+      table: records_files
+      data_type: char
+      default_value: null
+      generation_expression: null
+      max_length: 36
+      numeric_precision: null
+      numeric_scale: null
+      is_generated: false
+      is_nullable: true
+      is_unique: false
+      is_primary_key: false
+      has_auto_increment: false
+      foreign_key_column: id
+      foreign_key_table: directus_files
+      comment: ''
+    meta:
+      collection: records_files
+      field: directus_files_id
+      special: null
+      interface: null
+      options: null
+      display: null
+      display_options: null
+      readonly: false
+      hidden: true
+      sort: null
+      width: full
+      translations: null
+      note: null
+      conditions: null
+      required: false
+      group: null
+  - collection: results
+    field: id
+    type: integer
+    schema:
+      name: id
+      table: results
+      data_type: int unsigned
+      default_value: null
+      generation_expression: null
+      max_length: null
+      numeric_precision: 10
+      numeric_scale: 0
+      is_generated: false
+      is_nullable: false
+      is_unique: false
+      is_primary_key: true
+      has_auto_increment: true
+      foreign_key_column: null
+      foreign_key_table: null
+      comment: ''
+    meta:
+      collection: results
+      field: id
+      special: null
+      interface: input
+      options: null
+      display: null
+      display_options: null
+      readonly: true
+      hidden: true
+      sort: 1
+      width: full
+      translations: null
+      note: null
+      conditions: null
+      required: false
+      group: null
+  - collection: results
+    field: value
+    type: decimal
+    schema:
+      name: value
+      table: results
+      data_type: decimal
+      default_value: null
+      generation_expression: null
+      max_length: null
+      numeric_precision: 10
+      numeric_scale: 5
+      is_generated: false
+      is_nullable: true
+      is_unique: false
+      is_primary_key: false
+      has_auto_increment: false
+      foreign_key_column: null
+      foreign_key_table: null
+      comment: ''
+    meta:
+      collection: results
+      field: value
+      special: null
+      interface: input
+      options: null
+      display: null
+      display_options: null
+      readonly: false
+      hidden: false
+      sort: 4
+      width: full
+      translations: null
+      note: null
+      conditions: null
+      required: false
+      group: null
+  - collection: results
+    field: notes
+    type: string
+    schema:
+      name: notes
+      table: results
+      data_type: varchar
+      default_value: null
+      generation_expression: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_generated: false
+      is_nullable: true
+      is_unique: false
+      is_primary_key: false
+      has_auto_increment: false
+      foreign_key_column: null
+      foreign_key_table: null
+      comment: ''
+    meta:
+      collection: results
+      field: notes
+      special: null
+      interface: input
+      options: null
+      display: null
+      display_options: null
+      readonly: false
+      hidden: false
+      sort: 5
+      width: full
+      translations: null
+      note: null
+      conditions: null
+      required: false
+      group: null
+  - collection: results
+    field: record_id
+    type: integer
+    schema:
+      name: record_id
+      table: results
+      data_type: int unsigned
+      default_value: null
+      generation_expression: null
+      max_length: null
+      numeric_precision: 10
+      numeric_scale: 0
+      is_generated: false
+      is_nullable: true
+      is_unique: false
+      is_primary_key: false
+      has_auto_increment: false
+      foreign_key_column: id
+      foreign_key_table: records
+      comment: ''
+    meta:
+      collection: results
+      field: record_id
+      special:
+        - m2o
+      interface: select-dropdown-m2o
+      options:
+        template: '{{id}}{{name}}'
+      display: null
+      display_options: null
+      readonly: false
+      hidden: false
+      sort: 2
+      width: full
+      translations: null
+      note: null
+      conditions: null
+      required: false
+      group: null
+  - collection: results
+    field: biomarker_id
+    type: string
+    schema:
+      name: biomarker_id
+      table: results
+      data_type: varchar
+      default_value: null
+      generation_expression: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_generated: false
+      is_nullable: true
+      is_unique: false
+      is_primary_key: false
+      has_auto_increment: false
+      foreign_key_column: id
+      foreign_key_table: biomarkers
+      comment: ''
+    meta:
+      collection: results
+      field: biomarker_id
+      special:
+        - m2o
+      interface: select-dropdown-m2o
+      options:
+        template: '{{id}}{{translations.name}}'
+      display: null
+      display_options: null
+      readonly: false
+      hidden: false
+      sort: 3
+      width: full
+      translations: null
+      note: null
+      conditions: null
+      required: true
+      group: null
+  - collection: units
+    field: id
+    type: string
+    schema:
+      name: id
+      table: units
+      data_type: varchar
+      default_value: null
+      generation_expression: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_generated: false
+      is_nullable: false
+      is_unique: false
+      is_primary_key: true
+      has_auto_increment: false
+      foreign_key_column: null
+      foreign_key_table: null
+      comment: ''
+    meta:
+      collection: units
+      field: id
+      special: null
+      interface: input
+      options: null
+      display: null
+      display_options: null
+      readonly: false
+      hidden: false
+      sort: null
+      width: full
+      translations: null
+      note: null
+      conditions: null
+      required: false
+      group: null
+  - collection: units
+    field: description
+    type: string
+    schema:
+      name: description
+      table: units
+      data_type: varchar
+      default_value: null
+      generation_expression: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_generated: false
+      is_nullable: true
+      is_unique: false
+      is_primary_key: false
+      has_auto_increment: false
+      foreign_key_column: null
+      foreign_key_table: null
+      comment: ''
+    meta:
+      collection: units
+      field: description
+      special: null
+      interface: input
+      options: null
+      display: null
+      display_options: null
+      readonly: false
+      hidden: false
+      sort: null
+      width: full
+      translations: null
+      note: null
+      conditions: null
+      required: false
+      group: null
+  - collection: units
+    field: metadata
+    type: json
+    schema:
+      name: metadata
+      table: units
+      data_type: json
+      default_value: null
+      generation_expression: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_generated: false
+      is_nullable: true
+      is_unique: false
+      is_primary_key: false
+      has_auto_increment: false
+      foreign_key_column: null
+      foreign_key_table: null
+      comment: ''
+    meta:
+      collection: units
+      field: metadata
+      special:
+        - json
+      interface: input-code
+      options:
+        template: "{\"conversions\":{}, \"references\":[]}\t"
+      display: raw
+      display_options: null
+      readonly: false
+      hidden: false
+      sort: null
+      width: full
+      translations: null
+      note: null
+      conditions: null
+      required: false
+      group: null
+  - collection: posts
+    field: translations
+    type: alias
+    schema: null
+    meta:
+      collection: posts
+      field: translations
+      special:
+        - translations
+      interface: translations
+      options:
+        languageField: code
+      display: null
+      display_options: null
+      readonly: false
+      hidden: false
+      sort: null
+      width: full
+      translations: null
+      note: null
+      conditions: null
+      required: true
+      group: null
+  - collection: biomarkers
+    field: translations
+    type: alias
+    schema: null
+    meta:
+      collection: biomarkers
+      field: translations
+      special:
+        - translations
+      interface: translations
+      options:
+        languageField: code
+      display: null
+      display_options: null
+      readonly: false
+      hidden: false
+      sort: null
+      width: full
+      translations: null
+      note: null
+      conditions: null
+      required: true
+      group: null
+  - collection: records
+    field: documents
+    type: alias
+    schema: null
+    meta:
+      collection: records
+      field: documents
+      special:
+        - files
+      interface: files
+      options:
+        folder: 08eb2e18-06af-4c1b-9bf5-b0499ce8eb74
+      display: null
+      display_options: null
+      readonly: false
+      hidden: false
+      sort: 11
+      width: full
+      translations: null
+      note: null
+      conditions: null
+      required: false
+      group: null
+  - collection: records
+    field: results
+    type: alias
+    schema: null
+    meta:
+      collection: records
+      field: results
+      special:
+        - o2m
+      interface: list-o2m
+      options:
+        template: "{{biomarker_id}}\_{{value}}\_{{notes}}\_"
+      display: null
+      display_options: null
+      readonly: false
+      hidden: false
+      sort: 12
+      width: full
+      translations: null
+      note: Biomarker readings
+      conditions: null
+      required: false
+      group: null
+relations:
+  - collection: biomarkers_translations
+    field: biomarkers_id
+    related_collection: biomarkers
+    schema:
+      table: biomarkers_translations
+      column: biomarkers_id
+      foreign_key_table: biomarkers
+      foreign_key_column: id
+      constraint_name: biomarkers_translations_biomarkers_id_foreign
+      on_update: CASCADE
+      on_delete: CASCADE
+    meta:
+      many_collection: biomarkers_translations
+      many_field: biomarkers_id
+      one_collection: biomarkers
+      one_field: translations
+      one_collection_field: null
+      one_allowed_collections: null
+      junction_field: languages_code
+      sort_field: null
+      one_deselect_action: nullify
+  - collection: biomarkers_translations
+    field: languages_code
+    related_collection: languages
+    schema:
+      table: biomarkers_translations
+      column: languages_code
+      foreign_key_table: languages
+      foreign_key_column: code
+      constraint_name: biomarkers_translations_languages_code_foreign
+      on_update: CASCADE
+      on_delete: CASCADE
+    meta:
+      many_collection: biomarkers_translations
+      many_field: languages_code
+      one_collection: languages
+      one_field: null
+      one_collection_field: null
+      one_allowed_collections: null
+      junction_field: biomarkers_id
+      sort_field: null
+      one_deselect_action: nullify
+  - collection: biomarkers
+    field: unit
+    related_collection: units
+    schema:
+      table: biomarkers
+      column: unit
+      foreign_key_table: units
+      foreign_key_column: id
+      constraint_name: biomarkers_units_foreign
+      on_update: NO ACTION
+      on_delete: SET NULL
+    meta:
+      many_collection: biomarkers
+      many_field: unit
+      one_collection: units
+      one_field: null
+      one_collection_field: null
+      one_allowed_collections: null
+      junction_field: null
+      sort_field: null
+      one_deselect_action: nullify
+  - collection: posts_translations
+    field: languages_code
+    related_collection: languages
+    schema:
+      table: posts_translations
+      column: languages_code
+      foreign_key_table: languages
+      foreign_key_column: code
+      constraint_name: posts_translations_languages_code_foreign
+      on_update: NO ACTION
+      on_delete: SET NULL
+    meta:
+      many_collection: posts_translations
+      many_field: languages_code
+      one_collection: languages
+      one_field: null
+      one_collection_field: null
+      one_allowed_collections: null
+      junction_field: posts_id
+      sort_field: null
+      one_deselect_action: nullify
+  - collection: posts_translations
+    field: posts_id
+    related_collection: posts
+    schema:
+      table: posts_translations
+      column: posts_id
+      foreign_key_table: posts
+      foreign_key_column: id
+      constraint_name: posts_translations_posts_id_foreign
+      on_update: NO ACTION
+      on_delete: SET NULL
+    meta:
+      many_collection: posts_translations
+      many_field: posts_id
+      one_collection: posts
+      one_field: translations
+      one_collection_field: null
+      one_allowed_collections: null
+      junction_field: languages_code
+      sort_field: null
+      one_deselect_action: nullify
+  - collection: posts
+    field: user_created
+    related_collection: directus_users
+    schema:
+      table: posts
+      column: user_created
+      foreign_key_table: directus_users
+      foreign_key_column: id
+      constraint_name: posts_user_created_foreign
+      on_update: NO ACTION
+      on_delete: NO ACTION
+    meta:
+      many_collection: posts
+      many_field: user_created
+      one_collection: directus_users
+      one_field: null
+      one_collection_field: null
+      one_allowed_collections: null
+      junction_field: null
+      sort_field: null
+      one_deselect_action: nullify
+  - collection: posts
+    field: user_updated
+    related_collection: directus_users
+    schema:
+      table: posts
+      column: user_updated
+      foreign_key_table: directus_users
+      foreign_key_column: id
+      constraint_name: posts_user_updated_foreign
+      on_update: NO ACTION
+      on_delete: NO ACTION
+    meta:
+      many_collection: posts
+      many_field: user_updated
+      one_collection: directus_users
+      one_field: null
+      one_collection_field: null
+      one_allowed_collections: null
+      junction_field: null
+      sort_field: null
+      one_deselect_action: nullify
+  - collection: records_files
+    field: directus_files_id
+    related_collection: directus_files
+    schema:
+      table: records_files
+      column: directus_files_id
+      foreign_key_table: directus_files
+      foreign_key_column: id
+      constraint_name: records_files_directus_files_id_foreign
+      on_update: NO ACTION
+      on_delete: SET NULL
+    meta:
+      many_collection: records_files
+      many_field: directus_files_id
+      one_collection: directus_files
+      one_field: null
+      one_collection_field: null
+      one_allowed_collections: null
+      junction_field: records_id
+      sort_field: null
+      one_deselect_action: nullify
+  - collection: records_files
+    field: records_id
+    related_collection: records
+    schema:
+      table: records_files
+      column: records_id
+      foreign_key_table: records
+      foreign_key_column: id
+      constraint_name: records_files_records_id_foreign
+      on_update: NO ACTION
+      on_delete: SET NULL
+    meta:
+      many_collection: records_files
+      many_field: records_id
+      one_collection: records
+      one_field: documents
+      one_collection_field: null
+      one_allowed_collections: null
+      junction_field: directus_files_id
+      sort_field: null
+      one_deselect_action: nullify
+  - collection: records
+    field: user_created
+    related_collection: directus_users
+    schema:
+      table: records
+      column: user_created
+      foreign_key_table: directus_users
+      foreign_key_column: id
+      constraint_name: records_user_created_foreign
+      on_update: NO ACTION
+      on_delete: NO ACTION
+    meta:
+      many_collection: records
+      many_field: user_created
+      one_collection: directus_users
+      one_field: null
+      one_collection_field: null
+      one_allowed_collections: null
+      junction_field: null
+      sort_field: null
+      one_deselect_action: nullify
+  - collection: records
+    field: user_id
+    related_collection: directus_users
+    schema:
+      table: records
+      column: user_id
+      foreign_key_table: directus_users
+      foreign_key_column: id
+      constraint_name: records_user_id_foreign
+      on_update: NO ACTION
+      on_delete: SET NULL
+    meta:
+      many_collection: records
+      many_field: user_id
+      one_collection: directus_users
+      one_field: null
+      one_collection_field: null
+      one_allowed_collections: null
+      junction_field: null
+      sort_field: null
+      one_deselect_action: nullify
+  - collection: results
+    field: biomarker_id
+    related_collection: biomarkers
+    schema:
+      table: results
+      column: biomarker_id
+      foreign_key_table: biomarkers
+      foreign_key_column: id
+      constraint_name: results_biomarker_id_foreign
+      on_update: CASCADE
+      on_delete: CASCADE
+    meta:
+      many_collection: results
+      many_field: biomarker_id
+      one_collection: biomarkers
+      one_field: null
+      one_collection_field: null
+      one_allowed_collections: null
+      junction_field: null
+      sort_field: null
+      one_deselect_action: nullify
+  - collection: results
+    field: record_id
+    related_collection: records
+    schema:
+      table: results
+      column: record_id
+      foreign_key_table: records
+      foreign_key_column: id
+      constraint_name: results_record_id_foreign
+      on_update: CASCADE
+      on_delete: CASCADE
+    meta:
+      many_collection: results
+      many_field: record_id
+      one_collection: records
+      one_field: results
+      one_collection_field: null
+      one_allowed_collections: null
+      junction_field: null
+      sort_field: null
+      one_deselect_action: nullify
+  - collection: lab_results
+    field: user_created
+    related_collection: directus_users
+    schema: null
+    meta:
+      many_collection: lab_results
+      many_field: user_created
+      one_collection: directus_users
+      one_field: null
+      one_collection_field: null
+      one_allowed_collections: null
+      junction_field: null
+      sort_field: null
+      one_deselect_action: nullify
+  - collection: lab_results
+    field: user_updated
+    related_collection: directus_users
+    schema: null
+    meta:
+      many_collection: lab_results
+      many_field: user_updated
+      one_collection: directus_users
+      one_field: null
+      one_collection_field: null
+      one_allowed_collections: null
+      junction_field: null
+      sort_field: null
+      one_deselect_action: nullify
+  - collection: lab_results
+    field: user_id
+    related_collection: directus_users
+    schema: null
+    meta:
+      many_collection: lab_results
+      many_field: user_id
+      one_collection: directus_users
+      one_field: null
+      one_collection_field: null
+      one_allowed_collections: null
+      junction_field: null
+      sort_field: null
+      one_deselect_action: nullify
