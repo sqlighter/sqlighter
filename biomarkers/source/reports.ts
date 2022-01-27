@@ -152,7 +152,7 @@ export class Report {
 					rangesWords.push(word);
 				}
 			}
-
+/*
 			// determine if each category of words has a main alignment (column)
 			// console.debug('unitsBoxes', unitsWords.map((w) => bboxToString(w.bbox)).join(', '));
 			// console.debug('rangesBoxes', rangesWords.map((w) => bboxToString(w.bbox)).join(', '));
@@ -160,7 +160,7 @@ export class Report {
 			const unitsAlign = getBoundingBoxAlignments(unitsWords.map((w) => w.bbox));
 			const rangesAlign = getBoundingBoxAlignments(rangesWords.map((w) => w.bbox));
 			const valueAlign = getBoundingBoxAlignments(valuesWords.map((w) => w.bbox));
-
+*/
 			for (const line of page.lines) {
 				let biomarkerMatch = this._detectBiomarker(line);
 				if (biomarkerMatch) {
@@ -180,20 +180,21 @@ export class Report {
 						// if a biomarker's measurement unit was not found but we have the same biomarker
 						// in percentage and absolute form, like for example ba-abs and ba-perc then let's try
 						// the other biomarker and see if that works.
-            const isAbs = biomarker.id.endsWith('-abs'), isPerc = biomarker.id.endsWith('-perc')
+						const isAbs = biomarker.id.endsWith('-abs'),
+							isPerc = biomarker.id.endsWith('-perc');
 						if (isAbs || isPerc) {
 							const altId = biomarker.id.substring(0, biomarker.id.indexOf('-')) + (isPerc ? '-abs' : '-perc');
 							const alt = Biomarker.getBiomarker(altId);
 							if (alt) {
 								const altMatch = { item: alt, confidence: biomarkerMatch.confidence, word: biomarkerMatch.word };
 								let altUnitMatch = this._detectUnit(line, altMatch);
-/*
+								/*
                 if (!altUnitMatch && isPerc) {
                   // if target unit is % we can assume it was missed by OCR although with lower confidence
                   altUnitMatch = {id: "%", word: biomarkerMatch.word, confidence: LOW_CONFIDENCE, conversion: 1}
                 }
 */
-                if (altUnitMatch) {
+								if (altUnitMatch) {
 									biomarker = alt;
 									biomarkerMatch = altMatch;
 									biomarkerName = biomarker.translations?.[0]?.name;

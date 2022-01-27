@@ -7,11 +7,9 @@ import axios from 'axios';
 import { assert } from 'console';
 import fs from 'fs/promises';
 
-import { BoundingBox } from './geometry';
-
-export const HIGH_CONFIDENCE = 1.00;
+export const HIGH_CONFIDENCE = 1.0;
 export const MEDIUM_CONFIDENCE = 0.75;
-export const LOW_CONFIDENCE = 0.50;
+export const LOW_CONFIDENCE = 0.5;
 
 export class Api {
 	public static async getJson(relativeUrl: string): Promise<any> {

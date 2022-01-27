@@ -25,8 +25,25 @@ describe('reports.ts', () => {
 	test('Report.analyzeOcr (report01.pdf)', async () => {
 		await analyzePdf('report01.pdf');
 	});
+
 	test('Report.analyzeOcr (report02.pdf)', async () => {
 		await analyzePdf('report02.pdf');
+	});
+
+  test('Report.analyzeOcr (report03.pdf)', async () => {
+		await analyzePdf('report03.pdf');
+	});
+
+	test('Report.analyzeOcr (report04.pdf)', async () => {
+		await analyzePdf('report04.pdf');
+	});
+
+	test('Report.analyzeOcr (report05.pdf)', async () => {
+		await analyzePdf('report05.pdf');
+	});
+
+	test('Report.analyzeOcr (report06.pdf)', async () => {
+		await analyzePdf('report06.pdf');
 	});
 });
 
@@ -105,38 +122,37 @@ async function analyzePdf(file: string) {
 	}
 
 	// check measurements
-  let failed = false
+	let failed = false;
 	const numBiomarkers = expectedReport.biomarkers?.length;
 	expect(numBiomarkers).toBeGreaterThan(0);
-  if (numBiomarkers != report.biomarkers?.length) {
-    console.error(`Biomarkers, expected: ${numBiomarkers}, actual: ${report.biomarkers?.length}`)
-    failed = true;
-  }
+	if (numBiomarkers != report.biomarkers?.length) {
+		console.error(`Biomarkers, expected: ${numBiomarkers}, actual: ${report.biomarkers?.length}`);
+		failed = true;
+	}
 
-  for (const expected of expectedReport.biomarkers) {
-    const actual = report.biomarkers?.find(b => b.biomarker == expected.biomarker)
-    if (actual) {
-      if (actual.value != expected.value) {
-        console.error(`Biomarker: '${expected.biomarker}', value differs, expected: ${expected.value}, actual: ${actual.value}`)
-        failed = true;
-      }
-      if (actual.range != expected.range) {
-        console.error(`Biomarker: '${expected.biomarker}', range differs, expected: ${expected.range}, actual: ${actual.range}`)
-        failed = true;
-      }
-      if (actual.unit != expected.unit) {
-        console.error(`Biomarker: '${expected.biomarker}', unit differs, expected: ${expected.unit}, actual: ${actual.unit}`)
-        failed = true;
-      }
-    }
-    else {
-      console.error(`Biomarker: '${expected.biomarker}' is missing`)
-      failed = true;
-    }
-  }
-  if (failed) {
-    throw new Error("One or more errors while comparing expected vs actual biomarkers, see log")
-  }
+	for (const expected of expectedReport.biomarkers) {
+		const actual = report.biomarkers?.find((b) => b.biomarker == expected.biomarker);
+		if (actual) {
+			if (actual.value != expected.value) {
+				console.error(`Biomarker: '${expected.biomarker}', value differs, expected: ${expected.value}, actual: ${actual.value}`);
+				failed = true;
+			}
+			if (actual.range != expected.range) {
+				console.error(`Biomarker: '${expected.biomarker}', range differs, expected: ${expected.range}, actual: ${actual.range}`);
+				failed = true;
+			}
+			if (actual.unit != expected.unit) {
+				console.error(`Biomarker: '${expected.biomarker}', unit differs, expected: ${expected.unit}, actual: ${actual.unit}`);
+				failed = true;
+			}
+		} else {
+			console.error(`Biomarker: '${expected.biomarker}' is missing`);
+			failed = true;
+		}
+	}
+	if (failed) {
+		throw new Error('One or more errors while comparing expected vs actual biomarkers, see log');
+	}
 }
 
 const TEST_PDF_PATH = './test/analisi02.pdf';

@@ -1,9 +1,10 @@
+//
+// index.ts
+//
+
 import { defineEndpoint } from '@directus/extensions-sdk';
-
-// index.js - custom routes for insieme
 import { Request, Response, NextFunction, Router } from 'express';
-
-import { addOne } from './pino';
+const packageJson = require('./package.json');
 
 export default defineEndpoint((router: Router, { services, exceptions }) => {
 	const { ItemsService } = services;
@@ -23,8 +24,9 @@ export default defineEndpoint((router: Router, { services, exceptions }) => {
 
 	router.get('/', (_req, res) => res.send('Hello, World!'));
 
+	/** Package that was built */
 	router.get('/version', (req: Request, res: Response) => {
-		const version = addOne(9);
-		res.json({ version: `v${version}`, method: req.method });
+		const { name, author, version } = packageJson;
+		res.json({ name, author, version });
 	});
 });

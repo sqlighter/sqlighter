@@ -66,8 +66,8 @@ export class Biomarker {
 	 * @returns A ranked list of possible matches
 	 */
 	public static searchBiomarkers(query: string, confidence: number = BIOMARKERS_SEARCH_CONFIDENCE): { item: Biomarker; confidence: number }[] {
-    assert (_biomarkersFuse)
-    const matches = _biomarkersFuse.search(query);
+		assert(_biomarkersFuse);
+		const matches = _biomarkersFuse.search(query);
 		if (matches) {
 			let filtered = matches.map((m) => {
 				return { item: _biomarkers?.[m.item.id] as Biomarker, confidence: 1 - (m.score as number) };

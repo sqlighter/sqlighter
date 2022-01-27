@@ -18,9 +18,9 @@ export class Translation {
 	/** Actual translated contents */
 	[key: string]: string;
 
-    //
-    // static methods
-    //
+	//
+	// static methods
+	//
 
 	public static fromObject(translations: any[]): Translation[] {
 		return translations.map((t) => {

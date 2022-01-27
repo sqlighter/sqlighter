@@ -5,11 +5,11 @@
 import { resolve } from 'path';
 import fs from 'fs/promises';
 import { Ocr } from './ocr';
-import { writeJson } from "./utilities"
+import { writeJson } from './utilities';
 
 const TEST_PDF_PATH = './source/test/report01.pdf';
-function toArtifacts(path:string) {
-	return resolve(path).replace("/test/", "/test/artifacts/")
+function toArtifacts(path: string) {
+	return resolve(path).replace('/test/', '/test/artifacts/');
 }
 
 describe('ocr.ts', () => {
@@ -23,8 +23,8 @@ describe('ocr.ts', () => {
 		expect(rawOcr[0].fullTextAnnotation.text).toContain('AZIENDA OSPEDALIERA UNIVERSITARIA INTEGRATA');
 		expect(rawOcr[1].fullTextAnnotation).toBeTruthy();
 
-    expect(metadata.ocr?.sourceUri).toBe(sourceUri)
-    expect(metadata.ocr?.apiEndpoint).toBe("eu-vision.googleapis.com")
+		expect(metadata.ocr?.sourceUri).toBe(sourceUri);
+		expect(metadata.ocr?.apiEndpoint).toBe('eu-vision.googleapis.com');
 
 		expect(pages).toBeTruthy();
 		expect(pages.length).toBe(2);
@@ -36,7 +36,7 @@ describe('ocr.ts', () => {
 		}
 
 		const destinationPath = toArtifacts(sourceUri + '.ocr.json');
-    await writeJson(destinationPath, rawOcr);
+		await writeJson(destinationPath, rawOcr);
 	});
 
 	test('getOcrAnnotations (pdf from google storage)', async () => {
@@ -49,8 +49,8 @@ describe('ocr.ts', () => {
 		expect(rawOcr[0].fullTextAnnotation.text).toContain('AZIENDA OSPEDALIERA UNIVERSITARIA INTEGRATA');
 		expect(rawOcr[1].fullTextAnnotation).toBeTruthy();
 
-    expect(metadata.ocr?.sourceUri).toBe(sourceUri)
-    expect(metadata.ocr?.apiEndpoint).toBe("eu-vision.googleapis.com")
+		expect(metadata.ocr?.sourceUri).toBe(sourceUri);
+		expect(metadata.ocr?.apiEndpoint).toBe('eu-vision.googleapis.com');
 
 		expect(pages).toBeTruthy();
 		expect(pages.length).toBe(2);

@@ -436,47 +436,45 @@ describe('geometry.test.ts', () => {
 		expect(d4).toBeCloseTo(0.7071);
 	});
 
-    test('getBoundingBoxAlignments (right)', async () => {
-        const r1 = getBoundingBoxAlignments(rightAlignedBoxes);
-        expect(r1).toBeTruthy();
-        expect(r1[0]?.align).toBe("right")
-        expect(r1[0]?.confidence).toBeGreaterThan(0.40);
-    });
+	test('getBoundingBoxAlignments (right)', async () => {
+		const r1 = getBoundingBoxAlignments(rightAlignedBoxes);
+		expect(r1).toBeTruthy();
+		expect(r1[0]?.align).toBe('right');
+		expect(r1[0]?.confidence).toBeGreaterThan(0.4);
+	});
 
-    test('getBoundingBoxAlignments (center)', async () => {
-        const r1 = getBoundingBoxAlignments(centerAlignedBoxes);
-        expect(r1).toBeTruthy();
-        expect(r1[0]?.align).toBe("center")
-        expect(r1[0]?.confidence).toBeGreaterThan(0.40);
-    });
+	test('getBoundingBoxAlignments (center)', async () => {
+		const r1 = getBoundingBoxAlignments(centerAlignedBoxes);
+		expect(r1).toBeTruthy();
+		expect(r1[0]?.align).toBe('center');
+		expect(r1[0]?.confidence).toBeGreaterThan(0.4);
+	});
 
+	test('getBoundingBoxAlignments (center)', async () => {
+		const r1 = getBoundingBoxAlignments(centerAlignedBoxes);
+		expect(r1).toBeTruthy();
+		expect(r1[0]?.align).toBe('center');
+		expect(r1[0]?.confidence).toBeGreaterThan(0.4);
+	});
 
-    test('getBoundingBoxAlignments (center)', async () => {
-        const r1 = getBoundingBoxAlignments(centerAlignedBoxes);
-        expect(r1).toBeTruthy();
-        expect(r1[0]?.align).toBe("center")
-        expect(r1[0]?.confidence).toBeGreaterThan(0.40);
-    });
+	test('getBoundingBoxAlignments (scaled)', async () => {
+		const r1 = getBoundingBoxAlignments(rightAlignedBoxes);
+		expect(r1).toBeTruthy();
+		expect(r1[0]?.align).toBe('right');
+		expect(r1[0]?.confidence).toBeGreaterThan(0.4);
 
+		const biggerBoxes = rightAlignedBoxes.map((b) => b.map((p) => p.map((v) => v * 100)));
+		const r2 = getBoundingBoxAlignments(biggerBoxes as BoundingBox[]);
+		expect(r2).toBeTruthy();
+		expect(r2[0]?.align).toBe('right');
+		expect(r2[0]?.confidence).toBeGreaterThan(0.4);
+		expect(r2[0]?.confidence).toBeCloseTo(r1[0]?.confidence as number);
 
-    test('getBoundingBoxAlignments (scaled)', async () => {
-        const r1 = getBoundingBoxAlignments(rightAlignedBoxes);
-        expect(r1).toBeTruthy();
-        expect(r1[0]?.align).toBe("right")
-        expect(r1[0]?.confidence).toBeGreaterThan(0.40);
-
-        const biggerBoxes = rightAlignedBoxes.map(b => b.map(p => p.map(v => v*100)));
-        const r2 = getBoundingBoxAlignments(biggerBoxes as BoundingBox[]);
-        expect(r2).toBeTruthy();
-        expect(r2[0]?.align).toBe("right")
-        expect(r2[0]?.confidence).toBeGreaterThan(0.40);
-        expect(r2[0]?.confidence).toBeCloseTo(r1[0]?.confidence as number);
-
-        const smallerBoxes = rightAlignedBoxes.map(b => b.map(p => p.map(v => v/100)));
-        const r3 = getBoundingBoxAlignments(biggerBoxes as BoundingBox[]);
-        expect(r3).toBeTruthy();
-        expect(r3[0]?.align).toBe("right")
-        expect(r3[0]?.confidence).toBeGreaterThan(0.40);
-        expect(r3[0]?.confidence).toBeCloseTo(r1[0]?.confidence as number);
-    });
+		const smallerBoxes = rightAlignedBoxes.map((b) => b.map((p) => p.map((v) => v / 100)));
+		const r3 = getBoundingBoxAlignments(biggerBoxes as BoundingBox[]);
+		expect(r3).toBeTruthy();
+		expect(r3[0]?.align).toBe('right');
+		expect(r3[0]?.confidence).toBeGreaterThan(0.4);
+		expect(r3[0]?.confidence).toBeCloseTo(r1[0]?.confidence as number);
+	});
 });
