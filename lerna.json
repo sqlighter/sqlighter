@@ -1,6 +1,6 @@
 {
 	"packages": [
-    "biomarkers",
+    "app",
 		"backend/source/extensions/*/*",
 		"backend"
 	],

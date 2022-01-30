@@ -1,4 +1,5 @@
 .next
 .yarn
 node_modules
+lib/test/artifacts/**
 

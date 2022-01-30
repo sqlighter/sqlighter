@@ -1,0 +1,365 @@
+[
+  {
+    "id": "%",
+    "description": "percentage",
+    "metadata": {
+      "references": ["https://unitslab.com/node/16"],
+      "conversions": {
+        "L/L": 0.01,
+        "fraction": 0.01,
+        "proportion of 1": 0.01
+      }
+    }
+  },
+  {
+    "id": "/HPF",
+    "description": null,
+    "metadata": null
+  },
+  {
+    "id": "/LPF",
+    "description": null,
+    "metadata": null
+  },
+  {
+    "id": "10^12/L",
+    "description": "units per liter",
+    "metadata": {
+      "references": ["https://unitslab.com/node/9"],
+      "conversions": {
+        "T/L": 1,
+        "M/µL": 1,
+        "Tpt/L": 1,
+        "M/mm^3": 1,
+        "cells/L": 1000000000000,
+        "10^6/µL": 1,
+        "10^6/mm^3": 1,
+        "cells/µL": 1000000,
+        "cells/mm^3": 1000000
+      }
+    }
+  },
+  {
+    "id": "10^9/L",
+    "description": "units per liter",
+    "metadata": {
+      "references": ["https://unitslab.com/node/9"],
+      "conversions": {
+        "G/L": 1,
+        "Gpt/L": 1,
+        "cells/L": 1000000000,
+        "10^3/µL": 1,
+        "10^3/mm^3": 1,
+        "cells/µL": 1000,
+        "cells/mm^3": 1000
+      }
+    }
+  },
+  {
+    "id": "Angstrom",
+    "description": null,
+    "metadata": null
+  },
+  {
+    "id": "AU/mL",
+    "description": null,
+    "metadata": null
+  },
+  {
+    "id": "fL",
+    "description": "femtoliters",
+    "metadata": {
+      "references": ["https://unitslab.com/node/3"],
+      "conversions": {
+        "µm^3": 1,
+        "cu µm": 1,
+        "cubic µm": 1
+      }
+    }
+  },
+  {
+    "id": "g/dL",
+    "description": "grams per deciliter",
+    "metadata": {
+      "references": ["https://unitslab.com/node/79"],
+      "conversions": {
+        "g/L": 10,
+        "mg/mL": 0.1,
+        "g/100mL": 1
+      }
+    }
+  },
+  {
+    "id": "g/L",
+    "description": "grams per liter",
+    "metadata": {
+      "references": ["https://unitslab.com/node/79"],
+      "conversions": {
+        "g%": 0.1,
+        "g/dL": 0.1,
+        "mg/mL": 1,
+        "g/100mL": 0.1
+      }
+    }
+  },
+  {
+    "id": "inches",
+    "description": null,
+    "metadata": null
+  },
+  {
+    "id": "IU/L",
+    "description": "international units per liter",
+    "metadata": {
+      "aliases": ["UI/L"]
+    }
+  },
+  {
+    "id": "IU/mL",
+    "description": "international units per milliliter",
+    "metadata": {
+      "aliases": ["UI/mL"]
+    }
+  },
+  {
+    "id": "Kg/m2",
+    "description": null,
+    "metadata": null
+  },
+  {
+    "id": "kU/L",
+    "description": null,
+    "metadata": null
+  },
+  {
+    "id": "mcg/dL",
+    "description": null,
+    "metadata": null
+  },
+  {
+    "id": "meters",
+    "description": null,
+    "metadata": null
+  },
+  {
+    "id": "mg albumin / g creatinine",
+    "description": null,
+    "metadata": null
+  },
+  {
+    "id": "mg/dL",
+    "description": "milligrams per deciliter",
+    "metadata": {
+      "references": ["https://unitslab.com/node/1"],
+      "conversions": {
+        "mg%": 1,
+        "mg/L": 1,
+        "µg/mL": 1,
+        "mg/100mL": 1
+      }
+    }
+  },
+  {
+    "id": "mg/L",
+    "description": "milligrams per liter",
+    "metadata": {
+      "references": "https://unitslab.com/node/82",
+      "conversions": {
+        "mg%": 0.1,
+        "mg/dL": 0.1,
+        "µg/mL": 1,
+        "mg/100mL": 0.1,
+        "mL/min/1.73m^2": 72.22
+      }
+    }
+  },
+  {
+    "id": "mIU/L",
+    "description": "milli international units per per liter",
+    "metadata": {
+      "conversions": {
+        "mUI/L": 1
+      }
+    }
+  },
+  {
+    "id": "mIU/mL",
+    "description": "milli international units per milliliter",
+    "metadata": {
+      "aliases": ["mUI/mL"],
+      "references": ["https://unitslab.com/node/140"],
+      "conversions": {
+        "µIU/mL": 1
+      }
+    }
+  },
+  {
+    "id": "mL/min/1.73m2",
+    "description": null,
+    "metadata": null
+  },
+  {
+    "id": "mm/hr",
+    "description": "millimiters per hour",
+    "metadata": {
+      "aliases": ["mm/h"]
+    }
+  },
+  {
+    "id": "mmHg",
+    "description": null,
+    "metadata": null
+  },
+  {
+    "id": "mmol/L",
+    "description": null,
+    "metadata": null
+  },
+  {
+    "id": "ng/dL",
+    "description": null,
+    "metadata": null
+  },
+  {
+    "id": "ng/mg",
+    "description": null,
+    "metadata": null
+  },
+  {
+    "id": "ng/mL",
+    "description": null,
+    "metadata": null
+  },
+  {
+    "id": "nm",
+    "description": null,
+    "metadata": null
+  },
+  {
+    "id": "nmol/L",
+    "description": null,
+    "metadata": null
+  },
+  {
+    "id": "pg",
+    "description": null,
+    "metadata": null
+  },
+  {
+    "id": "pg/mg",
+    "description": null,
+    "metadata": null
+  },
+  {
+    "id": "pg/mL",
+    "description": null,
+    "metadata": null
+  },
+  {
+    "id": "pmol/L",
+    "description": "picomoles per liter",
+    "metadata": {
+      "references": ["https://unitslab.com/node/121"],
+      "conversions": {
+        "ng/dL": 0.0777
+      }
+    }
+  },
+  {
+    "id": "points",
+    "description": null,
+    "metadata": null
+  },
+  {
+    "id": "pounds",
+    "description": null,
+    "metadata": null
+  },
+  {
+    "id": "seconds",
+    "description": "seconds",
+    "metadata": {
+      "aliases": ["s", "sec", "secs"]
+    }
+  },
+  {
+    "id": "U/L",
+    "description": null,
+    "metadata": null
+  },
+  {
+    "id": "U/mL",
+    "description": null,
+    "metadata": null
+  },
+  {
+    "id": "Units",
+    "description": "units",
+    "metadata": {
+      "aliases": ["U"]
+    }
+  },
+  {
+    "id": "x10E3/μL",
+    "description": null,
+    "metadata": null
+  },
+  {
+    "id": "x10E6/μL",
+    "description": null,
+    "metadata": null
+  },
+  {
+    "id": "μg/dL",
+    "description": "micrograms per deciliter",
+    "metadata": {
+      "aliases": ["ug/dL", "mcg/dL"],
+      "references": ["http://unitslab.com/node/41"],
+      "conversions": {
+        "mg/L": 0.01,
+        "µg%": 1,
+        "ng/mL": 10,
+        "µg/L": 10,
+        "µg/100mL": 1
+      }
+    }
+  },
+  {
+    "id": "μg/L",
+    "description": "micrograms per liter",
+    "metadata": {
+      "aliases": ["ug/L", "mcg/L"],
+      "references": ["https://unitslab.com/fr/node/41"],
+      "conversions": {
+        "mg/L": 0.001,
+        "µg%": 0.1,
+        "ng/mL": 1,
+        "µg/dL": 0.1,
+        "µg/100mL": 0.1
+      }
+    }
+  },
+  {
+    "id": "μg/mL",
+    "description": "micrograms per milliliter",
+    "metadata": {
+      "aliases": ["ug/mL", "mcg/mL"]
+    }
+  },
+  {
+    "id": "μmol/L",
+    "description": "micromoles per liter",
+    "metadata": {
+      "aliases": ["umol/L"],
+      "references": ["https://unitslab.com/node/44"],
+      "conversions": {
+        "mg%": 0.0113,
+        "mg/L": 0.113,
+        "mg/dL": 0.0113,
+        "mmol/L": 0.001,
+        "µg/mL": 0.0113,
+        "mg/100mL": 0.0113
+      }
+    }
+  }
+]
