@@ -1,5 +1,7 @@
 import Layout from "../../components/layout"
 import Head from "next/head"
+import Image from "next/image"
+import rbc from "../../public/images/rbc.jpeg"
 import Date from "../../components/date"
 import utilStyles from "../../styles/utils.module.css"
 import { GetStaticProps, GetStaticPaths } from "next"
@@ -19,6 +21,8 @@ export default function BiomarkerDetail({ biomarker }: { biomarker: Biomarker })
         {getTranslation(biomarker, "summary")}
         <br />
         <div className={utilStyles.lightText}>{biomarker.id}</div>
+        <br />
+        <Image src={rbc} alt="Red blood cells" />
       </article>
     </Layout>
   )

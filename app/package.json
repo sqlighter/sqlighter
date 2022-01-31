@@ -4,9 +4,7 @@
   "version": "2.0.0",
   "packageManager": "yarn@3.1.1",
   "keywords": [
-    "directus",
-    "directus-extension",
-    "directus-custom-endpoint"
+    "biomarkers"
   ],
   "private": true,
   "scripts": {
@@ -14,7 +12,8 @@
     "build": "next build",
     "start": "next start",
     "test": "jest",
-    "format": "prettier --write \"**/*.{js,ts,vue,md,yaml,json}\""
+    "format": "prettier --write \"**/*.{js,ts,tsx,vue,md,yaml,json}\"",
+    "lint": "next lint"
   },
   "dependencies": {
     "@google-cloud/vision": "^2.4.2",
@@ -45,6 +44,7 @@
     "babel-jest": "^27.4.6",
     "eslint": "8.8.0",
     "eslint-config-next": "12.0.9",
+    "eslint-plugin-prettier": "^4.0.0",
     "jest": "^27.4.7",
     "prettier": "^2.5.1",
     "superagent": "^7.1.1",

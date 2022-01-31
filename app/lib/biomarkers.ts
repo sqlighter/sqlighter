@@ -30,6 +30,9 @@ export class Biomarker {
   /** Biomarker id, eg. glucose */
   id: string
 
+  /** Current publication status */
+  status: "draft" | "published" | "archived"
+
   /** Translations for biomaker's name, description and summary */
   translations: Translation[]
 
