@@ -1,11 +1,9 @@
-This is a starter template for [Learn Next.js](https://nextjs.org/learn).
-
-# Tools
+### Tools
 
 Next.js tutorial  
 https://nextjs.org/learn/basics/create-nextjs-app
 
-# Contents
+### Contents
 
 Graymatter (format for editorial contents)  
 https://github.com/jonschlinkert/gray-matter
