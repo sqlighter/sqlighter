@@ -3,7 +3,7 @@ id: alpha1-perc
 title: Alpha-1
 description: Proteine sintetizzate nel fegato
 status: published
-unit: '%'
+unit: "%"
 range: 2-3.5
 aliases:
   - alfa globuline 1
@@ -13,12 +13,13 @@ aliases:
   - siero amiloide A
   - alf 1-lipoproteina
 references:
-  - >-
-    https://www.valorinormali.com/sangue/alfa-globuline-alte-basse-e-valori-normali/
+  - https://www.valorinormali.com/sangue/alfa-globuline-alte-basse-e-valori-normali/
 ---
+
 Le alfa globuline sono proteine sintetizzate nel fegato e circolanti nel sangue, che possiamo suddividere in due gruppi:
 
 Alfa globuline 1
+
 - Alfa1-antitripsina
 - Alfa1-antichimotripsina
 - Alfa1-acido glicoproteina
@@ -26,6 +27,7 @@ Alfa globuline 1
 - Alf 1-lipoproteina
 
 Alfa globuline 2
+
 - Aptoglobina
 - Proteine urinarie maggiori
 - Alfa2-macroglobulina
@@ -42,6 +44,6 @@ I valori di concentrazione delle alfa globuline nel sangue aumentano per esempio
 
 Le cause di valori alterati sono numerose e la loro interpretazione deve sempre essere condotta in un quadro più ampio, considerando i sintomi lamentati dal paziente e gli altri risultati degli esami del sangue, anche perché piccoli spostamenti rispetto ai valori normali potrebbero essere non significativi.
 
-Da un punto di vista molto generale è possibile affermare che un aumento delle quantità circolanti delle proteine alfa-1 è spesso connesso a presenza di: infiammazione, tumore, malattia infiammatoria cronica (artrite reumatoide, lupus, …). 
+Da un punto di vista molto generale è possibile affermare che un aumento delle quantità circolanti delle proteine alfa-1 è spesso connesso a presenza di: infiammazione, tumore, malattia infiammatoria cronica (artrite reumatoide, lupus, …).
 
 Una diminuzione rilevante è in genere conseguente a un deficit di alfa 1-antitripsina, una condizione ereditaria in cui la mancanza dell’enzima omonimo causa disturbi polmonari ed epatici.

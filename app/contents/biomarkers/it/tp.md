@@ -3,17 +3,19 @@ id: tp
 title: Proteine Totali
 description: Proteine totali nel sangue
 references:
-  - 'https://labtestsonline.org.uk/tests/total-protein-test'
-  - 'https://medlineplus.gov/ency/article/003483.htm'
-  - 'https://www.valorinormali.com/sangue/proteine-2/'
+  - "https://labtestsonline.org.uk/tests/total-protein-test"
+  - "https://medlineplus.gov/ency/article/003483.htm"
+  - "https://www.valorinormali.com/sangue/proteine-2/"
 ---
+
 Le proteine sono grandi molecole formate da lunghe catene di amminoacidi che, attraverso sofisticati meccanismi, si piegano su sé stesse fino a formare complicate strutture tridimensionali.
 
 Si tratta di uno dei più importanti mattoni per la Vita come la conosciamo, perché responsabili o coinvolte di un numero quasi infinito di funzioni biologiche:
+
 - Enzimi. Coadiuvano le reazioni chimiche che avvengono nell’organismo. Sono essenziali alla replicazione del codice genetico. Sono implicate nella gestione degli stimoli e della trasmissione dei segnali,
 - Vettori. Si occupano del trasporto di altre molecole nel sangue.
 - Struttura. Conferiscono rigidità alle componenti biologiche. Consentono meccanicamente il movimento dei muscoli.
-- Difesa. Le immunoglobuline (anticorpi) sono proteine. 
+- Difesa. Le immunoglobuline (anticorpi) sono proteine.
 
 Il dosaggio delle proteine totali ne misura la quantità complessiva presente nel sangue e valutando anche le quantità specifiche dei due principali gruppi proteici del sangue: albumine e globuline.
 

@@ -3,9 +3,10 @@ id: ly-perc
 title: Linfociti (%)
 description: Un tipo di globuli bianchi
 references:
-  - 'https://www.genome.gov/genetics-glossary/Lymphocyte'
-  - 'https://www.valorinormali.com/sangue/linfociti/'
+  - "https://www.genome.gov/genetics-glossary/Lymphocyte"
+  - "https://www.valorinormali.com/sangue/linfociti/"
 ---
+
 I linfociti sono globuli bianchi, cellule presenti nel sangue e facenti parte del sistema immunitario, una complessa rete integrata cellule, tessuti e meccanismi biologici volta della difesa dell’organismo.
 
 Sono prodotti nel midollo osseo e possono essere classificati in due grandi categorie in base al tessuto dove avviene la loro maturazione finale: linfociti B (maturazione nel midollo osseo), linfociti T (maturazione nel timo).

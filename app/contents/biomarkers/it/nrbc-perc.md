@@ -3,9 +3,10 @@ id: nrbc-perc
 title: Eritroblasti (%)
 description: Globuli rossi nucleati
 references:
-  - 'https://labs.selfdecode.com/blog/nrbc/'
-  - 'https://en.wikipedia.org/wiki/Nucleated_red_blood_cell'
+  - "https://labs.selfdecode.com/blog/nrbc/"
+  - "https://en.wikipedia.org/wiki/Nucleated_red_blood_cell"
 ---
+
 I globuli rossi nucleati sono globuli rossi immaturi. Negli adulti, la loro presenza nel sangue indica un problema.
 
 Quando i globuli rossi maturano, perdono il loro nucleo, una parte della cellula in cui è immagazzinato il DNA. Ciò consente loro di trasportare più emoglobina (e quindi più ossigeno) e di assumere una forma altamente flessibile.

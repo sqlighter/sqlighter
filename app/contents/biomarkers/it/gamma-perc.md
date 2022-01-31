@@ -3,13 +3,15 @@ id: gamma-perc
 title: Gamma
 description: Gamma globuline
 references:
-  - 'https://www.valorinormali.com/sangue/gamma-globuline/'
+  - "https://www.valorinormali.com/sangue/gamma-globuline/"
 ---
+
 Le immunoglobuline sono molecole che fanno parte delle gamma-globuline, a loro volta appartenenti alla grande famiglia delle globuline, uno dei due gruppi di proteine plasmatiche.
 
 Le gamma-globuline sono molecole a servizio del sistema immunitario, più nel dettaglio si tratta di proteine in grado di neutralizzare gli agenti patogeni come batteri e virus; sono prodotte da alcuni globuli bianchi (linfociti B) in risposta alla stimolazione innescata da parte di insulti esterni.
 
 Meglio conosciute come anticorpi o semplicemente Ig, comprendono principalmente:
+
 - IgA,
 - IgG,
 - IgM

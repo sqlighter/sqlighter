@@ -1,7 +1,6 @@
 ---
 id: gliadin-antibody-igg
-title: 'Gliadin Antibody, IgG'
+title: "Gliadin Antibody, IgG"
 description: null
 status: draft
 ---
-

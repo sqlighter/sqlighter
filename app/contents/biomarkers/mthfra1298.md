@@ -5,4 +5,3 @@ description: Additional gene for folate metabolism enzyme
 status: draft
 range: A/A
 ---
-

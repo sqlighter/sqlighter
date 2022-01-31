@@ -5,4 +5,3 @@ description: Thyroxine Binding Sites
 status: draft
 range: 4.4 - 11.3
 ---
-

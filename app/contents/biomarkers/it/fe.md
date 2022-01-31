@@ -3,9 +3,10 @@ id: fe
 title: Ferro
 description: Ferro nel sangue
 references:
-  - 'https://www.valorinormali.com/sangue/ferro-sideremia/'
-  - 'https://medlineplus.gov/lab-tests/iron-tests/'
+  - "https://www.valorinormali.com/sangue/ferro-sideremia/"
+  - "https://medlineplus.gov/lab-tests/iron-tests/"
 ---
+
 Il metabolismo di quasi qualsiasi organismo vivente richiede necessariamente la presenza di ferro per numerosi processi metabolici e biochimici.
 
 Quello che ingeriamo attraverso l’alimentazione viene assorbito a livello intestinale e temporaneamente immagazzinato grazie alla ferritina nel fegato (ed in minor misura anche in midollo osseo, milza e muscolo scheletrico); nel momento in cui l’organismo lo richiede, il metallo viene invece rilasciato legato alla transferrina, una proteina di trasporto prodotta dal fegato.

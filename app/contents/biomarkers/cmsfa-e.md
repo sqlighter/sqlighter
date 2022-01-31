@@ -3,7 +3,6 @@ id: cmsfa-e
 title: Eicosenoic Acid
 description: monounsaturated fatty acid
 status: draft
-unit: '%'
+unit: "%"
 range: reference ranges have not been established
 ---
-

@@ -5,4 +5,3 @@ description: Marker of endothelial dysfunction
 status: draft
 range: ≥ 1.67
 ---
-

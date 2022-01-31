@@ -3,12 +3,13 @@ id: nrbc-perc
 title: Nucleated Red Blood Cells (%)
 description: Immature red blood cells
 status: published
-unit: '%'
+unit: "%"
 range: < 0.1
 references:
-  - 'https://labs.selfdecode.com/blog/nrbc/'
-  - 'https://en.wikipedia.org/wiki/Nucleated_red_blood_cell'
+  - "https://labs.selfdecode.com/blog/nrbc/"
+  - "https://en.wikipedia.org/wiki/Nucleated_red_blood_cell"
 ---
+
 Nucleated red blood cells are immature red blood cells. In adults, their presence in the blood indicates a problem.
 
 As red blood cells mature, they lose their nucleus – a part of the cell where DNA is stored. This enables them to carry more hemoglobin (and therefore more oxygen) and become highly flexible in shape.

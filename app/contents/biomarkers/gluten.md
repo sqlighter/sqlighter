@@ -5,4 +5,3 @@ description: Gluten antibody
 status: draft
 range: < 2.0
 ---
-

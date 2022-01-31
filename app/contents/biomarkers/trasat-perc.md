@@ -3,7 +3,6 @@ id: trasat-perc
 title: Transferrin Saturation %
 description: Percent of used Iron binding sites
 status: draft
-unit: '%'
+unit: "%"
 range: 15 - 50
 ---
-

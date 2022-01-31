@@ -3,12 +3,12 @@ id: bun
 title: Urea
 description: Urea nel Sangue
 references:
-  - 'https://medlineplus.gov/lab-tests/bun-blood-urea-nitrogen/'
-  - >-
-    https://www.mayoclinic.org/tests-procedures/blood-urea-nitrogen/about/pac-20384821
-  - 'https://www.valorinormali.com/sangue/azotemia/'
-  - 'http://unitslab.com/node/52'
+  - "https://medlineplus.gov/lab-tests/bun-blood-urea-nitrogen/"
+  - "https://www.mayoclinic.org/tests-procedures/blood-urea-nitrogen/about/pac-20384821"
+  - "https://www.valorinormali.com/sangue/azotemia/"
+  - "http://unitslab.com/node/52"
 ---
+
 L’esame denominato azotemia consiste in realtà nella misurazione della quantità di urea nel sangue; la maggior parte dell’azoto circolante è infatti contenuto proprio nelle molecole di urea, una sostanza innocua di rifiuto prodotta dalla trasformazione organica dell’ammoniaca, che deriva a sua volta dalla degradazione degli aminoacidi (i mattoni costituenti delle proteine).
 
 Le proteine che assumiamo con la dieta contengono mediamente il 16% in peso di azoto; se una parte viene riciclata dall’organismo per costruire nuove proteine secondo le proprie necessità, la frazione rimanente non immediatamente necessaria va incontro a distruzione nel fegato. L’azoto proveniente dallo smaltimento delle proteine (vecchie o nuove che siano) viene quindi riversato nel sangue sotto forma di urea (una sostanza di scarto), in questo modo i reni saranno in grado di prelevarla ed eliminarla attraverso le urine.

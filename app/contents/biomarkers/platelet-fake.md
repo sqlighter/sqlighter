@@ -4,4 +4,3 @@ title: Platelet fake
 description: null
 status: draft
 ---
-

@@ -10,59 +10,7 @@ import { readJson } from "./utilities"
 import fs from "fs/promises"
 import { resolve } from "path"
 
-const _biomarkersJson = require("../contents/biomarkers.json")
-
-async function convertBiomarker(biomarker) {
-  try {
-    var data = {
-      id: biomarker.id.toLowerCase(),
-      title: biomarker.translations?.[0].name,
-      description: biomarker.translations?.[0].description,
-      status: biomarker.status,
-      unit: biomarker.unit?.id,
-      range: biomarker.range ? biomarker.range : undefined,
-      aliases: biomarker.metadata?.aliases,
-      conversions: biomarker.metadata?.conversions,
-      references: biomarker.metadata?.references,
-    }
-    data = JSON.parse(JSON.stringify(data))
-
-    const content = biomarker.translations?.[0].summary as string
-    const yaml = matter.stringify(content ? content : "", data)
-    const yamlPath = resolve(`contents/biomarkers/${biomarker.id.toLowerCase()}.md`)
-    await fs.writeFile(yamlPath, yaml)
-    console.log(yaml)
-
-    if (biomarker.translations[1]) {
-      var data2 = {
-        id: biomarker.id.toLowerCase(),
-        title: biomarker.translations?.[1].name,
-        description: biomarker.translations?.[1].description,
-        references: biomarker.metadata?.references,
-      }
-      data2 = JSON.parse(JSON.stringify(data2))
-      const content = biomarker.translations?.[1].summary as string
-      const yaml = matter.stringify(content ? content : "", data2)
-      const yamlPath = resolve(`contents/biomarkers/it/${biomarker.id.toLowerCase()}.md`)
-      await fs.writeFile(yamlPath, yaml)
-      console.log(yaml)
-    }
-  } catch (exception) {
-    console.error(exception)
-  }
-}
-
 describe("biomarkers.ts", () => {
-  test("convert biormarkers", async () => {
-    //    const biomarkers = Biomarker.getBiomarkers()
-    //    const b2 = _biomarkersJson.filter((b) => b.id == "glucose")
-    //    await convertBiomarker(b2[0])
-
-    for (const biomarker of _biomarkersJson) {
-      await convertBiomarker(biomarker)
-    }
-  })
-
   test("searchBiomarkers (exact)", () => {
     let b1s = Biomarker.searchBiomarkers("glucose")
     expect(b1s[0]?.item.id).toBe("glucose")

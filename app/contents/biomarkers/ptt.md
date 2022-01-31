@@ -6,4 +6,3 @@ status: draft
 unit: seconds
 range: 22 - 33
 ---
-

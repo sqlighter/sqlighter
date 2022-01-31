@@ -5,4 +5,3 @@ description: Risk based on omega profile
 status: draft
 range: Low
 ---
-

@@ -3,9 +3,10 @@ id: mpv
 title: MPV
 description: Volume medio delle piastrine
 references:
-  - 'https://www.valorinormali.com/sangue/mpv/'
-  - 'https://medlineplus.gov/lab-tests/mpv-blood-test/'
+  - "https://www.valorinormali.com/sangue/mpv/"
+  - "https://medlineplus.gov/lab-tests/mpv-blood-test/"
 ---
+
 Il parametro MPV è una stima del volume medio delle piastrine, piccoli frammenti cellulari privi di nucleo e circolanti nel sangue.
 
 Le piastrine, anche chiamate trombociti, ricoprono un ruolo chiave nella formazione di coaguli per fermare eventuali sanguinamenti; quando un vaso sanguigno viene danneggiato vengono inviati segnali che inducono le piastrine a precipitarsi rapidamente nel distretto interessato con l’obiettivo di formare un coagulo (il primo passo nella riparazione).

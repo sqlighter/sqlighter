@@ -6,11 +6,12 @@ status: published
 unit: 10^9/L
 range: 0.0 - 0.2
 references:
-  - 'https://www.valorinormali.com/sangue/basofili/'
-  - 'https://www.webmd.com/a-to-z-guides/what-are-basophils'
-  - 'https://en.wikipedia.org/wiki/Basophil'
-  - 'https://unitslab.com/node/78'
+  - "https://www.valorinormali.com/sangue/basofili/"
+  - "https://www.webmd.com/a-to-z-guides/what-are-basophils"
+  - "https://en.wikipedia.org/wiki/Basophil"
+  - "https://unitslab.com/node/78"
 ---
+
 A type of immune cell that has granules (small particles) with enzymes that are released during allergic reactions, asthma, anaphylaxis, atopic dermatitis and hay fever. A basophil is a type of white blood cell and a type of granulocyte. Basophilic granulocytes (usually referred to as basophils) are a small population of peripheral blood leukocytes containing cytoplasmatic granules that stain with basophilic dyes.
 
 Basophils release histamine, bradykinin, and serotonin when activated by injury or infection. These substances are important to the inflammatory process since they increase capillary permeability and thus increase the blood flow to the affected area. Basophils are also involved in producing allergic responses. In addition, the granules on the surface of basophils secrete the natural anticoagulating substance, heparin. This provides some balance to the clotting and coagulation pathways.

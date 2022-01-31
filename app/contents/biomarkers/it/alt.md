@@ -3,11 +3,13 @@ id: alt
 title: ALT
 description: Alanina aminotransferasi
 references:
-  - 'https://www.valorinormali.com/sangue/transaminasi-alt-ast/'
-  - 'https://www.youtube.com/watch?v=ETmXkZyLFro'
-  - 'https://labtestsonline.org.uk/tests/alanine-aminotransferase-alt-test'
+  - "https://www.valorinormali.com/sangue/transaminasi-alt-ast/"
+  - "https://www.youtube.com/watch?v=ETmXkZyLFro"
+  - "https://labtestsonline.org.uk/tests/alanine-aminotransferase-alt-test"
 ---
+
 Le transaminasi sono enzimi utili a favorire e velocizzare reazioni biochimiche sugli amminoacidi; pur essendo una famiglia decisamente numerosa, i più utilizzati in medicina a scopo diagnostico sono due:
+
 - alanina aminotransferasi (ALT), chiamata anche glutammato-piruvato transaminasi (GPT).
 - aspartato aminotransferasi (AST), anche conosciuta come glutammato-ossalacetato transaminasi (GOT),
 

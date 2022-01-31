@@ -3,15 +3,17 @@ id: beta-perc
 title: Beta
 description: Beta globulin
 status: published
-unit: '%'
+unit: "%"
 range: 7-14
 aliases:
   - beta-2 microglobulina
   - beta-2 microglobulin
 references:
-  - 'https://www.valorinormali.com/sangue/beta-globuline/'
+  - "https://www.valorinormali.com/sangue/beta-globuline/"
 ---
+
 Beta globulins are a group of globular blood proteins that can be measured by electrophoresis; among the molecules belonging to this category we remember for example
+
 - beta-2 microglobulin,
 - plasminogen,
 - angiostatins,

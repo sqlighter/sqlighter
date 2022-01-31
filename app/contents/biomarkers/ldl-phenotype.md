@@ -5,4 +5,3 @@ description: LDL Size Pattern
 status: draft
 range: A
 ---
-

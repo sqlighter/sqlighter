@@ -8,4 +8,3 @@ range: |-
   non-smoker: <5.0 
   smoker: <6.5
 ---
-

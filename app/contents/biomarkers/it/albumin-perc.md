@@ -3,10 +3,11 @@ id: albumin-perc
 title: Albumina (%)
 description: Un tipo di proteina nel sangue
 references:
-  - 'https://labtestsonline.org.uk/tests/albumin'
-  - 'https://www.valorinormali.com/sangue/albumina'
-  - 'https://emedicine.medscape.com/article/2054430-overview'
+  - "https://labtestsonline.org.uk/tests/albumin"
+  - "https://www.valorinormali.com/sangue/albumina"
+  - "https://emedicine.medscape.com/article/2054430-overview"
 ---
+
 L’albumina è la proteina più abbondante nel plasma (la parte fluida del sangue), tanto che da sola rappresenta circa i due terzi del contenuto proteico totale; in virtù della sua abbondante concentrazione, quando questa diminuisce (a prescindere che la causa di una diminuzione della sintesi o un’aumentata escrezione) si verificano problemi nella regolazione della pressione oncotica intravascolare che si manifesta in forma di edema (gonfiore, per esempio di piedi e caviglie).
 
 Da un punto di vista chimico è solubile in acqua, precipita negli acidi e si coagula con il calore.

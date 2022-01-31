@@ -4,4 +4,3 @@ title: CYP2C9
 description: Warfarin-Metabolizing Enzyme
 status: draft
 ---
-

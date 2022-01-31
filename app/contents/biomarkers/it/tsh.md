@@ -3,16 +3,17 @@ id: tsh
 title: Tirotropina (TSH)
 description: Ormone tiroideo
 references:
-  - 'https://medlineplus.gov/lab-tests/tsh-thyroid-stimulating-hormone-test/'
-  - 'https://www.valorinormali.com/sangue/tsh/'
-  - 'https://www.my-personaltrainer.it/salute/tsh-tireotropina.html'
-  - 'https://unitslab.com/node/140'
+  - "https://medlineplus.gov/lab-tests/tsh-thyroid-stimulating-hormone-test/"
+  - "https://www.valorinormali.com/sangue/tsh/"
+  - "https://www.my-personaltrainer.it/salute/tsh-tireotropina.html"
+  - "https://unitslab.com/node/140"
 ---
-L’esame misura la quantità di ormone TSH (ormone tireotropo o tireostimolante) presente nel sangue.
- 
-L’ormone è prodotto dall’ipofisi, una piccola ghiandola che si trova alla base della scatola cranica,  e costituisce solo una parte del complesso meccanismo di regolazione sanguigna dei due ormoni tiroidei: il T4 (tiroxina) e il T3 (triiodotironina).
 
-La tiroide è una ghiandola a forma di farfalla che si trova nella parte anteriore del collo, appoggiata sulla trachea. Ha il compito di secernere gli ormoni tiroidei che, dal sangue,  raggiungono tutti i tessuti dell’organismo.
+L’esame misura la quantità di ormone TSH (ormone tireotropo o tireostimolante) presente nel sangue.
+
+L’ormone è prodotto dall’ipofisi, una piccola ghiandola che si trova alla base della scatola cranica, e costituisce solo una parte del complesso meccanismo di regolazione sanguigna dei due ormoni tiroidei: il T4 (tiroxina) e il T3 (triiodotironina).
+
+La tiroide è una ghiandola a forma di farfalla che si trova nella parte anteriore del collo, appoggiata sulla trachea. Ha il compito di secernere gli ormoni tiroidei che, dal sangue, raggiungono tutti i tessuti dell’organismo.
 
 Gli ormoni tiroidei contribuiscono a numerosi funzioni, tra cui regolazione dell’utilizzo dell’energia disponibile (metabolismo),
 il mantenimento della corretta temperatura corporea, il funzionamento ottimale di cervello, cuore, muscoli e altri organi.

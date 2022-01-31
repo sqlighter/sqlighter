@@ -6,4 +6,3 @@ status: draft
 unit: mg/dL
 range: medium 0-0.2; low 0.2-1.2; medium 1.2-1.3; high > 1.3
 ---
-

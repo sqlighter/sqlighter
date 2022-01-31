@@ -3,16 +3,18 @@ id: gamma-perc
 title: Gamma
 description: Gamma globulin
 status: published
-unit: '%'
+unit: "%"
 range: 10-20
 references:
-  - 'https://www.valorinormali.com/sangue/gamma-globuline/'
+  - "https://www.valorinormali.com/sangue/gamma-globuline/"
 ---
+
 Immunoglobulins are molecules that are part of the gamma-globulins, which in turn belong to the large family of globulins, one of the two groups of plasma proteins.
 
 Gamma-globulins are molecules at the service of the immune system, more in detail they are proteins capable of neutralizing pathogens such as bacteria and viruses; they are produced by some white blood cells (B lymphocytes) in response to stimulation triggered by external insults.
 
 Better known as antibodies or simply Ig, they mainly include:
+
 - IgA,
 - IgG,
 - IgM

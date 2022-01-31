@@ -3,12 +3,13 @@ id: ba-perc
 title: Basofili (%)
 description: Un tipo di globuli bianchi
 references:
-  - 'https://www.valorinormali.com/sangue/basofili/'
-  - 'https://www.webmd.com/a-to-z-guides/what-are-basophils'
-  - 'https://en.wikipedia.org/wiki/Basophil'
-  - 'https://unitslab.com/node/78'
+  - "https://www.valorinormali.com/sangue/basofili/"
+  - "https://www.webmd.com/a-to-z-guides/what-are-basophils"
+  - "https://en.wikipedia.org/wiki/Basophil"
+  - "https://unitslab.com/node/78"
 ---
-I granulociti basofili sono dei globuli bianchi, ossia cellule deputate alla difesa dell’organismo. 
+
+I granulociti basofili sono dei globuli bianchi, ossia cellule deputate alla difesa dell’organismo.
 
 Vengono prodotti dal midollo osseo a partire da cellule staminali comuni alle altre cellule del sangue: globuli bianchi (neutrofili, eosinofili, monociti, linfociti,),
 globuli rossi e piastrine.

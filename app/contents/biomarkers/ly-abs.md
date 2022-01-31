@@ -6,9 +6,10 @@ status: published
 unit: 10^9/L
 range: 1.2 - 4.0
 references:
-  - 'https://www.genome.gov/genetics-glossary/Lymphocyte'
-  - 'https://www.valorinormali.com/sangue/linfociti/'
+  - "https://www.genome.gov/genetics-glossary/Lymphocyte"
+  - "https://www.valorinormali.com/sangue/linfociti/"
 ---
+
 Lymphocytes are white blood cells and part of the immune system, a complex integrated network of cells, tissues and biological mechanisms aimed at the body's defense.
 
 They are produced in the bone marrow and can be classified into two broad categories based on the tissue where their final maturation occurs: B lymphocytes (maturation in the bone marrow), T lymphocytes (maturation in the thymus).

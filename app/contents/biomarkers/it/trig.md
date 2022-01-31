@@ -3,11 +3,12 @@ id: trig
 title: Trigliceridi
 description: Un particolare tipo di grasso
 references:
-  - 'https://www.valorinormali.com/sangue/trigliceridi/'
-  - 'https://www.youtube.it/LiGRLLb2abk'
-  - 'https://labtestsonline.org.uk/tests/triglycerides'
-  - 'https://unitslab.com/node/53'
+  - "https://www.valorinormali.com/sangue/trigliceridi/"
+  - "https://www.youtube.it/LiGRLLb2abk"
+  - "https://labtestsonline.org.uk/tests/triglycerides"
+  - "https://unitslab.com/node/53"
 ---
+
 Verificare periodicamente la pressione arteriosa ed i valori di colesterolo totale è utile per monitorare il proprio rischio cardiovascolare, ma a questi esami dovrebbe essere aggiunto anche il controllo dei trigliceridi, un particolare tipo di grasso.
 
 A seguito di un pasto l’organismo converte le calorie non utilizzate proprio in trigliceridi, per poi immagazzinarli in specifiche cellule deputate a funzione di riserva energetica e rilasciate in caso di necessità tra un pasto e l’altro.

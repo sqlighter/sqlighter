@@ -3,7 +3,7 @@ id: alpha2-perc
 title: Alpha-2
 description: Proteins synthesized in the liver
 status: published
-unit: '%'
+unit: "%"
 range: 5.4-10.6
 aliases:
   - Aptoglobina
@@ -15,12 +15,13 @@ aliases:
   - Alfa2-lipoproteina
   - Angiotensinogeno
 references:
-  - >-
-    https://www.valorinormali.com/sangue/alfa-globuline-alte-basse-e-valori-normali/
+  - https://www.valorinormali.com/sangue/alfa-globuline-alte-basse-e-valori-normali/
 ---
+
 Alpha globulins are proteins synthesized in the liver and circulating in the blood, which we can divide into two groups:
 
 Alpha globulins 1
+
 - Alpha1-antitrypsin
 - Alpha1-antichimotrypsin
 - Alpha1-acid glycoprotein
@@ -28,6 +29,7 @@ Alpha globulins 1
 - Alf 1-lipoprotein
 
 Alpha globulins 2
+
 - Haptoglobin
 - Higher urinary proteins
 - Alpha2-macroglobulin
@@ -45,6 +47,7 @@ The concentration values of alpha globulins in the blood increase for example in
 The causes of altered values are numerous and their interpretation must always be carried out in a broader framework, considering the symptoms complained of by the patient and the other results of blood tests, also because small shifts from normal values ​​could be insignificant.
 
 An increase in the quantities of alpha-2 is usually linked to severe inflammation (acute or chronic) and other more or less serious conditions, such as:
+
 - hyperthyroidism
 - adrenal insufficiency
 - advanced diabetes mellitus

@@ -3,9 +3,11 @@ id: beta-perc
 title: Beta
 description: Proteine globulari nel sangue
 references:
-  - 'https://www.valorinormali.com/sangue/beta-globuline/'
+  - "https://www.valorinormali.com/sangue/beta-globuline/"
 ---
+
 Le beta globuline sono un gruppo di proteine globulari del sangue che è possibile misurare attraverso il procedimento di elettroforesi; tra le molecole appartenenti a questa categoria ricordiamo per esempio
+
 - beta-2 microglobulina,
 - plasminogeno,
 - angiostatine,

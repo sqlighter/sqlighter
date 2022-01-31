@@ -3,9 +3,10 @@ id: esr
 title: VES
 description: Velocità di eritrosedimentazione
 references:
-  - 'https://www.valorinormali.com/sangue/ves/'
-  - 'https://labtestsonline.org.uk/tests/erythrocyte-sedimentation-rate-esr'
+  - "https://www.valorinormali.com/sangue/ves/"
+  - "https://labtestsonline.org.uk/tests/erythrocyte-sedimentation-rate-esr"
 ---
+
 La VES (Velocità di eritrosedimentazione) è un esame del sangue che permette di evidenziale l’eventuale presenza di infiammazione nell’organismo, anche se conseguente ad un’infezione; il test da solo non permette alcuna diagnosi, ma rappresenta un’indispensabile informazione nel processo diagnostico e viene talvolta usato per seguire l’evoluzione di una patologia infiammatoria.
 
 Il sangue prelevato dal paziente viene posto in una piccola provetta graduata; i globuli rossi presenti tenderanno spontaneamente a depositarsi sul fondo e l’esame è volto a misurare l’altezza del deposito che si forma in un’ora.

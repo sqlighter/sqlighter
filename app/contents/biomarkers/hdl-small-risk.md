@@ -4,4 +4,3 @@ title: HDL Small Risk
 description: null
 status: draft
 ---
-

@@ -6,4 +6,3 @@ status: draft
 unit: mmHg
 range: low < 80; medium 80-90; high > 90
 ---
-

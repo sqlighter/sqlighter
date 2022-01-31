@@ -2,10 +2,26 @@
  * @type {import('next').NextConfig}
  */
 const nextConfig = {
+  // https://nextjs.org/docs/advanced-features/i18n-routing
+  i18n: {
+    locales: ["en-US", "it"],
+    defaultLocale: "en-US",
+    domains: [
+      {
+        domain: "insieme.app",
+        defaultLocale: "it",
+      },
+      {
+        domain: "biomarkers.vercel.app",
+        defaultLocale: "en-US",
+      },
+    ],
+  },
   images: {
     loader: "default",
     domains: [
       "localhost",
+      "biomarkers.vercel.app",
       "insieme-api-zs2nymj7ga-ew.a.run.app",
       "storage.googleapis.com",
       "api.insieme.app",

@@ -3,10 +3,11 @@ id: cholesterol
 title: Colesterolo
 description: Un sostanza essenziale per la vita
 references:
-  - 'https://www.valorinormali.com/sangue/colesterolo-totale/'
-  - 'https://medlineplus.gov/cholesterol.html'
-  - 'http://unitslab.com/node/58'
+  - "https://www.valorinormali.com/sangue/colesterolo-totale/"
+  - "https://medlineplus.gov/cholesterol.html"
+  - "http://unitslab.com/node/58"
 ---
+
 Il colesterolo è una sostanza essenziale per la vita, in quanto costituente delle membrane cellulari in tutti gli organi e tessuti del corpo. Viene inoltre usato dall’organismo per la sintesi di ormoni, sostanze indispensabili per lo sviluppo, la crescita e la riproduzione e permette la sintesi degli acidi biliari che sono necessari per assorbire le sostanze nutrienti dal cibo.
 
 Il corpo produce circa il 75% della quantità necessaria alle diverse funzioni metaboliche, ma il restante 25% è assunto con la dieta. In caso di una predisposizione ereditaria a produrne troppo, oppure quando si consumano quantità eccessive di alimenti ricchi di grassi di cattiva qualità (grassi saturi, soprattutto di origine animale), i livelli circolanti nel sangue aumentano e con essi anche il rischio di avere un impatto negativo sulla salute.

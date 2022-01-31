@@ -5,4 +5,3 @@ description: Predicting risk of insulin resistance and diabetes
 status: draft
 range: < 1.9
 ---
-

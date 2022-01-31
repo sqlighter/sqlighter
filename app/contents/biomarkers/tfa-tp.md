@@ -3,7 +3,6 @@ id: tfa-tp
 title: trans-Palmitoleic Acid
 description: ruminant-derived trans fat
 status: draft
-unit: '%'
+unit: "%"
 range: reference ranges have not been established
 ---
-

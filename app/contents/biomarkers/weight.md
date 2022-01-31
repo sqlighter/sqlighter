@@ -6,4 +6,3 @@ status: draft
 unit: pounds
 range: ≥ 1
 ---
-

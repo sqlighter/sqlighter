@@ -3,7 +3,6 @@ id: cmsfa-p
 title: Palmitoleic acid
 description: unsaturated fatty acid
 status: draft
-unit: '%'
+unit: "%"
 range: reference ranges have not been established
 ---
-

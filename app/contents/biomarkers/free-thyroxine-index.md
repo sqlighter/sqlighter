@@ -5,4 +5,3 @@ description: A Thyroxine Index
 status: draft
 range: 0.4 - 5.4
 ---
-

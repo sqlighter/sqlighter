@@ -3,12 +3,13 @@ id: alpha1-perc
 title: Alpha-1
 description: Proteins synthesized in the liver
 references:
-  - >-
-    https://www.valorinormali.com/sangue/alfa-globuline-alte-basse-e-valori-normali/
+  - "https://www.valorinormali.com/sangue/alfa-globuline-alte-basse-e-valori-normali/"
 ---
+
 Alpha globulins are proteins synthesized in the liver and circulating in the blood, which we can divide into two groups:
 
 Alpha globulins 1
+
 - Alpha1-antitrypsin
 - Alpha1-antichimotrypsin
 - Alpha1-acid glycoprotein
@@ -16,6 +17,7 @@ Alpha globulins 1
 - Alf 1-lipoprotein
 
 Alpha globulins 2
+
 - Haptoglobin
 - Higher urinary proteins
 - Alpha2-macroglobulin

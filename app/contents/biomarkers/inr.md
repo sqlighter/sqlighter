@@ -5,4 +5,3 @@ description: Comparative Measure of Coagulation
 status: draft
 range: 0.9 - 1.0
 ---
-

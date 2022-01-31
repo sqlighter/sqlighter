@@ -5,4 +5,3 @@ description: An estimate of average blood sugar
 status: draft
 unit: mg/dL
 ---
-
