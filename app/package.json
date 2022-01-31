@@ -59,5 +59,13 @@
     "trailingComma": "es5",
     "semi": false,
     "tabWidth": 2
+  },
+  "jest": {
+    "testTimeout": 60000,
+    "transform": {
+      "^.+\\.(t|j)sx?$": [
+        "@swc-node/jest"
+      ]
+    }
   }
 }
