@@ -4,6 +4,7 @@
 .idea
 .readmes
 .env
+.next
 
 build
 node_modules

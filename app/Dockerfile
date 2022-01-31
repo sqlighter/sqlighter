@@ -24,6 +24,7 @@ COPY . ./
 #RUN yarn install # --production
 RUN yarn install
 #RUN yarn add --dev eslint eslint-config-next
+RUN yarn add --dev typescript @types/react
 RUN yarn next build
 
 # Run node server
