@@ -772,7 +772,7 @@
         }
       ],
       "text": "STUDI\nAZIENDA OSPEDALIERA UNIVERSITARIA INTEGRATA - VERONA\n(D.Lgs. n. 517/1999 - Art. 3 L.R. Veneto n. 18/2009)\nDIPARTIMENTO PATOLOGIA E DIAGNOSTICA\nUOC di Laboratorio Analisi dO - Sede di Borgo Trento - Direttore: f.f. Prof. G.C. GUIDI\nUOC di Laboratorio Analisi dU - Sede di Borgo Roma - Direttore: Prof. G.C. GUIDI\nUOC di Immunologia dU - Direttore: Prof. V. BRONTE\nServizio di Medicina del Lavoro Direttore: Prof. Luigi Perbellini\nJAIN\nVERO\nXERADE\nM\n-\nVERDI GIUSEPPE\nData di nascita: 11-02-2001\nEPID: VG27WG\nNosologico:000\nRichiesta:0001140610\nSez.:C. TRASF, - BORGO TRENTO - DONATORI\ncampione/i del:27-03-2014\npervenuto il:27-03-2014 10:14\nmg/dL\nEsami eseguiti presso: UOC Laboratorio analisi do - P.le Stefani 1 - 37126 Verona - Tel. 045 8122157\nUnita' Operativa con Sistema Qualita' UNI EN ISO 9001:2008 Certificato n.7882/02/S\nAnalisi\nRisultato\nValori di riferimento\nP-Glucosio\n4,6 mmol/L\nValori a digiuno:\n82 mg/dL 3,3-5,5 mmol/L (60-99 mg/dL)\nintervallo di riferimento;\n5,6-7,0 mmol/L (100-125 mg/dL)\nalterata glicemia;\n>7,0 mmol/L (>125 mg/dL)]\nindicativo di diabete (da confermare)\nP-Urea\n4,9 mmol/L\n[2,85 - 7,85]\n27\nmg/dL\n(15 - 43]\nP-Creatinina\n78 umol/L\n[53 - 115]\n0,88\n[0,59 - 1,29]\nP-Proteine totali\n79 g/L\n[60 - 83]\nP-Colesterolo\n4,64 mmol/L\n[< 5,18]\n179\nmg/dL\n[<200]\n(Valore desiderabile)\nP-Trigliceridi\n0,58 mmol/L\n[<1,69]\n51 mg/dL\n[< 150]\n(Valore desiderabile)\nP-Ferro\n17 umol/L\n[10 - 29]\n94\n[55 - 161]\nP-ALT (alanina aminotransferasi)\n21 U/L\n[5 - 50]\n(Metodo IFCC)\nP-Ferritina\n236 ug/L\n[20 - 320]\nSg-Esame emocromocitometrico\n(Citometria a flusso in fluorescenza)\nLeucociti\n4,97 10^9/L\n[4,00 - 11,00]\nEritrociti\n5,24 10^12/L\n[4,50 - 5,30]\nEmoglobina\n153 g/L\n[130 - 180]\nEmatocrito\n0,446 L/L\n[0,370 - 0,490]\nMCV\n85,1 fL\n[80,0 - 100,0]\nMCH\n29,2 pg\n[25,0 - 35,0]\nMCHC\n343 g/L\n[310 - 360]\nRDW\n12,9\n[11,5 - 14,5]\nPiastrine\n311 10^9/L\n[150 - 400]\nug/dL\nAZIENDA OSPEDALIERA UNIVERSITARIA INTEGRATA - VERONA\n(D.Lgs. n. 517/1999 - Art. 3 L.R. Veneto n. 18/2009)\nDIPARTIMENTO PATOLOGIA E DIAGNOSTICA\nUOC di Laboratorio Analisi dO - Sede di Borgo Trento - Direttore: f.f. Prof. G.C. GUIDI\nUOC di Laboratorio Analisi dU - Sede di Borgo Roma - Direttore: Prof. G.C. GUIDI\nUOC di Immunologia dU - Direttore: Prof. V. BRONTE\nServizio di Medicina del Lavoro Direttore: Prof. Luigi Perbellini\n2059ADE\n3\nM\n-\nVERDI GIUSEPPE\nData di nascita: 11-02-2001\nEPID: VG27WG\nNosologico:000\nDONATORI\nRichiesta: 0001140610\nSez.:C. TRASF, - BORGO TRENTO\ncampione/i del:27-03-2014\npervenuto il:27-03-2014 10:14\nSg-Formula leucocitaria\n",
-      "locale": "it",
+      "locale": "it-IT",
       "lines": [
         [
           {
@@ -1673,6 +1673,7 @@
       "pageNumber": 2,
       "width": 594,
       "height": 840,
+      "locale": "it-IT",
       "words": [
         {
           "text": "Neutrofili",

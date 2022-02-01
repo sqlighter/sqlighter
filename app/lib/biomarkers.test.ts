@@ -3,40 +3,50 @@
 //
 
 import assert from "assert/strict"
-import { fstat } from "fs"
-import matter from "gray-matter"
 import { Biomarker, Range } from "./biomarkers"
-import { readJson } from "./utilities"
-import fs from "fs/promises"
-import { resolve } from "path"
 
 describe("biomarkers.ts", () => {
+  test("getBiomarkers (localized)", () => {
+    const en1 = Biomarker.getBiomarker("glucose")
+    expect(en1.id).toBe("glucose")
+    expect(en1.title).toBe("Glucose")
+
+    const en3 = Biomarker.getBiomarker("glucose", "en-US")
+    expect(en1).toMatchObject(en3)
+    expect(en3.id).toBe("glucose")
+    expect(en3.title).toBe("Glucose")
+
+    const it1 = Biomarker.getBiomarker("glucose", "it-IT")
+    expect(it1.id).toBe("glucose")
+    expect(it1.title).toBe("Glucosio")
+  })
+
   test("searchBiomarkers (exact)", () => {
     let b1s = Biomarker.searchBiomarkers("glucose")
     expect(b1s[0]?.item.id).toBe("glucose")
-    expect(b1s[0]?.item.translations?.[0]?.name).toBe("Glucose")
+    expect(b1s[0]?.item.title).toBe("Glucose")
     expect(b1s[0]?.confidence).toBeCloseTo(1)
 
-    b1s = Biomarker.searchBiomarkers("Glucosio")
+    b1s = Biomarker.searchBiomarkers("Glucosio", "it-IT")
     expect(b1s[0]?.item.id).toBe("glucose")
-    expect(b1s[0]?.item.translations?.[1]?.name).toBe("Glucosio")
+    expect(b1s[0]?.item.title).toBe("Glucosio")
     expect(b1s[0]?.confidence).toBeCloseTo(1)
 
     b1s = Biomarker.searchBiomarkers("Urine Glucose")
     expect(b1s[0]?.item.id).toBe("urine-glu")
-    expect(b1s[0]?.item.translations?.[0]?.name).toBe("Urine Glucose")
+    expect(b1s[0]?.item.title).toBe("Urine Glucose")
     expect(b1s[0]?.confidence).toBeCloseTo(1)
   })
 
   test("searchBiomarkers (partial)", () => {
-    let b1s = Biomarker.searchBiomarkers("Leucociti")
+    let b1s = Biomarker.searchBiomarkers("Leucociti", "it-IT")
     expect(b1s[0]?.item.id).toBe("wbc")
-    expect(b1s[0]?.item.translations?.[1]?.name).toBe("Leucociti (globuli bianchi)")
+    expect(b1s[0]?.item.title).toBe("Leucociti (globuli bianchi)")
     expect(b1s[0]?.confidence).toBeGreaterThan(0.5)
 
-    b1s = Biomarker.searchBiomarkers("Sg-ERITROCITI")
+    b1s = Biomarker.searchBiomarkers("Sg-ERITROCITI", "it-IT")
     expect(b1s[0]?.item.id).toBe("rbc")
-    expect(b1s[0]?.item.translations?.[1]?.name).toBe("Eritrociti")
+    expect(b1s[0]?.item.title).toBe("Eritrociti")
     expect(b1s[0]?.confidence).toBeGreaterThan(0.5)
   })
 
@@ -44,13 +54,13 @@ describe("biomarkers.ts", () => {
     let b1s = Biomarker.searchBiomarkers("glucoze") // glucose
     expect(b1s[0]?.item.id).toBe("glucose")
 
-    b1s = Biomarker.searchBiomarkers("Glucoso") // glucosio
+    b1s = Biomarker.searchBiomarkers("Glucoso", "it-IT") // glucosio
     expect(b1s[0]?.item.id).toBe("glucose")
 
     b1s = Biomarker.searchBiomarkers("ematocreep") // hematocrit
     expect(b1s[0]?.item.id).toBe("hct")
 
-    b1s = Biomarker.searchBiomarkers("Ematocripo") // ematocrito
+    b1s = Biomarker.searchBiomarkers("Ematocripo", "it-IT") // ematocrito
     expect(b1s[0]?.item.id).toBe("hct")
 
     //	b1s = await searchBiomarkers('Leucocizi'); // leuco
@@ -204,9 +214,5 @@ describe("biomarkers.ts", () => {
     expect(unit).toBeNull()
     unit = Biomarker.parseUnits("fake", biomarker)
     expect(unit).toBeNull()
-  })
-
-  test("updateBiomarkers", async () => {
-    await Biomarker.updateBiomarkers()
   })
 })

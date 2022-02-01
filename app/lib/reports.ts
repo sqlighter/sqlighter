@@ -32,7 +32,7 @@ export class Report {
   // methods
   //
 
-  private _detectBiomarker(line: Word[]) {
+  private _detectBiomarker(line: Word[], locale: string) {
     // for now we assume that the leftmost word on the line is the one containing
     // the biomarkers' name. so we only check the first word on the line since
     // lines are sorted. in the future we may want to scan other words too.
@@ -48,7 +48,7 @@ export class Report {
 
       // TODO could check if text is in list of common words or blocked words for language or template
 
-      const biomarkersMatches = Biomarker.searchBiomarkers(text)
+      const biomarkersMatches = Biomarker.searchBiomarkers(text, locale)
       if (biomarkersMatches.length > 0 && biomarkersMatches[0]) {
         return {
           item: biomarkersMatches[0].item,
@@ -122,6 +122,7 @@ export class Report {
     const warnings = []
 
     for (const page of this.pages) {
+      assert(page.locale, `Page.locale is missing`)
       if (!page.lines) {
         break
       }
@@ -137,7 +138,7 @@ export class Report {
       const valuesWords = []
 
       for (const word of page.words) {
-        const biomarkersMatches = await Biomarker.searchBiomarkers(word.text)
+        const biomarkersMatches = await Biomarker.searchBiomarkers(word.text, page.locale)
         if (biomarkersMatches.length > 0) {
           biomarkersWords.push(word)
         }
@@ -162,10 +163,10 @@ export class Report {
 			const valueAlign = getBoundingBoxAlignments(valuesWords.map((w) => w.bbox));
 */
       for (const line of page.lines) {
-        let biomarkerMatch = this._detectBiomarker(line)
+        let biomarkerMatch = this._detectBiomarker(line, page.locale)
         if (biomarkerMatch) {
           let biomarker = biomarkerMatch.item
-          let biomarkerName = biomarker.translations?.[0]?.name
+          let biomarkerTitle = biomarker.title
           const biomarkerWord = biomarkerMatch.word
 
           // track that this biomarker word has been consumed
@@ -184,7 +185,7 @@ export class Report {
               isPerc = biomarker.id.endsWith("-perc")
             if (isAbs || isPerc) {
               const altId = biomarker.id.substring(0, biomarker.id.indexOf("-")) + (isPerc ? "-abs" : "-perc")
-              const alt = Biomarker.getBiomarker(altId)
+              const alt = Biomarker.getBiomarker(altId, page.locale)
               if (alt) {
                 const altMatch = { item: alt, confidence: biomarkerMatch.confidence, word: biomarkerMatch.word }
                 let altUnitMatch = this._detectUnit(line, altMatch)
@@ -197,7 +198,7 @@ export class Report {
                 if (altUnitMatch) {
                   biomarker = alt
                   biomarkerMatch = altMatch
-                  biomarkerName = biomarker.translations?.[0]?.name
+                  biomarkerTitle = biomarker.title
                   unitMatch = altUnitMatch
                   unitMatch.confidence = Math.min(unitMatch.confidence, MEDIUM_CONFIDENCE)
                 }
@@ -215,13 +216,13 @@ export class Report {
             (valueMatch?.confidence || 0) * 0.15
 
           console.debug(
-            `detectBiomarkers - text: ${biomarkerWord.text}, id: ${biomarker.id}/${biomarkerName}, unit: ${unitMatch?.id}, range: ${rangeMatch?.range}, value: ${valueMatch?.value}, confidence: ${confidence}`
+            `detectBiomarkers - text: ${biomarkerWord.text}, id: ${biomarker.id}/${biomarkerTitle}, unit: ${unitMatch?.id}, range: ${rangeMatch?.range}, value: ${valueMatch?.value}, confidence: ${confidence}, locale: ${page.locale}`
           )
 
           // create entry for measurements or warnings
           const bbox = mergeBoundingBoxes(line.map((w) => w.bbox))
           const medatata = new Metadata({
-            name: biomarkerName,
+            name: biomarkerTitle,
             confidence: confidence,
             ocr: {
               name: biomarkerWord.text,

@@ -4,12 +4,12 @@
 const nextConfig = {
   // https://nextjs.org/docs/advanced-features/i18n-routing
   i18n: {
-    locales: ["en-US", "it"],
+    locales: ["en-US", "it-IT"],
     defaultLocale: "en-US",
     domains: [
       {
         domain: "insieme.app",
-        defaultLocale: "it",
+        defaultLocale: "it-IT",
       },
       {
         domain: "biomarkers.vercel.app",

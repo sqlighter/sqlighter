@@ -2,14 +2,14 @@
 // biomarkers.ts
 //
 
-import { resolve } from "path"
 import Fuse from "fuse.js"
 import Tokenizr from "tokenizr"
 import assert from "assert"
+import path from "path"
 
-import { Api, writeJson, round } from "./utilities"
+import { round } from "./utilities"
 import { Unit } from "./units"
-import { Translation } from "./translations"
+import { getContentFiles, DEFAULT_LOCALE } from "./contents"
 import { Metadata } from "./metadata"
 
 export const BIOMARKERS_SEARCH_CONFIDENCE = 0.7
@@ -17,24 +17,24 @@ export const UNITS_SEARCH_CONFIDENCE = 0.7
 
 /** A biomarker, eg. glucose, hdl, ldl, weight, etc */
 export class Biomarker {
-  constructor(id: string, unit?: string, range?: string, translations?: Translation[], metadata?: any) {
+  constructor(id: string) {
     this.id = id
-    this.translations = translations || []
-    this.metadata = new Metadata(metadata)
-    this.range = range
-    if (unit) {
-      this.unit = Unit.getUnit(unit)
-    }
   }
 
   /** Biomarker id, eg. glucose */
   id: string
 
-  /** Current publication status */
-  status: "draft" | "published" | "archived"
+  /** Biomarker title, eg. Glucose (localized) */
+  title: string = ""
 
-  /** Translations for biomaker's name, description and summary */
-  translations: Translation[]
+  /** A short description, eg. Blood sugar (localized) */
+  description: string = ""
+
+  /** Biomarker's page content in markdown format (localized) */
+  content: string = ""
+
+  /** Current publication status */
+  status: "draft" | "published" | "archived" = "draft"
 
   /** Measurement unit for this biomarker */
   unit?: Unit
@@ -42,21 +42,48 @@ export class Biomarker {
   /** Range for this biomarker, eg. 120-150 */
   range?: string
 
-  /** Additional information like: aliases, notes, references */
-  metadata: Metadata
+  /**
+   * Custom conversions when required for example to go
+   * from mg/dL to mmol/L which is specific to this biomarker
+   */
+  conversions?: { [unit: string]: number }
+
+  /** Links to external contents */
+  references?: string[]
+
+  /** Other names by which this biomarker is known (localized) */
+  aliases?: string[]
+
+  /** Localized biomarkers are lazy loaded synchronously just once from /contents/biomarkers/ */
+  private static readonly _biomarkers: { [locale: string]: { [biomarkerId: string]: Biomarker } } = {}
+
+  /** Localized biomarkers search indexes are lazy loaded synchronously once */
+  private static readonly _biomarkersFuse: { [locale: string]: Fuse<Biomarker> } = {}
 
   //
   // static methods
   //
 
-  /** Returns list of all available biomarkers */
-  public static getBiomarkers(): Biomarker[] {
-    return Object.values(_biomarkers)
+  /** Returns available localized biomarkers */
+  public static getBiomarkers(locale: string = DEFAULT_LOCALE): { [biomarkerId: string]: Biomarker } {
+    if (!Biomarker._biomarkers[locale]) {
+      const biomarkersDirectory = path.join(process.cwd(), "contents/biomarkers")
+      const contents = getContentFiles(biomarkersDirectory, locale)
+      const biomarkers = {}
+      for (const content of contents) {
+        biomarkers[content.id] = Biomarker.fromObject(content)
+      }
+      Biomarker._biomarkers[locale] = biomarkers
+      console.log(`Biomarkers.getBiomarkers('${locale}') - lazy loaded ${Object.keys(biomarkers).length} biomarkers`)
+    }
+
+    return Biomarker._biomarkers[locale]
   }
 
-  /** Returns biomarker by id (or undefined) */
-  public static getBiomarker(biomarkerId: string): Biomarker | undefined {
-    return _biomarkers[biomarkerId]
+  /** Returns biomarker by id (or undefined), localized if requested */
+  public static getBiomarker(biomarkerId: string, locale: string = DEFAULT_LOCALE): Biomarker | undefined {
+    const biomarkers = Biomarker.getBiomarkers(locale)
+    return biomarkers[biomarkerId]
   }
 
   /**
@@ -68,39 +95,38 @@ export class Biomarker {
    * @param confidence Will return only results exceeding this confidence level (0 to 1)
    * @returns A ranked list of possible matches
    */
-  public static searchBiomarkers(
-    query: string,
-    confidence: number = BIOMARKERS_SEARCH_CONFIDENCE
-  ): { item: Biomarker; confidence: number }[] {
-    assert(_biomarkersFuse)
-    const matches = _biomarkersFuse.search(query)
+  public static searchBiomarkers(query: string, locale?: string): { item: Biomarker; confidence: number }[] {
+    const biomarkers = Biomarker.getBiomarkers(locale)
+    let biomarkersFuse = Biomarker._biomarkersFuse[locale]
+
+    if (!biomarkersFuse) {
+      // fuse index used for searches
+      biomarkersFuse = new Fuse<Biomarker>(Object.values(biomarkers), {
+        minMatchCharLength: 4,
+        includeScore: true,
+        keys: [
+          { name: "id", weight: 1.0 },
+          { name: "title", weight: 1.0 },
+          { name: "aliases", weight: 0.9 },
+          { name: "description", weight: 0.5 },
+          { name: "content", weight: 0.25 },
+        ],
+      })
+
+      Biomarker._biomarkersFuse[locale] = biomarkersFuse
+    }
+
+    assert(biomarkersFuse)
+    const matches = biomarkersFuse.search(query)
     if (matches) {
       let filtered = matches.map((m) => {
-        return { item: _biomarkers?.[m.item.id] as Biomarker, confidence: 1 - (m.score as number) }
+        return { item: biomarkers[m.item.id] as Biomarker, confidence: 1 - (m.score as number) }
       })
-      filtered = filtered.filter((m) => m.confidence >= confidence)
+      filtered = filtered.filter((m) => m.confidence >= BIOMARKERS_SEARCH_CONFIDENCE)
       return filtered
     }
 
     return []
-  }
-
-  /** Updates to latest version of biomarkers.json (requires a restart) */
-  public static async updateBiomarkers() {
-    const jsonPath = resolve("./contents/biomarkers.json")
-    const jsonUrl =
-      "/items/biomarkers?fields=id,status,description,range,unit.id,translations.languages_code,translations.name,translations.description,translations.summary,metadata&limit=1000"
-    try {
-      const biomarkersJson = (await Api.getJson(jsonUrl)).data
-      await writeJson(jsonPath, biomarkersJson)
-      _initializeBiomarkers(biomarkersJson)
-    } catch (exception) {
-      console.error(
-        `Biomarkers.updateBiomarkers - could not read biomarkers from network, exception: ${exception}`,
-        exception
-      )
-      throw exception
-    }
   }
 
   /**
@@ -145,9 +171,9 @@ export class Biomarker {
     const unitsCandidates = [biomarker.unit.id]
     const unitsConversions = [1]
 
-    if (biomarker.metadata?.conversions) {
-      unitsCandidates.push(...Object.keys(biomarker.metadata.conversions))
-      unitsConversions.push(...Object.values(biomarker.metadata.conversions))
+    if (biomarker.conversions) {
+      unitsCandidates.push(...Object.keys(biomarker.conversions))
+      unitsConversions.push(...Object.values(biomarker.conversions))
     }
     if (biomarker.unit?.conversions) {
       unitsCandidates.push(...Object.keys(biomarker.unit.conversions))
@@ -174,8 +200,15 @@ export class Biomarker {
   /** Creates a biomarker from an object */
   public static fromObject(obj: any): Biomarker {
     assert(obj.id)
-    const translations = obj.translations && Translation.fromObject(obj.translations)
-    return new Biomarker(obj.id, obj.unit?.id, obj.range, translations, obj.metadata)
+    const biomarker: Biomarker = Object.assign(new Biomarker(obj.id), obj)
+
+    if (biomarker.unit) {
+      const unit = Unit.getUnit(obj.unit)
+      assert(unit, `Biomarker.fromObject - '${biomarker.id}' has invalid unit '${biomarker.unit}`)
+      biomarker.unit = unit
+    }
+
+    return biomarker
   }
 
   /**
@@ -346,40 +379,8 @@ export class Measurement {
 // Utilities
 //
 
-// static list of available biomarkers and search index
-const _biomarkers: { [key: string]: Biomarker } = {}
-const _biomarkersJson = require("../contents/biomarkers.json")
-
-// fuse index used for searches
-let _biomarkersFuse: Fuse<Biomarker> | undefined
-
-function _initializeBiomarkers(biomarkersJson: any) {
-  biomarkersJson.forEach((b: any) => {
-    const biomarker = Biomarker.fromObject(b)
-    _biomarkers[biomarker.id] = biomarker
-  })
-
-  // fuse index used for searches
-  _biomarkersFuse = new Fuse<Biomarker>(Object.values(_biomarkers), {
-    minMatchCharLength: 4,
-    includeScore: true,
-    keys: [
-      { name: "id", weight: 1.0 },
-      { name: "translations.name", weight: 1.0 },
-      { name: "metadata.aliases", weight: 0.9 },
-      { name: "translations.description", weight: 0.5 },
-      { name: "translations.summary", weight: 0.25 },
-    ],
-  })
-}
-
-_initializeBiomarkers(_biomarkersJson)
-
-//
 // Parsing of biomarker values and ranges
 // https://www.npmjs.com/package/tokenizr
-//
-
 const lexer = new Tokenizr()
 lexer.rule(/(\d+([\.,]\d+)?)/, (ctx, match) => {
   // accept floating point with both . and , decimals

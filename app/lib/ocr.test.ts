@@ -3,7 +3,6 @@
 //
 
 import { resolve } from "path"
-import fs from "fs/promises"
 import { Ocr } from "./ocr"
 import { writeJson } from "./utilities"
 
@@ -30,9 +29,9 @@ describe("ocr.ts", () => {
     expect(pages.length).toBe(2)
     for (const page of pages) {
       expect(page).toBeTruthy()
-      expect(page?.width).toBe(594)
-      expect(page?.height).toBe(841)
-      expect(page.locale).toBe("it")
+      expect(page.width).toBe(594)
+      expect(page.height).toBe(841)
+      expect(page.locale).toBe("it-IT")
     }
 
     const destinationPath = toArtifacts(sourceUri + ".ocr.json")
@@ -56,9 +55,9 @@ describe("ocr.ts", () => {
     expect(pages.length).toBe(2)
     for (const page of pages) {
       expect(page).toBeTruthy()
-      expect(page?.width).toBe(594)
-      expect(page?.height).toBe(841)
-      expect(page.locale).toBe("it")
+      expect(page.width).toBe(594)
+      expect(page.height).toBe(841)
+      expect(page.locale).toBe("it-IT")
     }
   })
 })

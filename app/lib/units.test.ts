@@ -48,11 +48,11 @@ describe("units.ts", () => {
     // factors are stored in unit.metadata.conversion. however, some conversions like mmol/L
     // (a quantity of molecules) to mg/L (a weight) require a conversion ratio that is specific
     // to the biomarker and is therefore store in biomarker.metadata.conversions.
-    const biomarkers = Biomarker.getBiomarkers()
+    const biomarkers = Object.values(Biomarker.getBiomarkers())
     for (const biomarker of biomarkers) {
       if (biomarker.unit?.conversions) {
         Object.keys(biomarker.unit.conversions).forEach((unit) => {
-          if (biomarker.metadata.conversions?.[unit]) {
+          if (biomarker.conversions?.[unit]) {
             throw new Error(
               `Biomarker ${biomarker.id} - Unit ${biomarker.unit?.id} should not contain a conversion to ${unit}`
             )
@@ -79,10 +79,6 @@ describe("units.ts", () => {
         }
       }
     }
-  })
-
-  test("updateUnits", async () => {
-    await Unit.updateUnits()
   })
 
   // TODO test conversions, add cross pairs, find missing conversions

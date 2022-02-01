@@ -74,7 +74,7 @@ export class Page {
   /** Text in the page */
   text: string
 
-  /** Locale for this page, eg. en_US, it_IT */
+  /** Locale for this page, eg. en-US, it-IT */
   locale?: string
 
   //
@@ -314,7 +314,26 @@ export class Ocr {
       }
 
       // locale detected with highest confidence on page
-      const locale = ocrPage.property?.detectedLanguages[0].languageCode
+      let locale = ocrPage.property?.detectedLanguages[0].languageCode
+      switch (locale) {
+        case "en":
+          locale = "en-US"
+          break
+        case "it":
+          locale = "it-IT"
+          break
+      }
+      // locale is missing for this page? use locale of earlier pages
+      if (!locale) {
+        for (const page of pages) {
+          if (!locale && page.locale) {
+            locale = page.locale
+          }
+        }
+        console.warn(`Ocr.normalizeAnnotations - page ${pages.length + 1} is missing languageCode, using '${locale}'`)
+        // assert(locale, `Ocr.normalizeAnnotations - page ${pages.length + 1}  is missing languageCode`)
+      }
+
       const page = new Page(
         response.context.pageNumber,
         ocrPage.width,

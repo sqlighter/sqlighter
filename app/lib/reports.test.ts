@@ -11,11 +11,6 @@ import { Biomarker } from "./biomarkers"
 import { Unit } from "./units"
 
 describe("reports.ts", () => {
-  beforeAll(async () => {
-    await Unit.updateUnits()
-    await Biomarker.updateBiomarkers()
-  })
-
   // the test directory contains a number of xxx.pdf and xxx.pdf.report.json
   // files where the second file contains a completed report containing the
   // biomarkers that are expected to be found in the report. we can analyze

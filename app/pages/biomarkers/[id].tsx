@@ -33,21 +33,28 @@ function getTranslation(item: any, key: string): string {
 }
 
 /** Create a page for each available biomarker */
-export const getStaticPaths: GetStaticPaths = () => {
-  const paths = Biomarker.getBiomarkers().map((b) => {
-    return { params: { id: b.id } }
-  })
+export const getStaticPaths: GetStaticPaths = ({ locales }) => {
+  const paths = []
+  for (const locale of locales) {
+    for (const biomarker of Object.values(Biomarker.getBiomarkers(locale))) {
+      if (biomarker.status == "published") {
+        for (const locale of locales) {
+          paths.push({ params: { id: biomarker.id }, locale })
+        }
+      }
+    }
+  }
   return {
     paths,
-    fallback: false,
+    fallback: "blocking",
   }
 }
 
 /** Static properties from biomarkers.json */
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const biomarker = Biomarker.getBiomarker(params.id as string)
+export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
+  const biomarker = Biomarker.getBiomarker(params.id as string, locale)
   const serializable = JSON.parse(JSON.stringify(biomarker))
-  console.debug(`biomarkers.tsx - biomarkerId: ${biomarker.id}`, serializable)
+  console.debug(`biomarkers.tsx - biomarkerId: ${biomarker.id}, locale: ${locale}`, serializable)
   return {
     props: {
       biomarker: serializable,
