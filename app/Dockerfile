@@ -12,25 +12,24 @@ ENV SOURCE_COMMIT=${SOURCE_COMMIT}
 ENV SOURCE_BRANCH=${SOURCE_BRANCH}
 ENV NODE_ENV production
 
-# Copy application dependency manifests to the container image.
-# Copying this separately prevents re-running yarn install on every code change.
+# Copy application dependency manifests to the container image
+# Copying this separately prevents re-running yarn install on every code change
 COPY package.json ./
 COPY yarn.lock ./
+RUN yarn install --production
+RUN yarn add --dev eslint eslint-config-next
+RUN yarn add --dev typescript @types/react
 
 # Copy everything except what is in .dockerignore (eg node_modules, etc)
 COPY . ./
 
-# Install production packages + compiled apps
-#RUN yarn install # --production
-RUN yarn install
-#RUN yarn add --dev eslint eslint-config-next
-RUN yarn add --dev typescript @types/react
+# Create production build
 RUN yarn next build
 
-# Run node server
+# Run next.js server
 CMD ["yarn", "next", "start"]
 
-# Commands to build docker image, run it locally and deploy to Google Cloud Run
+# Commands to build docker image, run it locally then deploy to Google Cloud Run
 # docker build -t "eu.gcr.io/insieme2/insieme-app:staging" .
 # docker run -it --env-file=.env -p 127.0.0.1:80:3000 eu.gcr.io/insieme2/insieme-app:staging
 # docker push eu.gcr.io/insieme2/insieme-app:staging

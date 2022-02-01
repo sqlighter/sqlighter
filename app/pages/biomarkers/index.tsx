@@ -6,15 +6,15 @@ import { GetStaticProps, GetStaticPaths } from "next"
 import { Biomarker } from "../../lib/biomarkers"
 import Link from "next/link"
 
-export default function BiomarkersPage({ biomarkers }: { biomarkers: Biomarker[] }) {
+export default function BiomarkersPage({ biomarkers, locale }: { biomarkers: Biomarker[]; locale: string }) {
   return (
     <Layout>
       <Head>
-        <title>Biomarkers</title>
+        <title>Biomarkers ({locale})</title>
       </Head>
 
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
-        <h2 className={utilStyles.headingLg}>Blog</h2>
+        <h2 className={utilStyles.headingLg}>Biomarkers ({locale})</h2>
         <ul className={utilStyles.list}>
           {biomarkers.map((biomarker) => (
             <li className={utilStyles.listItem} key={biomarker.id}>
@@ -33,10 +33,10 @@ export default function BiomarkersPage({ biomarkers }: { biomarkers: Biomarker[]
 export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
   const biomarkers = Object.values(Biomarker.getBiomarkers(locale))
   const serializable = biomarkers.map((b) => JSON.parse(JSON.stringify(b)))
-  console.debug(serializable)
   return {
     props: {
       biomarkers: serializable,
+      locale,
     },
   }
 }

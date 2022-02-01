@@ -74,7 +74,7 @@ export class Biomarker {
         biomarkers[content.id] = Biomarker.fromObject(content)
       }
       Biomarker._biomarkers[locale] = biomarkers
-      console.log(`Biomarkers.getBiomarkers('${locale}') - lazy loaded ${Object.keys(biomarkers).length} biomarkers`)
+      // console.log(`Biomarkers.getBiomarkers('${locale}') - lazy loaded ${Object.keys(biomarkers).length} biomarkers`)
     }
 
     return Biomarker._biomarkers[locale]
