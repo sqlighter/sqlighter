@@ -6,19 +6,19 @@ import Date from "../../components/date"
 import utilStyles from "../../styles/utils.module.css"
 import { GetStaticProps, GetStaticPaths } from "next"
 import { Biomarker } from "../../lib/biomarkers"
+import { remark } from "remark"
+import html from "remark-html"
 
 export default function BiomarkerDetail({ biomarker }: { biomarker: Biomarker }) {
   return (
     <Layout>
       <Head>
-        <title>{getTranslation(biomarker, "name")}</title>
+        <title>{biomarker.title}</title>
       </Head>
       <article>
-        <h1 className={utilStyles.headingXl}>{getTranslation(biomarker, "name")}</h1>
-        <br />
-        {getTranslation(biomarker, "description")}
-        <br />
-        {getTranslation(biomarker, "summary")}
+        <h1 className={utilStyles.headingXl}>{biomarker.title}</h1>
+        <h2 className={utilStyles.headingMd}>{biomarker.description}</h2>
+        <div dangerouslySetInnerHTML={{ __html: biomarker.contentHtml }} />
         <br />
         <div className={utilStyles.lightText}>{biomarker.id}</div>
         <br />
@@ -26,10 +26,6 @@ export default function BiomarkerDetail({ biomarker }: { biomarker: Biomarker })
       </article>
     </Layout>
   )
-}
-
-function getTranslation(item: any, key: string): string {
-  return item?.translations?.[0][key]
 }
 
 /** Create a page for each available biomarker */
@@ -54,6 +50,11 @@ export const getStaticPaths: GetStaticPaths = ({ locales }) => {
 export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
   const biomarker = Biomarker.getBiomarker(params.id as string, locale)
   const serializable = JSON.parse(JSON.stringify(biomarker))
+
+  // Use remark to convert markdown into HTML string
+  const processedContent = await remark().use(html).process(serializable.content)
+  serializable.contentHtml = processedContent.toString()
+
   console.debug(`biomarkers.tsx - biomarkerId: ${biomarker.id}, locale: ${locale}`, serializable)
   return {
     props: {

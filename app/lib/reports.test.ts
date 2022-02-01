@@ -7,8 +7,6 @@ import path from "path"
 import { Ocr } from "./ocr"
 import { Report } from "./reports"
 import { writeJson, readJson } from "./utilities"
-import { Biomarker } from "./biomarkers"
-import { Unit } from "./units"
 
 describe("reports.ts", () => {
   // the test directory contains a number of xxx.pdf and xxx.pdf.report.json

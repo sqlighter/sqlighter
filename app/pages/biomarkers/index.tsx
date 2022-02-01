@@ -19,7 +19,7 @@ export default function BiomarkersPage({ biomarkers }: { biomarkers: Biomarker[]
           {biomarkers.map((biomarker) => (
             <li className={utilStyles.listItem} key={biomarker.id}>
               <Link href={`/biomarkers/${biomarker.id}`}>
-                <a>{getTranslation(biomarker, "name")}</a>
+                <a>{biomarker.title}</a>
               </Link>
             </li>
           ))}
@@ -29,13 +29,9 @@ export default function BiomarkersPage({ biomarkers }: { biomarkers: Biomarker[]
   )
 }
 
-function getTranslation(item: any, key: string): string {
-  return item?.translations?.[0][key]
-}
-
 /** Static properties from biomarkers.json */
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const biomarkers = Biomarker.getBiomarkers()
+export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
+  const biomarkers = Object.values(Biomarker.getBiomarkers(locale))
   const serializable = biomarkers.map((b) => JSON.parse(JSON.stringify(b)))
   console.debug(serializable)
   return {
