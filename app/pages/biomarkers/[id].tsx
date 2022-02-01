@@ -9,7 +9,7 @@ import { Biomarker } from "../../lib/biomarkers"
 import { remark } from "remark"
 import html from "remark-html"
 
-export default function BiomarkerDetail({ biomarker }: { biomarker: Biomarker }) {
+export default function BiomarkerDetail({ biomarker }: { biomarker: any }) {
   return (
     <Layout>
       <Head>
@@ -53,12 +53,12 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
 
   // Use remark to convert markdown into HTML string
   const processedContent = await remark().use(html).process(serializable.content)
-  serializable.contentHtml = processedContent.toString()
+  const contentHtml = processedContent.toString()
 
-  console.debug(`biomarkers.tsx - biomarkerId: ${biomarker.id}, locale: ${locale}`, serializable)
+  // console.debug(`biomarkers.tsx - biomarkerId: ${biomarker.id}, locale: ${locale}`, serializable)
   return {
     props: {
-      biomarker: serializable,
+      biomarker: { ...serializable, contentHtml },
     },
   }
 }

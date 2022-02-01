@@ -40,9 +40,11 @@ export function getContentFile(filePath: string, locale: string = DEFAULT_LOCALE
   assertLocale(locale)
   try {
     const fileContents = fs.readFileSync(filePath, "utf8")
+    assert(fileContents, `getContentFile - ${filePath} can't be read`)
     if (fileContents) {
-      const fileMatter = matter(fileContents)
-      if (!fileMatter.isEmpty) {
+      const fileMatter = matter<string, null>(fileContents)
+      assert(fileMatter.data, `getContentFile - ${filePath} is empty`)
+      if (fileMatter.data) {
         const obj = { content: fileMatter.content, ...fileMatter.data }
 
         if (locale != DEFAULT_LOCALE) {
@@ -55,7 +57,7 @@ export function getContentFile(filePath: string, locale: string = DEFAULT_LOCALE
             const localizedContents = fs.readFileSync(localizedPath, "utf8")
             if (localizedContents) {
               const localizedMatter = matter(localizedContents)
-              if (!localizedMatter.isEmpty) {
+              if (localizedMatter.data) {
                 const localizedObj = { content: localizedMatter.content, ...localizedMatter.data }
                 Object.assign(obj, localizedObj)
               }

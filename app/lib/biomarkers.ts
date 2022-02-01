@@ -67,7 +67,7 @@ export class Biomarker {
   /** Returns available localized biomarkers */
   public static getBiomarkers(locale: string = DEFAULT_LOCALE): { [biomarkerId: string]: Biomarker } {
     if (!Biomarker._biomarkers[locale]) {
-      const biomarkersDirectory = path.join(process.cwd(), "contents/biomarkers")
+      const biomarkersDirectory = path.resolve("./contents/biomarkers")
       const contents = getContentFiles(biomarkersDirectory, locale)
       const biomarkers = {}
       for (const content of contents) {
