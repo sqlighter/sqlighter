@@ -9,10 +9,15 @@ import Script from "next/script"
 
 import jwt_decode from "jwt-decode"
 
+// https://console.developers.google.com/apis/credentials/oauthclient/427320365950-75nnbuht76pb6femtq9ccctqhs0a4qbb.apps.googleusercontent.com?project=insieme2
+
 function onGoogleSignin(response) {
   const jwtToken = response.credential
-  var decoded = jwt_decode(jwtToken)
-  console.log(`onGoogleSignin`, response, decoded)
+
+  // https://developers.google.com/identity/gsi/web/reference/js-reference#CredentialResponse
+  var header = jwt_decode(jwtToken)
+  var payload = jwt_decode(jwtToken, { header: true })
+  console.log(`onGoogleSignin`, response, header, payload)
 }
 
 async function onGoogleLoad(params) {
@@ -46,6 +51,8 @@ export default function SigninPage({ biomarkers, locale }: { biomarkers: Biomark
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
         <div id="buttonDiv"></div>
       </section>
+
+      <div className="g_id_signout">Sign Out</div>
     </Layout>
   )
 }
