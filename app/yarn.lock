@@ -2693,6 +2693,7 @@ __metadata:
     fuse.js: ^6.5.3
     gray-matter: ^4.0.3
     jest: ^27.4.7
+    jwt-decode: ^3.1.2
     next: latest
     path: ^0.12.7
     prettier: ^2.5.1
@@ -5975,6 +5976,13 @@ __metadata:
     jwa: ^2.0.0
     safe-buffer: ^5.0.1
   checksum: d68d07aa6d1b8cb35c363a9bd2b48f15064d342a5d9dc18a250dbbce8dc06bd7e4792516c50baa16b8d14f61167c19e851fd7f66b59ecc68b7f6a013759765f7
+  languageName: node
+  linkType: hard
+
+"jwt-decode@npm:^3.1.2":
+  version: 3.1.2
+  resolution: "jwt-decode@npm:3.1.2"
+  checksum: 20a4b072d44ce3479f42d0d2c8d3dabeb353081ba4982e40b83a779f2459a70be26441be6c160bfc8c3c6eadf9f6380a036fbb06ac5406b5674e35d8c4205eeb
   languageName: node
   linkType: hard
 
