@@ -7,12 +7,17 @@ import { Biomarker } from "../lib/biomarkers"
 import Link from "next/link"
 import Script from "next/script"
 
+function onGoogleSigninLoad(ctx) {
+  console.log(`onGoogleSigninLoad`, ctx)
+}
+
 export default function SigninPage({ biomarkers, locale }: { biomarkers: Biomarker[]; locale: string }) {
   return (
     <Layout>
       <Head>
         <title>Signin</title>
       </Head>
+
       <Script
         src="https://accounts.google.com/gsi/client"
         strategy="lazyOnload"
@@ -33,7 +38,6 @@ export default function SigninPage({ biomarkers, locale }: { biomarkers: Biomark
             { theme: "outline", size: "large" } // customization attributes
           )
           google.accounts.id.prompt() // also display the One Tap dialog
-
         }}
       />
 
@@ -53,3 +57,32 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
     },
   }
 }
+/*
+
+      <script src="https://accounts.google.com/gsi/client" onLoad={onGoogleSigninLoad} async defer></script>
+
+
+<Script
+src="https://accounts.google.com/gsi/client"
+strategy="lazyOnload"
+onLoad={(params) => {
+  console.log(params)
+  const google = (window as any).google
+  console.log(google)
+
+  function handleCredentialResponse(response) {
+    console.log("Encoded JWT ID token: " + response.credential)
+  }
+  google.accounts.id.initialize({
+    client_id: "427320365950-75nnbuht76pb6femtq9ccctqhs0a4qbb.apps.googleusercontent.com",
+    callback: handleCredentialResponse,
+  })
+  google.accounts.id.renderButton(
+    document.getElementById("buttonDiv"),
+    { theme: "outline", size: "large" } // customization attributes
+  )
+  google.accounts.id.prompt() // also display the One Tap dialog
+}}
+/>
+
+*/
