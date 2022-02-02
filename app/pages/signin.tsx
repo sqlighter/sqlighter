@@ -16,7 +16,11 @@ export default function SigninPage({ biomarkers, locale }: { biomarkers: Biomark
       <Script
         src="https://accounts.google.com/gsi/client"
         strategy="lazyOnload"
-        onLoad={() => {
+        onLoad={(params) => {
+          console.log(params)
+          const google = (window as any).google
+          console.log(google)
+
           function handleCredentialResponse(response) {
             console.log("Encoded JWT ID token: " + response.credential)
           }
@@ -29,6 +33,7 @@ export default function SigninPage({ biomarkers, locale }: { biomarkers: Biomark
             { theme: "outline", size: "large" } // customization attributes
           )
           google.accounts.id.prompt() // also display the One Tap dialog
+
         }}
       />
 
