@@ -6,13 +6,18 @@
       "type": "node-terminal",
       "request": "launch",
       "cwd": "${workspaceFolder}/app",
-      "command": "npm run dev"
+      "command": "npm run dev",
+      "sourceMaps": true
     },
     {
       "name": "Next.js: debug client-side",
       "type": "pwa-chrome",
       "request": "launch",
-      "url": "http://localhost:3000"
+      "url": "http://localhost:3000",
+      "sourceMaps": true,
+      "sourceMapPathOverrides": {
+        "webpack://_N_E/*": "${webRoot}/*"
+      }
     },
     {
       "name": "Next.js: debug full stack",
@@ -25,7 +30,8 @@
         "pattern": "started server on .+, url: (https?://.+)",
         "uriFormat": "%s",
         "action": "debugWithChrome"
-      }
+      },
+      "sourceMaps": true
     }
   ]
 }
