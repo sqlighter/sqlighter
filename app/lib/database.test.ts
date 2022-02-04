@@ -4,7 +4,7 @@
 
 import "dotenv/config"
 import assert from "assert/strict"
-import { Item } from "./item"
+import { Item } from "./items"
 import { database, ItemsTable } from "./database"
 export const TEST_ITEMS_TABLE = "test_items"
 
@@ -26,12 +26,16 @@ describe("database.ts", () => {
   })
 
   /** Initialize actual 'items' schema if missing (database is new) */
-  test("initializeTable", async () => {
+  test("initializeTable (items)", async () => {
     const itemsTable = new ItemsTable()
     const exists = await itemsTable.hasTable()
     if (!exists) {
       await itemsTable.createTable()
     }
+  })
+
+  test("initializeTable (test_items)", async () => {
+    const itemsTable = await getTestTable()
   })
 
   test("insert with unicode", async () => {

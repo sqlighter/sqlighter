@@ -6,7 +6,7 @@ import "dotenv/config"
 
 import { assert } from "console"
 import { knex, Knex } from "knex"
-import { Item } from "./item"
+import { Item } from "./items"
 
 /**
  * Returns a Knex connection to the configured database
@@ -84,7 +84,7 @@ export class ItemsTable<T extends Item = Item> {
 
   /** Drops table (if it exists) */
   async dropTable() {
-    if (this.hasTable()) {
+    if (await this.hasTable()) {
       await database.schema.dropTable(this.tableName)
     }
   }
