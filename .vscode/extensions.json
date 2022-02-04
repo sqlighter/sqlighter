@@ -1,5 +1,6 @@
 {
     "recommendations": [
-        "googlecloudtools.cloudcode"
+        "googlecloudtools.cloudcode",
+        "firsttris.vscode-jest-runner"
     ] 
 }
