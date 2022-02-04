@@ -7,6 +7,7 @@ export default function Navbar() {
   async function handleLogout() {
     await fetch('/api/logout')
     mutate({ user: null })
+    console.log(`handleLogout - done`)
   }
 
   return (

@@ -1,6 +1,8 @@
 import crypto from 'crypto'
 import { v4 as uuidv4 } from 'uuid'
 
+// https://www.passportjs.org/reference/normalized-profile/
+
 export function getAllUsers(req) {
   // For demo purpose only. You are not likely to have to return all users.
   return req.session.users

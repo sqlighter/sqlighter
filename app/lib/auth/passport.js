@@ -1,9 +1,9 @@
 import passport from "passport"
 import LocalStrategy from "passport-local"
-import { findUserByUsername, validatePassword } from "./db"
+import { findUserByUsername, validatePassword } from "../db"
 import { GoogleOneTapStrategy } from "passport-google-one-tap"
 
-import { writeJson } from "../lib/utilities"
+import { writeJson } from "../utilities"
 
 passport.serializeUser(function (user, done) {
   console.log(`serializeUser`, user)
