@@ -3,6 +3,7 @@ import Image from "next/image"
 import styles from "./layout.module.css"
 import utilStyles from "../styles/utils.module.css"
 import Link from "next/link"
+import Header from './header'
 
 const name = "Buzz Lightyear"
 export const siteTitle = "Buzzblog"
@@ -22,6 +23,7 @@ export default function Layout({ children, home }: { children: React.ReactNode; 
         <meta name="og:title" content={siteTitle} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
+      <Header />
       <header className={styles.header}>
         {home ? (
           <>

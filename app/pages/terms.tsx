@@ -2,15 +2,20 @@ import Layout from "../components/layout"
 import Head from "next/head"
 import utilStyles from "../styles/utils.module.css"
 
-export default function TermsPage(props) {
+export default function TermsOfServicePage(props) {
   return (
     <Layout>
       <Head>
-        <title>Terms &amp; Conditions</title>
+        <title>Terms of Service</title>
       </Head>
-      <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
-        Terms and Conditions, this site is under construction.
-      </section>
+      <h2>Terms of Service</h2>
+      <p>
+        THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
+        LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT
+        SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+        OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+        DEALINGS IN THE SOFTWARE.
+      </p>
     </Layout>
   )
 }
