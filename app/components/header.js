@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { useUser } from '../lib/hooks'
+import { useUser } from '../lib/auth/hooks'
 
 const Header = () => {
   const user = useUser()

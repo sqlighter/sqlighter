@@ -6,7 +6,7 @@ import { GetStaticProps, GetStaticPaths } from "next"
 import { Biomarker } from "../lib/biomarkers"
 import Link from "next/link"
 import Script from "next/script"
-import { useUser } from "../lib/hooks"
+import { useUser } from "../lib/auth/hooks"
 
 export default function SigninPage({ biomarkers, locale }: { biomarkers: Biomarker[]; locale: string }) {
   const [user, { mutate, loading }] = useUser()
@@ -17,7 +17,7 @@ export default function SigninPage({ biomarkers, locale }: { biomarkers: Biomark
         <title>Signin</title>
       </Head>
       <div>
-        loading: {loading ? "true": "false"}
+        loading: {loading ? "true" : "false"}
         <br />
       </div>
 

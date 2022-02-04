@@ -2,6 +2,8 @@ import nextConnect from 'next-connect'
 import auth from '../../middleware/auth'
 import { deleteUser, createUser, updateUserByUsername } from '../../lib/db'
 
+// https://www.passportjs.org/reference/normalized-profile/
+
 const handler = nextConnect()
 
 handler

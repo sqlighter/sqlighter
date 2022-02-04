@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import Router from 'next/router'
 import Link from 'next/link'
-import { useUser } from '../lib/hooks'
+import { useUser } from '../lib/auth/hooks'
 
 export default function LoginPage() {
   const [user, { mutate }] = useUser()

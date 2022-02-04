@@ -1,6 +1,8 @@
 import { useEffect, useRef } from 'react'
 import Router from 'next/router'
-import { useUser } from '../lib/hooks'
+import { useUser } from '../lib/auth/hooks'
+
+
 
 function ProfileEdit() {
   const [user, { mutate }] = useUser()
