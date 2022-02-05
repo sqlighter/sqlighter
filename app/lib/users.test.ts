@@ -1,152 +1,168 @@
 //
-// database.test.ts
+// users.test.ts
 //
 
-import "dotenv/config"
-import assert from "assert/strict"
-import { Item } from "./items"
-import { database, items, ItemsTable } from "./database"
-export const TEST_ITEMS_TABLE = "test_items"
+import { ItemsTable } from "./database"
+import { User } from "./users"
 
-async function getTestTable() {
-  const itemsTable = new ItemsTable(TEST_ITEMS_TABLE)
-  await itemsTable.resetTable()
-  return itemsTable
+function sleep(ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms)
+  })
 }
 
-describe("database.ts", () => {
-  test("isConfigured", () => {
-    const databaseUrl = process.env.DATABASE_URL
-    expect(databaseUrl).toBeTruthy()
+describe("users.ts", () => {
+  // table used to test database
+  let itemsTable: ItemsTable = null
+
+  // start each test with an empty table
+  beforeEach(async () => {
+    itemsTable = new ItemsTable()
+    await itemsTable.resetTable()
+
+    // TODO a couple of tests fail if you remove this delay. probably issues with pooling or timing of deletes
+    // await sleep(500)
+
+    const u1 = await User.getUser(mockUserJon().id)
+    expect(u1).toBeNull()
+    const u2 = await User.getUser(mockUserJane().id)
+    expect(u2).toBeNull()
   })
 
-  test("canConnect", async () => {
-    const r1 = await database.raw("select 'test' as 'name'")
-    expect(r1[0][0].name).toBe("test")
+  test("getUser with missing user", async () => {
+    const user = await User.getUser("missing@doe.com")
+    expect(user).toBeNull()
   })
 
-  /** Initialize actual 'items' schema if missing (database is new) */
-  test("initializeTable (items)", async () => {
-    const itemsTable = new ItemsTable()
-    const exists = await itemsTable.hasTable()
-    if (!exists) {
-      await itemsTable.createTable()
+  test("getUser with valid email", async () => {
+    let user = await User.getUser("johndoe@gmail.com")
+    expect(user).toBeNull()
+
+    itemsTable.insertItem(mockUserJon())
+    itemsTable.insertItem(mockUserJane())
+
+    user = await User.getUser(mockUserJon().id)
+    expect(user.id).toStrictEqual(mockUserJon().id)
+    expect(user.attributes.passport.displayName).toStrictEqual(mockUserJon().attributes.passport.displayName)
+
+    user = await User.getUser(mockUserJane().id)
+    expect(user.id).toStrictEqual(mockUserJane().id)
+    expect(user.attributes.passport.displayName).toStrictEqual(mockUserJane().attributes.passport.displayName)
+  })
+
+  test("signinUser with new profile", async () => {
+    let user = await User.signinUser(mockUserJon().attributes.passport)
+    expect(user).toBeTruthy()
+    expect(user.id).toStrictEqual(mockUserJon().id)
+    expect(user.attributes.passport.displayName).toStrictEqual(mockUserJon().attributes.passport.displayName)
+  })
+
+  test("signinUser with existing profile", async () => {
+    itemsTable.insertItem(mockUserJon())
+    itemsTable.insertItem(mockUserJane())
+    if (await User.getUser(mockUserJon().id)) {
+      debugger
+    }
+    expect(await User.getUser(mockUserJon().id)).toBeTruthy()
+    expect(await User.getUser(mockUserJane().id)).toBeTruthy()
+
+    for (let i = 0; i < 5; i++) {
+      // john already exists
+      let user = await User.signinUser(mockUserJon().attributes.passport)
+      expect(user).toBeTruthy()
+      expect(user.id).toStrictEqual(mockUserJon().id)
+      expect(user.attributes.passport.displayName).toStrictEqual(mockUserJon().attributes.passport.displayName)
     }
   })
 
-  test("initializeTable (test_items)", async () => {
-    const itemsTable = await getTestTable()
-  })
+  test("signinUser with missing email", async () => {
+    const profile = mockUserJon().attributes.passport
+    profile.emails = null
 
-  test("insert with unicode", async () => {
-    const itemsTable = await getTestTable()
-
-    // insert item with unicode chars
-    const t1 = await itemsTable.insertItem({
-      id: "usr_香蕉",
-      type: "user",
-      attributes: {
-        name: "one",
-        banana: "香蕉",
-      },
-    })
-
-    const items1 = await itemsTable.select().where("id", "usr_香蕉")
-    expect(items1).toHaveLength(1)
-    expect(items1[0].id).toBe("usr_香蕉")
-    expect(items1[0].attributes.banana).toBe("香蕉")
-  })
-
-  test("insert with children", async () => {
-    const itemsTable = await getTestTable()
-
-    // insert items
-    const u1 = await itemsTable.insertItem({ id: "usr_1", type: "user" })
-    const u2 = await itemsTable.insertItem({ id: "usr_2", type: "user" })
-
-    // insert children
-    const c1 = await itemsTable.insertItem({ id: "usr_10", parentId: "usr_1", type: "user" })
-    const c2 = await itemsTable.insertItem({ id: "usr_20", parentId: "usr_2", type: "user" })
-
-    const items1 = await itemsTable.select().where("type", "user")
-    expect(items1).toHaveLength(4)
-  })
-
-  test("insertItem with invalid parent", async () => {
-    const itemsTable = await getTestTable()
-
-    // insert item
-    const u1 = await itemsTable.insertItem({ id: "usr_1", type: "user" })
-
-    // insert invalid parentId
     let hasThrown = false
     try {
-      const c1 = await itemsTable.insertItem({ id: "usr_10", parentId: "usr_invalid", type: "user" })
-    } catch {
+      await User.signinUser(profile)
+    } catch (exception) {
       hasThrown = true
     }
     expect(hasThrown).toBeTruthy()
   })
 
-  test("selectItem", async () => {
-    const itemsTable = await getTestTable()
-    await itemsTable.insertItem({ id: "usr_1", type: "user", attributes: { name: "Jim", age: 30 } })
+  test("signinUser with updated profile", async () => {
+    itemsTable.insertItem(mockUserJon())
+    itemsTable.insertItem(mockUserJane())
+    const john1 = await User.getUser(mockUserJon().id)
+    expect(john1).toBeTruthy()
+    const updated1 = john1.updatedAt.toISOString()
 
-    const item = await itemsTable.selectItem("usr_1")
-    expect(item).toBeTruthy()
-    expect(item.id).toBe("usr_1")
-    expect(item.parentId).toBeNull()
-    expect(item.attributes.name).toBe("Jim")
-    expect(item.attributes.age).toBe(30)
-  })
+    // sleep so we can get different updatedAt timestamps even with second resolution
+    await sleep(2000)
 
-  test("selectItem with invalid itemId", async () => {
-    const itemsTable = await getTestTable()
-    await itemsTable.insertItem({ id: "usr_1", type: "user", attributes: { name: "Jim", age: 30 } })
+    for (let v = 2; v < 5; v++) {
+      // signin user with changed profile information
+      let updatedProfile = mockUserJon().attributes.passport
+      updatedProfile.displayName = `John v${v}.0`
+      const john2 = await User.signinUser(updatedProfile)
 
-    const item = await itemsTable.selectItem("usr_2")
-    expect(item).toBeNull()
-  })
+      // user profile should have been updated
+      expect(john2).toBeTruthy()
+      expect(john2.id).toBe(mockUserJon().id)
+      expect(john2.attributes.passport.id).toBe(mockUserJon().attributes.passport.id)
+      expect(john2.attributes.passport.displayName).toBe(`John v${v}.0`)
 
-  test("updateItem attributes", async () => {
-    const itemsTable = await getTestTable()
-
-    // insert item
-    await itemsTable.insertItem({ id: "usr_1", type: "user", attributes: { name: "Jim", age: 30 } })
-
-    // insert child
-    await itemsTable.insertItem({
-      id: "usr_2",
-      parentId: "usr_1",
-      type: "relative",
-      attributes: { name: "Jane", age: 7, toy: "Potato head" },
-    })
-    const cBefore = await itemsTable.selectItem("usr_2")
-    expect(cBefore.id).toBe("usr_2")
-    expect(cBefore.parentId).toBe("usr_1")
-    expect(cBefore.attributes.name).toBe("Jane")
-    expect(cBefore.attributes.age).toBe(7)
-    expect(cBefore.attributes.toy).toBe("Potato head")
-
-    // update child data
-    await itemsTable.updateItem({
-      id: "usr_2",
-      attributes: { name: "Jane", age: 8 },
-    })
-    const cAfter = await itemsTable.selectItem("usr_2")
-    expect(cAfter.id).toBe("usr_2")
-    expect(cAfter.parentId).toBe("usr_1")
-    expect(cAfter.attributes.name).toBe("Jane")
-    expect(cAfter.attributes.age).toBe(8) // existing fields updated
-    expect(cAfter.attributes.toy).toBeUndefined() // missing fields removed
-    expect(cAfter.parentId).toBe(cBefore.parentId)
-    expect(cAfter.createdAt).toStrictEqual(cBefore.createdAt)
-    expect(cAfter.updatedAt > cBefore.updatedAt).toBeTruthy() // updatedAt changed
-
-    // other items not changed
-    const u1 = await itemsTable.selectItem("usr_1")
-    expect(u1.id).toBe("usr_1")
-    expect(u1.attributes.name).toBe("Jim")
-    expect(u1.attributes.age).toBe(30)
+      // updatedAt should have been updated
+      const updated2 = john2.updatedAt.toISOString()
+      expect(updated2 > updated1).toBeTruthy()
+    }
   })
 })
+
+//
+// test data - returns new objects every time
+//
+
+function mockUserJon() {
+  return JSON.parse(
+    JSON.stringify({
+      id: "johndoe@gmail.com",
+      type: "user",
+      attributes: {
+        passport: {
+          id: "105223593689997423612",
+          displayName: "John",
+          name: { familyName: "Doe", givenName: "John" },
+          provider: "google-one-tap",
+          emails: [{ value: "johndoe@gmail.com" }],
+          photos: [
+            {
+              value: "https://lh3.googleusercontent.com/a-/xyxy",
+            },
+          ],
+        },
+      },
+    })
+  )
+}
+
+function mockUserJane() {
+  return JSON.parse(
+    JSON.stringify({
+      id: "jane@doe.com",
+      type: "user",
+      attributes: {
+        passport: {
+          id: "105223593689997423613",
+          displayName: "Jane Doe",
+          name: { familyName: "Doe", givenName: "Jane" },
+          provider: "google-one-tap",
+          emails: [{ value: "jane@doe.com" }],
+          photos: [
+            {
+              value: "https://lh3.googleusercontent.com/a-/xxxx",
+            },
+          ],
+        },
+      },
+    })
+  )
+}

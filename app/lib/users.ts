@@ -4,6 +4,7 @@
 
 import { Item } from "./items"
 import { items } from "./database"
+import { assert } from "console"
 
 export const USER_TYPE = "user"
 export const USER_PREFIX = "usr_"
@@ -24,6 +25,7 @@ export class User extends Item {
     if (item) {
       return Object.assign(new User(), item)
     }
+    // console.debug(`User.getUser('${userId}') was not found`)
     return null
   }
 
@@ -37,29 +39,36 @@ export class User extends Item {
    * @see https://datatracker.ietf.org/doc/html/draft-smarr-vcarddav-portable-contacts-00
    */
   static async signinUser(profile) {
-    // for now we use user's email as id, later we may use phone number as well
-    const email = profile?.emails?.[0]?.value
-    console.debug(`User.signinUser - ${email}`, profile)
-    if (!email || email.indexOf("@") == -1) {
-      console.warn(`User.signinUser - profile is missing valid email`, profile)
-      throw new Error("User profile doesn't have an email address")
-    }
+    try {
+      // for now we use user's email as id, later we may use phone number as well
+      const email = profile?.emails?.[0]?.value
+      console.debug(`User.signinUser - ${email}`, profile)
+      if (!email || email.indexOf("@") == -1) {
+        console.warn(`User.signinUser - profile is missing valid email`, profile)
+        throw new Error("User profile doesn't have an email address")
+      }
 
-    let user = await User.getUser(email)
-    if (!user) {
-      // create a new user record with fresh profile
-      user = new User()
-      user.id = email
-      user.attributes.passport = profile
-      await items.insertItem(user)
-    } else {
-      // update existing user record
-      user.attributes.passport = profile
-      await items.updateItem(user)
-    }
+      let user = await User.getUser(email)
+      if (!user) {
+        // create a new user record with fresh profile
+        user = new User()
+        user.id = email
+        user.attributes.passport = profile
+        await items.insertItem(user)
+      } else {
+        // update existing user record
+        user.attributes.passport = profile
+        await items.updateItem(user)
+      }
 
-    // return with updated timestamps
-    return await User.getUser(user.id)
+      // return with updated timestamps
+      user = await User.getUser(user.id)
+      assert(user)
+      return user
+    } catch (exception) {
+      console.warn(`signinUser - ${exception}`, profile, exception)
+      throw exception
+    }
   }
 }
 

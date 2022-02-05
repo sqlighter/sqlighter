@@ -3,44 +3,40 @@
 //
 
 import "dotenv/config"
-import assert from "assert/strict"
-import { Item } from "./items"
-import { database, items, ItemsTable } from "./database"
-export const TEST_ITEMS_TABLE = "test_items"
-
-async function getTestTable() {
-  const itemsTable = new ItemsTable(TEST_ITEMS_TABLE)
-  await itemsTable.resetTable()
-  return itemsTable
-}
+import { getDatabase, ItemsTable } from "./database"
 
 describe("database.ts", () => {
+  // table used to test database
+  let itemsTable = null
+
+  // start each test with an empty table
+  beforeEach(async () => {
+    itemsTable = new ItemsTable()
+    await itemsTable.resetTable()
+  })
+
   test("isConfigured", () => {
     const databaseUrl = process.env.DATABASE_URL
     expect(databaseUrl).toBeTruthy()
   })
 
+  /** Check if we can connect to the production database DATABASE_URL */
   test("canConnect", async () => {
+    const databaseUrl = process.env.DATABASE_URL
+    const database = getDatabase(databaseUrl)
     const r1 = await database.raw("select 'test' as 'name'")
     expect(r1[0][0].name).toBe("test")
   })
 
   /** Initialize actual 'items' schema if missing (database is new) */
   test("initializeTable (items)", async () => {
-    const itemsTable = new ItemsTable()
     const exists = await itemsTable.hasTable()
     if (!exists) {
       await itemsTable.createTable()
     }
   })
 
-  test("initializeTable (test_items)", async () => {
-    const itemsTable = await getTestTable()
-  })
-
   test("insert with unicode", async () => {
-    const itemsTable = await getTestTable()
-
     // insert item with unicode chars
     const t1 = await itemsTable.insertItem({
       id: "usr_香蕉",
@@ -58,8 +54,6 @@ describe("database.ts", () => {
   })
 
   test("insert with children", async () => {
-    const itemsTable = await getTestTable()
-
     // insert items
     const u1 = await itemsTable.insertItem({ id: "usr_1", type: "user" })
     const u2 = await itemsTable.insertItem({ id: "usr_2", type: "user" })
@@ -73,8 +67,6 @@ describe("database.ts", () => {
   })
 
   test("insertItem with invalid parent", async () => {
-    const itemsTable = await getTestTable()
-
     // insert item
     const u1 = await itemsTable.insertItem({ id: "usr_1", type: "user" })
 
@@ -89,7 +81,6 @@ describe("database.ts", () => {
   })
 
   test("selectItem", async () => {
-    const itemsTable = await getTestTable()
     await itemsTable.insertItem({ id: "usr_1", type: "user", attributes: { name: "Jim", age: 30 } })
 
     const item = await itemsTable.selectItem("usr_1")
@@ -101,7 +92,6 @@ describe("database.ts", () => {
   })
 
   test("selectItem with invalid itemId", async () => {
-    const itemsTable = await getTestTable()
     await itemsTable.insertItem({ id: "usr_1", type: "user", attributes: { name: "Jim", age: 30 } })
 
     const item = await itemsTable.selectItem("usr_2")
@@ -109,8 +99,6 @@ describe("database.ts", () => {
   })
 
   test("updateItem attributes", async () => {
-    const itemsTable = await getTestTable()
-
     // insert item
     await itemsTable.insertItem({ id: "usr_1", type: "user", attributes: { name: "Jim", age: 30 } })
 

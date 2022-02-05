@@ -25,10 +25,7 @@ export function getDatabase(databaseUrl = process.env.DATABASE_URL) {
   return knex({
     client,
     connection: databaseUrl,
-    pool: {
-      min: 0,
-      max: 7,
-    },
+    pool: { min: 0, max: 7 },
   })
 }
 
@@ -145,7 +142,9 @@ export class ItemsTable {
 }
 
 /** Default database connection */
-export const database = getDatabase()
+export const databaseUrl = process.env.NODE_ENV === "test" ? process.env.TEST_DATABASE_URL : process.env.DATABASE_URL
+assert(databaseUrl, `database.ts - please configure DATABASE_URL or TEST_DATABASE_URL in your .env variables`)
+export const database = getDatabase(databaseUrl)
 export default database
 
 /** Default table for Item like records */
