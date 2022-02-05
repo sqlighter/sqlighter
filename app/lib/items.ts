@@ -3,14 +3,16 @@
 //
 
 /** A generic item with tree structure and open ended attributes */
-export interface Item {
+export class Item {
+  constructor() {}
+
   /** Unique id for item, eg. usr_xxx, crd_xxx, trn_xxx */
   id: string
 
   /** Item's parent id (optional) */
   parentId?: string
 
-  /** Type of item, eg. 'profile', 'card', 'transaction', etc... */
+  /** Type of item, eg. 'user', 'card', 'transaction', etc... */
   type: string
 
   /** Time when item was originally created */
@@ -20,7 +22,7 @@ export interface Item {
   updatedAt?: Date
 
   /** Item's attributes */
-  attributes?: any
+  attributes?: any = {}
 }
 
 export default Item
