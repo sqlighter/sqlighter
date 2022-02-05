@@ -32,20 +32,12 @@ export function getDatabase(databaseUrl = process.env.DATABASE_URL) {
   })
 }
 
-/** Default database connection */
-export const database = getDatabase()
-export default database
-
-/** Default table for Item like records */
-export const ITEMS_TABLE = "items"
-export const items = database(ITEMS_TABLE)
-
 //
 // Items - functions to store, retrieve, update generic items
 //
 
 /** A database utility class used to interrogate tables of generic items */
-export class ItemsTable<T extends Item = Item> {
+export class ItemsTable {
   /** Name of generic items table, normally 'items' */
   readonly tableName: string
 
@@ -65,7 +57,7 @@ export class ItemsTable<T extends Item = Item> {
   /** Creates a generic Items table */
   async createTable() {
     if (await this.hasTable()) {
-      throw new Error(`createTable - '${this.tableName}' table already exists`)
+      throw new Error(`ItemsTable.createTable - '${this.tableName}' table already exists`)
     }
 
     await database.schema.createTable(this.tableName, (table) => {
@@ -74,10 +66,11 @@ export class ItemsTable<T extends Item = Item> {
       table.string("parentId", 64).nullable().index()
       table.foreign("parentId").references(`${this.tableName}.id`).onUpdate("cascade").onDelete("cascade")
       table.string("type", 32).notNullable().index()
-      table.datetime("createdAt", { precision: 3 }).defaultTo(database.fn.now(3))
+      table.datetime("createdAt", { precision: 3 }).defaultTo(database.fn.now(3)).index()
       table
         .datetime("updatedAt", { precision: 3 })
         .defaultTo(database.raw("CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3)"))
+        .index()
       table.json("attributes")
     })
   }
@@ -115,16 +108,26 @@ export class ItemsTable<T extends Item = Item> {
   // items methods
   //
 
+  /** Retrieves single item by id or null if not found */
+  async selectItem(itemId: string): Promise<Item | null> {
+    const item = await this.table.where("id", itemId).first()
+    if (item) {
+      item.attributes = item.attributes || {}
+      return Object.assign(new Item(), item)
+    }
+    return null
+  }
+
   /** Inserts item with a few minor added checks */
   async insertItem(item: Item) {
     try {
       const res = await this.table.insert(item)
       if (res?.length != 1) {
-        console.debug(`ItemsTable.insert - ${item} returned ${res}`, res)
+        console.debug(`ItemsTable.insertItem - ${item} returned ${res}`, res)
       }
       return res
     } catch (exception) {
-      console.debug(`ItemsTable.insert - ${item} returned ${exception}`, exception)
+      console.debug(`ItemsTable.insertItem - ${item} returned ${exception}`, exception)
       throw exception
     }
   }
@@ -135,8 +138,16 @@ export class ItemsTable<T extends Item = Item> {
       assert(item.id && item.attributes)
       return await this.table.update("attributes", JSON.stringify(item.attributes)).where("id", item.id)
     } catch (exception) {
-      console.debug(`ItemsTable.update - ${item} returned ${exception}`, exception)
+      console.debug(`ItemsTable.updateItem - ${item} returned ${exception}`, exception)
       throw exception
     }
   }
 }
+
+/** Default database connection */
+export const database = getDatabase()
+export default database
+
+/** Default table for Item like records */
+export const ITEMS_TABLE = "items"
+export const items = new ItemsTable(ITEMS_TABLE)

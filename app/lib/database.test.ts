@@ -5,7 +5,7 @@
 import "dotenv/config"
 import assert from "assert/strict"
 import { Item } from "./items"
-import { database, ItemsTable } from "./database"
+import { database, items, ItemsTable } from "./database"
 export const TEST_ITEMS_TABLE = "test_items"
 
 async function getTestTable() {
@@ -72,7 +72,7 @@ describe("database.ts", () => {
     expect(items1).toHaveLength(4)
   })
 
-  test("insert with invalid parent", async () => {
+  test("insertItem with invalid parent", async () => {
     const itemsTable = await getTestTable()
 
     // insert item
@@ -88,7 +88,27 @@ describe("database.ts", () => {
     expect(hasThrown).toBeTruthy()
   })
 
-  test("update attributes", async () => {
+  test("selectItem", async () => {
+    const itemsTable = await getTestTable()
+    await itemsTable.insertItem({ id: "usr_1", type: "user", attributes: { name: "Jim", age: 30 } })
+
+    const item = await itemsTable.selectItem("usr_1")
+    expect(item).toBeTruthy()
+    expect(item.id).toBe("usr_1")
+    expect(item.parentId).toBeNull()
+    expect(item.attributes.name).toBe("Jim")
+    expect(item.attributes.age).toBe(30)
+  })
+
+  test("selectItem with invalid itemId", async () => {
+    const itemsTable = await getTestTable()
+    await itemsTable.insertItem({ id: "usr_1", type: "user", attributes: { name: "Jim", age: 30 } })
+
+    const item = await itemsTable.selectItem("usr_2")
+    expect(item).toBeNull()
+  })
+
+  test("updateItem attributes", async () => {
     const itemsTable = await getTestTable()
 
     // insert item
@@ -101,7 +121,7 @@ describe("database.ts", () => {
       type: "relative",
       attributes: { name: "Jane", age: 7, toy: "Potato head" },
     })
-    const cBefore = (await itemsTable.select().where("id", "usr_2"))[0]
+    const cBefore = await itemsTable.selectItem("usr_2")
     expect(cBefore.id).toBe("usr_2")
     expect(cBefore.parentId).toBe("usr_1")
     expect(cBefore.attributes.name).toBe("Jane")
@@ -113,7 +133,7 @@ describe("database.ts", () => {
       id: "usr_2",
       attributes: { name: "Jane", age: 8 },
     })
-    const cAfter = (await itemsTable.select().where("id", "usr_2"))[0]
+    const cAfter = await itemsTable.selectItem("usr_2")
     expect(cAfter.id).toBe("usr_2")
     expect(cAfter.parentId).toBe("usr_1")
     expect(cAfter.attributes.name).toBe("Jane")
@@ -124,7 +144,7 @@ describe("database.ts", () => {
     expect(cAfter.updatedAt > cBefore.updatedAt).toBeTruthy() // updatedAt changed
 
     // other items not changed
-    const u1 = (await itemsTable.select().where("id", "usr_1"))[0]
+    const u1 = await itemsTable.selectItem("usr_1")
     expect(u1.id).toBe("usr_1")
     expect(u1.attributes.name).toBe("Jim")
     expect(u1.attributes.age).toBe(30)
