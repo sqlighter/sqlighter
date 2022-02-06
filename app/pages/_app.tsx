@@ -6,8 +6,6 @@ import { useUser } from "../lib/auth/hooks"
 
 import { Context } from "../components/context"
 
-
-
 export default function App({ Component, pageProps }) {
   // retrieve user information from current session
   const [user, { mutate: mutateUser, loading: userLoading }] = useUser()
@@ -112,7 +110,6 @@ export default function App({ Component, pageProps }) {
     </>
   )
 }
-
 
 /*
 
