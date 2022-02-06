@@ -142,8 +142,12 @@ export class ItemsTable {
 }
 
 /** Default database connection */
+if (process.env.NODE_ENV === "test") {
+  assert(process.env.TEST_DATABASE_URL, `database.ts - please configure TEST_DATABASE_URL in your .env variables`)
+} else {
+  assert(process.env.DATABASE_URL, `database.ts - please configure DATABASE_URL in your .env variables`)
+}
 export const databaseUrl = process.env.NODE_ENV === "test" ? process.env.TEST_DATABASE_URL : process.env.DATABASE_URL
-assert(databaseUrl, `database.ts - please configure DATABASE_URL or TEST_DATABASE_URL in your .env variables`)
 export const database = getDatabase(databaseUrl)
 export default database
 
