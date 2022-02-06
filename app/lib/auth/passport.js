@@ -1,5 +1,5 @@
 //
-// passport.js - configures Passport auth for Google One Tap Signin
+// passport.js - configures Passport for Google One Tap signin
 //
 
 import passport from "passport"
@@ -34,6 +34,7 @@ passport.use(
     {
       consumerKey: process.env.GOOGLE_CLIENT_ID,
       consumerSecret: process.env.GOOGLE_CLIENT_SECRET,
+      verifyCsrfToken: false, // we receive our credentials from the client, no need to validate the csrf token or not
     },
     async function (profile, done) {
       try {

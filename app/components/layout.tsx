@@ -3,7 +3,10 @@ import Image from "next/image"
 import styles from "./layout.module.css"
 import utilStyles from "../styles/utils.module.css"
 import Link from "next/link"
-import Header from './header'
+import Header from "./header"
+import jwt_decode from "jwt-decode"
+
+import Avatar from "../components/avatar"
 
 const name = "Buzz Lightyear"
 export const siteTitle = "Buzzblog"

@@ -1,5 +1,29 @@
-import { parse, serialize } from 'cookie'
-import { createLoginSession, getLoginSession } from './auth'
+//
+// session.ts - handle session cookies
+//
+
+import Iron from "@hapi/iron"
+import { parse, serialize } from "cookie"
+
+// https://www.passportjs.org/reference/normalized-profile/
+
+async function createLoginSession(session, secret) {
+  const createdAt = Date.now()
+  const obj = { ...session, createdAt }
+  const token = await Iron.seal(obj, secret, Iron.defaults)
+  return token
+}
+
+async function getLoginSession(token, secret) {
+  const session = await Iron.unseal(token, secret, Iron.defaults)
+  const expiresAt = session.createdAt + session.maxAge * 1000
+
+  // Validate the expiration date of the session
+  if (session.maxAge && Date.now() > expiresAt) {
+    throw new Error("Session expired")
+  }
+  return session
+}
 
 function parseCookies(req) {
   // For API Routes we don't need to parse the cookies.
@@ -7,7 +31,7 @@ function parseCookies(req) {
 
   // For pages we do need to parse the cookies.
   const cookie = req.headers?.cookie
-  return parse(cookie || '')
+  return parse(cookie || "")
 }
 
 export default function session({ name, secret, cookie: cookieOpts }) {
@@ -36,8 +60,7 @@ export default function session({ name, secret, cookie: cookieOpts }) {
       }
 
       const token = await createLoginSession(req.session, secret)
-
-      res.setHeader('Set-Cookie', serialize(name, token, cookieOpts))
+      res.setHeader("Set-Cookie", serialize(name, token, cookieOpts))
       oldEnd.apply(this, args)
     }
 

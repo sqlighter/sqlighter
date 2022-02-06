@@ -1,5 +1,6 @@
-import Link from 'next/link'
-import { useUser } from '../lib/auth/hooks'
+import Link from "next/link"
+import { useUser } from "../lib/auth/hooks"
+import { Avatar } from "../components/avatar"
 
 const Header = () => {
   const user = useUser()
@@ -26,6 +27,8 @@ const Header = () => {
             </>
           ) : (
             <li>
+                      <Avatar par1="one" />
+
               <Link href="/login">
                 <a>Login</a>
               </Link>

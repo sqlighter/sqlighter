@@ -2,6 +2,7 @@
 // users.ts - user profiles and authentication information
 //
 
+import { Profile } from "passport"
 import { Item } from "./items"
 import { items } from "./database"
 import { assert } from "console"
@@ -38,7 +39,7 @@ export class User extends Item {
    * @see https://www.passportjs.org/reference/normalized-profile/
    * @see https://datatracker.ietf.org/doc/html/draft-smarr-vcarddav-portable-contacts-00
    */
-  static async signinUser(profile) {
+  static async signinUser(profile: Profile) {
     try {
       // for now we use user's email as id, later we may use phone number as well
       const email = profile?.emails?.[0]?.value

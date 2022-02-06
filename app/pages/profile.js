@@ -1,8 +1,6 @@
-import { useEffect, useRef } from 'react'
-import Router from 'next/router'
-import { useUser } from '../lib/auth/hooks'
-
-
+import { useEffect, useRef } from "react"
+import Router from "next/router"
+import { useUser } from "../lib/auth/hooks"
 
 function ProfileEdit() {
   const [user, { mutate }] = useUser()
@@ -20,8 +18,8 @@ function ProfileEdit() {
       name: nameRef.current.value,
     }
     const res = await fetch(`/api/user`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     })
     const updatedUser = await res.json()
@@ -31,12 +29,12 @@ function ProfileEdit() {
 
   async function handleDeleteProfile() {
     const res = await fetch(`/api/user`, {
-      method: 'DELETE',
+      method: "DELETE",
     })
 
     if (res.status === 204) {
       mutate({ user: null })
-      Router.replace('/')
+      Router.replace("/")
     }
   }
 
@@ -74,7 +72,7 @@ export default function ProfilePage() {
 
   useEffect(() => {
     // redirect user to login if not authenticated
-    if (!loading && !user) Router.replace('/login')
+    if (!loading && !user) Router.replace("/login")
   }, [user, loading])
 
   return (

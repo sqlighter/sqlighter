@@ -1,8 +1,7 @@
 import Layout from "../components/layout"
 import Head from "next/head"
-import utilStyles from "../styles/utils.module.css"
 
-export default function TermsOfServicePage(props) {
+export default function TermsOfServicePage() {
   return (
     <Layout>
       <Head>
