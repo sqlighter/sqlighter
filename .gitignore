@@ -112,3 +112,6 @@ api/google-keys.json
 .yarn/
 build/
 app/clip.md
+
+
+private/
