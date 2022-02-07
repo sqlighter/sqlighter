@@ -16,8 +16,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.7.1",
+    "@emotion/styled": "^11.6.0",
     "@google-cloud/vision": "^2.4.2",
     "@hapi/iron": "^6.0.0",
+    "@mui/icons-material": "^5.3.1",
+    "@mui/material": "^5.4.0",
     "assert-strict": "^0.0.2",
     "axios": "^0.25.0",
     "cookie": "^0.4.2",
