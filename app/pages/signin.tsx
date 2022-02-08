@@ -12,8 +12,6 @@ import Script from "next/script"
 import { Context } from "../components/context"
 import { SignInButton } from "../components/signingbutton"
 
-
-
 // https://console.developers.google.com/apis/credentials/oauthclient/427320365950-75nnbuht76pb6femtq9ccctqhs0a4qbb.apps.googleusercontent.com?project=insieme2
 
 export default function SigninPage({ biomarkers, locale }: { biomarkers: Biomarker[]; locale: string }) {
@@ -46,4 +44,3 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
     },
   }
 }
-

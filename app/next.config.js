@@ -6,6 +6,7 @@ const nextConfig = {
   i18n: {
     locales: ["en-US", "it-IT"],
     defaultLocale: "en-US",
+    /*   
     domains: [
       {
         domain: "insieme.app",
@@ -16,6 +17,7 @@ const nextConfig = {
         defaultLocale: "en-US",
       },
     ],
+    */
   },
   images: {
     loader: "default",

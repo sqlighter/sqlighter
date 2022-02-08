@@ -1,8 +1,11 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useContext } from "react"
 import Router from "next/router"
-import { useUser } from "../lib/auth/hooks"
+import { useUser } from "../../lib/auth/hooks"
+import { Context } from "../../components/context"
 
-function ProfileEdit() {
+function ProfilePage2() {
+  const context = useContext(Context)
+
   const [user, { mutate }] = useUser()
   const nameRef = useRef()
 
@@ -72,7 +75,7 @@ export default function ProfilePage() {
 
   useEffect(() => {
     // redirect user to login if not authenticated
-    if (!loading && !user) Router.replace("/login")
+    if (!loading && !user) Router.replace("/signin")
   }, [user, loading])
 
   return (
@@ -83,7 +86,7 @@ export default function ProfilePage() {
         <>
           <p>Your session:</p>
           <pre>{JSON.stringify(user, null, 2)}</pre>
-          <ProfileEdit />
+          <ProfilePage />
         </>
       )}
 

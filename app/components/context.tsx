@@ -8,7 +8,7 @@ export const Context = react.createContext({
   user: null,
 
   /** Sign out of Google and local session */
-  signOut: (redirectUrl?: string): void => {
+  signout: (redirectUrl?: string): void => {
     throw new Error("signOut - not implemented")
   },
 })

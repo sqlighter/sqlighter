@@ -1,18 +1,32 @@
+import { useState, useEffect } from "react"
+
 import Head from "next/head"
 import Script from "next/script"
 import { useRouter } from "next/router"
+
+import CssBaseline from "@mui/material/CssBaseline"
+
 import "../styles/global.css"
 import { useUser } from "../lib/auth/hooks"
-
 import { Context } from "../components/context"
 
 export default function App({ Component, pageProps }) {
+  const router = useRouter()
+
+  //
+  // Google Signin and User status methods
+  //
+
   // retrieve user information from current session
   const [user, { mutate: mutateUser, loading: userLoading }] = useUser()
-  const router = useRouter()
-  console.log("_app props" + JSON.stringify(pageProps))
 
-  function promptSignIn() {
+  // true if google signin script has lazy loaded and has been initialized, i.e. is active
+  const [isGoogleSigninLoaded, setGoogleSigninLoaded] = useState(false)
+
+  //console.log("_app props" + JSON.stringify(pageProps))
+
+  /** Asks Google Signin to display Google one tap dialog or to automatically sign in */
+  function promptSignin() {
     const google = (window as any).google
     // also display the One Tap dialog
     google.accounts.id.prompt((notification) => {
@@ -31,7 +45,7 @@ export default function App({ Component, pageProps }) {
    * will authenticate the token, create a local session cookie and
    * return the User object that was retrieve or created.
    */
-  function onSignIn(response) {
+  function onSignin(response) {
     // https://developers.google.com/identity/gsi/web/reference/js-reference#CredentialResponse
     // import jwt_decode from "jwt-decode"
     // const jwtToken = response.credential
@@ -51,7 +65,7 @@ export default function App({ Component, pageProps }) {
   }
 
   /** Sign out of Google and local sessions, disable session cookie */
-  function signOut(redirectUrl?: string): void {
+  function signout(redirectUrl?: string): void {
     const google = (window as any).google
     google.accounts.id.disableAutoSelect()
     fetch("/api/signout").then((res) => {
@@ -67,75 +81,56 @@ export default function App({ Component, pageProps }) {
     console.log(`onGoogleLoad`, params, google)
     google.accounts.id.initialize({
       client_id: "427320365950-75nnbuht76pb6femtq9ccctqhs0a4qbb.apps.googleusercontent.com",
-      callback: onSignIn,
+      callback: onSignin,
       auto_select: true,
     })
 
     // https://developers.google.com/identity/gsi/web/guides/personalized-button
     google.accounts.id.renderButton(
-      document.getElementById("googleSignInButton"),
+      document.getElementById("googleSigninButton"),
       { theme: "outline", size: "large", shape: "pill" } // customization attributes
     )
 
-    // also display the One Tap dialog
-    google.accounts.id.prompt((notification) => {
-      console.log(`google.accounts.id.prompt`, notification)
-      if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-        // https://developers.google.com/identity/gsi/web/reference/js-reference#PromptMomentNotification
-        // continue with another identity provider.
-      }
-    })
+    setGoogleSigninLoaded(true)
   }
 
-  // context that is shared will all app components includes user, status, etc.
+  useEffect(() => {
+    console.log(`isGoogleSigninLoaded: ${isGoogleSigninLoaded}, userLoading: ${userLoading}, user: ${user}`)
+    if (isGoogleSigninLoaded && userLoading == false && user == null) {
+      console.log("prompting...")
+      promptSignin()
+    }
+  })
+
+  //
+  // Context that is shared will all app components includes user, status, callbacks, etc.
+  //
+
   const context = {
-    user,
-    signOut,
+    // undefined while user is loading
+    user: userLoading ? undefined : user,
+    // signout + redirect callback
+    signout,
   }
 
   return (
     <>
-      <Context.Provider value={context}>
-        <Head>
-          <meta name="user" content={user?.id} />
-        </Head>
-        <Component {...pageProps} />
-        <Script
-          key="google-signin"
-          src="https://accounts.google.com/gsi/client"
-          strategy="lazyOnload"
-          onLoad={onGoogleLoaded}
-        />
-      </Context.Provider>
+      <CssBaseline>
+        <Context.Provider value={context}>
+          <Head>
+            <meta name="viewport" content="initial-scale=1, width=device-width" />
+            <meta name="user" content={user?.id} />
+          </Head>
+          user: {user?.id}
+          <Component {...pageProps} />
+          <Script
+            key="google-signin"
+            src="https://accounts.google.com/gsi/client"
+            strategy="lazyOnload"
+            onLoad={onGoogleLoaded}
+          />
+        </Context.Provider>
+      </CssBaseline>
     </>
   )
 }
-
-/*
-
-
-
-        <section>
-          <SignInButton />
-        </section>
-        <button onClick={promptSignIn}>ask google</button>
-
-        <div
-          className="g_id_signin"
-          data-type="standard"
-          data-shape="pill"
-          data-theme="outline"
-          data-text="signin_with"
-          data-size="large"
-          data-logo_alignment="left"
-        ></div>
-
-        <button onClick={(event) => signOut()}>SignOut</button>
-        <div>
-          Loading? {userLoading ? "true" : "false"}
-          User: {user ? JSON.stringify(user) : ""}
-        </div>
-
-
-
-        */

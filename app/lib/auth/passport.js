@@ -30,6 +30,7 @@ passport.deserializeUser(async (req, id, done) => {
  * @see https://www.passportjs.org/packages/passport-google-one-tap/
  */
 passport.use(
+  // https://console.cloud.google.com/apis/credentials/consent
   new GoogleOneTapStrategy(
     {
       consumerKey: process.env.GOOGLE_CLIENT_ID,
