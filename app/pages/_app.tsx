@@ -59,7 +59,7 @@ export default function App({ Component, pageProps }) {
       res.json().then((json) => {
         const user = json.data
         console.log("onSignIn", user)
-        mutateUser(user)
+        mutateUser({ data: user }, false)
       })
     })
   }
@@ -96,6 +96,11 @@ export default function App({ Component, pageProps }) {
 
   useEffect(() => {
     console.log(`isGoogleSigninLoaded: ${isGoogleSigninLoaded}, userLoading: ${userLoading}, user: ${user}`)
+
+    cookieStore.get("g_state").then((cookie) => {
+      console.log("google cookie", cookie)
+    })
+
     if (isGoogleSigninLoaded && userLoading == false && user == null) {
       console.log("prompting...")
       promptSignin()
