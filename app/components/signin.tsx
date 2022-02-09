@@ -2,10 +2,14 @@
 // signin.tsx - components and functions used to facilitate google signin
 //
 
+import { useRouter } from "next/router"
+
 import * as React from "react"
 import Box from "@mui/material/Box"
+import IconButton from "@mui/material/IconButton"
 import Stack from "@mui/material/Stack"
 import Typography from "@mui/material/Typography"
+import Tooltip from "@mui/material/Tooltip"
 
 import { Context } from "./context"
 
@@ -26,6 +30,14 @@ export function promptSignin() {
   } else {
     console.debug("promptSignin was called but Google Signin is not initialized yet")
   }
+}
+
+export function getDisplayName(user) {
+  return user?.attributes?.passport?.displayName || ""
+}
+
+export function getProfileImageUrl(user) {
+  return user?.attributes?.passport?.photos?.[0]?.value
 }
 
 export function SigninButton() {

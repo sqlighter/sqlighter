@@ -41,7 +41,7 @@ function getProfileContents(context) {
         </Tooltip>
         <Stack direction="column">
           <Typography variant="h4">{displayName}</Typography>
-          <Typography variant="body2">{email}</Typography>
+          <Typography variant="body2" color="text.secondary">{email}</Typography>
           <Box mt={4}>
             <Button onClick={onSignout} variant="outlined">
               Signout

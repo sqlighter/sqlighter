@@ -1,28 +1,21 @@
 //
-//
+// header.tsx
 //
 
 import * as React from "react"
-import Avatar from "@mui/material/Avatar"
 import Stack from "@mui/material/Stack"
-import Tooltip from "@mui/material/Tooltip"
 
+import { Avatar } from "../components/avatar"
 import { Context } from "../components/context"
 
-const Header = () => {
+export function Header() {
   const context = React.useContext(Context)
-  const displayName = context.user?.attributes?.passport?.displayName || ""
-  const imageUrl = context.user?.attributes?.passport?.photos?.[0]?.value
 
   return (
     <header>
-      <Stack direction="row" spacing={2}>
-        <Tooltip title={displayName}>
-          <Avatar alt={displayName} src={imageUrl} />
-        </Tooltip>
+      <Stack direction="row" justifyContent="flex-end" spacing={2}>
+        <Avatar user={context.user} />
       </Stack>
     </header>
   )
 }
-
-export default Header

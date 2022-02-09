@@ -8,7 +8,7 @@ import Link from "next/link"
 
 import utilStyles from "../styles/utils.module.css"
 import styles from "./layout.module.css"
-import Header from "./header"
+import { Header } from "./header"
 import Footer from "./footer"
 
 interface LayoutProps {
