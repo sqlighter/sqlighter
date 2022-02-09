@@ -1,9 +1,11 @@
-import react from "react"
+//
+// context.tsx
+//
 
-import { User } from "../lib/users"
+import { createContext } from "react"
 
 /** Default context is an empty template, actual values filled by Context.Provider */
-export const Context = react.createContext({
+export const Context = createContext({
   /** Currently signed in user */
   user: null,
 
@@ -12,9 +14,6 @@ export const Context = react.createContext({
     throw new Error("Implemented in Context.Provider")
   },
 
-  /** 
-   * True if Google Signin script has been loaded and initialized 
-   * @see https://developers.google.com/identity/gsi/web/reference/js-reference#google.accounts.id.initialize
-   */
+  /** True if Google Signin script has been loaded and initialized */
   isGoogleSigninLoaded: null,
 })

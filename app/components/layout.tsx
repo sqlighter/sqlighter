@@ -6,6 +6,8 @@ import Head from "next/head"
 import Image from "next/image"
 import Link from "next/link"
 
+import Container from "@mui/material/Container"
+
 import utilStyles from "../styles/utils.module.css"
 import styles from "./layout.module.css"
 import { Header } from "./header"
@@ -36,7 +38,7 @@ export default function Layout({ children, title, home }: LayoutProps) {
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
       <Header />
-      <main>{children}</main>
+      <Container maxWidth="sm">{children}</Container>
       <Footer />
     </div>
   )
