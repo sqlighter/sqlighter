@@ -42,7 +42,7 @@ export function SigninButton() {
         shape: "pill",
       })
     }
-  }, [context.googleSigninLoaded])
+  }, [context.isGoogleSigninLoaded])
   return (
     <Box maxWidth={400}>
       <div id="google_signin_button" style={{ width: 400 }}></div>
@@ -54,16 +54,18 @@ export function SigninPanel() {
   const context = React.useContext(Context)
 
   React.useEffect(() => {
-    if (context.googleSigninLoaded) {
+    if (context.isGoogleSigninLoaded) {
       promptSignin()
     }
-  }, [context.googleSigninLoaded])
+  }, [context.isGoogleSigninLoaded])
 
   return (
     <Stack>
       <Typography variant="h4">Welcome to Biomarkers</Typography>
       <Typography variant="body2">Please sign in using Google</Typography>
-      <SigninButton />
+      <Box mt={4}>
+        <SigninButton />
+      </Box>
     </Stack>
   )
 }
