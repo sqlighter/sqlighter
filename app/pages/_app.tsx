@@ -39,6 +39,17 @@ export default function App({ Component, pageProps }) {
   }
 
   /**
+   * Renders a personalized Google Signin button
+   * @param parent The parent element of the signin button
+   * @param options Button configurations, see: https://developers.google.com/identity/gsi/web/reference/js-reference#GsiButtonConfiguration
+   */
+  function renderSigninButton(parent, options = { theme: "outline", size: "large", shape: "pill" }) {
+    console.assert(isGoogleSigninLoaded)
+    const google = (window as any).google
+    google.accounts.id.renderButton(parent, options)
+  }
+
+  /**
    * Called by Google sign in when credentials check is completed.
    * To complete the sign up or sign in procedure we pass the jwt
    * token we just received from Google to our server side. Passport
@@ -76,24 +87,21 @@ export default function App({ Component, pageProps }) {
     })
   }
 
-  async function onGoogleLoaded(params) {
+  async function onGoogleSigninLoaded(params) {
     const google = (window as any).google
     console.log(`onGoogleLoad`, params, google)
+
+    // https://developers.google.com/identity/gsi/web/reference/js-reference#IdConfiguration
     google.accounts.id.initialize({
       client_id: "427320365950-75nnbuht76pb6femtq9ccctqhs0a4qbb.apps.googleusercontent.com",
       callback: onSignin,
       auto_select: true,
     })
 
-    // https://developers.google.com/identity/gsi/web/guides/personalized-button
-    google.accounts.id.renderButton(
-      document.getElementById("googleSigninButton"),
-      { theme: "outline", size: "large", shape: "pill" } // customization attributes
-    )
-
     setGoogleSigninLoaded(true)
   }
 
+  /*
   useEffect(() => {
     console.log(`isGoogleSigninLoaded: ${isGoogleSigninLoaded}, userLoading: ${userLoading}, user: ${user}`)
 
@@ -106,16 +114,21 @@ export default function App({ Component, pageProps }) {
       promptSignin()
     }
   })
+*/
 
   //
   // Context that is shared will all app components includes user, status, callbacks, etc.
   //
 
   const context = {
-    // undefined while user is loading
+    // undefined while user is loading or google signin script is loading
     user: userLoading ? undefined : user,
+
     // signout + redirect callback
     signout,
+
+    // points to google.accounts.id but only after the google signin script has loaded
+    googleAccountsId: isGoogleSigninLoaded ? (window as any).google.accounts.id : undefined,
   }
 
   return (
@@ -132,7 +145,7 @@ export default function App({ Component, pageProps }) {
             key="google-signin"
             src="https://accounts.google.com/gsi/client"
             strategy="lazyOnload"
-            onLoad={onGoogleLoaded}
+            onLoad={onGoogleSigninLoaded}
           />
         </Context.Provider>
       </CssBaseline>

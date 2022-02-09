@@ -9,6 +9,12 @@ export const Context = react.createContext({
 
   /** Sign out of Google and local session */
   signout: (redirectUrl?: string): void => {
-    throw new Error("signOut - not implemented")
+    throw new Error("Implemented in Context.Provider")
   },
+
+  /**
+   * Points to google.account.id only after the Google Signin script has been initialized
+   * @see https://developers.google.com/identity/gsi/web/reference/js-reference#google.accounts.id.initialize
+   */
+  googleAccountsId: null,
 })

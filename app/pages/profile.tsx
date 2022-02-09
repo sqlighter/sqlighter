@@ -11,17 +11,47 @@ import Stack from "@mui/material/Stack"
 import Tooltip from "@mui/material/Tooltip"
 
 import { useUser } from "../lib/auth/hooks"
-import { getSortedPostsData } from "../lib/posts"
 import { Context } from "../components/context"
 import Layout from "../components/layout"
-import Date from "../components/date"
 import { Typography } from "@mui/material"
+
+import { SigninPanel } from "../components/signin"
 
 interface ProfilePageProps {
   //
 }
 
-function SignedinProfile() {}
+function getProfileContents(context) {
+  const user = context.user
+  const email = user?.id
+  const displayName = user?.attributes?.passport?.displayName || ""
+  const imageUrl = user?.attributes?.passport?.photos?.[0]?.value
+
+  function onSignout(event) {
+    context.signout("/browse")
+  }
+
+  return (
+    <section>
+      <h2 className={utilStyles.headingLg}>Profile (with)</h2>
+
+      <Stack direction="row" spacing={2}>
+        <Tooltip title={displayName}>
+          <Avatar alt={displayName} src={imageUrl} sx={{ width: 96, height: 96 }} />
+        </Tooltip>
+        <Stack direction="column">
+          <Typography variant="h4">{displayName}</Typography>
+          <Typography variant="body2">{email}</Typography>
+          <Box mt={4}>
+            <Button onClick={onSignout} variant="outlined">
+              Signout
+            </Button>
+          </Box>
+        </Stack>
+      </Stack>
+    </section>
+  )
+}
 
 export default function ProfilePage(props: ProfilePageProps) {
   // retrieve user information from current session
@@ -29,54 +59,17 @@ export default function ProfilePage(props: ProfilePageProps) {
 
   const context = React.useContext(Context)
 
-  if (userLoading) {
-    return <>Loading...</>
-  }
+  // avoid flashing while user is loading
+  if (userLoading) return null
 
-  if (!user) {
-    const google = (window as any).google
-    google.accounts.id.renderButton(
-      document.getElementById("googleSigninButton"),
-      { theme: "outline", size: "large", shape: "pill" } // customization attributes
-    )
-
+  if (!context.user)
     return (
       <Layout title="Profile">
-        <section>
-          <div id="googleSigninButton"></div>
-        </section>
+        <SigninPanel />
       </Layout>
     )
-  }
 
-  function onSignout(event) {
-    context.signout("/browse")
-  }
-
-  const email = context.user?.id
-  const displayName = context.user?.attributes?.passport?.displayName || ""
-  const imageUrl = context.user?.attributes?.passport?.photos?.[0]?.value
-
-  return (
-    <Layout title="Profile">
-      <section>
-        <h2 className={utilStyles.headingLg}>Profile</h2>
-
-        <Stack direction="row" spacing={2}>
-          <Tooltip title={displayName}>
-            <Avatar alt={displayName} src={imageUrl} sx={{ width: 96, height: 96 }} />
-          </Tooltip>
-          <Stack direction="column">
-            <Typography variant="h4">{displayName}</Typography>
-            <Typography variant="body2">{email}</Typography>
-            <Button onClick={onSignout} variant="outlined">
-              Signout
-            </Button>
-          </Stack>
-        </Stack>
-      </section>
-    </Layout>
-  )
+  return <Layout title="Profile">{getProfileContents(context)}</Layout>
 }
 
 export const getStaticProps: GetStaticProps = async () => {
