@@ -9,45 +9,17 @@ import CssBaseline from "@mui/material/CssBaseline"
 import "../styles/global.css"
 import { useUser } from "../lib/auth/hooks"
 import { Context } from "../components/context"
+import { getGoogleSigninClient } from "../components/signin"
 
 export default function App({ Component, pageProps }) {
+  // current page, navigation, etc
   const router = useRouter()
-
-  //
-  // Google Signin and User status methods
-  //
 
   // retrieve user information from current session
   const [user, { mutate: mutateUser, loading: userLoading }] = useUser()
 
   // true if google signin script has lazy loaded and has been initialized, i.e. is active
   const [isGoogleSigninLoaded, setGoogleSigninLoaded] = useState(false)
-
-  //console.log("_app props" + JSON.stringify(pageProps))
-
-  /** Asks Google Signin to display Google one tap dialog or to automatically sign in */
-  function promptSignin() {
-    const google = (window as any).google
-    // also display the One Tap dialog
-    google.accounts.id.prompt((notification) => {
-      console.log(`google.accounts.id.prompt`, notification)
-      if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-        // https://developers.google.com/identity/gsi/web/reference/js-reference#PromptMomentNotification
-        // continue with another identity provider.
-      }
-    })
-  }
-
-  /**
-   * Renders a personalized Google Signin button
-   * @param parent The parent element of the signin button
-   * @param options Button configurations, see: https://developers.google.com/identity/gsi/web/reference/js-reference#GsiButtonConfiguration
-   */
-  function renderSigninButton(parent, options = { theme: "outline", size: "large", shape: "pill" }) {
-    console.assert(isGoogleSigninLoaded)
-    const google = (window as any).google
-    google.accounts.id.renderButton(parent, options)
-  }
 
   /**
    * Called by Google sign in when credentials check is completed.
@@ -77,8 +49,10 @@ export default function App({ Component, pageProps }) {
 
   /** Sign out of Google and local sessions, disable session cookie */
   function signout(redirectUrl?: string): void {
-    const google = (window as any).google
-    google.accounts.id.disableAutoSelect()
+    const gsi = getGoogleSigninClient()
+    if (gsi) {
+      gsi.disableAutoSelect()
+    }
     fetch("/api/signout").then((res) => {
       mutateUser()
       if (redirectUrl) {
@@ -87,34 +61,17 @@ export default function App({ Component, pageProps }) {
     })
   }
 
+  /** Initialize Google Signin with client id credentials */
   async function onGoogleSigninLoaded(params) {
-    const google = (window as any).google
-    console.log(`onGoogleLoad`, params, google)
-
     // https://developers.google.com/identity/gsi/web/reference/js-reference#IdConfiguration
-    google.accounts.id.initialize({
+    const gsi = getGoogleSigninClient()
+    gsi.initialize({
       client_id: "427320365950-75nnbuht76pb6femtq9ccctqhs0a4qbb.apps.googleusercontent.com",
       callback: onSignin,
       auto_select: true,
     })
-
     setGoogleSigninLoaded(true)
   }
-
-  /*
-  useEffect(() => {
-    console.log(`isGoogleSigninLoaded: ${isGoogleSigninLoaded}, userLoading: ${userLoading}, user: ${user}`)
-
-    cookieStore.get("g_state").then((cookie) => {
-      console.log("google cookie", cookie)
-    })
-
-    if (isGoogleSigninLoaded && userLoading == false && user == null) {
-      console.log("prompting...")
-      promptSignin()
-    }
-  })
-*/
 
   //
   // Context that is shared will all app components includes user, status, callbacks, etc.
@@ -122,13 +79,13 @@ export default function App({ Component, pageProps }) {
 
   const context = {
     // undefined while user is loading or google signin script is loading
-    user: userLoading ? undefined : user,
+    user: isGoogleSigninLoaded && user,
+
+    // true once google signin has been initialized
+    isGoogleSigninLoaded,
 
     // signout + redirect callback
     signout,
-
-    // points to google.accounts.id but only after the google signin script has loaded
-    googleAccountsId: isGoogleSigninLoaded ? (window as any).google.accounts.id : undefined,
   }
 
   return (
@@ -139,7 +96,6 @@ export default function App({ Component, pageProps }) {
             <meta name="viewport" content="initial-scale=1, width=device-width" />
             <meta name="user" content={user?.id} />
           </Head>
-          user: {user?.id}
           <Component {...pageProps} />
           <Script
             key="google-signin"

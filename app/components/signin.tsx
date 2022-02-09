@@ -9,20 +9,40 @@ import Typography from "@mui/material/Typography"
 
 import { Context } from "./context"
 
+export function getGoogleSigninClient() {
+  return (window as any)?.google?.accounts?.id
+}
+
+export function promptSignin() {
+  const gsi = getGoogleSigninClient()
+  if (gsi) {
+    gsi.prompt((notification) => {
+      console.debug("promptSignin", notification)
+      if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+        // https://developers.google.com/identity/gsi/web/reference/js-reference#PromptMomentNotification
+        // continue with another identity provider.
+      }
+    })
+  } else {
+    console.debug("promptSignin was called but Google Signin is not initialized yet")
+  }
+}
+
 export function SigninButton() {
   const context = React.useContext(Context)
 
   React.useEffect(() => {
+    const gsi = getGoogleSigninClient()
     // console.log("SigninButton.useEffect - googleAccountsId: " + context.googleAccountsId)
-    if (context.googleAccountsId) {
+    if (gsi) {
       // https://developers.google.com/identity/gsi/web/reference/js-reference#google.accounts.id.renderButton
-      context.googleAccountsId.renderButton(document.getElementById("google_signin_button"), {
+      gsi.renderButton(document.getElementById("google_signin_button"), {
         theme: "outline",
         size: "large",
         shape: "pill",
       })
     }
-  }, [context.googleAccountsId])
+  }, [context.googleSigninLoaded])
   return (
     <Box maxWidth={400}>
       <div id="google_signin_button" style={{ width: 400 }}></div>
@@ -34,17 +54,10 @@ export function SigninPanel() {
   const context = React.useContext(Context)
 
   React.useEffect(() => {
-    // console.log("SigninButton.useEffect - googleAccountsId: " + context.googleAccountsId)
-    if (context.googleAccountsId) {
-      context.googleAccountsId.prompt((notification) => {
-        console.log(`SigninPanel.prompt`, notification)
-        if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-          // https://developers.google.com/identity/gsi/web/reference/js-reference#PromptMomentNotification
-          // continue with another identity provider.
-        }
-      })
+    if (context.googleSigninLoaded) {
+      promptSignin()
     }
-  }, [context.googleAccountsId])
+  }, [context.googleSigninLoaded])
 
   return (
     <Stack>
