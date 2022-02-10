@@ -1,3 +1,7 @@
+//
+// biomarkerPage - detail page for biomarker
+//
+
 import Layout from "../../components/layout"
 import Head from "next/head"
 import Image from "next/image"
@@ -9,18 +13,22 @@ import { Biomarker } from "../../lib/biomarkers"
 import { remark } from "remark"
 import html from "remark-html"
 
+import { Section } from "../../components/section"
+
 export default function BiomarkerDetail({ biomarker }: { biomarker: any }) {
   return (
-    <Layout>
-      <Head>
-        <title>{biomarker.title}</title>
-      </Head>
+    <Layout title={biomarker.title}>
       <article>
-        <h1 className={utilStyles.headingXl}>{biomarker.title}</h1>
-        <h2 className={utilStyles.headingMd}>{biomarker.description}</h2>
-        <div dangerouslySetInnerHTML={{ __html: biomarker.contentHtml }} />
-        <br />
-        <div className={utilStyles.lightText}>{biomarker.id}</div>
+        <Section title={biomarker.title} subtitle={biomarker.description}>
+          <div dangerouslySetInnerHTML={{ __html: biomarker.contentHtml }} />
+          <div className={utilStyles.lightText}>{biomarker.id}</div>
+        </Section>
+
+        <Section title="Links" subtitle="Learn more">
+          <div dangerouslySetInnerHTML={{ __html: biomarker.contentHtml }} />
+          <div className={utilStyles.lightText}>{biomarker.id}</div>
+        </Section>
+
         <br />
         <Image src={rbc} alt="Red blood cells" />
       </article>

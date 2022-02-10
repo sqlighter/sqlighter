@@ -8,7 +8,7 @@ import utilStyles from "../styles/utils.module.css"
 import { getSortedPostsData } from "../lib/posts"
 import Link from "next/link"
 import Date from "../components/date"
-import { GetStaticProps } from "next"
+import { GetStaticProps, GetServerSideProps } from "next"
 
 import { Biomarker } from "../lib/biomarkers"
 
@@ -64,8 +64,15 @@ export default function BrowsePage({ biomarkers, posts, locale }: BrowsePageProp
 }
 
 /** Static properties from biomarkers */
-export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
-  const biomarkers = Object.values(Biomarker.getBiomarkers(locale))
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  let biomarkers = Object.values(Biomarker.getBiomarkers(locale))
+//  console.log(biomarkers)
+
+  //console.log(req.query)
+
+  biomarkers= biomarkers.filter((b) => b.status == "published")
+  biomarkers = biomarkers.sort((a, b) => a.title < b.title ? -1 : 1)
+
   const serializable = biomarkers.map((b) => JSON.parse(JSON.stringify(b)))
   const posts = getSortedPostsData()
 
