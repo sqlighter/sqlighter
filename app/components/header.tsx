@@ -40,8 +40,6 @@ function HideOnScroll({ children }) {
   )
 }
 
-type Anchor = "top" | "left" | "bottom" | "right"
-
 export function Header(props) {
   const context = useContext(Context)
   const router = useRouter()
@@ -71,7 +69,7 @@ export function Header(props) {
     <header>
       <Fragment key="left">
         <HideOnScroll {...props}>
-          <AppBar>
+          <AppBar sx={{ backgroundColor: "background.paper", color: "text.secondary", boxShadow: 1 }}>
             <Container maxWidth="sm">
               <Toolbar disableGutters>
                 {getMenuIcon()}
