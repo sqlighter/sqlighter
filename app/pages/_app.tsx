@@ -11,7 +11,7 @@ import { useRouter } from "next/router"
 import CssBaseline from "@mui/material/CssBaseline"
 import { styled, createTheme, ThemeProvider } from "@mui/material/styles"
 
-import utilStyles from "../styles/global.scss"
+import "../styles/global.css"
 import { useUser } from "../lib/auth/hooks"
 import { Context } from "../components/context"
 import { getGoogleSigninClient } from "../components/signin"
@@ -19,20 +19,12 @@ import { theme } from "../components/theme"
 
 // https://bareynol.github.io/mui-theme-creator/
 const theme2 = createTheme({
-  components: {
-    MuiAppBar: {
-    },
-  },
-
   palette: {
     primary: {
-      light: "#e5eefb",
-      main: "#3871e0",
-      dark: "#284da0",
+      main: "#567bc5",
     },
     secondary: {
-      light: "#58c0a7",
-      main: "#387e6e",
+      main: "#7ab6a8",
     },
     background: {
       /*   paper: "#fF00FF", */

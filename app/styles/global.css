@@ -35,31 +35,9 @@ img {
  * https://sass-lang.com/guide
  */
 
-/* variables.module.scss */
-$colore-primario: #114400;
-
-$primary-color-light: #e5eefb;
-$primary-color: #3871e0;
-$primary-color-dark: #284da0;
-$primary-color-contrast-text: #fff;
-
-$secondary-color-light: #58c0a7;
-$secondary-color: #58c0a7;
-$secondary-color-dark: adjust-lightness($secondary-color, 30%);
-$secondary-color-contrast-text: #000;
-
-:export {
-  colorePrimario: $colore-primario;
-}
-
 /* https://m3.material.io/components/top-app-bar/overview */
 
-.MuiAppBar-colorPrimary {
-  background-color: #00ff00;
-  /*  background-color: $colore-primario; */
-
-  /*  color: #00ff00; */
-  /*  background-color: $colore-primario; */
-
-  z-index: 999;
+.OFFMuiAppBar-colorPrimary {
+  color: "#ff0000";
+  background-color: "#00ff00";
 }
