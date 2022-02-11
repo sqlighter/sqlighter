@@ -9,11 +9,46 @@ import Script from "next/script"
 import { useRouter } from "next/router"
 
 import CssBaseline from "@mui/material/CssBaseline"
+import { styled, createTheme, ThemeProvider } from "@mui/material/styles"
 
-import "../styles/global.css"
+import utilStyles from "../styles/global.scss"
 import { useUser } from "../lib/auth/hooks"
 import { Context } from "../components/context"
 import { getGoogleSigninClient } from "../components/signin"
+import { theme } from "../components/theme"
+
+// https://bareynol.github.io/mui-theme-creator/
+const theme2 = createTheme({
+  components: {
+    MuiAppBar: {
+    },
+  },
+
+  palette: {
+    primary: {
+      light: "#e5eefb",
+      main: "#3871e0",
+      dark: "#284da0",
+    },
+    secondary: {
+      light: "#58c0a7",
+      main: "#387e6e",
+    },
+    background: {
+      /*   paper: "#fF00FF", */
+    },
+    text: {
+      primary: "#3d4043",
+      secondary: "#606367",
+    },
+    action: {
+      active: "#001E3C",
+    },
+    success: {
+      500: "#009688",
+    },
+  },
+})
 
 export default function App({ Component, pageProps }) {
   // current page, navigation, etc
@@ -95,19 +130,21 @@ export default function App({ Component, pageProps }) {
   return (
     <>
       <CssBaseline>
-        <Context.Provider value={context}>
-          <Head>
-            <meta name="viewport" content="initial-scale=1, width=device-width" />
-            <meta name="user" content={user?.id} />
-          </Head>
-          <Component {...pageProps} />
-          <Script
-            key="google-signin"
-            src="https://accounts.google.com/gsi/client"
-            strategy="lazyOnload"
-            onLoad={onGoogleSigninLoaded}
-          />
-        </Context.Provider>
+        <ThemeProvider theme={theme2}>
+          <Context.Provider value={context}>
+            <Head>
+              <meta name="viewport" content="initial-scale=1, width=device-width" />
+              <meta name="user" content={user?.id} />
+            </Head>
+            <Component {...pageProps} />
+            <Script
+              key="google-signin"
+              src="https://accounts.google.com/gsi/client"
+              strategy="lazyOnload"
+              onLoad={onGoogleSigninLoaded}
+            />
+          </Context.Provider>
+        </ThemeProvider>
       </CssBaseline>
     </>
   )

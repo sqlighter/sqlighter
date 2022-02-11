@@ -32,7 +32,7 @@ export default function LoremPage(props) {
         </p>
         {["First", "Second", "Third", "Fourth", "Fifth"].map((section) => {
           return (
-            <Section title={section + " subsection"} subtitle="Also has a subtitle">
+            <Section key={section} title={section + " subsection"} subtitle="Also has a subtitle">
               <p>
                 Vivamus consequat neque tellus, vitae pretium lacus interdum et. Vestibulum ante ipsum primis in
                 faucibus orci luctus et ultrices posuere cubilia curae; Praesent sollicitudin tincidunt ullamcorper. Sed

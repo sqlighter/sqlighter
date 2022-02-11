@@ -7,9 +7,8 @@ import Image from "next/image"
 import Link from "next/link"
 
 import Container from "@mui/material/Container"
+import { styled, createTheme, ThemeProvider } from "@mui/system"
 
-import utilStyles from "../styles/utils.module.css"
-import styles from "./layout.module.css"
 import { Header } from "./header"
 import Footer from "./footer"
 
@@ -23,7 +22,7 @@ export default function Layout({ children, title, home }: LayoutProps) {
   title = title || "Biomarkers"
 
   return (
-    <div className={styles.container}>
+    <>
       <Head>
         <title>{title}</title>
         <link rel="icon" href="/favicon.ico" />
@@ -40,6 +39,6 @@ export default function Layout({ children, title, home }: LayoutProps) {
       <Header />
       <Container maxWidth="sm">{children}</Container>
       <Footer />
-    </div>
+    </>
   )
 }

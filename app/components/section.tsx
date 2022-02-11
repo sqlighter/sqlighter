@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography"
 
 interface SectionProps {
   title?: string
-  subtitle?: string,
+  subtitle?: string
   large?: boolean
   children: any
 }

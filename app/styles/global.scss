@@ -1,0 +1,65 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
+    Helvetica Neue, sans-serif;
+  line-height: 1.6;
+  font-size: 18px;
+  /*
+  background-color: aqua;
+*/
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: #0070f3;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/*
+ * MUI Customizations
+ * https://nextjs.org/docs/basic-features/built-in-css-support#sass-variables
+ * https://sass-lang.com/guide
+ */
+
+/* variables.module.scss */
+$colore-primario: #114400;
+
+$primary-color-light: #e5eefb;
+$primary-color: #3871e0;
+$primary-color-dark: #284da0;
+$primary-color-contrast-text: #fff;
+
+$secondary-color-light: #58c0a7;
+$secondary-color: #58c0a7;
+$secondary-color-dark: adjust-lightness($secondary-color, 30%);
+$secondary-color-contrast-text: #000;
+
+:export {
+  colorePrimario: $colore-primario;
+}
+
+/* https://m3.material.io/components/top-app-bar/overview */
+
+.MuiAppBar-colorPrimary {
+  background-color: #00ff00;
+  /*  background-color: $colore-primario; */
+
+  /*  color: #00ff00; */
+  /*  background-color: $colore-primario; */
+
+  z-index: 999;
+}
