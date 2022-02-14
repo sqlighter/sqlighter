@@ -95,9 +95,6 @@ const customTheme = createTheme({
 
     MuiAppBar: {
       styleOverrides: {
-        root: {
-          boxShadow: 0,
-        },
         colorPrimary: {
           color: defaultTheme.palette.text.primary,
           backgroundColor: PRIMARY_LIGHTEST,
