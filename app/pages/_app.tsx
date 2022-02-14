@@ -11,7 +11,7 @@ import { useState, useEffect } from "react"
 import CssBaseline from "@mui/material/CssBaseline"
 import GlobalStyles from "@mui/material/GlobalStyles"
 import { createTheme, ThemeProvider, ThemeOptions } from "@mui/material/styles"
-import { lighten } from "@mui/material/styles"
+import { lighten, rgbToHex } from "@mui/material/styles"
 import Box from "@mui/material/Box"
 
 import { useUser } from "../lib/auth/hooks"
@@ -44,9 +44,9 @@ const LIGHTER = 0.95
 const LIGHTEST = 0.97
 
 export const PRIMARY_COLOR = "#0072e5" // blue
-export const PRIMARY_LIGHT = lighten(PRIMARY_COLOR, LIGHT)
-export const PRIMARY_LIGHTER = lighten(PRIMARY_COLOR, LIGHTER)
-export const PRIMARY_LIGHTEST = lighten(PRIMARY_COLOR, LIGHTEST)
+export const PRIMARY_LIGHT = rgbToHex(lighten(PRIMARY_COLOR, LIGHT))
+export const PRIMARY_LIGHTER = rgbToHex(lighten(PRIMARY_COLOR, LIGHTER))
+export const PRIMARY_LIGHTEST = rgbToHex(lighten(PRIMARY_COLOR, LIGHTEST))
 
 // https://mui.com/customization/default-theme/
 const defaultTheme = createTheme()
@@ -194,6 +194,7 @@ export default function App({ Component, pageProps }) {
             <Head>
               <meta name="viewport" content="initial-scale=1, width=device-width" />
               <meta name="user" content={user?.id} />
+              <meta name="theme-color" content={PRIMARY_LIGHTEST} />
             </Head>
             <Box sx={{ backgroundColor: "background.paper" }}>
               <Component {...pageProps} />
