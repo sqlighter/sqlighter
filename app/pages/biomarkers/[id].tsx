@@ -16,21 +16,19 @@ import html from "remark-html"
 import { Section } from "../../components/section"
 
 export default function BiomarkerDetail({ biomarker }: { biomarker: any }) {
+  const articlesTitle = `Articles on ${biomarker.title}`
+
   return (
-    <Layout title={biomarker.title}>
+    <Layout title={biomarker.title} subtitle={biomarker.description} back={true}>
       <article>
-        <Section title={biomarker.title} subtitle={biomarker.description}>
-          <div dangerouslySetInnerHTML={{ __html: biomarker.contentHtml }} />
-          <div className={utilStyles.lightText}>{biomarker.id}</div>
-        </Section>
-
-        <Section title="Links" subtitle="Learn more">
-          <div dangerouslySetInnerHTML={{ __html: biomarker.contentHtml }} />
-          <div className={utilStyles.lightText}>{biomarker.id}</div>
-        </Section>
-
-        <br />
+        <div dangerouslySetInnerHTML={{ __html: biomarker.contentHtml }} />
         <Image src={rbc} alt="Red blood cells" />
+        <Section title={articlesTitle} subtitle="Learn more">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse sit amet enim quis tellus ultricies
+          porttitor ac eu ex. Fusce commodo ante vitae luctus euismod. Donec at est faucibus, bibendum nisi ornare,
+          imperdiet nibh. Suspendisse sagittis consectetur massa. Vivamus ultricies fermentum felis, auctor vulputate
+          dui pellentesque et.
+        </Section>
       </article>
     </Layout>
   )

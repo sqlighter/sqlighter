@@ -196,7 +196,7 @@ export default function App({ Component, pageProps }) {
               <meta name="user" content={user?.id} />
               <meta name="theme-color" content={PRIMARY_LIGHTEST} />
             </Head>
-            <Box sx={{ backgroundColor: "background.paper" }}>
+            <Box sx={{ backgroundColor: "background.paper", top: 0, bottom: 0 }}>
               <Component {...pageProps} />
             </Box>
             <Script

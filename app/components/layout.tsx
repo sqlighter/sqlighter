@@ -15,13 +15,16 @@ import Footer from "./footer"
 import { Fragment } from "react"
 
 interface LayoutProps {
+  title?: string
+  subtitle?: string
+
   children: React.ReactNode
   home?: boolean
-  title?: string
+  back?: boolean | string
 }
 
-export default function Layout({ children, title, home }: LayoutProps) {
-  title = title || "Biomarkers"
+export default function Layout({ children, title, subtitle, home, back }: LayoutProps) {
+  //  title = title || "Biomarkers"
 
   return (
     <>
@@ -38,7 +41,7 @@ export default function Layout({ children, title, home }: LayoutProps) {
         <meta name="og:title" content={title} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
-      <Header />
+      <Header title={title} subtitle={subtitle} back={back} />
       <Container maxWidth="sm">{children}</Container>
       <Footer />
     </>

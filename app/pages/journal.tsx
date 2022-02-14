@@ -15,7 +15,7 @@ interface JournalPageProps {
 
 export default function JournalPage(props: JournalPageProps) {
   return (
-    <Layout title="Journal">
+    <Layout title="Journal" subtitle="Track your progress">
       <section>
         <h2 className={utilStyles.headingLg}>Journal</h2>
       </section>
