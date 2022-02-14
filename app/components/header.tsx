@@ -2,8 +2,8 @@
 // header.tsx
 //
 
-import { Fragment, useContext, useState } from "react"
 import { useRouter } from "next/router"
+import { useContext, useState } from "react"
 import useScrollTrigger from "@mui/material/useScrollTrigger"
 import AppBar from "@mui/material/AppBar"
 import Avatar from "@mui/material/Avatar"
@@ -11,21 +11,10 @@ import Box from "@mui/material/Box"
 import Container from "@mui/material/Container"
 import Drawer from "@mui/material/Drawer"
 import IconButton from "@mui/material/IconButton"
-import Slide from "@mui/material/Slide"
-import Stack from "@mui/material/Stack"
-import Toolbar from "@mui/material/Toolbar"
-import Typography from "@mui/material/Typography"
-import SearchIcon from "@mui/icons-material/SearchOutlined"
-
-import Button from "@mui/material/Button"
-import List from "@mui/material/List"
-import Divider from "@mui/material/Divider"
-import ListItem from "@mui/material/ListItem"
-import ListItemIcon from "@mui/material/ListItemIcon"
-import ListItemText from "@mui/material/ListItemText"
-import InboxIcon from "@mui/icons-material/MoveToInbox"
-import MailIcon from "@mui/icons-material/Mail"
 import MenuIcon from "@mui/icons-material/Menu"
+import SearchIcon from "@mui/icons-material/SearchOutlined"
+import Slide from "@mui/material/Slide"
+import Toolbar from "@mui/material/Toolbar"
 
 import { getDisplayName, getProfileImageUrl } from "./signin"
 import { Context } from "./context"
@@ -65,29 +54,27 @@ export function Header(props) {
     )
   }
 
+  // wrap appbar in <HideOnScroll {...props}> to make it disappear on scroll
+  // TODO move AppBar.boxShadow to _app.js' custom theme
   return (
     <header>
-      <Fragment key="left">
-        <HideOnScroll {...props}>
-          <AppBar sx={{ backgroundColor: "background.paper", color: "text.secondary", boxShadow: 1 }}>
-            <Container maxWidth="sm">
-              <Toolbar disableGutters>
-                {getMenuIcon()}
-                <Box sx={{ flexGrow: 1 }} />
-                <Box sx={{ display: { xs: "none", md: "flex" } }}>
-                  <IconButton color="inherit" onClick={(e) => router.push("/search")}>
-                    <SearchIcon />
-                  </IconButton>
-                </Box>
-              </Toolbar>
-            </Container>
-          </AppBar>
-        </HideOnScroll>
-        <Toolbar />
-        <Drawer anchor={"left"} open={open} onClose={(e) => setDrawer(false)}>
-          <Menu onClose={(e) => setDrawer(false)} />
-        </Drawer>
-      </Fragment>
+      <AppBar sx={{ boxShadow: 0 }}>
+        <Container maxWidth="sm">
+          <Toolbar disableGutters>
+            {getMenuIcon()}
+            <Box sx={{ flexGrow: 1 }} />
+            <Box sx={{ display: { xs: "none", md: "flex" } }}>
+              <IconButton color="inherit" onClick={(e) => router.push("/search")}>
+                <SearchIcon />
+              </IconButton>
+            </Box>
+          </Toolbar>
+        </Container>
+      </AppBar>
+      <Toolbar />
+      <Drawer anchor={"left"} open={open} onClose={(e) => setDrawer(false)}>
+        <Menu onClose={(e) => setDrawer(false)} />
+      </Drawer>
     </header>
   )
 }

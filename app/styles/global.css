@@ -6,27 +6,6 @@ body {
     Helvetica Neue, sans-serif;
   line-height: 1.6;
   font-size: 18px;
-  /*
-  background-color: aqua;
-*/
-}
-
-* {
-  box-sizing: border-box;
-}
-
-a {
-  color: #0070f3;
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
-img {
-  max-width: 100%;
-  display: block;
 }
 
 /*

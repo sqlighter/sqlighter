@@ -28,8 +28,8 @@ const Footer = () => {
   return (
     <>
       <Toolbar />
-      <Paper sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }} elevation={3}>
-        <BottomNavigation value={pathSegments[0]} onChange={navigateTo} showLabels>
+      <Paper sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }} elevation={1}>
+        <BottomNavigation value={pathSegments[0]} onChange={navigateTo} color="primary" showLabels>
           <BottomNavigationAction label="Journal" value="journal" icon={<JournalIcon />} />
           <BottomNavigationAction label="Browse" value="browse" icon={<BrowseIcon />} />
           <BottomNavigationAction label="Profile" value="profile" icon={<ProfileIcon />} />

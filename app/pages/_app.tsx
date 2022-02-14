@@ -2,31 +2,65 @@
 // app.tsx
 //
 
-import { useState, useEffect } from "react"
-
 import Head from "next/head"
 import Script from "next/script"
 import { useRouter } from "next/router"
-
-import CssBaseline from "@mui/material/CssBaseline"
-import { styled, createTheme, ThemeProvider } from "@mui/material/styles"
-
 import "../styles/global.css"
+
+import { useState, useEffect } from "react"
+import CssBaseline from "@mui/material/CssBaseline"
+import GlobalStyles from "@mui/material/GlobalStyles"
+import { createTheme, ThemeProvider, ThemeOptions } from "@mui/material/styles"
+import { lighten } from "@mui/material/styles"
+import Box from "@mui/material/Box"
+
 import { useUser } from "../lib/auth/hooks"
 import { Context } from "../components/context"
 import { getGoogleSigninClient } from "../components/signin"
-import { theme } from "../components/theme"
+import { text } from "stream/consumers"
 
+//
+// Theming
 // https://bareynol.github.io/mui-theme-creator/
-const theme2 = createTheme({
+// https://mui.com/customization/theming/
+//
+
+declare module "@mui/material/styles" {
+  // allow configuration using `createTheme`
+  interface PaletteOptions {
+    materialyou?: {
+      primary?: {
+        light?: string
+        lighter?: string
+        lightest?: string
+      }
+    }
+  }
+}
+
+// coefficients used to make colors lighter
+const LIGHT = 0.92
+const LIGHTER = 0.95
+const LIGHTEST = 0.97
+
+export const PRIMARY_COLOR = "#0072e5" // blue
+export const PRIMARY_LIGHT = lighten(PRIMARY_COLOR, LIGHT)
+export const PRIMARY_LIGHTER = lighten(PRIMARY_COLOR, LIGHTER)
+export const PRIMARY_LIGHTEST = lighten(PRIMARY_COLOR, LIGHTEST)
+
+// https://mui.com/customization/default-theme/
+const defaultTheme = createTheme()
+
+const customTheme = createTheme({
   palette: {
     primary: {
-      main: "#567bc5",
+      main: PRIMARY_COLOR,
     },
     secondary: {
       main: "#7ab6a8",
     },
     background: {
+      default: PRIMARY_LIGHTEST,
       /*   paper: "#fF00FF", */
     },
     text: {
@@ -38,6 +72,37 @@ const theme2 = createTheme({
     },
     success: {
       500: "#009688",
+    },
+    materialyou: {
+      primary: {
+        light: PRIMARY_LIGHT,
+        lighter: PRIMARY_LIGHTER,
+        lightest: PRIMARY_LIGHTEST,
+      },
+    },
+
+    tonalOffset: 0.4,
+  },
+
+  components: {
+    MuiBottomNavigation: {
+      styleOverrides: {
+        root: {
+          backgroundColor: PRIMARY_LIGHTEST,
+        },
+      },
+    },
+
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          boxShadow: 0,
+        },
+        colorPrimary: {
+          color: defaultTheme.palette.text.primary,
+          backgroundColor: PRIMARY_LIGHTEST,
+        },
+      },
     },
   },
 })
@@ -97,7 +162,7 @@ export default function App({ Component, pageProps }) {
     // https://developers.google.com/identity/gsi/web/reference/js-reference#IdConfiguration
     const gsi = getGoogleSigninClient()
     gsi.initialize({
-      client_id: "427320365950-75nnbuht76pb6femtq9ccctqhs0a4qbb.apps.googleusercontent.com",
+      client_id: process.env.NEXT_PUBLIC_GOOGLE_ID,
       callback: onSignin,
       auto_select: true,
     })
@@ -119,16 +184,23 @@ export default function App({ Component, pageProps }) {
     signout,
   }
 
+  // <GlobalStyles styles={{ body: { backgroundColor: PRIMARY_LIGHTEST } }} />
+  // is used to that you don't see a white strip when you pull the header down
+  // we then give all contents a default of background.paper so it's all white as base
+
   return (
     <>
       <CssBaseline>
-        <ThemeProvider theme={theme2}>
+        <GlobalStyles styles={{ body: { backgroundColor: PRIMARY_LIGHTEST } }} />
+        <ThemeProvider theme={customTheme}>
           <Context.Provider value={context}>
             <Head>
               <meta name="viewport" content="initial-scale=1, width=device-width" />
               <meta name="user" content={user?.id} />
             </Head>
-            <Component {...pageProps} />
+            <Box sx={{ backgroundColor: "background.paper" }}>
+              <Component {...pageProps} />
+            </Box>
             <Script
               key="google-signin"
               src="https://accounts.google.com/gsi/client"

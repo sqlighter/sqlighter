@@ -8,9 +8,11 @@ import Link from "next/link"
 
 import Container from "@mui/material/Container"
 import { styled, createTheme, ThemeProvider } from "@mui/system"
+import Box from "@mui/material/Box"
 
 import { Header } from "./header"
 import Footer from "./footer"
+import { Fragment } from "react"
 
 interface LayoutProps {
   children: React.ReactNode
