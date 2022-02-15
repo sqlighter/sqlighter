@@ -33,8 +33,10 @@ interface BrowsePageProps {
 }
 
 export default function BrowsePage({ biomarkers, posts, locale }: BrowsePageProps) {
+  const subtitle = `${biomarkers.length} biomarkers`
+
   return (
-    <Layout home title="Library">
+    <Layout home title="Library" subtitle={subtitle}>
       <Typography variant="overline">Articles</Typography>
       {posts &&
         posts.map(({ id, date, title }) => (
