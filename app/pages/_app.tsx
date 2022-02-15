@@ -220,6 +220,8 @@ export default function App({ Component, pageProps }) {
   // is used to that you don't see a white strip when you pull the header down
   // we then give all contents a default of background.paper so it's all white as base
 
+  //               <meta name="theme-color" content={PRIMARY_LIGHTEST} />
+
   return (
     <>
       <CssBaseline>
@@ -229,7 +231,7 @@ export default function App({ Component, pageProps }) {
             <Head>
               <meta name="viewport" content="initial-scale=1, width=device-width" />
               <meta name="user" content={user?.id} />
-              <meta name="theme-color" content={PRIMARY_LIGHTEST} />
+              <meta name="theme-color" content="#ff0000" />
 
               <link rel="preconnect" href="https://fonts.googleapis.com" />
               <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
