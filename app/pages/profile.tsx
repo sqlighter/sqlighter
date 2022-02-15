@@ -33,8 +33,6 @@ function getProfileContents(context) {
 
   return (
     <section>
-      <h2 className={utilStyles.headingLg}>Profile (with)</h2>
-
       <Stack direction="row" spacing={2}>
         <Tooltip title={displayName}>
           <Avatar alt={displayName} src={imageUrl} sx={{ width: 96, height: 96 }} />
@@ -71,7 +69,15 @@ export default function ProfilePage(props: ProfilePageProps) {
       </Layout>
     )
 
-  return <Layout title="Profile">{getProfileContents(context)}</Layout>
+  //  const email = user?.id
+  //  const displayName = user?.attributes?.passport?.displayName || ""
+  //  const imageUrl = user?.attributes?.passport?.photos?.[0]?.value
+
+  return (
+    <Layout title="Profile" subtitle="Personalize your results">
+      {getProfileContents(context)}
+    </Layout>
+  )
 }
 
 export const getStaticProps: GetStaticProps = async () => {

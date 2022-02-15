@@ -1,11 +1,55 @@
+
+/* global.css - app wide styles imported by _app.js, in synch with mui custom theme */
+
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
-    Helvetica Neue, sans-serif;
+
+  font-family: Lato, Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+h1 {
+  font-weight: 900;
+  font-size: 3rem;
+  line-height: 1.167;
+}
+
+h2 {
+  font-weight: 900;
+  font-size: 2.125rem;
+  line-height: 1.235;
+}
+
+h3 {
+  font-weight: 900;
+  font-size: 1.5rem;
+  line-height: 1.334;
+}
+
+h4 {
+  font-weight: 700;
+  font-size: 1.25rem;
   line-height: 1.6;
-  font-size: 18px;
+}
+
+h5 {
+  font-weight: 700;
+  font-size: 1.25rem;
+  line-height: 1.6;
+}
+
+h6 {
+  font-weight: 700;
+  font-size: 1.25rem;
+  line-height: 1.6;
+}
+
+strong {
+  font-weight: 700;
 }
 
 /*

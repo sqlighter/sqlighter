@@ -20,7 +20,7 @@ export default function BiomarkerDetail({ biomarker }: { biomarker: any }) {
 
   return (
     <Layout title={biomarker.title} subtitle={biomarker.description} back={true}>
-      <article>
+      <article id={biomarker.id} title={biomarker.title}>
         <div dangerouslySetInnerHTML={{ __html: biomarker.contentHtml }} />
         <Image src={rbc} alt="Red blood cells" />
         <Section title={articlesTitle} subtitle="Learn more">

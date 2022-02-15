@@ -65,16 +65,17 @@ export function Header(props: HeaderProps) {
         </IconButton>
       )
     }
-
+    /*
     if (context.user) {
       const displayName = getDisplayName(context.user)
       const profileImageUrl = getProfileImageUrl(context.user)
       return (
-        <IconButton onClick={(e) => setDrawer(true)}>
-          <Avatar alt={displayName} src={profileImageUrl} />
+        <IconButton onClick={(e) => setDrawer(true)} edge="start">
+          <Avatar alt={displayName} src={profileImageUrl} sx={{ width: 27, height: 27 }} />
         </IconButton>
       )
     }
+*/
     return (
       <IconButton onClick={(e) => setDrawer(true)} color="inherit" edge="start">
         <MenuIcon />
@@ -102,7 +103,7 @@ export function Header(props: HeaderProps) {
                 </Box>
               </Box>
               {props.title && (
-                <Typography variant="h5" color="text.primary" noWrap={true}>
+                <Typography variant="h3" color="text.primary" noWrap={true}>
                   {props.title}
                 </Typography>
               )}
