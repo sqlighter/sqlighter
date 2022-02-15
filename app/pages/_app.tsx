@@ -231,7 +231,7 @@ export default function App({ Component, pageProps }) {
             <Head>
               <meta name="viewport" content="initial-scale=1, width=device-width" />
               <meta name="user" content={user?.id} />
-              <meta name="theme-color" content="#ff0000" />
+              <meta name="theme-color" content={PRIMARY_LIGHTEST} />
 
               <link rel="preconnect" href="https://fonts.googleapis.com" />
               <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
