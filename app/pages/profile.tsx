@@ -28,7 +28,7 @@ function getProfileContents(context) {
   const imageUrl = user?.attributes?.passport?.photos?.[0]?.value
 
   function onSignout(event) {
-    context.signout("/browse")
+    context.signout("/library")
   }
 
   return (

@@ -11,13 +11,13 @@ import BottomNavigationAction from "@mui/material/BottomNavigationAction"
 import Toolbar from "@mui/material/Toolbar"
 
 import JournalIcon from "@mui/icons-material/AssignmentOutlined"
-import BrowseIcon from "@mui/icons-material/FormatListBulletedOutlined"
+import LibraryIcon from "@mui/icons-material/LocalLibraryOutlined"
 import ProfileIcon from "@mui/icons-material/PersonOutlineOutlined"
 
 const Footer = () => {
   const router = useRouter()
 
-  // if pathname is '/browse/biomarkers/glucose' pathSegments[0] will be 'browse'
+  // if pathname is '/library/biomarkers/glucose' pathSegments[0] will be 'library'
   console.assert(router.pathname.length > 1 && router.pathname.startsWith("/"))
   let pathSegments = router.pathname.length > 1 && router.pathname.substring(1).split("/")
 
@@ -31,7 +31,7 @@ const Footer = () => {
       <Paper sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }} elevation={1}>
         <BottomNavigation value={pathSegments[0]} onChange={navigateTo} color="primary" showLabels>
           <BottomNavigationAction label="Journal" value="journal" icon={<JournalIcon />} />
-          <BottomNavigationAction label="Browse" value="browse" icon={<BrowseIcon />} />
+          <BottomNavigationAction label="Library" value="library" icon={<LibraryIcon />} />
           <BottomNavigationAction label="Profile" value="profile" icon={<ProfileIcon />} />
         </BottomNavigation>
       </Paper>

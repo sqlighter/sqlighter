@@ -54,5 +54,5 @@ WithoutSubtitle.args = {
 export const WithBack = Template.bind({})
 WithBack.args = {
   title: "Journal",
-  back: "/browse",
+  back: "/library",
 }

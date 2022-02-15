@@ -17,7 +17,6 @@ import Box from "@mui/material/Box"
 import { useUser } from "../lib/auth/hooks"
 import { Context } from "../components/context"
 import { getGoogleSigninClient } from "../components/signin"
-import { text } from "stream/consumers"
 
 //
 // Theming
@@ -219,8 +218,6 @@ export default function App({ Component, pageProps }) {
   // <GlobalStyles styles={{ body: { backgroundColor: PRIMARY_LIGHTEST } }} />
   // is used to that you don't see a white strip when you pull the header down
   // we then give all contents a default of background.paper so it's all white as base
-
-  //               <meta name="theme-color" content={PRIMARY_LIGHTEST} />
 
   return (
     <>

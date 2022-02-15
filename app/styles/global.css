@@ -52,6 +52,12 @@ strong {
   font-weight: 700;
 }
 
+/** Styles for components */
+
+.rounded {
+  border-radius: 50%;
+}
+
 /*
  * MUI Customizations
  * https://nextjs.org/docs/basic-features/built-in-css-support#sass-variables

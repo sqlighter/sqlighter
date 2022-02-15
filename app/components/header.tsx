@@ -52,7 +52,7 @@ export function Header(props: HeaderProps) {
   const [open, setDrawer] = useState(false)
 
   function goBack(e) {
-    // TODO if props.back is an url, go to that url, if backstack empty, go to /browse
+    // TODO if props.back is an url, go to that url, if backstack empty, go to /library
     router.back()
   }
 
@@ -116,7 +116,7 @@ export function Header(props: HeaderProps) {
           </Toolbar>
         </Container>
       </AppBar>
-      <Toolbar sx={{ height: headerHeight }} />
+      <Toolbar sx={{ height: headerHeight, marginBottom: 2 }} />
       <Drawer anchor={"left"} open={open} onClose={(e) => setDrawer(false)}>
         <Menu onClose={(e) => setDrawer(false)} />
       </Drawer>
