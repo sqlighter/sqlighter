@@ -13,22 +13,34 @@ import { Biomarker } from "../../lib/biomarkers"
 import { remark } from "remark"
 import html from "remark-html"
 
+import { ArticleListItem } from "../../components/articlelistitem"
 import { Section } from "../../components/section"
 
 export default function BiomarkerDetail({ biomarker }: { biomarker: any }) {
-  const articlesTitle = `Articles on ${biomarker.title}`
+  const referencesTitle = `References`
+  const referencesSubtitle = `Learn more on ${biomarker.title}`
+
+  console.log(biomarker)
 
   return (
     <Layout title={biomarker.title} subtitle={biomarker.description} back={true}>
       <article id={biomarker.id} title={biomarker.title}>
-        <div dangerouslySetInnerHTML={{ __html: biomarker.contentHtml }} />
-        <Image src={rbc} alt="Red blood cells" />
-        <Section title={articlesTitle} subtitle="Learn more">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse sit amet enim quis tellus ultricies
-          porttitor ac eu ex. Fusce commodo ante vitae luctus euismod. Donec at est faucibus, bibendum nisi ornare,
-          imperdiet nibh. Suspendisse sagittis consectetur massa. Vivamus ultricies fermentum felis, auctor vulputate
-          dui pellentesque et.
-        </Section>
+        <section>
+          <div className="markdown" dangerouslySetInnerHTML={{ __html: biomarker.contentHtml }} />
+        </section>
+        {biomarker.references && (
+          <Section title="References">
+            {biomarker.references.map((ref) => (
+              <ArticleListItem
+                key={ref.url}
+                title={ref.title}
+                url={ref.url}
+                imageUrl={ref.imageUrl}
+                videoUrl={ref.videoUrl}
+              />
+            ))}
+          </Section>
+        )}
       </article>
     </Layout>
   )
@@ -57,9 +69,12 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
   const biomarker = Biomarker.getBiomarker(params.id as string, locale)
   const serializable = JSON.parse(JSON.stringify(biomarker))
 
+  console.log(biomarker)
+
   // Use remark to convert markdown into HTML string
   const processedContent = await remark().use(html).process(serializable.content)
-  const contentHtml = processedContent.toString()
+  let contentHtml = processedContent.toString()
+  contentHtml = contentHtml.replaceAll('"images/', '"/api/contents/biomarkers/images/')
 
   // console.debug(`biomarkers.tsx - biomarkerId: ${biomarker.id}, locale: ${locale}`, serializable)
   return {

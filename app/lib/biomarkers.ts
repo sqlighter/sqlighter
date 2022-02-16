@@ -71,7 +71,13 @@ export class Biomarker {
       const contents = getContentFiles(biomarkersDirectory, locale)
       const biomarkers = {}
       for (const content of contents) {
-        biomarkers[content.id] = Biomarker.fromObject(content)
+        try {
+          biomarkers[content.id] = Biomarker.fromObject(content)
+        }
+        catch(exception) {
+          console.error(`getBiomarkers - error while processing ${content?.id}`, content, exception)
+          throw exception
+        }
       }
       Biomarker._biomarkers[locale] = biomarkers
       // console.log(`Biomarkers.getBiomarkers('${locale}') - lazy loaded ${Object.keys(biomarkers).length} biomarkers`)
@@ -199,7 +205,11 @@ export class Biomarker {
 
   /** Creates a biomarker from an object */
   public static fromObject(obj: any): Biomarker {
-    assert(obj.id)
+    if (!obj.id) {
+      console.error(`Biomarkers.fromObject - object missing id field`, obj)
+      assert(obj.id)
+    }
+
     const biomarker: Biomarker = Object.assign(new Biomarker(obj.id), obj)
 
     if (biomarker.unit) {

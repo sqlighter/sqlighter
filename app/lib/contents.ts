@@ -25,7 +25,7 @@ export function getContentFiles(directoryPath: string, locale: string = DEFAULT_
   const fileNames = fs.readdirSync(directoryPath)
   for (const fileName of fileNames) {
     const filePath = path.join(directoryPath, fileName)
-    if (fs.statSync(filePath).isFile()) {
+    if (!filePath.startsWith(".") && filePath.endsWith(".md") && fs.statSync(filePath).isFile()) {
       const item = getContentFile(filePath, locale)
       if (item) {
         items.push(item)

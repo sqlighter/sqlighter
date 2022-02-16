@@ -14,7 +14,7 @@ interface SectionProps {
 
 export function Section({ title, subtitle, large, children }: SectionProps) {
   return (
-    <section>
+    <section aria-label={title}>
       <Box mb={1}>
         {title && (
           <Typography variant={large ? "h2" : "h3"} color="text.primary">

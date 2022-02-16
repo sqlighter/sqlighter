@@ -57,6 +57,19 @@ strong {
   border-radius: 50%;
 }
 
+/** Markdown from content in .md files */
+.markdown img {
+  max-width: 100%;
+}
+
+.article-listitem img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+
 /*
  * MUI Customizations
  * https://nextjs.org/docs/basic-features/built-in-css-support#sass-variables
