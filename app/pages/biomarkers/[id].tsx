@@ -76,7 +76,7 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
       const processedContent = await remark().use(html).process(serializable.content)
       contentHtml = processedContent.toString()
       if (typeof contentHtml == "string") {
-        contentHtml = contentHtml.replaceAll('"images/', '"/api/contents/biomarkers/images/')
+        contentHtml = contentHtml.replace(/\"images\//g, '"/api/contents/biomarkers/images/')
       }
     }
 
