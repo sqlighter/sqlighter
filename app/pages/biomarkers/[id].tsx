@@ -20,8 +20,6 @@ export default function BiomarkerDetail({ biomarker }: { biomarker: any }) {
   const referencesTitle = `References`
   const referencesSubtitle = `Learn more on ${biomarker.title}`
 
-  console.log(biomarker)
-
   return (
     <Layout title={biomarker.title} subtitle={biomarker.description} back={true}>
       <article id={biomarker.id} title={biomarker.title}>
@@ -72,7 +70,9 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
   // Use remark to convert markdown into HTML string
   const processedContent = await remark().use(html).process(serializable.content)
   let contentHtml = processedContent.toString()
-  contentHtml = contentHtml.replaceAll('"images/', '"/api/contents/biomarkers/images/')
+  if (contentHtml) {
+    contentHtml = contentHtml.replaceAll('"images/', '"/api/contents/biomarkers/images/')
+  }
 
   // console.debug(`biomarkers.tsx - biomarkerId: ${biomarker.id}, locale: ${locale}`, serializable)
   return {
