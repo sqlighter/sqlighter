@@ -12,15 +12,14 @@ export const config = {
   api: { externalResolver: true },
 }
 
-
 // http://expressjs.com/en/5x/api.html#example.of.express.static
 const handler = express()
 const contentsDirectory = path.resolve("contents")
 const contentsOptions = {
-  dotfiles: 'ignore',
-  extensions: ['jpg', 'jpeg', 'svg', 'png'], // no .md or .json files
+  dotfiles: "ignore",
+  extensions: ["jpg", "jpeg", "svg", "png"], // no .md or .json files
   index: false,
-  maxAge: '4h',
+  maxAge: "4h",
 }
 const serveFiles = express.static(contentsDirectory, contentsOptions)
 handler.use("/api/contents", serveFiles)

@@ -64,12 +64,10 @@ export const getStaticPaths: GetStaticPaths = ({ locales }) => {
   }
 }
 
-/** Static properties from biomarkers.json */
+/** Static properties from /contents/biomarkers/ */
 export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
   const biomarker = Biomarker.getBiomarker(params.id as string, locale)
   const serializable = JSON.parse(JSON.stringify(biomarker))
-
-  console.log(biomarker)
 
   // Use remark to convert markdown into HTML string
   const processedContent = await remark().use(html).process(serializable.content)

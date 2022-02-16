@@ -9,8 +9,7 @@ export default function PrivacyPolicyPage() {
         Your privacy is important to us. It is Insieme&#39;s policy to respect your privacy and comply with any
         applicable law and regulation regarding any personal information we may collect about you. Information we
         collect includes both information you knowingly and actively provide us when using or participating in any of
-        our services, and any information automatically sent by your devices in the course of accessing
-        our services.
+        our services, and any information automatically sent by your devices in the course of accessing our services.
       </p>
       <h4>Personal Information</h4>
       <p>

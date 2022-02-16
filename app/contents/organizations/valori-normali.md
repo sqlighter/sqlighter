@@ -4,7 +4,7 @@ title: Valori Normali
 description: Il sito valorinormali.com nasce nel 2013, curato dal Dr. Roberto Gindro, per contribuire a divulgare informazioni sanitarie in lingua italiana affidabili e di qualità.
 url: https://valorinormali.com/
 domains:
-    - https://healthy.thewom.it/
+  - https://healthy.thewom.it/
 locale: it-IT
 ---
 

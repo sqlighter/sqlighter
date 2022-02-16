@@ -20,7 +20,11 @@ export function BiomarkerListItem({ biomarker }: BiomarkerListItemProps) {
   const biomarkerImageUrl = "/biomarkers/blood.jpeg"
 
   // TODO we could make the text of list items a bit bigger in the theme itself
-  const primary = <Typography variant="body1" noWrap={true}>{biomarker.title}</Typography>
+  const primary = (
+    <Typography variant="body1" noWrap={true}>
+      {biomarker.title}
+    </Typography>
+  )
   // const secondary = <Typography variant="body2">{biomarker.description}</Typography>
   //const primary = biomarker.title
   const secondary = biomarker.description

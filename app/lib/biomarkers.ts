@@ -72,9 +72,13 @@ export class Biomarker {
       const biomarkers = {}
       for (const content of contents) {
         try {
+          if (Array.isArray(content.references)) {
+            // if references has just a url convert to object with url property, normally references are dictionaries
+            content.references = content.references.map((r) => (typeof r == "string" ? { url: r } : r))
+          }
+
           biomarkers[content.id] = Biomarker.fromObject(content)
-        }
-        catch(exception) {
+        } catch (exception) {
           console.error(`getBiomarkers - error while processing ${content?.id}`, content, exception)
           throw exception
         }
