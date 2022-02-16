@@ -17,7 +17,7 @@ export function BiomarkersList({ title, biomarkers }: BiomarkersListProps) {
       {title && <Typography variant="overline">{title}</Typography>}
       <List dense disablePadding>
         {biomarkers.map((biomarker) => (
-          <BiomarkerListItem biomarker={biomarker} />
+          <BiomarkerListItem key={biomarker.id} biomarker={biomarker} />
         ))}
       </List>
     </section>
