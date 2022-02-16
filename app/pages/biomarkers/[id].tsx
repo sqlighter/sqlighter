@@ -23,9 +23,11 @@ export default function BiomarkerDetail({ biomarker }: { biomarker: any }) {
   return (
     <Layout title={biomarker.title} subtitle={biomarker.description} back={true}>
       <article id={biomarker.id} title={biomarker.title}>
-        <section>
-          <div className="markdown" dangerouslySetInnerHTML={{ __html: biomarker.contentHtml }} />
-        </section>
+        {biomarker.contentHtml && (
+          <section>
+            <div className="markdown" dangerouslySetInnerHTML={{ __html: biomarker.contentHtml }} />
+          </section>
+        )}
         {biomarker.references && (
           <Section title="References">
             {biomarker.references.map((ref) => (
@@ -65,19 +67,27 @@ export const getStaticPaths: GetStaticPaths = ({ locales }) => {
 /** Static properties from /contents/biomarkers/ */
 export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
   const biomarker = Biomarker.getBiomarker(params.id as string, locale)
-  const serializable = JSON.parse(JSON.stringify(biomarker))
+  try {
+    const serializable = JSON.parse(JSON.stringify(biomarker))
 
-  // Use remark to convert markdown into HTML string
-  const processedContent = await remark().use(html).process(serializable.content)
-  let contentHtml = processedContent.toString()
-  if (contentHtml) {
-    contentHtml = contentHtml.replaceAll('"images/', '"/api/contents/biomarkers/images/')
-  }
+    // Use remark to convert markdown into HTML string
+    let contentHtml = null
+    if (serializable.content) {
+      const processedContent = await remark().use(html).process(serializable.content)
+      contentHtml = processedContent.toString()
+      if (contentHtml) {
+        contentHtml = contentHtml.replaceAll('"images/', '"/api/contents/biomarkers/images/')
+      }
+    }
 
-  // console.debug(`biomarkers.tsx - biomarkerId: ${biomarker.id}, locale: ${locale}`, serializable)
-  return {
-    props: {
-      biomarker: { ...serializable, contentHtml },
-    },
+    // console.debug(`biomarkers.tsx - biomarkerId: ${biomarker.id}, locale: ${locale}`, serializable)
+    return {
+      props: {
+        biomarker: { ...serializable, contentHtml },
+      },
+    }
+  } catch (exception) {
+    console.error(`biomarker.getStaticProps - error while processing biomarker: ${params.id}`, exception, biomarker)
+    throw exception
   }
 }
