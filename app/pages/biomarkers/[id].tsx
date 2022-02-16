@@ -72,10 +72,10 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
 
     // Use remark to convert markdown into HTML string
     let contentHtml = null
-    if (serializable.content) {
+    if (typeof serializable.content == "string") {
       const processedContent = await remark().use(html).process(serializable.content)
       contentHtml = processedContent.toString()
-      if (contentHtml) {
+      if (typeof contentHtml == "string") {
         contentHtml = contentHtml.replaceAll('"images/', '"/api/contents/biomarkers/images/')
       }
     }
