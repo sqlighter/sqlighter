@@ -37,6 +37,7 @@ export default function BiomarkerDetail({ biomarker }: { biomarker: any }) {
                 url={ref.url}
                 imageUrl={ref.imageUrl}
                 videoUrl={ref.videoUrl}
+                organizationId={ref.organizationId}
               />
             ))}
           </Section>

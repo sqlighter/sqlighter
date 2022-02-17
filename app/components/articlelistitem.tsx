@@ -11,6 +11,8 @@ import ListItemText from "@mui/material/ListItemText"
 import ListItemAvatar from "@mui/material/ListItemAvatar"
 import Typography from "@mui/material/Typography"
 
+import { Logo } from "./logo"
+
 export interface ArticleListItemProps {
   title?: string
   subtitle?: string
@@ -18,6 +20,8 @@ export interface ArticleListItemProps {
   url: string
   imageUrl?: string
   videoUrl?: string
+
+  organizationId?: string
 }
 
 export function ArticleListItem(props: ArticleListItemProps) {
@@ -32,7 +36,8 @@ export function ArticleListItem(props: ArticleListItemProps) {
       >
         <ListItem alignItems="flex-start" disableGutters dense={true} sx={{ marginTop: -1, marginBottom: -1 }}>
           <Typography variant="h4">{props.title}</Typography>
-          <img src={props.imageUrl} alt={props.title} />
+          <img src={props.imageUrl} alt={props.title} className="article-thumbnail" />
+          <Logo organizationId={props.organizationId} height={20} width={200} />
         </ListItem>
       </ListItemButton>
     </Link>

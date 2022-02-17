@@ -75,12 +75,17 @@ export function getContentFile(filePath: string, locale: string = DEFAULT_LOCALE
   return null
 }
 
+/** An image asset */
 export interface ContentImages {
   name: string
-  path: string
   type: string
   width: number
   height: number
+
+  /** Path of image in local file system */
+  path?: string
+  /** Url of image resource */
+  url?: string
 }
 
 /**

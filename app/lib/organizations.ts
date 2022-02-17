@@ -79,21 +79,25 @@ export class Organization {
 
   /** Returns the organization that publishes content from the given url (or undefined), localized if requested */
   public static getOrganizationFromUrl(url: string, locale: string = DEFAULT_LOCALE): Organization | undefined {
-    const organizations = Organization.getOrganizations(locale)
-    const hostname = new URL(url).hostname
+    try {
+      const organizations = Organization.getOrganizations(locale)
+      const hostname = new URL(url).hostname
 
-    for (const org of Object.values(organizations)) {
-      if (hostname == new URL(org.url).hostname) {
-        return org
-      }
-      // has optional domains?
-      if (org.domains) {
-        for (const domain of org.domains) {
-          if (hostname == new URL(domain).hostname) {
-            return org
+      for (const org of Object.values(organizations)) {
+        if (hostname == new URL(org.url).hostname) {
+          return org
+        }
+        // has optional domains?
+        if (org.domains) {
+          for (const domain of org.domains) {
+            if (hostname == new URL(domain).hostname) {
+              return org
+            }
           }
         }
       }
+    } catch (exception) {
+      console.warn(`Organization.getOrganizationFromUrl - ${url}`, exception)
     }
   }
 
@@ -110,7 +114,8 @@ export class Organization {
    * Will render to id if nested in a json
    * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#tojson_behavior
    */
+  /* 
   public toJSON(key: any) {
     return key ? this.id : this
-  }
+  }*/
 }
