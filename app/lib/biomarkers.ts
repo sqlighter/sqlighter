@@ -11,6 +11,7 @@ import { round } from "./utilities"
 import { Unit } from "./units"
 import { getContentFiles, DEFAULT_LOCALE } from "./contents"
 import { Metadata } from "./metadata"
+import { Organization } from "./organizations"
 
 export const BIOMARKERS_SEARCH_CONFIDENCE = 0.7
 export const UNITS_SEARCH_CONFIDENCE = 0.7
@@ -49,7 +50,7 @@ export class Biomarker {
   conversions?: { [unit: string]: number }
 
   /** Links to external contents */
-  references?: string[]
+  references?: string[] | any[]
 
   /** Other names by which this biomarker is known (localized) */
   aliases?: string[]
@@ -75,6 +76,16 @@ export class Biomarker {
           if (Array.isArray(content.references)) {
             // if references has just a url convert to object with url property, normally references are dictionaries
             content.references = content.references.map((r) => (typeof r == "string" ? { url: r } : r))
+
+            // add organization id which can be used to apply branding these links
+            for (const reference of content.references) {
+              if (reference.url) {
+                const organization = Organization.getOrganizationFromUrl(reference.url)
+                if (organization) {
+                  reference.organizationId = organization.id
+                }
+              }
+            }
           }
 
           biomarkers[content.id] = Biomarker.fromObject(content)
