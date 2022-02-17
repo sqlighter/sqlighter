@@ -6,6 +6,7 @@ import path from "path"
 import matter from "gray-matter"
 import fs from "fs"
 import assert from "assert"
+import sizeOf from "image-size"
 
 export const DEFAULT_LOCALE = "en-US"
 
@@ -72,6 +73,49 @@ export function getContentFile(filePath: string, locale: string = DEFAULT_LOCALE
     console.warn(`getContentFile - ${filePath}, ${exception}`, exception)
   }
   return null
+}
+
+export interface ContentImages {
+  name: string
+  path: string
+  type: string
+  width: number
+  height: number
+}
+
+/**
+ * Scans a directory of /images and returns information on the image files
+ * @param contentsPath Path to contents directory, eg. contents/biomarkers, contents/organizations, etc.
+ * @param locale The locale directory to be scanned
+ * @returns An array of objects with the image name, path, width and height
+ */
+export function getContentImages(contentsPath: string, locale: string = DEFAULT_LOCALE): ContentImages[] {
+  assertLocale(locale)
+  const images = []
+
+  if (locale != DEFAULT_LOCALE) {
+    const localizedDir = path.join(contentsPath, locale)
+    assert(fs.existsSync(localizedDir), `getContentImages - localized directory ${localizedDir} does not exist`)
+  }
+
+  contentsPath = path.join(contentsPath, "/images")
+  const fileNames = fs.readdirSync(contentsPath)
+  for (const fileName of fileNames) {
+    const filePath = path.join(contentsPath, fileName)
+    const fileExtension = path.extname(filePath).toLowerCase()
+    if (fileExtension && [".png", ".jpg", ".jpeg", ".svg"].indexOf(fileExtension) != -1) {
+      const imageSize = sizeOf(filePath)
+      images.push({
+        name: fileName,
+        path: filePath,
+        type: imageSize.type,
+        width: imageSize.width,
+        height: imageSize.height,
+      })
+    }
+  }
+
+  return images
 }
 
 export class Translation {

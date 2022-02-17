@@ -31,6 +31,7 @@
     "dotenv": "^16.0.0",
     "fuse.js": "^6.5.3",
     "gray-matter": "^4.0.3",
+    "image-size": "^1.0.1",
     "jwt-decode": "^3.1.2",
     "knex": "^1.0.2",
     "mysql2": "^2.3.3",
