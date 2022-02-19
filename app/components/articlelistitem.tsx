@@ -42,8 +42,12 @@ export function ArticleListItem(props: ArticleListItemProps) {
           <Box display="flex">
             <Stack sx={{ flexGrow: 1 }}>
               <Logo organizationId={props.organizationId} height={20} width={200} />
-              <Typography variant="body1" color="text.primary">{props.title}</Typography>
-              <Typography variant="caption" color="text.secondary">{hostname}</Typography>
+              <Typography variant="body1" color="text.primary">
+                {props.title}
+              </Typography>
+              <Typography variant="caption" color="text.secondary">
+                {hostname}
+              </Typography>
             </Stack>
             <img src={props.imageUrl} alt={props.title} className="article-thumbnail" />
           </Box>

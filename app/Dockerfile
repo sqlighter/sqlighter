@@ -30,7 +30,7 @@ RUN yarn next build
 CMD ["yarn", "next", "start"]
 
 # Commands to build docker image, run it locally then deploy to Google Cloud Run
-# docker build -t "eu.gcr.io/insieme2/insieme-app:staging" .
+# docker build -t "eu.gcr.io/insieme2/insieme-app:staging" --build-arg NEXT_PUBLIC_GOOGLE_CLIENT_ID=${NEXT_PUBLIC_GOOGLE_CLIENT_ID} .
 # docker run -it --env-file=.env -p 127.0.0.1:80:3000 eu.gcr.io/insieme2/insieme-app:staging
 # docker push eu.gcr.io/insieme2/insieme-app:staging
 # gcloud run deploy insieme-app --quiet --region europe-west1 --image "eu.gcr.io/insieme2/insieme-app:staging" --platform "managed" --allow-unauthenticated

@@ -1,5 +1,5 @@
 //
-// pages/api/contents/[...path].js - serve static assets from /contents directory
+// pages/api/contents/[...path].ts - serve static assets from /contents directory
 //
 
 import express from "express"
