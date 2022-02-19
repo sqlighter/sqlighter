@@ -33,6 +33,7 @@ export function Logo({ organizationId, width, height }: LogoProps) {
           height={height}
           layout="intrinsic"
           objectFit="contain"
+          objectPosition="left top"
         />
       )}
     </Box>

@@ -53,8 +53,12 @@ strong {
 
 /** Styles for components */
 
-.rounded {
+.round {
   border-radius: 50%;
+}
+
+.rounded {
+  border-radius: 8px
 }
 
 /** Markdown from content in .md files */

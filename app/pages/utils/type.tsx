@@ -5,12 +5,12 @@
 import * as React from "react"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
-import { createTheme } from "@mui/material/styles"
+import { useTheme } from "@mui/material/styles"
 
 import Layout from "../../components/layout"
 
 export default function TypePage() {
-  const theme = createTheme()
+  const theme = useTheme()
 
   function variantSpecs(variant, sample) {
     return (

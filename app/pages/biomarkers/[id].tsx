@@ -9,11 +9,15 @@ import rbc from "../../public/images/rbc.jpeg"
 import Date from "../../components/date"
 import utilStyles from "../../styles/utils.module.css"
 import { GetStaticProps, GetStaticPaths } from "next"
+
+import List from "@mui/material/List"
+import Typography from "@mui/material/Typography"
+
 import { Biomarker } from "../../lib/biomarkers"
 import { remark } from "remark"
 import html from "remark-html"
 
-import { ArticleListItem } from "../../components/articlelistitem"
+import { ReferenceListItem } from "../../components/listitems"
 import { Section } from "../../components/section"
 
 export default function BiomarkerDetail({ biomarker }: { biomarker: any }) {
@@ -28,19 +32,16 @@ export default function BiomarkerDetail({ biomarker }: { biomarker: any }) {
             <div className="markdown" dangerouslySetInnerHTML={{ __html: biomarker.contentHtml }} />
           </section>
         )}
+
         {biomarker.references && (
-          <Section title="References">
-            {biomarker.references.map((ref) => (
-              <ArticleListItem
-                key={ref.url}
-                title={ref.title}
-                url={ref.url}
-                imageUrl={ref.imageUrl}
-                videoUrl={ref.videoUrl}
-                organizationId={ref.organizationId}
-              />
-            ))}
-          </Section>
+          <>
+            <Typography variant="overline">References</Typography>
+            <List dense disablePadding>
+              {biomarker.references.map((ref) => (
+                <ReferenceListItem key={ref.url} reference={ref} />
+              ))}
+            </List>
+          </>
         )}
       </article>
     </Layout>

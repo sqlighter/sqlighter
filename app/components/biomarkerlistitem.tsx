@@ -5,7 +5,7 @@
 import Link from "next/link"
 import Image from "next/image"
 
-import ListItem from "@mui/material/ListItem"
+import MuiListItem from "@mui/material/ListItem"
 import ListItemButton from "@mui/material/ListItemButton"
 import ListItemText from "@mui/material/ListItemText"
 import ListItemAvatar from "@mui/material/ListItemAvatar"
@@ -32,12 +32,12 @@ export function BiomarkerListItem({ biomarker }: BiomarkerListItemProps) {
   return (
     <Link href={`/biomarkers/${biomarker.id}`} key={biomarker.id} passHref>
       <ListItemButton sx={{ marginLeft: -2, marginRight: -2, borderRadius: "8px" }} dense={true}>
-        <ListItem alignItems="flex-start" disableGutters dense={true} sx={{ marginTop: -1, marginBottom: -1 }}>
+        <MuiListItem alignItems="flex-start" disableGutters dense={true} sx={{ marginTop: -1, marginBottom: -1 }}>
           <ListItemAvatar>
             <Image src={biomarkerImageUrl} alt={biomarker.title} width={40} height={40} className="rounded" />
           </ListItemAvatar>
           <ListItemText primary={primary} secondary={secondary} />
-        </ListItem>
+        </MuiListItem>
       </ListItemButton>
     </Link>
   )
