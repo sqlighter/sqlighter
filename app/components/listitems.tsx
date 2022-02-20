@@ -16,11 +16,16 @@ import Typography from "@mui/material/Typography"
 import { Logo } from "./logo"
 
 function getImage(src, alt, width, height, className?) {
-  if (src.startsWith("/")) {
-    return <Image src={src} alt={alt} width={width} height={height} className={className} />
-  }
+/*
+  if (src) {
+    if (src.startsWith("/")) {
+      return <Image src={src} alt={alt} width={width} height={height} className={className} />
+    }
+*/
+    return <img src={src} alt={alt} width={width} height={height} style={{objectFit: "cover"}} className={className} />
+//  }
 
-  return <img src={src} alt={alt} width={width} height={height} className={className} />
+ // return <Box width={width} height={height} />
 }
 
 export interface ReferenceListItemProps {
@@ -53,18 +58,16 @@ export function ReferenceListItem({ reference }: ReferenceListItemProps) {
 
   return (
     <Link href={reference.url} passHref>
-      <ListItemButton sx={{ marginLeft: -2, marginRight: -2, borderRadius: "8px" }} dense={true}>
         <ListItem alignItems="flex-start" disableGutters dense={true} sx={{ marginTop: -1, marginBottom: -1 }}>
-          <ListItemAvatar>{getImage(reference.imageUrl, reference.title, 40, 40, "rounded")} </ListItemAvatar>
+          {getImage(reference.imageUrl, reference.title, 48, 48, "rounded")}
           <ListItemText primary={primary} secondary={secondary} />
-          <Box>
-            <Logo organizationId={reference.organizationId} height={14} width={96} />
+          <Box height="100%">
+            {reference.organizationId && <Logo organizationId={reference.organizationId} height={28} width={96} objectPosition="right center" />}
           </Box>
         </ListItem>
-      </ListItemButton>
     </Link>
   )
-/*
+  /*
   return (
     <Link href={props.url} passHref>
       <ListItemButton

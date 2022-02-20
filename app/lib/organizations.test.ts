@@ -36,7 +36,7 @@ describe("organizations.ts", () => {
     const en1 = Organization.getOrganization("medline-plus")
 
     expect(en1.images).toBeTruthy()
-    expect(en1.images).toHaveLength(1)
+    expect(en1.images).toHaveLength(2)
 
     const logo1 = en1.images[0]
     expect(logo1.name).toBe("medline-plus.png")

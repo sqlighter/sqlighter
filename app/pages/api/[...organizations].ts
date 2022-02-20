@@ -10,7 +10,13 @@ import auth from "../../middleware/auth"
 import { Organization } from "../../lib/organizations"
 
 function getImageUrl(imagePath: string) {
-  return "/api/" + imagePath.substring(imagePath.indexOf("contents/organizations"))
+  if (imagePath) {
+    const idx = imagePath.indexOf("contents/organizations")
+    if (idx != -1) {
+      return "/api/" + imagePath.substring(idx)
+    }
+  }
+  return undefined
 }
 
 const mimeTypes = {
@@ -27,11 +33,14 @@ handler
 
   /** Returns an organization's details */
   .get("/api/organizations/:organizationId", (req: any, res) => {
-    const org = Organization.getOrganization(req.params.organizationId)
-    for (const image of org.images) {
-      image.url = getImageUrl(image.path) // relative from server root
-      delete image.path
+    const organizationId = req.params.organizationId
+    const org = { ...Organization.getOrganization(organizationId) }
+    for (const idx in org.images) {
+      const image = org.images[idx]
+      org.images[idx] = { ...image, url: getImageUrl(image.path) }
     }
+
+    console.debug(`/api/organizations/${organizationId}`, org)
     res.json({ data: org })
   })
 

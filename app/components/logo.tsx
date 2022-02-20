@@ -10,10 +10,13 @@ interface LogoProps {
   organizationId: string
   width: number
   height: number
+
+  // https://developer.mozilla.org/en-US/docs/Web/CSS/object-position
+  objectPosition?: string
 }
 
 /** Shows the logo of an organization in a given box */
-export function Logo({ organizationId, width, height }: LogoProps) {
+export function Logo({ organizationId, width, height, objectPosition }: LogoProps) {
   const { data } = useSWR(`/api/organizations/${organizationId}`, (apiUrl: string) =>
     fetch(apiUrl).then((res) => res.json())
   )
@@ -33,7 +36,7 @@ export function Logo({ organizationId, width, height }: LogoProps) {
           height={height}
           layout="intrinsic"
           objectFit="contain"
-          objectPosition="left top"
+          objectPosition={objectPosition || "left center"}
         />
       )}
     </Box>

@@ -34,14 +34,13 @@ export default function BiomarkerDetail({ biomarker }: { biomarker: any }) {
         )}
 
         {biomarker.references && (
-          <>
-            <Typography variant="overline">References</Typography>
-            <List dense disablePadding>
-              {biomarker.references.map((ref) => (
-                <ReferenceListItem key={ref.url} reference={ref} />
-              ))}
-            </List>
-          </>
+            <Section title="References">
+              <List dense disablePadding>
+                {biomarker.references.map((ref) => (
+                  <ReferenceListItem key={ref.url} reference={ref} />
+                ))}
+              </List>
+            </Section>
         )}
       </article>
     </Layout>
