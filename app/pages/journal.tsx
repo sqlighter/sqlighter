@@ -1,7 +1,10 @@
+//
+// journal.tsx
+//
+
 import { GetStaticProps } from "next"
 import Head from "next/head"
 import Link from "next/link"
-import utilStyles from "../styles/utils.module.css"
 
 import * as React from "react"
 
@@ -16,9 +19,7 @@ interface JournalPageProps {
 export default function JournalPage(props: JournalPageProps) {
   return (
     <Layout title="Journal" subtitle="Track your progress">
-      <section>
-        <h2 className={utilStyles.headingLg}>Journal</h2>
-      </section>
+      <section>tbd: Journal goes here</section>
     </Layout>
   )
 }

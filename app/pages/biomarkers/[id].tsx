@@ -2,21 +2,16 @@
 // biomarkerPage - detail page for biomarker
 //
 
-import Layout from "../../components/layout"
-import Head from "next/head"
-import Image from "next/image"
-import rbc from "../../public/images/rbc.jpeg"
-import Date from "../../components/date"
-import utilStyles from "../../styles/utils.module.css"
 import { GetStaticProps, GetStaticPaths } from "next"
-
-import List from "@mui/material/List"
-import Typography from "@mui/material/Typography"
-
-import { Biomarker } from "../../lib/biomarkers"
 import { remark } from "remark"
 import html from "remark-html"
 
+import Box from "@mui/material/Box"
+import List from "@mui/material/List"
+import Typography from "@mui/material/Typography"
+
+import Layout from "../../components/layout"
+import { Biomarker } from "../../lib/biomarkers"
 import { ReferenceListItem } from "../../components/listitems"
 import { Section } from "../../components/section"
 
@@ -32,17 +27,17 @@ export default function BiomarkerDetail({ biomarker }: { biomarker: any }) {
             <div className="markdown" dangerouslySetInnerHTML={{ __html: biomarker.contentHtml }} />
           </section>
         )}
-
-        {biomarker.references && (
-            <Section title="References">
-              <List dense disablePadding>
-                {biomarker.references.map((ref) => (
-                  <ReferenceListItem key={ref.url} reference={ref} />
-                ))}
-              </List>
-            </Section>
-        )}
       </article>
+      {biomarker.references && (
+        <Section title="References">
+          <Box mb={2} />
+          <List dense disablePadding>
+            {biomarker.references.map((ref) => (
+              <ReferenceListItem key={ref.url} reference={ref} />
+            ))}
+          </List>
+        </Section>
+      )}
     </Layout>
   )
 }

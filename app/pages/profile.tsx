@@ -1,7 +1,6 @@
 import { GetStaticProps } from "next"
 import Head from "next/head"
 import Link from "next/link"
-import utilStyles from "../styles/utils.module.css"
 
 import * as React from "react"
 import Avatar from "@mui/material/Avatar"

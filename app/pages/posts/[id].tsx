@@ -4,7 +4,6 @@
 
 import Head from "next/head"
 import { GetStaticProps, GetStaticPaths } from "next"
-import utilStyles from "../../styles/utils.module.css"
 import Typography from "@mui/material/Typography"
 
 import { Section } from "../../components/section"

@@ -58,7 +58,7 @@ strong {
 }
 
 .rounded {
-  border-radius: 8px
+  border-radius: 8px;
 }
 
 /** Markdown from content in .md files */

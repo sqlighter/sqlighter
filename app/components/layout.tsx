@@ -6,13 +6,11 @@ import Head from "next/head"
 import Image from "next/image"
 import Link from "next/link"
 
-import Container from "@mui/material/Container"
-import { styled, createTheme, ThemeProvider } from "@mui/system"
 import Box from "@mui/material/Box"
+import Container from "@mui/material/Container"
 
 import { Header } from "./header"
 import Footer from "./footer"
-import { Fragment } from "react"
 
 interface LayoutProps {
   title?: string
@@ -24,14 +22,14 @@ interface LayoutProps {
 }
 
 export default function Layout({ children, title, subtitle, home, back }: LayoutProps) {
-  //  title = title || "Biomarkers"
+  title = title || "Biomarkers"
 
   return (
     <>
       <Head>
         <title>{title}</title>
         <link rel="icon" href="/favicon.ico" />
-        <meta name="description" content="Learn how to build a personal website using Next.js" />
+        <meta name="description" content="Biomarkers" />
         <meta
           property="og:image"
           content={`https://og-image.vercel.app/${encodeURI(

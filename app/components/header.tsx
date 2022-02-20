@@ -4,6 +4,7 @@
 
 import { useRouter } from "next/router"
 import { useContext, useState } from "react"
+
 import useScrollTrigger from "@mui/material/useScrollTrigger"
 import AppBar from "@mui/material/AppBar"
 import Avatar from "@mui/material/Avatar"
@@ -16,7 +17,6 @@ import Slide from "@mui/material/Slide"
 import Stack from "@mui/material/Stack"
 import Toolbar from "@mui/material/Toolbar"
 import Typography from "@mui/material/Typography"
-
 import SearchIcon from "@mui/icons-material/SearchOutlined"
 import ArrowBackIcon from "@mui/icons-material/ArrowBackOutlined"
 

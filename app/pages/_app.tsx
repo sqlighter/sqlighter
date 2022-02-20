@@ -108,7 +108,6 @@ const customTheme = createTheme({
     },
     h4: { ...defaultTheme.typography.h6, fontWeight: 700 },
     h5: { ...defaultTheme.typography.h6, fontWeight: 700 },
-    
     h6: { ...defaultTheme.typography.body1, fontWeight: 700 },
   },
 

@@ -10,3 +10,6 @@ https://github.com/jonschlinkert/gray-matter
 
 Format for front matter files (biomarkers, units, etc)  
 https://gohugo.io/content-management/front-matter/
+
+Tools
+`yarn next dev --hostname 192.168.8.101`

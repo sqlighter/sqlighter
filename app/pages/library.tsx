@@ -3,10 +3,8 @@
 //
 
 import * as React from "react"
-import Head from "next/head"
 import Link from "next/link"
 import { GetStaticProps, GetServerSideProps } from "next"
-import utilStyles from "../styles/utils.module.css"
 
 import List from "@mui/material/List"
 import Stack from "@mui/material/Stack"
@@ -40,14 +38,12 @@ export default function BrowsePage({ biomarkers, posts, locale }: BrowsePageProp
       <Typography variant="overline">Articles</Typography>
       {posts &&
         posts.map(({ id, date, title }) => (
-          <li className={utilStyles.listItem} key={id}>
+          <li key={id}>
             <Link href={`/posts/${id}`}>
               <a>{title}</a>
             </Link>
             <br />
-            <small className={utilStyles.lightText}>
-              <Date dateString={date} />
-            </small>
+            <Date dateString={date} />
           </li>
         ))}
 

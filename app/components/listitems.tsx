@@ -16,37 +16,28 @@ import Typography from "@mui/material/Typography"
 import { Logo } from "./logo"
 
 function getImage(src, alt, width, height, className?) {
-/*
   if (src) {
     if (src.startsWith("/")) {
       return <Image src={src} alt={alt} width={width} height={height} className={className} />
     }
-*/
-    return <img src={src} alt={alt} width={width} height={height} style={{objectFit: "cover"}} className={className} />
-//  }
+    return (
+      <img src={src} alt={alt} width={width} height={height} style={{ objectFit: "cover" }} className={className} />
+    )
+  }
 
- // return <Box width={width} height={height} />
+  return <Box width={width} height={height} />
 }
 
 export interface ReferenceListItemProps {
   reference: any
 }
 
-/*
-key={ref.url}
-title={ref.title}
-url={ref.url}
-imageUrl={ref.imageUrl}
-videoUrl={ref.videoUrl}
-organizationId={ref.organizationId}
-*/
-
 export function ReferenceListItem({ reference }: ReferenceListItemProps) {
   console.assert(reference.url)
   const hostname = new URL(reference.url).hostname
 
   // TODO we could make the text of list items a bit bigger in the theme itself
-  const primary = (
+  let primary = (
     <Typography variant="body1" noWrap={true}>
       {reference.title}
     </Typography>
@@ -58,82 +49,22 @@ export function ReferenceListItem({ reference }: ReferenceListItemProps) {
 
   return (
     <Link href={reference.url} passHref>
-        <ListItem alignItems="flex-start" disableGutters dense={true} sx={{ marginTop: -1, marginBottom: -1 }}>
-          {getImage(reference.imageUrl, reference.title, 48, 48, "rounded")}
-          <ListItemText primary={primary} secondary={secondary} />
-          <Box height="100%">
-            {reference.organizationId && <Logo organizationId={reference.organizationId} height={28} width={96} objectPosition="right center" />}
-          </Box>
-        </ListItem>
-    </Link>
-  )
-  /*
-  return (
-    <Link href={props.url} passHref>
-      <ListItemButton
-        sx={{ marginLeft: -2, marginRight: -2, borderRadius: "8px" }}
-        dense={true}
-        className="article-listitem"
-      >
-        <ListItem alignItems="flex-start" disableGutters dense={true} sx={{ marginTop: 0, marginBottom: 0 }}>
-          <Box display="flex" flexGrow={1}>
-            <Box mr={2}>
-              <img src={props.imageUrl} alt={props.title} className="article-thumbnail" />
+      <Box display="flex" alignItems="flex-start" mb={2}>
+        <Box mr={2}>{getImage(reference.imageUrl, reference.title, 64, 64, "rounded")}</Box>
+        <Stack flexGrow={1}>
+          <Typography variant="h6" lineHeight={1} color="text.primary">
+            {reference.title}
+          </Typography>
+          <Typography variant="body2" sx={{ color: "text.secondary" }}>
+            {secondary} · 3 min read
+          </Typography>
+          {reference.organizationId && (
+            <Box mt={0.5}>
+              <Logo organizationId={reference.organizationId} height={20} width={60} objectPosition="left center" />
             </Box>
-            <Stack sx={{ flexGrow: 1 }}>
-              {props.organizationId && (
-                <Box mb={1}>
-                  <Logo organizationId={props.organizationId} height={14} width={96} />
-                </Box>
-              )}
-              <Typography variant="body1" color="text.primary" mb={0}>
-                {props.title}
-              </Typography>
-              <Typography variant="caption" color="text.secondary">
-                {hostname}
-              </Typography>
-            </Stack>
-          </Box>
-        </ListItem>
-      </ListItemButton>
-    </Link>
-  )
-  */
-}
-
-export function ArticleListItemOLD(props: any) {
-  console.assert(props.url)
-
-  const hostname = new URL(props.url).hostname
-
-  return (
-    <Link href={props.url} passHref>
-      <ListItemButton
-        sx={{ marginLeft: -2, marginRight: -2, borderRadius: "8px" }}
-        dense={true}
-        className="article-listitem"
-      >
-        <ListItem alignItems="flex-start" disableGutters dense={true} sx={{ marginTop: 0, marginBottom: 0 }}>
-          <Box display="flex" flexGrow={1}>
-            <Box mr={2}>
-              <img src={props.imageUrl} alt={props.title} className="article-thumbnail" />
-            </Box>
-            <Stack sx={{ flexGrow: 1 }}>
-              {props.organizationId && (
-                <Box mb={1}>
-                  <Logo organizationId={props.organizationId} height={14} width={96} />
-                </Box>
-              )}
-              <Typography variant="body1" color="text.primary" mb={0}>
-                {props.title}
-              </Typography>
-              <Typography variant="caption" color="text.secondary">
-                {hostname}
-              </Typography>
-            </Stack>
-          </Box>
-        </ListItem>
-      </ListItemButton>
+          )}
+        </Stack>
+      </Box>
     </Link>
   )
 }
