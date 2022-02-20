@@ -193,7 +193,7 @@ export default function App({ Component, pageProps }) {
     // https://developers.google.com/identity/gsi/web/reference/js-reference#IdConfiguration
     const gsi = getGoogleSigninClient()
     gsi.initialize({
-      client_id: GOOGLE_ID,
+      client_id: "427320365950-75nnbuht76pb6femtq9ccctqhs0a4qbb.apps.googleusercontent.com", /*GOOGLE_ID,*/
       callback: onSignin,
       auto_select: true,
     })
