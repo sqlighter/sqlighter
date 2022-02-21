@@ -4,7 +4,7 @@ title: Liver enzymes group
 description: Liver function and toxicity
 status: published
 sort: 6
-image: images/liver1.jpeg
+imageUrl: images/liver1.jpeg
 biomarkers:
   - alt
 references:

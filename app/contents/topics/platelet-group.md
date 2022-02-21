@@ -4,7 +4,7 @@ title: Platelet group
 description: Platelet group
 status: published
 sort: 4
-image: images/platelet2.jpeg
+imageUrl: images/platelet2.jpeg
 biomarkers:
   - mpv
   - plt

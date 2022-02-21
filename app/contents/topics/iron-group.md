@@ -4,7 +4,7 @@ title: Iron group
 description: Oxygen transfer and blood function
 status: published
 sort: 3
-image: images/iron.png
+imageUrl: images/iron.png
 biomarkers:
   - hgb
   - rbc

@@ -1,10 +1,10 @@
 ---
 id: inflammation-group
 title: Inflammation Group
-description: Inflammation Group
+description: Immune system function
 status: published
 sort: 2
-image: images/white-blood-cells.jpeg
+imageUrl: images/white-blood-cells.jpeg
 biomarkers:
   - wbc
   - ne-abs

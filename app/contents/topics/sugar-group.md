@@ -4,7 +4,7 @@ title: Sugar Group
 description: Metabolism and Energy
 status: published
 sort: 1
-image: images/glucose-test.jpeg
+imageUrl: images/glucose-test.jpeg
 biomarkers:
   - glucose
   - a1c-perc

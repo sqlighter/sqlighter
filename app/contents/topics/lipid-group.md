@@ -4,7 +4,7 @@ title: Lipid group
 description: Lipid group
 status: published
 sort: 5
-image: images/lipid1.jpeg
+imageUrl: images/lipid1.jpeg
 biomarkers:
   - ldl
   - hdl

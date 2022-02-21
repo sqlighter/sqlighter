@@ -4,6 +4,7 @@
 
 import * as React from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { GetStaticProps, GetServerSideProps } from "next"
 
 import List from "@mui/material/List"
@@ -13,13 +14,17 @@ import Typography from "@mui/material/Typography"
 
 import { getSortedPostsData } from "../lib/posts"
 import { Biomarker } from "../lib/biomarkers"
+import { Topic } from "../lib/topics"
 import Date from "../components/date"
 import Layout from "../components/layout"
 import { Section } from "../components/section"
 import { BiomarkersList } from "../components/biomarkerslist"
+import { ContentsGallery, QUILT_SIZES } from "../components/contentsgallery"
 
 interface BrowsePageProps {
   biomarkers: Biomarker[]
+
+  topics: Topic[]
 
   posts: {
     date: string
@@ -30,11 +35,17 @@ interface BrowsePageProps {
   locale: string
 }
 
-export default function BrowsePage({ biomarkers, posts, locale }: BrowsePageProps) {
+export default function BrowsePage({ biomarkers, posts, topics, locale }: BrowsePageProps) {
   const subtitle = `${biomarkers.length} biomarkers`
 
   return (
     <Layout home title="Library" subtitle={subtitle}>
+      {topics && (
+        <Section title="Topics">
+          <ContentsGallery items={topics} sizes={QUILT_SIZES} />
+        </Section>
+      )}
+
       <Typography variant="overline">Articles</Typography>
       {posts &&
         posts.map(({ id, date, title }) => (
@@ -54,6 +65,10 @@ export default function BrowsePage({ biomarkers, posts, locale }: BrowsePageProp
 
 /** Static properties from biomarkers */
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  let topics = Object.values(Topic.getContents(locale))
+  topics = topics.map((topic) => JSON.parse(JSON.stringify(topic)))
+  // console.log(topics)
+
   let biomarkers = Object.values(Biomarker.getBiomarkers(locale))
   //  console.log(biomarkers)
 
@@ -70,6 +85,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
       biomarkers: serializable,
       posts,
       locale,
+      topics,
     },
   }
 }
