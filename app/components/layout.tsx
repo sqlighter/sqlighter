@@ -22,12 +22,13 @@ interface LayoutProps {
 }
 
 export default function Layout({ children, title, subtitle, home, back }: LayoutProps) {
+  const pageTitle = title ? `${title} | Biomarkers` : "Biomarkers"
   title = title || "Biomarkers"
 
   return (
     <>
       <Head>
-        <title>{title}</title>
+        <title>{pageTitle}</title>
         <link rel="icon" href="/favicon.ico" />
         <meta name="description" content="Biomarkers" />
         <meta

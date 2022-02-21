@@ -102,16 +102,12 @@ export function Header(props: HeaderProps) {
                   </IconButton>
                 </Box>
               </Box>
-              {props.title && (
-                <Typography variant="h3" color="text.primary" noWrap={true}>
-                  {props.title}
-                </Typography>
-              )}
-              {props.subtitle && (
-                <Typography variant="body2" color="text.secondary" noWrap={true}>
-                  {props.subtitle}
-                </Typography>
-              )}
+              <Typography variant="h3" color="text.primary" noWrap={true}>
+                {props.title || "\xa0"}
+              </Typography>
+              <Typography variant="body2" color="text.secondary" noWrap={true}>
+                {props.subtitle || "\xa0"}
+              </Typography>
             </Stack>
           </Toolbar>
         </Container>
