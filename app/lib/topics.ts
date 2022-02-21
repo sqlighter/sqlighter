@@ -15,4 +15,5 @@ export class Topic extends Content {
   public static getContents(locale: string = DEFAULT_LOCALE): { [contentId: string]: Content; } {
       return loadContents<Topic>(this.contentType, locale, Topic);
   }
+
 }

@@ -1,5 +1,5 @@
 //
-// translations.ts
+// contents.ts
 //
 
 import path from "path"
@@ -133,13 +133,29 @@ export abstract class Content extends ContentReference {
   //
 
   /** Concrete class defines content type, eg. biomarker, topic, post, organization, etc... */
-  public static get contentType() {
-    return undefined
+  public static get contentType(): string {
+    throw new Error("Content.contentType - must be defined in subclass")
   }
 
   /** Concrete class loads contents from local file system or wherever */
   public static getContents(locale: string = DEFAULT_LOCALE): { [contentId: string]: Content } {
-    return undefined
+    throw new Error("Content.getContents - must be defined in subclass")
+  }
+
+  /**
+   * Returns content with given id (if available)
+   * @param id Content id
+   * @param locale Locale (defaults to DEFAULT_LOCALE)
+   * @param fallback Return default locale item if localized content not found? 
+   * @returns Content or undefined
+   */
+  public static getContent(id: string, locale: string = DEFAULT_LOCALE, fallback: boolean = false): Content | undefined {
+    // this.getContents refers to the class in a static context
+    let contents = this.getContents(locale) 
+    if(!contents[id] && fallback && locale != DEFAULT_LOCALE) {
+      contents = this.getContents(DEFAULT_LOCALE)
+    }
+    return contents[id] 
   }
 }
 
@@ -176,7 +192,10 @@ export function loadContents<T extends Content>(
 
   if (locale != DEFAULT_LOCALE) {
     const localizedDir = path.join(contentsDirectory, locale)
-    assert(fs.existsSync(localizedDir), `loadContents - localized directory ${localizedDir} does not exist`)
+    if (!fs.existsSync(localizedDir)) {
+      console.warn(`loadContents - localized directory ${localizedDir} does not exist`)
+    }
+    return {}
   }
 
   const fileNames = fs.readdirSync(contentsDirectory)

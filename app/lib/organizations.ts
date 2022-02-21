@@ -4,7 +4,7 @@
 
 import assert from "assert"
 import path from "path"
-import { getContentFiles, getContentImages, ContentImages, DEFAULT_LOCALE } from "./contents"
+import { getContentFiles, getContentImages, ContentImage, DEFAULT_LOCALE } from "./contents"
 
 /** An organization, used mainly to qualify news sources with small intro, logo, etc */
 export class Organization {
@@ -34,7 +34,7 @@ export class Organization {
   locale?: string
 
   /** Logo images for this organization */
-  images?: ContentImages[]
+  images?: ContentImage[]
 
   /** Localized content is lazy loaded synchronously just once from /contents/organizations/ */
   private static readonly _organizations: { [locale: string]: { [organizationId: string]: Organization } } = {}
