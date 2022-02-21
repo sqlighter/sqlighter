@@ -1,6 +1,6 @@
 ---
 id: inflammation-group
-title: Inflammation Group
+title: Inflammation group
 description: Immune system function
 status: published
 sort: 2

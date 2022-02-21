@@ -1,7 +1,6 @@
 ---
 id: lipid-group
 title: Lipid group
-description: Lipid group
 status: published
 sort: 5
 imageUrl: images/lipid1.jpeg

@@ -1,7 +1,6 @@
 ---
 id: platelet-group
 title: Platelet group
-description: Platelet group
 status: published
 sort: 4
 imageUrl: images/platelet2.jpeg
@@ -10,7 +9,7 @@ biomarkers:
   - plt
 references:
   - title: What Are Platelets and Why Are They Important?
-    imageUrl: images/platelet.jpeg
+    imageUrl: images/platelet1.jpeg
     url: https://www.hopkinsmedicine.org/health/conditions-and-diseases/what-are-platelets-and-why-are-they-important
 foods:
   - Wheat germ
