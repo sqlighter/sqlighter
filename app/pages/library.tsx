@@ -66,8 +66,12 @@ export default function BrowsePage({ biomarkers, posts, topics, locale }: Browse
 /** Static properties from biomarkers */
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   let topics = Object.values(Topic.getContents(locale))
-  topics = topics.map((topic) => JSON.parse(JSON.stringify(topic)))
-  // console.log(topics)
+  topics = topics.map((topic) => {
+    topic = JSON.parse(JSON.stringify(topic))
+    return { ...topic, url: `/topics/${topic.id}` }
+  })
+
+  //console.log(topics)
 
   let biomarkers = Object.values(Biomarker.getBiomarkers(locale))
   //  console.log(biomarkers)

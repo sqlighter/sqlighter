@@ -3,6 +3,8 @@
 //
 
 import React from "react"
+import Link from "next/link"
+
 import ImageList from "@mui/material/ImageList"
 import ImageListItem from "@mui/material/ImageListItem"
 import ImageListItemBar from "@mui/material/ImageListItemBar"
@@ -55,16 +57,21 @@ export function ContentsGallery({ items, sizes, rowHeight, cols, gap }: Contents
           itemSize = sizes[Math.min(sizes.length - 1, index)]
         }
 
+        // TODO could have hover effects
+        // TODO could add touch ripple to the image using ButtonBase
+        // TODO could use next/image instead of regular image and pass image size, etc
         return (
-          <ImageListItem key={item.id} rows={itemSize.rows} cols={itemSize.cols}>
-            <img src={`/api/contents/topics/${item.imageUrl}`} alt={item.title} loading="lazy" />
-            <ImageListItemBar
-              sx={{ background: BLACK_TO_TOP_GRADIENT }}
-              title={item.title}
-              subtitle={description}
-              position="bottom"
-            />
-          </ImageListItem>
+          <Link key={item.id} href={item.url}>
+            <ImageListItem rows={itemSize.rows} cols={itemSize.cols}>
+              <img src={`/api/contents/topics/${item.imageUrl}`} alt={item.title} loading="lazy" />
+              <ImageListItemBar
+                sx={{ background: BLACK_TO_TOP_GRADIENT }}
+                title={item.title}
+                subtitle={description}
+                position="bottom"
+              />
+            </ImageListItem>
+          </Link>
         )
       })}
     </ImageList>

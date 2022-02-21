@@ -4,6 +4,8 @@ title: Inside Tracker
 description: Innovative. Scientific. Evolving.
 url: https://insidetracker.com/
 locale: en-US
+domains:
+    - https://blog.insidetracker.com
 ---
 
 We’re a team of passionate, creative people who are using extreme personalization to make the world a healthier place.
