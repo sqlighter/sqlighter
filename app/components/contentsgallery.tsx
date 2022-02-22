@@ -63,7 +63,7 @@ export function ContentsGallery({ items, sizes, rowHeight, cols, gap }: Contents
         return (
           <Link key={item.id} href={item.url}>
             <ImageListItem rows={itemSize.rows} cols={itemSize.cols}>
-              <img src={`/api/contents/topics/${item.imageUrl}`} alt={item.title} loading="lazy" />
+              <img src={item.imageUrl} alt={item.title} loading="lazy" />
               <ImageListItemBar
                 sx={{ background: BLACK_TO_TOP_GRADIENT }}
                 title={item.title}

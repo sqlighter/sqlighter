@@ -21,7 +21,9 @@ export default function BlogPage({ posts }: BlogPageProps) {
   return (
     <Layout home title="Blog">
       {posts.map(({ id, date, title }) => (
-        <Section title={title} subtitle={<Date dateString={date} />}> </Section>
+        <Section title={title} subtitle={<Date dateString={date} />}>
+          {" "}
+        </Section>
       ))}
     </Layout>
   )

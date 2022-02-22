@@ -43,29 +43,18 @@ export const getStaticPaths: GetStaticPaths = ({ locales }) => {
   }
 }
 
+/** Convert to basic object to next.js doesn't complain when we pass props to the client */
+function serializableProps(props: any) {
+  return JSON.parse(JSON.stringify(props))
+}
 
 /** Static properties from /topics/id */
 export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
   const item = Topic.getContent(params.id as string, locale, true)
   try {
-    const serializable = JSON.parse(JSON.stringify(item))
-
-    // Use remark to convert markdown into HTML string
-    let contentHtml = null
-    if (typeof serializable.content == "string") {
-      const processedContent = await remark().use(html).process(serializable.content)
-      contentHtml = processedContent.toString()
-      if (typeof contentHtml == "string") {
-        contentHtml = contentHtml.replace(/\"images\//g, '"/api/contents/topics/images/')
-      }
-    }
-
+    const props = { item }
     // console.debug(`biomarkers.tsx - biomarkerId: ${biomarker.id}, locale: ${locale}`, serializable)
-    return {
-      props: {
-        item: { ...serializable, contentHtml },
-      },
-    }
+    return { props: serializableProps(props) }
   } catch (exception) {
     console.error(`biomarker.getStaticProps - error while processing biomarker: ${params.id}`, exception, item)
     throw exception

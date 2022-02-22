@@ -1,6 +1,6 @@
 ---
 id: sugar-group
-title: Sugar Group
+title: Sugar group
 description: Metabolism and Energy
 status: published
 sort: 1

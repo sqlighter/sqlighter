@@ -8,6 +8,9 @@ import fs from "fs"
 import assert from "assert"
 import sizeOf from "image-size"
 
+import { remark } from "remark"
+import html from "remark-html"
+
 import Fuse from "fuse.js"
 import Tokenizr from "tokenizr"
 
@@ -70,10 +73,10 @@ export class ContentReference {
   /** Content title, eg. Glucose (localized) */
   title?: string
 
-  /** Main url of this content reference */
+  /** Main url of this content */
   url?: string
 
-  /** An image that can be used to represent this content */
+  /** An image representing this content */
   imageUrl?: string
 
   /** An optional link to YouTube if this is a video content */
@@ -90,13 +93,16 @@ export abstract class Content extends ContentReference {
   id: string
 
   /** Content title, eg. Glucose (localized) */
-  title: string = ""
+  title?: string
 
   /** A short description, eg. Blood sugar (localized) */
-  description: string = ""
+  description?: string
 
   /** Content's page content in markdown format (localized) */
-  content: string = ""
+  content?: string
+
+  /** Content converted to html code (localized) */
+  contentHtml?: string
 
   /** Current publication status */
   status: "draft" | "published" | "archived" = "draft"
@@ -104,7 +110,7 @@ export abstract class Content extends ContentReference {
   /** Links to external contents (either plain urls or reference objects) */
   references?: (string | ContentReference)[]
 
-  /** Ids of biomarkers related to this content */
+  /** Biomarker ids related to this content */
   biomarkers?: string[]
 
   /** Foods related to this content */
@@ -113,7 +119,7 @@ export abstract class Content extends ContentReference {
   /** Miscellaneous tags */
   tags?: string[]
 
-  /** Other names by which this biomarker is known (localized) */
+  /** Other names by which this item is also known (localized) */
   aliases?: string[]
 
   //
@@ -146,18 +152,24 @@ export abstract class Content extends ContentReference {
    * Returns content with given id (if available)
    * @param id Content id
    * @param locale Locale (defaults to DEFAULT_LOCALE)
-   * @param fallback Return default locale item if localized content not found? 
+   * @param fallback Return default locale item if localized content not found?
    * @returns Content or undefined
    */
-  public static getContent(id: string, locale: string = DEFAULT_LOCALE, fallback: boolean = false): Content | undefined {
+  public static getContent(
+    id: string,
+    locale: string = DEFAULT_LOCALE,
+    fallback: boolean = false
+  ): Content | undefined {
     // this.getContents refers to the class in a static context
-    let contents = this.getContents(locale) 
-    if(!contents[id] && fallback && locale != DEFAULT_LOCALE) {
+    let contents = this.getContents(locale)
+    if (!contents[id] && fallback && locale != DEFAULT_LOCALE) {
       contents = this.getContents(DEFAULT_LOCALE)
     }
-    return contents[id] 
+    return contents[id]
   }
 }
+
+export default Content
 
 //
 // Utility methods
@@ -202,7 +214,7 @@ export function loadContents<T extends Content>(
   for (const fileName of fileNames) {
     const filePath = path.join(contentsDirectory, fileName)
     if (!filePath.startsWith(".") && filePath.endsWith(".md") && fs.statSync(filePath).isFile()) {
-      const item = getContentFile(filePath, locale)
+      const item = loadContentFile(filePath, locale, TCreator)
       if (item) {
         const content = Object.assign(new TCreator(), item)
         if (content.imageUrl && content.imageUrl.startsWith("images/")) {
@@ -222,6 +234,72 @@ export function loadContents<T extends Content>(
 
   return contents
 }
+
+export function loadContentFile<T extends Content>(
+  filePath: string,
+  locale: string = DEFAULT_LOCALE,
+  TCreator: new () => T
+): T | undefined {
+  assertLocale(locale)
+  try {
+    const fileContents = fs.readFileSync(filePath, "utf8")
+    assert(fileContents, `getContentFile - ${filePath} can't be read`)
+    if (fileContents) {
+      const fileMatter = matter<string, null>(fileContents)
+      assert(fileMatter.data, `getContentFile - ${filePath} is empty`)
+      if (fileMatter.data) {
+        const obj: T = Object.assign(new TCreator(), { content: fileMatter.content, ...fileMatter.data })
+
+        if (locale != DEFAULT_LOCALE) {
+          const basePath = path.parse(filePath)
+          const localizedPath = path.join(basePath.dir, locale, basePath.base)
+          const localizedDir = path.parse(localizedPath).dir
+          assert(fs.existsSync(localizedDir), `getContentFile - localized directory ${localizedDir} does not exist`)
+
+          if (fs.existsSync(localizedPath)) {
+            const localizedContents = fs.readFileSync(localizedPath, "utf8")
+            if (localizedContents) {
+              const localizedMatter = matter(localizedContents)
+              if (localizedMatter.data) {
+                const localizedObj = { content: localizedMatter.content, ...localizedMatter.data }
+                Object.assign(obj, localizedObj)
+              }
+            }
+          }
+        }
+
+        // TODO retrieve current domain from req or environment
+        const basePath = path.resolve("./")
+        const relativePath = path.dirname(path.relative(basePath, filePath))
+        const prefixUrl = `/api/${relativePath}/`
+
+        // fix paths of assets if needed
+        if (obj.imageUrl && obj.imageUrl.startsWith("images/")) {
+          obj.imageUrl = prefixUrl + obj.imageUrl
+        }
+
+        // use remark to convert markdown into HTML string
+        // image in markdown content may have relative paths
+        // like images/ which will be converted to absolute urls
+        if (typeof obj.content === "string") {
+          let contentHtml = remark().use(html).processSync(obj.content).toString()
+          if (contentHtml) {
+            obj.contentHtml = contentHtml.replace(/\"images\//g, `"${prefixUrl}images/`)
+          }
+        }
+
+        return obj
+      }
+    }
+  } catch (exception) {
+    console.warn(`loadContentFile - ${filePath}, ${exception}`, exception)
+  }
+  return null
+}
+
+//
+// OLD ROUTINES TO BE REMOVED
+//
 
 export function getContentFiles(directoryPath: string, locale: string = DEFAULT_LOCALE): any[] {
   assertLocale(locale)

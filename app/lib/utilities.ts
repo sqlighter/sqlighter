@@ -14,7 +14,7 @@ export const LOW_CONFIDENCE = 0.5
 export class Api {
   public static async getJson(relativeUrl: string): Promise<any> {
     assert(relativeUrl.startsWith("/"))
-    const url = "https://api.insieme.app" + relativeUrl
+    const url = "https://api.biomarkers.app" + relativeUrl
     const token = "topolino"
     try {
       const results = await axios.get(url, {
