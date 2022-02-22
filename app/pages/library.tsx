@@ -18,7 +18,6 @@ import { Topic } from "../lib/topics"
 import Date from "../components/date"
 import Layout from "../components/layout"
 import { Section } from "../components/section"
-import { BiomarkersList } from "../components/biomarkerslist"
 import { ContentsGallery, QUILT_SIZES } from "../components/contentsgallery"
 import { BiomarkerListItem } from "../components/listitems"
 
