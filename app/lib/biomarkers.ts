@@ -9,7 +9,7 @@ import path from "path"
 
 import { round } from "./utilities"
 import { Unit } from "./units"
-import { getContentFiles, DEFAULT_LOCALE } from "./contents"
+import { Content, loadContents, DEFAULT_LOCALE } from "./contents"
 import { Metadata } from "./metadata"
 import { Organization } from "./organizations"
 
@@ -17,25 +17,11 @@ export const BIOMARKERS_SEARCH_CONFIDENCE = 0.7
 export const UNITS_SEARCH_CONFIDENCE = 0.7
 
 /** A biomarker, eg. glucose, hdl, ldl, weight, etc */
-export class Biomarker {
-  constructor(id: string) {
-    this.id = id
+export class Biomarker extends Content {
+  /** Define content type  */
+  public static get contentType(): string {
+    return "biomarker"
   }
-
-  /** Biomarker id, eg. glucose */
-  id: string
-
-  /** Biomarker title, eg. Glucose (localized) */
-  title: string = ""
-
-  /** A short description, eg. Blood sugar (localized) */
-  description: string = ""
-
-  /** Biomarker's page content in markdown format (localized) */
-  content: string = ""
-
-  /** Current publication status */
-  status: "draft" | "published" | "archived" = "draft"
 
   /** Measurement unit for this biomarker */
   unit?: Unit
@@ -49,15 +35,6 @@ export class Biomarker {
    */
   conversions?: { [unit: string]: number }
 
-  /** Links to external contents */
-  references?: string[] | any[]
-
-  /** Other names by which this biomarker is known (localized) */
-  aliases?: string[]
-
-  /** Localized biomarkers are lazy loaded synchronously just once from /contents/biomarkers/ */
-  private static readonly _biomarkers: { [locale: string]: { [biomarkerId: string]: Biomarker } } = {}
-
   /** Localized biomarkers search indexes are lazy loaded synchronously once */
   private static readonly _biomarkersFuse: { [locale: string]: Fuse<Biomarker> } = {}
 
@@ -65,40 +42,14 @@ export class Biomarker {
   // static methods
   //
 
+  /** Lazy load dictionary of available biomarkers */
+  public static getContents(locale: string = DEFAULT_LOCALE): { [contentId: string]: Content } {
+    return loadContents<Biomarker>(this.contentType, locale, Biomarker)
+  }
+
   /** Returns available localized biomarkers */
   public static getBiomarkers(locale: string = DEFAULT_LOCALE): { [biomarkerId: string]: Biomarker } {
-    if (!Biomarker._biomarkers[locale]) {
-      const biomarkersDirectory = path.resolve("./contents/biomarkers")
-      const contents = getContentFiles(biomarkersDirectory, locale)
-      const biomarkers = {}
-      for (const content of contents) {
-        try {
-          if (Array.isArray(content.references)) {
-            // if references has just a url convert to object with url property, normally references are dictionaries
-            content.references = content.references.map((r) => (typeof r == "string" ? { url: r } : r))
-
-            // add organization id which can be used to apply branding these links
-            for (const reference of content.references) {
-              if (reference.url) {
-                const organization = Organization.getOrganizationFromUrl(reference.url)
-                if (organization) {
-                  reference.organizationId = organization.id
-                }
-              }
-            }
-          }
-
-          biomarkers[content.id] = Biomarker.fromObject(content)
-        } catch (exception) {
-          console.error(`getBiomarkers - error while processing ${content?.id}`, content, exception)
-          throw exception
-        }
-      }
-      Biomarker._biomarkers[locale] = biomarkers
-      // console.log(`Biomarkers.getBiomarkers('${locale}') - lazy loaded ${Object.keys(biomarkers).length} biomarkers`)
-    }
-
-    return Biomarker._biomarkers[locale]
+    return this.getContents(locale) as { [biomarkerId: string]: Biomarker }
   }
 
   /** Returns biomarker by id (or undefined), localized if requested */
@@ -219,6 +170,7 @@ export class Biomarker {
   }
 
   /** Creates a biomarker from an object */
+  /*
   public static fromObject(obj: any): Biomarker {
     if (!obj.id) {
       console.error(`Biomarkers.fromObject - object missing id field`, obj)
@@ -235,12 +187,12 @@ export class Biomarker {
 
     return biomarker
   }
-
+*/
   /**
    * Will render to id if nested in a json
    * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#tojson_behavior
    */
-/*  
+  /*  
   public toJSON(key: any) {
     return key ? this.id : this
   }

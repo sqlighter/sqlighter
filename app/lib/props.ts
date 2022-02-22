@@ -3,6 +3,7 @@
 //
 
 import { Biomarker } from "./biomarkers"
+import { Organization } from "./organizations"
 
 /**
  * Strips an item down to a basic object so it can be used by getStaticProps in next.js
@@ -10,9 +11,22 @@ import { Biomarker } from "./biomarkers"
  * @param expandBiomarkers True if item.biomarkers should be expanded from a list of biomarkerId to actual contents
  * @returns A regular dictionary object
  */
- export function getSerializableContent(item: any, expandBiomarkers: boolean = false) {
+export function getSerializableContent(item: any, expandBiomarkers: boolean = false) {
   const serialized = JSON.parse(JSON.stringify(item))
 
+  // add organizations to references so we can show logos, etc
+  if (serialized.references) {
+    for (const reference of serialized.references) {
+      if (reference.url && !reference.organization) {
+        const organization = Organization.getOrganizationFromUrl(reference.url)
+        if (organization) {
+          reference.organization = organization.id
+        }
+      }
+    }
+  }
+
+  // expand biomarker references if requested
   if (expandBiomarkers && item.biomarkers) {
     const biomarkers = []
     for (const biomarkerId of serialized.biomarkers) {

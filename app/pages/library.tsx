@@ -5,7 +5,7 @@
 import * as React from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { GetStaticProps, GetServerSideProps } from "next"
+import { GetStaticProps } from "next"
 
 import List from "@mui/material/List"
 import Stack from "@mui/material/Stack"
@@ -20,8 +20,9 @@ import Layout from "../components/layout"
 import { Section } from "../components/section"
 import { ContentsGallery, QUILT_SIZES } from "../components/contentsgallery"
 import { BiomarkerListItem } from "../components/listitems"
+import { getSerializableContent } from "../lib/props"
 
-interface BrowsePageProps {
+interface LibraryPageProps {
   biomarkers: Biomarker[]
 
   topics: Topic[]
@@ -35,7 +36,7 @@ interface BrowsePageProps {
   locale: string
 }
 
-export default function BrowsePage({ biomarkers, posts, topics, locale }: BrowsePageProps) {
+export default function LibraryPage({ biomarkers, posts, topics, locale }: LibraryPageProps) {
   const subtitle = `${biomarkers.length} biomarkers`
 
   return (
@@ -50,55 +51,45 @@ export default function BrowsePage({ biomarkers, posts, topics, locale }: Browse
         <Section title="Biomarkers">
           <List dense disablePadding>
             {biomarkers.map((biomarker) => (
-              <BiomarkerListItem item={biomarker} />
+              <BiomarkerListItem key={biomarker.id} item={biomarker} />
             ))}
           </List>
         </Section>
       )}
 
-      {posts && <Section title="Articles">
-      {posts.map(({ id, date, title }) => (
-          <li key={id}>
-            <Link href={`/posts/${id}`}>
-              <a>{title}</a>
-            </Link>
-            <br />
-            <Date dateString={date} />
-          </li>
-        ))}
-        </Section>}
-
+      {posts && (
+        <Section title="Articles">
+          {posts.map(({ id, date, title }) => (
+            <li key={id}>
+              <Link href={`/posts/${id}`}>
+                <a>{title}</a>
+              </Link>
+              <br />
+              <Date dateString={date} />
+            </li>
+          ))}
+        </Section>
+      )}
     </Layout>
   )
 }
 
 /** Static properties from biomarkers */
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  // TODO filter topics by published status, sort by sort field or title
   let topics = Object.values(Topic.getContents(locale))
   topics = topics.map((topic) => {
-    topic = JSON.parse(JSON.stringify(topic))
-    return { ...topic, url: `/topics/${topic.id}` }
+    const serialized = getSerializableContent(topic, false)
+    return { ...serialized, url: `/topics/${topic.id}` }
   })
 
-  //console.log(topics)
-
+  // TODO could group based on topic group or sort order, etc
   let biomarkers = Object.values(Biomarker.getBiomarkers(locale))
-  //  console.log(biomarkers)
-
-  //console.log(req.query)
-
   biomarkers = biomarkers.filter((b) => b.status == "published")
   biomarkers = biomarkers.sort((a, b) => (a.title < b.title ? -1 : 1))
+  biomarkers = biomarkers.map((biomarker) => getSerializableContent(biomarker, false))
 
-  const serializable = biomarkers.map((b) => JSON.parse(JSON.stringify(b)))
   const posts = getSortedPostsData()
 
-  return {
-    props: {
-      biomarkers: serializable,
-      posts,
-      locale,
-      topics,
-    },
-  }
+  return { props: { topics, biomarkers, posts, locale } }
 }

@@ -69,26 +69,8 @@ export interface ContentImage {
   url?: string
 }
 
-export class ContentReference {
-  /** Content title, eg. Glucose (localized) */
-  title?: string
-
-  /** Main url of this content */
-  url?: string
-
-  /** An image representing this content */
-  imageUrl?: string
-
-  /** An optional link to YouTube if this is a video content */
-  videoUrl?: string
-}
-
 /** A piece of content like an article, topic, a biomarker, unit, etc */
-export abstract class Content extends ContentReference {
-  public constructor() {
-    super()
-  }
-
+export abstract class Content {
   /** Content id, eg. glucose */
   id: string
 
@@ -104,11 +86,20 @@ export abstract class Content extends ContentReference {
   /** Content converted to html code (localized) */
   contentHtml?: string
 
-  /** Current publication status */
-  status: "draft" | "published" | "archived" = "draft"
+  /** Main url of this content */
+  url?: string
 
-  /** Links to external contents (either plain urls or reference objects) */
-  references?: (string | ContentReference)[]
+  /** An image representing this content */
+  imageUrl?: string
+
+  /** An optional link to YouTube if this is a video content */
+  videoUrl?: string
+
+  /** Current publication status */
+  status?: "draft" | "published" | "archived"
+
+  /** Links to external contents (either plain urls or other contents) */
+  references?: (string | Content)[]
 
   /** Biomarker ids related to this content */
   biomarkers?: string[]
@@ -121,6 +112,15 @@ export abstract class Content extends ContentReference {
 
   /** Other names by which this item is also known (localized) */
   aliases?: string[]
+
+  /** Additional images for this content */
+  images?: ContentImage[]
+
+  /** Main locale used by this content */
+  locale?: string
+
+  /** The organization related to this content, see Organization */
+  organization?: string
 
   //
   // public methods
@@ -169,8 +169,6 @@ export abstract class Content extends ContentReference {
   }
 }
 
-export default Content
-
 //
 // Utility methods
 //
@@ -214,13 +212,8 @@ export function loadContents<T extends Content>(
   for (const fileName of fileNames) {
     const filePath = path.join(contentsDirectory, fileName)
     if (!filePath.startsWith(".") && filePath.endsWith(".md") && fs.statSync(filePath).isFile()) {
-      const item = loadContentFile(filePath, locale, TCreator)
-      if (item) {
-        const content = Object.assign(new TCreator(), item)
-        if (content.imageUrl && content.imageUrl.startsWith("images/")) {
-          // TODO should normalize to url? absolute path? / path?
-        }
-
+      const content = loadContent(filePath, locale, TCreator)
+      if (content) {
         contents[content.id] = content
       }
     }
@@ -235,7 +228,14 @@ export function loadContents<T extends Content>(
   return contents
 }
 
-export function loadContentFile<T extends Content>(
+/**
+ * Load a single content file of .md type into a subclass of Content
+ * @param filePath The path of the file on disk
+ * @param locale The preferred locale
+ * @param TCreator The constructor to be used to create the object
+ * @returns An object of type T that contains the content in filePath.md
+ */
+export function loadContent<T extends Content>(
   filePath: string,
   locale: string = DEFAULT_LOCALE,
   TCreator: new () => T
@@ -243,10 +243,10 @@ export function loadContentFile<T extends Content>(
   assertLocale(locale)
   try {
     const fileContents = fs.readFileSync(filePath, "utf8")
-    assert(fileContents, `getContentFile - ${filePath} can't be read`)
+    assert(fileContents, `loadContentFile - ${filePath} can't be read`)
     if (fileContents) {
       const fileMatter = matter<string, null>(fileContents)
-      assert(fileMatter.data, `getContentFile - ${filePath} is empty`)
+      assert(fileMatter.data, `loadContentFile - ${filePath} is empty`)
       if (fileMatter.data) {
         const obj: T = Object.assign(new TCreator(), { content: fileMatter.content, ...fileMatter.data })
 
@@ -254,7 +254,7 @@ export function loadContentFile<T extends Content>(
           const basePath = path.parse(filePath)
           const localizedPath = path.join(basePath.dir, locale, basePath.base)
           const localizedDir = path.parse(localizedPath).dir
-          assert(fs.existsSync(localizedDir), `getContentFile - localized directory ${localizedDir} does not exist`)
+          assert(fs.existsSync(localizedDir), `loadContentFile - localized directory ${localizedDir} does not exist`)
 
           if (fs.existsSync(localizedPath)) {
             const localizedContents = fs.readFileSync(localizedPath, "utf8")
@@ -268,12 +268,24 @@ export function loadContentFile<T extends Content>(
           }
         }
 
-        // TODO retrieve current domain from req or environment
+        // load images related to this content
+        if (obj.id) {
+          const images = loadContentImages(path.dirname(filePath), obj.id, locale)
+          if (images) {
+            obj.images = images
+          }
+        }
+
+        // fix references that we entered as just a url (instead of a dictionary)
+        if (Array.isArray(obj.references)) {
+          // if references has just a url convert to object with url property, normally references are dictionaries
+          obj.references = obj.references.map((r) => (typeof r == "string" ? { id: r, url: r } : r))
+        }
+
+        // fix relative paths of assets if needed
         const basePath = path.resolve("./")
         const relativePath = path.dirname(path.relative(basePath, filePath))
         const prefixUrl = `/api/${relativePath}/`
-
-        // fix paths of assets if needed
         if (obj.imageUrl && obj.imageUrl.startsWith("images/")) {
           obj.imageUrl = prefixUrl + obj.imageUrl
         }
@@ -292,105 +304,48 @@ export function loadContentFile<T extends Content>(
       }
     }
   } catch (exception) {
-    console.warn(`loadContentFile - ${filePath}, ${exception}`, exception)
-  }
-  return null
-}
-
-//
-// OLD ROUTINES TO BE REMOVED
-//
-
-export function getContentFiles(directoryPath: string, locale: string = DEFAULT_LOCALE): any[] {
-  assertLocale(locale)
-  const items = []
-
-  if (locale != DEFAULT_LOCALE) {
-    const localizedDir = path.join(directoryPath, locale)
-    assert(fs.existsSync(localizedDir), `getContentFiles - localized directory ${localizedDir} does not exist`)
+    console.warn(`loadContent - ${filePath}, ${exception}`, exception)
   }
 
-  const fileNames = fs.readdirSync(directoryPath)
-  for (const fileName of fileNames) {
-    const filePath = path.join(directoryPath, fileName)
-    if (!filePath.startsWith(".") && filePath.endsWith(".md") && fs.statSync(filePath).isFile()) {
-      const item = getContentFile(filePath, locale)
-      if (item) {
-        items.push(item)
-      }
-    }
-  }
-
-  return items
-}
-
-export function getContentFile(filePath: string, locale: string = DEFAULT_LOCALE): object | null {
-  assertLocale(locale)
-  try {
-    const fileContents = fs.readFileSync(filePath, "utf8")
-    assert(fileContents, `getContentFile - ${filePath} can't be read`)
-    if (fileContents) {
-      const fileMatter = matter<string, null>(fileContents)
-      assert(fileMatter.data, `getContentFile - ${filePath} is empty`)
-      if (fileMatter.data) {
-        const obj = { content: fileMatter.content, ...fileMatter.data }
-
-        if (locale != DEFAULT_LOCALE) {
-          const basePath = path.parse(filePath)
-          const localizedPath = path.join(basePath.dir, locale, basePath.base)
-          const localizedDir = path.parse(localizedPath).dir
-          assert(fs.existsSync(localizedDir), `getContentFile - localized directory ${localizedDir} does not exist`)
-
-          if (fs.existsSync(localizedPath)) {
-            const localizedContents = fs.readFileSync(localizedPath, "utf8")
-            if (localizedContents) {
-              const localizedMatter = matter(localizedContents)
-              if (localizedMatter.data) {
-                const localizedObj = { content: localizedMatter.content, ...localizedMatter.data }
-                Object.assign(obj, localizedObj)
-              }
-            }
-          }
-        }
-
-        return obj
-      }
-    }
-  } catch (exception) {
-    console.warn(`getContentFile - ${filePath}, ${exception}`, exception)
-  }
   return null
 }
 
 /**
  * Scans a directory of /images and returns information on the image files
  * @param contentsPath Path to contents directory, eg. contents/biomarkers, contents/organizations, etc.
+ * @param contentId The id of the content that we need images for (all related image names start with this id)
  * @param locale The locale directory to be scanned
  * @returns An array of objects with the image name, path, width and height
  */
-export function getContentImages(contentsPath: string, locale: string = DEFAULT_LOCALE): ContentImage[] {
+export function loadContentImages(
+  contentsPath: string,
+  contentId: string,
+  locale: string = DEFAULT_LOCALE
+): ContentImage[] {
   assertLocale(locale)
   const images = []
 
   if (locale != DEFAULT_LOCALE) {
     const localizedDir = path.join(contentsPath, locale)
-    assert(fs.existsSync(localizedDir), `getContentImages - localized directory ${localizedDir} does not exist`)
+    assert(fs.existsSync(localizedDir), `loadContentImages - localized directory ${localizedDir} does not exist`)
   }
 
   contentsPath = path.join(contentsPath, "/images")
   const fileNames = fs.readdirSync(contentsPath)
   for (const fileName of fileNames) {
-    const filePath = path.join(contentsPath, fileName)
-    const fileExtension = path.extname(filePath).toLowerCase()
-    if (fileExtension && [".png", ".jpg", ".jpeg", ".svg"].indexOf(fileExtension) != -1) {
-      const imageSize = sizeOf(filePath)
-      images.push({
-        name: fileName,
-        path: filePath,
-        type: imageSize.type,
-        width: imageSize.width,
-        height: imageSize.height,
-      })
+    if (fileName.startsWith(contentId)) {
+      const filePath = path.join(contentsPath, fileName)
+      const fileExtension = path.extname(filePath).toLowerCase()
+      if (fileExtension && [".png", ".jpg", ".jpeg", ".svg"].indexOf(fileExtension) != -1) {
+        const imageSize = sizeOf(filePath)
+        images.push({
+          name: fileName,
+          path: filePath,
+          type: imageSize.type,
+          width: imageSize.width,
+          height: imageSize.height,
+        })
+      }
     }
   }
 

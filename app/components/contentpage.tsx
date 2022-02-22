@@ -10,11 +10,11 @@ import Box from "@mui/material/Box"
 import List from "@mui/material/List"
 
 import Layout from "./layout"
-import { Content, ContentReference } from "../lib/contents"
+import { Content } from "../lib/contents"
 import { Biomarker } from "../lib/biomarkers"
 import { ReferenceListItem } from "./listitems"
 import { Section } from "./section"
-import { BiomarkerListItem }from "./listitems"
+import { BiomarkerListItem } from "./listitems"
 
 interface ContentPageProps {
   /** Item that should be shown */
@@ -52,7 +52,7 @@ export function ContentPage({ item }: ContentPageProps) {
           <Box mb={2} />
           <List dense disablePadding>
             {item.references.map((ref) => (
-              <ReferenceListItem key={(ref as ContentReference).url} item={ref} />
+              <ReferenceListItem key={(ref as Content).url} item={ref} />
             ))}
           </List>
         </Section>

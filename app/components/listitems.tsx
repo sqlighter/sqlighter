@@ -58,9 +58,9 @@ export function ReferenceListItem({ item }: ListItemProps) {
           <Typography variant="body2" sx={{ color: "text.secondary" }}>
             {secondary} · 3 min read
           </Typography>
-          {item.organizationId && (
+          {item.organization && (
             <Box mt={0.5}>
-              <Logo organizationId={item.organizationId} height={20} width={60} objectPosition="left center" />
+              <Logo organizationId={item.organization} height={20} width={60} objectPosition="left center" />
             </Box>
           )}
         </Stack>
@@ -68,8 +68,6 @@ export function ReferenceListItem({ item }: ListItemProps) {
     </Link>
   )
 }
-
-
 
 export function BiomarkerListItem({ item }: ListItemProps) {
   // TODO biomarker itself could have an image url or a group of biomarkers could give it one
