@@ -14,6 +14,7 @@ import { Content, ContentReference } from "../lib/contents"
 import { Biomarker } from "../lib/biomarkers"
 import { ReferenceListItem } from "./listitems"
 import { Section } from "./section"
+import { BiomarkerListItem }from "./listitems"
 
 interface ContentPageProps {
   /** Item that should be shown */
@@ -24,6 +25,8 @@ interface ContentPageProps {
 export function ContentPage({ item }: ContentPageProps) {
   const contentHtml = item.contentHtml ? item.contentHtml : "empty"
 
+  const biomarkers = item.biomarkers as any as Biomarker[]
+
   return (
     <Layout title={item.title} subtitle={item.description} back={true}>
       <article id={item.id} title={item.title}>
@@ -33,14 +36,12 @@ export function ContentPage({ item }: ContentPageProps) {
           </section>
         )}
       </article>
-      {item.biomarkers && (
+      {biomarkers && (
         <Section title="Biomarkers">
           <Box mb={2} />
           <List dense disablePadding>
-            {item.biomarkers.map((biomarker) => (
-              <Link key={biomarker} href={`/biomarkers/${biomarker}`}>
-                <Box key={biomarker}>{biomarker}</Box>
-              </Link>
+            {biomarkers.map((biomarker) => (
+              <BiomarkerListItem key={biomarker.id} item={biomarker} />
             ))}
           </List>
         </Section>
@@ -51,7 +52,7 @@ export function ContentPage({ item }: ContentPageProps) {
           <Box mb={2} />
           <List dense disablePadding>
             {item.references.map((ref) => (
-              <ReferenceListItem key={(ref as ContentReference).url} reference={ref} />
+              <ReferenceListItem key={(ref as ContentReference).url} item={ref} />
             ))}
           </List>
         </Section>

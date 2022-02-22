@@ -28,18 +28,18 @@ function getImage(src, alt, width, height, className?) {
   return <Box width={width} height={height} />
 }
 
-export interface ReferenceListItemProps {
-  reference: any
+export interface ListItemProps {
+  item: any
 }
 
-export function ReferenceListItem({ reference }: ReferenceListItemProps) {
-  console.assert(reference.url)
-  const hostname = new URL(reference.url).hostname
+export function ReferenceListItem({ item }: ListItemProps) {
+  console.assert(item.url)
+  const hostname = new URL(item.url).hostname
 
   // TODO we could make the text of list items a bit bigger in the theme itself
   let primary = (
     <Typography variant="body1" noWrap={true}>
-      {reference.title}
+      {item.title}
     </Typography>
   )
 
@@ -48,23 +48,53 @@ export function ReferenceListItem({ reference }: ReferenceListItemProps) {
   const secondary = hostname
 
   return (
-    <Link href={reference.url} passHref>
+    <Link href={item.url} passHref>
       <Box display="flex" alignItems="flex-start" mb={2}>
-        <Box mr={2}>{getImage(reference.imageUrl, reference.title, 64, 64, "rounded")}</Box>
+        <Box mr={2}>{getImage(item.imageUrl, item.title, 64, 64, "rounded")}</Box>
         <Stack flexGrow={1}>
           <Typography variant="h6" lineHeight={1} color="text.primary">
-            {reference.title}
+            {item.title}
           </Typography>
           <Typography variant="body2" sx={{ color: "text.secondary" }}>
             {secondary} · 3 min read
           </Typography>
-          {reference.organizationId && (
+          {item.organizationId && (
             <Box mt={0.5}>
-              <Logo organizationId={reference.organizationId} height={20} width={60} objectPosition="left center" />
+              <Logo organizationId={item.organizationId} height={20} width={60} objectPosition="left center" />
             </Box>
           )}
         </Stack>
       </Box>
+    </Link>
+  )
+}
+
+
+
+export function BiomarkerListItem({ item }: ListItemProps) {
+  // TODO biomarker itself could have an image url or a group of biomarkers could give it one
+  const biomarkerImageUrl = "/biomarkers/blood.jpeg"
+
+  // TODO we could make the text of list items a bit bigger in the theme itself
+  const primary = (
+    <Typography variant="body1" noWrap={true}>
+      {item.title}
+    </Typography>
+  )
+  // const secondary = <Typography variant="body2">{biomarker.description}</Typography>
+  //const primary = biomarker.title
+  const secondary = item.description
+
+  return (
+    <Link href={`/biomarkers/${item.id}`} key={item.id} passHref>
+      <ListItemButton sx={{ marginLeft: -2, marginRight: -2, borderRadius: "8px" }} dense={true}>
+        <ListItem alignItems="flex-start" disableGutters dense={true} sx={{ marginTop: -1, marginBottom: -1 }}>
+          <ListItemAvatar>
+            <Image src={biomarkerImageUrl} alt={item.title} width={40} height={40} className="rounded" />
+          </ListItemAvatar>
+          <ListItemText primary={primary} secondary={secondary} />
+        </ListItem>
+      </ListItemButton>
     </Link>
   )
 }

@@ -33,7 +33,7 @@ export default function BiomarkerDetail({ biomarker }: { biomarker: any }) {
           <Box mb={2} />
           <List dense disablePadding>
             {biomarker.references.map((ref) => (
-              <ReferenceListItem key={ref.url} reference={ref} />
+              <ReferenceListItem key={ref.url} item={ref} />
             ))}
           </List>
         </Section>

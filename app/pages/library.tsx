@@ -20,6 +20,7 @@ import Layout from "../components/layout"
 import { Section } from "../components/section"
 import { BiomarkersList } from "../components/biomarkerslist"
 import { ContentsGallery, QUILT_SIZES } from "../components/contentsgallery"
+import { BiomarkerListItem } from "../components/listitems"
 
 interface BrowsePageProps {
   biomarkers: Biomarker[]
@@ -46,9 +47,18 @@ export default function BrowsePage({ biomarkers, posts, topics, locale }: Browse
         </Section>
       )}
 
-      <Typography variant="overline">Articles</Typography>
-      {posts &&
-        posts.map(({ id, date, title }) => (
+      {biomarkers && (
+        <Section title="Biomarkers">
+          <List dense disablePadding>
+            {biomarkers.map((biomarker) => (
+              <BiomarkerListItem item={biomarker} />
+            ))}
+          </List>
+        </Section>
+      )}
+
+      {posts && <Section title="Articles">
+      {posts.map(({ id, date, title }) => (
           <li key={id}>
             <Link href={`/posts/${id}`}>
               <a>{title}</a>
@@ -57,8 +67,8 @@ export default function BrowsePage({ biomarkers, posts, topics, locale }: Browse
             <Date dateString={date} />
           </li>
         ))}
+        </Section>}
 
-      {biomarkers && <BiomarkersList title="Biomarkers" biomarkers={biomarkers} />}
     </Layout>
   )
 }

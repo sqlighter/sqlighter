@@ -240,9 +240,11 @@ export class Biomarker {
    * Will render to id if nested in a json
    * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#tojson_behavior
    */
+/*  
   public toJSON(key: any) {
     return key ? this.id : this
   }
+  */
 }
 
 /** A suggested range for a biomarker */
