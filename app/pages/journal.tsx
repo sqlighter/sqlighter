@@ -1,16 +1,9 @@
 //
-// journal.tsx
+// journal.tsx - show biomarker measurements, events, personal data, etc.
 //
 
-import { GetStaticProps } from "next"
-import Head from "next/head"
-import Link from "next/link"
-
 import * as React from "react"
-
-import { getSortedPostsData } from "../lib/posts"
 import Layout from "../components/layout"
-import Date from "../components/date"
 
 interface JournalPageProps {
   //
@@ -19,15 +12,11 @@ interface JournalPageProps {
 export default function JournalPage(props: JournalPageProps) {
   return (
     <Layout title="Journal" subtitle="Track your progress">
-      <section>tbd: Journal goes here</section>
+      <section>
+        THIS IS WORK IN PROGRESS. THE DEPLOYED APPLICATION IS NOT AT ALL COMPLETE, HAS NOT YET BEEN RELEASED, SOME PAGES
+        MAY BE COMPLETE, SOME HALF DONE, SOME JUST DRAFTS. MOST OF THE CONTENTS ARE JUST PLACEHOLDERS FOR NOW. WE ARE
+        LOOKING FOR COLLABORATORS, ESPECIALLY CONTENT EDITORS.
+      </section>
     </Layout>
   )
-}
-
-export const getStaticProps: GetStaticProps = async () => {
-  return {
-    props: {
-      //
-    },
-  }
 }
