@@ -14,7 +14,7 @@ biomarkers:
   - mchc
   - rdw
   - ferritin
-  - iron
+  - fe
 references:
   - title: Why Iron is So Crucial to Your Body
     imageUrl: https://blog.insidetracker.com/hs-fs/hubfs/Biomarkers%20of%20inflammation.jpg

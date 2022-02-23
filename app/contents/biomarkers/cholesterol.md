@@ -3,13 +3,15 @@ id: cholesterol
 title: Cholesterol
 description: A waxy, fat-like substance
 status: published
-image: images/cholesterol.jpeg
+imageUrl: images/cholesterol.jpeg
 unit: mg/dL
 range: "<200; medium: 200-240; high: >240"
 conversions:
   mmol/L: 0.0258632
   umol/L: 25.8632
   µmol/L: 25.8632
+articles:
+  - what-is-cholesterol
 references:
   - title: What is Cholesterol?
     imageUrl: https://www.heart.org/-/media/Images/Health-Topics/Cholesterol/family-cooking-together.jpg

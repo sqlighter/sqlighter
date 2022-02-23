@@ -5,10 +5,10 @@
 import { GetStaticProps } from "next"
 import * as React from "react"
 
-import { getSortedPostsData } from "../lib/posts"
-import Layout from "../components/layout"
-import { Section } from "../components/section"
-import Date from "../components/date"
+//import { getSortedPostsData } from "../lib/posts"
+import Layout from "../../components/layout"
+import { Section } from "../../components/section"
+import Date from "../../components/date"
 
 interface BlogPageProps {
   // list of posts ordered by date
@@ -30,7 +30,7 @@ export default function BlogPage({ posts }: BlogPageProps) {
 }
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
-  const posts = getSortedPostsData()
+  const posts = []//getSortedPostsData()
   return {
     props: {
       posts,

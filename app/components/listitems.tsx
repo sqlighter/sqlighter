@@ -96,3 +96,34 @@ export function BiomarkerListItem({ item }: ListItemProps) {
     </Link>
   )
 }
+
+export function ContentListItem({ item }: ListItemProps) {
+  // TODO biomarker itself could have an image url or a group of biomarkers could give it one
+  const image = getImage(item.imageUrl || "/biomarkers/blood.jpeg", item.title, 40, 40, "rounded")
+
+  // TODO we could make the text of list items a bit bigger in the theme itself
+  const primary = (
+    <Typography variant="body1" noWrap={true}>
+      {item.title}
+    </Typography>
+  )
+  // const secondary = <Typography variant="body2">{biomarker.description}</Typography>
+  //const primary = biomarker.title
+  const secondary = item.description
+
+  return (
+    <Link href={item.url} key={item.id} passHref>
+      <ListItemButton sx={{ marginLeft: -2, marginRight: -2, borderRadius: "8px" }} dense={true}>
+        <ListItem alignItems="flex-start" disableGutters dense={true} sx={{ marginTop: -1, marginBottom: -1 }}>
+          <ListItemAvatar>{image}</ListItemAvatar>
+          <ListItemText primary={primary} secondary={secondary} />
+        </ListItem>
+      </ListItemButton>
+    </Link>
+  )
+}
+
+/** Placeholder for specific article list item (use generic for now) */
+export function ArticleListItem(props: ListItemProps) {
+  return <ContentListItem {...props} />
+}

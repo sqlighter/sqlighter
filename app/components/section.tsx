@@ -15,19 +15,17 @@ interface SectionProps {
 export function Section({ title, subtitle, large, children }: SectionProps) {
   return (
     <section aria-label={title}>
-      <Box mb={1}>
-        {title && (
-          <Typography variant={large ? "h2" : "h3"} color="text.primary">
-            {title}
-          </Typography>
-        )}
-        {subtitle && (
-          <Typography variant="body1" sx={{ color: "text.secondary" }}>
-            {subtitle}
-          </Typography>
-        )}
-      </Box>
-      <Box mb={2}>{children}</Box>
+      {title && (
+        <Typography variant={large ? "h2" : "h3"} color="text.primary">
+          {title}
+        </Typography>
+      )}
+      {subtitle && (
+        <Typography variant="body1" sx={{ color: "text.secondary" }}>
+          {subtitle}
+        </Typography>
+      )}
+      <Box mb={4}>{children}</Box>
     </section>
   )
 }
