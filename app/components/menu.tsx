@@ -26,13 +26,19 @@ import MailIcon from "@mui/icons-material/Mail"
 
 import { Avatar } from "./avatar"
 import { Context } from "./context"
+import { Logo } from "./logo"
 
 export function Menu({ onClose }) {
   const context = useContext(Context)
   const router = useRouter()
 
   return (
-    <Box sx={{ width: 250 }} role="presentation" onClick={onClose} onKeyDown={onClose}>
+    <Box sx={{ width: 240 }} role="presentation" onClick={onClose} onKeyDown={onClose}>
+      <Box height={128} display="flex">
+        <Box ml={2} alignSelf="flex-end">
+          <Logo organizationId="american-hearth-association" width={96} height={96} />
+        </Box>
+      </Box>
       <List>
         {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
           <ListItem button key={text}>
