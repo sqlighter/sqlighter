@@ -4,9 +4,10 @@
 const nextConfig = {
   // https://nextjs.org/docs/advanced-features/i18n-routing
   i18n: {
-    locales: ["en-US", "it-IT"],
+    locales: ["en-US"],
     defaultLocale: "en-US",
     /*   
+    locales: ["en-US", "it-IT"],
     domains: [
       {
         domain: "insieme.app",
