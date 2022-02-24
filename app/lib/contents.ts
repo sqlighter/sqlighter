@@ -108,6 +108,9 @@ export abstract class Content {
   /** Biomarker ids related to this content */
   biomarkers?: string[]
 
+  /** List of articles ids related to this content */
+  articles?: string[]
+
   /** Foods related to this content */
   foods?: string[]
 
