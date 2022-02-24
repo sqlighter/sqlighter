@@ -13,7 +13,7 @@ import { getSerializableArticles, getSerializableBiomarkers, getSerializableTopi
 import Layout from "../components/layout"
 import { Section } from "../components/section"
 import { ContentsGallery, QUILT_SIZES } from "../components/contentsgallery"
-import { ArticleListItem, BiomarkerListItem } from "../components/listitems"
+import { ArticleListItem, BiomarkerListItem, TopicListItem } from "../components/listitems"
 
 interface LibraryPageProps {
   biomarkers: Biomarker[]
@@ -28,6 +28,16 @@ export default function LibraryPage({ biomarkers, topics, articles }: LibraryPag
       {topics && (
         <Section title="Topics">
           <ContentsGallery items={topics} sizes={QUILT_SIZES} />
+        </Section>
+      )}
+
+      {false && (
+        <Section title="Topics">
+          <List dense disablePadding>
+            {topics.map((topic) => (
+              <TopicListItem key={topic.id} item={topic} />
+            ))}
+          </List>
         </Section>
       )}
 

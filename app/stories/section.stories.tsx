@@ -1,10 +1,6 @@
 import React from "react"
 import { ComponentStory, ComponentMeta } from "@storybook/react"
 import { Section } from "../components/section"
-import { StorybookDecorator } from "../components/storybook"
-
-import { red } from "@mui/material/colors"
-import { ThemeProvider, createTheme } from "@mui/material/styles"
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {

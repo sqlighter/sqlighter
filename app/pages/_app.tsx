@@ -7,11 +7,10 @@ import Script from "next/script"
 import { useRouter } from "next/router"
 import "../styles/global.css"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import CssBaseline from "@mui/material/CssBaseline"
 import GlobalStyles from "@mui/material/GlobalStyles"
-import { createTheme, ThemeProvider, ThemeOptions } from "@mui/material/styles"
-import { lighten, rgbToHex } from "@mui/material/styles"
+import { ThemeProvider } from "@mui/material/styles"
 import Box from "@mui/material/Box"
 
 import { useUser } from "../lib/auth/hooks"

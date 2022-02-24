@@ -5,13 +5,17 @@
 import React from "react"
 import CssBaseline from "@mui/material/CssBaseline"
 import GlobalStyles from "@mui/material/GlobalStyles"
-import { customTheme, PRIMARY_LIGHTEST } from "../components/theme"
 import { ThemeProvider } from "@mui/material/styles"
+import Container from "@mui/material/Container"
+
 import { Context } from "../components/context"
+import { customTheme, PRIMARY_LIGHTEST } from "../components/theme"
 
 interface StorybookDecoratorProps {
+  /** Used passed to "app" as logged in */
   user?: any
 
+  /** Story to be shown inside this decorator */
   children: any
 }
 
@@ -34,7 +38,9 @@ export function StorybookDecorator({ user, children }: StorybookDecoratorProps) 
     <CssBaseline>
       <GlobalStyles styles={{ body: { backgroundColor: PRIMARY_LIGHTEST } }} />
       <Context.Provider value={context}>
-        <ThemeProvider theme={customTheme()}>{children}</ThemeProvider>
+        <ThemeProvider theme={customTheme()}>
+          <Container maxWidth="sm">{children}</Container>
+        </ThemeProvider>
       </Context.Provider>
     </CssBaseline>
   )

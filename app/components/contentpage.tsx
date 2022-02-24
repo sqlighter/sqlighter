@@ -31,32 +31,31 @@ export function ContentPage({ item }: ContentPageProps) {
     <Layout title={item.title} subtitle={item.description} back={true}>
       <article id={item.id} title={item.title}>
         {contentHtml && (
-          <section>
-            <div className="markdown" dangerouslySetInnerHTML={{ __html: contentHtml }} />
-          </section>
+          <Box mb={4}>
+            <section>
+              <div className="markdown" dangerouslySetInnerHTML={{ __html: contentHtml }} />
+            </section>
+          </Box>
+        )}
+        {biomarkers && (
+          <Section title="Biomarkers">
+            <List>
+              {biomarkers.map((biomarker) => (
+                <BiomarkerListItem key={biomarker.id} item={biomarker} />
+              ))}
+            </List>
+          </Section>
+        )}
+        {item.references && (
+          <Section title="References">
+            <List>
+              {item.references.map((ref: Content) => (
+                <ReferenceListItem key={ref.id || ref.url} item={ref} />
+              ))}
+            </List>
+          </Section>
         )}
       </article>
-      {biomarkers && (
-        <Section title="Biomarkers">
-          <Box mb={2} />
-          <List dense disablePadding>
-            {biomarkers.map((biomarker) => (
-              <BiomarkerListItem key={biomarker.id} item={biomarker} />
-            ))}
-          </List>
-        </Section>
-      )}
-
-      {item.references && (
-        <Section title="References">
-          <Box mb={2} />
-          <List dense disablePadding>
-            {item.references.map((ref) => (
-              <ReferenceListItem key={(ref as Content).url} item={ref} />
-            ))}
-          </List>
-        </Section>
-      )}
     </Layout>
   )
 }
