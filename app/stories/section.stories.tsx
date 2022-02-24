@@ -1,11 +1,16 @@
 import React from "react"
 import { ComponentStory, ComponentMeta } from "@storybook/react"
-import { Section } from "../../components/section"
+import { Section } from "../components/section"
+import { StorybookDecorator } from "../components/storybook"
+
+import { red } from "@mui/material/colors"
+import { ThemeProvider, createTheme } from "@mui/material/styles"
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: "Components/Section",
   component: Section,
+
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
     //
@@ -28,8 +33,9 @@ const Template: ComponentStory<typeof Section> = (args) => (
   </Section>
 )
 
-export const Primary = Template.bind({})
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
+
+export const Primary = Template.bind({})
 Primary.args = {
   title: "Biomarkers",
   subtitle: "A comprehensive list",

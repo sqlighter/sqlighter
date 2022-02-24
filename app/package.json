@@ -16,9 +16,7 @@
     "start": "next start",
     "test": "jest --runInBand",
     "format": "prettier --write \"**/*.{js,ts,tsx,vue,md,yaml,json,scss,css}\"",
-    "lint": "next lint",
-    "storybook": "start-storybook -p 6006 -s ./public",
-    "build-storybook": "build-storybook -s"
+    "storybook": "start-storybook -p 6006 -s ./public"
   },
   "dependencies": {
     "@emotion/react": "^11.7.1",

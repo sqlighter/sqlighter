@@ -16,6 +16,6 @@
     "incremental": true,
     "sourceMap": true
   },
-  "exclude": ["node_modules", "stories"],
+  "exclude": ["node_modules", "OFFstories"],
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"]
 }

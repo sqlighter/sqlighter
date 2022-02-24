@@ -24,6 +24,10 @@ export const UNITS_SEARCH_CONFIDENCE = 0.7
 
 export const DEFAULT_LOCALE = "en-US"
 
+// TODO to merge localized content
+// import { deepmerge } from '@mui/utils';
+// const theme = createTheme(deepmerge(options1, options2));
+
 export class Translation {
   constructor(args: { locale: string; [key: string]: string }) {
     this.locale = args.locale

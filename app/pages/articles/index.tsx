@@ -30,7 +30,7 @@ export default function BlogPage({ posts }: BlogPageProps) {
 }
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
-  const posts = []//getSortedPostsData()
+  const posts = [] //getSortedPostsData()
   return {
     props: {
       posts,

@@ -17,119 +17,7 @@ import Box from "@mui/material/Box"
 import { useUser } from "../lib/auth/hooks"
 import { Context } from "../components/context"
 import { getGoogleSigninClient } from "../components/signin"
-
-//
-// Theming
-// https://bareynol.github.io/mui-theme-creator/
-// https://mui.com/customization/theming/
-//
-
-declare module "@mui/material/styles" {
-  // allow configuration using `createTheme`
-  interface PaletteOptions {
-    materialyou?: {
-      primary?: {
-        light?: string
-        lighter?: string
-        lightest?: string
-      }
-    }
-  }
-}
-
-// coefficients used to make colors lighter
-const LIGHT = 0.92
-const LIGHTER = 0.95
-const LIGHTEST = 0.97
-
-export const PRIMARY_COLOR = "#0072e5" // blue
-export const PRIMARY_LIGHT = rgbToHex(lighten(PRIMARY_COLOR, LIGHT))
-export const PRIMARY_LIGHTER = rgbToHex(lighten(PRIMARY_COLOR, LIGHTER))
-export const PRIMARY_LIGHTEST = rgbToHex(lighten(PRIMARY_COLOR, LIGHTEST))
-
-// https://mui.com/customization/default-theme/
-const defaultTheme = createTheme()
-
-const customTheme = createTheme({
-  palette: {
-    primary: {
-      main: PRIMARY_COLOR,
-    },
-    secondary: {
-      main: "#7ab6a8",
-    },
-    background: {
-      default: PRIMARY_LIGHTEST,
-      /*   paper: "#fF00FF", */
-    },
-    text: {
-      primary: "#3d4043",
-      secondary: "#606367",
-    },
-    action: {
-      active: "#001E3C",
-    },
-    success: {
-      500: "#009688",
-    },
-    materialyou: {
-      primary: {
-        light: PRIMARY_LIGHT,
-        lighter: PRIMARY_LIGHTER,
-        lightest: PRIMARY_LIGHTEST,
-      },
-    },
-    tonalOffset: 0.4,
-  },
-
-  typography: {
-    fontFamily: "Lato, Roboto, Helvetica, Arial, sans-serif",
-    fontWeightLight: 300,
-    fontWeightRegular: 400,
-    fontWeightMedium: 700,
-    fontWeightBold: 900,
-    h1: {
-      fontWeight: 900,
-      fontSize: defaultTheme.typography.h3.fontSize,
-      lineHeight: defaultTheme.typography.h3.lineHeight,
-      letterSpacing: defaultTheme.typography.h3.letterSpacing,
-    },
-    h2: {
-      fontWeight: 900,
-      fontSize: defaultTheme.typography.h4.fontSize,
-      lineHeight: defaultTheme.typography.h4.lineHeight,
-      letterSpacing: defaultTheme.typography.h4.letterSpacing,
-    },
-    h3: {
-      fontWeight: 900,
-      fontSize: defaultTheme.typography.h5.fontSize,
-      lineHeight: defaultTheme.typography.h5.lineHeight,
-      letterSpacing: defaultTheme.typography.h5.letterSpacing,
-    },
-    h4: { ...defaultTheme.typography.h6, fontWeight: 700 },
-    h5: { ...defaultTheme.typography.h6, fontWeight: 700 },
-    h6: { ...defaultTheme.typography.body1, fontWeight: 700 },
-  },
-
-  components: {
-    MuiBottomNavigation: {
-      styleOverrides: {
-        root: {
-          backgroundColor: PRIMARY_LIGHTEST,
-        },
-      },
-    },
-
-    MuiAppBar: {
-      styleOverrides: {
-        colorPrimary: {
-          color: defaultTheme.palette.text.primary,
-          backgroundColor: PRIMARY_LIGHTEST,
-        },
-      },
-    },
-  },
-})
+import { customTheme, PRIMARY_LIGHTEST } from "../components/theme"
 
 // TODO google public id used to signin from environment variables
 // https://nextjs.org/docs/basic-features/environment-variables#exposing-environment-variables-to-the-browser
@@ -223,7 +111,7 @@ export default function App({ Component, pageProps }) {
     <>
       <CssBaseline>
         <GlobalStyles styles={{ body: { backgroundColor: PRIMARY_LIGHTEST } }} />
-        <ThemeProvider theme={customTheme}>
+        <ThemeProvider theme={customTheme()}>
           <Context.Provider value={context}>
             <Head>
               <meta name="viewport" content="initial-scale=1, width=device-width" />
