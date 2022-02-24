@@ -34,7 +34,7 @@ handler
   /** Returns an organization's details */
   .get("/api/organizations/:organizationId", (req: any, res) => {
     const organizationId = req.params.organizationId
-    const org = { ...Organization.getOrganization(organizationId) }
+    const org = { ...Organization.getOrganization(organizationId), type: "organization" }
     for (const idx in org.images) {
       const image = org.images[idx]
       org.images[idx] = { ...image, url: getImageUrl(image.path) }

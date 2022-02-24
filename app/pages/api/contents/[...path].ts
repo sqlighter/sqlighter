@@ -19,7 +19,7 @@ const contentsOptions = {
   dotfiles: "ignore",
   extensions: ["jpg", "jpeg", "svg", "png"], // no .md or .json files
   index: false,
-  maxAge: "4h",
+  maxAge: "8h",
 }
 const serveFiles = express.static(contentsDirectory, contentsOptions)
 handler.use("/api/contents", serveFiles)

@@ -32,6 +32,8 @@ export function Menu({ onClose }) {
   const context = useContext(Context)
   const router = useRouter()
 
+  const user = context.user
+
   return (
     <Box sx={{ width: 240 }} role="presentation" onClick={onClose} onKeyDown={onClose}>
       <Box height={128} display="flex">
@@ -56,6 +58,7 @@ export function Menu({ onClose }) {
           </ListItem>
         ))}
       </List>
+      {user && <Box>has user</Box>}
     </Box>
   )
 }

@@ -28,7 +28,7 @@ export function getImage(src: string, alt: string, width?, height?, objectFit?, 
   let image = null
   if (src) {
     if (src.startsWith("/")) {
-      image = <Image src={src} alt={alt} width={width} height={height} />
+      image = <Image src={src} alt={alt} width={width} height={height} quality={100} layout="responsive" objectFit="cover" />
     } else {
       image = <img src={src} alt={alt} width={width} height={height} style={{ objectFit }} />
     }
