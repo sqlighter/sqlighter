@@ -40,7 +40,7 @@ handler
       org.images[idx] = { ...image, url: getImageUrl(image.path) }
     }
 
-    console.debug(`/api/organizations/${organizationId}`, org)
+    // console.debug(`/api/organizations/${organizationId}`, org)
     res.json({ data: org })
   })
 

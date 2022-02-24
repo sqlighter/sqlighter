@@ -30,7 +30,7 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
   try {
     // fallback to non-localized content if needed
     const topic = Biomarker.getBiomarker(biomarkerId, locale) // TODO add true to fallback on non-localized
-    const item = getSerializableContent(topic, true)
+    const item = getSerializableContent(topic, true, true)
     return { props: { item } }
   } catch (exception) {
     console.error(`getStaticProps - /biomarker/${biomarkerId}, exception: ${exception}`, exception)

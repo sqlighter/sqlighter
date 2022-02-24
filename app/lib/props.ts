@@ -13,7 +13,7 @@ import { Topic } from "./topics"
  * @param expandBiomarkers True if item.biomarkers should be expanded from a list of biomarkerId to actual contents
  * @returns A regular dictionary object
  */
-export function getSerializableContent(item: any, expandBiomarkers: boolean = false) {
+export function getSerializableContent(item: any, expandBiomarkers: boolean = false, expandArticles: boolean = false) {
   const serialized = JSON.parse(JSON.stringify(item))
 
   // add organizations to references so we can show logos, etc
@@ -29,7 +29,7 @@ export function getSerializableContent(item: any, expandBiomarkers: boolean = fa
   }
 
   // expand biomarker references if requested
-  if (expandBiomarkers && item.biomarkers) {
+  if (expandBiomarkers && serialized.biomarkers) {
     const biomarkers = []
     for (const biomarkerId of serialized.biomarkers) {
       const biomarker = Biomarker.getBiomarker(biomarkerId)
@@ -40,6 +40,20 @@ export function getSerializableContent(item: any, expandBiomarkers: boolean = fa
       }
     }
     serialized.biomarkers = getSerializableContent(biomarkers)
+  }
+
+  // expand article references if requested
+  if (expandArticles && item.articles) {
+    const articles = []
+    for (const articleId of serialized.articles) {
+      const article = Article.getContent(articleId)
+      if (article) {
+        articles.push(article)
+      } else {
+        console.error(`getSerializableContent - ${item.id}, article: ${articleId} not found`, item)
+      }
+    }
+    serialized.articles = getSerializableContent(articles)
   }
 
   return serialized

@@ -2,9 +2,6 @@
 // contentpage.tsx - a content detail page used for topics, blogs, biomarkers
 //
 
-import Link from "next/link"
-import { GetStaticProps, GetStaticPaths } from "next"
-
 import React from "react"
 import Box from "@mui/material/Box"
 import List from "@mui/material/List"
@@ -12,9 +9,8 @@ import List from "@mui/material/List"
 import Layout from "./layout"
 import { Content } from "../lib/contents"
 import { Biomarker } from "../lib/biomarkers"
-import { ReferenceListItem } from "./listitems"
 import { Section } from "./section"
-import { BiomarkerListItem } from "./listitems"
+import { BiomarkerListItem, ArticleListItem, ReferenceListItem } from "./listitems"
 
 interface ContentPageProps {
   /** Item that should be shown */
@@ -24,8 +20,8 @@ interface ContentPageProps {
 /** Shows a gallery of images with titles and optional subtitles arranged in tiles of variables sizes */
 export function ContentPage({ item }: ContentPageProps) {
   const contentHtml = item.contentHtml ? item.contentHtml : "empty"
-
   const biomarkers = item.biomarkers as any as Biomarker[]
+  const articles = item.articles as any as Content[]
 
   return (
     <Layout title={item.title} subtitle={item.description} back={true}>
@@ -42,6 +38,15 @@ export function ContentPage({ item }: ContentPageProps) {
             <List>
               {biomarkers.map((biomarker) => (
                 <BiomarkerListItem key={biomarker.id} item={biomarker} />
+              ))}
+            </List>
+          </Section>
+        )}
+        {articles && (
+          <Section title="Articles">
+            <List>
+              {articles.map((article) => (
+                <ArticleListItem key={article.id} item={article} />
               ))}
             </List>
           </Section>

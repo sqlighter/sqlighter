@@ -30,7 +30,7 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
   try {
     // fallback to non-localized content if needed
     const topic = Article.getContent(articleId, locale, true)
-    const item = getSerializableContent(topic, true)
+    const item = getSerializableContent(topic, true, true)
     return { props: { item } }
   } catch (exception) {
     console.error(`getStaticProps - /article/${articleId}, exception: ${exception}`, exception)
