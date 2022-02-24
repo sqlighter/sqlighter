@@ -1,2 +1,0 @@
-- Aumentare l'apporto di Proteine mangiando Carne, in particolare di Pollo, e Pesce
-- Mantenere in salute il Fegato, che le produce, e i Reni, che non devono espellerle in eccesso

@@ -1,2 +1,0 @@
-- Un basso livello di Potassio solitamente viene risolto aumentando il suo apporto con la Dieta
-- Se invece il Potassio è elevato è necessario parlarne con un Medico

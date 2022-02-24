@@ -1,2 +1,0 @@
-- Aumentare l'apporto di Proteine come quelle contenute nella Carne di pollo e nel Pesce
-- Mantenere Fegato e Reni sani, in modo che entrambi producano Proteine a sufficienza e non ne distruggano troppe.

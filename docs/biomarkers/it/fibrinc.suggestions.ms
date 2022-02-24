@@ -1,2 +1,0 @@
-- Aumentare l'attività fisica fa abbassare il Fibrinogeno fino a quando non si va in sovraccarico.
-- Assumere Alimenti Antinfiammatori come il te verde, olio di semi di lino e curcuma può far abbassare il livello di Fibrinogeno

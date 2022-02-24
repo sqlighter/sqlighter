@@ -1,2 +1,0 @@
-La presenza di Corpi Chetonici nelle Urine è un segno dell'incapacità del Corpo di utilizzare correttamente il glucosio quale fonte di energia. La
-Chetonuria si manifesta in caso di diabete, disidratazione, malnutrizione e altre malattie.

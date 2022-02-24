@@ -1,3 +1,0 @@
-- Aumentare l'esposizione alla luce solare, meglio se per brevi periodi quando il sole è al suo picco a metà giornata.
-- Consumare cibi ricchi di Vitamina D com Pesce e Noci
-- Iniziare ad assumere Integratori Alimentari contenenti Vitamina D

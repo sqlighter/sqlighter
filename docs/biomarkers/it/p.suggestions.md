@@ -1,1 +1,0 @@
-- Alterazioni del Fosforo devono essere valutate da un Medico tenendo in considerazione anche i livelli di Calcio, Vitamina D e Ormoni Tiroidei.
