@@ -1,14 +1,17 @@
 {
-  "name": "app",
+  "name": "biomarkers-app",
   "author": "Gionata Mettifogo <gmettifogo@gmail.com>",
   "version": "2.0.0",
   "packageManager": "yarn@3.1.1",
   "keywords": [
-    "biomarkers"
+    "biomarkers",
+    "health",
+    "laboratory",
+    "fitness"
   ],
   "private": true,
   "scripts": {
-    "dev": "next dev --hostname 127.0.0.1",
+    "dev": "next dev --hostname 0.0.0.0",
     "build": "next build",
     "start": "next start",
     "test": "jest --runInBand",

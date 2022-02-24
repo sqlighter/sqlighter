@@ -1,6 +1,0 @@
-dist
-node_modules
-app/src/lang/translations/*.yaml
-frontend/_next
-frontend/.next
-
