@@ -29,6 +29,8 @@ const nextConfig = {
       "storage.googleapis.com",
       "api.insieme.app",
       "insieme.app",
+      "api.biomarkers.app",
+      "biomarkers.app"
     ],
   },
   eslint: {
