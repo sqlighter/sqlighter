@@ -3,13 +3,16 @@
 //
 
 import * as React from "react"
+import { useRouter } from "next/router"
 import { GetStaticProps } from "next"
+import Box from "@mui/material/Box"
 import List from "@mui/material/List"
 
 import { Article } from "../lib/articles"
 import { Biomarker } from "../lib/biomarkers"
 import { Topic } from "../lib/topics"
 import { getSerializableArticles, getSerializableBiomarkers, getSerializableTopics } from "../lib/props"
+
 import Layout from "../components/layout"
 import { Section } from "../components/section"
 import { ContentsGallery, QUILT_SIZES } from "../components/contentsgallery"
@@ -23,8 +26,12 @@ interface LibraryPageProps {
 }
 
 export default function LibraryPage({ biomarkers, topics, articles }: LibraryPageProps) {
+  const router = useRouter()
+
   return (
-    <Layout home title="Library" subtitle={`${biomarkers.length} biomarkers`}>
+    <Layout home title="Library" subtitle={`${biomarkers.length} biomarkers`} search={true}>
+      {router.query.search && <Box>search: {router.query.search}</Box>}
+
       {topics && (
         <Section title="Topics">
           <ContentsGallery items={topics} sizes={QUILT_SIZES} />

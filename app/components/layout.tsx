@@ -3,14 +3,12 @@
 //
 
 import Head from "next/head"
-import Image from "next/image"
-import Link from "next/link"
-
-import Box from "@mui/material/Box"
 import Container from "@mui/material/Container"
 
 import { Header } from "./header"
-import Footer from "./footer"
+import { Footer } from "./footer"
+
+export const TITLE = "Biomakers"
 
 interface LayoutProps {
   title?: string
@@ -18,12 +16,17 @@ interface LayoutProps {
 
   children: React.ReactNode
   home?: boolean
-  back?: boolean | string
+
+  /** True if back icon should be shown */
+  back?: boolean
+
+  /** True if search icon should be shown */
+  search?: boolean
 }
 
-export default function Layout({ children, title, subtitle, home, back }: LayoutProps) {
-  const pageTitle = title ? `${title} | Biomarkers` : "Biomarkers"
-  title = title || "Biomarkers"
+export default function Layout({ children, title, subtitle, home, back, search }: LayoutProps) {
+  const pageTitle = title ? `${title} | ${TITLE}` : TITLE
+  title = title || TITLE
 
   return (
     <>
@@ -40,7 +43,7 @@ export default function Layout({ children, title, subtitle, home, back }: Layout
         <meta name="og:title" content={title} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
-      <Header title={title} subtitle={subtitle} back={back} />
+      <Header title={title} subtitle={subtitle} back={back} search={search} />
       <Container maxWidth="sm">{children}</Container>
       <Footer />
     </>

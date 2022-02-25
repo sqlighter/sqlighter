@@ -9,7 +9,7 @@ import Layout from "../components/layout"
 
 export default function Home({ props }) {
   return (
-    <Layout title="Biomarkers" subtitle="Know better, live better" home>
+    <Layout subtitle="Know better, live better" home>
       <Image priority src="/images/profile.jpg" className="round" height={144} width={144} alt="Biomarkers" />
       <Box>
         THIS IS WORK IN PROGRESS. THE DEPLOYED APPLICATION IS NOT AT ALL COMPLETE, HAS NOT YET BEEN RELEASED, SOME PAGES

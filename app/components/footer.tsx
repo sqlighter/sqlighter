@@ -14,7 +14,7 @@ import JournalIcon from "@mui/icons-material/AssignmentOutlined"
 import LibraryIcon from "@mui/icons-material/LocalLibraryOutlined"
 import ProfileIcon from "@mui/icons-material/PersonOutlineOutlined"
 
-const Footer = () => {
+export function Footer() {
   const router = useRouter()
 
   // if pathname is '/library/biomarkers/glucose' pathSegments[0] will be 'library'
@@ -38,5 +38,3 @@ const Footer = () => {
     </>
   )
 }
-
-export default Footer
