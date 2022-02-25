@@ -2,7 +2,6 @@
 // layout.tsx - shared layout component
 //
 
-import { useRouter } from "next/router"
 import Head from "next/head"
 import Container from "@mui/material/Container"
 
