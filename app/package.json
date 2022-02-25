@@ -48,7 +48,7 @@
     "remark": "^14.0.2",
     "remark-html": "^15.0.1",
     "set-clustering": "^1.1.0",
-    "sharp": "^0.29.3",
+    "sharp": "^0.30.1",
     "swr": "^1.2.1",
     "tokenizr": "^1.6.5",
     "uuid": "^8.3.2"
