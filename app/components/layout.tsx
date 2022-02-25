@@ -2,11 +2,13 @@
 // layout.tsx - shared layout component
 //
 
+import { useRouter } from "next/router"
 import Head from "next/head"
 import Container from "@mui/material/Container"
 
-import { Header } from "./header"
+import { Header, useSearch } from "./header"
 import { Footer } from "./footer"
+import { SearchResults } from "./search"
 
 export const TITLE = "Biomakers"
 
@@ -25,6 +27,9 @@ interface LayoutProps {
 }
 
 export default function Layout({ children, title, subtitle, home, back, search }: LayoutProps) {
+  // search query entered in header if any
+  const [query] = useSearch()
+
   const pageTitle = title ? `${title} | ${TITLE}` : TITLE
   title = title || TITLE
 
@@ -44,7 +49,7 @@ export default function Layout({ children, title, subtitle, home, back, search }
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
       <Header title={title} subtitle={subtitle} back={back} search={search} />
-      <Container maxWidth="sm">{children}</Container>
+      <Container maxWidth="sm">{query ? <SearchResults search={query} /> : children}</Container>
       <Footer />
     </>
   )

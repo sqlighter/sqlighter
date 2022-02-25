@@ -3,7 +3,7 @@
 //
 
 import { useRouter } from "next/router"
-import { useContext, useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef } from "react"
 
 import useScrollTrigger from "@mui/material/useScrollTrigger"
 import AppBar from "@mui/material/AppBar"
@@ -27,6 +27,19 @@ import { Menu } from "./menu"
 
 export const HEADER_SMALL_HEIGHT = 64
 export const HEADER_LARGE_HEIGHT = 128
+
+export function useSearch(search?: string) {
+  const router = useRouter()
+  useEffect(() => {
+    if (search != undefined) {
+      router.query.search = search
+      router.replace(router)
+    }
+  }, [router]);
+
+  return [router.query.search as string];
+};
+
 
 function HideOnScroll({ children }) {
   const trigger = useScrollTrigger()
