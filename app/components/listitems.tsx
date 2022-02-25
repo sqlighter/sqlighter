@@ -5,14 +5,12 @@
 import Link from "next/link"
 import Image from "next/image"
 
-import Avatar from "@mui/material/Avatar"
+import Badge from "@mui/material/Badge"
 import Box from "@mui/material/Box"
 import ListItem from "@mui/material/ListItem"
 import ListItemButton from "@mui/material/ListItemButton"
 import ListItemText from "@mui/material/ListItemText"
 import ListItemAvatar from "@mui/material/ListItemAvatar"
-import Stack from "@mui/material/Stack"
-import Typography from "@mui/material/Typography"
 
 import { Content } from "../lib/contents"
 import { Logo } from "./logo"
@@ -28,7 +26,9 @@ export function getImage(src: string, alt: string, width?, height?, objectFit?, 
   let image = null
   if (src) {
     if (src.startsWith("/")) {
-      image = <Image src={src} alt={alt} width={width} height={height} quality={100} layout="responsive" objectFit="cover" />
+      image = (
+        <Image src={src} alt={alt} width={width} height={height} quality={100} layout="responsive" objectFit="cover" />
+      )
     } else {
       image = <img src={src} alt={alt} width={width} height={height} style={{ objectFit }} />
     }
@@ -81,14 +81,29 @@ export interface ListItemProps {
 
   /** Additional items to be shown on right hand side */
   secondaryAction?: any
+
+  /** Display a dot badge with the given color (default none) */
+  dotColor?: "default" | "success" | "primary" | "secondary" | "error" | "info" | "warning"
 }
 
-export function ContentListItem({ item, avatar, avatarStyle, secondaryAction }: ListItemProps) {
+export function ContentListItem({ item, avatar, avatarStyle, secondaryAction, dotColor }: ListItemProps) {
   const primary = item.title
   const secondary = item.description
 
   if (!avatar && item.imageUrl) {
     avatar = getAvatarImage(item.imageUrl, item.title, avatarStyle)
+    if (dotColor) {
+      avatar = (
+        <Badge
+          overlap="circular"
+          anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+          variant="dot"
+          color={dotColor}
+        >
+          {avatar}
+        </Badge>
+      )
+    }
   }
 
   return (
@@ -122,7 +137,7 @@ export function BiomarkerListItem(props: ListItemProps) {
     }
   }
 
-  return <ContentListItem item={item} avatarStyle="fancy" />
+  return <ContentListItem item={item} avatarStyle="fancy" dotColor="success" />
 }
 
 /** List item for generic references to external sources and contents */

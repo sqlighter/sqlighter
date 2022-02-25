@@ -113,6 +113,16 @@ export function customTheme() {
           },
         },
       },
+
+      MuiBadge: {
+        styleOverrides: {
+          badge: {
+            // add a bit of white border around the dot that makes it stand out
+            // TODO could have animation from https://mui.com/components/avatars/#with-badge
+            boxShadow: `0 0 0 2px ${baseTheme.palette.background.paper}`,
+          },
+        },
+      },
     },
   })
 
