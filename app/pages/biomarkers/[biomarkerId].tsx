@@ -33,7 +33,7 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
     const item = getSerializableContent(topic, true, true)
     return { props: { item } }
   } catch (exception) {
-    console.error(`getStaticProps - /biomarker/${biomarkerId}, exception: ${exception}`, exception)
+    console.error("getStaticProps - /biomarker/%s, exception: %s", biomarkerId, exception, exception)
     throw exception
   }
 }
