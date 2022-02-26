@@ -18,6 +18,9 @@ import { Section } from "../components/section"
 import { ContentsGallery, QUILT_SIZES } from "../components/contentsgallery"
 import { ArticleListItem, BiomarkerListItem, TopicListItem } from "../components/listitems"
 
+// Monitor performance here:
+// https://pagespeed.web.dev/report?url=https%3A%2F%2Fbiomarkers.app%2Flibrary&hl=en-US
+
 interface LibraryPageProps {
   biomarkers: Biomarker[]
   topics: Topic[]
