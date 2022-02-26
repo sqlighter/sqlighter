@@ -35,11 +35,10 @@ export function useSearch(search?: string) {
       router.query.search = search
       router.replace(router)
     }
-  }, [router]);
+  }, [router])
 
-  return [router.query.search as string];
-};
-
+  return [router.query.search as string]
+}
 
 function HideOnScroll({ children }) {
   const trigger = useScrollTrigger()

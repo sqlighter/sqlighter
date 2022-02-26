@@ -34,7 +34,7 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
     return { props: { item } }
   } catch (exception) {
     // no format string because topicId is externally controlled user data
-    console.error('getStaticProps - /topic/' + topicId + ', exception: ' + exception, exception)
+    console.error("getStaticProps - /topic/%s, exception: %s", exception, exception)
     throw exception
   }
 }
