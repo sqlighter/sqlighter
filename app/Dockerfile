@@ -1,5 +1,5 @@
-# Use the official lightweight Node.js image
-FROM node:16-slim
+# Use prebuild base docker so we can speed up yarn installs
+FROM eu.gcr.io/biomarkers-app/biomarkers-base
 WORKDIR /app
 
 # Add environment variables to production image
@@ -17,7 +17,7 @@ ENV NODE_ENV production
 COPY package.json ./
 COPY yarn.lock ./
 RUN yarn install --production
-RUN yarn add --dev eslint eslint-config-next
+# RUN yarn add --dev eslint eslint-config-next
 RUN yarn add --dev typescript @types/react
 
 # Copy everything except what is in .dockerignore (eg node_modules, etc)
@@ -30,7 +30,7 @@ RUN yarn next build
 CMD ["yarn", "next", "start"]
 
 # Commands to build docker image, run it locally then deploy to Google Cloud Run
-# docker build -t "eu.gcr.io/insieme2/insieme-app:staging" --build-arg NEXT_PUBLIC_GOOGLE_CLIENT_ID=${NEXT_PUBLIC_GOOGLE_CLIENT_ID} .
-# docker run -it --env-file=.env -p 127.0.0.1:80:3000 eu.gcr.io/insieme2/insieme-app:staging
-# docker push eu.gcr.io/insieme2/insieme-app:staging
-# gcloud run deploy insieme-app --quiet --region europe-west1 --image "eu.gcr.io/insieme2/insieme-app:staging" --platform "managed" --allow-unauthenticated
+# docker build -t "eu.gcr.io/biomarkers-app/biomarkers-app:staging" --build-arg NEXT_PUBLIC_GOOGLE_CLIENT_ID=${NEXT_PUBLIC_GOOGLE_CLIENT_ID} .
+# docker run -it --env-file=.env -p 127.0.0.1:80:3000 eu.gcr.io/biomarkers-app/biomarkers-app:staging
+# docker push eu.gcr.io/biomarkers-app/biomarkers-app:staging
+# gcloud run deploy biomarkers-app --quiet --region europe-west1 --image "eu.gcr.io/biomarkers-app/biomarkers-app:staging" --platform "managed" --allow-unauthenticated
