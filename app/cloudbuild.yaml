@@ -1,0 +1,12 @@
+steps:
+- name: 'eu.gcr.io/cloud-builders/docker'
+  entrypoint: 'bash'
+  args: ['-c', 'docker pull eu.gcr.io/$PROJECT_ID/biomarkers-app:latest || exit 0']
+- name: 'eu.gcr.io/cloud-builders/docker'
+  args: [
+            'build',
+            '-t', 'eu.gcr.io/$PROJECT_ID/biomarkers-app:latest',
+            '--cache-from', 'eu.gcr.io/$PROJECT_ID/biomarkers-app:latest',
+            '.'
+        ]
+images: ['eu.gcr.io/$PROJECT_ID/biomarkers-app:latest']
