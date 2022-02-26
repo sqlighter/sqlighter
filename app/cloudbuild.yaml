@@ -1,15 +1,47 @@
 steps:
-- name: 'eu.gcr.io/cloud-builders/docker'
-  entrypoint: 'bash'
-  args: ['-c', 'docker pull eu.gcr.io/$PROJECT_ID/biomarkers-app:latest || exit 0']
-- name: 'eu.gcr.io/cloud-builders/docker'
-  args: [
-            'build',
-            '-t', 'eu.gcr.io/$PROJECT_ID/biomarkers-app:latest',
-            '--cache-from', 'eu.gcr.io/$PROJECT_ID/biomarkers-app:latest',
-            '.'
-        ]
-images: ['eu.gcr.io/$PROJECT_ID/biomarkers-app:latest']
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - "--cache-from"
+      - "$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:latest"
+      - "-t"
+      - "$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA"
+      - app
+      - "-f"
+      - app/Dockerfile
+    id: Build
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - push
+      - "$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA"
+    id: Push
+  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk:slim"
+    args:
+      - run
+      - services
+      - update
+      - $_SERVICE_NAME
+      - "--platform=managed"
+      - "--image=$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA"
+      - >-
+        --labels=managed-by=gcp-cloud-build-deploy-cloud-run,commit-sha=$COMMIT_SHA,gcb-build-id=$BUILD_ID,gcb-trigger-id=$_TRIGGER_ID,$_LABELS
+      - "--region=$_DEPLOY_REGION"
+      - "--quiet"
+    id: Deploy
+    entrypoint: gcloud
+images:
+  - "$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA"
+options:
+  substitutionOption: ALLOW_LOOSE
+substitutions:
+  _LABELS: gcb-trigger-id=9d72d545-af22-43d1-8ee0-6af4485e11c5
+  _TRIGGER_ID: 9d72d545-af22-43d1-8ee0-6af4485e11c5
+  _DEPLOY_REGION: europe-west1
+  _GCR_HOSTNAME: eu.gcr.io
+  _PLATFORM: managed
+  _SERVICE_NAME: biomarkers-app
+tags:
+  - gcp-cloud-build-deploy-cloud-run
+  - gcp-cloud-build-deploy-cloud-run-managed
+  - biomarkers-app
 timeout: 20m
-
-
