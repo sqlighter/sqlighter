@@ -4,7 +4,7 @@ steps:
       - --dockerfile=app/Dockerfile
       - --destination=$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA
       - --cache=true
-      - --context dir:///workspace/app/
+      - --context=dir:///workspace/app/
     id: Build
   - name: gcr.io/cloud-builders/docker
     args:
