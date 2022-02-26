@@ -1,5 +1,5 @@
 //
-// app.tsx
+// app.tsx - main component used to wrap all page components and keep state, handle shared tasks, etc
 //
 
 import Head from "next/head"
@@ -18,14 +18,15 @@ import { Context } from "../components/context"
 import { getGoogleSigninClient } from "../components/signin"
 import { customTheme, PRIMARY_LIGHTEST } from "../components/theme"
 
-// TODO google public id used to signin from environment variables
+// Google client id used for signin client is bound below at build time
 // https://nextjs.org/docs/basic-features/environment-variables#exposing-environment-variables-to-the-browser
-// const GOOGLE_ID = process.env['NEXT_PUBLIC_GOOGLE_ID']
-const GOOGLE_ID = "427320365950-75nnbuht76pb6femtq9ccctqhs0a4qbb.apps.googleusercontent.com"
-//console.log('GOOGLE_ID: ' + GOOGLE_ID)
-//console.assert(GOOGLE_ID, JSON.stringify(process.env))
+const GOOGLE_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID
 
-export default function App({ Component, pageProps }) {
+interface AppProps {
+  //
+}
+
+export default function App({ Component, pageProps }: { Component: any; pageProps: AppProps }) {
   // current page, navigation, etc
   const router = useRouter()
 
@@ -55,7 +56,7 @@ export default function App({ Component, pageProps }) {
     }).then((res) => {
       res.json().then((json) => {
         const user = json.data
-        console.log("onSignIn", user)
+        // console.log("onSignIn", user)
         mutateUser({ data: user }, false)
       })
     })
@@ -80,7 +81,7 @@ export default function App({ Component, pageProps }) {
     // https://developers.google.com/identity/gsi/web/reference/js-reference#IdConfiguration
     const gsi = getGoogleSigninClient()
     gsi.initialize({
-      client_id: "427320365950-75nnbuht76pb6femtq9ccctqhs0a4qbb.apps.googleusercontent.com" /*GOOGLE_ID,*/,
+      client_id: GOOGLE_ID,
       callback: onSignin,
       auto_select: true,
     })
