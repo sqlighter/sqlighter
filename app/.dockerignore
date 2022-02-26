@@ -1,11 +1,15 @@
 .dockerignore
+.prettierignore
+.editorconfig
 .cache
 .vscode
 .idea
 .readmes
 .env
 .next
+.yarn
 
 build
 node_modules
 out
+README.md
