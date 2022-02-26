@@ -10,3 +10,6 @@ steps:
             '.'
         ]
 images: ['eu.gcr.io/$PROJECT_ID/biomarkers-app:latest']
+timeout: 20m
+
+
