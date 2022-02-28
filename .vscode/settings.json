@@ -8,5 +8,6 @@
     "jestrunner.runOptions": [
         "--runInBand",
         "--detectOpenHandles"
-    ]
+    ],
+    "svg.preview.background": "transparent"
 }

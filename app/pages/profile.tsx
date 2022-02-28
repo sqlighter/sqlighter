@@ -49,10 +49,6 @@ function getProfileContents(context) {
           </Box>
         </Stack>
       </Stack>
-      pre
-      <Icon color="secondary">&#xE87C;</Icon>
-      <Icon color="secondary">local_library</Icon>
-      post
     </section>
   )
 }
