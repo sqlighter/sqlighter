@@ -117,7 +117,7 @@ export function Menu({ onClose }) {
         </Box>
         <Box flexGrow={1} mb={2}>
           <Box mb={2}>
-            <Typography variant="body1">{displayName}</Typography>
+            <Typography variant="body2">{displayName}</Typography>
             <Typography variant="body2" color="text.secondary">
               {email}
             </Typography>
