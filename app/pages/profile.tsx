@@ -8,6 +8,7 @@ import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
 import Stack from "@mui/material/Stack"
 import Tooltip from "@mui/material/Tooltip"
+import Icon from "@mui/material/Icon"
 
 import { useUser } from "../lib/auth/hooks"
 import { Context } from "../components/context"
@@ -48,6 +49,10 @@ function getProfileContents(context) {
           </Box>
         </Stack>
       </Stack>
+      pre
+      <Icon color="secondary">&#xE87C;</Icon>
+      <Icon color="secondary">local_library</Icon>
+      post
     </section>
   )
 }

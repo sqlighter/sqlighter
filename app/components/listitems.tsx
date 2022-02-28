@@ -7,11 +7,14 @@ import Image from "next/image"
 
 import Badge from "@mui/material/Badge"
 import Box from "@mui/material/Box"
+import List from "@mui/material/List"
 import ListItem from "@mui/material/ListItem"
 import ListItemButton from "@mui/material/ListItemButton"
 import ListItemText from "@mui/material/ListItemText"
 import ListItemAvatar from "@mui/material/ListItemAvatar"
+import IconButton from "@mui/material/IconButton"
 
+import { getIcon } from "../components/icon"
 import { Content } from "../lib/contents"
 import { Logo } from "./logo"
 
@@ -25,6 +28,11 @@ export const AVATAR_SIZE = 40
 export function getImage(src: string, alt: string, width?, height?, objectFit?, borderRadius?) {
   let image = null
   if (src) {
+    if (src.startsWith("icon://")) {
+      const icon = src.substring("icon://".length)
+      return <IconButton>{getIcon(icon)}</IconButton>
+    }
+
     if (src.startsWith("/")) {
       image = (
         <Image
@@ -50,7 +58,7 @@ export function getImage(src: string, alt: string, width?, height?, objectFit?, 
 }
 
 /** Return an image sized for use in regular avatars */
-export function getAvatarImage(src: string, alt: string, avatarStyle: AvatarStyle) {
+export function getAvatarImage(src: string, alt: string, avatarStyle: AvatarStyle, size = AVATAR_SIZE) {
   let borderRadius = "50%"
   switch (avatarStyle) {
     case "rounded":
@@ -63,7 +71,7 @@ export function getAvatarImage(src: string, alt: string, avatarStyle: AvatarStyl
       borderRadius = "74% 26% 61% 39% / 35% 30% 70% 65%"
       break
   }
-  return getImage(src, alt, AVATAR_SIZE, AVATAR_SIZE, "cover", borderRadius)
+  return getImage(src, alt, size, size, "cover", borderRadius)
 }
 
 /** A logo of the organization/source is shown on the right */
@@ -186,4 +194,35 @@ export function TopicListItem(props: ListItemProps) {
     item.description = `${item.biomarkers.length} biomarkers`
   }
   return <ContentListItem item={item} avatarStyle="square" />
+}
+
+export function GenericListItem(props: ListItemProps) {
+  const item = props.item
+
+  switch (item.type) {
+    case "biomarker":
+      return <BiomarkerListItem {...props} />
+    case "reference":
+      return <ReferenceListItem {...props} />
+    case "topic":
+      return <TopicListItem {...props} />
+  }
+
+  return <ContentListItem {...props} />
+}
+
+interface ListProps {
+  items: Content[]
+}
+
+/** A general purpose list which picks item components automatically based on their types */
+export function GenericList(props: ListProps) {
+  return (
+    <List>
+      {props.items.map((item) => {
+        if (!item.type) console.warn("GenericList - item %s is missing a type", item.id, item)
+        return <GenericListItem item={item} />
+      })}
+    </List>
+  )
 }

@@ -78,6 +78,9 @@ export abstract class Content {
   /** Content id, eg. glucose */
   id: string
 
+  /** Type of item, eg. biomarker, topic, user, section, etc... */
+  type?: string
+
   /** Content title, eg. Glucose (localized) */
   title?: string
 

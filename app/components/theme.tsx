@@ -31,6 +31,8 @@ export const PRIMARY_LIGHT = rgbToHex(lighten(PRIMARY_COLOR, LIGHT))
 export const PRIMARY_LIGHTER = rgbToHex(lighten(PRIMARY_COLOR, LIGHTER))
 export const PRIMARY_LIGHTEST = rgbToHex(lighten(PRIMARY_COLOR, LIGHTEST))
 
+export const BORDER_RADIUS_FANCY = "74% 26% 61% 39% / 35% 30% 70% 65%"
+
 export function customTheme() {
   const baseTheme = createTheme({
     palette: {
@@ -97,6 +99,13 @@ export function customTheme() {
     },
 
     components: {
+      MuiIcon: {
+        defaultProps: {
+          // Replace the `material-icons` default value.
+          baseClassName: 'material-icons-outlined',
+        },
+      },
+
       MuiBottomNavigation: {
         styleOverrides: {
           root: {
