@@ -102,7 +102,7 @@ export function customTheme() {
       MuiIcon: {
         defaultProps: {
           // Replace the `material-icons` default value.
-          baseClassName: 'material-icons-outlined',
+          baseClassName: "material-icons-outlined",
         },
       },
 

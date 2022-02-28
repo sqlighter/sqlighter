@@ -19,6 +19,7 @@ import Typography from "@mui/material/Typography"
 import JournalIcon from "@mui/icons-material/AssignmentOutlined"
 import LibraryIcon from "@mui/icons-material/LocalLibraryOutlined"
 import ProfileIcon from "@mui/icons-material/PersonOutlineOutlined"
+import LogoutIcon from "@mui/icons-material/LogoutOutlined"
 
 import { Context } from "./context"
 import { PRIMARY_LIGHTER, PRIMARY_LIGHTEST } from "./theme"
@@ -53,7 +54,6 @@ export function Menu({ onClose }) {
     bottom: 0,
     display: "flex",
     flexGrow: 1,
-    backgroundColor: PRIMARY_LIGHTEST,
     paddingTop: 2,
     paddingBottom: 2,
   }
@@ -75,7 +75,7 @@ export function Menu({ onClose }) {
         <Box ml={2} mr={3}>
           <Avatar alt={displayName} src={imageUrl} sx={{ height: 40, width: 40 }} />
         </Box>
-        <Box flexGrow={1} mb={2}>
+        <Box flexGrow={1}>
           <Typography variant="body2" noWrap={true}>
             {displayName}
           </Typography>

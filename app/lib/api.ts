@@ -1,11 +1,10 @@
-
 import useSWR from "swr"
 
 // fetcher is polyfilled by next.js and works on client and server alike
-export const fetcher = async (input: RequestInfo, init: RequestInit,  ...args: any[]) => {
-  const res = await fetch(input, init);
-  return res.json();
-};
+export const fetcher = async (input: RequestInfo, init: RequestInit, ...args: any[]) => {
+  const res = await fetch(input, init)
+  return res.json()
+}
 
 /** Retrieve data and metadata from relative url pointing to our APIs */
 export function useApi(url: string) {
@@ -15,6 +14,6 @@ export function useApi(url: string) {
     data: data?.data,
     metadata: data?.metadata,
     isLoading: !error && !data,
-    isError: error
+    isError: error,
   }
 }

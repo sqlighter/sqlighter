@@ -10,7 +10,11 @@ import LibraryIcon from "@mui/icons-material/LocalLibraryOutlined"
 import ProfileIcon from "@mui/icons-material/PersonOutlineOutlined"
 
 interface IconProps {
-  color, fontSize, htmlColor, sx, titleAccess
+  color
+  fontSize
+  htmlColor
+  sx
+  titleAccess
 }
 
 export function getIcon(name: string, fontSize?) {
@@ -21,7 +25,7 @@ export function getIcon(name: string, fontSize?) {
   console.debug(`icon - name: ${name}`)
   return <MuiIcon>{name}</MuiIcon>
 
-  switch(name) {
+  switch (name) {
     case "journal":
       return <JournalIcon fontSize={fontSize} />
     case "library":
@@ -33,8 +37,6 @@ export function getIcon(name: string, fontSize?) {
   return null
 }
 
-export function Icon({children, fontSize}) {
-  return getIcon(children as string, fontSize);
+export function Icon({ children, fontSize }) {
+  return getIcon(children as string, fontSize)
 }
-
-

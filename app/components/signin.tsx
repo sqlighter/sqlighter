@@ -52,12 +52,13 @@ export function SigninButton() {
         theme: "outline",
         size: "large",
         shape: "pill",
+        width: 230
       })
     }
   }, [context.isGoogleSigninLoaded])
   return (
-    <Box maxWidth={400}>
-      <div id="google_signin_button" style={{ width: 400 }}></div>
+    <Box width={230}>
+      <div id="google_signin_button"></div>
     </Box>
   )
 }
