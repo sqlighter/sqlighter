@@ -17,6 +17,8 @@ ENV NODE_ENV production
 COPY .yarn ./
 COPY package.json ./
 COPY yarn.lock ./
+RUN yarn add --dev eslint eslint-config-next
+RUN yarn add --dev typescript @types/react
 RUN yarn install --immutable
 
 # Copy everything except what is in .dockerignore (eg node_modules, etc)

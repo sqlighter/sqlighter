@@ -26,6 +26,8 @@ import { Context } from "./context"
 import { PRIMARY_LIGHTER, PRIMARY_LIGHTEST } from "./theme"
 import { SigninButton } from "./signin"
 
+const MENU_WIDTH = 280
+
 function MenuLabel({ text, variant }: { text: string; variant?: "default" | "secondary" }) {
   if (variant == "secondary") {
     return (
@@ -115,14 +117,25 @@ export function Menu({ onClose }) {
   }
 
   return (
-    <Box sx={{ width: 300 }} role="presentation" onClick={onClose} onKeyDown={onClose}>
+    <Box
+      sx={{
+        width: MENU_WIDTH,
+        height: "100%",
+        // theme is extended in theme.tsx with very light shades used by material you specs
+        background: (theme: Theme | any) =>
+          `linear-gradient(to bottom, white 0%, white 40%, ${theme.palette.materialyou.primary.light} 100%)`,
+      }}
+      role="presentation"
+      onClick={onClose}
+      onKeyDown={onClose}
+    >
       <Box
         height={128}
         display="flex"
         alignItems="flex-end"
         sx={{ position: "relative", backgroundColor: PRIMARY_LIGHTER, paddingLeft: 3, paddingBottom: 2 }}
       >
-        <Image
+        <Image 
           src="/american-hearth-association.svg"
           alt="Biomarkers.app"
           width={100}

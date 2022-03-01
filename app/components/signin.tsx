@@ -52,7 +52,7 @@ export function SigninButton() {
         theme: "outline",
         size: "large",
         shape: "pill",
-        width: 230
+        width: 230,
       })
     }
   }, [context.isGoogleSigninLoaded])
