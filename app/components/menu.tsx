@@ -20,10 +20,32 @@ import JournalIcon from "@mui/icons-material/AssignmentOutlined"
 import LibraryIcon from "@mui/icons-material/LocalLibraryOutlined"
 import ProfileIcon from "@mui/icons-material/PersonOutlineOutlined"
 import LogoutIcon from "@mui/icons-material/LogoutOutlined"
+import { Theme } from "@mui/material/styles"
 
 import { Context } from "./context"
 import { PRIMARY_LIGHTER, PRIMARY_LIGHTEST } from "./theme"
 import { SigninButton } from "./signin"
+
+function MenuLabel({ text, variant }: { text: string; variant?: "default" | "secondary" }) {
+  if (variant == "secondary") {
+    return (
+      <Typography
+        variant="body2"
+        noWrap={true}
+        color="text.secondary"
+        sx={{ fontWeight: (theme: Theme) => theme.typography.fontWeightRegular }}
+      >
+        {text}
+      </Typography>
+    )
+  }
+
+  return (
+    <Typography variant="body2" noWrap={true} sx={{ fontWeight: (theme: Theme) => theme.typography.fontWeightMedium }}>
+      {text}
+    </Typography>
+  )
+}
 
 export function Menu({ onClose }) {
   const context = useContext(Context)
@@ -41,7 +63,7 @@ export function Menu({ onClose }) {
         >
           <ListItem alignItems="center">
             <ListItemIcon sx={{ marginLeft: 1 }}>{icon}</ListItemIcon>
-            <ListItemText primary={title} />
+            <ListItemText primary={<MenuLabel text={title} />} />
           </ListItem>
         </ListItemButton>
       </Link>
@@ -76,15 +98,15 @@ export function Menu({ onClose }) {
           <Avatar alt={displayName} src={imageUrl} sx={{ height: 40, width: 40 }} />
         </Box>
         <Box flexGrow={1}>
-          <Typography variant="body2" noWrap={true}>
-            {displayName}
-          </Typography>
-          <Typography variant="body2" color="text.secondary" noWrap={true}>
-            {email}
-          </Typography>
-          <Box mt={2}>
-            <Button variant="outlined" size="small" onClick={(e) => context.signout("/library")}>
-              Sign Out
+          <MenuLabel text={displayName} />
+          <MenuLabel text={email} variant="secondary" />
+          <Box mt={1}>
+            <Button
+              size="small"
+              onClick={(e) => context.signout("/library")}
+              sx={{ position: "relative", left: "-4px" }}
+            >
+              Signout
             </Button>
           </Box>
         </Box>
