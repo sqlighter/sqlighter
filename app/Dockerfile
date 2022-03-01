@@ -14,9 +14,11 @@ ENV NODE_ENV production
 
 # Copy application dependency manifests to the container image
 # Copying this separately prevents re-running yarn install on every code change
+COPY .yarn ./
 COPY package.json ./
 COPY yarn.lock ./
 RUN yarn install --immutable --immutable-cache
+
 
 # Copy everything except what is in .dockerignore (eg node_modules, etc)
 COPY . ./
