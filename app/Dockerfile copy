@@ -1,5 +1,5 @@
 # Use base docker with prebuild tools
-FROM node:16-slim
+FROM eu.gcr.io/biomarkers-app/biomarkers-base
 WORKDIR /app
 
 # Add environment variables to production image
@@ -14,14 +14,8 @@ ENV NODE_ENV production
 
 # Copy application dependency manifests to the container image
 # Copying this separately prevents re-running yarn install on every code change
-COPY .yarnrc.yml ./
 COPY package.json ./
 COPY yarn.lock ./
-
-RUN npm i -g npm@latest
-RUN npm update -g yarn@latest
-RUN yarn set version latest
-RUN yarn -v
 RUN yarn install
 
 # Copy everything except what is in .dockerignore (eg node_modules, etc)
