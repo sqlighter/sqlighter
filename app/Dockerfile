@@ -1,5 +1,5 @@
-# Use prebuild base docker so we can speed up yarn installs
-FROM eu.gcr.io/biomarkers-app/biomarkers-base
+# Use the official lightweight Node.js image
+FROM node:16-slim
 WORKDIR /app
 
 # Add environment variables to production image
@@ -17,7 +17,7 @@ ENV NODE_ENV production
 COPY .yarn ./
 COPY package.json ./
 COPY yarn.lock ./
-#RUN yarn install --production --immutable
+RUN yarn install --immutable
 
 # Copy everything except what is in .dockerignore (eg node_modules, etc)
 COPY . ./
