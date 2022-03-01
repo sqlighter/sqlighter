@@ -187,6 +187,7 @@ export default function Layout({ children, title, subtitle, home, showBack, acti
           variant={isMediumScreen ? "permanent" : "temporary"}
           open={open}
           onClose={(e) => setDrawer(false)}
+          PaperProps={{ style: { borderRight: 0 } }}
         >
           <Menu width={DRAWER_WIDTH} onClose={(e) => setDrawer(false)} />
         </Drawer>
