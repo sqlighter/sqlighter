@@ -27,4 +27,5 @@ yarn-error.log*
 # storybook
 /storybook-static
 
-.yarn
+# experimenting with committed .yarn folder to see cache improviments in CI/CD
+#.yarn
