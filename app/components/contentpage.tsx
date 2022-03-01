@@ -24,7 +24,7 @@ export function ContentPage({ item }: ContentPageProps) {
   const articles = item.articles as any as Content[]
 
   return (
-    <Layout title={item.title} subtitle={item.description} back={true}>
+    <Layout title={item.title} subtitle={item.description} showBack={true}>
       <article id={item.id} title={item.title}>
         {contentHtml && (
           <Box mb={4}>

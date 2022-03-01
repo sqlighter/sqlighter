@@ -23,36 +23,39 @@ import LogoutIcon from "@mui/icons-material/LogoutOutlined"
 import { Theme } from "@mui/material/styles"
 
 import { Context } from "./context"
-import { PRIMARY_LIGHTER, PRIMARY_LIGHTEST } from "./theme"
 import { SigninButton } from "./signin"
 
-const MENU_WIDTH = 280
+export function Menu({ width, onClose }) {
+  const context = useContext(Context)
+  const router = useRouter()
+  const user = context.user
 
-function MenuLabel({ text, variant }: { text: string; variant?: "default" | "secondary" }) {
-  if (variant == "secondary") {
+  function MenuLabel({ text, variant }: { text: string; variant?: "default" | "secondary" }) {
+    if (variant == "secondary") {
+      return (
+        <Typography
+          width={width - 100}
+          variant="body2"
+          noWrap={true}
+          color="text.secondary"
+          sx={{ fontWeight: (theme: Theme) => theme.typography.fontWeightRegular }}
+        >
+          {text}
+        </Typography>
+      )
+    }
+
     return (
       <Typography
+        width="180px"
         variant="body2"
         noWrap={true}
-        color="text.secondary"
-        sx={{ fontWeight: (theme: Theme) => theme.typography.fontWeightRegular }}
+        sx={{ fontWeight: (theme: Theme) => theme.typography.fontWeightMedium }}
       >
         {text}
       </Typography>
     )
   }
-
-  return (
-    <Typography variant="body2" noWrap={true} sx={{ fontWeight: (theme: Theme) => theme.typography.fontWeightMedium }}>
-      {text}
-    </Typography>
-  )
-}
-
-export function Menu({ onClose }) {
-  const context = useContext(Context)
-  const router = useRouter()
-  const user = context.user
 
   function getMenuItem(title, icon, url) {
     const selected = router.pathname.startsWith(url)
@@ -80,6 +83,7 @@ export function Menu({ onClose }) {
     flexGrow: 1,
     paddingTop: 2,
     paddingBottom: 2,
+    paddingRight: 2,
   }
 
   function getUserItem() {
@@ -119,11 +123,11 @@ export function Menu({ onClose }) {
   return (
     <Box
       sx={{
-        width: MENU_WIDTH,
+        width,
         height: "100%",
         // theme is extended in theme.tsx with very light shades used by material you specs
         background: (theme: Theme | any) =>
-          `linear-gradient(to bottom, white 0%, white 40%, ${theme.palette.materialyou.primary.light} 100%)`,
+          `linear-gradient(to bottom, white 0%, white 40%, ${theme.palette.materialyou.primary.lightest} 100%)`,
       }}
       role="presentation"
       onClick={onClose}
@@ -133,9 +137,14 @@ export function Menu({ onClose }) {
         height={128}
         display="flex"
         alignItems="flex-end"
-        sx={{ position: "relative", backgroundColor: PRIMARY_LIGHTER, paddingLeft: 3, paddingBottom: 2 }}
+        sx={{
+          position: "relative",
+          backgroundColor: (theme: Theme | any) => theme.palette.materialyou.primary.lightest,
+          paddingLeft: 3,
+          paddingBottom: 3,
+        }}
       >
-        <Image 
+        <Image
           src="/american-hearth-association.svg"
           alt="Biomarkers.app"
           width={100}
