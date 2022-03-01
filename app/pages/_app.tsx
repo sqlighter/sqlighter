@@ -21,7 +21,7 @@ import { customTheme, PRIMARY_LIGHTEST } from "../components/theme"
 // Google client id used for signin client is bound below at build time
 // https://nextjs.org/docs/basic-features/environment-variables#exposing-environment-variables-to-the-browser
 const GOOGLE_ID = "287841034651-nn6phbd87f979bbqn7vfh0rav8lpdt7c.apps.googleusercontent.com" // temp workaround for google cloud build issues
-//const GOOGLE_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID
+//const GOOGLE_ID2 = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID
 
 interface AppProps {
   //
@@ -118,6 +118,7 @@ export default function App({ Component, pageProps }: { Component: any; pageProp
               <meta name="viewport" content="initial-scale=1, width=device-width" />
               <meta name="user" content={user?.id} />
               <meta name="theme-color" content={PRIMARY_LIGHTEST} />
+              <meta name="google_id" content={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID} />
 
               <link rel="preconnect" href="https://fonts.googleapis.com" />
               <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

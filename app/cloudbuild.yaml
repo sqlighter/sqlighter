@@ -6,6 +6,8 @@ steps:
       - "$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:latest"
       - "-t"
       - "$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA"
+      - "--build-arg"
+      - "NEXT_PUBLIC_GOOGLE_CLIENT_ID=$_GOOGLE_CLIENT_ID"
       - app
       - "-f"
       - app/Dockerfile
