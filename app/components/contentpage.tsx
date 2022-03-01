@@ -11,7 +11,7 @@ import { Content } from "../lib/contents"
 import { Biomarker } from "../lib/biomarkers"
 import { Section } from "./section"
 import { BiomarkerListItem, ArticleListItem, ReferenceListItem } from "./listitems"
-
+   
 interface ContentPageProps {
   /** Item that should be shown */
   item: Content

@@ -96,6 +96,24 @@ export function customTheme() {
         lineHeight: baseTheme.typography.h5.lineHeight,
         letterSpacing: baseTheme.typography.h5.letterSpacing,
       },
+      h4: {
+        fontWeight: 900,
+        fontSize: baseTheme.typography.h6.fontSize,
+        lineHeight: baseTheme.typography.h6.lineHeight,
+        letterSpacing: baseTheme.typography.h6.letterSpacing,
+      },
+      h5: {
+        fontWeight: 900,
+        fontSize: baseTheme.typography.h6.fontSize,
+        lineHeight: baseTheme.typography.h6.lineHeight,
+        letterSpacing: baseTheme.typography.h6.letterSpacing,
+      },
+      h6: {
+        fontWeight: 900,
+        fontSize: baseTheme.typography.h6.fontSize,
+        lineHeight: baseTheme.typography.h6.lineHeight,
+        letterSpacing: baseTheme.typography.h6.letterSpacing,
+      },
     },
 
     components: {

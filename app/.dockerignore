@@ -7,7 +7,6 @@
 .readmes
 .env
 .next
-.yarn
 
 build
 node_modules
