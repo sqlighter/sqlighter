@@ -1,5 +1,5 @@
-# Use the official lightweight Node.js image
-FROM node:16-slim
+# Use base docker with prebuild tools
+FROM eu.gcr.io/biomarkers-app/biomarkers-base
 WORKDIR /app
 
 # Add environment variables to production image
@@ -14,12 +14,9 @@ ENV NODE_ENV production
 
 # Copy application dependency manifests to the container image
 # Copying this separately prevents re-running yarn install on every code change
-COPY .yarn ./
 COPY package.json ./
 COPY yarn.lock ./
-RUN yarn add --dev eslint eslint-config-next
-RUN yarn add --dev typescript @types/react
-RUN yarn install --immutable
+RUN yarn install --immutable --immutable-cache
 
 # Copy everything except what is in .dockerignore (eg node_modules, etc)
 COPY . ./

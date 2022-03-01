@@ -53,14 +53,11 @@ interface LayoutProps {
   /** True if back icon should be shown */
   showBack?: boolean
 
-  /** True if search icon should be shown */
-  showSearch?: boolean
-
   /** Additional actions to be placed on the right hand side of the toolbar */
   actions?: any
 }
 
-export default function Layout({ children, title, subtitle, home, showBack, showSearch, actions }: LayoutProps) {
+export default function Layout({ children, title, subtitle, home, showBack, actions }: LayoutProps) {
   // search query entered in header if any
   const [query] = useSearch()
 
@@ -145,11 +142,9 @@ export default function Layout({ children, title, subtitle, home, showBack, show
             )
           )}
           <Box sx={{ flexGrow: 1 }} />
-          {showSearch && (
-            <IconButton color="inherit" edge={actions ? undefined : "end"} onClick={(e) => setSearch("")}>
-              <SearchIcon />
-            </IconButton>
-          )}
+          <IconButton color="inherit" edge={actions ? undefined : "end"} onClick={(e) => setSearch("")}>
+            <SearchIcon />
+          </IconButton>
           {actions}
         </Box>
         <Typography variant="h3" color="text.primary" noWrap={true}>
