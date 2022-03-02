@@ -112,7 +112,8 @@ export default function Layout({ children, title, subtitle, home, showBack, acti
           </Box>
         </Box>
         <TextField
-          id="search"
+          id="search-field"
+          type="search"
           variant="standard"
           placeholder="Search"
           value={search}
