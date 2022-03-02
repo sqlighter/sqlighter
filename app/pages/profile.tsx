@@ -55,69 +55,65 @@ function ProfilePanel({ user }) {
   const fieldSx = { width: "100%", maxWidth: 400, marginBottom: 4 }
 
   return (
-    user && (
-      <>
-        <Stack direction="row" spacing={2} mb={2}>
-          <Tooltip title={displayName}>
-            <Avatar alt={displayName} src={imageUrl} sx={{ width: 96, height: 96 }} />
-          </Tooltip>
-          <Stack direction="column">
-            <Box mt={2} mb={6}>
-              <Typography variant="h4">{displayName}</Typography>
-              <Typography variant="body2" color="text.secondary">
-                {email}
-              </Typography>
-            </Box>
-          </Stack>
+    <>
+      <Stack direction="row" spacing={2} mb={2} alignItems="center">
+        <Tooltip title={displayName}>
+          <Avatar alt={displayName} src={imageUrl} sx={{ width: 96, height: 96 }} />
+        </Tooltip>
+        <Stack direction="column">
+            <Typography variant="h4">{displayName}</Typography>
+            <Typography variant="body2" color="text.secondary">
+              {email}
+            </Typography>
         </Stack>
+      </Stack>
 
-        <Section title="Personal Information">
-          <Box mb={2}>
-            <Tip title="Why do we ask?" variant="link">
-              <Box mt={1} mb={1}>
-                We use information like gender and age to give you the optimal ranges for a number of biomarkers like
-                cholesterol. Please pick the gender that fits you best hormonally as that will give you the best
-                results. Your privacy is important to us. Your selections remain private and you can remove any data at
-                any time. See our <a href="/privacy">Privacy Policy</a> for more information.
-              </Box>
-            </Tip>
-          </Box>
+      <Section title="Personal Information">
+        <Box mb={2}>
+          <Tip title="Why do we ask?" variant="link">
+            <Box mt={1} mb={1}>
+              We use information like gender and age to give you the optimal ranges for a number of biomarkers like
+              cholesterol. Please pick the gender that fits you best hormonally as that will give you the best results.
+              Your privacy is important to us. Your selections remain private and you can remove any data at any time.
+              See our <a href="/privacy">Privacy Policy</a> for more information.
+            </Box>
+          </Tip>
+        </Box>
 
-          <DateInput
-            id="birthdate-field"
-            label="Birthdate"
-            value={profile?.birthdate}
-            onChange={handleBirthdate}
-            minDate={dayjs().add(-100, "year")}
-            sx={fieldSx}
-          />
+        <DateInput
+          id="birthdate-field"
+          label="Birthdate"
+          value={profile?.birthdate}
+          onChange={handleBirthdate}
+          minDate={dayjs().add(-100, "year")}
+          sx={fieldSx}
+        />
 
-          <SelectInput id="gender-field" label="Gender" value={profile?.gender} onChange={handleGender} sx={fieldSx}>
-            <MenuItem value="">&nbsp;</MenuItem>
-            <MenuItem value="male">Male</MenuItem>
-            <MenuItem value="female">Female</MenuItem>
-          </SelectInput>
+        <SelectInput id="gender-field" label="Gender" value={profile?.gender} onChange={handleGender} sx={fieldSx}>
+          <MenuItem value="">&nbsp;</MenuItem>
+          <MenuItem value="male">Male</MenuItem>
+          <MenuItem value="female">Female</MenuItem>
+        </SelectInput>
 
-          <NumericInput
-            id="height-field"
-            label="Height"
-            unit="cm"
-            value={profile?.height}
-            onChange={handleHeight}
-            sx={fieldSx}
-          />
+        <NumericInput
+          id="height-field"
+          label="Height"
+          unit="cm"
+          value={profile?.height}
+          onChange={handleHeight}
+          sx={fieldSx}
+        />
 
-          <NumericInput
-            id="weight-field"
-            label="Weight"
-            unit="kg"
-            value={profile?.weight}
-            onChange={handleWeight}
-            sx={fieldSx}
-          />
-        </Section>
-      </>
-    )
+        <NumericInput
+          id="weight-field"
+          label="Weight"
+          unit="kg"
+          value={profile?.weight}
+          onChange={handleWeight}
+          sx={fieldSx}
+        />
+      </Section>
+    </>
   )
 }
 
