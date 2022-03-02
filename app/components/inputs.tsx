@@ -16,17 +16,20 @@ interface InputProps {
   /** Id of text field component, also used to persist preferences */
   id: string
 
+  /** The label content */
   label: string
+
+  /** The short hint displayed in the input before the user enters a value */
+  placeholder?: string
+
+  /** The helper text content */
+  helperText?: string
 
   /** Initial value to be shown in input field */
   value?: any
 
   /** Callback used to notify of value changes */
-  onChange?(value: any): void
-
-  helperText?: string
-
-  fullWidth?: boolean
+  onChange?(value): void
 
   /** Style to be passed to component */
   sx?: SxProps<Theme>
@@ -114,7 +117,7 @@ interface NumericInputProps extends InputProps {
 /** A numeric input with measurement units, conversions, etc */
 export function NumericInput(props: NumericInputProps) {
   const [value, setValue] = useState<string>(props.value)
-  console.debug(`NumericInput - id: ${props.id}, value:${props.value}`)
+  // console.debug(`NumericInput - id: ${props.id}, value:${props.value}`)
 
   function onChange(event: React.ChangeEvent<HTMLInputElement>) {
     console.debug(`NumericInput.onChange - id: ${props.id}, value:${event.target.value}`)
@@ -127,14 +130,15 @@ export function NumericInput(props: NumericInputProps) {
   return (
     <TextField
       id={props.id}
+      type="number"
       label={props.label}
       helperText={props.helperText}
       value={props.value}
       onChange={onChange}
       variant="outlined"
       inputProps={{
+        // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-type
         inputMode: "numeric",
-        pattern: "[0-9]*[.,]+[0-9]*",
       }}
       InputLabelProps={{
         shrink: true,
