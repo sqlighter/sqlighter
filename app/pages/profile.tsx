@@ -3,6 +3,7 @@
 //
 
 import * as React from "react"
+import { useState } from "react"
 import dayjs from "dayjs"
 
 import Avatar from "@mui/material/Avatar"
@@ -11,6 +12,7 @@ import Stack from "@mui/material/Stack"
 import Tooltip from "@mui/material/Tooltip"
 import MenuItem from "@mui/material/MenuItem"
 import Typography from "@mui/material/Typography"
+import { deepmerge } from "@mui/utils"
 
 import { useUser } from "../lib/auth/hooks"
 import { Context } from "../components/context"
@@ -24,34 +26,39 @@ interface ProfilePageProps {
   //
 }
 
-function ProfilePanel({ user }) {
+function ProfilePanel() {
+  // retrieve user information from current session
+  const [user, { mutate: mutateUser, loading: userLoading, setUser }] = useUser()
+
+
+  const [profile, setProfile] = useState(user?.attributes?.profile || {})
+
+  if (!user) return null
+
   const email = user.id
   const displayName = user.attributes?.passport?.displayName || ""
   const imageUrl = user.attributes?.passport?.photos?.[0]?.value
-  const profile = user.attributes?.profile
+  //  const profile = user.attributes?.profile
 
-  function handleBirthdate(date) {
-    if (date) {
-      let formatted = dayjs(date).format("YYYY-MM-DD")
-      console.log("handleBirthdate: %s, valid?", formatted, date.isValid(), date)
-    } else {
-      console.log("handleBirthdate - null")
+
+  async function updateProfile(profile) {
+    console.debug("ProfilePanel.updateProfile", profile)
+    setProfile(profile)
+
+    // update user in database
+    const updated = deepmerge(user, { attributes: { profile } })
+    await setUser(updated)
+  }
+
+  async function updateBirthdate(date) {
+    let birthdate = null
+    if (date.isValid()) {
+      birthdate = dayjs(date).format("YYYY-MM-DD")
     }
+    await updateProfile({ ...profile, birthdate })
   }
 
-  function handleGender(gender) {
-    console.log("handleGender: %s", gender)
-  }
-
-  function handleHeight(height) {
-    console.log("handleHeight: %s", height)
-  }
-
-  function handleWeight(weight) {
-    console.log("handleWeight: %s", weight)
-  }
-
-  // fields are fu
+  // fields are fullWidth with a limit
   const fieldSx = { width: "100%", maxWidth: 400, marginBottom: 4 }
 
   return (
@@ -61,10 +68,10 @@ function ProfilePanel({ user }) {
           <Avatar alt={displayName} src={imageUrl} sx={{ width: 96, height: 96 }} />
         </Tooltip>
         <Stack direction="column">
-            <Typography variant="h4">{displayName}</Typography>
-            <Typography variant="body2" color="text.secondary">
-              {email}
-            </Typography>
+          <Typography variant="h4">{displayName}</Typography>
+          <Typography variant="body2" color="text.secondary">
+            {email}
+          </Typography>
         </Stack>
       </Stack>
 
@@ -83,13 +90,19 @@ function ProfilePanel({ user }) {
         <DateInput
           id="birthdate-field"
           label="Birthdate"
-          value={profile?.birthdate}
-          onChange={handleBirthdate}
+          value={profile?.birthdate ? dayjs(profile.birthdate, "YYYY-MM-DD") : undefined}
+          onChange={updateBirthdate}
           minDate={dayjs().add(-100, "year")}
           sx={fieldSx}
         />
 
-        <SelectInput id="gender-field" label="Gender" value={profile?.gender} onChange={handleGender} sx={fieldSx}>
+        <SelectInput
+          id="gender-field"
+          label="Gender"
+          value={profile?.gender}
+          onChange={async (gender) => await updateProfile({ ...profile, gender })}
+          sx={fieldSx}
+        >
           <MenuItem value="">&nbsp;</MenuItem>
           <MenuItem value="male">Male</MenuItem>
           <MenuItem value="female">Female</MenuItem>
@@ -98,18 +111,20 @@ function ProfilePanel({ user }) {
         <NumericInput
           id="height-field"
           label="Height"
+          placeholder="170"
           unit="cm"
           value={profile?.height}
-          onChange={handleHeight}
+          onChange={async (height) => await updateProfile({ ...profile, height })}
           sx={fieldSx}
         />
 
         <NumericInput
           id="weight-field"
           label="Weight"
+          placeholder="70"
           unit="kg"
           value={profile?.weight}
-          onChange={handleWeight}
+          onChange={(weight) => updateProfile({ ...profile, weight })}
           sx={fieldSx}
         />
       </Section>
