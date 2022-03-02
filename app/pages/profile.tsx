@@ -134,16 +134,14 @@ function ProfilePanel() {
 
 export default function ProfilePage(props: ProfilePageProps) {
   // retrieve user information from current session
-  const [user, { mutate: mutateUser, loading: userLoading }] = useUser()
-
-  const context = React.useContext(Context)
+  const [user, { loading: userLoading }] = useUser()
 
   // avoid flashing while user is loading
   if (userLoading) return null
 
   return (
     <Layout title="Profile" subtitle="Personalize your results">
-      {context.user ? <ProfilePanel user={context.user} /> : <SigninPanel />}
+      {user ? <ProfilePanel /> : <SigninPanel />}
     </Layout>
   )
 }
