@@ -32,7 +32,7 @@ export class Report {
   // methods
   //
 
-  private _detectBiomarker(line: Word[], locale: string) {
+  private async _detectBiomarker(line: Word[], locale: string) {
     // for now we assume that the leftmost word on the line is the one containing
     // the biomarkers' name. so we only check the first word on the line since
     // lines are sorted. in the future we may want to scan other words too.
@@ -48,7 +48,7 @@ export class Report {
 
       // TODO could check if text is in list of common words or blocked words for language or template
 
-      const biomarkersMatches = Biomarker.searchBiomarkers(text, locale)
+      const biomarkersMatches = await Biomarker.searchBiomarkers(text, locale)
       if (biomarkersMatches.length > 0 && biomarkersMatches[0]) {
         return {
           item: biomarkersMatches[0].item,
@@ -163,7 +163,7 @@ export class Report {
 			const valueAlign = getBoundingBoxAlignments(valuesWords.map((w) => w.bbox));
 */
       for (const line of page.lines) {
-        let biomarkerMatch = this._detectBiomarker(line, page.locale)
+        let biomarkerMatch = await this._detectBiomarker(line, page.locale)
         if (biomarkerMatch) {
           let biomarker = biomarkerMatch.item
           let biomarkerTitle = biomarker.title
@@ -185,7 +185,7 @@ export class Report {
               isPerc = biomarker.id.endsWith("-perc")
             if (isAbs || isPerc) {
               const altId = biomarker.id.substring(0, biomarker.id.indexOf("-")) + (isPerc ? "-abs" : "-perc")
-              const alt = Biomarker.getBiomarker(altId, page.locale)
+              const alt = await Biomarker.getBiomarker(altId, page.locale)
               if (alt) {
                 const altMatch = { item: alt, confidence: biomarkerMatch.confidence, word: biomarkerMatch.word }
                 let altUnitMatch = this._detectUnit(line, altMatch)

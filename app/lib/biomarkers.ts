@@ -43,18 +43,21 @@ export class Biomarker extends Content {
   //
 
   /** Lazy load dictionary of available biomarkers */
-  public static getContents(locale: string = DEFAULT_LOCALE): { [contentId: string]: Content } {
-    return loadContents<Biomarker>(this.contentType, locale, Biomarker)
+  public static async getContents(locale: string = DEFAULT_LOCALE): Promise<{ [contentId: string]: Content }> {
+    return await loadContents<Biomarker>(this.contentType, locale, Biomarker)
   }
 
   /** Returns available localized biomarkers */
-  public static getBiomarkers(locale: string = DEFAULT_LOCALE): { [biomarkerId: string]: Biomarker } {
-    return this.getContents(locale) as { [biomarkerId: string]: Biomarker }
+  public static async getBiomarkers(locale: string = DEFAULT_LOCALE): Promise<{ [biomarkerId: string]: Biomarker }> {
+    return (await this.getContents(locale)) as { [biomarkerId: string]: Biomarker }
   }
 
   /** Returns biomarker by id (or undefined), localized if requested */
-  public static getBiomarker(biomarkerId: string, locale: string = DEFAULT_LOCALE): Biomarker | undefined {
-    const biomarkers = Biomarker.getBiomarkers(locale)
+  public static async getBiomarker(
+    biomarkerId: string,
+    locale: string = DEFAULT_LOCALE
+  ): Promise<Biomarker | undefined> {
+    const biomarkers = await Biomarker.getBiomarkers(locale)
     return biomarkers[biomarkerId]
   }
 
@@ -67,8 +70,11 @@ export class Biomarker extends Content {
    * @param confidence Will return only results exceeding this confidence level (0 to 1)
    * @returns A ranked list of possible matches
    */
-  public static searchBiomarkers(query: string, locale?: string): { item: Biomarker; confidence: number }[] {
-    const biomarkers = Biomarker.getBiomarkers(locale)
+  public static async searchBiomarkers(
+    query: string,
+    locale?: string
+  ): Promise<{ item: Biomarker; confidence: number }[]> {
+    const biomarkers = await Biomarker.getBiomarkers(locale)
     let biomarkersFuse = Biomarker._biomarkersFuse[locale]
 
     if (!biomarkersFuse) {
@@ -168,35 +174,6 @@ export class Biomarker extends Content {
 
     return null
   }
-
-  /** Creates a biomarker from an object */
-  /*
-  public static fromObject(obj: any): Biomarker {
-    if (!obj.id) {
-      console.error(`Biomarkers.fromObject - object missing id field`, obj)
-      assert(obj.id)
-    }
-
-    const biomarker: Biomarker = Object.assign(new Biomarker(obj.id), obj)
-
-    if (biomarker.unit) {
-      const unit = Unit.getUnit(obj.unit)
-      assert(unit, `Biomarker.fromObject - '${biomarker.id}' has invalid unit '${biomarker.unit}`)
-      biomarker.unit = unit
-    }
-
-    return biomarker
-  }
-*/
-  /**
-   * Will render to id if nested in a json
-   * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#tojson_behavior
-   */
-  /*  
-  public toJSON(key: any) {
-    return key ? this.id : this
-  }
-  */
 }
 
 /** A suggested range for a biomarker */

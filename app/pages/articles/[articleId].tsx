@@ -12,10 +12,10 @@ export default function ArticlePage({ item }: { item: Article }) {
 }
 
 /** Create a page for each available article in each locale */
-export const getStaticPaths: GetStaticPaths = ({ locales }) => {
+export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
   const paths = []
   for (const locale of locales) {
-    for (const article of Object.values(Article.getContents(locale))) {
+    for (const article of Object.values(await Article.getContents(locale))) {
       if (article.status == "published") {
         paths.push({ params: { articleId: article.id }, locale })
       }
@@ -29,8 +29,8 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
   const articleId = params.articleId as string
   try {
     // fallback to non-localized content if needed
-    const topic = Article.getContent(articleId, locale, true)
-    const item = getSerializableContent(topic, true, true)
+    const topic = await Article.getContent(articleId, locale, true)
+    const item = await getSerializableContent(topic, true, true)
     return { props: { item } }
   } catch (exception) {
     console.error("getStaticProps - /article/%s, exception: %s", articleId, exception, exception)

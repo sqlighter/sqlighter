@@ -9,11 +9,11 @@ import { Biomarker } from "../../lib/biomarkers"
 
 const handler = nextConnect<NextApiRequest, NextApiResponse>()
 
-handler.use(auth).get((req, res) => {
+handler.use(auth).get(async (req, res) => {
   // search query
   const query = req.query.q as string
 
-  const biomarkers = Biomarker.searchBiomarkers(query)
+  const biomarkers = await Biomarker.searchBiomarkers(query)
   // TODO filter by item.status == published
   const results = biomarkers.map((r) => {
     return {

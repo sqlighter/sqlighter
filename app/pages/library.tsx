@@ -75,12 +75,10 @@ export default function LibraryPage({ biomarkers, topics, articles }: LibraryPag
 }
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  const topics = await getSerializableTopics(locale)
+  const biomarkers = await getSerializableBiomarkers(locale)
+  const articles = await getSerializableArticles(locale)
   return {
-    props: {
-      topics: getSerializableTopics(locale),
-      biomarkers: getSerializableBiomarkers(locale),
-      articles: getSerializableArticles(locale),
-      locale,
-    },
+    props: { topics, biomarkers, articles, locale },
   }
 }

@@ -11,7 +11,7 @@ export class Topic extends Content {
   }
 
   /** Lazy load dictionary of available topics */
-  public static getContents(locale: string = DEFAULT_LOCALE): { [contentId: string]: Content } {
-    return loadContents<Topic>(this.contentType, locale, Topic)
+  public static async getContents(locale: string = DEFAULT_LOCALE): Promise<{ [contentId: string]: Content }> {
+    return await loadContents<Topic>(this.contentType, locale, Topic)
   }
 }

@@ -32,9 +32,9 @@ handler
   .use(auth)
 
   /** Returns an organization's details */
-  .get("/api/organizations/:organizationId", (req: any, res) => {
+  .get("/api/organizations/:organizationId", async (req: any, res) => {
     const organizationId = req.params.organizationId
-    const org = { ...Organization.getOrganization(organizationId), type: "organization" }
+    const org = { ...(await Organization.getOrganization(organizationId)), type: "organization" }
     for (const idx in org.images) {
       const image = org.images[idx]
       org.images[idx] = { ...image, url: getImageUrl(image.path) }
@@ -45,8 +45,8 @@ handler
   })
 
   /** Returns an organization's logo */
-  .get("/api/organizations/:organizationId/image", (req: any, res: any) => {
-    const org = Organization.getOrganization(req.params.organizationId)
+  .get("/api/organizations/:organizationId/image", async (req: any, res: any) => {
+    const org = await Organization.getOrganization(req.params.organizationId)
     const image = org.images[0]
     const imagePath = image.path
     const imageStat = fs.statSync(imagePath)

@@ -4,7 +4,7 @@
 
 import path from "path"
 import matter from "gray-matter"
-import fs from "fs"
+import fs from "fs/promises"
 import assert from "assert"
 import sizeOf from "image-size"
 
@@ -154,7 +154,7 @@ export abstract class Content {
   }
 
   /** Concrete class loads contents from local file system or wherever */
-  public static getContents(locale: string = DEFAULT_LOCALE): { [contentId: string]: Content } {
+  public static async getContents(locale: string = DEFAULT_LOCALE): Promise<{ [contentId: string]: Content }> {
     throw new Error("Content.getContents - must be defined in subclass")
   }
 
@@ -165,15 +165,15 @@ export abstract class Content {
    * @param fallback Return default locale item if localized content not found?
    * @returns Content or undefined
    */
-  public static getContent(
+  public static async getContent(
     id: string,
     locale: string = DEFAULT_LOCALE,
     fallback: boolean = false
-  ): Content | undefined {
+  ): Promise<Content | undefined> {
     // this.getContents refers to the class in a static context
-    let contents = this.getContents(locale)
+    let contents = await this.getContents(locale)
     if (!contents[id] && fallback && locale != DEFAULT_LOCALE) {
-      contents = this.getContents(DEFAULT_LOCALE)
+      contents = await this.getContents(DEFAULT_LOCALE)
     }
     return contents[id]
   }
@@ -196,11 +196,11 @@ export function assertLocale(locale: string) {
   assert(/[a-z]{2}-[A-Z]{2}/.test(locale), `'${locale}' is an invalid locale (eg. en-US, it-IT...)`)
 }
 
-export function loadContents<T extends Content>(
+export async function loadContents<T extends Content>(
   contentType: string,
   locale: string = DEFAULT_LOCALE,
   TCreator: new () => T
-): { [contentId: string]: T } {
+): Promise<{ [contentId: string]: T }> {
   // if contents already loaded, return cached version
   if (_contentsCache[contentType]?.[locale]) {
     return _contentsCache[contentType][locale] as unknown as { [contentId: string]: T }
@@ -212,17 +212,17 @@ export function loadContents<T extends Content>(
 
   if (locale != DEFAULT_LOCALE) {
     const localizedDir = path.join(contentsDirectory, locale)
-    if (!fs.existsSync(localizedDir)) {
+    if (!(await fsExists(localizedDir))) {
       console.warn(`loadContents - localized directory ${localizedDir} does not exist`)
     }
     return {}
   }
 
-  const fileNames = fs.readdirSync(contentsDirectory)
+  const fileNames = await fs.readdir(contentsDirectory)
   for (const fileName of fileNames) {
     const filePath = path.join(contentsDirectory, fileName)
-    if (!filePath.startsWith(".") && filePath.endsWith(".md") && fs.statSync(filePath).isFile()) {
-      const content = loadContent(filePath, locale, TCreator)
+    if (!filePath.startsWith(".") && filePath.endsWith(".md") && (await fs.stat(filePath)).isFile()) {
+      const content = await loadContent(filePath, locale, TCreator)
       if (content) {
         contents[content.id] = content
       }
@@ -238,6 +238,14 @@ export function loadContents<T extends Content>(
   return contents
 }
 
+/** Returns true if file or directory exists and can be accessed */
+async function fsExists(filePath): Promise<boolean> {
+  return await fs.access(filePath).then(
+    () => true,
+    () => false
+  )
+}
+
 /**
  * Load a single content file of .md type into a subclass of Content
  * @param filePath The path of the file on disk
@@ -245,14 +253,14 @@ export function loadContents<T extends Content>(
  * @param TCreator The constructor to be used to create the object
  * @returns An object of type T that contains the content in filePath.md
  */
-export function loadContent<T extends Content>(
+export async function loadContent<T extends Content>(
   filePath: string,
   locale: string = DEFAULT_LOCALE,
   TCreator: new () => T
-): T | undefined {
+): Promise<T | undefined> {
   assertLocale(locale)
   try {
-    const fileContents = fs.readFileSync(filePath, "utf8")
+    const fileContents = await fs.readFile(filePath, "utf8")
     assert(fileContents, `loadContentFile - ${filePath} can't be read`)
     if (fileContents) {
       const fileMatter = matter<string, null>(fileContents)
@@ -264,10 +272,10 @@ export function loadContent<T extends Content>(
           const basePath = path.parse(filePath)
           const localizedPath = path.join(basePath.dir, locale, basePath.base)
           const localizedDir = path.parse(localizedPath).dir
-          assert(fs.existsSync(localizedDir), `loadContentFile - localized directory ${localizedDir} does not exist`)
+          assert(await fsExists(localizedDir), `loadContentFile - localized directory ${localizedDir} does not exist`)
 
-          if (fs.existsSync(localizedPath)) {
-            const localizedContents = fs.readFileSync(localizedPath, "utf8")
+          if (await fsExists(localizedPath)) {
+            const localizedContents = await fs.readFile(localizedPath, "utf8")
             if (localizedContents) {
               const localizedMatter = matter(localizedContents)
               if (localizedMatter.data) {
@@ -280,7 +288,7 @@ export function loadContent<T extends Content>(
 
         // load images related to this content
         if (obj.id) {
-          const images = loadContentImages(path.dirname(filePath), obj.id, locale)
+          const images = await loadContentImages(path.dirname(filePath), obj.id, locale)
           if (images) {
             obj.images = images
           }
@@ -327,21 +335,21 @@ export function loadContent<T extends Content>(
  * @param locale The locale directory to be scanned
  * @returns An array of objects with the image name, path, width and height
  */
-export function loadContentImages(
+export async function loadContentImages(
   contentsPath: string,
   contentId: string,
   locale: string = DEFAULT_LOCALE
-): ContentImage[] {
+): Promise<ContentImage[]> {
   assertLocale(locale)
   const images = []
 
   if (locale != DEFAULT_LOCALE) {
     const localizedDir = path.join(contentsPath, locale)
-    assert(fs.existsSync(localizedDir), `loadContentImages - localized directory ${localizedDir} does not exist`)
+    assert(await fsExists(localizedDir), `loadContentImages - localized directory ${localizedDir} does not exist`)
   }
 
   contentsPath = path.join(contentsPath, "/images")
-  const fileNames = fs.readdirSync(contentsPath)
+  const fileNames = await fs.readdir(contentsPath)
   for (const fileName of fileNames) {
     if (fileName.startsWith(contentId)) {
       const filePath = path.join(contentsPath, fileName)
