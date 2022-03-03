@@ -3,6 +3,15 @@ import useSWR from "swr"
 // fetcher is polyfilled by next.js and works on client and server alike
 export const fetcher = async (input: RequestInfo, init: RequestInit, ...args: any[]) => {
   const res = await fetch(input, init)
+
+  // if the status code is not in the range 200-299, we still try to parse and throw it
+  if (!res.ok) {
+    const error: any = new Error("An error occurred while fetching the data.")
+    // attach extra info to the error object
+    error.info = await res.json()
+    error.status = res.status
+    throw error
+  }
   return res.json()
 }
 
@@ -34,4 +43,3 @@ export function useApi(url: string) {
     isError: error,
   }
 }
-

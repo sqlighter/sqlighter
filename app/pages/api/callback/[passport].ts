@@ -5,7 +5,7 @@
 //
 
 import nextConnect from "next-connect"
-import auth from "../../../middleware/auth"
+import auth from "../../../lib/auth/middleware"
 import passport from "../../../lib/auth/passport"
 import { NextApiRequest, NextApiResponse } from "next"
 

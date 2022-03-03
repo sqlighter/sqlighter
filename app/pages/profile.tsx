@@ -30,7 +30,6 @@ function ProfilePanel() {
   // retrieve user information from current session
   const [user, { mutate: mutateUser, loading: userLoading, setUser }] = useUser()
 
-
   const [profile, setProfile] = useState(user?.attributes?.profile || {})
 
   if (!user) return null
@@ -39,7 +38,6 @@ function ProfilePanel() {
   const displayName = user.attributes?.passport?.displayName || ""
   const imageUrl = user.attributes?.passport?.photos?.[0]?.value
   //  const profile = user.attributes?.profile
-
 
   async function updateProfile(profile) {
     console.debug("ProfilePanel.updateProfile", profile)
@@ -99,7 +97,7 @@ function ProfilePanel() {
         <SelectInput
           id="gender-field"
           label="Gender"
-          value={profile?.gender}
+          value={profile?.gender ? profile.gender : ""}
           onChange={async (gender) => await updateProfile({ ...profile, gender })}
           sx={fieldSx}
         >

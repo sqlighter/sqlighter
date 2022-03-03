@@ -13,7 +13,7 @@ export function useUser() {
   const loading = !data
   const user = data?.data
 
-  /** 
+  /**
    * Callback used to post updated user information. Only the profile
    * attributes of the user item can be updated via this API. Other
    * parts of the user, like OpenId passport information cannot be updated.

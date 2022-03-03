@@ -5,7 +5,7 @@
 import nextConnect from "next-connect"
 import { NextApiRequest, NextApiResponse } from "next"
 import fs from "fs"
-import auth from "../../middleware/auth"
+import auth from "../../lib/auth/middleware"
 
 import { Organization } from "../../lib/organizations"
 

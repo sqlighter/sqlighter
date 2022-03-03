@@ -1,5 +1,5 @@
 import nextConnect from "next-connect"
-import auth from "../../middleware/auth"
+import auth from "../../lib/auth/middleware"
 
 const handler = nextConnect()
 

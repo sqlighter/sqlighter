@@ -1,5 +1,5 @@
 //
-// passport.js - configures Passport for Google One Tap signin
+// passport.ts - configures Passport for Google One Tap signin
 //
 
 import passport from "passport"
@@ -7,7 +7,7 @@ import { GoogleOneTapStrategy } from "passport-google-one-tap"
 import { User } from "../users"
 
 /** Serialize a user object into its email which is used as id in sessions */
-passport.serializeUser(function (user, done) {
+passport.serializeUser(function (user: User, done) {
   // console.debug(`serializeUser - ${user.id}`)
   done(null, user.id)
 })
@@ -33,9 +33,10 @@ passport.use(
   // https://console.cloud.google.com/apis/credentials/consent
   new GoogleOneTapStrategy(
     {
-      consumerKey: process.env.GOOGLE_CLIENT_ID,
-      consumerSecret: process.env.GOOGLE_CLIENT_SECRET,
-      verifyCsrfToken: false, // we receive our credentials from the client, no need to validate the csrf token or not
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      // we receive our credentials from the client, no need to validate the csrf token or not
+      verifyCsrfToken: false,
     },
     async function (profile, done) {
       try {

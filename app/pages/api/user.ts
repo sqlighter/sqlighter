@@ -3,44 +3,35 @@
 //
 
 import nextConnect from "next-connect"
-import { deepmerge } from "@mui/utils"
-import auth from "../../middleware/auth"
+import { NextApiRequest, NextApiResponse } from "next"
+import auth from "../../lib/auth/middleware"
 import { ItemsTable } from "../../lib/database"
-import { STATUS_CODES } from "http"
 
 // https://www.passportjs.org/reference/normalized-profile/
 
-const handler = nextConnect()
+const handler = nextConnect<NextApiRequest, NextApiResponse>()
 
 handler
   .use(auth)
+  // returns currently authenticated user profile or null if no auth
   .get((req, res) => {
-    // You do not generally want to return the whole user object
-    // because it may contain sensitive field such as !!password!! Only return what needed
-    // const { name, username, favoriteColor } = req.user
-    // res.json({ user: { name, username, favoriteColor } })
     res.json({ data: req.user })
   })
-  .post((req, res) => {
-    const user = req.body
-    //createUser(req, { username, password, name })
-
-    res.status(204).json({ data: user })
-  })
+  // handlers after this require an authenticated user
   .use((req, res, next) => {
-    // handlers after this (PUT, DELETE) all require an authenticated user
-    // This middleware to check if user is authenticated before continuing
+    // middleware checks if user is authenticated before continuing
     if (!req.user) {
-      res.status(401).send("unauthenticated")
+      res.status(401).send("Unauthenticated")
     } else {
       next()
     }
   })
+  // PUT /api/users - updates to user profile
   .put(async (req, res) => {
     const user = req.user
     const putUser = req.body
     if (!user || user.id != putUser.id) {
-      res.status(403) // Forbidden
+      res.status(403).send("Forbidden")
     }
 
     // retrieve user, merge and update
@@ -49,7 +40,7 @@ handler
     databaseUser.attributes.profile = putUser.attributes.profile
     await items.updateItem(databaseUser)
     const updatedUser = await items.selectItem(putUser.id)
-    console.log("PUT /api/user", putUser, updatedUser)
+    // console.log("PUT /api/user", putUser, updatedUser)
 
     res.json({ data: updatedUser })
   })
