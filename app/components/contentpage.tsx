@@ -15,16 +15,20 @@ import { BiomarkerListItem, ArticleListItem, ReferenceListItem } from "./listite
 interface ContentPageProps {
   /** Item that should be shown */
   item: Content
+
+  /** Content or components shown at the top of the page */
+  header?: any
 }
 
 /** Shows a gallery of images with titles and optional subtitles arranged in tiles of variables sizes */
-export function ContentPage({ item }: ContentPageProps) {
+export function ContentPage({ item, header }: ContentPageProps) {
   const contentHtml = item.contentHtml ? item.contentHtml : "empty"
   const biomarkers = item.biomarkers as any as Biomarker[]
   const articles = item.articles as any as Content[]
 
   return (
     <Layout title={item.title} subtitle={item.description} showBack={true}>
+      {header}
       <article id={item.id} title={item.title}>
         {contentHtml && (
           <Box mb={4}>

@@ -4,11 +4,12 @@
 
 import { GetStaticProps, GetStaticPaths } from "next"
 import { ContentPage } from "../../components/contentpage"
+import { BiomarkerPanel } from "../../components/biomarkerpanel"
 import { Biomarker } from "../../lib/items/biomarkers"
 import { getSerializableContent } from "../../lib/props"
 
 export default function BiomarkerPage({ item }: { item: Biomarker }) {
-  return <ContentPage item={item} />
+  return <ContentPage item={item} header={<BiomarkerPanel item={item} />} />
 }
 
 /** Create a page for each available biomarker in each locale */

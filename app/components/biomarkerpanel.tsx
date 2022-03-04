@@ -1,9 +1,14 @@
 //
-// hooks.ts - utility hooks for React (client only)
+// biomarkerpanel.tsx - panel that shows biomarkers latest reading, allows input, shows charted recap, etc
 //
 
+import Box from "@mui/material/Box"
+
+import { Biomarker } from "../lib/items/biomarkers";
+
+
 import useSWR from "swr"
-import { fetcher, putJson } from "../api"
+import { fetcher, putJson } from "../lib/api"
 
 /** Retrieve information on currently logged in user */
 export function useUser() {
@@ -26,3 +31,26 @@ export function useUser() {
 
   return [user, { mutate, loading, setUser }]
 }
+
+
+
+
+
+
+interface BiomarkerPanelProps {
+
+  item: Biomarker
+
+  variant?: "default"
+}
+
+export function BiomarkerPanel({item, variant}: BiomarkerPanelProps) {
+
+  console.log(item)
+
+  return <Box width="100%">
+    Biomarker: {item.id} panel
+  </Box>
+}
+
+

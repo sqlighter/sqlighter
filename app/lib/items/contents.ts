@@ -7,9 +7,7 @@ import matter from "gray-matter"
 import fs from "fs/promises"
 import assert from "assert"
 import sizeOf from "image-size"
-
-import { remark } from "remark"
-import html from "remark-html"
+import showdown from "showdown"
 
 import Fuse from "fuse.js"
 import Tokenizr from "tokenizr"
@@ -282,11 +280,12 @@ export async function loadContent<T extends Content>(
           obj.imageUrl = prefixUrl + obj.imageUrl
         }
 
-        // use remark to convert markdown into HTML string
+        // use showdown to convert markdown into HTML string
         // image in markdown content may have relative paths
         // like images/ which will be converted to absolute urls
         if (typeof obj.content === "string") {
-          let contentHtml = remark().use(html).processSync(obj.content).toString()
+          const converter = new showdown.Converter();
+          let contentHtml = converter.makeHtml(obj.content)
           if (contentHtml) {
             obj.contentHtml = contentHtml.replace(/\"images\//g, `"${prefixUrl}images/`)
           }
