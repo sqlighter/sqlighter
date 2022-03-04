@@ -6,9 +6,9 @@ import nextConnect from "next-connect"
 import { NextApiRequest, NextApiResponse } from "next"
 
 import auth from "../../../lib/auth/middleware"
-import { Biomarker } from "../../../lib/biomarkers"
-import { Topic } from "../../../lib/topics"
-import { DEFAULT_LOCALE } from "../../../lib/contents"
+import { Biomarker } from "../../../lib/items/biomarkers"
+import { Topic } from "../../../lib/items/topics"
+import { DEFAULT_LOCALE } from "../../../lib/items/contents"
 
 const handler = nextConnect<NextApiRequest, NextApiResponse>()
 

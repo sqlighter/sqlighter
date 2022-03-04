@@ -5,7 +5,7 @@
 import nextConnect from "next-connect"
 import { NextApiRequest, NextApiResponse } from "next"
 import auth from "../../lib/auth/middleware"
-import { Biomarker } from "../../lib/biomarkers"
+import { Biomarker } from "../../lib/items/biomarkers"
 
 const handler = nextConnect<NextApiRequest, NextApiResponse>()
 

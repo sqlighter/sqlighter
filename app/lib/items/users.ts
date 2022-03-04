@@ -4,17 +4,35 @@
 
 import { Profile } from "passport"
 import { Item } from "./items"
-import { items } from "./database"
+import { items, unpackItem } from "../database"
 import { assert } from "console"
 
 export const USER_TYPE = "user"
 export const USER_PREFIX = "usr_"
 
-/** A generic item with tree structure and open ended attributes */
+/** An extendable type for users with a customizable profile and openid based passport credentials */
 export class User extends Item {
   constructor() {
     super()
     this.type = USER_TYPE
+  }
+
+  /** The normalized profile for the user retrieved by signin provider */
+  passport?: Profile
+
+  /** Additional user profile. Any fields with same labels as passport override passport info */
+  profile?: {
+    /** Birtdate in YYYY-MM-DD format */
+    birthdate?: string
+
+    /** User's biological gender, or closest hormonally, or undefined */
+    gender?: "male" | "female"
+
+    /** Height in cm */
+    height?: number
+
+    /** Weight in kg */
+    weight?: number
   }
 
   /**
@@ -24,7 +42,7 @@ export class User extends Item {
   static async getUser(userId: string): Promise<User | null> {
     const item = await items.selectItem(userId)
     if (item) {
-      return Object.assign(new User(), item)
+      return User.fromObject(item, User)
     }
     // console.debug(`User.getUser('${userId}') was not found`)
     return null
@@ -54,11 +72,11 @@ export class User extends Item {
         // create a new user record with fresh profile
         user = new User()
         user.id = email
-        user.attributes.passport = profile
+        user.passport = profile
         await items.insertItem(user)
       } else {
         // update existing user record
-        user.attributes.passport = profile
+        user.passport = profile
         await items.updateItem(user)
       }
 

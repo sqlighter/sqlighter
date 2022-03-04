@@ -4,11 +4,18 @@
 
 import { Content, loadContents, DEFAULT_LOCALE } from "./contents"
 
+export const ORGANIZATION_TYPE = "organization"
+
 /** An organization, used mainly to qualify news sources with small intro, logo, etc */
 export class Organization extends Content {
+  constructor() {
+    super()
+    this.type = ORGANIZATION_TYPE
+  }
+
   /** Define content type  */
-  public static get contentType(): string {
-    return "organization"
+  public static get itemType(): string {
+    return ORGANIZATION_TYPE
   }
 
   /** Additional domains used by this organization */
@@ -20,7 +27,7 @@ export class Organization extends Content {
 
   /** Lazy load dictionary of available biomarkers */
   public static async getContents(locale: string = DEFAULT_LOCALE): Promise<{ [contentId: string]: Content }> {
-    return await loadContents<Organization>(this.contentType, locale, Organization)
+    return await loadContents<Organization>(ORGANIZATION_TYPE, locale, Organization)
   }
 
   /** Returns available localized organizations */

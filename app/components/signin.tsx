@@ -33,11 +33,11 @@ export function promptSignin() {
 }
 
 export function getDisplayName(user) {
-  return user?.attributes?.passport?.displayName || ""
+  return user?.passport?.displayName || ""
 }
 
 export function getProfileImageUrl(user) {
-  return user?.attributes?.passport?.photos?.[0]?.value
+  return user?.passport?.photos?.[0]?.value
 }
 
 export function SigninButton() {

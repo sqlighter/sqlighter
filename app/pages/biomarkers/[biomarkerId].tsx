@@ -4,7 +4,7 @@
 
 import { GetStaticProps, GetStaticPaths } from "next"
 import { ContentPage } from "../../components/contentpage"
-import { Biomarker } from "../../lib/biomarkers"
+import { Biomarker } from "../../lib/items/biomarkers"
 import { getSerializableContent } from "../../lib/props"
 
 export default function BiomarkerPage({ item }: { item: Biomarker }) {

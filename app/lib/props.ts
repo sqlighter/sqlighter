@@ -2,10 +2,10 @@
 // props.ts - helper functions for dealing with next.js getStaticProps and getStaticPaths methods
 //
 
-import { Article } from "./articles"
-import { Biomarker } from "./biomarkers"
-import { Organization } from "./organizations"
-import { Topic } from "./topics"
+import { Article } from "./items/articles"
+import { Biomarker } from "./items/biomarkers"
+import { Organization } from "./items/organizations"
+import { Topic } from "./items/topics"
 
 /**
  * Strips an item down to a basic object so it can be used by getStaticProps in next.js

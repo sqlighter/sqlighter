@@ -4,7 +4,7 @@
 
 import { GetStaticProps, GetStaticPaths } from "next"
 import { ContentPage } from "../../components/contentpage"
-import { Topic } from "../../lib/topics"
+import { Topic } from "../../lib/items/topics"
 import { getSerializableContent } from "../../lib/props"
 
 export default function TopicPage({ item }: { item: Topic }) {

@@ -7,20 +7,26 @@ import Tokenizr from "tokenizr"
 import assert from "assert"
 import path from "path"
 
-import { round } from "./utilities"
-import { Unit } from "./units"
+import { round } from "../utilities"
+import { Unit } from "../units"
 import { Content, loadContents, DEFAULT_LOCALE } from "./contents"
-import { Metadata } from "./metadata"
+import { Metadata } from "../metadata"
 import { Organization } from "./organizations"
 
+export const BIOMARKER_TYPE = "biomarker"
 export const BIOMARKERS_SEARCH_CONFIDENCE = 0.7
 export const UNITS_SEARCH_CONFIDENCE = 0.7
 
 /** A biomarker, eg. glucose, hdl, ldl, weight, etc */
 export class Biomarker extends Content {
+  constructor() {
+    super()
+    this.type = BIOMARKER_TYPE
+  }
+
   /** Define content type  */
-  public static get contentType(): string {
-    return "biomarker"
+  public static get itemType(): string {
+    return BIOMARKER_TYPE
   }
 
   /** Measurement unit for this biomarker */
@@ -44,7 +50,7 @@ export class Biomarker extends Content {
 
   /** Lazy load dictionary of available biomarkers */
   public static async getContents(locale: string = DEFAULT_LOCALE): Promise<{ [contentId: string]: Content }> {
-    return await loadContents<Biomarker>(this.contentType, locale, Biomarker)
+    return await loadContents<Biomarker>(this.itemType, locale, Biomarker)
   }
 
   /** Returns available localized biomarkers */

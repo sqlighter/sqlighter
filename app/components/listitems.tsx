@@ -15,7 +15,7 @@ import ListItemAvatar from "@mui/material/ListItemAvatar"
 import IconButton from "@mui/material/IconButton"
 
 import { getIcon } from "../components/icon"
-import { Content } from "../lib/contents"
+import { Content } from "../lib/items/contents"
 import { Logo } from "./logo"
 
 /** Border radius to be applied to avatar image */

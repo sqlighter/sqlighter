@@ -5,7 +5,7 @@
 import nextConnect from "next-connect"
 import passport from "./passport"
 import session from "./session"
-import User from "../users"
+import User from "../items/users"
 
 /** Global augmentation of NextApiRequest with currently logged in user */
 declare module "next" {

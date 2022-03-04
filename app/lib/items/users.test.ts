@@ -2,7 +2,7 @@
 // users.test.ts
 //
 
-import { ItemsTable } from "./database"
+import { ItemsTable } from "../database"
 import { User } from "./users"
 
 function sleep(ms) {
@@ -21,7 +21,7 @@ describe("users.ts", () => {
     await itemsTable.resetTable()
 
     // TODO a couple of tests fail if you remove this delay. probably issues with pooling or timing of deletes
-    // await sleep(500)
+    await sleep(500)
 
     const u1 = await User.getUser(mockUserJon().id)
     expect(u1).toBeNull()
@@ -43,18 +43,18 @@ describe("users.ts", () => {
 
     user = await User.getUser(mockUserJon().id)
     expect(user.id).toStrictEqual(mockUserJon().id)
-    expect(user.attributes.passport.displayName).toStrictEqual(mockUserJon().attributes.passport.displayName)
+    expect(user.passport.displayName).toStrictEqual(mockUserJon().passport.displayName)
 
     user = await User.getUser(mockUserJane().id)
     expect(user.id).toStrictEqual(mockUserJane().id)
-    expect(user.attributes.passport.displayName).toStrictEqual(mockUserJane().attributes.passport.displayName)
+    expect(user.passport.displayName).toStrictEqual(mockUserJane().passport.displayName)
   })
 
   test("signinUser with new profile", async () => {
-    let user = await User.signinUser(mockUserJon().attributes.passport)
+    let user = await User.signinUser(mockUserJon().passport)
     expect(user).toBeTruthy()
     expect(user.id).toStrictEqual(mockUserJon().id)
-    expect(user.attributes.passport.displayName).toStrictEqual(mockUserJon().attributes.passport.displayName)
+    expect(user.passport.displayName).toStrictEqual(mockUserJon().passport.displayName)
   })
 
   test("signinUser with existing profile", async () => {
@@ -68,15 +68,15 @@ describe("users.ts", () => {
 
     for (let i = 0; i < 5; i++) {
       // john already exists
-      let user = await User.signinUser(mockUserJon().attributes.passport)
+      let user = await User.signinUser(mockUserJon().passport)
       expect(user).toBeTruthy()
       expect(user.id).toStrictEqual(mockUserJon().id)
-      expect(user.attributes.passport.displayName).toStrictEqual(mockUserJon().attributes.passport.displayName)
+      expect(user.passport.displayName).toStrictEqual(mockUserJon().passport.displayName)
     }
   })
 
   test("signinUser with missing email", async () => {
-    const profile = mockUserJon().attributes.passport
+    const profile = mockUserJon().passport
     profile.emails = null
 
     let hasThrown = false
@@ -91,7 +91,10 @@ describe("users.ts", () => {
   test("signinUser with updated profile", async () => {
     itemsTable.insertItem(mockUserJon())
     itemsTable.insertItem(mockUserJane())
+    await sleep(500)
+
     const john1 = await User.getUser(mockUserJon().id)
+    console.log(john1)
     expect(john1).toBeTruthy()
     const updated1 = john1.updatedAt.toISOString()
 
@@ -100,15 +103,15 @@ describe("users.ts", () => {
 
     for (let v = 2; v < 5; v++) {
       // signin user with changed profile information
-      let updatedProfile = mockUserJon().attributes.passport
+      let updatedProfile = mockUserJon().passport
       updatedProfile.displayName = `John v${v}.0`
       const john2 = await User.signinUser(updatedProfile)
 
       // user profile should have been updated
       expect(john2).toBeTruthy()
       expect(john2.id).toBe(mockUserJon().id)
-      expect(john2.attributes.passport.id).toBe(mockUserJon().attributes.passport.id)
-      expect(john2.attributes.passport.displayName).toBe(`John v${v}.0`)
+      expect(john2.passport.id).toBe(mockUserJon().passport.id)
+      expect(john2.passport.displayName).toBe(`John v${v}.0`)
 
       // updatedAt should have been updated
       const updated2 = john2.updatedAt.toISOString()
@@ -126,19 +129,17 @@ function mockUserJon() {
     JSON.stringify({
       id: "johndoe@gmail.com",
       type: "user",
-      attributes: {
-        passport: {
-          id: "105223593689997423612",
-          displayName: "John",
-          name: { familyName: "Doe", givenName: "John" },
-          provider: "google-one-tap",
-          emails: [{ value: "johndoe@gmail.com" }],
-          photos: [
-            {
-              value: "https://lh3.googleusercontent.com/a-/xyxy",
-            },
-          ],
-        },
+      passport: {
+        id: "105223593689997423612",
+        displayName: "John",
+        name: { familyName: "Doe", givenName: "John" },
+        provider: "google-one-tap",
+        emails: [{ value: "johndoe@gmail.com" }],
+        photos: [
+          {
+            value: "https://lh3.googleusercontent.com/a-/xyxy",
+          },
+        ],
       },
     })
   )
@@ -149,19 +150,17 @@ function mockUserJane() {
     JSON.stringify({
       id: "jane@doe.com",
       type: "user",
-      attributes: {
-        passport: {
-          id: "105223593689997423613",
-          displayName: "Jane Doe",
-          name: { familyName: "Doe", givenName: "Jane" },
-          provider: "google-one-tap",
-          emails: [{ value: "jane@doe.com" }],
-          photos: [
-            {
-              value: "https://lh3.googleusercontent.com/a-/xxxx",
-            },
-          ],
-        },
+      passport: {
+        id: "105223593689997423613",
+        displayName: "Jane Doe",
+        name: { familyName: "Doe", givenName: "Jane" },
+        provider: "google-one-tap",
+        emails: [{ value: "jane@doe.com" }],
+        photos: [
+          {
+            value: "https://lh3.googleusercontent.com/a-/xxxx",
+          },
+        ],
       },
     })
   )

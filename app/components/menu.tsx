@@ -96,8 +96,8 @@ export function Menu({ width, onClose }) {
     }
 
     const email = user?.id
-    const displayName = user?.attributes?.passport?.displayName || ""
-    const imageUrl = user?.attributes?.passport?.photos?.[0]?.value
+    const displayName = user?.passport?.displayName || ""
+    const imageUrl = user?.passport?.photos?.[0]?.value
     return (
       <Box sx={USERBOX_SX}>
         <Box ml={2} mr={3}>

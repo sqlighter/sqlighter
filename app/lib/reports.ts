@@ -7,7 +7,7 @@ import assert from "assert/strict"
 import { BoundingBox, getBoundingBoxAlignments, mergeBoundingBoxes } from "./geometry"
 import { Unit } from "./units"
 import { Page, Ocr, Word } from "./ocr"
-import { Biomarker, Measurement, Range } from "./biomarkers"
+import { Biomarker, Measurement, Range } from "./items/biomarkers"
 import { Metadata } from "./metadata"
 import { round, HIGH_CONFIDENCE, MEDIUM_CONFIDENCE, LOW_CONFIDENCE } from "./utilities"
 

@@ -7,8 +7,8 @@ import Box from "@mui/material/Box"
 import List from "@mui/material/List"
 
 import Layout from "./layout"
-import { Content } from "../lib/contents"
-import { Biomarker } from "../lib/biomarkers"
+import { Content } from "../lib/items/contents"
+import { Biomarker } from "../lib/items/biomarkers"
 import { Section } from "./section"
 import { BiomarkerListItem, ArticleListItem, ReferenceListItem } from "./listitems"
 

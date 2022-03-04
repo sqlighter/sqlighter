@@ -5,8 +5,22 @@
 import "dotenv/config"
 
 import { assert } from "console"
-import { knex, Knex } from "knex"
-import { Item } from "./items"
+import { knex } from "knex"
+import { Item } from "./items/items"
+
+/** Takes all object fields beyond id, parentId, type, createdAt, updatedAt and moves them to 'attributes' so they can be stored in items table in the database */
+export function packItem(obj) {
+  assert(obj.id, "packItem - item doesn't have an id")
+  const { id, parentId, type, createdAt, updatedAt, ...attributes } = obj
+  return { id, parentId, type, createdAt, updatedAt, attributes }
+}
+
+/** Takes an item in database format and unpacks its attributes in regular object fields */
+export function unpackItem(obj) {
+  assert(obj.id, "unpackItem - item doesn't have an id")
+  const { id, parentId, type, createdAt, updatedAt, attributes } = obj
+  return { id, parentId, type, createdAt, updatedAt, ...attributes }
+}
 
 /**
  * Returns a Knex connection to the configured database
@@ -109,8 +123,8 @@ export class ItemsTable {
   async selectItem(itemId: string): Promise<Item | null> {
     const item = await this.table.where("id", itemId).first()
     if (item) {
-      item.attributes = item.attributes || {}
-      return Object.assign(new Item(), item)
+      const unpackedItem = unpackItem(item)
+      return Object.assign(new Item(), unpackedItem)
     }
     return null
   }
@@ -118,7 +132,8 @@ export class ItemsTable {
   /** Inserts item with a few minor added checks */
   async insertItem(item: Item) {
     try {
-      const res = await this.table.insert(item)
+      const packedItem = packItem(item)
+      const res = await this.table.insert(packedItem)
       if (res?.length != 1) {
         console.debug(`ItemsTable.insertItem - ${item} returned ${res}`, res)
       }
@@ -132,8 +147,9 @@ export class ItemsTable {
   /** Updates all attributes of given item */
   async updateItem(item: Partial<Item>) {
     try {
-      assert(item.id && item.attributes)
-      return await this.table.update("attributes", JSON.stringify(item.attributes)).where("id", item.id)
+      const packedItem = packItem(item)
+      assert(packedItem.id && packedItem.attributes)
+      return await this.table.update("attributes", JSON.stringify(packedItem.attributes)).where("id", packedItem.id)
     } catch (exception) {
       console.debug(`ItemsTable.updateItem - ${item} returned ${exception}`, exception)
       throw exception

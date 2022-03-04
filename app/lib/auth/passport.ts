@@ -4,7 +4,7 @@
 
 import passport from "passport"
 import { GoogleOneTapStrategy } from "passport-google-one-tap"
-import { User } from "../users"
+import { User } from "../items/users"
 
 /** Serialize a user object into its email which is used as id in sessions */
 passport.serializeUser(function (user: User, done) {

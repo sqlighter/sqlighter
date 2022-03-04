@@ -14,10 +14,11 @@ import html from "remark-html"
 import Fuse from "fuse.js"
 import Tokenizr from "tokenizr"
 
-import { round } from "./utilities"
-import { Unit } from "./units"
-import { Metadata } from "./metadata"
+import { round } from "../utilities"
+import { Unit } from "../units"
+import { Metadata } from "../metadata"
 import { Organization } from "./organizations"
+import { Item } from "./items"
 
 export const BIOMARKERS_SEARCH_CONFIDENCE = 0.7
 export const UNITS_SEARCH_CONFIDENCE = 0.7
@@ -74,13 +75,7 @@ export interface ContentImage {
 }
 
 /** A piece of content like an article, topic, a biomarker, unit, etc */
-export abstract class Content {
-  /** Content id, eg. glucose */
-  id: string
-
-  /** Type of item, eg. biomarker, topic, user, section, etc... */
-  type?: string
-
+export class Content extends Item {
   /** Content title, eg. Glucose (localized) */
   title?: string
 
@@ -131,27 +126,6 @@ export abstract class Content {
 
   /** The organization related to this content, see Organization */
   organization?: string
-
-  //
-  // public methods
-  //
-
-  public static fromObject<T extends Content = Content>(obj: any, TCreator: new () => T): T {
-    if (!obj.id) {
-      console.error(`Content.fromObject - object missing id field`, obj)
-      assert(obj.id)
-    }
-    return Object.assign(new TCreator(), obj)
-  }
-
-  //
-  // static methods
-  //
-
-  /** Concrete class defines content type, eg. biomarker, topic, post, organization, etc... */
-  public static get contentType(): string {
-    throw new Error("Content.contentType - must be defined in subclass")
-  }
 
   /** Concrete class loads contents from local file system or wherever */
   public static async getContents(locale: string = DEFAULT_LOCALE): Promise<{ [contentId: string]: Content }> {

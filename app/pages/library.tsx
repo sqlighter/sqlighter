@@ -8,9 +8,9 @@ import { GetStaticProps } from "next"
 import Box from "@mui/material/Box"
 import List from "@mui/material/List"
 
-import { Article } from "../lib/articles"
-import { Biomarker } from "../lib/biomarkers"
-import { Topic } from "../lib/topics"
+import { Article } from "../lib/items/articles"
+import { Biomarker } from "../lib/items/biomarkers"
+import { Topic } from "../lib/items/topics"
 import { getSerializableArticles, getSerializableBiomarkers, getSerializableTopics } from "../lib/props"
 
 import Layout from "../components/layout"

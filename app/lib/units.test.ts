@@ -1,6 +1,6 @@
 // units.ts tests
 import { Unit, UNITS_SEARCH_CONFIDENCE } from "./units"
-import { Biomarker } from "./biomarkers"
+import { Biomarker } from "./items/biomarkers"
 import { assert } from "console"
 
 describe("units.ts", () => {

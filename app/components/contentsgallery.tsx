@@ -10,7 +10,7 @@ import ImageList from "@mui/material/ImageList"
 import ImageListItem from "@mui/material/ImageListItem"
 import ImageListItemBar from "@mui/material/ImageListItemBar"
 
-import { Content } from "../lib/contents"
+import { Content } from "../lib/items/contents"
 
 /** 2x2 and 1x2 items */
 export const QUILT_SIZES = [

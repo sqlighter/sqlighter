@@ -30,13 +30,14 @@ function ProfilePanel() {
   // retrieve user information from current session
   const [user, { mutate: mutateUser, loading: userLoading, setUser }] = useUser()
 
-  const [profile, setProfile] = useState(user?.attributes?.profile || {})
+  // user's customized profile (not the passport used for identity)
+  const [profile, setProfile] = useState(user?.profile || {})
 
   if (!user) return null
 
   const email = user.id
-  const displayName = user.attributes?.passport?.displayName || ""
-  const imageUrl = user.attributes?.passport?.photos?.[0]?.value
+  const displayName = user.passport?.displayName || ""
+  const imageUrl = user.passport?.photos?.[0]?.value
   //  const profile = user.attributes?.profile
 
   async function updateProfile(profile) {
@@ -109,7 +110,6 @@ function ProfilePanel() {
         <NumericInput
           id="height-field"
           label="Height"
-          placeholder="170"
           unit="cm"
           value={profile?.height}
           onChange={async (height) => await updateProfile({ ...profile, height })}
@@ -119,7 +119,6 @@ function ProfilePanel() {
         <NumericInput
           id="weight-field"
           label="Weight"
-          placeholder="70"
           unit="kg"
           value={profile?.weight}
           onChange={(weight) => updateProfile({ ...profile, weight })}

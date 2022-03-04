@@ -3,7 +3,7 @@
 //
 
 import "dotenv/config"
-import { getDatabase, ItemsTable } from "./database"
+import { getDatabase, ItemsTable, unpackItem } from "./database"
 
 describe("database.ts", () => {
   // table used to test database
@@ -41,16 +41,16 @@ describe("database.ts", () => {
     const t1 = await itemsTable.insertItem({
       id: "usr_香蕉",
       type: "user",
-      attributes: {
-        name: "one",
-        banana: "香蕉",
-      },
+      name: "one",
+      banana: "香蕉",
     })
 
-    const items1 = await itemsTable.select().where("id", "usr_香蕉")
+    let items1 = await itemsTable.select().where("id", "usr_香蕉")
+    // plain results need to "unpack" attributes to regular fields
+    items1 = items1.map((item) => unpackItem(item))
     expect(items1).toHaveLength(1)
     expect(items1[0].id).toBe("usr_香蕉")
-    expect(items1[0].attributes.banana).toBe("香蕉")
+    expect(items1[0].banana).toBe("香蕉")
   })
 
   test("insert with children", async () => {
@@ -81,52 +81,52 @@ describe("database.ts", () => {
   })
 
   test("selectItem", async () => {
-    await itemsTable.insertItem({ id: "usr_1", type: "user", attributes: { name: "Jim", age: 30 } })
+    await itemsTable.insertItem({ id: "usr_1", type: "user", profile: { displayName: "Jim", birthdate: "1990-05-20" } })
 
     const item = await itemsTable.selectItem("usr_1")
     expect(item).toBeTruthy()
     expect(item.id).toBe("usr_1")
     expect(item.parentId).toBeNull()
-    expect(item.attributes.name).toBe("Jim")
-    expect(item.attributes.age).toBe(30)
+    expect(item.profile.displayName).toBe("Jim")
+    expect(item.profile.birthdate).toBe("1990-05-20")
   })
 
   test("selectItem with invalid itemId", async () => {
-    await itemsTable.insertItem({ id: "usr_1", type: "user", attributes: { name: "Jim", age: 30 } })
-
+    await itemsTable.insertItem({ id: "usr_1", type: "user", profile: { displayName: "Jim", birthdate: "1990-05-20" } })
     const item = await itemsTable.selectItem("usr_2")
     expect(item).toBeNull()
   })
 
   test("updateItem attributes", async () => {
     // insert item
-    await itemsTable.insertItem({ id: "usr_1", type: "user", attributes: { name: "Jim", age: 30 } })
+    await itemsTable.insertItem({ id: "usr_1", type: "user", profile: { displayName: "Jim", birthdate: "1990-05-20" } })
 
     // insert child
     await itemsTable.insertItem({
       id: "usr_2",
       parentId: "usr_1",
       type: "relative",
-      attributes: { name: "Jane", age: 7, toy: "Potato head" },
+      profile: { displayName: "Jane", age: 7 },
+      toy: "Potato head",
     })
     const cBefore = await itemsTable.selectItem("usr_2")
     expect(cBefore.id).toBe("usr_2")
     expect(cBefore.parentId).toBe("usr_1")
-    expect(cBefore.attributes.name).toBe("Jane")
-    expect(cBefore.attributes.age).toBe(7)
-    expect(cBefore.attributes.toy).toBe("Potato head")
+    expect(cBefore.profile.displayName).toBe("Jane")
+    expect(cBefore.profile.age).toBe(7)
+    expect(cBefore.toy).toBe("Potato head")
 
     // update child data
     await itemsTable.updateItem({
       id: "usr_2",
-      attributes: { name: "Jane", age: 8 },
+      profile: { displayName: "Jane", age: 8 },
     })
     const cAfter = await itemsTable.selectItem("usr_2")
     expect(cAfter.id).toBe("usr_2")
     expect(cAfter.parentId).toBe("usr_1")
-    expect(cAfter.attributes.name).toBe("Jane")
-    expect(cAfter.attributes.age).toBe(8) // existing fields updated
-    expect(cAfter.attributes.toy).toBeUndefined() // missing fields removed
+    expect(cAfter.profile.displayName).toBe("Jane")
+    expect(cAfter.profile.age).toBe(8) // existing fields updated
+    expect(cAfter.toy).toBeUndefined() // missing fields removed
     expect(cAfter.parentId).toBe(cBefore.parentId)
     expect(cAfter.createdAt).toStrictEqual(cBefore.createdAt)
     expect(cAfter.updatedAt > cBefore.updatedAt).toBeTruthy() // updatedAt changed
@@ -134,7 +134,7 @@ describe("database.ts", () => {
     // other items not changed
     const u1 = await itemsTable.selectItem("usr_1")
     expect(u1.id).toBe("usr_1")
-    expect(u1.attributes.name).toBe("Jim")
-    expect(u1.attributes.age).toBe(30)
+    expect(u1.profile.displayName).toBe("Jim")
+    expect(u1.profile.birthdate).toBe("1990-05-20")
   })
 })
