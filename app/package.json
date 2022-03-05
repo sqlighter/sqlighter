@@ -53,7 +53,8 @@
     "showdown": "^2.0.2",
     "swr": "^1.2.1",
     "tokenizr": "^1.6.5",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "yaml": "^1.10.2"
   },
   "devDependencies": {
     "@babel/core": "^7.16.12",
@@ -82,6 +83,7 @@
     "eslint-config-next": "^12.1.0",
     "eslint-plugin-prettier": "^4.0.0",
     "jest": "^27.4.7",
+    "jest-html-reporter": "^3.4.2",
     "prettier": "^2.5.1",
     "superagent": "^7.1.1",
     "supertest": "^6.2.2",
@@ -103,6 +105,15 @@
       "^.+\\.(t|j)sx?$": [
         "@swc-node/jest"
       ]
-    }
+    },
+    "reporters": [
+      "default",
+      [
+        "./node_modules/jest-html-reporter",
+        {
+          "pageTitle": "Biomarkers Test Report"
+        }
+      ]
+    ]
   }
 }

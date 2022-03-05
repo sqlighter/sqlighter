@@ -5,8 +5,8 @@
 import { Organization } from "./organizations"
 
 describe("organizations.ts", () => {
-  test("getOrganizations", () => {
-    const orgs = Organization.getOrganizations()
+  test("getOrganizations", async () => {
+    const orgs = await Organization.getOrganizations()
     expect(orgs).toBeTruthy()
 
     // check that all orgs have basic info
@@ -21,8 +21,8 @@ describe("organizations.ts", () => {
     }
   })
 
-  test("getOrganization (data)", () => {
-    const en1 = Organization.getOrganization("medline-plus")
+  test("getOrganization (data)", async () => {
+    const en1 = await Organization.getOrganization("medline-plus")
 
     expect(en1.id).toBe("medline-plus")
     expect(en1.title).toBe("MedlinePlus")
@@ -32,8 +32,8 @@ describe("organizations.ts", () => {
     expect(en1.locale).toBe("en-US")
   })
 
-  test("getOrganization (images)", () => {
-    const en1 = Organization.getOrganization("medline-plus")
+  test("getOrganization (images)", async () => {
+    const en1 = await Organization.getOrganization("medline-plus")
 
     expect(en1.images).toBeTruthy()
     expect(en1.images).toHaveLength(2)
@@ -46,21 +46,21 @@ describe("organizations.ts", () => {
     expect(logo1.height).toBe(67)
   })
 
-  test("getOrganizationFromUrl", () => {
+  test("getOrganizationFromUrl", async () => {
     // url from main domain
-    const en1 = Organization.getOrganizationFromUrl("https://medlineplus.gov/lab-tests/albumin-blood-test/")
+    const en1 = await Organization.getOrganizationFromUrl("https://medlineplus.gov/lab-tests/albumin-blood-test/")
     expect(en1).toBeTruthy()
     expect(en1.id).toBe("medline-plus")
 
     // url from secondary domain
-    const en2 = Organization.getOrganizationFromUrl(
+    const en2 = await Organization.getOrganizationFromUrl(
       "https://healthy.thewom.it/divulgazione/aumento-difese-immunitarie/"
     )
     expect(en2).toBeTruthy()
     expect(en2.id).toBe("valori-normali")
 
     // url from organization which we don't have
-    const en3 = Organization.getOrganizationFromUrl(
+    const en3 = await Organization.getOrganizationFromUrl(
       "https://healthy.madeupname.com/divulgazione/aumento-difese-immunitarie/"
     )
     expect(en3).toBeUndefined()

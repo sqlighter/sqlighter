@@ -92,7 +92,7 @@ export async function getSerializableBiomarkers(locale) {
 /** Returns a list of available articles */
 export async function getSerializableArticles(locale) {
   // TODO could sort based on publicationDate, relevance, etc.
-  let articles: Article[] = Object.values(Article.getContents(locale))
+  let articles: Article[] = Object.values(await Article.getContents(locale))
   articles = articles.filter((b) => b.status == "published")
   articles = articles.sort((a, b) => (a.title < b.title ? -1 : 1))
   articles = await Promise.all(

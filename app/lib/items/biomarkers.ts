@@ -8,7 +8,7 @@ import assert from "assert"
 import path from "path"
 
 import { round } from "../utilities"
-import { Unit } from "../units"
+import { Unit } from "./units"
 import { Content, loadContents, DEFAULT_LOCALE } from "./contents"
 import { Metadata } from "../metadata"
 import { Organization } from "./organizations"
@@ -29,8 +29,8 @@ export class Biomarker extends Content {
     return BIOMARKER_TYPE
   }
 
-  /** Measurement unit for this biomarker */
-  unit?: Unit
+  /** Measurement unit for this biomarker (this is the unit id, not the unit object) */
+  unit?: string
 
   /** Range for this biomarker, eg. 120-150 */
   range?: string
@@ -40,6 +40,11 @@ export class Biomarker extends Content {
    * from mg/dL to mmol/L which is specific to this biomarker
    */
   conversions?: { [unit: string]: number }
+
+  /** Returns the measurement unit for this biomarker as an object */
+  public async getUnit(): Promise<Unit | undefined> {
+    return this.unit ? Unit.getUnit(this.unit) : undefined
+  }
 
   /** Localized biomarkers search indexes are lazy loaded synchronously once */
   private static readonly _biomarkersFuse: { [locale: string]: Fuse<Biomarker> } = {}
@@ -138,11 +143,19 @@ export class Biomarker extends Content {
    * @param biomarker A biomarker as returned by searchBiomarkers
    * @returns A unit and its optional conversion ratio to the biomarker's base unit
    */
-  public static parseUnits(
+  public static async parseUnits(
     text: string,
     biomarker: Biomarker
-  ): { id: string; conversion: number; confidence: number } | null {
-    if (!biomarker.unit) {
+  ): Promise<{ id: string; conversion: number; confidence: number } | null> {
+    // if unit is native return quickly
+    /*
+    if (biomarker.unit && text && text.trim() == biomarker.unit) {
+      return { id: biomarker.unit, conversion: 1, confidence: 1 }
+    }
+*/
+    // otherwise perform search on variant
+    const unit = await biomarker.getUnit()
+    if (!unit) {
       console.warn(`parseUnits - biomarker: ${biomarker.id} does not have a measurement unit`)
       return null
     }
@@ -152,16 +165,16 @@ export class Biomarker extends Content {
     // factors are stored in unit.metadata.conversion. however, some conversions like mmol/L
     // (a quantity of molecules) to mg/L (a weight) require a conversion ratio that is specific
     // to the biomarker and is therefore stored in biomarker.metadata.conversions.
-    const unitsCandidates = [biomarker.unit.id]
+    const unitsCandidates = [unit.id]
     const unitsConversions = [1]
 
     if (biomarker.conversions) {
       unitsCandidates.push(...Object.keys(biomarker.conversions))
       unitsConversions.push(...Object.values(biomarker.conversions))
     }
-    if (biomarker.unit?.conversions) {
-      unitsCandidates.push(...Object.keys(biomarker.unit.conversions))
-      unitsConversions.push(...Object.values(biomarker.unit.conversions))
+    if (unit.conversions) {
+      unitsCandidates.push(...Object.keys(unit.conversions))
+      unitsConversions.push(...Object.values(unit.conversions))
     }
 
     const unitsFuse = new Fuse(unitsCandidates, { minMatchCharLength: 1, includeScore: true })
@@ -309,7 +322,7 @@ export class Range {
 
 /** A biomarker measurement, eg. current glucose level */
 export class Measurement {
-  constructor(biomarker: Biomarker, value?: number, text?: string, unit?: Unit, range?: Range, metadata?: any) {
+  constructor(biomarker: string, value?: number, text?: string, unit?: string, range?: Range, metadata?: any) {
     this.biomarker = biomarker
     this.value = value
     this.text = text
@@ -318,8 +331,8 @@ export class Measurement {
     this.metadata = new Metadata(metadata)
   }
 
-  /** The biomarker that was measured */
-  biomarker: Biomarker
+  /** The biomarker id that was measured */
+  biomarker: string
 
   /** Numeric value of the measurement expressed in units */
   value?: number
@@ -327,8 +340,8 @@ export class Measurement {
   /** Textual value of the measurement, if applicable. Eg. 'negative' */
   text?: string
 
-  /** The measurement unit (normally matches biomarker.unit) */
-  unit?: Unit
+  /** The unit id (normally matches biomarker.unit) */
+  unit?: string
 
   /** Optional range suggested by the lab. May differ from range in biomarker card itself. */
   range?: Range

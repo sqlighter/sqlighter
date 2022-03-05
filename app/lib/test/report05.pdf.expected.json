@@ -2518,7 +2518,7 @@
       }
     ]
   },
-  "biomarkers": [
+  "measurements": [
     {
       "biomarker": "alt",
       "value": 23,

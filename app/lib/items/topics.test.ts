@@ -15,8 +15,10 @@ describe("topics.ts", () => {
       expect(topic.id).toBeTruthy()
       expect(topic.id).toBe(topic.id.toLowerCase())
       expect(topic.title).toBeTruthy()
-      expect(topic.description).toBeTruthy()
       expect(topic.content).toBeTruthy()
+
+      // description is optional
+      // expect(topic.description).toBeTruthy()
     }
   })
 

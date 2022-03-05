@@ -104,15 +104,15 @@ export function customTheme() {
       },
       h5: {
         fontWeight: 900,
-        fontSize: baseTheme.typography.h6.fontSize,
-        lineHeight: baseTheme.typography.h6.lineHeight,
-        letterSpacing: baseTheme.typography.h6.letterSpacing,
+        fontSize: "1rem",
+        lineHeight: "1.1",
+        letterSpacing: "0em",
       },
       h6: {
         fontWeight: 900,
-        fontSize: baseTheme.typography.h6.fontSize,
-        lineHeight: baseTheme.typography.h6.lineHeight,
-        letterSpacing: baseTheme.typography.h6.letterSpacing,
+        fontSize: "1rem",
+        lineHeight: "1",
+        letterSpacing: "0em",
       },
     },
 

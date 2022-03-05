@@ -2363,7 +2363,7 @@
       }
     ]
   },
-  "biomarkers": [
+  "measurements": [
     {
       "biomarker": "rbc",
       "value": 5.44,

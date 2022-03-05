@@ -1,18 +1,18 @@
 // units.ts tests
 import { Unit, UNITS_SEARCH_CONFIDENCE } from "./units"
-import { Biomarker } from "./items/biomarkers"
+import { Biomarker } from "./biomarkers"
 import { assert } from "console"
 
 describe("units.ts", () => {
-  test("getUnits", () => {
-    const units = Unit.getUnits()
+  test("getUnits", async () => {
+    const units = Object.values(await Unit.getUnits())
     expect(units).toBeTruthy()
     expect(units.length).toBeGreaterThan(10)
     expect(units[0]?.toString()).toContain(":")
   })
 
-  test("getUnit", () => {
-    const u1 = Unit.getUnit("μg/L")
+  test("getUnit", async () => {
+    const u1 = await Unit.getUnit("μg/L")
     expect(u1).toBeTruthy()
     if (u1) {
       expect(u1 instanceof Unit).toBeTruthy()
@@ -24,8 +24,8 @@ describe("units.ts", () => {
     }
   })
 
-  test("searchUnit", () => {
-    const matches = Unit.searchUnits("μg/L")
+  test("searchUnit", async () => {
+    const matches = await Unit.searchUnits("μg/L")
     expect(matches).toBeTruthy()
     expect(matches.length).toBeGreaterThanOrEqual(1)
     expect(matches[0]?.confidence).toBeGreaterThanOrEqual(UNITS_SEARCH_CONFIDENCE)
@@ -45,29 +45,29 @@ describe("units.ts", () => {
   test("checkBiomarkerConversions", async () => {
     // each biomarker has a main unit of measurement which is preferred (normally the SI unit)
     // and a number of available conversions that can also be read. normally the conversion
-    // factors are stored in unit.metadata.conversion. however, some conversions like mmol/L
+    // factors are stored in unit.conversion. however, some conversions like mmol/L
     // (a quantity of molecules) to mg/L (a weight) require a conversion ratio that is specific
-    // to the biomarker and is therefore store in biomarker.metadata.conversions.
-    const biomarkers = Object.values(Biomarker.getBiomarkers())
+    // to the biomarker and is therefored store in biomarker.conversions.
+    const biomarkers = Object.values(await Biomarker.getBiomarkers())
     for (const biomarker of biomarkers) {
-      if (biomarker.unit?.conversions) {
-        Object.keys(biomarker.unit.conversions).forEach((unit) => {
+      const unit = await biomarker.getUnit()
+      if (unit && unit.conversions) {
+        Object.keys(unit.conversions).forEach((unit) => {
           if (biomarker.conversions?.[unit]) {
-            throw new Error(
-              `Biomarker ${biomarker.id} - Unit ${biomarker.unit?.id} should not contain a conversion to ${unit}`
-            )
+            throw new Error(`Biomarker ${biomarker.id} - Unit ${unit} should not contain a conversion to ${unit}`)
           }
         })
       }
     }
   })
 
-  test("checkIncompatibleConversions", () => {
+  test("checkIncompatibleConversions", async () => {
     // TODO we could also introduce unit types and assert conversions between different types
     const from = ["mmol/L", "µmol/L", "umol/L"]
     const to = ["mg/dL", "mg/100mL", "mg%", "mg/L", "µg/mL", "μg/dL", "ug/dL"]
+    const units = Object.values(await Unit.getUnits())
 
-    for (const unit of Unit.getUnits()) {
+    for (const unit of units) {
       if (unit.conversions) {
         for (const conversion of Object.keys(unit.conversions)) {
           if (

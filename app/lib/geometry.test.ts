@@ -1,13 +1,8 @@
+//
 // geometry.ts tests
-import exp from "constants"
-import {
-  Point,
-  BoundingBox,
-  getDistance,
-  getDistanceFromLine,
-  getBoundingBoxSize,
-  getBoundingBoxAlignments,
-} from "./geometry"
+//
+
+import { BoundingBox, getDistance, getDistanceFromLine, getBoundingBoxAlignments } from "./geometry"
 
 const rightAlignedBoxes: BoundingBox[] = [
   [

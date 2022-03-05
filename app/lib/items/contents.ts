@@ -13,7 +13,7 @@ import Fuse from "fuse.js"
 import Tokenizr from "tokenizr"
 
 import { round } from "../utilities"
-import { Unit } from "../units"
+import { Unit } from "./units"
 import { Metadata } from "../metadata"
 import { Organization } from "./organizations"
 import { Item } from "./items"
@@ -168,6 +168,15 @@ export function assertLocale(locale: string) {
   assert(/[a-z]{2}-[A-Z]{2}/.test(locale), `'${locale}' is an invalid locale (eg. en-US, it-IT...)`)
 }
 
+/** Returns true if file or directory exists and can be accessed */
+async function fsExists(filePath): Promise<boolean> {
+  return await fs.access(filePath).then(
+    () => true,
+    () => false
+  )
+}
+
+// TODO could memoize the function with a library that has a proper cache, etc
 export async function loadContents<T extends Content>(
   contentType: string,
   locale: string = DEFAULT_LOCALE,
@@ -185,9 +194,8 @@ export async function loadContents<T extends Content>(
   if (locale != DEFAULT_LOCALE) {
     const localizedDir = path.join(contentsDirectory, locale)
     if (!(await fsExists(localizedDir))) {
-      console.warn(`loadContents - localized directory ${localizedDir} does not exist`)
+      throw new Error(`loadContents - localized directory ${localizedDir} does not exist`)
     }
-    return {}
   }
 
   const fileNames = await fs.readdir(contentsDirectory)
@@ -208,14 +216,6 @@ export async function loadContents<T extends Content>(
   _contentsCache[contentType][locale] = contents
 
   return contents
-}
-
-/** Returns true if file or directory exists and can be accessed */
-async function fsExists(filePath): Promise<boolean> {
-  return await fs.access(filePath).then(
-    () => true,
-    () => false
-  )
 }
 
 /**
@@ -284,7 +284,7 @@ export async function loadContent<T extends Content>(
         // image in markdown content may have relative paths
         // like images/ which will be converted to absolute urls
         if (typeof obj.content === "string") {
-          const converter = new showdown.Converter();
+          const converter = new showdown.Converter()
           let contentHtml = converter.makeHtml(obj.content)
           if (contentHtml) {
             obj.contentHtml = contentHtml.replace(/\"images\//g, `"${prefixUrl}images/`)
@@ -314,31 +314,33 @@ export async function loadContentImages(
   locale: string = DEFAULT_LOCALE
 ): Promise<ContentImage[]> {
   assertLocale(locale)
-  const images = []
 
   if (locale != DEFAULT_LOCALE) {
     const localizedDir = path.join(contentsPath, locale)
     assert(await fsExists(localizedDir), `loadContentImages - localized directory ${localizedDir} does not exist`)
   }
 
+  const images = []
   contentsPath = path.join(contentsPath, "/images")
-  const fileNames = await fs.readdir(contentsPath)
-  for (const fileName of fileNames) {
-    if (fileName.startsWith(contentId)) {
-      const filePath = path.join(contentsPath, fileName)
-      const fileExtension = path.extname(filePath).toLowerCase()
-      if (fileExtension && [".png", ".jpg", ".jpeg", ".svg"].indexOf(fileExtension) != -1) {
-        const imageSize = sizeOf(filePath)
-        images.push({
-          name: fileName,
-          path: filePath,
-          type: imageSize.type,
-          width: imageSize.width,
-          height: imageSize.height,
-        })
+  if (await fsExists(contentsPath)) {
+    const fileNames = await fs.readdir(contentsPath)
+    for (const fileName of fileNames) {
+      if (fileName.startsWith(contentId)) {
+        const filePath = path.join(contentsPath, fileName)
+        const fileExtension = path.extname(filePath).toLowerCase()
+        if (fileExtension && [".png", ".jpg", ".jpeg", ".svg"].indexOf(fileExtension) != -1) {
+          const imageSize = sizeOf(filePath)
+          images.push({
+            name: fileName,
+            path: filePath,
+            type: imageSize.type,
+            width: imageSize.width,
+            height: imageSize.height,
+          })
+        }
       }
     }
   }
 
-  return images
+  return images && images.length > 0 ? images : undefined
 }

@@ -5,7 +5,7 @@
 import assert from "assert/strict"
 
 import { BoundingBox, getBoundingBoxAlignments, mergeBoundingBoxes } from "./geometry"
-import { Unit } from "./units"
+import { Unit } from "./items/units"
 import { Page, Ocr, Word } from "./ocr"
 import { Biomarker, Measurement, Range } from "./items/biomarkers"
 import { Metadata } from "./metadata"
@@ -23,7 +23,7 @@ export class Report {
   pages: Page[]
 
   /** Biomarker measurements detected in this report */
-  biomarkers?: Measurement[]
+  measurements?: Measurement[]
 
   /** Additional metadata on this report */
   metadata: Metadata
@@ -61,10 +61,10 @@ export class Report {
     return null
   }
 
-  private _detectUnit(line: Word[], biomarkerMatch: any) {
+  private async _detectUnit(line: Word[], biomarkerMatch: any) {
     let bestMatch = null
     for (const word of line) {
-      const u = Biomarker.parseUnits(word.text, biomarkerMatch.item)
+      const u = await Biomarker.parseUnits(word.text, biomarkerMatch.item)
       if (u && (bestMatch == null || bestMatch.confidence < u.confidence)) {
         bestMatch = { ...u, word }
 
@@ -142,7 +142,7 @@ export class Report {
         if (biomarkersMatches.length > 0) {
           biomarkersWords.push(word)
         }
-        const unitsMatches = Unit.searchUnits(word.text)
+        const unitsMatches = await Unit.searchUnits(word.text)
         if (unitsMatches.length > 0) {
           unitsWords.push(word)
         }
@@ -176,7 +176,7 @@ export class Report {
           }
 
           // find compatible measurement unit, range and value on the same line
-          let unitMatch = this._detectUnit(line, biomarkerMatch)
+          let unitMatch = await this._detectUnit(line, biomarkerMatch)
           if (!unitMatch) {
             // if a biomarker's measurement unit was not found but we have the same biomarker
             // in percentage and absolute form, like for example ba-abs and ba-perc then let's try
@@ -188,7 +188,7 @@ export class Report {
               const alt = await Biomarker.getBiomarker(altId, page.locale)
               if (alt) {
                 const altMatch = { item: alt, confidence: biomarkerMatch.confidence, word: biomarkerMatch.word }
-                let altUnitMatch = this._detectUnit(line, altMatch)
+                let altUnitMatch = await this._detectUnit(line, altMatch)
                 /*
                 if (!altUnitMatch && isPerc) {
                   // if target unit is % we can assume it was missed by OCR although with lower confidence
@@ -219,6 +219,10 @@ export class Report {
             `detectBiomarkers - text: ${biomarkerWord.text}, id: ${biomarker.id}/${biomarkerTitle}, unit: ${unitMatch?.id}, range: ${rangeMatch?.range}, value: ${valueMatch?.value}, confidence: ${confidence}, locale: ${page.locale}`
           )
 
+          if (unitMatch && !unitMatch.word) {
+            console.log(unitMatch)
+          }
+
           // create entry for measurements or warnings
           const bbox = mergeBoundingBoxes(line.map((w) => w.bbox))
           const medatata = new Metadata({
@@ -233,7 +237,7 @@ export class Report {
             },
           })
           const measurement = new Measurement(
-            biomarker,
+            biomarker.id,
             valueMatch ? round(valueMatch.value / (unitMatch?.conversion || 1.0)) : undefined,
             valueMatch ? valueMatch.text : undefined,
             unitMatch ? biomarker.unit : undefined,
@@ -256,7 +260,7 @@ export class Report {
       }
     }
 
-    this.biomarkers = measurements
+    this.measurements = measurements
     if (warnings.length > 0) {
       this.metadata = { ...this.metadata, warnings }
     }

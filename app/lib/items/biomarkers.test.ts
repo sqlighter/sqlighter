@@ -2,7 +2,6 @@
 // biomarkers.test.ts
 //
 
-import assert from "assert/strict"
 import { Biomarker, Range } from "./biomarkers"
 
 describe("biomarkers.ts", () => {
@@ -17,6 +16,7 @@ describe("biomarkers.ts", () => {
     expect(en3.title).toBe("Glucose")
 
     const it1 = await Biomarker.getBiomarker("glucose", "it-IT")
+    expect(it1).toBeTruthy()
     expect(it1.id).toBe("glucose")
     expect(it1.title).toBe("Glucosio")
   })
@@ -190,29 +190,30 @@ describe("biomarkers.ts", () => {
     expect(res).toBeNull()
   })
 
-  test("parseUnits", () => {
-    let biomarker = Biomarker.getBiomarker("hgb") // native unit is g/L
-    assert(biomarker)
+  test("parseUnits", async () => {
+    let biomarker = await Biomarker.getBiomarker("hgb") // native unit is g/L
+    expect(biomarker).toBeTruthy()
+    expect(biomarker.id).toBe("hgb")
 
     // parse native unit for biomarker
-    let unit = Biomarker.parseUnits("g/L", biomarker)
+    let unit = await Biomarker.parseUnits("g/L", biomarker)
     expect(unit?.id).toBe("g/L")
     expect(unit?.confidence).toBe(1)
 
     // parse a unit that can be converted to native unit
-    unit = Biomarker.parseUnits("g/100mL", biomarker)
+    unit = await Biomarker.parseUnits("g/100mL", biomarker)
     expect(unit?.id).toBe("g/100mL")
     expect(unit?.conversion).toBe(0.1)
     expect(unit?.confidence).toBe(1)
 
     // parse a unit that CANNOT be converted to native unit
-    unit = Biomarker.parseUnits("mmol/L", biomarker)
+    unit = await Biomarker.parseUnits("mmol/L", biomarker)
     expect(unit).toBeNull()
 
     // parse unparseable strings
-    unit = Biomarker.parseUnits("5,0", biomarker)
+    unit = await Biomarker.parseUnits("5,0", biomarker)
     expect(unit).toBeNull()
-    unit = Biomarker.parseUnits("fake", biomarker)
+    unit = await Biomarker.parseUnits("fake", biomarker)
     expect(unit).toBeNull()
   })
 })

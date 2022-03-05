@@ -4,8 +4,7 @@
 
 import Box from "@mui/material/Box"
 
-import { Biomarker } from "../lib/items/biomarkers";
-
+import { Biomarker } from "../lib/items/biomarkers"
 
 import useSWR from "swr"
 import { fetcher, putJson } from "../lib/api"
@@ -32,25 +31,14 @@ export function useUser() {
   return [user, { mutate, loading, setUser }]
 }
 
-
-
-
-
-
 interface BiomarkerPanelProps {
-
   item: Biomarker
 
   variant?: "default"
 }
 
-export function BiomarkerPanel({item, variant}: BiomarkerPanelProps) {
-
+export function BiomarkerPanel({ item, variant }: BiomarkerPanelProps) {
   console.log(item)
 
-  return <Box width="100%">
-    Biomarker: {item.id} panel
-  </Box>
+  return <Box width="100%">Biomarker: {item.id} panel</Box>
 }
-
-

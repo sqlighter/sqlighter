@@ -39,20 +39,21 @@ export default function LoremPage(props) {
         {variantSpecs("h6", "h6. Heading")}
 
         {variantSpecs(
-          "subtitle1",
-          "subtitle1. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur"
-        )}
-        {variantSpecs(
-          "subtitle2",
-          "subtitle2. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur"
-        )}
-        {variantSpecs(
           "body1",
           "body1. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur, neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti? Eum quasi quidem quibusdam."
         )}
         {variantSpecs(
+          "subtitle1",
+          "subtitle1. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur"
+        )}
+
+        {variantSpecs(
           "body2",
           "body2. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur, neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti? Eum quasi quidem quibusdam."
+        )}
+        {variantSpecs(
+          "subtitle2",
+          "subtitle2. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur"
         )}
 
         {variantSpecs("button", "button text")}
