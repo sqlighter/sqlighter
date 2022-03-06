@@ -1,47 +1,49 @@
-// scan.ts testsn
+//
+// labresults.test.ts
+//
 
 import { resolve } from "path"
 import fs from "fs/promises"
 import path from "path"
 
 import { Ocr } from "./ocr"
-import { Report } from "./reports"
-import { writeJson, readJson } from "./utilities"
+import { LabResults } from "./labresults"
+import { writeJson, readJson } from "../utilities"
 
-describe("reports.ts", () => {
+describe("labresults.ts", () => {
   // the test directory contains a number of xxx.pdf and xxx.pdf.report.json
   // files where the second file contains a completed report containing the
   // biomarkers that are expected to be found in the report. we can analyze
   // the pdf and then match against the expected results to see if anything
   // has gone missing
 
-  test("Report.analyzeOcr (report01.pdf)", async () => {
+  test("LabResults.analyzeOcr (report01.pdf)", async () => {
     await analyzePdf("report01.pdf")
   })
 
   /** 1 failing
-  test("Report.analyzeOcr (report02.pdf)", async () => {
+  test("LabResults.analyzeOcr (report02.pdf)", async () => {
     await analyzePdf("report02.pdf")
   })
 */
 
-  test("Report.analyzeOcr (report03.pdf)", async () => {
+  test("LabResults.analyzeOcr (report03.pdf)", async () => {
     await analyzePdf("report03.pdf")
   })
 
-  test("Report.analyzeOcr (report04.pdf)", async () => {
+  test("LabResults.analyzeOcr (report04.pdf)", async () => {
     await analyzePdf("report04.pdf")
   })
 
   // TODO fails because locale is not detected
   /*
-  test("Report.analyzeOcr (report05.pdf)", async () => {
+  test("LabResults.analyzeOcr (report05.pdf)", async () => {
     await analyzePdf("report05.pdf")
   })
 */
 
   /* more failing
-  test("Report.analyzeOcr (report06.pdf)", async () => {
+  test("LabResults.analyzeOcr (report06.pdf)", async () => {
     await analyzePdf("report06.pdf")
   })
   */
@@ -72,7 +74,7 @@ async function analyzePdf(file: string) {
 
   // now analyze the ocr file, produce biomarkers and test expected results
   const pages = Ocr.normalizeAnnotations(rawOcr)
-  let report = new Report(pages)
+  let report = new LabResults(pages)
   for (const page of pages) {
     const svg = report.toHtml(page.pageNumber)
     const svgPath = toArtifacts(pdfFile + `.page${page.pageNumber}.before.html`)

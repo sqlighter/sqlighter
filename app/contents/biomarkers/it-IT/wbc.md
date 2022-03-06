@@ -1,7 +1,9 @@
 ---
-translation: automatic
-title: Conta dei globuli bianchi
+translation: manual
+title: Leucociti (globuli bianchi)
 description: Cellule del sistema immunitario
+aliases:
+  - Conteggio dei globuli bianchi
 ---
 
 Un emocromo misura il numero di globuli bianchi nel sangue. I globuli bianchi fanno parte del sistema immunitario. Aiutano il tuo corpo a combattere infezioni e altre malattie.

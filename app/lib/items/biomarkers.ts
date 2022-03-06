@@ -5,13 +5,11 @@
 import Fuse from "fuse.js"
 import Tokenizr from "tokenizr"
 import assert from "assert"
-import path from "path"
 
 import { round } from "../utilities"
 import { Unit } from "./units"
 import { Content, loadContents, DEFAULT_LOCALE } from "./contents"
-import { Metadata } from "../metadata"
-import { Organization } from "./organizations"
+import { Metadata } from "./items"
 
 export const BIOMARKER_TYPE = "biomarker"
 export const BIOMARKERS_SEARCH_CONFIDENCE = 0.7

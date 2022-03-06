@@ -1,7 +1,7 @@
 ---
-translation: automatic
-title: Globuli rossi nucleati
-description: Globuli rossi immaturi
+translation: manual
+title: Eritroblasti
+description: Globuli rossi nucleati
 ---
 
 I globuli rossi nucleati sono globuli rossi immaturi. Negli adulti, la loro presenza nel sangue indica un problema.

@@ -4,6 +4,11 @@
 
 import assert from "assert"
 
+// secure ids with low collision probability
+import { customAlphabet } from "nanoid"
+const nanoid = customAlphabet("1234567890abcdefghijklmnopqrstuvwxyz", 20)
+
+/** Item entries are basic values arranged in dictionaries and arrays */
 export type ItemAttribute =
   | string
   | number
@@ -14,6 +19,18 @@ export type ItemAttribute =
   | null
   | undefined
   | any
+
+/** Additional metadata for an object */
+export class Metadata {
+  constructor(args?: any) {
+    if (args) {
+      Object.assign(this, args)
+    }
+  }
+
+  /** Metadata values can be accessed by property name */
+  [key: string]: ItemAttribute
+}
 
 /**
  * A generic item with tree structure and open ended attributes.
@@ -50,6 +67,16 @@ export class Item {
   /** Concrete class defines content type, eg. biomarker, topic, post, organization, etc... */
   public static get itemType(): string {
     throw new Error("Item.itemType - must be defined in subclass")
+  }
+
+  /** Id prefix to be used for this kind of items */
+  public static get itemPrefix(): string {
+    throw new Error("Item.itemPrefix - must be defined in subclass")
+  }
+
+  /** Generate a random id that is crytographically secure */
+  public static generateId(): string {
+    return this.itemPrefix + nanoid()
   }
 
   public static fromObject<T extends Item = Item>(obj: any, TCreator: new () => T): T {

@@ -1,32 +1,25 @@
 //
-// reports.ts
+// labresults.ts - a health record deriving from lab results (eg. blood test)
 //
 
 import assert from "assert/strict"
 
-import { BoundingBox, getBoundingBoxAlignments, mergeBoundingBoxes } from "./geometry"
-import { Unit } from "./items/units"
+import { BoundingBox, mergeBoundingBoxes } from "../geometry"
+import { Unit } from "../items/units"
 import { Page, Ocr, Word } from "./ocr"
-import { Biomarker, Measurement, Range } from "./items/biomarkers"
-import { Metadata } from "./metadata"
-import { round, HIGH_CONFIDENCE, MEDIUM_CONFIDENCE, LOW_CONFIDENCE } from "./utilities"
+import { Biomarker, Measurement, Range } from "../items/biomarkers"
+import { Metadata } from "../items/items"
+import { Record } from "../items/records"
+import { round, HIGH_CONFIDENCE, MEDIUM_CONFIDENCE, LOW_CONFIDENCE } from "../utilities"
 
-/** A report inclusive of a number of pages, OCR information, metadata, etc */
-export class Report {
+/** A lab results is a specialized health record for blood tests and other lab works */
+export class LabResults extends Record {
   constructor(pages: Page[], metadata?: any) {
+    super()
     assert(pages && pages.length > 0, "Report - pages is empty")
     this.pages = pages
     this.metadata = new Metadata(metadata)
   }
-
-  /** Pages in this report with fulltext, OCR words, etc */
-  pages: Page[]
-
-  /** Biomarker measurements detected in this report */
-  measurements?: Measurement[]
-
-  /** Additional metadata on this report */
-  metadata: Metadata
 
   //
   // methods
@@ -316,9 +309,9 @@ export class Report {
    * if requested, analyze the document looking for biomarker reading results.
    * @returns A report with OCR annotations and possibly biomarker results and more metadata
    */
-  public static async fromOcr(sourceUri: string, analyze: boolean = true): Promise<Report> {
+  public static async fromOcr(sourceUri: string, analyze: boolean = true): Promise<LabResults> {
     const { pages, metadata: extras } = await Ocr.scanPages(sourceUri)
-    const report = new Report(pages, extras)
+    const report = new LabResults(pages, extras)
     if (analyze) {
       await report.analyzeOcr()
     }

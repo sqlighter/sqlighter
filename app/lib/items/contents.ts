@@ -9,14 +9,7 @@ import assert from "assert"
 import sizeOf from "image-size"
 import showdown from "showdown"
 
-import Fuse from "fuse.js"
-import Tokenizr from "tokenizr"
-
 import { fsExists } from "../utilities"
-import { round } from "../utilities"
-import { Unit } from "./units"
-import { Metadata } from "../metadata"
-import { Organization } from "./organizations"
 import { Item } from "./items"
 
 export const BIOMARKERS_SEARCH_CONFIDENCE = 0.7

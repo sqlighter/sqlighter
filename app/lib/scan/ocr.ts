@@ -6,9 +6,8 @@ import assert from "assert/strict"
 const vision = require("@google-cloud/vision").v1
 import fs from "fs/promises"
 
-import { BoundingBox, getDistance, getAverage, getBoundingBoxSize } from "./geometry"
-import { Metadata } from "./metadata"
-import { round } from "./utilities"
+import { BoundingBox, getDistance, getAverage, getBoundingBoxSize } from "../geometry"
+import { Metadata } from "../items/items"
 
 /** A word or short sentence detected by OCR in a page */
 export class Word {

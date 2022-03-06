@@ -1,7 +1,9 @@
+//
 // units.ts tests
+//
+
 import { Unit, UNITS_SEARCH_CONFIDENCE } from "./units"
 import { Biomarker } from "./biomarkers"
-import { assert } from "console"
 
 describe("units.ts", () => {
   test("getUnits", async () => {

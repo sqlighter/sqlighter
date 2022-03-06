@@ -4,7 +4,7 @@
 
 import { resolve } from "path"
 import { Ocr } from "./ocr"
-import { writeJson } from "./utilities"
+import { writeJson } from "../utilities"
 
 const TEST_PDF_PATH = "./lib/test/report01.pdf"
 function toArtifacts(path: string) {
