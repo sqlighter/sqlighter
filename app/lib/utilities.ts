@@ -103,3 +103,11 @@ export async function readJson(jsonPath: string) {
 export function round(value: number, digits: number = 2) {
   return parseFloat(value.toFixed(digits))
 }
+
+/** Returns true if file or directory exists and can be accessed */
+export async function fsExists(filePath): Promise<boolean> {
+  return await fs.access(filePath).then(
+    () => true,
+    () => false
+  )
+}

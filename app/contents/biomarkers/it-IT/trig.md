@@ -1,18 +1,13 @@
 ---
-id: trig
+translation: automatic
 title: Trigliceridi
-description: Un particolare tipo di grasso
-references:
-  - "https://www.valorinormali.com/sangue/trigliceridi/"
-  - "https://www.youtube.it/LiGRLLb2abk"
-  - "https://labtestsonline.org.uk/tests/triglycerides"
-  - "https://unitslab.com/node/53"
+description: Tipo di grasso
 ---
 
-Verificare periodicamente la pressione arteriosa ed i valori di colesterolo totale è utile per monitorare il proprio rischio cardiovascolare, ma a questi esami dovrebbe essere aggiunto anche il controllo dei trigliceridi, un particolare tipo di grasso.
+I trigliceridi sono il principale tipo di grasso presente nel sangue. Il cibo in eccesso che non usi subito viene immagazzinato sotto forma di trigliceridi.
 
-A seguito di un pasto l’organismo converte le calorie non utilizzate proprio in trigliceridi, per poi immagazzinarli in specifiche cellule deputate a funzione di riserva energetica e rilasciate in caso di necessità tra un pasto e l’altro.
+Un livello troppo alto di trigliceridi può aumentare il rischio di malattie cardiache e ictus. Sebbene <150 mg/dL sia considerato normale, molti raccomandano un obiettivo di trigliceridi <100 mg/dL.
 
-Come per altri valori del profilo lipidico, un’eccessiva quantità circolante aumenta il rischio di malattie cardiovascolari (in particolare per le coronarie): uno dei principali meccanismi che causa l’aumento dei valori di trigliceridemia è mangiare più calorie del necessario, è quindi chiaro che una verifica della propria dieta è sempre il primo passo per un corretto controllo dei livelli plasmatici.
+Poiché i trigliceridi contribuiscono all'aterosclerosi, è importante avere il corretto equilibrio dei trigliceridi con il colesterolo HDL che elimina le arterie.
 
-I valori non sono sempre proporzionali a quelli del colesterolo, quindi è possibile riscontrare valori alti di uno e valori bassi dell’altro indipendentemente fra loro.
+Il rapporto ideale tra trigliceridi e colesterolo HDL è inferiore a 2:1, mentre un rapporto superiore a 6:1 è considerato ad alto rischio. Abbassando i trigliceridi e questo rapporto, puoi ridurre il rischio di malattie cardiovascolari, come infarto e ictus.

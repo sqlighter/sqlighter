@@ -1,16 +1,9 @@
 ---
-id: ferritin
+translation: automatic
 title: Ferritina
-description: Una proteina che contiene ferro
-references:
-  - "https://www.valorinormali.com/sangue/ferritina/"
-  - "https://medlineplus.gov/lab-tests/ferritin-blood-test/"
+description: Proteina di accumulo del ferro
 ---
 
-La ferritina, misurata attraverso l’omonimo esame del sangue, è una proteina che contiene ferro; la sua valutazione fornisce importanti informazioni relative alle scorti disponibili nell’organismo.
+Un esame del sangue della ferritina misura il livello di ferritina nel sangue. La ferritina è una proteina che immagazzina il ferro all'interno delle cellule. Hai bisogno di ferro per produrre globuli rossi sani. I globuli rossi trasportano l'ossigeno dai polmoni al resto del corpo.
 
-Si trova accumulata principalmente nel fegato, nella milza, nel midollo osseo e nei muscoli scheletrici e di fatto è la principale proteina responsabile dell’immagazzinamento del ferro; benché la frazione circolante sia molto piccola rispetto alle quantità accumulate, la sua concentrazione varia in proporzione al totale presente nel corpo, risultandone quindi un’accurata approssimazione.
-
-Se il risultato dell’esame è un valore basso significa che la concentrazione nel sangue è inferiore al normale, indicazione del fatto che anche i depositi sono bassi (carenza di ferro).
-
-Se al contrario il risultato è un valore alto potrebbe essere indicativo della presenza di una qualche malattia che causa un eccessivo immagazzinamento di ferro (ad esempio l’emocromatosi).
+Il ferro è importante anche per la salute dei muscoli, del midollo osseo e della funzione degli organi. Troppo poco o troppo ferro nel tuo sistema può causare seri problemi di salute se non trattato.

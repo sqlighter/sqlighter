@@ -1,39 +1,44 @@
 ---
-id: alpha1-perc
+translation: automatic
 title: Alpha-1
-description: Proteins synthesized in the liver
-references:
-  - "https://www.valorinormali.com/sangue/alfa-globuline-alte-basse-e-valori-normali/"
+undefined: ""
+description: Proteine sintetizzate nel fegato
 ---
 
-Alpha globulins are proteins synthesized in the liver and circulating in the blood, which we can divide into two groups:
+Le alfa globuline sono proteine sintetizzate nel fegato e circolanti nel sangue, che possiamo suddividere in due gruppi:
 
-Alpha globulins 1
+,Alfa globuline 1
 
-- Alpha1-antitrypsin
-- Alpha1-antichimotrypsin
-- Alpha1-acid glycoprotein
-- Amyloid serum A
-- Alf 1-lipoprotein
+,- Alfa1-antitripsina
 
-Alpha globulins 2
+- Alfa1-antichimotripsina
+- Alfa1-acido glicoproteina
+- Siero amiloide A
+- Alf 1-lipoproteina
 
-- Haptoglobin
-- Higher urinary proteins
-- Alpha2-macroglobulin
-- Ceruloplasmin
-- thyroid hormone binding globulin - TBG
-- Alpha2-antiplasmin
-- Protein C
-- Alpha2-lipoprotein
-- Angiotensinogen
+<!-- -->
 
-From a laboratory point of view, they are differentiated from other proteins present in the blood through a process called electrophoresis, a technique that allows separation based on the physical characteristics of the molecules such as charge (positive or negative), size and shape.
+,Alfa globuline 2
 
-The concentration values ​​of alpha globulins in the blood increase for example in the presence of inflammation.
+,- Aptoglobina
 
-The causes of altered values ​​are numerous and their interpretation must always be carried out in a broader framework, considering the symptoms complained of by the patient and the other results of blood tests, also because small shifts from normal values ​​could be insignificant.
+- Proteine urinarie maggiori
+- Alfa2-macroglobulina
+- Ceruloplasmina
+- globulina legante gli ormoni tiroidei – TBG
+- Alfa2-antiplasmina
+- Proteina C
+- Alfa2-lipoproteina
+- Angiotensinogeno
 
-From a very general point of view, it is possible to state that an increase in the circulating quantities of alpha-1 proteins is often connected to the presence of: inflammation, tumor, chronic inflammatory disease (rheumatoid arthritis, lupus, ...).
+<!-- -->
 
-A significant decrease is generally due to an alpha 1-antitrypsin deficiency, a hereditary condition in which the lack of the enzyme of the same name causes lung and liver disorders.
+,Da un punto di vista laboratoristico, vengono differenziate dalle altre proteine presenti nel sangue attraverso un procedimento chiamato elettroforesi, tecnica che consente una separazione in base alla caratteristiche fisiche delle molecole quali carica (positiva o negativa), dimensione e forma.
+
+,I valori di concentrazione delle alfa globuline nel sangue aumentano per esempio in presenza di infiammazione.
+
+,Le cause di valori alterati sono numerose e la loro interpretazione deve sempre essere condotta in un quadro più ampio, considerando i sintomi lamentati dal paziente e gli altri risultati degli esami del sangue, anche perché piccoli spostamenti rispetto ai valori normali potrebbero essere non significativi.
+
+,Da un punto di vista molto generale è possibile affermare che un aumento delle quantità circolanti delle proteine alfa-1 è spesso connesso a presenza di: infiammazione, tumore, malattia infiammatoria cronica (artrite reumatoide, lupus, …).
+
+,Una diminuzione rilevante è in genere conseguente a un deficit di alfa 1-antitripsina, una condizione ereditaria in cui la mancanza dell’enzima omonimo causa disturbi polmonari ed epatici.

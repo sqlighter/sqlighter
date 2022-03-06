@@ -1,20 +1,11 @@
 ---
-id: egfr
+translation: automatic
 title: eGFR
-description: Indicatore della funzione renale
-references:
-  - "https://medlineplus.gov/lab-tests/glomerular-filtration-rate-gfr-test/"
-  - "https://www.kidney.org/atoz/content/gfr"
-  - "https://unitslab.com/node/82"
-  - "https://www.valorinormali.com/sangue/egfr/"
+description: Marcatore per la funzionalità renale
 ---
 
-La stima del tasso di filtrazione glomerulare (eGFR) è una misura usata per valutare la salute dei reni.
+Una velocità di filtrazione glomerulare (GFR) è un esame del sangue che controlla il funzionamento dei reni. I tuoi reni hanno piccoli filtri chiamati glomeruli. Questi filtri aiutano a rimuovere i rifiuti e i liquidi in eccesso dal sangue. Un test GFR stima la quantità di sangue che passa attraverso questi filtri ogni minuto.
 
-I reni sono due organi a forma di fagiolo, ciascuno delle dimensioni di un pugno. Si trovano appena sotto la gabbia toracica, su ciascun lato della colonna vertebrale. Ogni giorno filtrano circa 120-150 litri di sangue producendo circa 1-2 litri di urina, il mezzo che ha l’organismo per eliminare sostanze di rifiuto e i liquidi in eccesso.
+Un GFR può essere misurato direttamente, ma è un test complicato, che richiede fornitori specializzati. Quindi il GFR viene spesso stimato utilizzando un test chiamato GFR stimato o eGFR. Per ottenere un preventivo, il tuo fornitore utilizzerà un metodo noto come calcolatore GFR. Un calcolatore GFR è un tipo di formula matematica che stima la velocità di filtrazione. Lo fa confrontando i risultati di un esame del sangue che misura la creatinina, un prodotto di scarto filtrato dai reni, con altre informazioni su di te.
 
-Quando un rene si ammala non è più in grado di filtrare il sangue come dovrebbe e questo danno può causare l’accumulo delle sostanze di rifiuto nell’organismo e, di conseguenza, creare grossi pericoli per la salute.
-
-Il test più importante da questo punto di vista è l’eGFR, un esame del sangue che controlla la velocità di filtrazione glomerulare e permette una valutazione di quanto bene i reni filtrano le sostanze di rifiuto.
-
-eGFR è l’abbreviazione inglese di velocità di filtrazione glomerulare stimata (Estimated Glomerular Filtration Rate) e indica la quantità di sangue filtrata al minuto; viene calcolato con una formula basata sulla creatinina sierica.
+Queste informazioni includono alcune o tutte le seguenti informazioni: i risultati di un esame del sangue che misura la creatinina, un prodotto di scarto filtrato dai reni, età, peso, altezza, sesso, razza. L'eGFR è un test semplice che può fornire risultati molto accurati.

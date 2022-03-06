@@ -1,44 +1,48 @@
 ---
-id: alpha2-perc
+translation: automatic
 title: Alfa-2
-description: Proteine sintetizzate nel fegato
-references:
-  - https://www.valorinormali.com/sangue/alfa-globuline-alte-basse-e-valori-normali/"
+description: Proteine ​​sintetizzate nel fegato
 ---
 
-Le alfa globuline sono proteine sintetizzate nel fegato e circolanti nel sangue, che possiamo suddividere in due gruppi:
+Le alfa globuline sono proteine ​​sintetizzate nel fegato e circolanti nel sangue, che possiamo dividere in due gruppi:
 
 Alfa globuline 1
 
 - Alfa1-antitripsina
 - Alfa1-antichimotripsina
-- Alfa1-acido glicoproteina
+- Glicoproteina alfa1-acida
 - Siero amiloide A
 - Alf 1-lipoproteina
+
+<!-- -->
 
 Alfa globuline 2
 
 - Aptoglobina
-- Proteine urinarie maggiori
+- Proteine ​​urinarie superiori
 - Alfa2-macroglobulina
 - Ceruloplasmina
-- globulina legante gli ormoni tiroidei – TBG
+- globulina legante l'ormone tiroideo - TBG
 - Alfa2-antiplasmina
 - Proteina C
 - Alfa2-lipoproteina
 - Angiotensinogeno
 
-Da un punto di vista laboratoristico, vengono differenziate dalle altre proteine presenti nel sangue attraverso un procedimento chiamato elettroforesi, tecnica che consente una separazione in base alla caratteristiche fisiche delle molecole quali carica (positiva o negativa), dimensione e forma.
+<!-- -->
 
-I valori di concentrazione delle alfa globuline nel sangue aumentano per esempio in presenza di infiammazione.
+Da un punto di vista di laboratorio, si differenziano dalle altre proteine ​​presenti nel sangue attraverso un processo chiamato elettroforesi, una tecnica che permette la separazione in base alle caratteristiche fisiche delle molecole come carica (positiva o negativa), dimensione e forma.
 
-Le cause di valori alterati sono numerose e la loro interpretazione deve sempre essere condotta in un quadro più ampio, considerando i sintomi lamentati dal paziente e gli altri risultati degli esami del sangue, anche perché piccoli spostamenti rispetto ai valori normali potrebbero essere non significativi.
+I valori di concentrazione delle alfa globuline nel sangue aumentano ad esempio in presenza di infiammazione.
 
-Un aumento delle quantità delle alfa-2 è di norma legato a una forte infiammazione (acuta o cronica) ed altre condizioni più o meno gravi, come ad esempio:
+Le cause dei valori alterati sono numerose e la loro interpretazione va sempre svolta in un quadro più ampio, considerando i sintomi lamentati dal paziente e gli altri risultati delle analisi del sangue, anche perché piccoli scostamenti dai valori normali potrebbero essere insignificanti.
+
+Un aumento delle quantità di alfa-2 è solitamente legato a una grave infiammazione (acuta o cronica) e ad altre condizioni più o meno gravi, come:
 
 - ipertiroidismo
 - insufficienza surrenalica
-- diabete mellito in stato avanzato
-- sindrome nefrotica
+- diabete mellito avanzato
+- Sindrome nevrotica
 
-Una diminuzione delle alfa-2 a emolisi (rottura dei globuli rossi), anemia megaloblastica (tipicamente da carenza di vitamina B12 e/o folati), malattie epatiche.
+<!-- -->
+
+Una diminuzione dell'alfa-2 all'emolisi (rottura dei globuli rossi), anemia megaloblastica (tipicamente da carenza di vitamina B12 e/o folati), malattie del fegato.

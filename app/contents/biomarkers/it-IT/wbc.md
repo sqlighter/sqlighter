@@ -1,14 +1,11 @@
 ---
-id: wbc
-title: Leucociti (globuli bianchi)
+translation: automatic
+title: Conta dei globuli bianchi
 description: Cellule del sistema immunitario
-references:
-  - "https://medlineplus.gov/lab-tests/white-blood-count-wbc/"
-  - "https://www.valorinormali.com/sangue/leucociti-globuli-bianchi/"
 ---
 
-I leucociti, conosciuti anche con il nome di globuli bianchi, sono cellule presenti nel sangue la cui funzione principale è proteggere l’organismo attraverso l’attuazione di meccanismi di difesa contro microorganismi di varia natura (virus, batteri, miceti, parassiti) e contro corpi estranei penetrati nell’organismo; rappresentano quindi uno degli elementi più importanti dell nostro sistema immunitario.
+Un emocromo misura il numero di globuli bianchi nel sangue. I globuli bianchi fanno parte del sistema immunitario. Aiutano il tuo corpo a combattere infezioni e altre malattie.
 
-Si possono differenziare diversi tipi di globuli bianchi. Contare quanti leucociti sono presenti nel sangue e la loro suddivisione percentuale (conta leucocitaria) ci permette quindi di avere informazioni sullo stato di salute dell’organismo.
+Quando ti ammali, il tuo corpo produce più globuli bianchi per combattere i batteri, i virus o altre sostanze estranee che causano la tua malattia. Questo aumenta il numero di globuli bianchi.
 
-Un basso numero di globuli bianchi, condizione definita leucopenia, significa disporre di un ridotto numero di cellule nel sangue in grado di contrastare eventuali minacce.
+Altre malattie possono far sì che il tuo corpo produca meno globuli bianchi del necessario. Questo abbassa il numero di globuli bianchi. Le malattie che possono abbassare il numero di globuli bianchi includono alcuni tipi di cancro e l'HIV/AIDS, una malattia virale che attacca i globuli bianchi. Alcuni medicinali, inclusa la chemioterapia, possono anche ridurre il numero dei globuli bianchi.

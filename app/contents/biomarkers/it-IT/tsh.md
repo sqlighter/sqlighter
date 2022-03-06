@@ -1,26 +1,13 @@
 ---
-id: tsh
-title: Tirotropina (TSH)
-description: Ormone tiroideo
-references:
-  - "https://medlineplus.gov/lab-tests/tsh-thyroid-stimulating-hormone-test/"
-  - "https://www.valorinormali.com/sangue/tsh/"
-  - "https://www.my-personaltrainer.it/salute/tsh-tireotropina.html"
-  - "https://unitslab.com/node/140"
+translation: automatic
+title: TSH
+description: Ormone stimolante la tiroide
 ---
 
-L’esame misura la quantità di ormone TSH (ormone tireotropo o tireostimolante) presente nel sangue.
+TSH sta per ormone stimolante la tiroide. Un test del TSH è un esame del sangue che misura questo ormone.
 
-L’ormone è prodotto dall’ipofisi, una piccola ghiandola che si trova alla base della scatola cranica, e costituisce solo una parte del complesso meccanismo di regolazione sanguigna dei due ormoni tiroidei: il T4 (tiroxina) e il T3 (triiodotironina).
+La tiroide è una piccola ghiandola a forma di farfalla situata vicino alla gola. La tua tiroide produce ormoni che regolano il modo in cui il tuo corpo utilizza l'energia. Svolge anche un ruolo importante nella regolazione del peso, della temperatura corporea, della forza muscolare e persino del tuo umore.
 
-La tiroide è una ghiandola a forma di farfalla che si trova nella parte anteriore del collo, appoggiata sulla trachea. Ha il compito di secernere gli ormoni tiroidei che, dal sangue, raggiungono tutti i tessuti dell’organismo.
+Il TSH è prodotto in una ghiandola nel cervello chiamata pituitaria. Quando i livelli di tiroide nel tuo corpo sono bassi, la ghiandola pituitaria produce più TSH. Quando i livelli della tiroide sono alti, la ghiandola pituitaria produce meno TSH. Livelli di TSH troppo alti o troppo bassi possono indicare che la tiroide non funziona correttamente.
 
-Gli ormoni tiroidei contribuiscono a numerosi funzioni, tra cui regolazione dell’utilizzo dell’energia disponibile (metabolismo),
-il mantenimento della corretta temperatura corporea, il funzionamento ottimale di cervello, cuore, muscoli e altri organi.
-
-Quando la loro concentrazione nel sangue diminuisce, l’ipotalamo secerne l’ormone TRH (ormone di rilascio della tireotropina) che a sua volta stimola l’ipofisi a secernere il TSH,
-che induce la tiroide a rilasciare in circolo il T3 e il T4.
-
-Gli ormoni tiroidei agiscono su ipotalamo e ipofisi attraverso un meccanismo di feedback negativo, ossia favorendo una riduzione della produzione di TRH e TSH. Quando tiroide, ipotalamo e ipofisi funzionano correttamente la tiroide riesce a mantenere costanti i livelli di ormoni tiroidei i circolo, attivandosi solo al bisogno, grazie a questo semplice ma sensibile meccanismo di controllo ed equilibrio.
-
-Se l’ipofisi non funziona bene la quantità di TSH circolante si allontana dalla normalità
+Un test del TSH viene utilizzato per scoprire quanto bene funziona la tiroide.

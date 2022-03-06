@@ -12,6 +12,7 @@ import showdown from "showdown"
 import Fuse from "fuse.js"
 import Tokenizr from "tokenizr"
 
+import { fsExists } from "../utilities"
 import { round } from "../utilities"
 import { Unit } from "./units"
 import { Metadata } from "../metadata"
@@ -166,14 +167,6 @@ const _contentsCache: {
 
 export function assertLocale(locale: string) {
   assert(/[a-z]{2}-[A-Z]{2}/.test(locale), `'${locale}' is an invalid locale (eg. en-US, it-IT...)`)
-}
-
-/** Returns true if file or directory exists and can be accessed */
-async function fsExists(filePath): Promise<boolean> {
-  return await fs.access(filePath).then(
-    () => true,
-    () => false
-  )
 }
 
 // TODO could memoize the function with a library that has a proper cache, etc

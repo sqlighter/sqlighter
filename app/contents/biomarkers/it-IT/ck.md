@@ -1,25 +1,21 @@
 ---
-id: ck
+translation: automatic
 title: Creatinina
 description: Creatinina nel sangue
-references:
-  - "https://medlineplus.gov/lab-tests/creatinine-test/"
-  - "https://www.mayoclinic.org/tests-procedures/creatinine-test/about/pac-20384646"
-  - "https://www.youtube.it/watch?v=-0nGICBxmEI"
-  - "https://www.valorinormali.com/sangue/creatinina/"
 ---
 
-Si tratta di una sostanza di rifiuto prodotta dal metabolismo energetico muscolare in seguito al consumo di creatina oppure come conseguenza del consumo di carne (ma con impatto inferiore al precedente punto).
+Un test della creatinina è una misura di quanto bene i tuoi reni stanno svolgendo il loro lavoro di filtrare i rifiuti dal tuo sangue.
 
-Se i reni sono in salute sono in grado di filtrare la creatinina e gli altri prodotti di rifiuto dal sangue, eliminandoli poi attraverso l’urina; poiché la quantità di creatinina prodotta quotidianamente è ragionevolmente prevedibile e viene poi smaltita interamente dai reni, si tratta di un marcatore utile a stimare la velocità di filtrazione glomerulare, ossia un’indicazione sulla funzionalità renale.
+La creatinina è un composto chimico rimasto dai processi di produzione di energia nei muscoli. I reni sani filtrano la creatinina dal sangue. La creatinina esce dal tuo corpo come prodotto di scarto nelle urine.
 
-Quando questa è compromessa, la concentrazione di creatinina nel sangue aumenta, perché ne viene smaltita di meno con le urine.
+Una misurazione della creatinina nel sangue o nelle urine fornisce indizi per aiutare il medico a determinare quanto bene funzionano i reni.
 
-Può essere utile in numerose situazioni, ma tra i motivi principali per cui viene richiesta ricordiamo:
+Il medico o altro operatore sanitario può ordinare un test della creatinina per i seguenti motivi:
 
-- controllo di routine
-- verifica prima di esami strumentali che richiedano la somministrazione di mezzi di contrasto
-- monitoraggio dei pazienti a rischio di malattie renali (per esempio pazienti diabetici)
-- verifica periodica di pazienti affetti da insufficienza renale.
+- Per fare una diagnosi se si hanno segni o sintomi di malattie renali
+- Per lo screening di malattie renali in caso di diabete, pressione alta o altre condizioni che aumentano il rischio di malattie renali
+- Per monitorare il trattamento o la progressione della malattia renale
+- Per monitorare gli effetti collaterali dei farmaci che possono includere danno renale o alterata funzionalità renale
+- Per monitorare la funzione di un rene trapiantato
 
-La quantità di creatinina prodotta dall’organismo dipende dal peso della persona e dalla sua massa muscolare, per questo la concentrazione è leggermente superiore negli uomini rispetto alle donne e ai bambini.
+<!-- -->

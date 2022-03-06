@@ -1,18 +1,9 @@
 ---
-id: mpv
-title: MPV
-description: Volume medio delle piastrine
-references:
-  - "https://www.valorinormali.com/sangue/mpv/"
-  - "https://medlineplus.gov/lab-tests/mpv-blood-test/"
+translation: automatic
+title: Volume piastrinico medio (MPV)
+description: Dimensione media delle piastrine
 ---
 
-Il parametro MPV è una stima del volume medio delle piastrine, piccoli frammenti cellulari privi di nucleo e circolanti nel sangue.
+MPV sta per volume piastrinico medio. Le piastrine sono piccoli globuli essenziali per la coagulazione del sangue, il processo che aiuta a fermare l'emorragia dopo un infortunio.
 
-Le piastrine, anche chiamate trombociti, ricoprono un ruolo chiave nella formazione di coaguli per fermare eventuali sanguinamenti; quando un vaso sanguigno viene danneggiato vengono inviati segnali che inducono le piastrine a precipitarsi rapidamente nel distretto interessato con l’obiettivo di formare un coagulo (il primo passo nella riparazione).
-
-È chiaramente vantaggioso per il processo di coagulazione che le piastrine siano il più grandi possibile, ma in presenza di una ridotta funzionalità del midollo osseo diminuiscono di volume.
-
-Nel caso in cui la conta delle piastrine sia inferiore ai valori normali per cause diverse da un malfunzionamento del midollo osseo, quest’ultimo proverà a compensare la ridotta quantità producendo cellule dal volume superiore.
-
-Poiché la dimensione media delle piastrine è maggiore quando il corpo produce un numero superiore di piastrine, i risultati di questo esame possono essere utilizzati per capire l’origine di eventuali anomalie nella quantità circolante.
+Un esame del sangue MPV misura la dimensione media delle piastrine. Il test può aiutare a diagnosticare disturbi emorragici e malattie del midollo osseo.

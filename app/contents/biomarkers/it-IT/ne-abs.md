@@ -1,17 +1,9 @@
 ---
-id: ne-abs
+translation: automatic
 title: Neutrofili
-description: Un tipo di globuli bianchi
-references:
-  - "https://www.valorinormali.com/sangue/neutrofili/"
-  - "https://www.youtube.it/watch?v=CZaIXdh4zqs"
-  - "https://www.verywellhealth.com/what-are-neutrophils-p2-2249134"
-  - "https://medlineplus.gov/lab-tests/blood-differential/"
-  - "https://en.wikipedia.org/wiki/Neutrophil"
+description: Tipo di globuli bianchi
 ---
 
-I granulociti neutrofili sono un tipo di leucocita (globulo bianco) che viene attivato in difesa dell’organismo quando questo viene attaccato da batteri e/o funghi; la loro funzione è quella di catturare e distruggere sostanze estranee attraverso il meccanismo della fagocitosi, che prevede l’ingestione e la successiva distruzione di materiale estraneo.
+I neutrofili sono un tipo di globuli bianchi (globuli bianchi o granulociti) che ci proteggono dalle infezioni, tra le altre funzioni. Costituiscono circa dal 40% al 60% dei globuli bianchi nel nostro corpo1 e sono le prime cellule ad arrivare sulla scena quando sperimentiamo un'infezione batterica. Una conta dei neutrofili normale (assoluta) è compresa tra 2500 e 6000 neutrofili per microlitro di sangue.2
 
-Vengono chiamati neutrofili perché in analisi di laboratorio non incorporano alcun tipo di colorante (rimangono cioè neutri).
-
-Rappresentano circa il 50-70% dei globuli bianchi ed ogni giorno il midollo osseo ne produce circa 100 miliardi, poiché hanno una vita limitata a circa 7-10 ore nel sangue e di pochi giorni nei tessuti.
+La conta dei neutrofili può essere elevata con le infezioni, a causa dell'aumento della produzione nel midollo osseo come nella leucemia, oa causa di stress fisico o emotivo. Un basso numero di neutrofili può anche essere un segno di malattia in condizioni come la leucemia, alcune infezioni, carenza di vitamina B12, chemioterapia e altro.

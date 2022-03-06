@@ -1,17 +1,11 @@
 ---
-id: hgb
+translation: automatic
 title: Emoglobina
-description: Proteina solubile di colore rosso
-references:
-  - "https://www.mayoclinic.org/tests-procedures/hemoglobin-test/about/pac-20385075"
-  - "https://unitslab.com/node/79"
-  - "https://www.valorinormali.com/sangue/emoglobina/"
-  - "https://www.mayoclinic.org/tests-procedures/hemoglobin-test/about/pac-20385075"
-  - "https://unitslab.com/node/79"
+description: Proteine nei globuli rossi
 ---
 
-L’emoglobina è una proteina solubile di colore rosso che troviamo nei globuli rossi del sangue; la sua funzione è quella di legare l’ossigeno, che potrà così essere trasportato dai globuli rossi in tutti i tessuti dell’organismo, ceduto in cambio dell’anidride carbonica da smaltire.
+Un test dell'emoglobina misura la quantità di emoglobina nel sangue. L'emoglobina è una proteina nei globuli rossi che trasporta l'ossigeno agli organi e ai tessuti del corpo e trasporta l'anidride carbonica dagli organi e dai tessuti ai polmoni.
 
-Quando il dosaggio nel sangue ne evidenzia una concentrazione inferiore al normale, il paziente presenta un insufficiente numero di globuli rossi nel sangue (anemia); questo può avere numerose cause, tra cui carenze vitaminiche, emorragie ed alcune malattie croniche.
+Se un test dell'emoglobina rivela che il tuo livello di emoglobina è inferiore al normale, significa che hai un basso numero di globuli rossi (anemia). L'anemia può avere molte cause diverse, tra cui carenze vitaminiche, sanguinamento e malattie croniche.
 
-Se al contrario troviamo un livello superiore al normale, condizione peraltro decisamente più rara, le potenziali cause devono essere cercate nella policitemia vera (una malattia del sangue), o in fattori quali la vita ad alta quota, il fumo e la disidratazione.
+Se un test dell'emoglobina mostra un livello superiore al normale, ci sono diverse potenziali cause: la policitemia vera, una malattia del sangue, vivere in alta quota, fumare e disidratazione.

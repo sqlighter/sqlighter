@@ -1,18 +1,11 @@
 ---
-id: glucose
+translation: automatic
 title: Glucosio
-description: Zucchero nel sangue (o glicemia)
-references:
-  - "https://www.valorinormali.com/sangue/glicemia/"
-  - "https://www.youtube.it/watch?v=xNgwZFP5A9s"
-  - "https://unitslab.com/node/1"
-  - "https://medlineplus.gov/lab-tests/blood-glucose-test/"
+description: Glicemia
 ---
 
-In campo medico la quantità di glucosio (zucchero) nel sangue prende il nome di glicemia ed è in genere il primo esame che viene richiesto quando si sospetta la presenza di diabete.
+Un test della glicemia misura i livelli di glucosio nel sangue. Il glucosio è un tipo di zucchero. È la principale fonte di energia del tuo corpo. Un ormone chiamato insulina aiuta a spostare il glucosio dal flusso sanguigno alle cellule.
 
-Il glucosio rappresenta la principale fonte di energia per la maggior parte delle cellule del corpo, comprese quelle del cervello che sono tra l’altro tra le poche a non poterne fare a meno, non essendo in grado di usare fonti energetiche alternative.
+Troppo o troppo poco glucosio nel sangue può essere un segno di una grave condizione medica. Livelli elevati di glucosio nel sangue (iperglicemia) possono essere un segno di diabete, un disturbo che può causare malattie cardiache, cecità, insufficienza renale e altre complicazioni. Bassi livelli di glucosio nel sangue (ipoglicemia) possono anche portare a gravi problemi di salute, inclusi danni cerebrali, se non trattati.
 
-I carboidrati (o glucidi) si trovano ad esempio in frutta, cereali (pane, pasta, riso, …) e vengono più o meno rapidamente trasformati in glucosio a seguito della loro introduzione attraverso la dieta; l’assorbimento che si verifica durante e dopo un pasto ha come conseguenza un aumento della quantità circolante di zucchero nel sangue e, nel caso si raggiungano valori eccessivi (iperglicemia), possono verificarsi sintomi di vario genere.
-
-In caso di risultati oltre i valori normali, la diagnosi di diabete o pre-diabete deve sempre essere confermata con nuove analisi, a meno di presenza inequivocabile dei sintomi caratteristici della malattia.
+Un test della glicemia viene utilizzato per scoprire se i livelli di zucchero nel sangue sono nell'intervallo sano. Viene spesso utilizzato per diagnosticare e monitorare il diabete.

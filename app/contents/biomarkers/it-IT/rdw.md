@@ -1,13 +1,9 @@
 ---
-id: rdw
+translation: automatic
 title: RDW
-description: Ampiezza di distribuzione eritrocitaria
-references:
-  - "https://medlineplus.gov/lab-tests/rdw-red-cell-distribution-width/"
-  - "https://www.valorinormali.com/sangue/rdw/"
-  - "https://www.youtube.it/watch?v=peQtTM-cGog"
+description: Larghezza di distribuzione dei globuli rossi
 ---
 
-L’RDW (Red Cell Distribution Width), in italiano ampiezza di distribuzione eritrocitaria, è un indice che fa parte dell’emocromo ed in grado di stimare la variabilità di volume dei globuli rossi. Permette quindi una stima della cosiddetta anisocitosi, ossia della presenza nel sangue di globuli rossi di diversa dimensione (gli eritrociti immaturi sono più grandi) e rappresenta un’informazione complementare all’indice MCV, che rappresenta invece la dimensione media dei globuli rossi.
+Un test della larghezza di distribuzione dei globuli rossi (RDW) è una misura dell'intervallo nel volume e nella dimensione dei globuli rossi (eritrociti). I globuli rossi spostano l'ossigeno dai polmoni a ogni cellula del corpo. Le tue cellule hanno bisogno di ossigeno per crescere, riprodursi e rimanere in salute. Se i tuoi globuli rossi sono più grandi del normale, potrebbe indicare un problema medico.
 
-L’RDW viene tipicamente utilizzata per la diagnosi differenziale di alcuni tipi di anemia.
+L'analisi del sangue RDW è spesso parte di un esame emocromocitometrico completo (CBC), un test che misura molti diversi componenti del sangue, compresi i globuli rossi. Il test RDW è comunemente usato per diagnosticare l'anemia, una condizione in cui i globuli rossi non possono trasportare abbastanza ossigeno al resto del corpo.

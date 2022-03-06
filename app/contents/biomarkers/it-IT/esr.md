@@ -1,24 +1,15 @@
 ---
-id: esr
-title: VES
-description: Velocità di eritrosedimentazione
-references:
-  - "https://www.valorinormali.com/sangue/ves/"
-  - "https://labtestsonline.org.uk/tests/erythrocyte-sedimentation-rate-esr"
+translation: automatic
+title: Velocità di sedimentazione eritrocitaria
+description: Misura dell'infiammazione
 ---
 
-La VES (Velocità di eritrosedimentazione) è un esame del sangue che permette di evidenziale l’eventuale presenza di infiammazione nell’organismo, anche se conseguente ad un’infezione; il test da solo non permette alcuna diagnosi, ma rappresenta un’indispensabile informazione nel processo diagnostico e viene talvolta usato per seguire l’evoluzione di una patologia infiammatoria.
+La VES è una misura indiretta del grado di infiammazione presente nel corpo. In realtà misura il tasso di caduta (sedimentazione) degli eritrociti (globuli rossi) in un tubo di sangue alto e sottile.
 
-Il sangue prelevato dal paziente viene posto in una piccola provetta graduata; i globuli rossi presenti tenderanno spontaneamente a depositarsi sul fondo e l’esame è volto a misurare l’altezza del deposito che si forma in un’ora.
+I risultati sono riportati come quanti millimetri di plasma trasparente sono presenti nella parte superiore della colonna dopo un'ora.
 
-L’utilità di osservare questo processo nasce dal fatto che quando è presente un’infiammazione nel sangue sono presenti delle sostanze che facilitano la formazione di gruppi di cellule che, aumentando di peso, si depositano più velocemente sul fondo.
+Normalmente, i globuli rossi cadono lentamente, lasciando poco plasma chiaro. L'aumento dei livelli ematici di alcune proteine (come il fibrinogeno o le immunoglobuline, che aumentano nell'infiammazione) fanno sì che i globuli rossi cadano più rapidamente, aumentando la VES.
 
-Riassumendo, più è elevata la quantità di globuli rossi discesi sul fondo della provetta, maggiore è la risposta infiammatoria del sistema immunitario.
+I medici non basano le loro decisioni esclusivamente sui risultati della VES. Puoi avere un risultato normale e avere ancora un problema.
 
-La VES non è tuttavia un esame specifico in quanto non fornisce indicazioni sul sito coinvolto nel processo infiammatorio o infettivo e al tipo di malattia infiammatoria in atto (acuta o cronica); è quindi possibile dire che si tratta di un esame in grado di evidenziare la presenza di infiammazione,
-quantificarne l’entità, ma non fornire indicazioni sull’area dell’organismo colpita né soprattutto sulle cause.
-
-Viene spesso richiesta insieme ad altri marker infiammatori, come ad esempio la PCR e la concentrazione di globuli bianchi nel sangue, ma va detto che negli ultimi anni il ricorso al dosaggio della VES è andato via via scemando, seppure conservi alcune caratteristiche ancora degne di nota: rapida, economica e disponibile in tutti gli ospedale,
-utilità come test di primo livello.
-
-La gran parte dei fenomeni infiammatori, nonché dei tumori, si associa ad un aumento del risultato.
+Una VES molto alta di solito ha una causa ovvia, come un'infezione. Il medico utilizzerà altri test di follow-up, come le colture, a seconda dei sintomi del paziente.
