@@ -18,7 +18,14 @@ export default function Home({ props }) {
           variant="subtitle2"
           href="mailto:info@biomarkers.app"
           underline="hover"
-          sx={{ cursor: "pointer", position: "absolute", bottom: 32 }}
+          sx={{
+            cursor: "pointer",
+            position: "absolute",
+            bottom: 32,
+            "@media (orientation: landscape)": {
+              visibility: "hidden",
+            },
+          }}
         >
           info@biomarkers.app
         </Link>
