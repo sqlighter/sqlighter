@@ -6,12 +6,10 @@ import { useRouter } from "next/router"
 
 import * as React from "react"
 import Box from "@mui/material/Box"
-import IconButton from "@mui/material/IconButton"
-import Stack from "@mui/material/Stack"
-import Typography from "@mui/material/Typography"
-import Tooltip from "@mui/material/Tooltip"
 
 import { Context } from "./context"
+import { Empty } from "./empty"
+import signinImage from "../public/images/empty3.jpg"
 
 export function getGoogleSigninClient() {
   return (window as any)?.google?.accounts?.id
@@ -73,12 +71,11 @@ export function SigninPanel() {
   }, [context.isGoogleSigninLoaded])
 
   return (
-    <Stack>
-      <Typography variant="h4">Welcome to Biomarkers</Typography>
-      <Typography variant="body2">Please sign in using Google</Typography>
-      <Box mt={4}>
-        <SigninButton />
-      </Box>
-    </Stack>
+    <Empty
+      title="Welcome"
+      description="Sign in securely to access your data"
+      image={signinImage}
+      action={<SigninButton />}
+    />
   )
 }
