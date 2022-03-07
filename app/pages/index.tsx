@@ -22,7 +22,7 @@ export default function Home({ props }) {
             cursor: "pointer",
             position: "absolute",
             bottom: 32,
-            "@media (orientation: landscape)": {
+            "@media (max-height: 480px)": {
               visibility: "hidden",
             },
           }}
