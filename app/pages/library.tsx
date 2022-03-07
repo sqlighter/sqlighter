@@ -32,7 +32,7 @@ export default function LibraryPage({ biomarkers, topics, articles }: LibraryPag
   const router = useRouter()
 
   return (
-    <AppLayout home title="Library" description={`${biomarkers.length} biomarkers`}>
+    <AppLayout title="Library" description={`${biomarkers.length} biomarkers`}>
       {router.query.search && <Box>search: {router.query.search}</Box>}
 
       {topics && (
