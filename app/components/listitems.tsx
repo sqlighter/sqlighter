@@ -18,6 +18,8 @@ import { getIcon } from "../components/icon"
 import { Content } from "../lib/items/contents"
 import { Logo } from "./logo"
 
+export const FANCY_RADIUS = "74% 26% 61% 39% / 35% 30% 70% 65%"
+
 /** Border radius to be applied to avatar image */
 export type AvatarStyle = "round" | "rounded" | "square" | "fancy"
 
@@ -68,7 +70,7 @@ export function getAvatarImage(src: string, alt: string, avatarStyle: AvatarStyl
       borderRadius = undefined
       break
     case "fancy":
-      borderRadius = "74% 26% 61% 39% / 35% 30% 70% 65%"
+      borderRadius = FANCY_RADIUS
       break
   }
   return getImage(src, alt, size, size, "cover", borderRadius)

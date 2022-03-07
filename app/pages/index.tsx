@@ -12,7 +12,7 @@ import homeImage from "../public/images/empty1.jpg"
 export default function Home({ props }) {
   return (
     <SiteLayout description="Know better, live better">
-      <Empty title="Biomarkers.app" description="Know better, live better" image={homeImage} />
+      <Empty title="Biomarkers.app" description="Know better, live better" image={homeImage} variant="fancy" />
       <Stack alignItems="center" justifyContent="center" mt={4}>
         <Link
           variant="subtitle2"
