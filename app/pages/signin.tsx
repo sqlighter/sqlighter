@@ -10,7 +10,7 @@ import { SigninPanel } from "../components/signin"
 
 export default function SigninPage() {
   return (
-    <AppLayout title="Signin">
+    <AppLayout title="Sign In">
       <SigninPanel />
     </AppLayout>
   )
