@@ -6,7 +6,7 @@ import React from "react"
 import Box from "@mui/material/Box"
 import List from "@mui/material/List"
 
-import Layout from "./layout"
+import { AppLayout } from "./layouts"
 import { Content } from "../lib/items/contents"
 import { Biomarker } from "../lib/items/biomarkers"
 import { Section } from "./section"
@@ -27,7 +27,7 @@ export function ContentPage({ item, header }: ContentPageProps) {
   const articles = item.articles as any as Content[]
 
   return (
-    <Layout title={item.title} subtitle={item.description} showBack={true}>
+    <AppLayout title={item.title} description={item.description} showBack={true}>
       {header}
       <article id={item.id} title={item.title}>
         {contentHtml && (
@@ -65,6 +65,6 @@ export function ContentPage({ item, header }: ContentPageProps) {
           </Section>
         )}
       </article>
-    </Layout>
+    </AppLayout>
   )
 }

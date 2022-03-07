@@ -5,7 +5,7 @@
 import * as React from "react"
 import { useContext } from "react"
 
-import Layout from "../components/layout"
+import { AppLayout } from "../components/layouts"
 import { SigninPanel } from "../components/signin"
 import { Context } from "../components/context"
 import { Empty } from "../components/empty"
@@ -33,9 +33,9 @@ export default function JournalPage({ records }: JournalPageProps) {
   }
 
   return (
-    <Layout title="Journal" subtitle="Track your progress">
+    <AppLayout title="Journal" description="Track your progress">
       {content}
-    </Layout>
+    </AppLayout>
   )
 }
 

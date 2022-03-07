@@ -5,8 +5,7 @@
 import { GetStaticProps } from "next"
 import * as React from "react"
 
-//import { getSortedPostsData } from "../lib/posts"
-import Layout from "../../components/layout"
+import { AppLayout } from "../../components/layouts"
 import { Section } from "../../components/section"
 import Date from "../../components/date"
 
@@ -19,13 +18,13 @@ interface BlogPageProps {
 
 export default function BlogPage({ posts }: BlogPageProps) {
   return (
-    <Layout home title="Blog">
+    <AppLayout title="Blog">
       {posts.map(({ id, date, title }) => (
         <Section title={title} subtitle={<Date dateString={date} />}>
           {" "}
         </Section>
       ))}
-    </Layout>
+    </AppLayout>
   )
 }
 

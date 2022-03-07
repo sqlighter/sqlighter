@@ -15,8 +15,7 @@ import Typography from "@mui/material/Typography"
 import { deepmerge } from "@mui/utils"
 
 import { useUser } from "../lib/auth/hooks"
-import { Context } from "../components/context"
-import Layout from "../components/layout"
+import { AppLayout } from "../components/layouts"
 import { Section } from "../components/section"
 import { SigninPanel } from "../components/signin"
 import { Tip } from "../components/tip"
@@ -137,8 +136,8 @@ export default function ProfilePage(props: ProfilePageProps) {
   if (userLoading) return null
 
   return (
-    <Layout title="Profile" subtitle="Personalize your results">
+    <AppLayout title="Profile" description="Personalize your results">
       {user ? <ProfilePanel /> : <SigninPanel />}
-    </Layout>
+    </AppLayout>
   )
 }

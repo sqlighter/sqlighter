@@ -3,15 +3,15 @@
 //
 
 import React, { useContext } from "react"
-import Layout from "../components/layout"
+import { AppLayout } from "../components/layouts"
 import { SigninPanel } from "../components/signin"
 
 // TODO redirect to /browse once signed in
 
 export default function SigninPage() {
   return (
-    <Layout title="Signin">
+    <AppLayout title="Signin">
       <SigninPanel />
-    </Layout>
+    </AppLayout>
   )
 }

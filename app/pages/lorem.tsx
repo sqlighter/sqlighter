@@ -8,7 +8,7 @@ import { useTheme } from "@mui/material/styles"
 import { Typography } from "@mui/material"
 
 import { Context } from "../components/context"
-import Layout from "../components/layout"
+import { AppLayout } from "../components/layouts"
 import { Section } from "../components/section"
 
 export default function LoremPage(props) {
@@ -29,7 +29,7 @@ export default function LoremPage(props) {
   }
 
   return (
-    <Layout title="Lorem Ipsum" subtitle="Consectetur adipiscing elit">
+    <AppLayout title="Lorem Ipsum" description="Consectetur adipiscing elit">
       <Box sx={{ width: "100%", maxWidth: 500 }}>
         {variantSpecs("h1", "h1. Heading")}
         {variantSpecs("h2", "h3. Heading")}
@@ -85,6 +85,6 @@ export default function LoremPage(props) {
           </Section>
         )
       })}
-    </Layout>
+    </AppLayout>
   )
 }

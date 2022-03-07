@@ -1,9 +1,9 @@
-import Layout from "../components/layout"
+import { AppLayout } from "../components/layouts"
 import Head from "next/head"
 
 export default function PrivacyPolicyPage() {
   return (
-    <Layout title="Privacy Policy" subtitle="We respect your privacy">
+    <AppLayout title="Privacy Policy" description="We respect your privacy">
       <h4>Information We Collect</h4>
       <p>
         Your privacy is important to us. It is Insieme&#39;s policy to respect your privacy and comply with any
@@ -29,6 +29,6 @@ export default function PrivacyPolicyPage() {
         For any questions or concerns regarding your privacy, you may contact us using the following details:
         <a href="mailto:privacy@insieme.app">privacy@insieme.app</a>.
       </p>
-    </Layout>
+    </AppLayout>
   )
 }

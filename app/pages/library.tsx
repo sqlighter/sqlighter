@@ -13,7 +13,7 @@ import { Biomarker } from "../lib/items/biomarkers"
 import { Topic } from "../lib/items/topics"
 import { getSerializableArticles, getSerializableBiomarkers, getSerializableTopics } from "../lib/props"
 
-import Layout from "../components/layout"
+import { AppLayout } from "../components/layouts"
 import { Section } from "../components/section"
 import { ContentsGallery, QUILT_SIZES } from "../components/contentsgallery"
 import { ArticleListItem, BiomarkerListItem, TopicListItem } from "../components/listitems"
@@ -32,7 +32,7 @@ export default function LibraryPage({ biomarkers, topics, articles }: LibraryPag
   const router = useRouter()
 
   return (
-    <Layout home title="Library" subtitle={`${biomarkers.length} biomarkers`}>
+    <AppLayout home title="Library" description={`${biomarkers.length} biomarkers`}>
       {router.query.search && <Box>search: {router.query.search}</Box>}
 
       {topics && (
@@ -70,7 +70,7 @@ export default function LibraryPage({ biomarkers, topics, articles }: LibraryPag
           </List>
         </Section>
       )}
-    </Layout>
+    </AppLayout>
   )
 }
 

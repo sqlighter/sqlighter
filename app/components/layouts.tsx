@@ -1,5 +1,5 @@
 //
-// layout.tsx - shared layout component
+// layouts.tsx - shared layout components for app and website pages
 //
 
 import Head from "next/head"
@@ -44,11 +44,14 @@ export function useSearch(search?: string) {
 }
 
 interface LayoutProps {
+  /** Page title */
   title?: string
-  subtitle?: string
 
+  /** Brief subtitle shown in page's header */
+  description?: string
+
+  /** Layout contents */
   children: React.ReactNode
-  home?: boolean
 
   /** True if back icon should be shown */
   showBack?: boolean
@@ -57,7 +60,8 @@ interface LayoutProps {
   actions?: any
 }
 
-export default function Layout({ children, title, subtitle, home, showBack, actions }: LayoutProps) {
+/** A shared layout for all application pages, includes: menu drawer, header, footer, basic actions */
+export function AppLayout({ children, title, description: subtitle, showBack, actions }: LayoutProps) {
   // search query entered in header if any
   const [query] = useSearch()
 
@@ -200,6 +204,21 @@ export default function Layout({ children, title, subtitle, home, showBack, acti
         {query ? <SearchResults search={query} /> : children}
       </Container>
       {!isMediumScreen && <Footer />}
+    </>
+  )
+}
+
+/** A shared layout for website pages */
+export function SiteLayout({ children, title }: LayoutProps) {
+  const pageTitle = title ? `${title} | ${TITLE}` : TITLE
+  return (
+    <>
+      <Head>
+        <title>{pageTitle}</title>
+        <link rel="icon" href="/favicon.ico" />
+        <meta name="description" content="Biomarkers.app" />
+      </Head>
+      <Container maxWidth="sm">{children}</Container>
     </>
   )
 }
