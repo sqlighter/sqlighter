@@ -5,9 +5,9 @@
 import nextConnect from "next-connect"
 import { NextApiRequest, NextApiResponse } from "next"
 import fs from "fs"
-import auth from "../../lib/auth/middleware"
+import auth from "../../../lib/auth/middleware"
 
-import { Organization } from "../../lib/items/organizations"
+import { Organization } from "../../../lib/items/organizations"
 
 function getImageUrl(imagePath: string) {
   if (imagePath) {

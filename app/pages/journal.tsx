@@ -2,8 +2,8 @@
 // journal.tsx - show biomarker measurements, events, personal data, etc.
 //
 
-import * as React from "react"
-import { useContext } from "react"
+import React, { useContext, useCallback } from "react"
+import useFileUploader from "react-uploader-hook"
 
 import Button from "@mui/material/Button"
 import Fab from "@mui/material/Fab"
@@ -21,6 +21,33 @@ interface JournalPageProps {
 }
 
 function UploadButton(props) {
+  const getUploadParams = useCallback((file) => {
+    // [💡] you can return custom request configurations here
+    const form = new FormData()
+    form.append("file", file)
+    return {
+      method: "post",
+      url: "https://file.io?expires=1w",
+      headers: { "Content-Type": "multipart/form-data" },
+      data: form,
+      meta: { "any-other-stuff": "hello" },
+    }
+  }, [])
+
+  const onUploaded = useCallback((fileBag) => {
+    // [💡] do whatever with the uploaded files
+  }, [])
+
+  // [⭐]
+  const { onDrop, fileBags } = useFileUploader({ getUploadParams, onUploaded })
+
+  const handleChange = useCallback(
+    (event) => {
+      onDrop(event.target.files)
+    },
+    [onDrop]
+  )
+
   function handleUpload(e) {
     const file = e?.target?.files?.[0]
     if (file) {
@@ -29,12 +56,21 @@ function UploadButton(props) {
   }
 
   return (
-    <label htmlFor="contained-button-file">
-      <input accept=".pdf" id="contained-button-file" type="file" style={{ display: "none" }} onChange={handleUpload} />
-      <Button variant="outlined" component="span">
-        Upload
-      </Button>
-    </label>
+    <>
+      <label htmlFor="contained-button-file">
+        <input
+          accept="application/pdf"
+          id="contained-button-file"
+          type="file"
+          style={{ display: "none" }}
+          onChange={handleChange}
+        />
+        <Button variant="outlined" component="span">
+          Upload
+        </Button>
+      </label>
+      <pre>{JSON.stringify(fileBags, null, 2)}</pre>
+    </>
   )
 }
 
@@ -68,7 +104,7 @@ export default function JournalPage(props: JournalPageProps) {
     content = <Journal {...props} />
   }
 
-/*      {context.user && (
+  /*      {context.user && (
         <Fab
           aria-label="Upload"
           color="primary"
