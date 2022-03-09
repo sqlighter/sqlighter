@@ -15,11 +15,21 @@ export function packItem(obj) {
   return { id, parentId, type, createdAt, updatedAt, attributes }
 }
 
+/** Packs an array of items */
+export function packItems(items) {
+  return [...items].map((item) => packItem(item))
+}
+
 /** Takes an item in database format and unpacks its attributes in regular object fields */
 export function unpackItem(obj) {
   assert(obj.id, "unpackItem - item doesn't have an id")
   const { id, parentId, type, createdAt, updatedAt, attributes } = obj
   return { id, parentId, type, createdAt, updatedAt, ...attributes }
+}
+
+/** Unpacks an array of items */
+export function unpackItems(items) {
+  return [...items].map((item) => unpackItem(item))
 }
 
 /**
