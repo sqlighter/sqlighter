@@ -8,6 +8,11 @@ import assert from "assert"
 import { customAlphabet } from "nanoid"
 const nanoid = customAlphabet("1234567890abcdefghijklmnopqrstuvwxyz", 20)
 
+export function generateId(prefix): string {
+  assert(prefix && prefix.length == 4 && prefix.endsWith("_"))
+  return prefix + nanoid()
+}
+
 /** Item entries are basic values arranged in dictionaries and arrays */
 export type ItemAttribute =
   | string

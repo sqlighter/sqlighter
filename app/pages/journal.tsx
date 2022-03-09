@@ -3,125 +3,21 @@
 //
 
 import React, { useContext, useCallback, useState } from "react"
-import useFileUploader from "react-uploader-hook"
-import useSWR, { useSWRConfig } from "swr"
+import Box from "@mui/system/Box"
+import Typography from "@mui/material/Typography"
 
-import Button from "@mui/material/Button"
-import Fab from "@mui/material/Fab"
-import UploadIcon from "@mui/icons-material/UploadFileOutlined"
-
+import { generateId } from "../lib/items/items"
 import { AppLayout } from "../components/layouts"
 import { SigninPanel } from "../components/signin"
 import { Context } from "../components/context"
 import { Empty } from "../components/empty"
 import emptyImage from "../public/images/empty1.jpg"
-
 import { useApi } from "../lib/api"
-import { Box } from "@mui/system"
-
-//import { Record } from "../lib/items/records"
+import { UploadButton } from "../components/upload"
 
 interface JournalPageProps {
   /** List of available health records */
   records: any[]
-}
-
-interface UploadButtonProps {
-  itemType: string
-
-  /** Item we're uploading files to, eg. /api/records/rcd_xxxxxx */
-  itemId: string
-
-  /** Called when a file has been uploaded to storage */
-  onUploaded?: any
-}
-
-function UploadButton(props: UploadButtonProps) {
-  const itemType = props.itemType
-  const itemId = props.itemId
-
-  const { mutate } = useSWRConfig()
-
-  const getUploadParams = useCallback(async (file) => {
-    console.log(`getUploadParams`, file)
-    try {
-      const r = await fetch(`/api/${props.itemType}s/${props.itemId}/files/upload/sign`, {
-        method: "put",
-        headers: { Accept: "application/json", "Content-Type": "application/json" },
-        body: JSON.stringify({ filename: file.name, size: file.size, contentType: file.type }),
-      })
-      console.log(`getUploadParams - done`, r)
-
-      let { data, metadata } = await r.json()
-      console.log(`getUploadParams - data`, data, metadata)
-
-      // [💡] you can return custom request configurations here
-      //     const form = new FormData()
-      //   form.append("file", file)
-      return {
-        method: "put",
-        url: metadata.signedUrl,
-        headers: { "Content-Type": file.type },
-        //        data: form,
-        data: file,
-      }
-    } catch (exception) {
-      console.error(`getUploadParams - exception: ${exception}`, exception)
-    }
-  }, [])
-
-  const onUploaded = useCallback(async (fileBag) => {
-    console.debug(`UploadButton - uploaded, mutating ${itemId}`, fileBag)
-
-    // notify server that file upload on google storage has completed
-    const r = await fetch(`/api/${props.itemType}s/${props.itemId}/files/upload/complete`, {
-      method: "put",
-      headers: { Accept: "application/json", "Content-Type": "application/json" },
-      body: JSON.stringify({ filename: fileBag.file.name, size: fileBag.file.size, contentType: fileBag.file.type }),
-    })
-
-    mutate(`/api/${itemType}s/${itemId}`)
-    mutate(`/api/${itemType}s`)
-    if (props.onUploaded) {
-      props.onUploaded(fileBag)
-    }
-  }, [])
-
-  // [⭐]
-  const { onDrop, fileBags } = useFileUploader({ getUploadParams, onUploaded })
-
-  const handleChange = useCallback(
-    (event) => {
-      onDrop(event.target.files)
-    },
-    [onDrop]
-  )
-
-  function handleUpload(e) {
-    const file = e?.target?.files?.[0]
-    if (file) {
-      console.debug(`UploadButton.handleUpload - ${file.name} ${Math.round(file.size / 1024)} kB`, file)
-    }
-  }
-
-  return (
-    <>
-      <label htmlFor="contained-button-file">
-        <input
-          accept="application/pdf"
-          id="contained-button-file"
-          type="file"
-          style={{ display: "none" }}
-          onChange={handleChange}
-          multiple={true}
-        />
-        <Button variant="outlined" component="span">
-          Upload
-        </Button>
-      </label>
-      <pre>{JSON.stringify(fileBags, null, 2)}</pre>
-    </>
-  )
 }
 
 export default function JournalPage(props: JournalPageProps) {
@@ -130,22 +26,37 @@ export default function JournalPage(props: JournalPageProps) {
   // user records order by time desc
   const { data: records, isLoading: recordsLoading } = useApi("/api/records")
 
-  let itemId = "rcd_xxxxx" // Record.generateId()
+  let itemId = generateId("rcd_") // "rcd_xxxxx" // Record.generateId()
 
-  function handleUploaded(fileBag) {
-    console.log(`JournalPage.handleUploaded`, fileBag)
+  function handleUploaded(item, fileBag, allUploaded) {
+    console.log(`JournalPage.handleUploaded - ${item.id}`, item, fileBag)
+  }
+
+  function handleUploadProgress(progress, fileBags) {
+    // console.log(`JournalPage.handleUploadProgress - ${progress}%`, fileBags)
   }
 
   function getRecords() {
     return (
       <>
-        <p>Journal entries</p>
-        <UploadButton itemType="record" itemId={itemId} onUploaded={handleUploaded} />
+        <UploadButton itemType="record" itemId={itemId} onUploaded={handleUploaded} onProgress={handleUploadProgress} />
         {records &&
           records.map((record) => {
             return (
-              <Box key={record.id}>
-                {record.id} / {record.createdAt}
+              <Box key={record.id} mb={2}>
+                <Typography variant="body1">
+                  {record.id} / {record.createdAt}
+                </Typography>
+                {record.files &&
+                  record.files.map((file) => {
+                    return (
+                      <Box key={file.id} ml={4}>
+                        <Typography variant="subtitle1" color="text.secondary">
+                          {file.id}
+                        </Typography>
+                      </Box>
+                    )
+                  })}
               </Box>
             )
           })}
