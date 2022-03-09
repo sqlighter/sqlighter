@@ -31,3 +31,4 @@ Cons:
 
 In the end I liked vercel's service better because of its simplicity and design. I choose CloudRun because it's actually better and cheaper. Pay by time used, closer to storage files and MySQL. I also used CloudRun to deploy directus.io which is a headless CMS that is quite useful to build quick APIs based on MySQL data. It would be very simple to put the project back on vercel if needed.
 
+Still using vercel during development because of it's much quicker build time and container startup times.  

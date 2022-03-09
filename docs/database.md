@@ -1,6 +1,6 @@
-# Database schema
+## Database schema
 
-## Table
+### Table
 
 Database schema consists of a single 'items' table storing generic items with open ended attributes. Items have a unique id and are organized hierarchically. Items have open ended json attributes which can be used in json queries with MySQL. Indexes help keep items of different types separate when it comes to performance of queries. This is essentially MySQL being used for the most part as a NoSQL database. The advantage is the quick startup and simplicity of code. Heavier item types with lots of entries can easily be moved to custom tables later if need be.
 
@@ -19,9 +19,5 @@ CREATE TABLE `items` (
   CONSTRAINT `items_parentid_foreign` FOREIGN KEY (`parentId`) REFERENCES `items` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ```
-
-## Attributes
-
-`title` 
 
 

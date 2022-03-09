@@ -1,0 +1,23 @@
+[
+    {
+        "origin": [
+            "https://biomarkers.app",
+            "https://www.biomarkers.app",
+            "https://api.biomarkers.app",
+            "https://insieme.app",
+            "https://www.insieme.app",
+            "https://api.insieme.app",
+            "http://localhost:3000",
+            "http://192.168.8.101:3000"
+        ],
+        "responseHeader": [
+            "Content-Type"
+        ],
+        "method": [
+            "GET",
+            "PUT",
+            "POST"
+        ],
+        "maxAgeSeconds": 3600
+    }
+]
