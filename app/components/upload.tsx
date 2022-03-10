@@ -6,6 +6,7 @@ import React, { useCallback } from "react"
 import useFileUploader, { FileBag } from "react-uploader-hook"
 import { useSWRConfig } from "swr"
 import Button from "@mui/material/Button"
+import LoadingButton from "@mui/lab/LoadingButton"
 
 import { Item } from "../lib/items/items"
 
@@ -125,9 +126,9 @@ export function UploadButton(props: UploadButtonProps) {
           onChange={handleChange}
           multiple={true}
         />
-        <Button variant="outlined" component="span" disabled={progress < 100}>
-          {progress < 100 ? `Uploading… ${progress}%` : "Upload"}
-        </Button>
+        <LoadingButton variant="outlined" component="span" loading={progress < 100}>
+          Upload
+        </LoadingButton>
       </label>
       <pre>{JSON.stringify(fileBags, null, 2)}</pre>
     </>
