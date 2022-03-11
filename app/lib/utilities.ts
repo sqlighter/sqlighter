@@ -2,49 +2,11 @@
 // utilities.ts
 //
 
-// https://www.npmjs.com/package/axios
-import axios from "axios"
-import { assert } from "console"
 import fs from "fs/promises"
 
 export const HIGH_CONFIDENCE = 1.0
 export const MEDIUM_CONFIDENCE = 0.75
 export const LOW_CONFIDENCE = 0.5
-
-export class Api {
-  public static async getJson(relativeUrl: string): Promise<any> {
-    assert(relativeUrl.startsWith("/"))
-    const url = "https://api.biomarkers.app" + relativeUrl
-    const token = "topolino"
-    try {
-      const results = await axios.get(url, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-
-      return results.data
-    } catch (exception) {
-      console.error(`getApiJson - ${url}`, exception)
-      throw exception
-    }
-  }
-}
-
-export async function getApiJson(relativeUrl: string) {
-  assert(relativeUrl.startsWith("/"))
-  const url = "https://api.insieme.app" + relativeUrl
-  //	const url = 'http://localhost:8055' + relativeUrl;
-  const token = "topolino"
-  try {
-    const results = await axios.get(url, {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-
-    return results.data
-  } catch (exception) {
-    console.error(`getApiJson - ${url}`, exception)
-    throw exception
-  }
-}
 
 function _jsonReplacer(key: string, value: any) {
   if (key === "confidence" && typeof value === "number") {

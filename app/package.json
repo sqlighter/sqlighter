@@ -30,7 +30,6 @@
     "@mui/lab": "^5.0.0-alpha.71",
     "@mui/material": "^5.4.0",
     "assert-strict": "^0.0.2",
-    "axios": "^0.26.0",
     "cookie": "^0.4.2",
     "date-fns": "^2.28.0",
     "dayjs": "^1.10.8",
