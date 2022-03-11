@@ -151,26 +151,6 @@ export default function JournalPage(props: JournalPageProps) {
             })}
         </Timeline>
 
-        {records &&
-          records.map((record) => {
-            return (
-              <Box key={record.id} mb={2}>
-                <Typography variant="body1" noWrap={true}>
-                  {record.id} / {record.createdAt}
-                </Typography>
-                {record.files &&
-                  record.files.map((file) => {
-                    return (
-                      <Box key={file.id} ml={4}>
-                        <Typography variant="subtitle1" color="text.secondary" noWrap={true}>
-                          {file.id}
-                        </Typography>
-                      </Box>
-                    )
-                  })}
-              </Box>
-            )
-          })}
       </Box>
     )
   }
