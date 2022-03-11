@@ -6,6 +6,7 @@ import React, { useContext, useCallback, useState } from "react"
 import Box from "@mui/system/Box"
 import Typography from "@mui/material/Typography"
 
+import Tooltip from "@mui/material/Tooltip"
 import Timeline from "@mui/lab/Timeline"
 import TimelineItem from "@mui/lab/TimelineItem"
 import TimelineSeparator from "@mui/lab/TimelineSeparator"
@@ -31,43 +32,8 @@ import emptyImage from "../public/images/empty1.jpg"
 import { useApi } from "../lib/api"
 import { UploadButton } from "../components/upload"
 import { BiomarkerTag } from "../components/tags"
-
-function FileIcon({ contentType }) {
-  //  switch (contentType) {
-  //   case "application/pdf":
-  return <AttachmentIcon fontSize="medium" color="primary" />
-  // }
-  // return <InsertDriveFileOutlinedIcon color="secondary" />
-}
-
-function JournalEntryFiles({ item }) {
-  return (
-    <>
-      {item.files.map((file) => {
-        return (
-          <Box key={file.id}>
-            <IconButton color="primary" edge="start">
-              <FileIcon contentType={file.contentType} />
-            </IconButton>
-            <Typography variant="caption">{JSON.stringify(file)}</Typography>
-            {file.id}
-          </Box>
-        )
-      })}
-    </>
-  )
-}
-
-function JournalFile({ item }) {
-  return (
-    <Box display="flex">
-      <IconButton color="primary" edge="start">
-        <FileIcon contentType={item.contentType} />
-      </IconButton>
-      <Typography>{item.id} / {item.contentType}</Typography>
-    </Box>
-  )
-}
+import { FileIconButton } from "../components/files"
+import { prettyBytes, prettyContentType } from "../lib/shared"
 
 function JournalEntryContent({ item }) {
   const title = item.title || item.id
@@ -101,9 +67,9 @@ function JournalEntryContent({ item }) {
       )}
       {item.measurements && (
         <Box mt={2} display="flex" flexWrap="wrap">
-          {item.measurements.map((measurement) => {
+          {item.measurements.map((measurement, index) => {
             return (
-              <Box sx={{ marginRight: 1, marginBottom: 1 }}>
+              <Box key={`measurement${index}`} sx={{ marginRight: 1, marginBottom: 1 }}>
                 <BiomarkerTag
                   key={measurement.biomarker}
                   label={measurement.title || measurement.biomarker}
@@ -115,10 +81,20 @@ function JournalEntryContent({ item }) {
           })}
         </Box>
       )}
-      {item.files &&
-        item.files.map((file, index) => {
-          return <JournalFile key={`${item.id}-file${index}`} item={file} />
-        })}
+      {item.files && (
+        <Box mt={1}>
+          {item.files.map((file, index) => {
+            return (
+              <FileIconButton
+                key={`${item.id}-file${index}`}
+                item={file}
+                edge={index == 0 ? "start" : undefined}
+                sx={{ color: "primary.light" }}
+              />
+            )
+          })}
+        </Box>
+      )}
     </Box>
   )
 }
@@ -149,12 +125,11 @@ interface JournalPageProps {
 
 export default function JournalPage(props: JournalPageProps) {
   const context = useContext(Context)
-  const user = context.user
 
   // user records order by time desc
-  const { data: records, isLoading: recordsLoading } = useApi(user && "/api/records")
+  const { data: records, isLoading: recordsLoading } = useApi("/api/records")
 
-  let itemId = generateId("rcd_") // "rcd_xxxxx" // Record.generateId()
+  let itemId = generateId("rcd_")
 
   function handleUploaded(item, fileBag, allUploaded) {
     console.log(`JournalPage.handleUploaded - ${item.id}`, item, fileBag)
@@ -174,7 +149,6 @@ export default function JournalPage(props: JournalPageProps) {
             records.map((item) => {
               return <JournalEntry key={item.id} item={item} />
             })}
-          ì{" "}
         </Timeline>
 
         {records &&

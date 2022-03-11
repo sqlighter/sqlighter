@@ -24,10 +24,10 @@ export async function getServerSideProps({ req, params, locale }: GetServerSideP
   const recordId = params.recordId as string
   const record = await itemsTable.selectItem(recordId)
   const item = await getSerializableContent(record, true, true)
-  console.debug('%s - recordId: %s', req.url, recordId, item)
+  console.debug("%s - recordId: %s", req.url, recordId, item)
 
   return {
     // will be passed to the page component as props
-    props: { item }, 
+    props: { item },
   }
 }

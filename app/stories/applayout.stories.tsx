@@ -1,6 +1,6 @@
 import React from "react"
 import { ComponentStory, ComponentMeta } from "@storybook/react"
-import { withNextRouter } from 'storybook-addon-next-router';
+import { withNextRouter } from "storybook-addon-next-router"
 
 import Container from "@mui/material/Container"
 import Toolbar from "@mui/material/Toolbar"
@@ -49,14 +49,14 @@ const Template: ComponentStory<typeof AppLayout> = (args) => (
 Template.story = {
   parameters: {
     nextRouter: {
-      path: '/profile/[id]',
-      asPath: '/profile/lifeiscontent',
+      path: "/profile/[id]",
+      asPath: "/profile/lifeiscontent",
       query: {
-        id: 'lifeiscontent',
+        id: "lifeiscontent",
       },
     },
   },
-};
+}
 
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 export const Primary = Template.bind({})

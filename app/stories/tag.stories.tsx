@@ -17,7 +17,7 @@ export const Primary = Template.bind({})
 Primary.args = {
   label: "Glucose",
   onClick: null,
-  href: null
+  href: null,
 }
 
 export const WithHref = Template.bind({})
@@ -30,7 +30,7 @@ export const WithoutHref = Template.bind({})
 WithoutHref.args = {
   label: "Glucose",
   href: null,
-  onClick: null
+  onClick: null,
 }
 
 export const WithSuccessDot = Template.bind({})
