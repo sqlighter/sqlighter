@@ -12,7 +12,7 @@ import { Context } from "../components/context"
 import { customTheme, PRIMARY_LIGHTEST } from "../components/theme"
 
 interface StorybookDecoratorProps {
-  /** Used passed to "app" as logged in */
+  /** User passed to "app" as logged in */
   user?: any
 
   /** Story to be shown inside this decorator */

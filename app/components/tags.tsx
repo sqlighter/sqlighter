@@ -29,21 +29,21 @@ export function RiskBadge({ risk, children }: RiskBadgeProps) {
     return <>{children}</>
   }
 
-  let dot: any
+  let color: any
   switch (risk) {
     case "normal":
-      dot = "success"
+      color = "success"
       break
     case "medium":
-      dot = "warning"
+      color = "warning"
       break
     case "high":
-      dot = "error"
+      color = "error"
       break
   }
 
   return (
-    <Badge color={dot} variant="dot" overlap="circular" anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
+    <Badge color={color} variant="dot" overlap="circular" anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
       {children}
     </Badge>
   )

@@ -1,6 +1,7 @@
 import React from "react"
 import { ComponentStory, ComponentMeta } from "@storybook/react"
 import { Section } from "../components/section"
+import { StorybookDecorator } from "../components/storybook"
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -15,18 +16,21 @@ export default {
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: ComponentStory<typeof Section> = (args) => (
-  <Section {...args}>
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse sit amet enim quis tellus ultricies porttitor
-      ac eu ex. Fusce commodo ante vitae luctus euismod. Donec at est faucibus, bibendum nisi ornare, imperdiet nibh.
-      Suspendisse sagittis consectetur massa. Vivamus ultricies fermentum felis, auctor vulputate dui pellentesque et.
-    </p>
-    <p>
-      Consectetur adipiscing elit. Suspendisse sit amet enim quis tellus ultricies porttitor ac eu ex. Fusce commodo
-      ante vitae luctus euismod. Donec at est faucibus, bibendum nisi ornare, imperdiet nibh. Suspendisse sagittis
-      consectetur massa. Vivamus ultricies fermentum felis, auctor vulputate dui pellentesque et.
-    </p>
-  </Section>
+  <StorybookDecorator>
+    <Section {...args}>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse sit amet enim quis tellus ultricies
+        porttitor ac eu ex. Fusce commodo ante vitae luctus euismod. Donec at est faucibus, bibendum nisi ornare,
+        imperdiet nibh. Suspendisse sagittis consectetur massa. Vivamus ultricies fermentum felis, auctor vulputate dui
+        pellentesque et.
+      </p>
+      <p>
+        Consectetur adipiscing elit. Suspendisse sit amet enim quis tellus ultricies porttitor ac eu ex. Fusce commodo
+        ante vitae luctus euismod. Donec at est faucibus, bibendum nisi ornare, imperdiet nibh. Suspendisse sagittis
+        consectetur massa. Vivamus ultricies fermentum felis, auctor vulputate dui pellentesque et.
+      </p>
+    </Section>
+  </StorybookDecorator>
 )
 
 // More on args: https://storybook.js.org/docs/react/writing-stories/args

@@ -15,6 +15,7 @@ import TimelineDot from "@mui/lab/TimelineDot"
 import { TimelineOppositeContent } from "@mui/lab"
 import Chip from "@mui/material/Chip"
 import Badge from "@mui/material/Badge"
+import Button from "@mui/material/Button"
 import IconButton from "@mui/material/IconButton"
 import AttachmentIcon from "@mui/icons-material/FilePresentOutlined"
 import InsertDriveFileOutlinedIcon from "@mui/icons-material/InsertDriveFileOutlined"
@@ -32,11 +33,11 @@ import { UploadButton } from "../components/upload"
 import { BiomarkerTag } from "../components/tags"
 
 function FileIcon({ contentType }) {
-  switch (contentType) {
-    case "application/pdf":
-      return <AttachmentIcon fontSize="large" />
-  }
-  return <InsertDriveFileOutlinedIcon sx={{ fontSize: 64 }} color="secondary" />
+  //  switch (contentType) {
+  //   case "application/pdf":
+  return <AttachmentIcon fontSize="medium" color="primary" />
+  // }
+  // return <InsertDriveFileOutlinedIcon color="secondary" />
 }
 
 function JournalEntryFiles({ item }) {
@@ -45,7 +46,9 @@ function JournalEntryFiles({ item }) {
       {item.files.map((file) => {
         return (
           <Box key={file.id}>
-            <FileIcon contentType={file.contentType} />
+            <IconButton color="primary" edge="start">
+              <FileIcon contentType={file.contentType} />
+            </IconButton>
             <Typography variant="caption">{JSON.stringify(file)}</Typography>
             {file.id}
           </Box>
@@ -55,44 +58,67 @@ function JournalEntryFiles({ item }) {
   )
 }
 
+function JournalFile({ item }) {
+  return (
+    <Box display="flex">
+      <IconButton color="primary" edge="start">
+        <FileIcon contentType={item.contentType} />
+      </IconButton>
+      <Typography>{item.id} / {item.contentType}</Typography>
+    </Box>
+  )
+}
+
 function JournalEntryContent({ item }) {
+  const title = item.title || item.id
+  const subtitle = item.description || "subtitle of this section"
+
   return (
     <Box mb={4}>
-      <Typography variant="body1">{item.title || item.id}</Typography>
-      <Typography variant="subtitle2" color="text.secondary">
-        {item.createdAt}
-      </Typography>
-      {item.description && (
-        <Typography variant="body1" color="text.primary">
-          {item.description}
+      <Box>
+        <Typography variant="h3" color="text.primary">
+          {title}
         </Typography>
+        <Typography variant="subtitle2" color="text.secondary">
+          {subtitle}
+        </Typography>
+      </Box>
+      {item.content && (
+        <Box mt={1}>
+          <Typography
+            variant="body1"
+            color="text.primary"
+            sx={{
+              display: "-webkit-box",
+              overflow: "hidden",
+              WebkitBoxOrient: "vertical",
+              WebkitLineClamp: 3,
+            }}
+          >
+            {item.content}
+          </Typography>
+        </Box>
       )}
-
       {item.measurements && (
-        <>
-          <Typography variant="overline">Biomarkers</Typography>
-          <Box display="flex" flexWrap="wrap">
-            {item.measurements.map((measurement) => {
-              return (
-                <Box sx={{ marginRight: 1, marginBottom: 1 }}>
-                  <BiomarkerTag
-                    key={measurement.biomarker}
-                    label={measurement.title || measurement.biomarker}
-                    risk={measurement.risk}
-                    href={`/${item.type}s/${item.id}#${measurement.biomarker}`}
-                  />
-                </Box>
-              )
-            })}
-          </Box>
-        </>
+        <Box mt={2} display="flex" flexWrap="wrap">
+          {item.measurements.map((measurement) => {
+            return (
+              <Box sx={{ marginRight: 1, marginBottom: 1 }}>
+                <BiomarkerTag
+                  key={measurement.biomarker}
+                  label={measurement.title || measurement.biomarker}
+                  risk={measurement.risk}
+                  href={`/${item.type}s/${item.id}#${measurement.biomarker}`}
+                />
+              </Box>
+            )
+          })}
+        </Box>
       )}
-      {item.files && (
-        <>
-          <Typography variant="overline">Documents</Typography>
-          <JournalEntryFiles item={item} />
-        </>
-      )}
+      {item.files &&
+        item.files.map((file, index) => {
+          return <JournalFile key={`${item.id}-file${index}`} item={file} />
+        })}
     </Box>
   )
 }
@@ -103,13 +129,13 @@ function JournalEntry({ item }) {
       <TimelineOppositeContent
         style={{ maxWidth: "1px", paddingLeft: "0px", paddingRight: "0px" }}
       ></TimelineOppositeContent>
-      <TimelineSeparator color="secondary">
-        <TimelineDot color="secondary">
+      <TimelineSeparator color="primary">
+        <TimelineDot variant="outlined" sx={{ color: "primary.light", borderColor: "primary.light" }}>
           <InsertDriveFileOutlinedIcon fontSize="small" />
         </TimelineDot>
-        <TimelineConnector />
+        <TimelineConnector sx={{ bgcolor: "primary.light" }} />
       </TimelineSeparator>
-      <TimelineContent sx={{ width: 600 }}>
+      <TimelineContent sx={{ width: "100%" }}>
         <JournalEntryContent item={item} />
       </TimelineContent>
     </TimelineItem>

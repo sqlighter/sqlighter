@@ -6921,6 +6921,7 @@ __metadata:
     set-clustering: ^1.1.0
     sharp: ^0.30.1
     showdown: ^2.0.2
+    storybook-addon-next-router: ^3.1.1
     superagent: ^7.1.1
     supertest: ^6.2.2
     swr: ^1.2.1
@@ -17183,6 +17184,22 @@ __metadata:
   version: 2.13.1
   resolution: "store2@npm:2.13.1"
   checksum: c5fa1ac7dbf8431d87ad4563d9838311bb421cc6e13696b668c772192942be2e07ef20d36104f7496acab6dc4d569a9b50d6c2299ceaddbcb86628f585323ff4
+  languageName: node
+  linkType: hard
+
+"storybook-addon-next-router@npm:^3.1.1":
+  version: 3.1.1
+  resolution: "storybook-addon-next-router@npm:3.1.1"
+  dependencies:
+    tslib: ^2.3.0
+  peerDependencies:
+    "@storybook/addon-actions": ^6.0.0
+    "@storybook/addons": ^6.0.0
+    "@storybook/client-api": ^6.0.0
+    next: ^9.0.0 || ^10.0.0 || ^11.0.0 || ^12.0.0
+    react: ^16.8.0 || ^17.0.0
+    react-dom: ^16.8.0 || ^17.0.0
+  checksum: be8f1cdede08b8d32d4f4e55aba3d847a3dc11aaf30c32a4f2968b6c80b5f1eec47f064cdaa6eefde63762250b2d542c38c45576fed209fe4d279a5c4df0f431
   languageName: node
   linkType: hard
 
