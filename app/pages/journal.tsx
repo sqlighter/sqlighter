@@ -12,6 +12,14 @@ import TimelineSeparator from "@mui/lab/TimelineSeparator"
 import TimelineConnector from "@mui/lab/TimelineConnector"
 import TimelineContent from "@mui/lab/TimelineContent"
 import TimelineDot from "@mui/lab/TimelineDot"
+import { TimelineOppositeContent } from "@mui/lab"
+import Chip from "@mui/material/Chip"
+import Badge from "@mui/material/Badge"
+import IconButton from "@mui/material/IconButton"
+import AttachmentIcon from "@mui/icons-material/FilePresentOutlined"
+import InsertDriveFileOutlinedIcon from "@mui/icons-material/InsertDriveFileOutlined"
+import VideoFileOutlinedIcon from "@mui/icons-material/VideoFileOutlined"
+import AudioFileOutlinedIcon from "@mui/icons-material/AudioFileOutlined"
 
 import { generateId } from "../lib/items/items"
 import { AppLayout } from "../components/layouts"
@@ -21,15 +29,7 @@ import { Empty } from "../components/empty"
 import emptyImage from "../public/images/empty1.jpg"
 import { useApi } from "../lib/api"
 import { UploadButton } from "../components/upload"
-import { TimelineOppositeContent } from "@mui/lab"
-import Chip from "@mui/material/Chip"
-import Badge from "@mui/material/Badge"
-import IconButton from "@mui/material/IconButton"
-
-import AttachmentIcon from "@mui/icons-material/FilePresentOutlined"
-import InsertDriveFileOutlinedIcon from "@mui/icons-material/InsertDriveFileOutlined"
-import VideoFileOutlinedIcon from "@mui/icons-material/VideoFileOutlined"
-import AudioFileOutlinedIcon from "@mui/icons-material/AudioFileOutlined"
+import { BiomarkerTag } from "../components/tags"
 
 function FileIcon({ contentType }) {
   switch (contentType) {
@@ -56,10 +56,6 @@ function JournalEntryFiles({ item }) {
 }
 
 function JournalEntryContent({ item }) {
-  function handleBiomarkerClick(measurement) {
-    console.debug(`JournalEntryContent.handleBiomarkerClick - ${measurement.biomarker}`, measurement)
-  }
-
   return (
     <Box mb={4}>
       <Typography variant="body1">{item.title || item.id}</Typography>
@@ -75,26 +71,16 @@ function JournalEntryContent({ item }) {
       {item.measurements && (
         <>
           <Typography variant="overline">Biomarkers</Typography>
-          <Box display="flex" width="100%" flexWrap="wrap">
+          <Box display="flex" flexWrap="wrap">
             {item.measurements.map((measurement) => {
-              const biomarkerUrl = `/${item.type}s/${item.id}#${measurement.biomarker}`
               return (
-                <Box mr={1} mb={1}>
-                  <Badge
-                    color="secondary"
-                    variant="dot"
-                    overlap="circular"
-                    anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-                  >
-                    <Chip
-                      key={measurement.biomarker}
-                      variant="outlined"
-                      component="a"
-                      href={biomarkerUrl}
-                      onClick={(e) => handleBiomarkerClick(measurement)}
-                      label={measurement.biomarker}
-                    />{" "}
-                  </Badge>
+                <Box sx={{ marginRight: 1, marginBottom: 1 }}>
+                  <BiomarkerTag
+                    key={measurement.biomarker}
+                    label={measurement.title || measurement.biomarker}
+                    risk={measurement.risk}
+                    href={`/${item.type}s/${item.id}#${measurement.biomarker}`}
+                  />
                 </Box>
               )
             })}
@@ -137,9 +123,10 @@ interface JournalPageProps {
 
 export default function JournalPage(props: JournalPageProps) {
   const context = useContext(Context)
+  const user = context.user
 
   // user records order by time desc
-  const { data: records, isLoading: recordsLoading } = useApi("/api/records")
+  const { data: records, isLoading: recordsLoading } = useApi(user && "/api/records")
 
   let itemId = generateId("rcd_") // "rcd_xxxxx" // Record.generateId()
 
@@ -227,6 +214,7 @@ export default function JournalPage(props: JournalPageProps) {
 }
 
 /*
+// https://nextjs.org/docs/api-reference/data-fetching/get-server-side-props
 export async function getServerSideProps(context) {
   return {
     props: {}, // will be passed to the page component as props
