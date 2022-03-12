@@ -21,10 +21,10 @@ declare module "next" {
 const auth = nextConnect()
   .use(
     session({
-      name: "sess",
+      name: "biomarkers",
       secret: process.env.TOKEN_SECRET,
       cookie: {
-        maxAge: 60 * 60 * 8, // 8 hours,
+        maxAge: 3 * 24 * 60 * 60, // 3 days,
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         path: "/",
