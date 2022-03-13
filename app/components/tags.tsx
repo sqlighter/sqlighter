@@ -3,8 +3,10 @@
 //
 
 import React from "react"
+import Link from "next/link"
 import { Theme } from "@mui/material/styles"
 import { SxProps } from "@mui/material"
+import Box from "@mui/material/Box"
 import Badge from "@mui/material/Badge"
 import Chip from "@mui/material/Chip"
 
@@ -23,25 +25,24 @@ interface RiskBadgeProps {
   children: React.ReactNode
 }
 
-/** Shows a dot badge colored according to risk on an item */
-export function RiskBadge({ risk, children }: RiskBadgeProps) {
-  if (!risk) {
-    return <>{children}</>
-  }
-
-  let color: any
+export function getRiskColor(risk: Risk): "success" | "warning" | "error" | null {
   switch (risk) {
     case "normal":
-      color = "success"
-      break
+      return "success"
     case "medium":
-      color = "warning"
-      break
+      return "warning"
     case "high":
-      color = "error"
-      break
+      return "error"
   }
+  return null
+}
 
+/** Shows a dot badge colored according to risk on an item */
+export function RiskBadge({ risk, children }: RiskBadgeProps) {
+  const color = getRiskColor(risk)
+  if (!color) {
+    return <>{children}</>
+  }
   return (
     <Badge color={color} variant="dot" overlap="circular" anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
       {children}
@@ -63,6 +64,9 @@ interface TagProps {
   /** Dot badge is shown in this color (optional) */
   dot?: "default" | "primary" | "secondary" | "error" | "info" | "success" | "warning"
 
+  /** Dot badge colored according to risk (optional) */
+  risk?: Risk
+
   /** Chip size (default is medium) */
   size?: "medium" | "small"
 
@@ -74,27 +78,20 @@ interface TagProps {
 }
 
 /** A clickable tag possibly showing a colored dot badge on it */
-export function Tag({ label, href, dot, onClick, size, sx }: TagProps) {
-  // console.debug(`Tag - label: ${label}, dot: ${dot}, href: ${href}`)
-  let tag
+export function Tag({ label, dot, risk, href, onClick, size, sx }: TagProps) {
+  let tag = <Chip variant="outlined" onClick={onClick} label={label} size={size} sx={sx} />
 
-  // having an onClick handler gives the chip its hover and click effects
-  const handler = href || onClick ? handleClick : null
+  // wrap in clickable link?
   if (href) {
-    tag = <Chip variant="outlined" onClick={handler} label={label} size={size} sx={sx} component="a" href={href} />
-  } else {
-    tag = <Chip variant="outlined" onClick={handler} label={label} size={size} sx={sx} />
+    tag = <Link href={href}>{tag}</Link>
   }
 
-  function handleClick(e) {
-    console.debug(`Tag - label: ${label}, clicked`)
-    if (onClick) {
-      onClick(e)
+  // wrap in dot badge?
+  if (dot || risk) {
+    if (risk) {
+      dot = getRiskColor(risk)
     }
-  }
-
-  if (dot) {
-    return (
+    tag = (
       <Badge color={dot} variant="dot" overlap="circular" anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
         {tag}
       </Badge>
@@ -102,6 +99,19 @@ export function Tag({ label, href, dot, onClick, size, sx }: TagProps) {
   }
 
   return tag
+}
+
+/** A list of clickable tags */
+export function TagsCloud({ items }) {
+  return (
+    <Box display="flex" flexWrap="wrap">
+      {items.map((item, index) => (
+        <Box key={`measurement${index}`} sx={{ marginRight: 1, marginBottom: 1 }}>
+          <Tag key={index} {...item} />
+        </Box>
+      ))}
+    </Box>
+  )
 }
 
 //

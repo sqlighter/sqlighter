@@ -21,7 +21,7 @@ export function Section({ title, subtitle, large, children }: SectionProps) {
         </Typography>
       )}
       {subtitle && (
-        <Typography variant="body1" sx={{ color: "text.secondary" }}>
+        <Typography variant="body1" color="text.secondary">
           {subtitle}
         </Typography>
       )}

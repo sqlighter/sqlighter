@@ -10,6 +10,8 @@ import { parse, serialize } from "cookie"
 async function createLoginSession(session, secret) {
   const createdAt = Date.now()
   const obj = { ...session, createdAt }
+  // console.debug(`createLoginSession`, session)
+
   const token = await Iron.seal(obj, secret, Iron.defaults)
   return token
 }
@@ -17,9 +19,11 @@ async function createLoginSession(session, secret) {
 async function getLoginSession(token, secret) {
   const session = await Iron.unseal(token, secret, Iron.defaults)
   const expiresAt = session.createdAt + session.maxAge * 1000
+  const expired = session.maxAge && Date.now() > expiresAt
+  // console.debug(`createLoginSession - expired: ${expired}`, session)
 
   // Validate the expiration date of the session
-  if (session.maxAge && Date.now() > expiresAt) {
+  if (expired) {
     throw new Error("Session expired")
   }
   return session

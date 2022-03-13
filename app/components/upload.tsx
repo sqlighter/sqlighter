@@ -115,6 +115,9 @@ export function UploadButton(props: UploadButtonProps) {
     [onDrop]
   )
 
+  // to show fileBags data structure add:
+  // <pre>{JSON.stringify(fileBags, null, 2)}</pre>
+
   return (
     <>
       <label htmlFor="contained-button-file">
@@ -130,7 +133,6 @@ export function UploadButton(props: UploadButtonProps) {
           Upload
         </LoadingButton>
       </label>
-      <pre>{JSON.stringify(fileBags, null, 2)}</pre>
     </>
   )
 }

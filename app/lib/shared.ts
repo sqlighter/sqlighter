@@ -4,6 +4,13 @@
 
 import { stringify } from "querystring"
 
+import dayjs from "dayjs"
+import localizedFormat from "dayjs/plugin/localizedFormat"
+dayjs.extend(localizedFormat)
+
+//
+//const description = dayjs(item.createdAt).format()
+
 export const DEFAULT_LOCALE = "en-US"
 
 /** Will Capitalize given string */
@@ -17,6 +24,15 @@ export function capitalize(str: string): string {
 //
 // Localization and content related utilities
 //
+
+export function prettyDate(date?: string | dayjs.Dayjs): string {
+  if (typeof date == "string") {
+    date = dayjs(date)
+  }
+  var localizedFormat = require("dayjs/plugin/localizedFormat")
+  dayjs.extend(localizedFormat)
+  return dayjs(date).format("LL")
+}
 
 /**
  * Returns a content type strings that can be shown to users

@@ -1,5 +1,5 @@
 //
-// journal.tsx - show biomarker measurements, events, personal data, etc.
+// files.tsx - show biomarker measurements, events, personal data, etc.
 //
 
 import React, { useContext, useCallback, useState } from "react"
@@ -51,10 +51,10 @@ export function FileIconButton({ item, edge, sx }: FileIconButtonProps) {
     console.log(`FileIconButton - ${item.id}, clicked`)
     // TODO href should be provided to page to be opened, etc
   }
-
+  // onClick={handleClick}
   return (
     <Tooltip title={tooltip}>
-      <IconButton color="primary" edge={edge} onClick={handleClick} sx={sx}>
+      <IconButton color="primary" edge={edge} href="/pippone" sx={sx}>
         <FileIcon contentType={item.contentType} />
       </IconButton>
     </Tooltip>
