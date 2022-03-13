@@ -77,12 +77,7 @@ export default function JournalPage(props: JournalPageProps) {
     return (
       <Box width="100%" overflow="hidden">
         <Timeline position="right" sx={{ paddingLeft: 0, paddingRight: 0 }}>
-          <JournalEntry title="Save your Results" description={prettyDate()} icon={<FileUploadIcon />}>
-            <Box mb={2}>
-              Upload your lab results (PDF files) and we'll process then in the next 24-48 hours. You will receive a
-              notification when they are ready. You can also enter your biomarker's values manually and they will be
-              stored here.
-            </Box>
+          <JournalEntry title="Upload your results" description={"We'll process them in the next 24 hours"} icon={<FileUploadIcon />}>
             <UploadButton
               itemType="record"
               itemId={itemId}
