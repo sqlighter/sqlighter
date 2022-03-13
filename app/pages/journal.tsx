@@ -6,7 +6,9 @@ import React, { useContext } from "react"
 
 import Box from "@mui/system/Box"
 import Timeline from "@mui/lab/Timeline"
+import FileIcon from '@mui/icons-material/InsertDriveFileOutlined';
 import FileUploadIcon from "@mui/icons-material/FileUploadOutlined"
+import ScienceIcon from '@mui/icons-material/ScienceOutlined';
 
 import { useApi } from "../lib/api"
 import { prettyDate } from "../lib/shared"
@@ -25,6 +27,7 @@ function JournalContentEntry({ item }) {
   const title = item.title || "Documents"
   const description = prettyDate(item.createdAt)
   const href = `/${item.type}s/${item.id}`
+  let icon = <FileIcon />
 
   let measurements = null
   if (item.measurements) {
@@ -32,6 +35,7 @@ function JournalContentEntry({ item }) {
       return { label: m.title || m.biomarker, risk: m.risk, href: `/${item.type}s/${item.id}#${m.biomarker}` }
     })
     measurements = <TagsCloud items={tags} />
+    icon = <ScienceIcon />
   }
 
   const content = (
@@ -47,7 +51,7 @@ function JournalContentEntry({ item }) {
   )
 
   return (
-    <JournalEntry title={title} description={description} href={href}>
+    <JournalEntry icon={icon} title={title} description={description} href={href}>
       {content}
     </JournalEntry>
   )
@@ -76,8 +80,12 @@ export default function JournalPage(props: JournalPageProps) {
   function getRecords() {
     return (
       <Box width="100%" overflow="hidden">
-        <Timeline position="right" sx={{ paddingLeft: 0, paddingRight: 0 }}>
-          <JournalEntry title="Upload your results" description={"We'll process them in the next 24 hours"} icon={<FileUploadIcon />}>
+        <Timeline position="right" sx={{ padding: 0, margin: 0 }}>
+          <JournalEntry
+            title="Upload your results"
+            description="We'll process them in the next 24 hours"
+            icon={<FileUploadIcon />}
+          >
             <UploadButton
               itemType="record"
               itemId={itemId}

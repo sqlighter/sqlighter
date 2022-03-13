@@ -17,8 +17,9 @@ import AttachmentIcon from "@mui/icons-material/FilePresentOutlined"
 import InsertDriveFileOutlinedIcon from "@mui/icons-material/InsertDriveFileOutlined"
 import VideoFileOutlinedIcon from "@mui/icons-material/VideoFileOutlined"
 import AudioFileOutlinedIcon from "@mui/icons-material/AudioFileOutlined"
-import FileIcon from "@mui/icons-material/InsertDriveFileOutlined"
 import FileDownloadIcon from "@mui/icons-material/FileDownloadOutlined"
+import ScienceIcon from '@mui/icons-material/ScienceOutlined';
+import FileIcon from '@mui/icons-material/InsertDriveFileOutlined';
 
 import Timeline from "@mui/lab/Timeline"
 import TimelineItem from "@mui/lab/TimelineItem"
@@ -27,8 +28,6 @@ import TimelineConnector from "@mui/lab/TimelineConnector"
 import TimelineContent from "@mui/lab/TimelineContent"
 import TimelineDot from "@mui/lab/TimelineDot"
 import TimelineOppositeContent from "@mui/lab/TimelineOppositeContent"
-
-import { FileIconButton } from "./files"
 
 interface JournalEntryProps {
   /** Icon is optional, default is document icon */
@@ -56,7 +55,7 @@ interface JournalEntryProps {
 /** A Timeline entry in a page with journaling events */
 export function JournalEntry({ icon, title, description, actions, href, children }: JournalEntryProps) {
   let entry = (
-    <TimelineItem sx={{ minHeight: 120 }}>
+    <TimelineItem>
       <TimelineOppositeContent style={{ maxWidth: 0, paddingLeft: 0, paddingRight: 0 }} />
       <TimelineSeparator color="primary">
         <TimelineDot variant="outlined" sx={{ color: "primary.light", borderColor: "primary.light" }}>
@@ -64,10 +63,10 @@ export function JournalEntry({ icon, title, description, actions, href, children
         </TimelineDot>
         <TimelineConnector sx={{ bgcolor: "primary.light" }} />
       </TimelineSeparator>
-      <TimelineContent sx={{ marginRight: 0, paddingRight: 0 }}>
-        <Box mb={4}>
+      <TimelineContent sx={{ width: 240, marginRight: 0, paddingRight: 0 }}>
+        <Box mb={6}>
           <Box display="flex">
-            <Box flexGrow={1}>
+            <Box width="100%" flexGrow={1}>
               {title && (
                 <Typography variant="h3" color="text.primary" noWrap={true}>
                   {title}
@@ -82,7 +81,7 @@ export function JournalEntry({ icon, title, description, actions, href, children
             {actions && <Box sx={{ marginTop: -0.5 }}>{actions}</Box>}
           </Box>
           {children && (
-            <Box mt={1}>
+            <Box mt={2} width="100%">
               <Typography variant="body1" color="text.primary">
                 {children}
               </Typography>
