@@ -56,14 +56,15 @@ interface JournalEntryProps {
 
 /** A Timeline entry in a page with journaling events */
 export function JournalEntry({ icon, title, description, actions, href, children }: JournalEntryProps) {
+  const timelineColor = "text.secondary"
   let entry = (
     <TimelineItem>
       <TimelineOppositeContent style={{ maxWidth: 0, paddingLeft: 0, paddingRight: 0 }} />
       <TimelineSeparator color="primary">
-        <TimelineDot variant="outlined" sx={{ color: "primary.main", borderColor: "primary.main" }}>
+        <TimelineDot variant="outlined" sx={{ color: timelineColor, borderColor: timelineColor }}>
           {icon ? icon : <FileIcon />}
         </TimelineDot>
-        <TimelineConnector sx={{ bgcolor: "primary.main" }} />
+        <TimelineConnector sx={{ bgcolor: timelineColor }} />
       </TimelineSeparator>
       <TimelineContent sx={{ width: 240, marginRight: 0, paddingRight: 0 }}>
         <Box mb={6}>
@@ -77,7 +78,7 @@ export function JournalEntry({ icon, title, description, actions, href, children
                     </Link>
                   </NextLink>
                 ) : (
-                  <Typography variant="h3" color="primary" noWrap={true}>
+                  <Typography variant="h3" color="text.primary" noWrap={true}>
                     {title}
                   </Typography>
                 ))}
