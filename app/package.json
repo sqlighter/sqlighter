@@ -81,7 +81,7 @@
     "@types/passport": "^1.0.7",
     "@types/react": "^17.0.40",
     "@types/showdown": "^1.9.4",
-    "@types/supertest": "^2.0.11",
+    "@types/supertest": "^2.0.12",
     "babel-jest": "^27.4.6",
     "babel-loader": "^8.2.3",
     "eslint": "^8.10.0",
