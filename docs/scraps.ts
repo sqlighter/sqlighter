@@ -46,15 +46,15 @@ import multiparty from "multiparty"
         record.status = "draft"
         record.files = [
           {
-            id: objRes.id, // biomarkers-app/records/rcd_u2tir...
-            url: objRes.selfLink, // https://www.googleapis.com/storage/v1/b/biomarkers-app/...
+            id: objRes.id, // sqlighter/records/rcd_u2tir...
+            url: objRes.selfLink, // https://www.googleapis.com/storage/v1/b/sqlighter/...
             contentType: objRes.contentType, // application/pdf
             etag: objRes.etag, // CM//k+68tvYCEAE=
             size: objRes.size,
             //
             storage: {
               type: "google",
-              bucket: objRes.bucket, // biomarkers-app
+              bucket: objRes.bucket, // sqlighter
               name: objRes.name, // records/rcd_u2tirteich9zijoakjhq/Document.pdf
             },
           },

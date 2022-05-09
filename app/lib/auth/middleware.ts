@@ -21,7 +21,7 @@ declare module "next" {
 const auth = nextConnect()
   .use(
     session({
-      name: "biomarkers",
+      name: "SQLighter",
       secret: process.env.TOKEN_SECRET,
       cookie: {
         maxAge: 3 * 24 * 60 * 60, // 3 days,

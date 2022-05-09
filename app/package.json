@@ -1,13 +1,12 @@
 {
-  "name": "biomarkers-app",
+  "name": "sqlighter",
   "author": "Gionata Mettifogo <gmettifogo@gmail.com>",
   "version": "2.0.0",
   "packageManager": "yarn@3.2.0",
   "keywords": [
-    "biomarkers",
-    "health",
-    "laboratory",
-    "fitness"
+    "SQLite",
+    "SQLighter",
+    "SQL"
   ],
   "private": true,
   "scripts": {
@@ -117,7 +116,7 @@
       [
         "./node_modules/jest-html-reporter",
         {
-          "pageTitle": "Biomarkers Test Report"
+          "pageTitle": "SQLighter Test Report"
         }
       ]
     ]

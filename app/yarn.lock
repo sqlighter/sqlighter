@@ -6761,9 +6761,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"biomarkers-app@workspace:.":
+"sqlighter@workspace:.":
   version: 0.0.0-use.local
-  resolution: "biomarkers-app@workspace:."
+  resolution: "sqlighter@workspace:."
   dependencies:
     "@babel/core": ^7.16.12
     "@babel/preset-env": ^7.16.11

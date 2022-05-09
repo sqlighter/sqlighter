@@ -102,14 +102,14 @@ handler
     const [apiRes, objRes]: [any, any] = await storageBucket.file(storagePath).get()
     const itemFile = {
       id: filename,
-      url: objRes.selfLink, // https://www.googleapis.com/storage/v1/b/biomarkers-app/...
+      url: objRes.selfLink, // https://www.googleapis.com/storage/v1/b/sqlighter/...
       contentType: objRes.contentType, // application/pdf
       etag: objRes.etag, // CM//k+68tvYCEAE=
       size: objRes.size,
       updatedAt: objRes.updated,
       storage: {
         type: "google",
-        bucket: objRes.bucket, // biomarkers-app
+        bucket: objRes.bucket, // sqlighter
         name: objRes.name, // records/rcd_u2tirteich9zijoakjhq/Document.pdf
       },
     }

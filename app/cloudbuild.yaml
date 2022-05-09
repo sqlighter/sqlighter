@@ -41,9 +41,9 @@ substitutions:
   _DEPLOY_REGION: europe-west1
   _GCR_HOSTNAME: eu.gcr.io
   _PLATFORM: managed
-  _SERVICE_NAME: biomarkers-app
+  _SERVICE_NAME: sqlighter
 tags:
   - gcp-cloud-build-deploy-cloud-run
   - gcp-cloud-build-deploy-cloud-run-managed
-  - biomarkers-app
+  - sqlighter
 timeout: 20m

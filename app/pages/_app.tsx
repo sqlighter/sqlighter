@@ -20,7 +20,7 @@ import { customTheme, PRIMARY_LIGHTEST } from "../components/theme"
 
 // Google client id used for signin client is bound below at build time
 // https://nextjs.org/docs/basic-features/environment-variables#exposing-environment-variables-to-the-browser
-// const GOOGLE_ID = "1018461202790-sprml3gmhr6ogmgdtlkfcifr7462v7eq.apps.googleusercontent.com" // temp workaround for google cloud build issues
+// const GOOGLE_ID = "xxxx.apps.googleusercontent.com" // workaround for google cloud build issues
 const GOOGLE_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID
 
 interface AppProps {

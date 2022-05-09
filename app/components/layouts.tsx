@@ -26,7 +26,7 @@ import { Menu } from "./menu"
 import { Footer } from "./footer"
 import { SearchResults } from "./search"
 
-export const TITLE = "Biomakers"
+export const TITLE = "SQLighter"
 export const HEADER_SMALL_HEIGHT = 64
 export const HEADER_LARGE_HEIGHT = 128
 export const DRAWER_WIDTH = 280
@@ -216,7 +216,7 @@ export function SiteLayout({ children, title }: LayoutProps) {
       <Head>
         <title>{pageTitle}</title>
         <link rel="icon" href="/favicon.ico" />
-        <meta name="description" content="Biomarkers.app" />
+        <meta name="description" content="SQLighter" />
       </Head>
       <Container maxWidth="sm">{children}</Container>
     </>

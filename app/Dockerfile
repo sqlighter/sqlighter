@@ -35,7 +35,7 @@ RUN yarn next build
 CMD ["yarn", "next", "start"]
 
 # Commands to build docker image, run it locally then deploy to Google Cloud Run
-# docker build -t "eu.gcr.io/biomarkers-app/biomarkers-app:staging" --build-arg NEXT_PUBLIC_GOOGLE_CLIENT_ID=${NEXT_PUBLIC_GOOGLE_CLIENT_ID} .
-# docker run -it --env-file=.env -p 127.0.0.1:80:3000 eu.gcr.io/biomarkers-app/biomarkers-app:staging
-# docker push eu.gcr.io/biomarkers-app/biomarkers-app:staging
-# gcloud run deploy biomarkers-app --quiet --region europe-west1 --image "eu.gcr.io/biomarkers-app/biomarkers-app:staging" --platform "managed" --allow-unauthenticated
+# docker build -t "gcr.io/sqlighter/sqlighter:staging" --build-arg NEXT_PUBLIC_GOOGLE_CLIENT_ID=${NEXT_PUBLIC_GOOGLE_CLIENT_ID} .
+# docker run -it --env-file=.env -p 127.0.0.1:80:3000 eu.gcr.io/sqlighter/sqlighter:staging
+# docker push gcr.io/sqlighter/sqlighter:staging
+# gcloud run deploy sqlighter --quiet --region europe-west1 --image "gcr.io/sqlighter/sqlighter:staging" --platform "managed" --allow-unauthenticated

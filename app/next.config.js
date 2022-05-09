@@ -4,7 +4,7 @@
 const nextConfig = {
   // https://nextjs.org/docs/advanced-features/i18n-routing
   i18n: {
-    locales: ["en-US", "it-IT", "fr-FR"],
+    locales: ["en-US"],
     defaultLocale: "en-US",
     /*   
     locales: ["en-US", "it-IT"],
