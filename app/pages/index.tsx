@@ -7,16 +7,16 @@ import Stack from "@mui/material/Stack"
 
 import { SiteLayout } from "../components/layouts"
 import { Empty } from "../components/empty"
-import homeImage from "../public/images/empty1.jpg"
+import homeImage from "../public/images/empty2.jpg"
 
 export default function Home({ props }) {
   return (
-    <SiteLayout description="Know better, live better">
-      <Empty title="Biomarkers.app" description="Know better, live better" image={homeImage} variant="fancy" />
+    <SiteLayout description="Lighter, mightier.">
+      <Empty title="SQLighter" description="Lighter, mightier." image={homeImage} variant="fancy" />
       <Stack alignItems="center" justifyContent="center" mt={4}>
         <Link
           variant="subtitle2"
-          href="mailto:info@biomarkers.app"
+          href="mailto:info@sqlighter.com"
           underline="hover"
           sx={{
             cursor: "pointer",
@@ -27,7 +27,7 @@ export default function Home({ props }) {
             },
           }}
         >
-          info@biomarkers.app
+          info@sqlighter.com
         </Link>
       </Stack>
     </SiteLayout>

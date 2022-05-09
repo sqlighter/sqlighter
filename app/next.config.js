@@ -23,14 +23,12 @@ const nextConfig = {
   images: {
     loader: "default",
     domains: [
-      "localhost",
-      "biomarkers.vercel.app",
-      "insieme-api-zs2nymj7ga-ew.a.run.app",
+      "sqlighter.com",
+      "www.sqlighter.com",
+      "api.sqlighter.com",
+      "sqlighter.vercel.app",
       "storage.googleapis.com",
-      "api.insieme.app",
-      "insieme.app",
-      "api.biomarkers.app",
-      "biomarkers.app",
+      "localhost",
     ],
   },
   eslint: {
