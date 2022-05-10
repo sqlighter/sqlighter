@@ -37,14 +37,12 @@ function ProfilePanel() {
   const email = user.id
   const displayName = user.passport?.displayName || ""
   const imageUrl = user.passport?.photos?.[0]?.value
-  //  const profile = user.attributes?.profile
 
   async function updateProfile(profile) {
-    console.debug("ProfilePanel.updateProfile", profile)
     setProfile(profile)
 
     // update user in database
-    const updated = deepmerge(user, { attributes: { profile } })
+    const updated = deepmerge(user, { profile })
     await setUser(updated)
   }
 

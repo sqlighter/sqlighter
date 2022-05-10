@@ -28,24 +28,34 @@ handler
   })
   // PUT /api/users - updates to user profile
   .put(async (req, res) => {
-    const user = req.user
-    const putUser = req.body
-    if (!user || user.id != putUser.id) {
-      res.status(403).send("Forbidden")
+    try {
+      const user = req.user
+      const putUser = req.body
+      if (!user || user.id != putUser.id) {
+        res.status(403).send("Forbidden")
+      }
+  
+      // retrieve user, merge and update
+      const items = new ItemsTable()
+      const databaseUser = await items.selectItem(user.id)
+
+      // API can only be used to update user profile field. other parts of the
+      // user object, for example the passport field are only modified internally
+      // by the authentication code or the backend
+      databaseUser.profile = putUser.profile
+      await items.updateItem(databaseUser)
+      const updatedUser = await items.selectItem(putUser.id)
+      console.debug("PUT /api/user - updatedUser", updatedUser)
+      res.json({ data: updatedUser })
+    }    
+    catch (exception) {
+      console.error("PUT /api/user", exception)
+      throw exception
     }
-
-    // retrieve user, merge and update
-    const items = new ItemsTable()
-    const databaseUser = await items.selectItem(user.id)
-    databaseUser.attributes.profile = putUser.attributes.profile
-    await items.updateItem(databaseUser)
-    const updatedUser = await items.selectItem(putUser.id)
-    // console.log("PUT /api/user", putUser, updatedUser)
-
-    res.json({ data: updatedUser })
   })
   .delete((req, res) => {
-    //  deleteUser(req)
+    // TODO will archive user or delete cascading records
+    // deleteUser(req)
     req.logOut()
     res.status(204).end()
   })
