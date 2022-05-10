@@ -5437,6 +5437,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/emscripten@npm:*":
+  version: 1.39.6
+  resolution: "@types/emscripten@npm:1.39.6"
+  checksum: 437f2f9cdfd9057255662508fa9a415fe704ba484c6198f3549c5b05feebcdcd612b1ec7b10026d2566935d05d3c36f9366087cb42bc90bd25772a88fcfc9343
+  languageName: node
+  linkType: hard
+
 "@types/eslint-scope@npm:^3.7.3":
   version: 3.7.3
   resolution: "@types/eslint-scope@npm:3.7.3"
@@ -5826,6 +5833,16 @@ __metadata:
   version: 0.1.2
   resolution: "@types/source-list-map@npm:0.1.2"
   checksum: fda8f37537aca9d3ed860d559289ab1dddb6897e642e6f53e909bbd18a7ac3129a8faa2a7d093847c91346cf09c86ef36e350c715406fba1f2271759b449adf6
+  languageName: node
+  linkType: hard
+
+"@types/sql.js@npm:^1.4.3":
+  version: 1.4.3
+  resolution: "@types/sql.js@npm:1.4.3"
+  dependencies:
+    "@types/emscripten": "*"
+    "@types/node": "*"
+  checksum: ba02fdc13efd96e0a59590b198cc62326dc30e252bda2c494beab9dcea16cd0cb7a145da473d4b3aaf2abc682b8caa0cd8febe0e0093a76cb596d131cbf58359
   languageName: node
   linkType: hard
 
@@ -17741,6 +17758,7 @@ __metadata:
     "@types/passport": ^1.0.7
     "@types/react": ^18.0.9
     "@types/showdown": ^2.0.0
+    "@types/sql.js": ^1.4.3
     "@types/supertest": ^2.0.12
     assert-strict: ^0.0.2
     babel-jest: ^28.1.0
