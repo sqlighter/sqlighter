@@ -4,7 +4,7 @@
 
 import { assert } from "console"
 import { Storage } from "@google-cloud/storage"
-import tempy from "tempy"
+import { temporaryWriteSync } from "tempy"
 
 /**
  * Returns Google Storage credentials and client
@@ -14,7 +14,7 @@ import tempy from "tempy"
 export function getStorage(credentialsJson = process.env.GOOGLE_SERVICE_ACCOUNT) {
   assert(credentialsJson, "getStorage - GOOGLE_SERVICE_ACCOUNT is not configured")
   const credentials = JSON.parse(credentialsJson)
-  const keyFilename = tempy.writeSync(credentialsJson, { extension: "json" })
+  const keyFilename = temporaryWriteSync(credentialsJson, { extension: "json" })
   const storage = new Storage({ projectId: credentials.project_id, keyFilename })
   return { credentials, storage, keyFilename }
 }
