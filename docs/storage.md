@@ -1,6 +1,6 @@
 ## Storage
 
-This application will use Google Storage for customer's data. All data resides in a private bucket and can only be accessed via the APIs or using signed urls. The app uploads directly to Google Storage after obtaining a signed upload url from the proper /api endpoint. Uploading to the bucket requires a bit more work but is faster for clients and doesn't put any load on the API containers.
+This application will use Google Storage for customer's data/preferences. All data resides in a private bucket and can only be accessed via the APIs or using server signed urls. The app uploads directly to Google Storage after obtaining a signed upload url from the proper /api endpoint. Uploading to the bucket requires a bit more work but is faster for clients and doesn't put any load on the API containers.
 
 Example of upload flow:
 
