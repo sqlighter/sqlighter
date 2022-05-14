@@ -132,11 +132,9 @@ export default function AppPage(props) {
   return (
     <TabsLayout
       title="Lorem Ipsum"
-      testo1="testo 1"
       description="Consectetur adipiscing elit"
       //
       activities={activities}
-      onActivityChange={onActivityChange}
       //
       tabs={tabs}
       tabValue={tabValue}
