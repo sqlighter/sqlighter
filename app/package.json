@@ -30,6 +30,7 @@
     "@mui/material": "^5.7.0",
     "@mui/x-data-grid": "^5.10.0",
     "@types/sql.js": "^1.4.3",
+    "allotment": "^1.13.0",
     "assert-strict": "^0.0.2",
     "cookie": "^0.5.0",
     "date-fns": "^2.28.0",

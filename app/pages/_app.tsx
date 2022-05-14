@@ -123,9 +123,7 @@ export default function App({ Component, pageProps }: { Component: any; pageProp
               <link rel="preconnect" href="https://fonts.googleapis.com" />
               <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
             </Head>
-            <Box sx={{ backgroundColor: "background.paper", top: 0, bottom: 0 }}>
-              <Component {...pageProps} />
-            </Box>
+            <Component {...pageProps} />
             <Script
               key="google-signin"
               src="https://accounts.google.com/gsi/client"
