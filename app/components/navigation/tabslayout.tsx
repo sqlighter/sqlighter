@@ -31,7 +31,8 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBackOutlined"
 import CloseIcon from "@mui/icons-material/CloseOutlined"
 import Typography from "@mui/material/Typography"
 
-import { ActivityBar, ActivityBarProps } from "./activitybar"
+import { ActivityBar, ACTIVITYBAR_WIDTH } from "./activitybar"
+import { SideBar, SIDEBAR_MIN_WIDTH } from "./sidebar"
 import { Panel, PanelProps } from "./panel"
 
 import { Menu } from "../menu"
@@ -73,17 +74,14 @@ interface TabsLayoutProps {
   /** Additional actions to be placed on the right hand side of the toolbar */
   actions?: any
 
-  activities?: PanelProps[]
-  activityValue?: string
-  onActivityChange?: (event: React.SyntheticEvent, activityId: any) => void
+  /** Activities shown as icons in activity bar and as panels in side bar */
+  activities: PanelProps[]
 
   tabs?: PanelProps[]
   tabValue?: string
   onTabChange?: (event: React.SyntheticEvent, tabId: any) => void
 
-  testo1?: string
-
-  /** Signed in user */
+  /** Signed in user (or null) */
   user?: object
 }
 
@@ -94,6 +92,8 @@ export function TabsLayout({
   description: subtitle,
   showBack,
   actions,
+
+  activities,
   tabs,
   ...props
 }: TabsLayoutProps) {
@@ -108,6 +108,8 @@ export function TabsLayout({
 
   // open or close navigation drawer
   const [open, setDrawer] = useState(false)
+
+  const [activityId, setActivityId] = useState(activities[0].id)
 
   // input field showing search query
   const searchRef = useRef()
@@ -197,10 +199,28 @@ export function TabsLayout({
     )
   }
 
+  //
+  // handlers
+  //
+
+  function handleActivityChange(e, clickedActivityId) {
+    console.debug(`TabsLayout.handleActivityChange - activityId: ${clickedActivityId}`)
+    setActivityId(clickedActivityId)
+  }
+
+  function handleActivityClick(e, clickedActivityId) {
+    console.debug(`TabsLayout.handleActivityClick - activityId: ${clickedActivityId}`)
+    //setActivityId(clickedActivityId)
+  }
+
   const pageTitle = title ? `${title} | ${TITLE}` : TITLE
   title = title || TITLE
 
   console.debug(`TabsLayout - props.user: ${props.user}`, props.user)
+
+  //
+  // render
+  //
 
   return (
     <>
@@ -219,8 +239,17 @@ export function TabsLayout({
       </Head>
       <Box sx={{ width: "100%", height: "100%" }}>
         <Allotment>
-          <Allotment.Pane minSize={208}>
-            <ActivityBar activities={props.activities} onActivityChange={props.onActivityChange} user={props.user} />
+          <Allotment.Pane maxSize={ACTIVITYBAR_WIDTH} minSize={ACTIVITYBAR_WIDTH} visible>
+            <ActivityBar
+              activities={activities}
+              activityId={activityId}
+              user={props.user}
+              onClick={handleActivityClick}
+              onChange={handleActivityChange}
+            />
+          </Allotment.Pane>
+          <Allotment.Pane minSize={SIDEBAR_MIN_WIDTH} preferredSize={SIDEBAR_MIN_WIDTH} snap visible>
+            <SideBar activities={activities} activityId={activityId} />
           </Allotment.Pane>
           <Allotment.Pane>
             {tabs && (

@@ -29,6 +29,6 @@ export interface PanelProps {
 }
 
 /** A simple panel (used mostly to pass props to tabs or other layout componentsawer, header, footer, basic actions */
-export function Panel(props: PanelProps) {
-  return <Box sx={props.sx}>{props.children}</Box>
+export function Panel({ sx, children }: PanelProps) {
+  return <Box sx={sx}>{children}</Box>
 }
