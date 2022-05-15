@@ -97,6 +97,9 @@ export function TabsLayout({
   tabs,
   ...props
 }: TabsLayoutProps) {
+  // sibar with activities panel is visible?
+  const [sidebarVisibile, setSidebarVisible] = useState(false)
+
   // search query entered in header if any
   const [query] = useSearch()
 
@@ -112,7 +115,7 @@ export function TabsLayout({
   const [activityId, setActivityId] = useState(activities[0].id)
 
   // input field showing search query
-  const searchRef = useRef()
+  const searchRef = useRef(0)
 
   // search is a controlled text field and is also shown in query as ?search=
   const [search, setSearch] = useState(router.query.search)
@@ -203,20 +206,32 @@ export function TabsLayout({
   // handlers
   //
 
+  /** Track when a different activity icon is selected */
   function handleActivityChange(e, clickedActivityId) {
-    console.debug(`TabsLayout.handleActivityChange - activityId: ${clickedActivityId}`)
     setActivityId(clickedActivityId)
+    setSidebarVisible(true)
   }
 
+  /** Clicking currently selected activity icon will toggle sidebar open/close */
   function handleActivityClick(e, clickedActivityId) {
-    console.debug(`TabsLayout.handleActivityClick - activityId: ${clickedActivityId}`)
-    //setActivityId(clickedActivityId)
+    if (clickedActivityId == activityId) {
+      // console.debug(`handleActivityClick - clickedActivityId: ${clickedActivityId}, sidebarVisible: ${sidebarVisibile}`)
+      setSidebarVisible(!sidebarVisibile)
+    }
+  }
+
+  /** Track sidebar visibility change when user snaps panel shut */
+  function handleSidebarVisibilityChange(index, visible) {
+    // console.debug(`handleSidebarVisibilityChange - index: ${index}, visible: ${visible}`)
+    if (index == 1) {
+      setSidebarVisible(visible)
+    }
   }
 
   const pageTitle = title ? `${title} | ${TITLE}` : TITLE
   title = title || TITLE
 
-  console.debug(`TabsLayout - props.user: ${props.user}`, props.user)
+  //console.debug(`TabsLayout - props.user: ${props.user}`, props.user)
 
   //
   // render
@@ -238,7 +253,7 @@ export function TabsLayout({
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
       <Box sx={{ width: "100%", height: "100%" }}>
-        <Allotment>
+        <Allotment onVisibleChange={handleSidebarVisibilityChange}>
           <Allotment.Pane maxSize={ACTIVITYBAR_WIDTH} minSize={ACTIVITYBAR_WIDTH} visible>
             <ActivityBar
               activities={activities}
@@ -248,7 +263,7 @@ export function TabsLayout({
               onChange={handleActivityChange}
             />
           </Allotment.Pane>
-          <Allotment.Pane minSize={SIDEBAR_MIN_WIDTH} preferredSize={SIDEBAR_MIN_WIDTH} snap visible>
+          <Allotment.Pane minSize={SIDEBAR_MIN_WIDTH} preferredSize={SIDEBAR_MIN_WIDTH} visible={sidebarVisibile} snap>
             <SideBar activities={activities} activityId={activityId} />
           </Allotment.Pane>
           <Allotment.Pane>
@@ -256,10 +271,12 @@ export function TabsLayout({
               <TabContext value={props.tabValue}>
                 <TabList onChange={props.onTabChange} scrollButtons="auto">
                   {tabs &&
-                    tabs.map((tab: any) => <Tab label={title} value={tab.id} icon={tab.icon} iconPosition="start" />)}
+                    tabs.map((tab: any) => (
+                      <Tab key={tab.id} label={title} value={tab.id} icon={tab.icon} iconPosition="start" />
+                    ))}
                 </TabList>
                 {tabs.map((tab: any) => (
-                  <TabPanel id={tab.id} value={tab.id} sx={{ padding: 0, width: "100%", height: "100%" }}>
+                  <TabPanel key={tab.id} id={tab.id} value={tab.id} sx={{ padding: 0, width: "100%", height: "100%" }}>
                     <Panel {...tab} />
                   </TabPanel>
                 ))}
