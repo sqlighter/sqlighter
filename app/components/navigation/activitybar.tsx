@@ -100,6 +100,7 @@ export function ActivityBar({ activities, activityId, user, onClick, onChange }:
           <TabList scrollButtons="auto" orientation="vertical" sx={ACTIVITYBAR_TABLIST_STYLE}>
             {activities.map((activity: any) => (
               <Tab
+                key={activity.id}
                 id={activity.id}
                 value={activity.id}
                 icon={activity.icon}

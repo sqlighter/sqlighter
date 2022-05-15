@@ -70,7 +70,7 @@ export default function AppPage(props) {
       title: "Database",
       description: "Database Schema",
       icon: <DatabaseIcon />,
-      sx: { backgroundColor: "beige", width: "100%", height: "100%" },
+      sx: { width: "100%", height: "100%" },
       children: <>Database activity</>,
     },
     {
@@ -78,7 +78,7 @@ export default function AppPage(props) {
       title: "Queries",
       description: "Saved Queries",
       icon: <QueryIcon />,
-      sx: { backgroundColor: "blue", width: "100%", height: "100%" },
+      sx: { width: "100%", height: "100%" },
       children: <>Saved queries activity</>,
     },
     {
@@ -86,7 +86,6 @@ export default function AppPage(props) {
       title: "History",
       description: "History description",
       icon: <HistoryIcon />,
-      sx: { backgroundColor: "yellow", width: "100%", height: "100%" },
       children: <>History activity</>,
     },
   ]
@@ -97,52 +96,51 @@ export default function AppPage(props) {
       id: "tab1",
       title: "Tab1",
       description: "description of tab 1",
-      icon: <Box>icon1</Box>,
-      sx: { backgroundColor: "beige", width: "100%", height: "100%" },
+      icon: <QueryIcon />,
+      //sx: { backgroundColor: "beige", width: "100%", height: "100%" },
       children: <>Tab one panel</>,
     },
     {
       id: "tab2",
-      title: "Tab2",
+      title: "Untitled query, May 15, 2022",
       description: "description of tab 2",
-      icon: <Box>icon2</Box>,
-      sx: { backgroundColor: "blue", width: "100%", height: "100%" },
+      icon: <QueryIcon />,
+      //sx: { backgroundColor: "blue", width: "100%", height: "100%" },
       children: <>Tab two panel</>,
     },
     {
       id: "tab3",
       title: "Tab3",
       description: "description of tab 3",
-      icon: <Box>icon3</Box>,
-      sx: { backgroundColor: "yellow", width: "100%", height: "100%" },
+      icon: <DatabaseIcon />,
+      //sx: { backgroundColor: "yellow", width: "100%", height: "100%" },
       children: <>Tab three panel</>,
     },
   ]
 
-  function onTabsChange(_, tabId) {
+  function handleTabsChange(_, tabId) {
     setTabValue(tabId)
   }
 
-  function onActivityChange(_, activityId) {
-    console.debug(`onActivityChange - activityId: ${activityId}`)
+  function handleActivityChange(_, activityId) {
+    console.debug(`App.handleActivityChange - activityId: ${activityId}`)
   }
 
 
 
   return (
     <TabsLayout
-      title="Lorem Ipsum"
-      description="Consectetur adipiscing elit"
+      title="SQLighter"
+      description="Lighter, mightier"
       //
       activities={activities}
+      onActivityChange={handleActivityChange}
       //
       tabs={tabs}
       tabValue={tabValue}
-      onTabChange={onTabsChange}
+      onTabChange={handleTabsChange}
       //
       user={context.user}
-    >
-      This is content
-    </TabsLayout>
+    />
   )
 }
