@@ -3,20 +3,49 @@
 // https://code.visualstudio.com/docs/getstarted/userinterface#_tabs
 //
 
-import { useState } from "react"
+import { SyntheticEvent, useState } from "react"
 
 import Tab from "@mui/material/Tab"
 import TabContext from "@mui/lab/TabContext"
 import TabList from "@mui/lab/TabList"
 import TabPanel from "@mui/lab/TabPanel"
-import { Theme } from "@mui/material/styles"
-import useMediaQuery from "@mui/material/useMediaQuery"
+import { SxProps } from "@mui/material"
 import Box from "@mui/material/Box"
+import { IconButton } from "@mui/material"
+import CloseIcon from "@mui/icons-material/CloseOutlined"
 
 import { Panel, PanelProps } from "./panel"
 
-const TABLIST_STYLES = {
-  height: 48,
+export const TABLIST_HEIGHT = 48
+
+const TABLIST_STYLES: SxProps = {
+  minHeight: TABLIST_HEIGHT,
+  height: TABLIST_HEIGHT,
+
+  borderBottom: (theme: any) => `1px solid ${theme.palette.divider}`,
+
+  ".MuiTabs-flexContainer": {
+    height: TABLIST_HEIGHT,
+  },
+
+  ".MuiTab-root": {
+    minHeight: TABLIST_HEIGHT,
+    height: TABLIST_HEIGHT,
+    textTransform: "none",
+    paddingRight: 1,
+
+    ".MuiTab-closeIcon": {
+      marginLeft: 1,
+      color: "transparent",
+    },
+
+    "&:hover": {
+      backgroundColor: "action.hover",
+      ".MuiTab-closeIcon": {
+        color: "text.secondary",
+      },
+    },
+  },
 }
 
 interface TabsProps extends PanelProps {
@@ -37,11 +66,16 @@ export function Tabs(props: TabsProps) {
   //
 
   /** Handle change in selected tab */
-  function handleTabsChange(_, tabId) {
+  function handleTabsChange(e: SyntheticEvent<Element, Event>, tabId: string) {
     setTabId(tabId)
     if (props.onTabsChange) {
       props.onTabsChange(tabId, props.tabs)
     }
+  }
+
+  function handleCloseTab(e, tabId) {
+    console.debug(`Tabs.handleCloseTab - tabId: ${tabId}`)
+    e.stopPropagation()
   }
 
   //
@@ -53,7 +87,23 @@ export function Tabs(props: TabsProps) {
       <TabList onChange={handleTabsChange} variant="scrollable" sx={TABLIST_STYLES}>
         {props.tabs &&
           props.tabs.map((tab: any) => (
-            <Tab key={tab.id} label={tab.title} value={tab.id} icon={tab.icon} iconPosition="start" />
+            <Tab
+              key={tab.id}
+              value={tab.id}
+              icon={tab.icon}
+              iconPosition="start"
+              component="div"
+              label={
+                <span>
+                  <Box component="span" sx={{ position: "relative", top: "1px" }}>
+                    {tab.title}
+                  </Box>
+                  <IconButton onClick={(e) => handleCloseTab(e, tab.id)} className="MuiTab-closeIcon">
+                    <CloseIcon fontSize="small" />
+                  </IconButton>
+                </span>
+              }
+            />
           ))}
       </TabList>
       {props.tabs &&
