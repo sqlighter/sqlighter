@@ -85,7 +85,7 @@ export function Tabs(props: TabsProps) {
 
   /** When a tab is closed we remove it from the list of tabs (and select a new one if needed) */
   function handleCloseTab(e, closedTabId) {
-    console.debug(`Tabs.handleCloseTab - closedTabId: ${closedTabId}`)
+    // console.debug(`Tabs.handleCloseTab - closedTabId: ${closedTabId}`)
     e.stopPropagation()
 
     // create new list of tabs without the tab that was just closed
@@ -96,6 +96,68 @@ export function Tabs(props: TabsProps) {
         setTabId(tabs.length > 0 ? tabs[0].id : null)
       }
       props.onTabsChange(tabId, tabs)
+    }
+  }
+
+  /** Tab is starting to be dragged to a new position */
+  function handleTabDragStart(e) {
+    const draggedTabId = e.target.getAttribute("aria-label")
+    const draggedTabIndex = props.tabs.findIndex((tab) => tab.id == draggedTabId)
+    e.dataTransfer.setData("tabId", draggedTabId)
+    e.dataTransfer.setData("tabIndex", draggedTabIndex)
+    // console.debug(`Tabs.handleTabDragStart - dragging tab: ${draggedTabId}, fromIndex: ${draggedTabIndex}`)
+  }
+
+  /** Returns index where tab being dragged should be dropped to based on mouse position */
+  function getTabDropIndex(e): number {
+    const tabList = e.target.closest("div[role='tablist']") as HTMLElement
+    if (tabList) {
+      // position in tab list where the tab should be dropped to
+      let toIndex = 0
+      for (let i = 0; i < tabList.childNodes.length; i++) {
+        const childTab = tabList.childNodes[i] as HTMLElement
+        const childTabRect = childTab.getBoundingClientRect()
+        const childTabMiddle = childTabRect.left + childTabRect.width / 2
+        if (e.pageX > childTabMiddle) {
+          toIndex = i + 1
+        }
+      }
+      return toIndex
+    }
+    return -1
+  }
+
+  function handleTagDragOver(e) {
+    e.preventDefault()
+  }
+
+  function handleTabDrop(e) {
+    e.preventDefault()
+
+    const tabList = e.target.closest("div[role='tablist']") as HTMLElement
+    if (!tabList) {
+      return
+    }
+
+    const draggedTabId = e.dataTransfer.getData("tabId")
+    const fromIndex = e.dataTransfer.getData("tabIndex")
+    const toIndex = getTabDropIndex(e)
+    if (fromIndex != toIndex && props.onTabsChange) {
+      const tabs = [...props.tabs]
+      if (toIndex > fromIndex) {
+        // moving right, insert in new position, remove from old
+        tabs.splice(toIndex, 0, props.tabs[fromIndex])
+        tabs.splice(fromIndex, 1)
+      } else {
+        // moving left, remove from old position, insert new
+        tabs.splice(fromIndex, 1)
+        tabs.splice(toIndex, 0, props.tabs[fromIndex])
+      }
+
+      // select dragged tab, notify parent of reordering
+      console.debug(`Tabs.handleTabDrop - moving ${draggedTabId}, fromIndex: ${fromIndex}, toIndex: ${toIndex}`)
+      setTabId(draggedTabId)
+      props.onTabsChange(draggedTabId, tabs)
     }
   }
 
@@ -110,8 +172,10 @@ export function Tabs(props: TabsProps) {
           props.tabs.map((tab: any) => (
             <Tab
               key={tab.id}
+              id={"ciccio" + tab.id}
               value={tab.id}
               icon={tab.icon}
+              aria-label={tab.id}
               iconPosition="start"
               component="div"
               label={
@@ -124,6 +188,10 @@ export function Tabs(props: TabsProps) {
                   </IconButton>
                 </span>
               }
+              draggable="true"
+              onDragStart={handleTabDragStart}
+              onDragOver={handleTagDragOver}
+              onDrop={handleTabDrop}
             />
           ))}
       </TabList>

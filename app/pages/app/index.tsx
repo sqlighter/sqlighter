@@ -17,7 +17,6 @@ const MainComponentWithoutSSR = dynamic(
   { ssr: false }
 )
 
-
 const title = "SQLighter"
 
 export default function AppPage(props) {

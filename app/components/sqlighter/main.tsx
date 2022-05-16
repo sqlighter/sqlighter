@@ -61,28 +61,37 @@ const activities: PanelProps[] = [
 
 const TABS: PanelProps[] = [
   {
-    id: "tab1",
-    title: "Tab1",
-    description: "description of tab 1",
+    id: "tab0",
+    title: "Tab 0",
+    description: "description of tab 0",
     icon: <QueryIcon />,
     //sx: { backgroundColor: "beige", width: "100%", height: "100%" },
-    children: <>Tab one panel</>,
+    children: <>Tab zero panel</>,
+  },
+  {
+    id: "tab1",
+//    title: "Untitled query, May 15, 2022",
+    title: "Tab 1",
+    description: "description of tab 1",
+    icon: <QueryIcon />,
+    //sx: { backgroundColor: "blue", width: "100%", height: "100%" },
+    children: <>Tab 1 panel</>,
   },
   {
     id: "tab2",
-    title: "Untitled query, May 15, 2022",
-    description: "description of tab 2",
-    icon: <QueryIcon />,
-    //sx: { backgroundColor: "blue", width: "100%", height: "100%" },
-    children: <>Tab two panel</>,
-  },
-  {
-    id: "tab3",
-    title: "Tab3",
+    title: "Tab 2",
     description: "description of tab 3",
     icon: <DatabaseIcon />,
     //sx: { backgroundColor: "yellow", width: "100%", height: "100%" },
-    children: <>Tab three panel</>,
+    children: <>Tab 2 panel</>,
+  },
+  {
+    id: "tab3",
+    title: "Tab 3",
+    description: "description of tab 3",
+    icon: <DatabaseIcon />,
+    //sx: { backgroundColor: "yellow", width: "100%", height: "100%" },
+    children: <>Tab 3 panel</>,
   },
 ]
 
