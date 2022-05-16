@@ -19,6 +19,7 @@ import Box from "@mui/material/Box"
 import { ActivityBar, ACTIVITYBAR_WIDTH } from "./activitybar"
 import { SideBar, SIDEBAR_MIN_WIDTH } from "./sidebar"
 import { Panel, PanelProps } from "./panel"
+import { Tabs } from "./tabs"
 
 interface TabsLayoutProps {
   /** Page title */
@@ -36,9 +37,11 @@ interface TabsLayoutProps {
   /** Callback used to notify that selected activity has changed */
   onActivityChange?: (event: React.SyntheticEvent, activityId) => void
 
+  /** List of tab panels to be shown (includes title, contents, etc) */
   tabs?: PanelProps[]
-  tabValue?: string
-  onTabChange?: (event: React.SyntheticEvent, tabId: any) => void
+
+  /** Called when a tab is selected, a tab is closed, tabs order changes, etc. */
+  onTabsChange?: (tabId?: string, tabs?: PanelProps[]) => void
 
   /** Signed in user (or null) */
   user?: object
@@ -112,21 +115,7 @@ export function TabsLayout(props: TabsLayoutProps) {
             <SideBar activities={props.activities} activityId={activityId} />
           </Allotment.Pane>
           <Allotment.Pane>
-            {props.tabs && (
-              <TabContext value={props.tabValue}>
-                <TabList onChange={props.onTabChange} variant="scrollable">
-                  {props.tabs &&
-                    props.tabs.map((tab: any) => (
-                      <Tab key={tab.id} label={tab.title} value={tab.id} icon={tab.icon} iconPosition="start" />
-                    ))}
-                </TabList>
-                {props.tabs.map((tab: any) => (
-                  <TabPanel key={tab.id} id={tab.id} value={tab.id} sx={{ padding: 0, width: "100%", height: "100%" }}>
-                    <Panel {...tab} />
-                  </TabPanel>
-                ))}
-              </TabContext>
-            )}
+            <Tabs tabs={props.tabs} onTabsChange={props.onTabsChange} />
           </Allotment.Pane>
         </Allotment>
       </Box>

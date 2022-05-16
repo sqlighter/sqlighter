@@ -1,5 +1,5 @@
 //
-// lorem.tsx - test page showing typography and other components
+// app.tsx - sqlighter as a full page application
 //
 
 import * as React from "react"
@@ -32,28 +32,67 @@ import { PanelProps } from "../components/navigation/panel"
 
 const SSR = typeof window === "undefined"
 
+const activities: PanelProps[] = [
+  {
+    id: "databaseActivity",
+    title: "Database",
+    description: "Database Schema",
+    icon: <DatabaseIcon />,
+    sx: { width: "100%", height: "100%" },
+    children: <>Database activity</>,
+  },
+  {
+    id: "queriesActivity",
+    title: "Queries",
+    description: "Saved Queries",
+    icon: <QueryIcon />,
+    sx: { width: "100%", height: "100%" },
+    children: <>Saved queries activity</>,
+  },
+  {
+    id: "historyActivity",
+    title: "History",
+    description: "History description",
+    icon: <HistoryIcon />,
+    children: <>History activity</>,
+  },
+]
+
+
+const TABS: PanelProps[] = [
+  {
+    id: "tab1",
+    title: "Tab1",
+    description: "description of tab 1",
+    icon: <QueryIcon />,
+    //sx: { backgroundColor: "beige", width: "100%", height: "100%" },
+    children: <>Tab one panel</>,
+  },
+  {
+    id: "tab2",
+    title: "Untitled query, May 15, 2022",
+    description: "description of tab 2",
+    icon: <QueryIcon />,
+    //sx: { backgroundColor: "blue", width: "100%", height: "100%" },
+    children: <>Tab two panel</>,
+  },
+  {
+    id: "tab3",
+    title: "Tab3",
+    description: "description of tab 3",
+    icon: <DatabaseIcon />,
+    //sx: { backgroundColor: "yellow", width: "100%", height: "100%" },
+    children: <>Tab three panel</>,
+  },
+]
+
+
 /*
 const SQLighterComponentWithNoSSR = dynamic(
   () => import('../components/layouts/tabsapp'),
   { ssr: false }
 )
 */
-
-function App(props) {
-  return (
-    <div>
-      <div>This is test1</div>
-      <Allotment>
-        <Allotment.Pane minSize={200}>
-          <div>This is component A</div>
-        </Allotment.Pane>
-        <Allotment.Pane snap minSize={300}>
-          <div>This is component B</div>
-        </Allotment.Pane>
-      </Allotment>
-    </div>
-  )
-}
 
 const title = "SQLighter"
 
@@ -63,70 +102,19 @@ export default function AppPage(props) {
 
   const [activityValue, setActivityValue] = useState("activity1")
   const [tabValue, setTabValue] = useState("tab1")
-
-  const activities: PanelProps[] = [
-    {
-      id: "databaseActivity",
-      title: "Database",
-      description: "Database Schema",
-      icon: <DatabaseIcon />,
-      sx: { width: "100%", height: "100%" },
-      children: <>Database activity</>,
-    },
-    {
-      id: "queriesActivity",
-      title: "Queries",
-      description: "Saved Queries",
-      icon: <QueryIcon />,
-      sx: { width: "100%", height: "100%" },
-      children: <>Saved queries activity</>,
-    },
-    {
-      id: "historyActivity",
-      title: "History",
-      description: "History description",
-      icon: <HistoryIcon />,
-      children: <>History activity</>,
-    },
-  ]
+  const [tabs, setTabs] = useState(TABS)
 
 
-  const tabs: PanelProps[] = [
-    {
-      id: "tab1",
-      title: "Tab1",
-      description: "description of tab 1",
-      icon: <QueryIcon />,
-      //sx: { backgroundColor: "beige", width: "100%", height: "100%" },
-      children: <>Tab one panel</>,
-    },
-    {
-      id: "tab2",
-      title: "Untitled query, May 15, 2022",
-      description: "description of tab 2",
-      icon: <QueryIcon />,
-      //sx: { backgroundColor: "blue", width: "100%", height: "100%" },
-      children: <>Tab two panel</>,
-    },
-    {
-      id: "tab3",
-      title: "Tab3",
-      description: "description of tab 3",
-      icon: <DatabaseIcon />,
-      //sx: { backgroundColor: "yellow", width: "100%", height: "100%" },
-      children: <>Tab three panel</>,
-    },
-  ]
-
-  function handleTabsChange(_, tabId) {
-    setTabValue(tabId)
-  }
 
   function handleActivityChange(_, activityId) {
     console.debug(`App.handleActivityChange - activityId: ${activityId}`)
   }
 
-
+  function handleTabsChange(tabId?: string, tabs?: PanelProps[]) {
+    console.debug(`handleTabsChange - tabId: ${tabId}, tabs: ${tabs && tabs.map(t => t.id).join(", ")}`)
+    setTabs(tabs)
+    setTabValue(tabId)
+  }
 
   return (
     <TabsLayout
@@ -137,8 +125,7 @@ export default function AppPage(props) {
       onActivityChange={handleActivityChange}
       //
       tabs={tabs}
-      tabValue={tabValue}
-      onTabChange={handleTabsChange}
+      onTabsChange={handleTabsChange}
       //
       user={context.user}
     />
