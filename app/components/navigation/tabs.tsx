@@ -5,12 +5,12 @@
 
 import { SyntheticEvent, useState } from "react"
 
+import Box from "@mui/material/Box"
 import Tab from "@mui/material/Tab"
 import TabContext from "@mui/lab/TabContext"
 import TabList from "@mui/lab/TabList"
 import TabPanel from "@mui/lab/TabPanel"
 import { SxProps } from "@mui/material"
-import Box from "@mui/material/Box"
 import { IconButton } from "@mui/material"
 import CloseIcon from "@mui/icons-material/CloseOutlined"
 
@@ -34,6 +34,12 @@ const TABLIST_STYLES: SxProps = {
     textTransform: "none",
     paddingRight: 1,
 
+    ".MuiTab-textLabel": {
+      position: "relative",
+      top: "1px",
+    },
+
+    // TODO keep close icons visible on touch devices
     ".MuiTab-closeIcon": {
       marginLeft: 1,
       color: "transparent",
@@ -58,8 +64,12 @@ interface TabsProps extends PanelProps {
 
 /** A tabbed panel used to switch between different editors or panels */
 export function Tabs(props: TabsProps) {
+  //
+  // state
+  //
+
   // currently selected tab
-  const [tabId, setTabId] = useState(props.tabs[0].id)
+  const [tabId, setTabId] = useState(props?.tabs?.[0]?.id)
 
   //
   // handlers
@@ -73,9 +83,20 @@ export function Tabs(props: TabsProps) {
     }
   }
 
-  function handleCloseTab(e, tabId) {
-    console.debug(`Tabs.handleCloseTab - tabId: ${tabId}`)
+  /** When a tab is closed we remove it from the list of tabs (and select a new one if needed) */
+  function handleCloseTab(e, closedTabId) {
+    console.debug(`Tabs.handleCloseTab - closedTabId: ${closedTabId}`)
     e.stopPropagation()
+
+    // create new list of tabs without the tab that was just closed
+    console.assert(props.tabs)
+    const tabs = props.tabs.filter((tab) => tab.id !== closedTabId)
+    if (props.onTabsChange) {
+      if (tabId == closedTabId) {
+        setTabId(tabs.length > 0 ? tabs[0].id : null)
+      }
+      props.onTabsChange(tabId, tabs)
+    }
   }
 
   //
@@ -95,7 +116,7 @@ export function Tabs(props: TabsProps) {
               component="div"
               label={
                 <span>
-                  <Box component="span" sx={{ position: "relative", top: "1px" }}>
+                  <Box component="span" className="MuiTab-textLabel">
                     {tab.title}
                   </Box>
                   <IconButton onClick={(e) => handleCloseTab(e, tab.id)} className="MuiTab-closeIcon">
@@ -108,7 +129,7 @@ export function Tabs(props: TabsProps) {
       </TabList>
       {props.tabs &&
         props.tabs.map((tab: any) => (
-          <TabPanel key={tab.id} id={tab.id} value={tab.id} sx={{ padding: 0, width: "100%", height: "100%" }}>
+          <TabPanel key={tab.id} value={tab.id} sx={{ padding: 0, width: "100%", height: "100%" }}>
             <Panel {...tab} />
           </TabPanel>
         ))}
