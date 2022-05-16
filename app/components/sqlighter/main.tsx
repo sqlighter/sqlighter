@@ -24,11 +24,11 @@ import HistoryIcon from "@mui/icons-material/HistoryOutlined"
 import SearchIcon from "@mui/icons-material/SearchOutlined"
 import SchemaIcon from '@mui/icons-material/WeekendOutlined'; // TODO find database icon
 
-import { Context } from "../components/context"
-import { TabsLayout } from "../components/navigation/tabslayout"
-import { Section } from "../components/section"
+import { Context } from "../../components/context"
+import { TabsLayout } from "../../components/navigation/tabslayout"
+import { Section } from "../../components/section"
 
-import { PanelProps } from "../components/navigation/panel"
+import { PanelProps } from "../../components/navigation/panel"
 
 const SSR = typeof window === "undefined"
 
@@ -86,7 +86,6 @@ const TABS: PanelProps[] = [
   },
 ]
 
-
 /*
 const SQLighterComponentWithNoSSR = dynamic(
   () => import('../components/layouts/tabsapp'),
@@ -96,7 +95,8 @@ const SQLighterComponentWithNoSSR = dynamic(
 
 const title = "SQLighter"
 
-export default function AppPage(props) {
+/** Main component for SQLighter app which includes activities, sidebar, tabs, etc... */
+export default function Main(props) {
   //  <SQLighterComponentWithNoSSR />
   const context = React.useContext(Context)
 
