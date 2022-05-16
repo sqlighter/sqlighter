@@ -16,13 +16,13 @@ import { useTheme } from "@mui/material/styles"
 import { Typography } from "@mui/material"
 import IconButton from "@mui/material/IconButton"
 
-import CloudOutlinedIcon from '@mui/icons-material/CloudOutlined';
+import CloudOutlinedIcon from "@mui/icons-material/CloudOutlined"
 
-import DatabaseIcon from '@mui/icons-material/DnsOutlined';
-import QueryIcon from '@mui/icons-material/ArticleOutlined';
+import DatabaseIcon from "@mui/icons-material/DnsOutlined"
+import QueryIcon from "@mui/icons-material/ArticleOutlined"
 import HistoryIcon from "@mui/icons-material/HistoryOutlined"
 import SearchIcon from "@mui/icons-material/SearchOutlined"
-import SchemaIcon from '@mui/icons-material/WeekendOutlined'; // TODO find database icon
+import SchemaIcon from "@mui/icons-material/WeekendOutlined" // TODO find database icon
 
 import { Context } from "../../components/context"
 import { TabsLayout } from "../../components/navigation/tabslayout"
@@ -58,7 +58,6 @@ const activities: PanelProps[] = [
   },
 ]
 
-
 const TABS: PanelProps[] = [
   {
     id: "tab0",
@@ -70,7 +69,7 @@ const TABS: PanelProps[] = [
   },
   {
     id: "tab1",
-//    title: "Untitled query, May 15, 2022",
+    //    title: "Untitled query, May 15, 2022",
     title: "Tab 1",
     description: "description of tab 1",
     icon: <QueryIcon />,
@@ -113,16 +112,18 @@ export default function Main(props) {
   const [tabValue, setTabValue] = useState("tab1")
   const [tabs, setTabs] = useState(TABS)
 
-
-
   function handleActivityChange(_, activityId) {
     console.debug(`App.handleActivityChange - activityId: ${activityId}`)
   }
 
   function handleTabsChange(tabId?: string, tabs?: PanelProps[]) {
-    console.debug(`handleTabsChange - tabId: ${tabId}, tabs: ${tabs && tabs.map(t => t.id).join(", ")}`)
+    console.debug(`handleTabsChange - tabId: ${tabId}, tabs: ${tabs && tabs.map((t) => t.id).join(", ")}`)
     setTabs(tabs)
     setTabValue(tabId)
+  }
+
+  function handleAddTabClick(e: React.MouseEvent<HTMLElement>): void {
+    // console.debug("Main.handleAddTabClick", e)
   }
 
   return (
@@ -135,6 +136,7 @@ export default function Main(props) {
       //
       tabs={tabs}
       onTabsChange={handleTabsChange}
+      onAddTabClick={handleAddTabClick}
       //
       user={context.user}
     />

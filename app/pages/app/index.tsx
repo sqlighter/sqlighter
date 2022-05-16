@@ -11,11 +11,7 @@ import dynamic from "next/dynamic"
 
 const SSR = typeof window === "undefined"
 
-
-const MainComponentWithoutSSR = dynamic(
-  () => import('../../components/sqlighter/main'),
-  { ssr: false }
-)
+const MainComponentWithoutSSR = dynamic(() => import("../../components/sqlighter/main"), { ssr: false })
 
 const title = "SQLighter"
 

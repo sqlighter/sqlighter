@@ -89,7 +89,7 @@ function ResultsTable({ columns, values }) {
     <>
       <div style={{ display: "flex", height: "100%", minHeight: 400 }}>
         <div style={{ flexGrow: 1 }}>
-          <DataGrid          
+          <DataGrid
             rows={rows3}
             columns={columns3}
             pageSize={50}
@@ -114,7 +114,7 @@ export default function SqlPage(props: SqlPageProps) {
   const data = useBinaryFile(sqlliteURL)
   const db = useDB(data)
   const columnsQuery = "SELECT name FROM  sqlite_schema WHERE type ='table' AND name NOT LIKE 'sqlite_%';"
-//  const columnsQuery = "SELECT name FROM  sqlite_schema"
+  //  const columnsQuery = "SELECT name FROM  sqlite_schema"
   const [query, setQuery] = useState(columnsQuery)
 
   //  const [query, setQuery] = useState( "SELECT 1;" )
@@ -128,14 +128,12 @@ export default function SqlPage(props: SqlPageProps) {
   const [query3, setQuery3] = useState(querySql3)
   const results3 = useDBQuery(db, query3)
 
-
-
   return (
     <>
       <Script type="module" strategy="beforeInteractive" src="/sql-loader.js" />
-    {results3 && <ResultsTable columns={results3[0].columns} values={results3[0].values} />}
+      {results3 && <ResultsTable columns={results3[0].columns} values={results3[0].values} />}
 
-      <p>Columns: {columns && columns.map(column => <div>{column}</div>)}</p>
+      <p>Columns: {columns && columns.map((column) => <div>{column}</div>)}</p>
 
       {db && <SQLRepl db={db} />}
     </>

@@ -8,20 +8,16 @@ import { useState } from "react"
 import { Allotment } from "allotment"
 import "allotment/dist/style.css"
 
-import Tab from "@mui/material/Tab"
-import TabContext from "@mui/lab/TabContext"
-import TabList from "@mui/lab/TabList"
-import TabPanel from "@mui/lab/TabPanel"
 import { Theme } from "@mui/material/styles"
 import useMediaQuery from "@mui/material/useMediaQuery"
 import Box from "@mui/material/Box"
 
 import { ActivityBar, ACTIVITYBAR_WIDTH } from "./activitybar"
 import { SideBar, SIDEBAR_MIN_WIDTH } from "./sidebar"
-import { Panel, PanelProps } from "./panel"
-import { Tabs } from "./tabs"
+import { PanelProps } from "./panel"
+import { Tabs, TabsProps } from "./tabs"
 
-interface TabsLayoutProps {
+interface TabsLayoutProps extends TabsProps {
   /** Page title */
   title?: string
 
@@ -36,12 +32,6 @@ interface TabsLayoutProps {
 
   /** Callback used to notify that selected activity has changed */
   onActivityChange?: (event: React.SyntheticEvent, activityId) => void
-
-  /** List of tab panels to be shown (includes title, contents, etc) */
-  tabs?: PanelProps[]
-
-  /** Called when a tab is selected, a tab is closed, tabs order changes, etc. */
-  onTabsChange?: (tabId?: string, tabs?: PanelProps[]) => void
 
   /** Signed in user (or null) */
   user?: object
@@ -115,7 +105,7 @@ export function TabsLayout(props: TabsLayoutProps) {
             <SideBar activities={props.activities} activityId={activityId} />
           </Allotment.Pane>
           <Allotment.Pane>
-            <Tabs tabs={props.tabs} onTabsChange={props.onTabsChange} />
+            <Tabs tabs={props.tabs} onTabsChange={props.onTabsChange} onAddTabClick={props.onAddTabClick} />
           </Allotment.Pane>
         </Allotment>
       </Box>

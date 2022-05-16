@@ -12,9 +12,11 @@ import TabList from "@mui/lab/TabList"
 import TabPanel from "@mui/lab/TabPanel"
 import { SxProps } from "@mui/material"
 import { IconButton } from "@mui/material"
+import AddIcon from "@mui/icons-material/AddOutlined"
 import CloseIcon from "@mui/icons-material/CloseOutlined"
 
 import { Panel, PanelProps } from "./panel"
+import { HtmlProps } from "next/dist/shared/lib/html-context"
 
 export const TABLIST_HEIGHT = 48
 
@@ -52,14 +54,29 @@ const TABLIST_STYLES: SxProps = {
       },
     },
   },
+
+  ".MuiTab-addIcon": {
+    display: "flex",
+    flexGrow: 1,
+    justifyContent: "flex-end",
+    alignItems: "center",
+    paddingRight: 1,
+
+    ".MuiIconButton-root": {
+      color: "text.secondary",
+    },
+  },
 }
 
-interface TabsProps extends PanelProps {
+export interface TabsProps extends PanelProps {
   /** List of tab panels to be shown (includes title, contents, etc) */
   tabs?: PanelProps[]
 
   /** Called when a tab is selected, a tab is closed, tabs order changes, etc. */
   onTabsChange?: (tabId?: string, tabs?: PanelProps[]) => void
+
+  /** Called when add button is clicked (will not show button if handler undefined) */
+  onAddTabClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
 }
 
 /** A tabbed panel used to switch between different editors or panels */
@@ -161,6 +178,10 @@ export function Tabs(props: TabsProps) {
     }
   }
 
+  function handleAddTab(e) {
+    console.debug("Tabs.handleAddTab")
+  }
+
   //
   // render
   //
@@ -194,6 +215,13 @@ export function Tabs(props: TabsProps) {
               onDrop={handleTabDrop}
             />
           ))}
+        {props.onAddTabClick && (
+          <Box className="MuiTab-addIcon">
+            <IconButton onClick={props.onAddTabClick}>
+              <AddIcon fontSize="small" />
+            </IconButton>
+          </Box>
+        )}
       </TabList>
       {props.tabs &&
         props.tabs.map((tab: any) => (
