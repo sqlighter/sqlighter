@@ -8,6 +8,7 @@ import MuiIcon from "@mui/material/Icon"
 import JournalIcon from "@mui/icons-material/AssignmentOutlined"
 import LibraryIcon from "@mui/icons-material/LocalLibraryOutlined"
 import ProfileIcon from "@mui/icons-material/PersonOutlineOutlined"
+import DatabaseIcon from '@mui/icons-material/Storage';
 
 interface IconProps {
   color

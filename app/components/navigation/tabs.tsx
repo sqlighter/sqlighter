@@ -68,7 +68,7 @@ const TABLIST_STYLES: SxProps = {
   },
 }
 
-export interface TabsProps extends PanelProps {
+export interface TabsProps {
   /** List of tab panels to be shown (includes title, contents, etc) */
   tabs?: PanelProps[]
 

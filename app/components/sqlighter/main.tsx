@@ -29,17 +29,18 @@ import { TabsLayout } from "../../components/navigation/tabslayout"
 import { Section } from "../../components/section"
 
 import { PanelProps } from "../../components/navigation/panel"
+import { DatabasePanel } from "./databasepanel"
 
 const SSR = typeof window === "undefined"
 
 const activities: PanelProps[] = [
   {
-    id: "databaseActivity",
+    id: "database-activity",
     title: "Database",
     description: "Database Schema",
     icon: <DatabaseIcon />,
     sx: { width: "100%", height: "100%" },
-    children: <>Database activity</>,
+    children: <DatabasePanel />,
   },
   {
     id: "queriesActivity",
