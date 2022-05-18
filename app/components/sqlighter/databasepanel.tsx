@@ -25,12 +25,8 @@ export function DatabasePanel() {
   
     switch(action) {
       case "collapse":
-        item.collapsibleState = "collapsed"
-        setItems([...items])
-        break;
       case "expand":
-        item.collapsibleState = "expanded"
-        setItems([...items])
+        // handled by treeview
         break;
     }
   }

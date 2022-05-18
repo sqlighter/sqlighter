@@ -5,64 +5,17 @@
 import * as React from "react"
 import { useState } from "react"
 
-import { styled } from "@mui/material/styles"
 import Box from "@mui/material/Box"
+import ButtonBase from "@mui/material/ButtonBase"
+import Chip from "@mui/material/Chip"
 import Typography from "@mui/material/Typography"
-import MailIcon from "@mui/icons-material/Mail"
-import DeleteIcon from "@mui/icons-material/Delete"
-import Label from "@mui/icons-material/Label"
-import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount"
-import InfoIcon from "@mui/icons-material/Info"
-import ForumIcon from "@mui/icons-material/Forum"
-import LocalOfferIcon from "@mui/icons-material/LocalOffer"
+import Stack from "@mui/material/Stack"
+import { SxProps } from "@mui/material"
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown"
 import ArrowRightIcon from "@mui/icons-material/ArrowRight"
-import { SxProps } from "@mui/material"
-
-import Badge from "@mui/material/Badge"
-import ButtonBase from "@mui/material/ButtonBase"
-//import Icon from "@mui/material/Icon"
-import IconButton from "@mui/material/IconButton"
-import Chip from "@mui/material/Chip"
-import Stack from "@mui/material/Stack"
 
 import { Tree } from "../../lib/data/tree"
 import { Icon } from "../ui/icon"
-
-/*
-const StyledTreeItemRoot = styled(MuiTreeItem)(({ theme }) => ({
-  color: theme.palette.text.secondary,
-  [`& .${muiTreeItemClasses.content}`]: {
-    color: theme.palette.text.secondary,
-    borderTopRightRadius: theme.spacing(2),
-    borderBottomRightRadius: theme.spacing(2),
-    paddingRight: theme.spacing(1),
-    fontWeight: theme.typography.fontWeightMedium,
-    "&.Mui-expanded": {
-      fontWeight: theme.typography.fontWeightRegular,
-    },
-    "&:hover": {
-      backgroundColor: theme.palette.action.hover,
-    },
-    "&.Mui-focused, &.Mui-selected, &.Mui-selected.Mui-focused": {
-      backgroundColor: `var(--tree-view-bg-color, ${theme.palette.action.selected})`,
-      color: "var(--tree-view-color)",
-    },
-    [`& .${muiTreeItemClasses.label}`]: {
-      fontWeight: "inherit",
-      color: "inherit",
-    },
-  },
-  [`& .${muiTreeItemClasses.group}`]: {
-    marginLeft: 0,
-    [`& .${muiTreeItemClasses.content}`]: {
-      paddingLeft: theme.spacing(2),
-    },
-  },
-}))
-*/
-
-const TREEITEM_HEIGHT = 26
 
 const TREEITEM_STYLES: SxProps = {
   width: "100%",
@@ -103,7 +56,7 @@ const TREEITEM_NORESULTS_STYLES: SxProps = {
   minHeight: 24,
   maxHeight: 24,
   lineHeight: "24px",
-  color: "text.secondary"
+  color: "text.secondary",
 }
 
 const TREEVIEW_STYLES: SxProps = {
@@ -130,12 +83,25 @@ export interface TreeItemProps {
   /** Depth in tree data (null or zero for root) */
   depth?: number
 
+  /** True if item is rendered as expanded */
+  expanded?: boolean
+
+  /** True if item should be rendered as selected */
+  selected?: boolean
+
+  /** True if item should be rendered as pinned */
+  pinned?: boolean
+
   /** Callback used when one of the action or "collapse/expand" icons is clicked */
   onActionClick?: (event: React.SyntheticEvent, item: Tree, action: string) => void
 }
 
+//
+// TreeItem subcomponent
+//
+
 /** A component showing a tree item and its children (used by TreeView) */
-function TreeItem({ item, onActionClick, depth }: TreeItemProps) {
+function TreeItem({ item, ...props }: TreeItemProps) {
   /** An item is collapsible if it has an array of children (even if empty for now) */
   function isCollapsible(): boolean {
     return Array.isArray(item.children)
@@ -147,9 +113,9 @@ function TreeItem({ item, onActionClick, depth }: TreeItemProps) {
 
   function handleClick(e) {
     if (isCollapsible()) {
-      const action = item.collapsibleState == "expanded" ? "collapse" : "expand"
-      console.debug(`TreeView.handleClick - item.id: ${item.id}, action: ${action}`)
-      onActionClick(e, item, action)
+      const action = props.expanded ? "collapse" : "expand"
+      // console.debug(`TreeView.handleClick - item.id: ${item.id}, action: ${action}`)
+      props.onActionClick(e, item, action)
     }
   }
 
@@ -157,11 +123,11 @@ function TreeItem({ item, onActionClick, depth }: TreeItemProps) {
   // render
   //
 
-  const depthPadding = `${(depth || 0) * 8}px`
+  const depthPadding = `${(props.depth || 0) * 8}px`
 
   function getCollapsibleIcon() {
     if (isCollapsible()) {
-      if (item.collapsibleState == "expanded") {
+      if (props.expanded) {
         return <ArrowDropDownIcon className="TreeItem-collapsibleIcon" />
       } else {
         return <ArrowRightIcon className="TreeItem-collapsibleIcon" />
@@ -173,31 +139,6 @@ function TreeItem({ item, onActionClick, depth }: TreeItemProps) {
   function getIcon() {
     const icon = item.icon ? item.icon : isCollapsible() ? "folder" : "file"
     return <Icon className="TreeItem-icon">{icon}</Icon>
-  }
-
-  function getChildren() {
-    if (item.collapsibleState == "expanded") {
-      if (item.children && item.children.length > 0) {
-        return item.children.map((child, index) => {
-          return (
-            <TreeItem key={index + child.title} item={child} onActionClick={onActionClick} depth={(depth || 0) + 1} />
-          )
-        })
-      } else {
-        const marginLeft = `${(depth + 1) * 8 + 24}px`
-        return (
-          <Typography
-            className="TreeItem-noResults"
-            variant="body2"
-            sx={TREEITEM_NORESULTS_STYLES}
-            marginLeft={marginLeft}
-          >
-            No results
-          </Typography>
-        )
-      }
-    }
-    return null
   }
 
   return (
@@ -223,7 +164,6 @@ function TreeItem({ item, onActionClick, depth }: TreeItemProps) {
           )}
         </Typography>
       </ButtonBase>
-      {getChildren()}
     </>
   )
 }
@@ -244,19 +184,94 @@ export interface TreeViewProps {
 }
 
 export function TreeView({ items, onActionClick }: TreeViewProps) {
-  // currently selected row (or rows)
-  const [selection, setSelection] = useState<Tree[]>([])
+  //
+  // state
+  //
+
+  // list of ids of items that are selected
+  const [selected, setSelected] = useState<string[]>([])
+  function isSelected(itemId: string): boolean {
+    return selected.indexOf(itemId) !== -1
+  }
+
+  // list of ids of items that are expanded
+  const [expanded, setExpanded] = useState<string[]>([])
+  function isExpanded(itemId: string): boolean {
+    return expanded.indexOf(itemId) !== -1
+  }
+
+  // list of ids of items that are pinned
+  const [pinned, setPinned] = useState<string[]>([])
+  function isPinned(itemId: string): boolean {
+    return pinned.indexOf(itemId) !== -1
+  }
+
+  //
+  // handlers
+  //
+
+  function handleActionClick(event: React.SyntheticEvent, item: Tree, action: string) {
+    console.debug(`TreeView.handleActionClick - itemId: ${item.id}, action: ${action}`, item)
+
+    switch (action) {
+      case "collapse":
+        setExpanded(expanded.filter((expandedId) => item.id !== expandedId))
+        break
+      case "expand":
+        if (!isExpanded(item.id)) {
+          setExpanded([...expanded, item.id])
+          break
+        }
+    }
+
+    if (onActionClick) {
+      onActionClick(event, item, action)
+    }
+  }
 
   //
   // render
   //
 
+  function renderChildren(children, depth) {
+    if (children && children.length > 0) {
+      return children.map((child) => renderItem(child, depth))
+    } else {
+      const marginLeft = `${(depth + 1) * 8 + 24}px`
+      return (
+        <Typography
+          className="TreeItem-noResults"
+          variant="body2"
+          sx={TREEITEM_NORESULTS_STYLES}
+          marginLeft={marginLeft}
+        >
+          No results
+        </Typography>
+      )
+    }
+  }
+
+  function renderItem(item, depth) {
+    const expanded = isExpanded(item.id)
+    return (
+      <>
+        <TreeItem
+          key={item.id}
+          item={item}
+          onActionClick={handleActionClick}
+          expanded={expanded}
+          selected={isSelected(item.id)}
+          pinned={isPinned(item.id)}
+          depth={depth}
+        />
+        {expanded && renderChildren(item.children, depth + 1)}
+      </>
+    )
+  }
+
   return (
     <Box className="TreeView-root" sx={TREEVIEW_STYLES}>
-      {items?.length > 0 &&
-        items.map((item, index) => {
-          return <TreeItem key={index} item={item} onActionClick={onActionClick} />
-        })}
+      {items?.length > 0 && items.map((item) => renderItem(item, 0))}
     </Box>
   )
 }

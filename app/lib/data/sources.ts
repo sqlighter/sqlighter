@@ -1,4 +1,3 @@
-
 import { Tree } from "../data/tree"
 
 export const FAKE_SCHEMAS: Tree[] = [
@@ -7,20 +6,19 @@ export const FAKE_SCHEMAS: Tree[] = [
     title: "public",
     icon: "database",
     badge: "1",
-    collapsibleState: "collapsed",
     children: [
       {
         id: "101",
         title: "Tables",
         icon: "table",
         badge: "3",
-        collapsibleState: "expanded",
         children: [
           {
             id: "102",
             title: "city",
             children: [
               {
+                id: "103",
                 title: "Columns",
                 badge: "5",
                 children: [
@@ -31,88 +29,64 @@ export const FAKE_SCHEMAS: Tree[] = [
                   { id: "114", title: "population", tags: ["not null", "integer"] },
                 ],
               },
-              { id: "120", title: "Indexes", badge: 1, children: [{ title: "city_pkey" }] },
+              { id: "120", title: "Indexes", badge: 1, children: [{ id: "1200", title: "city_pkey" }] },
               { id: "130", title: "Triggers", badge: 0, children: [] },
             ],
           },
-
           {
             id: "140",
             title: "country",
             children: [
               {
+                id: "150",
                 title: "Columns",
                 badge: 5,
                 children: [
-                  { title: "code", tags: ["primary key", "character(3)"] },
-                  { title: "name", tags: ["not null", "text"] },
-                  { title: "continent", tags: ["not null", "text"] },
-                  { title: "region", tags: ["not null", "text"] },
-                  { title: "surface_area", tags: ["not null", "real"] },
-                  { title: "indep_year", tags: ["smallint"] },
-                  { title: "population", tags: ["not null", "integer"] },
-                  { title: "life_expectancy", tags: ["real"] },
-                  { title: "gnp", tags: ["numeric(10,2)"] },
-                  { title: "gnp_old", tags: ["numeric(10,2)"] },
-                  { title: "local_name", tags: ["not null", "text"] },
-                  { title: "government_form", tags: ["not null", "text"] },
-                  { title: "head_of_state", tags: ["text"] },
-                  { title: "capital", tags: ["integer"] },
-                  { title: "code2", tags: ["not null", "character(2)"] },
+                  { id: "160", title: "code", tags: ["primary key", "character(3)"] },
+                  { id: "162", title: "name", tags: ["not null", "text"] },
+                  { id: "162", title: "continent", tags: ["not null", "text"] },
+                  { id: "163", title: "region", tags: ["not null", "text"] },
+                  { id: "164", title: "surface_area", tags: ["not null", "real"] },
+                  { id: "165", title: "indep_year", tags: ["smallint"] },
+                  { id: "166", title: "population", tags: ["not null", "integer"] },
+                  { id: "167", title: "life_expectancy", tags: ["real"] },
+                  { id: "168", title: "gnp", tags: ["numeric(10,2)"] },
+                  { id: "169", title: "gnp_old", tags: ["numeric(10,2)"] },
+                  { id: "170", title: "local_name", tags: ["not null", "text"] },
+                  { id: "171", title: "government_form", tags: ["not null", "text"] },
+                  { id: "172", title: "head_of_state", tags: ["text"] },
+                  { id: "173", title: "capital", tags: ["integer"] },
+                  { id: "174", title: "code2", tags: ["not null", "character(2)"] },
                 ],
               },
-              {
-                title: "Indexes",
-                badge: 1,
-                children: [{ title: "country_pkey" }],
-              },
-              {
-                title: "Triggers",
-                badge: 0,
-                children: []
-              },
+              { id: "180", title: "Indexes", badge: 1, children: [{ title: "country_pkey" }] },
+              { id: "181", title: "Triggers", badge: 0, children: [] },
             ],
           },
           {
+            id: "190",
             title: "country_language",
             children: [
               {
+                id: "191",
                 title: "Columns",
                 badge: 4,
                 children: [
-                  { title: "country_code", tags: ["primary key", "character(3)"] },
-                  { title: "langage", tags: ["primary key", "text"] },
-                  { title: "is_official", tags: ["not null", "boolean"] },
-                  { title: "percentage", tags: ["not null", "real"] },
+                  { id: "192", title: "country_code", tags: ["primary key", "character(3)"] },
+                  { id: "193", title: "langage", tags: ["primary key", "text"] },
+                  { id: "194", title: "is_official", tags: ["not null", "boolean"] },
+                  { id: "195", title: "percentage", tags: ["not null", "real"] },
                 ],
               },
-              {
-                title: "Indexes",
-                badge: 1,
-                children: [{ title: "country_language_pkey" }],
-              },
-              {
-                title: "Triggers",
-                badge: 0,
-              },
+              { id: "195", title: "Indexes", badge: 1, children: [{ title: "country_language_pkey" }] },
+              { id: "197", title: "Triggers", badge: 0 },
             ],
           },
         ],
       },
-      {
-        title: "Views",
-        badge: 0,
-        children: null,
-      },
-      {
-        title: "Functions",
-        badge: 0,
-        children: null,
-      },
-      {
-        title: "Procedures",
-        badge: 0,
-      },
+      { id: "198", title: "Views", badge: 0, children: null },
+      { id: "200", title: "Functions", badge: 0, children: null },
+      { id: "201", title: "Procedures", badge: 0 },
     ],
   },
 ]
