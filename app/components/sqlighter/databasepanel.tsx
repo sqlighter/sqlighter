@@ -7,8 +7,9 @@
 import { useState } from "react"
 import Box from "@mui/material/Box"
 
+import { Tree } from "../../lib/data/tree"
 import { FAKE_SCHEMAS } from "../../lib/data/sources"
-import { TreeView, TreeItemProps } from "../navigation/treeview"
+import { TreeView } from "../navigation/treeview"
 
 /** A sidebar panel used to display the schema of connected databases */
 export function DatabasePanel() {
@@ -19,7 +20,7 @@ export function DatabasePanel() {
   // handlers
   //
 
-  function handleActionClick(event: React.SyntheticEvent, item: TreeItemProps, action: string) {
+  function handleActionClick(event: React.SyntheticEvent, item: Tree, action: string) {
     console.debug(`DatabasePanel.handleActionClick - itemId: ${item.id}, action: ${action}`, item)
   
     switch(action) {

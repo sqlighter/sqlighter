@@ -1,18 +1,19 @@
 
-import { TreeData } from "../../components/navigation/treeview"
+import { Tree } from "../data/tree"
 
-export const FAKE_SCHEMAS: TreeData[] = [
+export const FAKE_SCHEMAS: Tree[] = [
   {
     id: "100",
     title: "public",
     icon: "database",
+    badge: "1",
     collapsibleState: "collapsed",
     children: [
       {
         id: "101",
         title: "Tables",
         icon: "table",
-        counter: 3,
+        badge: "3",
         collapsibleState: "expanded",
         children: [
           {
@@ -21,7 +22,7 @@ export const FAKE_SCHEMAS: TreeData[] = [
             children: [
               {
                 title: "Columns",
-                counter: 5,
+                badge: "5",
                 children: [
                   { id: "110", title: "id", tags: ["primary key", "integer"] },
                   { id: "111", title: "name", tags: ["not null", "text"] },
@@ -30,8 +31,8 @@ export const FAKE_SCHEMAS: TreeData[] = [
                   { id: "114", title: "population", tags: ["not null", "integer"] },
                 ],
               },
-              { id: "120", title: "Indexes", counter: 1, children: [{ title: "city_pkey" }] },
-              { id: "130", title: "Triggers", counter: 0, children: [] },
+              { id: "120", title: "Indexes", badge: 1, children: [{ title: "city_pkey" }] },
+              { id: "130", title: "Triggers", badge: 0, children: [] },
             ],
           },
 
@@ -41,7 +42,7 @@ export const FAKE_SCHEMAS: TreeData[] = [
             children: [
               {
                 title: "Columns",
-                counter: 5,
+                badge: 5,
                 children: [
                   { title: "code", tags: ["primary key", "character(3)"] },
                   { title: "name", tags: ["not null", "text"] },
@@ -62,12 +63,12 @@ export const FAKE_SCHEMAS: TreeData[] = [
               },
               {
                 title: "Indexes",
-                counter: 1,
+                badge: 1,
                 children: [{ title: "country_pkey" }],
               },
               {
                 title: "Triggers",
-                counter: 0,
+                badge: 0,
                 children: []
               },
             ],
@@ -77,7 +78,7 @@ export const FAKE_SCHEMAS: TreeData[] = [
             children: [
               {
                 title: "Columns",
-                counter: 4,
+                badge: 4,
                 children: [
                   { title: "country_code", tags: ["primary key", "character(3)"] },
                   { title: "langage", tags: ["primary key", "text"] },
@@ -87,12 +88,12 @@ export const FAKE_SCHEMAS: TreeData[] = [
               },
               {
                 title: "Indexes",
-                counter: 1,
+                badge: 1,
                 children: [{ title: "country_language_pkey" }],
               },
               {
                 title: "Triggers",
-                counter: 0,
+                badge: 0,
               },
             ],
           },
@@ -100,17 +101,17 @@ export const FAKE_SCHEMAS: TreeData[] = [
       },
       {
         title: "Views",
-        counter: 0,
+        badge: 0,
         children: null,
       },
       {
         title: "Functions",
-        counter: 0,
+        badge: 0,
         children: null,
       },
       {
         title: "Procedures",
-        counter: 0,
+        badge: 0,
       },
     ],
   },
