@@ -8,16 +8,18 @@ import { useState } from "react"
 import Box from "@mui/material/Box"
 import ButtonBase from "@mui/material/ButtonBase"
 import Chip from "@mui/material/Chip"
+import IconButton from "@mui/material/IconButton"
 import Typography from "@mui/material/Typography"
 import Stack from "@mui/material/Stack"
-import { SxProps } from "@mui/material"
+import { SxProps, Theme } from "@mui/material"
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown"
 import ArrowRightIcon from "@mui/icons-material/ArrowRight"
 
+import { Command } from "../../lib/data/commands"
 import { Tree } from "../../lib/data/tree"
 import { Icon } from "../ui/icon"
 
-const TREEITEM_STYLES: SxProps = {
+const TREEITEM_STYLES: SxProps<Theme> = {
   width: "100%",
   minHeight: 32,
   maxHeight: 32,
@@ -32,6 +34,10 @@ const TREEITEM_STYLES: SxProps = {
 
   "&:hover": {
     backgroundColor: "action.hover",
+
+    ".TreeItem-commandIcon": {
+      color: (theme) => theme.palette.text.disabled,
+    },
   },
 
   ".TreeItem-collapsibleIcon": {
@@ -40,7 +46,7 @@ const TREEITEM_STYLES: SxProps = {
     height: 20,
   },
 
-  ".TreeItem-icon": {
+  ".TreeItem-labelIcon": {
     width: 20,
     height: 20,
     marginRight: 0.5,
@@ -49,6 +55,20 @@ const TREEITEM_STYLES: SxProps = {
   ".TreeItem-label": {
     fontWeight: "inherit",
     paddingRight: 0.5,
+  },
+
+  ".TreeItem-commandIcon": {
+    width: 20,
+    height: 20,
+    color: "transparent",
+
+    "&:hover": {
+      color: (theme) => theme.palette.text.secondary,
+    },
+  },
+
+  ".TreeItem-pinnedIcon": {
+    color: (theme) => theme.palette.primary.main,
   },
 }
 
@@ -93,7 +113,7 @@ export interface TreeItemProps {
   pinned?: boolean
 
   /** Callback used when one of the action or "collapse/expand" icons is clicked */
-  onActionClick?: (event: React.SyntheticEvent, item: Tree, action: string) => void
+  onCommand?: (event: React.SyntheticEvent, command: Command, item: Tree) => void
 }
 
 //
@@ -111,12 +131,19 @@ function TreeItem({ item, ...props }: TreeItemProps) {
   // handlers
   //
 
-  function handleClick(e) {
+  function handleItemClick(e) {
+    console.debug("TreeItem.handleItemClick")
     if (isCollapsible()) {
-      const action = props.expanded ? "collapse" : "expand"
-      // console.debug(`TreeView.handleClick - item.id: ${item.id}, action: ${action}`)
-      props.onActionClick(e, item, action)
+      props.onCommand(e, { command: props.expanded ? "sqltr.collapseItem" : "sqltr.expandItem" }, item)
     }
+  }
+
+  function handleCommandClick(e, command) {
+    console.debug(`TreeItem.handleCommandClick - ${command.command}`)
+    e.stopPropagation()
+    e.preventDefault()
+    props.onCommand(e, command, item)
+    return 0
   }
 
   //
@@ -138,12 +165,32 @@ function TreeItem({ item, ...props }: TreeItemProps) {
 
   function getIcon() {
     const icon = item.icon ? item.icon : isCollapsible() ? "folder" : "file"
-    return <Icon className="TreeItem-icon">{icon}</Icon>
+    return <Icon className="TreeItem-labelIcon">{icon}</Icon>
+  }
+
+  function getCommandIcon(command: Command) {
+    let className = "TreeItem-commandIcon"
+    if (props.pinned && command.command === "sqltr.pinItem") {
+      className = " TreeItem-pinnedIcon"
+    }
+
+    return (
+      <Icon
+        key={command.command}
+        className={className}
+        onClick={(e) => {
+          props.onCommand(e, command, item)
+          e.stopPropagation()
+        }}
+      >
+        {command.icon}
+      </Icon>
+    )
   }
 
   return (
     <>
-      <ButtonBase sx={TREEITEM_STYLES} className="TreeItem-root" onClick={handleClick}>
+      <ButtonBase sx={TREEITEM_STYLES} className="TreeItem-root" onClick={handleItemClick}>
         <Box className="TreeItem-depthPadding" sx={{ minWidth: depthPadding, width: depthPadding }} />
         {getCollapsibleIcon()}
         {getIcon()}
@@ -163,6 +210,11 @@ function TreeItem({ item, ...props }: TreeItemProps) {
             </Stack>
           )}
         </Typography>
+        {item.commands && (
+          <Stack className="TreeItem-commands" direction="row" spacing={0.5}>
+            {item.commands.map((command) => getCommandIcon(command))}
+          </Stack>
+        )}
       </ButtonBase>
     </>
   )
@@ -179,11 +231,11 @@ export interface TreeViewProps {
   /** Will show filtered results based on given string */
   filter?: string
 
-  /** Callback used when one of the item's actions or "collapse/expand" icons is clicked */
-  onActionClick?: (event: React.SyntheticEvent, item: Tree, action: string) => void
+  /** Callback used when one of the item's commands is triggered */
+  onCommand?: (event: React.SyntheticEvent, command: Command, item: Tree) => void
 }
 
-export function TreeView({ items, onActionClick }: TreeViewProps) {
+export function TreeView({ items, onCommand }: TreeViewProps) {
   //
   // state
   //
@@ -210,22 +262,22 @@ export function TreeView({ items, onActionClick }: TreeViewProps) {
   // handlers
   //
 
-  function handleActionClick(event: React.SyntheticEvent, item: Tree, action: string) {
-    console.debug(`TreeView.handleActionClick - itemId: ${item.id}, action: ${action}`, item)
+  function handleCommand(event: React.SyntheticEvent, command: Command, item: Tree) {
+    console.debug(`TreeView.handleActionClick - command: ${command.command}, item: ${item.id}`, command, item)
 
-    switch (action) {
-      case "collapse":
+    switch (command.command) {
+      case "sqltr.collapseItem":
         setExpanded(expanded.filter((expandedId) => item.id !== expandedId))
         break
-      case "expand":
+      case "sqltr.expandItem":
         if (!isExpanded(item.id)) {
           setExpanded([...expanded, item.id])
-          break
         }
-    }
+        break
+      }
 
-    if (onActionClick) {
-      onActionClick(event, item, action)
+    if (onCommand) {
+      onCommand(event, command, item)
     }
   }
 
@@ -258,7 +310,7 @@ export function TreeView({ items, onActionClick }: TreeViewProps) {
         <TreeItem
           key={item.id}
           item={item}
-          onActionClick={handleActionClick}
+          onCommand={handleCommand}
           expanded={expanded}
           selected={isSelected(item.id)}
           pinned={isPinned(item.id)}

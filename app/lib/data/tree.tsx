@@ -10,6 +10,8 @@ import * as React from "react"
 // https://code.visualstudio.com/api/references/vscode-api#TreeDataProvider
 // https://code.visualstudio.com/api/references/vscode-api#TreeItem
 
+import { Command } from "./commands"
+
 /** Data model for hierarchial data rendered with TreeView */
 export interface Tree {
   /**
@@ -45,6 +47,9 @@ export interface Tree {
 
   /** Tags shown for this item (optional) */
   tags?: string[]
+
+  /** Commands shown as icons or in extension menu (optional) */
+  commands?: Command[]
 
   /** Item's children (expand icon will be shown if array provided but empty) */
   children?: Tree[]

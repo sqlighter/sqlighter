@@ -16,6 +16,11 @@ export const FAKE_SCHEMAS: Tree[] = [
           {
             id: "102",
             title: "city",
+            commands: [
+              { "command": "sqltr.viewData", "title": "View Data", "icon": "table"},
+              { "command": "sqltr.viewStructure", "title": "View Structure", "icon": "database"},
+              { "command": "sqltr.pinItem", "title": "Pin", "icon": "pin"}
+            ],
             children: [
               {
                 id: "103",

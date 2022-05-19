@@ -7,6 +7,7 @@
 import { useState } from "react"
 import Box from "@mui/material/Box"
 
+import { Command } from "../../lib/data/commands"
 import { Tree } from "../../lib/data/tree"
 import { FAKE_SCHEMAS } from "../../lib/data/sources"
 import { TreeView } from "../navigation/treeview"
@@ -20,15 +21,20 @@ export function DatabasePanel() {
   // handlers
   //
 
-  function handleActionClick(event: React.SyntheticEvent, item: Tree, action: string) {
-    console.debug(`DatabasePanel.handleActionClick - itemId: ${item.id}, action: ${action}`, item)
+  function handleCommand(event: React.SyntheticEvent, command: Command, item: Tree) {
+    console.debug(`DatabasePanel.handleCommand - command: ${command.command}, itemId: ${item.id}`, command, item)
   
-    switch(action) {
-      case "collapse":
-      case "expand":
+    switch(command.command) {
+      case "sqltr.collapseItem":
+      case "sqltr.expandItem":
         // handled by treeview
         break;
-    }
+
+      case "sqltr.viewData":
+        break;
+      case "sqltr.viewStructure":
+        break;
+      }
   }
 
   //
@@ -38,7 +44,7 @@ export function DatabasePanel() {
   return (
     <>
       <Box>Database schema panel (TBD)</Box>
-      <TreeView items={items} onActionClick={handleActionClick} />
+      <TreeView items={items} onCommand={handleCommand} />
     </>
   )
 }
