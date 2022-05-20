@@ -4,8 +4,10 @@
 
 import { DataConnectionConfigs } from "../connections"
 import { SqliteDataConnection } from "./sqlite"
-import { Database, QueryExecResult } from "sql.js"
+import initSqlJs, { Database, QueryExecResult } from "sql.js"
 import fs from "fs"
+
+
 
 function printThis(value) {
   console.log(JSON.stringify(value, null, " "))
@@ -16,14 +18,25 @@ function printThis(value) {
 // AST tool
 // https://astexplorer.net/
 
+
+// client side testing
+// https://jestjs.io/docs/configuration#testenvironment-string
+
 async function getChinookConnection() {
+  // create sqlite engine
+  const engine = await initSqlJs({
+    // Required to load the wasm binary asynchronously. Of course, you can host it wherever you want
+    // You can omit locateFile completely when running in node
+    // locateFile: file => `https://sql.js.org/dist/${file}`
+  })
+
   const configs: DataConnectionConfigs = {
     client: "sqlite3",
     connection: {
       buffer: fs.readFileSync("./lib/sqltr/databases/test/chinook.sqlite"),
     },
   }
-  return await SqliteDataConnection.create(configs)
+  return await SqliteDataConnection.create(configs, engine)
 }
 
 describe("sqlite.ts", () => {

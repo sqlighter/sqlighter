@@ -17,16 +17,25 @@ export class SqliteDataConnection extends DataConnection {
     super(configs)
   }
 
-  public static async create(configs: DataConnectionConfigs): Promise<SqliteDataConnection> {
+  public static async create(configs: DataConnectionConfigs, engine): Promise<SqliteDataConnection> {
     try {
       // TODO open sqlite from filename, url, etc.
       if (configs.client !== "sqlite3" || !configs.connection.buffer) {
         throw new Error("SqliteDataConnection.connect - can only create in memory connections from buffer data")
       }
+/*
+      const engine = await initSqlJs({
+        // Required to load the wasm binary asynchronously. Of course, you can host it wherever you want
+        // You can omit locateFile completely when running in node
+        // locateFile: file => `https://sql.js.org/dist/${file}`
+      })
+*/
 
       // create database from memory buffer
       const connection = new SqliteDataConnection(configs)
+      connection._database = new engine.Database(configs.connection.buffer)
 
+/*
       try {
         if (window) {
           // @ts-ignore
@@ -45,7 +54,7 @@ export class SqliteDataConnection extends DataConnection {
         })
         connection._database = new SQL.Database(configs.connection.buffer)
       }
-
+*/
       // register connection in
       DataConnection._connections.push(connection)
 
@@ -83,10 +92,10 @@ export class SqliteDataConnection extends DataConnection {
         if (sql) {
           try {
             console.log(sql)
-            const ast = sqliteParser(sql)
-            const createAst = ast.statement[0]
-            const name = createAst.name?.name || createAst.target?.name
-            schema.push({ type: createAst.format, name, sql, ast })
+            let ast = sqliteParser(sql)
+            ast = ast.statement[0] // remove statement list wrapper
+            const name = ast.name?.name || ast.target?.name
+            schema.push({ type: ast.format, name, sql, ast })
           } catch (exception) {
             console.error(
               `SqliteDataConnection.getSchema - ${entity}: ${name}, exception: ${exception}`,

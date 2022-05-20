@@ -3,6 +3,7 @@
 //
 
 import * as React from "react"
+import Script from "next/script"
 import dynamic from "next/dynamic"
 
 // import { Main  } from "../../components/sqlighter/main"
@@ -16,5 +17,10 @@ const MainComponentWithoutSSR = dynamic(() => import("../../components/sqlighter
 const title = "SQLighter"
 
 export default function AppPage(props) {
-  return <MainComponentWithoutSSR {...props} />
+  return (
+    <>
+      <Script type="module" strategy="beforeInteractive" src="/sql-loader.js" />
+      <MainComponentWithoutSSR {...props} />
+    </>
+  )
 }

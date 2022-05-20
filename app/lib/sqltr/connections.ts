@@ -20,14 +20,7 @@ export interface DataSchema {
   }
 }
 
-/**
- * Configuration used to connect with data source
- * @see http://knexjs.org/#Installation-client
- */
-export interface DataConnectionConfigs {
-  client: "sqlite3" | "mysql" // etc...
-
-  connection: {
+interface DataConnectionConfigParams {
     // TDB...
     host?: string
     port?: number
@@ -38,7 +31,18 @@ export interface DataConnectionConfigs {
 
     /** Binary buffer containing the actual database data, eg. sqlite3 */
     buffer?: Buffer
-  }
+}
+
+/**
+ * Configuration used to connect with data source
+ * @see http://knexjs.org/#Installation-client
+ */
+export interface DataConnectionConfigs {
+  /** Type of client that should be used to connect */
+  client: "sqlite3" | "mysql" // etc...
+
+  /** Connection string or object with detailed connection parameters */
+  connection: DataConnectionConfigParams | string;
 }
 
 export abstract class DataConnection {
