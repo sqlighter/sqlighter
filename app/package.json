@@ -19,7 +19,7 @@
     "storybook": "start-storybook -p 6006 -s ./public"
   },
   "dependencies": {
-    "@date-io/dayjs": "^2.13.2",
+    "@date-io/dayjs": "^2.14.0",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
     "@google-cloud/storage": "^5.19.4",
