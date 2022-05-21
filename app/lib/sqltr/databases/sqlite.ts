@@ -6,6 +6,8 @@ import initSqlJs, { Database, QueryExecResult } from "sql.js"
 import sqliteParser from "sqlite-parser"
 import { DataConnection, DataConnectionConfigs, DataSchema } from "../connections"
 
+// import fs from "fs"
+
 export class SqliteDataConnection extends DataConnection {
   /** SQLite database connection */
   private _database: Database
@@ -136,6 +138,30 @@ export class SqliteDataConnection extends DataConnection {
     return tableSchema
   }
 
+  private _getViewSchema(entities, viewEntity) {
+    const viewAst = viewEntity.ast
+    const viewName = viewAst.target.name
+
+    // TODO parse view's columns, expressions, etc
+    return {
+      name: viewName,
+      sql: viewEntity.sql,
+      from: viewAst.result?.from?.name,
+    }
+  }
+
+  private _getTriggerSchema(entities, triggerEntity) {
+    const triggerAst = triggerEntity.ast
+    const triggerName = triggerAst.target.name
+
+    // TODO parse view's columns, expressions, etc
+    return {
+      name: triggerName,
+      sql: triggerEntity.sql,
+      //from: viewAst.result?.from?.name,
+    }
+  }
+
   /**
    * This method will run a query on 'sqlite_schema' to retrieve the SQL create statements for all
    * the tables, indexes, triggers and views in the database. It will then parse the SQL statements
@@ -181,6 +207,10 @@ export class SqliteDataConnection extends DataConnection {
         }
       }
 
+      // save schema for verification
+      // const json = JSON.stringify(entities, null, "  ")
+      // fs.writeFileSync("./lib/sqltr/databases/test/test.entities.json", json)
+
       // database name to be used for schema
       let database = "sqlite"
       if (typeof this._configs?.connection == "object") {
@@ -195,15 +225,21 @@ export class SqliteDataConnection extends DataConnection {
         .map((tableEntity) => this._getTableSchema(entities, tableEntity))
         .sort((a, b) => (a.name < b.name ? -1 : 1))
 
+        const views = entities
+        .filter((entity) => entity.type == "view")
+        .map((viewEntity) => this._getViewSchema(entities, viewEntity))
+        .sort((a, b) => (a.name < b.name ? -1 : 1))
+
+        const triggers = entities
+        .filter((entity) => entity.type == "trigger")
+        .map((triggerEntity) => this._getViewSchema(entities, triggerEntity))
+        .sort((a, b) => (a.name < b.name ? -1 : 1))
+
       const schema: DataSchema = {
         database,
         tables,
-
-        // TODO parse triggers into schema
-        triggers: [],
-
-        // TODO parse views into schema
-        views: [],
+        triggers,
+        views,
       }
 
       return [schema]

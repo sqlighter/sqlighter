@@ -26,8 +26,19 @@ export interface DataSchema {
     }[]
   }[]
 
-  triggers?: any[]
-  views?: any[]
+  /** Triggers in the schema */
+  triggers?: {
+    name: string
+    sql: string
+    on?: string
+  }[]
+
+  /** Views in the schema */
+  views?: {
+    name: string
+    sql: string
+    from?: string
+  }[]
 }
 
 export interface DataConnectionConfigParams {
@@ -144,16 +155,32 @@ export abstract class DataConnection {
     }
   }
 
+  private _getTriggerTree(schema, trigger) {
+    return {
+      id: `${schema.database}/triggers/${trigger.name}`,
+      title: trigger.name,
+      type: "trigger",
+      tags: trigger.on ? [trigger.on] : undefined,
+    }
+  }
+
+  private _getViewTree(schema, view) {
+    return {
+      id: `${schema.database}/views/${view.name}`,
+      title: view.name,
+      type: "view",
+      tags: view.from ? [view.from] : undefined,
+    }
+  }
+
   public async getTrees(refresh: boolean = false): Promise<Tree[]> {
     const schemas = await this.getSchemas(refresh)
     const trees: Tree[] = []
 
     for (const schema of schemas) {
       const tables = schema.tables.map((table) => this._getTableTree(schema, table))
-
-      const indexes = []
-      const triggers = []
-      const views = []
+      const triggers = schema.triggers.map((trigger) => this._getTriggerTree(schema, trigger))
+      const views = schema.views.map((view) => this._getViewTree(schema, view))
 
       const tree: Tree = {
         id: schema.database,
@@ -173,6 +200,7 @@ export abstract class DataConnection {
             id: `${schema.database}/triggers`,
             title: "Triggers",
             type: "triggers",
+            icon: "trigger",
             badge: triggers.length.toString(),
             children: triggers,
           },
@@ -180,6 +208,7 @@ export abstract class DataConnection {
             id: `${schema.database}/views`,
             title: "Views",
             type: "views",
+            icon: "view",
             badge: views.length.toString(),
             children: views,
           },

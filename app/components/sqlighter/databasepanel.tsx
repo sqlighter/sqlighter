@@ -145,7 +145,8 @@ export function DatabasePanel() {
 
   async function handleOpenClick(e) {
     if (sqljs) {
-      const response = await fetch("/chinook.sqlite")
+//      const response = await fetch("/chinook.sqlite")
+      const response = await fetch("/test.db")
       const buffer = await response.arrayBuffer()
       console.log("downloaded", response, buffer)
       const configs: DataConnectionConfigs = {

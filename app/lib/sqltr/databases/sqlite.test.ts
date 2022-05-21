@@ -37,6 +37,18 @@ async function getChinookConnection() {
   return await SqliteDataConnection.create(configs, engine)
 }
 
+async function getTestConnection() {
+  const engine = await initSqlJs()
+  const configs: DataConnectionConfigs = {
+    client: "sqlite3",
+    connection: {
+      database: "test.db",
+      buffer: fs.readFileSync("./lib/sqltr/databases/test/test.db"),
+    },
+  }
+  return await SqliteDataConnection.create(configs, engine)
+}
+
 describe("sqlite.ts", () => {
   test("getResult (single select)", async () => {
     const connection = await getChinookConnection()
@@ -127,6 +139,45 @@ describe("sqlite.ts", () => {
     )
   })
 
+  test("getSchema (test.db)", async () => {
+    const connection = await getTestConnection()
+    const schemas = await connection.getSchemas(false)
+    expect(schemas).toBeTruthy()
+    expect(schemas.length).toBe(1)
+
+    const schema = schemas[0]
+    // TODO SqliteDataConnection.getSchema - index: playlist_track doesn't have a SQL schema
+
+    // save schema for verification
+    const json = JSON.stringify(schema, null, "  ")
+    fs.writeFileSync("./lib/sqltr/databases/test/test.schema.json", json)
+
+    // save sql for verification
+    const sql = []
+    for (const tbl of schema.tables) {
+      sql.push(tbl.sql)
+      if (tbl.indexes) {
+        for (const idx of tbl.indexes) {
+          sql.push(idx.sql)
+        }
+      }
+    }
+    for (const trg of schema.triggers) {
+      sql.push(trg.sql)
+    }
+    for (const view of schema.views) {
+      sql.push(view.sql)
+    }
+    const sqlJoin = sql.join(";\n\n")
+    fs.writeFileSync("./lib/sqltr/databases/test/test.sql", sqlJoin)
+
+    const triggersNames = schema.triggers.map((t) => t.name).join(", ")
+    expect(triggersNames).toBe("validate_email_before_insert_customers")
+
+    const viewsNames = schema.views.map((v) => v.name).join(" ")
+    expect(viewsNames).toBe("customernames doublesales invoicetotals")
+  })
+
   test("getTree (chinook.db)", async () => {
     const connection = await getChinookConnection()
     const tree = await connection.getTrees(false)
@@ -191,5 +242,35 @@ describe("sqlite.ts", () => {
     expect(titleColumn.icon).toBeUndefined()
     expect(titleColumn.badge).toBeUndefined()
     expect(titleColumn.children).toBeUndefined()
+  })
+
+  test("getTree (test.db)", async () => {
+    const connection = await getTestConnection()
+    const tree = await connection.getTrees(false)
+    expect(tree).toBeTruthy()
+    expect(tree.length).toBe(1)
+    const root = tree[0]
+
+    // save for verification
+    const json = JSON.stringify(tree, null, "  ")
+    fs.writeFileSync("./lib/sqltr/databases/test/test.tree.json", json)
+
+    const triggers = root.children[1]
+    expect(triggers.id).toBe("test.db/triggers")
+    expect(triggers.title).toBe("Triggers")
+    expect(triggers.icon).toBe("trigger")
+    expect(triggers.badge).toBe("1")
+    expect(triggers.children.length).toBe(1)
+    const triggersTitles = triggers.children.map((c) => c.title).join(", ")
+    expect(triggersTitles).toBe("validate_email_before_insert_customers")
+
+    const views = root.children[2]
+    expect(views.id).toBe("test.db/views")
+    expect(views.title).toBe("Views")
+    expect(views.icon).toBe("view")
+    expect(views.badge).toBe("3")
+    expect(views.children.length).toBe(3)
+    const viewsTitles = views.children.map((c) => c.title).join(", ")
+    expect(viewsTitles).toBe("customernames, doublesales, invoicetotals")
   })
 })

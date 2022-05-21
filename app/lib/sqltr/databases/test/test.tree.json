@@ -1,30 +1,30 @@
 [
   {
-    "id": "chinook.db",
-    "title": "chinook.db",
+    "id": "test.db",
+    "title": "test.db",
     "type": "database",
     "icon": "database",
     "children": [
       {
-        "id": "chinook.db/tables",
+        "id": "test.db/tables",
         "title": "Tables",
         "type": "tables",
         "icon": "table",
         "badge": "11",
         "children": [
           {
-            "id": "chinook.db/tables/albums",
+            "id": "test.db/tables/albums",
             "title": "albums",
             "type": "table",
             "children": [
               {
-                "id": "chinook.db/tables/albums/columns",
+                "id": "test.db/tables/albums/columns",
                 "title": "Columns",
                 "type": "columns",
                 "badge": "3",
                 "children": [
                   {
-                    "id": "chinook.db/tables/albums/columns/AlbumId",
+                    "id": "test.db/tables/albums/columns/AlbumId",
                     "title": "AlbumId",
                     "type": "column",
                     "tags": [
@@ -35,7 +35,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/albums/columns/Title",
+                    "id": "test.db/tables/albums/columns/Title",
                     "title": "Title",
                     "type": "column",
                     "tags": [
@@ -44,7 +44,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/albums/columns/ArtistId",
+                    "id": "test.db/tables/albums/columns/ArtistId",
                     "title": "ArtistId",
                     "type": "column",
                     "tags": [
@@ -55,13 +55,13 @@
                 ]
               },
               {
-                "id": "chinook.db/tables/albums/indexes",
+                "id": "test.db/tables/albums/indexes",
                 "title": "Indexes",
                 "type": "indexes",
                 "badge": "1",
                 "children": [
                   {
-                    "id": "chinook.db/tables/albums/indexes/IFK_AlbumArtistId",
+                    "id": "test.db/tables/albums/indexes/IFK_AlbumArtistId",
                     "title": "IFK_AlbumArtistId",
                     "type": "index",
                     "tags": [
@@ -73,18 +73,18 @@
             ]
           },
           {
-            "id": "chinook.db/tables/artists",
+            "id": "test.db/tables/artists",
             "title": "artists",
             "type": "table",
             "children": [
               {
-                "id": "chinook.db/tables/artists/columns",
+                "id": "test.db/tables/artists/columns",
                 "title": "Columns",
                 "type": "columns",
                 "badge": "2",
                 "children": [
                   {
-                    "id": "chinook.db/tables/artists/columns/ArtistId",
+                    "id": "test.db/tables/artists/columns/ArtistId",
                     "title": "ArtistId",
                     "type": "column",
                     "tags": [
@@ -95,7 +95,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/artists/columns/Name",
+                    "id": "test.db/tables/artists/columns/Name",
                     "title": "Name",
                     "type": "column",
                     "tags": [
@@ -105,7 +105,7 @@
                 ]
               },
               {
-                "id": "chinook.db/tables/artists/indexes",
+                "id": "test.db/tables/artists/indexes",
                 "title": "Indexes",
                 "type": "indexes",
                 "badge": "0"
@@ -113,18 +113,18 @@
             ]
           },
           {
-            "id": "chinook.db/tables/customers",
+            "id": "test.db/tables/customers",
             "title": "customers",
             "type": "table",
             "children": [
               {
-                "id": "chinook.db/tables/customers/columns",
+                "id": "test.db/tables/customers/columns",
                 "title": "Columns",
                 "type": "columns",
                 "badge": "13",
                 "children": [
                   {
-                    "id": "chinook.db/tables/customers/columns/CustomerId",
+                    "id": "test.db/tables/customers/columns/CustomerId",
                     "title": "CustomerId",
                     "type": "column",
                     "tags": [
@@ -135,7 +135,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/customers/columns/FirstName",
+                    "id": "test.db/tables/customers/columns/FirstName",
                     "title": "FirstName",
                     "type": "column",
                     "tags": [
@@ -144,7 +144,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/customers/columns/LastName",
+                    "id": "test.db/tables/customers/columns/LastName",
                     "title": "LastName",
                     "type": "column",
                     "tags": [
@@ -153,7 +153,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/customers/columns/Company",
+                    "id": "test.db/tables/customers/columns/Company",
                     "title": "Company",
                     "type": "column",
                     "tags": [
@@ -161,7 +161,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/customers/columns/Address",
+                    "id": "test.db/tables/customers/columns/Address",
                     "title": "Address",
                     "type": "column",
                     "tags": [
@@ -169,7 +169,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/customers/columns/City",
+                    "id": "test.db/tables/customers/columns/City",
                     "title": "City",
                     "type": "column",
                     "tags": [
@@ -177,7 +177,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/customers/columns/State",
+                    "id": "test.db/tables/customers/columns/State",
                     "title": "State",
                     "type": "column",
                     "tags": [
@@ -185,7 +185,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/customers/columns/Country",
+                    "id": "test.db/tables/customers/columns/Country",
                     "title": "Country",
                     "type": "column",
                     "tags": [
@@ -193,7 +193,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/customers/columns/PostalCode",
+                    "id": "test.db/tables/customers/columns/PostalCode",
                     "title": "PostalCode",
                     "type": "column",
                     "tags": [
@@ -201,7 +201,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/customers/columns/Phone",
+                    "id": "test.db/tables/customers/columns/Phone",
                     "title": "Phone",
                     "type": "column",
                     "tags": [
@@ -209,7 +209,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/customers/columns/Fax",
+                    "id": "test.db/tables/customers/columns/Fax",
                     "title": "Fax",
                     "type": "column",
                     "tags": [
@@ -217,7 +217,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/customers/columns/Email",
+                    "id": "test.db/tables/customers/columns/Email",
                     "title": "Email",
                     "type": "column",
                     "tags": [
@@ -226,7 +226,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/customers/columns/SupportRepId",
+                    "id": "test.db/tables/customers/columns/SupportRepId",
                     "title": "SupportRepId",
                     "type": "column",
                     "tags": [
@@ -236,13 +236,13 @@
                 ]
               },
               {
-                "id": "chinook.db/tables/customers/indexes",
+                "id": "test.db/tables/customers/indexes",
                 "title": "Indexes",
                 "type": "indexes",
                 "badge": "1",
                 "children": [
                   {
-                    "id": "chinook.db/tables/customers/indexes/IFK_CustomerSupportRepId",
+                    "id": "test.db/tables/customers/indexes/IFK_CustomerSupportRepId",
                     "title": "IFK_CustomerSupportRepId",
                     "type": "index",
                     "tags": [
@@ -254,18 +254,18 @@
             ]
           },
           {
-            "id": "chinook.db/tables/employees",
+            "id": "test.db/tables/employees",
             "title": "employees",
             "type": "table",
             "children": [
               {
-                "id": "chinook.db/tables/employees/columns",
+                "id": "test.db/tables/employees/columns",
                 "title": "Columns",
                 "type": "columns",
                 "badge": "15",
                 "children": [
                   {
-                    "id": "chinook.db/tables/employees/columns/EmployeeId",
+                    "id": "test.db/tables/employees/columns/EmployeeId",
                     "title": "EmployeeId",
                     "type": "column",
                     "tags": [
@@ -276,7 +276,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/employees/columns/LastName",
+                    "id": "test.db/tables/employees/columns/LastName",
                     "title": "LastName",
                     "type": "column",
                     "tags": [
@@ -285,7 +285,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/employees/columns/FirstName",
+                    "id": "test.db/tables/employees/columns/FirstName",
                     "title": "FirstName",
                     "type": "column",
                     "tags": [
@@ -294,7 +294,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/employees/columns/Title",
+                    "id": "test.db/tables/employees/columns/Title",
                     "title": "Title",
                     "type": "column",
                     "tags": [
@@ -302,7 +302,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/employees/columns/ReportsTo",
+                    "id": "test.db/tables/employees/columns/ReportsTo",
                     "title": "ReportsTo",
                     "type": "column",
                     "tags": [
@@ -310,7 +310,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/employees/columns/BirthDate",
+                    "id": "test.db/tables/employees/columns/BirthDate",
                     "title": "BirthDate",
                     "type": "column",
                     "tags": [
@@ -318,7 +318,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/employees/columns/HireDate",
+                    "id": "test.db/tables/employees/columns/HireDate",
                     "title": "HireDate",
                     "type": "column",
                     "tags": [
@@ -326,7 +326,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/employees/columns/Address",
+                    "id": "test.db/tables/employees/columns/Address",
                     "title": "Address",
                     "type": "column",
                     "tags": [
@@ -334,7 +334,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/employees/columns/City",
+                    "id": "test.db/tables/employees/columns/City",
                     "title": "City",
                     "type": "column",
                     "tags": [
@@ -342,7 +342,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/employees/columns/State",
+                    "id": "test.db/tables/employees/columns/State",
                     "title": "State",
                     "type": "column",
                     "tags": [
@@ -350,7 +350,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/employees/columns/Country",
+                    "id": "test.db/tables/employees/columns/Country",
                     "title": "Country",
                     "type": "column",
                     "tags": [
@@ -358,7 +358,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/employees/columns/PostalCode",
+                    "id": "test.db/tables/employees/columns/PostalCode",
                     "title": "PostalCode",
                     "type": "column",
                     "tags": [
@@ -366,7 +366,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/employees/columns/Phone",
+                    "id": "test.db/tables/employees/columns/Phone",
                     "title": "Phone",
                     "type": "column",
                     "tags": [
@@ -374,7 +374,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/employees/columns/Fax",
+                    "id": "test.db/tables/employees/columns/Fax",
                     "title": "Fax",
                     "type": "column",
                     "tags": [
@@ -382,7 +382,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/employees/columns/Email",
+                    "id": "test.db/tables/employees/columns/Email",
                     "title": "Email",
                     "type": "column",
                     "tags": [
@@ -392,13 +392,13 @@
                 ]
               },
               {
-                "id": "chinook.db/tables/employees/indexes",
+                "id": "test.db/tables/employees/indexes",
                 "title": "Indexes",
                 "type": "indexes",
                 "badge": "1",
                 "children": [
                   {
-                    "id": "chinook.db/tables/employees/indexes/IFK_EmployeeReportsTo",
+                    "id": "test.db/tables/employees/indexes/IFK_EmployeeReportsTo",
                     "title": "IFK_EmployeeReportsTo",
                     "type": "index",
                     "tags": [
@@ -410,18 +410,18 @@
             ]
           },
           {
-            "id": "chinook.db/tables/genres",
+            "id": "test.db/tables/genres",
             "title": "genres",
             "type": "table",
             "children": [
               {
-                "id": "chinook.db/tables/genres/columns",
+                "id": "test.db/tables/genres/columns",
                 "title": "Columns",
                 "type": "columns",
                 "badge": "2",
                 "children": [
                   {
-                    "id": "chinook.db/tables/genres/columns/GenreId",
+                    "id": "test.db/tables/genres/columns/GenreId",
                     "title": "GenreId",
                     "type": "column",
                     "tags": [
@@ -432,7 +432,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/genres/columns/Name",
+                    "id": "test.db/tables/genres/columns/Name",
                     "title": "Name",
                     "type": "column",
                     "tags": [
@@ -442,7 +442,7 @@
                 ]
               },
               {
-                "id": "chinook.db/tables/genres/indexes",
+                "id": "test.db/tables/genres/indexes",
                 "title": "Indexes",
                 "type": "indexes",
                 "badge": "0"
@@ -450,18 +450,18 @@
             ]
           },
           {
-            "id": "chinook.db/tables/invoice_items",
+            "id": "test.db/tables/invoice_items",
             "title": "invoice_items",
             "type": "table",
             "children": [
               {
-                "id": "chinook.db/tables/invoice_items/columns",
+                "id": "test.db/tables/invoice_items/columns",
                 "title": "Columns",
                 "type": "columns",
                 "badge": "5",
                 "children": [
                   {
-                    "id": "chinook.db/tables/invoice_items/columns/InvoiceLineId",
+                    "id": "test.db/tables/invoice_items/columns/InvoiceLineId",
                     "title": "InvoiceLineId",
                     "type": "column",
                     "tags": [
@@ -472,7 +472,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/invoice_items/columns/InvoiceId",
+                    "id": "test.db/tables/invoice_items/columns/InvoiceId",
                     "title": "InvoiceId",
                     "type": "column",
                     "tags": [
@@ -481,7 +481,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/invoice_items/columns/TrackId",
+                    "id": "test.db/tables/invoice_items/columns/TrackId",
                     "title": "TrackId",
                     "type": "column",
                     "tags": [
@@ -490,7 +490,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/invoice_items/columns/UnitPrice",
+                    "id": "test.db/tables/invoice_items/columns/UnitPrice",
                     "title": "UnitPrice",
                     "type": "column",
                     "tags": [
@@ -499,7 +499,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/invoice_items/columns/Quantity",
+                    "id": "test.db/tables/invoice_items/columns/Quantity",
                     "title": "Quantity",
                     "type": "column",
                     "tags": [
@@ -510,13 +510,13 @@
                 ]
               },
               {
-                "id": "chinook.db/tables/invoice_items/indexes",
+                "id": "test.db/tables/invoice_items/indexes",
                 "title": "Indexes",
                 "type": "indexes",
                 "badge": "2",
                 "children": [
                   {
-                    "id": "chinook.db/tables/invoice_items/indexes/IFK_InvoiceLineInvoiceId",
+                    "id": "test.db/tables/invoice_items/indexes/IFK_InvoiceLineInvoiceId",
                     "title": "IFK_InvoiceLineInvoiceId",
                     "type": "index",
                     "tags": [
@@ -524,7 +524,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/invoice_items/indexes/IFK_InvoiceLineTrackId",
+                    "id": "test.db/tables/invoice_items/indexes/IFK_InvoiceLineTrackId",
                     "title": "IFK_InvoiceLineTrackId",
                     "type": "index",
                     "tags": [
@@ -536,18 +536,18 @@
             ]
           },
           {
-            "id": "chinook.db/tables/invoices",
+            "id": "test.db/tables/invoices",
             "title": "invoices",
             "type": "table",
             "children": [
               {
-                "id": "chinook.db/tables/invoices/columns",
+                "id": "test.db/tables/invoices/columns",
                 "title": "Columns",
                 "type": "columns",
                 "badge": "9",
                 "children": [
                   {
-                    "id": "chinook.db/tables/invoices/columns/InvoiceId",
+                    "id": "test.db/tables/invoices/columns/InvoiceId",
                     "title": "InvoiceId",
                     "type": "column",
                     "tags": [
@@ -558,7 +558,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/invoices/columns/CustomerId",
+                    "id": "test.db/tables/invoices/columns/CustomerId",
                     "title": "CustomerId",
                     "type": "column",
                     "tags": [
@@ -567,7 +567,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/invoices/columns/InvoiceDate",
+                    "id": "test.db/tables/invoices/columns/InvoiceDate",
                     "title": "InvoiceDate",
                     "type": "column",
                     "tags": [
@@ -576,7 +576,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/invoices/columns/BillingAddress",
+                    "id": "test.db/tables/invoices/columns/BillingAddress",
                     "title": "BillingAddress",
                     "type": "column",
                     "tags": [
@@ -584,7 +584,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/invoices/columns/BillingCity",
+                    "id": "test.db/tables/invoices/columns/BillingCity",
                     "title": "BillingCity",
                     "type": "column",
                     "tags": [
@@ -592,7 +592,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/invoices/columns/BillingState",
+                    "id": "test.db/tables/invoices/columns/BillingState",
                     "title": "BillingState",
                     "type": "column",
                     "tags": [
@@ -600,7 +600,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/invoices/columns/BillingCountry",
+                    "id": "test.db/tables/invoices/columns/BillingCountry",
                     "title": "BillingCountry",
                     "type": "column",
                     "tags": [
@@ -608,7 +608,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/invoices/columns/BillingPostalCode",
+                    "id": "test.db/tables/invoices/columns/BillingPostalCode",
                     "title": "BillingPostalCode",
                     "type": "column",
                     "tags": [
@@ -616,7 +616,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/invoices/columns/Total",
+                    "id": "test.db/tables/invoices/columns/Total",
                     "title": "Total",
                     "type": "column",
                     "tags": [
@@ -627,13 +627,13 @@
                 ]
               },
               {
-                "id": "chinook.db/tables/invoices/indexes",
+                "id": "test.db/tables/invoices/indexes",
                 "title": "Indexes",
                 "type": "indexes",
                 "badge": "1",
                 "children": [
                   {
-                    "id": "chinook.db/tables/invoices/indexes/IFK_InvoiceCustomerId",
+                    "id": "test.db/tables/invoices/indexes/IFK_InvoiceCustomerId",
                     "title": "IFK_InvoiceCustomerId",
                     "type": "index",
                     "tags": [
@@ -645,18 +645,18 @@
             ]
           },
           {
-            "id": "chinook.db/tables/media_types",
+            "id": "test.db/tables/media_types",
             "title": "media_types",
             "type": "table",
             "children": [
               {
-                "id": "chinook.db/tables/media_types/columns",
+                "id": "test.db/tables/media_types/columns",
                 "title": "Columns",
                 "type": "columns",
                 "badge": "2",
                 "children": [
                   {
-                    "id": "chinook.db/tables/media_types/columns/MediaTypeId",
+                    "id": "test.db/tables/media_types/columns/MediaTypeId",
                     "title": "MediaTypeId",
                     "type": "column",
                     "tags": [
@@ -667,7 +667,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/media_types/columns/Name",
+                    "id": "test.db/tables/media_types/columns/Name",
                     "title": "Name",
                     "type": "column",
                     "tags": [
@@ -677,7 +677,7 @@
                 ]
               },
               {
-                "id": "chinook.db/tables/media_types/indexes",
+                "id": "test.db/tables/media_types/indexes",
                 "title": "Indexes",
                 "type": "indexes",
                 "badge": "0"
@@ -685,18 +685,18 @@
             ]
           },
           {
-            "id": "chinook.db/tables/playlist_track",
+            "id": "test.db/tables/playlist_track",
             "title": "playlist_track",
             "type": "table",
             "children": [
               {
-                "id": "chinook.db/tables/playlist_track/columns",
+                "id": "test.db/tables/playlist_track/columns",
                 "title": "Columns",
                 "type": "columns",
                 "badge": "2",
                 "children": [
                   {
-                    "id": "chinook.db/tables/playlist_track/columns/PlaylistId",
+                    "id": "test.db/tables/playlist_track/columns/PlaylistId",
                     "title": "PlaylistId",
                     "type": "column",
                     "tags": [
@@ -705,7 +705,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/playlist_track/columns/TrackId",
+                    "id": "test.db/tables/playlist_track/columns/TrackId",
                     "title": "TrackId",
                     "type": "column",
                     "tags": [
@@ -716,13 +716,13 @@
                 ]
               },
               {
-                "id": "chinook.db/tables/playlist_track/indexes",
+                "id": "test.db/tables/playlist_track/indexes",
                 "title": "Indexes",
                 "type": "indexes",
                 "badge": "1",
                 "children": [
                   {
-                    "id": "chinook.db/tables/playlist_track/indexes/IFK_PlaylistTrackTrackId",
+                    "id": "test.db/tables/playlist_track/indexes/IFK_PlaylistTrackTrackId",
                     "title": "IFK_PlaylistTrackTrackId",
                     "type": "index",
                     "tags": [
@@ -734,18 +734,18 @@
             ]
           },
           {
-            "id": "chinook.db/tables/playlists",
+            "id": "test.db/tables/playlists",
             "title": "playlists",
             "type": "table",
             "children": [
               {
-                "id": "chinook.db/tables/playlists/columns",
+                "id": "test.db/tables/playlists/columns",
                 "title": "Columns",
                 "type": "columns",
                 "badge": "2",
                 "children": [
                   {
-                    "id": "chinook.db/tables/playlists/columns/PlaylistId",
+                    "id": "test.db/tables/playlists/columns/PlaylistId",
                     "title": "PlaylistId",
                     "type": "column",
                     "tags": [
@@ -756,7 +756,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/playlists/columns/Name",
+                    "id": "test.db/tables/playlists/columns/Name",
                     "title": "Name",
                     "type": "column",
                     "tags": [
@@ -766,7 +766,7 @@
                 ]
               },
               {
-                "id": "chinook.db/tables/playlists/indexes",
+                "id": "test.db/tables/playlists/indexes",
                 "title": "Indexes",
                 "type": "indexes",
                 "badge": "0"
@@ -774,18 +774,18 @@
             ]
           },
           {
-            "id": "chinook.db/tables/tracks",
+            "id": "test.db/tables/tracks",
             "title": "tracks",
             "type": "table",
             "children": [
               {
-                "id": "chinook.db/tables/tracks/columns",
+                "id": "test.db/tables/tracks/columns",
                 "title": "Columns",
                 "type": "columns",
                 "badge": "9",
                 "children": [
                   {
-                    "id": "chinook.db/tables/tracks/columns/TrackId",
+                    "id": "test.db/tables/tracks/columns/TrackId",
                     "title": "TrackId",
                     "type": "column",
                     "tags": [
@@ -796,7 +796,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/tracks/columns/Name",
+                    "id": "test.db/tables/tracks/columns/Name",
                     "title": "Name",
                     "type": "column",
                     "tags": [
@@ -805,7 +805,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/tracks/columns/AlbumId",
+                    "id": "test.db/tables/tracks/columns/AlbumId",
                     "title": "AlbumId",
                     "type": "column",
                     "tags": [
@@ -813,7 +813,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/tracks/columns/MediaTypeId",
+                    "id": "test.db/tables/tracks/columns/MediaTypeId",
                     "title": "MediaTypeId",
                     "type": "column",
                     "tags": [
@@ -822,7 +822,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/tracks/columns/GenreId",
+                    "id": "test.db/tables/tracks/columns/GenreId",
                     "title": "GenreId",
                     "type": "column",
                     "tags": [
@@ -830,7 +830,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/tracks/columns/Composer",
+                    "id": "test.db/tables/tracks/columns/Composer",
                     "title": "Composer",
                     "type": "column",
                     "tags": [
@@ -838,7 +838,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/tracks/columns/Milliseconds",
+                    "id": "test.db/tables/tracks/columns/Milliseconds",
                     "title": "Milliseconds",
                     "type": "column",
                     "tags": [
@@ -847,7 +847,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/tracks/columns/Bytes",
+                    "id": "test.db/tables/tracks/columns/Bytes",
                     "title": "Bytes",
                     "type": "column",
                     "tags": [
@@ -855,7 +855,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/tracks/columns/UnitPrice",
+                    "id": "test.db/tables/tracks/columns/UnitPrice",
                     "title": "UnitPrice",
                     "type": "column",
                     "tags": [
@@ -866,13 +866,13 @@
                 ]
               },
               {
-                "id": "chinook.db/tables/tracks/indexes",
+                "id": "test.db/tables/tracks/indexes",
                 "title": "Indexes",
                 "type": "indexes",
                 "badge": "3",
                 "children": [
                   {
-                    "id": "chinook.db/tables/tracks/indexes/IFK_TrackAlbumId",
+                    "id": "test.db/tables/tracks/indexes/IFK_TrackAlbumId",
                     "title": "IFK_TrackAlbumId",
                     "type": "index",
                     "tags": [
@@ -880,7 +880,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/tracks/indexes/IFK_TrackGenreId",
+                    "id": "test.db/tables/tracks/indexes/IFK_TrackGenreId",
                     "title": "IFK_TrackGenreId",
                     "type": "index",
                     "tags": [
@@ -888,7 +888,7 @@
                     ]
                   },
                   {
-                    "id": "chinook.db/tables/tracks/indexes/IFK_TrackMediaTypeId",
+                    "id": "test.db/tables/tracks/indexes/IFK_TrackMediaTypeId",
                     "title": "IFK_TrackMediaTypeId",
                     "type": "index",
                     "tags": [
@@ -902,20 +902,51 @@
         ]
       },
       {
-        "id": "chinook.db/triggers",
+        "id": "test.db/triggers",
         "title": "Triggers",
         "type": "triggers",
         "icon": "trigger",
-        "badge": "0",
-        "children": []
+        "badge": "1",
+        "children": [
+          {
+            "id": "test.db/triggers/validate_email_before_insert_customers",
+            "title": "validate_email_before_insert_customers",
+            "type": "trigger"
+          }
+        ]
       },
       {
-        "id": "chinook.db/views",
+        "id": "test.db/views",
         "title": "Views",
         "type": "views",
         "icon": "view",
-        "badge": "0",
-        "children": []
+        "badge": "3",
+        "children": [
+          {
+            "id": "test.db/views/customernames",
+            "title": "customernames",
+            "type": "view",
+            "tags": [
+              "customers"
+            ]
+          },
+          {
+            "id": "test.db/views/doublesales",
+            "title": "doublesales",
+            "type": "view",
+            "tags": [
+              "invoices"
+            ]
+          },
+          {
+            "id": "test.db/views/invoicetotals",
+            "title": "invoicetotals",
+            "type": "view",
+            "tags": [
+              "invoices"
+            ]
+          }
+        ]
       }
     ]
   }
