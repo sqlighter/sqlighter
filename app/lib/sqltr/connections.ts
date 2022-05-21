@@ -3,24 +3,34 @@
 //
 
 import { QueryExecResult } from "sql.js"
+import { Tree } from "../data/tree"
 
+/** Database schema */
 export interface DataSchema {
-  /** Type of entity */
-  type: "table" | "index" | "trigger" | "view"
+  /** Name of database for this schema */
+  database?: string
 
-  /** Name of the entity */
-  name: string
+  /** Tables in the schema */
+  tables?: {
+    name: string
+    sql: string
+    columns: {
+      name: string
+      datatype: string
+      constraints?: string[]
+    }[]
+    indexes: {
+      name: string
+      sql: string
+      columns: string[]
+    }[]
+  }[]
 
-  /** SQL create statement for this entity */
-  sql: string
-
-  /** Abstract syntax tree (AST) for this entity */
-  ast: {
-    [key: string]: string | boolean | [] | {}
-  }
+  triggers?: any[]
+  views?: any[]
 }
 
-class DataConnectionConfigParams {
+export interface DataConnectionConfigParams {
   // TDB...
   host?: string
   port?: number
@@ -42,26 +52,15 @@ export interface DataConnectionConfigs {
   client: "sqlite3" | "mysql" // etc...
 
   /** Connection string or object with detailed connection parameters */
-  connection: string | {
-    // TDB...
-    host?: string
-    port?: number
-    user?: string
-    password?: string
-    database?: string
-    filename?: string
-
-    /** Binary buffer containing the actual database data, eg. sqlite3 */
-    buffer?: Buffer
-  }
+  connection: string | DataConnectionConfigParams
 }
 
 export abstract class DataConnection {
-  /** Configurations used to open this data connection */
-  protected _configs: DataConnectionConfigs
-
   /** Active data connections */
   protected static _connections: DataConnection[] = []
+
+  /** Configurations used to open this data connection */
+  protected _configs: DataConnectionConfigs
 
   /** Concrete classes only */
   protected constructor(configs: DataConnectionConfigs) {
@@ -85,7 +84,111 @@ export abstract class DataConnection {
   //
 
   /** Returns schema for this data source */
-  public abstract getSchema(refresh: boolean): Promise<DataSchema[]>
+  public abstract getSchemas(refresh: boolean): Promise<DataSchema[]>
+
+  //
+  // tree
+  //
+
+  private _getTableColumnTree(schema, table, column) {
+    const tree: Tree = {
+      id: `${schema.database}/tables/${table.name}/columns/${column.name}`,
+      title: column.name,
+      type: "column",
+      tags: [],
+    }
+
+    if (column.constraints) {
+      // show primary key using 🔑 emoji instead of plain text?
+      tree.tags.push(...column.constraints)
+    }
+    tree.tags.push(column.datatype)
+
+    return tree
+  }
+
+  private _getTableTree(schema, table) {
+    const columns = table.columns && table.columns.map((column) => this._getTableColumnTree(schema, table, column))
+
+    const indexes =
+      table.indexes &&
+      table.indexes.map((index) => {
+        return {
+          id: `${schema.database}/tables/${table.name}/indexes/${index.name}`,
+          title: index.name,
+          type: "index",
+          tags: [...index.columns],
+        }
+      })
+
+    return {
+      id: `${schema.database}/tables/${table.name}`,
+      title: table.name,
+      type: "table",
+      children: [
+        {
+          id: `${schema.database}/tables/${table.name}/columns`,
+          title: "Columns",
+          type: "columns",
+          badge: (columns ? columns.length : 0).toString(),
+          children: columns,
+        },
+        {
+          id: `${schema.database}/tables/${table.name}/indexes`,
+          title: "Indexes",
+          type: "indexes",
+          badge: (indexes ? indexes.length : 0).toString(),
+          children: indexes,
+        },
+      ],
+    }
+  }
+
+  public async getTrees(refresh: boolean = false): Promise<Tree[]> {
+    const schemas = await this.getSchemas(refresh)
+    const trees: Tree[] = []
+
+    for (const schema of schemas) {
+      const tables = schema.tables.map((table) => this._getTableTree(schema, table))
+
+      const indexes = []
+      const triggers = []
+      const views = []
+
+      const tree: Tree = {
+        id: schema.database,
+        title: schema.database,
+        type: "database",
+        icon: "database",
+        children: [
+          {
+            id: `${schema.database}/tables`,
+            title: "Tables",
+            type: "tables",
+            icon: "table",
+            badge: tables.length.toString(),
+            children: tables,
+          },
+          {
+            id: `${schema.database}/triggers`,
+            title: "Triggers",
+            type: "triggers",
+            badge: triggers.length.toString(),
+            children: triggers,
+          },
+          {
+            id: `${schema.database}/views`,
+            title: "Views",
+            type: "views",
+            badge: views.length.toString(),
+            children: views,
+          },
+        ],
+      }
+      trees.push(tree)
+    }
+    return trees
+  }
 
   //
   // data

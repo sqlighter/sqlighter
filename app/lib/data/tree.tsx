@@ -30,6 +30,9 @@ export interface Tree {
   /** A human-readable string describing this item. */
   title: string
 
+  /** Node type, eg. database, table, column, etc... */
+  type?: string
+
   /**
    * Ranges in the title to highlight. A range is defined as a tuple of two number
    * where the first is the inclusive start index and the second the exclusive end index.

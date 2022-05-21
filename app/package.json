@@ -14,7 +14,7 @@
     "build": "next build",
     "start": "next start",
     "test": "jest --runInBand",
-    "testSingle": "jest sqlite.test.ts --runInBand",
+    "testSingle": "jest sqlite.test.ts -t 'getTree' --runInBand",
     "format": "prettier --write \"**/*.{js,ts,tsx,vue,md,yaml,json,scss,css}\"",
     "storybook": "start-storybook -p 6006 -s ./public"
   },

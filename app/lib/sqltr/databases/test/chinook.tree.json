@@ -1,0 +1,920 @@
+[
+  {
+    "id": "chinook.db",
+    "title": "chinook.db",
+    "type": "database",
+    "icon": "database",
+    "children": [
+      {
+        "id": "chinook.db/tables",
+        "title": "Tables",
+        "type": "tables",
+        "icon": "table",
+        "badge": "11",
+        "children": [
+          {
+            "id": "chinook.db/tables/albums",
+            "title": "albums",
+            "type": "table",
+            "children": [
+              {
+                "id": "chinook.db/tables/albums/columns",
+                "title": "Columns",
+                "type": "columns",
+                "badge": "3",
+                "children": [
+                  {
+                    "id": "chinook.db/tables/albums/columns/AlbumId",
+                    "title": "AlbumId",
+                    "type": "column",
+                    "tags": [
+                      "primary key",
+                      "auto increment",
+                      "not null",
+                      "integer"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/albums/columns/Title",
+                    "title": "Title",
+                    "type": "column",
+                    "tags": [
+                      "not null",
+                      "nvarchar(160)"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/albums/columns/ArtistId",
+                    "title": "ArtistId",
+                    "type": "column",
+                    "tags": [
+                      "not null",
+                      "integer"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "chinook.db/tables/albums/indexes",
+                "title": "Indexes",
+                "type": "indexes",
+                "badge": "1",
+                "children": [
+                  {
+                    "id": "chinook.db/tables/albums/indexes/IFK_AlbumArtistId",
+                    "title": "IFK_AlbumArtistId",
+                    "type": "index",
+                    "tags": [
+                      "ArtistId"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "chinook.db/tables/artists",
+            "title": "artists",
+            "type": "table",
+            "children": [
+              {
+                "id": "chinook.db/tables/artists/columns",
+                "title": "Columns",
+                "type": "columns",
+                "badge": "2",
+                "children": [
+                  {
+                    "id": "chinook.db/tables/artists/columns/ArtistId",
+                    "title": "ArtistId",
+                    "type": "column",
+                    "tags": [
+                      "primary key",
+                      "auto increment",
+                      "not null",
+                      "integer"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/artists/columns/Name",
+                    "title": "Name",
+                    "type": "column",
+                    "tags": [
+                      "nvarchar(120)"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "chinook.db/tables/artists/indexes",
+                "title": "Indexes",
+                "type": "indexes",
+                "badge": "0"
+              }
+            ]
+          },
+          {
+            "id": "chinook.db/tables/customers",
+            "title": "customers",
+            "type": "table",
+            "children": [
+              {
+                "id": "chinook.db/tables/customers/columns",
+                "title": "Columns",
+                "type": "columns",
+                "badge": "13",
+                "children": [
+                  {
+                    "id": "chinook.db/tables/customers/columns/CustomerId",
+                    "title": "CustomerId",
+                    "type": "column",
+                    "tags": [
+                      "primary key",
+                      "auto increment",
+                      "not null",
+                      "integer"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/customers/columns/FirstName",
+                    "title": "FirstName",
+                    "type": "column",
+                    "tags": [
+                      "not null",
+                      "nvarchar(40)"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/customers/columns/LastName",
+                    "title": "LastName",
+                    "type": "column",
+                    "tags": [
+                      "not null",
+                      "nvarchar(20)"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/customers/columns/Company",
+                    "title": "Company",
+                    "type": "column",
+                    "tags": [
+                      "nvarchar(80)"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/customers/columns/Address",
+                    "title": "Address",
+                    "type": "column",
+                    "tags": [
+                      "nvarchar(70)"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/customers/columns/City",
+                    "title": "City",
+                    "type": "column",
+                    "tags": [
+                      "nvarchar(40)"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/customers/columns/State",
+                    "title": "State",
+                    "type": "column",
+                    "tags": [
+                      "nvarchar(40)"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/customers/columns/Country",
+                    "title": "Country",
+                    "type": "column",
+                    "tags": [
+                      "nvarchar(40)"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/customers/columns/PostalCode",
+                    "title": "PostalCode",
+                    "type": "column",
+                    "tags": [
+                      "nvarchar(10)"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/customers/columns/Phone",
+                    "title": "Phone",
+                    "type": "column",
+                    "tags": [
+                      "nvarchar(24)"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/customers/columns/Fax",
+                    "title": "Fax",
+                    "type": "column",
+                    "tags": [
+                      "nvarchar(24)"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/customers/columns/Email",
+                    "title": "Email",
+                    "type": "column",
+                    "tags": [
+                      "not null",
+                      "nvarchar(60)"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/customers/columns/SupportRepId",
+                    "title": "SupportRepId",
+                    "type": "column",
+                    "tags": [
+                      "integer"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "chinook.db/tables/customers/indexes",
+                "title": "Indexes",
+                "type": "indexes",
+                "badge": "1",
+                "children": [
+                  {
+                    "id": "chinook.db/tables/customers/indexes/IFK_CustomerSupportRepId",
+                    "title": "IFK_CustomerSupportRepId",
+                    "type": "index",
+                    "tags": [
+                      "SupportRepId"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "chinook.db/tables/employees",
+            "title": "employees",
+            "type": "table",
+            "children": [
+              {
+                "id": "chinook.db/tables/employees/columns",
+                "title": "Columns",
+                "type": "columns",
+                "badge": "15",
+                "children": [
+                  {
+                    "id": "chinook.db/tables/employees/columns/EmployeeId",
+                    "title": "EmployeeId",
+                    "type": "column",
+                    "tags": [
+                      "primary key",
+                      "auto increment",
+                      "not null",
+                      "integer"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/employees/columns/LastName",
+                    "title": "LastName",
+                    "type": "column",
+                    "tags": [
+                      "not null",
+                      "nvarchar(20)"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/employees/columns/FirstName",
+                    "title": "FirstName",
+                    "type": "column",
+                    "tags": [
+                      "not null",
+                      "nvarchar(20)"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/employees/columns/Title",
+                    "title": "Title",
+                    "type": "column",
+                    "tags": [
+                      "nvarchar(30)"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/employees/columns/ReportsTo",
+                    "title": "ReportsTo",
+                    "type": "column",
+                    "tags": [
+                      "integer"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/employees/columns/BirthDate",
+                    "title": "BirthDate",
+                    "type": "column",
+                    "tags": [
+                      "datetime"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/employees/columns/HireDate",
+                    "title": "HireDate",
+                    "type": "column",
+                    "tags": [
+                      "datetime"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/employees/columns/Address",
+                    "title": "Address",
+                    "type": "column",
+                    "tags": [
+                      "nvarchar(70)"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/employees/columns/City",
+                    "title": "City",
+                    "type": "column",
+                    "tags": [
+                      "nvarchar(40)"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/employees/columns/State",
+                    "title": "State",
+                    "type": "column",
+                    "tags": [
+                      "nvarchar(40)"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/employees/columns/Country",
+                    "title": "Country",
+                    "type": "column",
+                    "tags": [
+                      "nvarchar(40)"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/employees/columns/PostalCode",
+                    "title": "PostalCode",
+                    "type": "column",
+                    "tags": [
+                      "nvarchar(10)"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/employees/columns/Phone",
+                    "title": "Phone",
+                    "type": "column",
+                    "tags": [
+                      "nvarchar(24)"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/employees/columns/Fax",
+                    "title": "Fax",
+                    "type": "column",
+                    "tags": [
+                      "nvarchar(24)"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/employees/columns/Email",
+                    "title": "Email",
+                    "type": "column",
+                    "tags": [
+                      "nvarchar(60)"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "chinook.db/tables/employees/indexes",
+                "title": "Indexes",
+                "type": "indexes",
+                "badge": "1",
+                "children": [
+                  {
+                    "id": "chinook.db/tables/employees/indexes/IFK_EmployeeReportsTo",
+                    "title": "IFK_EmployeeReportsTo",
+                    "type": "index",
+                    "tags": [
+                      "ReportsTo"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "chinook.db/tables/genres",
+            "title": "genres",
+            "type": "table",
+            "children": [
+              {
+                "id": "chinook.db/tables/genres/columns",
+                "title": "Columns",
+                "type": "columns",
+                "badge": "2",
+                "children": [
+                  {
+                    "id": "chinook.db/tables/genres/columns/GenreId",
+                    "title": "GenreId",
+                    "type": "column",
+                    "tags": [
+                      "primary key",
+                      "auto increment",
+                      "not null",
+                      "integer"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/genres/columns/Name",
+                    "title": "Name",
+                    "type": "column",
+                    "tags": [
+                      "nvarchar(120)"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "chinook.db/tables/genres/indexes",
+                "title": "Indexes",
+                "type": "indexes",
+                "badge": "0"
+              }
+            ]
+          },
+          {
+            "id": "chinook.db/tables/invoice_items",
+            "title": "invoice_items",
+            "type": "table",
+            "children": [
+              {
+                "id": "chinook.db/tables/invoice_items/columns",
+                "title": "Columns",
+                "type": "columns",
+                "badge": "5",
+                "children": [
+                  {
+                    "id": "chinook.db/tables/invoice_items/columns/InvoiceLineId",
+                    "title": "InvoiceLineId",
+                    "type": "column",
+                    "tags": [
+                      "primary key",
+                      "auto increment",
+                      "not null",
+                      "integer"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/invoice_items/columns/InvoiceId",
+                    "title": "InvoiceId",
+                    "type": "column",
+                    "tags": [
+                      "not null",
+                      "integer"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/invoice_items/columns/TrackId",
+                    "title": "TrackId",
+                    "type": "column",
+                    "tags": [
+                      "not null",
+                      "integer"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/invoice_items/columns/UnitPrice",
+                    "title": "UnitPrice",
+                    "type": "column",
+                    "tags": [
+                      "not null",
+                      "numeric(10, 2)"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/invoice_items/columns/Quantity",
+                    "title": "Quantity",
+                    "type": "column",
+                    "tags": [
+                      "not null",
+                      "integer"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "chinook.db/tables/invoice_items/indexes",
+                "title": "Indexes",
+                "type": "indexes",
+                "badge": "2",
+                "children": [
+                  {
+                    "id": "chinook.db/tables/invoice_items/indexes/IFK_InvoiceLineInvoiceId",
+                    "title": "IFK_InvoiceLineInvoiceId",
+                    "type": "index",
+                    "tags": [
+                      "InvoiceId"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/invoice_items/indexes/IFK_InvoiceLineTrackId",
+                    "title": "IFK_InvoiceLineTrackId",
+                    "type": "index",
+                    "tags": [
+                      "TrackId"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "chinook.db/tables/invoices",
+            "title": "invoices",
+            "type": "table",
+            "children": [
+              {
+                "id": "chinook.db/tables/invoices/columns",
+                "title": "Columns",
+                "type": "columns",
+                "badge": "9",
+                "children": [
+                  {
+                    "id": "chinook.db/tables/invoices/columns/InvoiceId",
+                    "title": "InvoiceId",
+                    "type": "column",
+                    "tags": [
+                      "primary key",
+                      "auto increment",
+                      "not null",
+                      "integer"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/invoices/columns/CustomerId",
+                    "title": "CustomerId",
+                    "type": "column",
+                    "tags": [
+                      "not null",
+                      "integer"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/invoices/columns/InvoiceDate",
+                    "title": "InvoiceDate",
+                    "type": "column",
+                    "tags": [
+                      "not null",
+                      "datetime"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/invoices/columns/BillingAddress",
+                    "title": "BillingAddress",
+                    "type": "column",
+                    "tags": [
+                      "nvarchar(70)"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/invoices/columns/BillingCity",
+                    "title": "BillingCity",
+                    "type": "column",
+                    "tags": [
+                      "nvarchar(40)"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/invoices/columns/BillingState",
+                    "title": "BillingState",
+                    "type": "column",
+                    "tags": [
+                      "nvarchar(40)"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/invoices/columns/BillingCountry",
+                    "title": "BillingCountry",
+                    "type": "column",
+                    "tags": [
+                      "nvarchar(40)"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/invoices/columns/BillingPostalCode",
+                    "title": "BillingPostalCode",
+                    "type": "column",
+                    "tags": [
+                      "nvarchar(10)"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/invoices/columns/Total",
+                    "title": "Total",
+                    "type": "column",
+                    "tags": [
+                      "not null",
+                      "numeric(10, 2)"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "chinook.db/tables/invoices/indexes",
+                "title": "Indexes",
+                "type": "indexes",
+                "badge": "1",
+                "children": [
+                  {
+                    "id": "chinook.db/tables/invoices/indexes/IFK_InvoiceCustomerId",
+                    "title": "IFK_InvoiceCustomerId",
+                    "type": "index",
+                    "tags": [
+                      "CustomerId"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "chinook.db/tables/media_types",
+            "title": "media_types",
+            "type": "table",
+            "children": [
+              {
+                "id": "chinook.db/tables/media_types/columns",
+                "title": "Columns",
+                "type": "columns",
+                "badge": "2",
+                "children": [
+                  {
+                    "id": "chinook.db/tables/media_types/columns/MediaTypeId",
+                    "title": "MediaTypeId",
+                    "type": "column",
+                    "tags": [
+                      "primary key",
+                      "auto increment",
+                      "not null",
+                      "integer"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/media_types/columns/Name",
+                    "title": "Name",
+                    "type": "column",
+                    "tags": [
+                      "nvarchar(120)"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "chinook.db/tables/media_types/indexes",
+                "title": "Indexes",
+                "type": "indexes",
+                "badge": "0"
+              }
+            ]
+          },
+          {
+            "id": "chinook.db/tables/playlist_track",
+            "title": "playlist_track",
+            "type": "table",
+            "children": [
+              {
+                "id": "chinook.db/tables/playlist_track/columns",
+                "title": "Columns",
+                "type": "columns",
+                "badge": "2",
+                "children": [
+                  {
+                    "id": "chinook.db/tables/playlist_track/columns/PlaylistId",
+                    "title": "PlaylistId",
+                    "type": "column",
+                    "tags": [
+                      "not null",
+                      "integer"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/playlist_track/columns/TrackId",
+                    "title": "TrackId",
+                    "type": "column",
+                    "tags": [
+                      "not null",
+                      "integer"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "chinook.db/tables/playlist_track/indexes",
+                "title": "Indexes",
+                "type": "indexes",
+                "badge": "1",
+                "children": [
+                  {
+                    "id": "chinook.db/tables/playlist_track/indexes/IFK_PlaylistTrackTrackId",
+                    "title": "IFK_PlaylistTrackTrackId",
+                    "type": "index",
+                    "tags": [
+                      "TrackId"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "chinook.db/tables/playlists",
+            "title": "playlists",
+            "type": "table",
+            "children": [
+              {
+                "id": "chinook.db/tables/playlists/columns",
+                "title": "Columns",
+                "type": "columns",
+                "badge": "2",
+                "children": [
+                  {
+                    "id": "chinook.db/tables/playlists/columns/PlaylistId",
+                    "title": "PlaylistId",
+                    "type": "column",
+                    "tags": [
+                      "primary key",
+                      "auto increment",
+                      "not null",
+                      "integer"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/playlists/columns/Name",
+                    "title": "Name",
+                    "type": "column",
+                    "tags": [
+                      "nvarchar(120)"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "chinook.db/tables/playlists/indexes",
+                "title": "Indexes",
+                "type": "indexes",
+                "badge": "0"
+              }
+            ]
+          },
+          {
+            "id": "chinook.db/tables/tracks",
+            "title": "tracks",
+            "type": "table",
+            "children": [
+              {
+                "id": "chinook.db/tables/tracks/columns",
+                "title": "Columns",
+                "type": "columns",
+                "badge": "9",
+                "children": [
+                  {
+                    "id": "chinook.db/tables/tracks/columns/TrackId",
+                    "title": "TrackId",
+                    "type": "column",
+                    "tags": [
+                      "primary key",
+                      "auto increment",
+                      "not null",
+                      "integer"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/tracks/columns/Name",
+                    "title": "Name",
+                    "type": "column",
+                    "tags": [
+                      "not null",
+                      "nvarchar(200)"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/tracks/columns/AlbumId",
+                    "title": "AlbumId",
+                    "type": "column",
+                    "tags": [
+                      "integer"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/tracks/columns/MediaTypeId",
+                    "title": "MediaTypeId",
+                    "type": "column",
+                    "tags": [
+                      "not null",
+                      "integer"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/tracks/columns/GenreId",
+                    "title": "GenreId",
+                    "type": "column",
+                    "tags": [
+                      "integer"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/tracks/columns/Composer",
+                    "title": "Composer",
+                    "type": "column",
+                    "tags": [
+                      "nvarchar(220)"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/tracks/columns/Milliseconds",
+                    "title": "Milliseconds",
+                    "type": "column",
+                    "tags": [
+                      "not null",
+                      "integer"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/tracks/columns/Bytes",
+                    "title": "Bytes",
+                    "type": "column",
+                    "tags": [
+                      "integer"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/tracks/columns/UnitPrice",
+                    "title": "UnitPrice",
+                    "type": "column",
+                    "tags": [
+                      "not null",
+                      "numeric(10, 2)"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "chinook.db/tables/tracks/indexes",
+                "title": "Indexes",
+                "type": "indexes",
+                "badge": "3",
+                "children": [
+                  {
+                    "id": "chinook.db/tables/tracks/indexes/IFK_TrackAlbumId",
+                    "title": "IFK_TrackAlbumId",
+                    "type": "index",
+                    "tags": [
+                      "AlbumId"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/tracks/indexes/IFK_TrackGenreId",
+                    "title": "IFK_TrackGenreId",
+                    "type": "index",
+                    "tags": [
+                      "GenreId"
+                    ]
+                  },
+                  {
+                    "id": "chinook.db/tables/tracks/indexes/IFK_TrackMediaTypeId",
+                    "title": "IFK_TrackMediaTypeId",
+                    "type": "index",
+                    "tags": [
+                      "MediaTypeId"
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "chinook.db/triggers",
+        "title": "Triggers",
+        "type": "triggers",
+        "badge": "0",
+        "children": []
+      },
+      {
+        "id": "chinook.db/views",
+        "title": "Views",
+        "type": "views",
+        "badge": "0",
+        "children": []
+      }
+    ]
+  }
+]
