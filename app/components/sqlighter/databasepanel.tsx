@@ -26,6 +26,88 @@ async function getConnectionsTree(): Promise<Tree> {
   return null
 }
 
+async function getTree(connection) {
+  const schema = await connection.getSchema()
+  const rootId = "main"
+
+  function getTableTree(table) {
+    const tableAst = table.ast
+    const columns = tableAst.definition
+      .filter((d) => d.variant == "column")
+      .map((d) => {
+        return {
+          id: `${rootId}/tables/${table.name}/columns/${d.name}`,
+          title: d.name,
+          icon: "column",
+        }
+      })
+
+    const indexes = schema
+      .filter((entity) => entity.type == "index" && entity.ast.on.name == table.name)
+      .map((entity) => {
+        return {
+          id: `${rootId}/tables/${table.name}/indexes/${entity.name}`,
+          title: entity.name,
+          icon: "index",
+          children: [
+            //
+          ],
+        }
+      })
+
+    return {
+      id: `${rootId}/tables/${table.name}`,
+      title: table.name,
+      icon: "table",
+      children: [
+        {
+          id: `${rootId}/tables/${table.name}/columns`,
+          title: "Columns",
+          icon: "columns",
+          badge: columns.length.toString(),
+          children: columns,
+        },
+        {
+          id: `${rootId}/tables/${table.name}/indexes`,
+          title: "Indexes",
+          icon: "index",
+          badge: indexes.length.toString(),
+          children: indexes,
+        },
+      ],
+    }
+  }
+
+  const tables = schema.filter((entity) => entity.type == "table").map((entity) => getTableTree(entity))
+
+  const indexes = []
+
+  const tree: Tree = {
+    id: rootId,
+    title: "chinook.db",
+    icon: "database",
+    children: [
+      {
+        id: `${rootId}/tables`,
+        title: "Tables",
+        icon: "table",
+        badge: tables.length.toString(),
+        children: tables,
+      },
+      {
+        id: `${rootId}/indexes`,
+        title: "Indexes",
+        icon: "index",
+        badge: indexes.length.toString(),
+        children: indexes,
+      },
+    ],
+  }
+
+  console.debug([tree])
+  return [tree]
+}
+
 /** A sidebar panel used to display the schema of connected databases */
 export function DatabasePanel() {
   const sqljs = useSqljs()
@@ -78,66 +160,9 @@ export function DatabasePanel() {
       setConnection(connection)
       console.log("downloaded", response, buffer)
 
-      const tree = await getTreeItems(connection)
+      const tree = await getTree(connection)
       setTree(tree)
     } else [console.error(`DatabasePanel.handleOpenClick - sqljs engine not loaded`)]
-  }
-
-  async function getTreeItems(connection): Promise<Tree[]> {
-    console.debug(`DatabasePanel.getTreeItems - ${connection}`)
-
-    const result = await connection.getResult("select * from customers")
-    console.log("select 1", result)
-
-    const schema = await connection.getSchema()
-
-    const rootId = "main"
-
-    const tables = schema
-      .filter((s) => s.type == "table")
-      .map((s) => {
-        const columns = s.ast.definition
-          .filter((d) => d.variant == "column")
-          .map((d) => {
-            return {
-              id: `${rootId}/tables/${s.name}/columns/${d.name}`,
-              title: d.name,
-              icon: "column",
-            }
-          })
-
-        return {
-          id: `${rootId}/tables/${s.name}`,
-          title: s.name,
-          icon: "table",
-          children: [
-            {
-              id: `${rootId}/tables/${s.name}/columns`,
-              title: "Columns",
-              icon: "columns",
-              badge: columns.length.toString(),
-              children: columns,
-            },
-          ],
-        }
-      })
-
-    const tree: Tree = {
-      id: rootId,
-      title: "chinook.db",
-      icon: "database",
-      children: [
-        {
-          id: `${rootId}/tables`,
-          title: "Tables",
-          icon: "table",
-          children: tables,
-        },
-      ],
-    }
-
-    console.debug([tree])
-    return [tree]
   }
 
   //

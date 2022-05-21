@@ -20,17 +20,17 @@ export interface DataSchema {
   }
 }
 
-interface DataConnectionConfigParams {
-    // TDB...
-    host?: string
-    port?: number
-    user?: string
-    password?: string
-    database?: string
-    filename?: string
+class DataConnectionConfigParams {
+  // TDB...
+  host?: string
+  port?: number
+  user?: string
+  password?: string
+  database?: string
+  filename?: string
 
-    /** Binary buffer containing the actual database data, eg. sqlite3 */
-    buffer?: Buffer
+  /** Binary buffer containing the actual database data, eg. sqlite3 */
+  buffer?: Buffer
 }
 
 /**
@@ -42,7 +42,18 @@ export interface DataConnectionConfigs {
   client: "sqlite3" | "mysql" // etc...
 
   /** Connection string or object with detailed connection parameters */
-  connection: DataConnectionConfigParams | string;
+  connection: string | {
+    // TDB...
+    host?: string
+    port?: number
+    user?: string
+    password?: string
+    database?: string
+    filename?: string
+
+    /** Binary buffer containing the actual database data, eg. sqlite3 */
+    buffer?: Buffer
+  }
 }
 
 export abstract class DataConnection {

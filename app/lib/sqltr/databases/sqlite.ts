@@ -4,6 +4,7 @@
 
 import initSqlJs, { Database, QueryExecResult } from "sql.js"
 import sqliteParser from "sqlite-parser"
+import { Tree } from "../../data/tree"
 import { DataConnection, DataConnectionConfigs, DataSchema } from "../connections"
 
 export class SqliteDataConnection extends DataConnection {
@@ -19,6 +20,10 @@ export class SqliteDataConnection extends DataConnection {
 
   public static async create(configs: DataConnectionConfigs, engine): Promise<SqliteDataConnection> {
     try {
+      if (typeof configs.connection === "string") {
+        throw new Error("Not implemented yet")
+      }
+
       // TODO open sqlite from filename, url, etc.
       if (configs.client !== "sqlite3" || !configs.connection.buffer) {
         throw new Error("SqliteDataConnection.connect - can only create in memory connections from buffer data")
@@ -121,6 +126,16 @@ export class SqliteDataConnection extends DataConnection {
       this._schema = schema
     }
     return this._schema
+  }
+
+  //
+  // tree
+  //
+
+  public async getTree(refresh: boolean = false): Promise<Tree> {
+
+
+    return null
   }
 
   //
