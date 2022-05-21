@@ -274,7 +274,7 @@ export function TreeView({ items, onCommand }: TreeViewProps) {
           setExpanded([...expanded, item.id])
         }
         break
-      }
+    }
 
     if (onCommand) {
       onCommand(event, command, item)
@@ -292,7 +292,7 @@ export function TreeView({ items, onCommand }: TreeViewProps) {
       const marginLeft = `${(depth + 1) * 8 + 24}px`
       return (
         <Typography
-        key="children1"
+          key="children1"
           className="TreeItem-noResults"
           variant="body2"
           sx={TREEITEM_NORESULTS_STYLES}

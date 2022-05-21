@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react"
 
-
-
 export function useSqljs() {
   const [engine, setEngine] = useState(null)
   const [db, setDB] = useState(null)
@@ -40,9 +38,6 @@ export function useSqljs() {
 
   return engine
 }
-
-
-
 
 export function useDB(data) {
   const [engine, setEngine] = useState(null)

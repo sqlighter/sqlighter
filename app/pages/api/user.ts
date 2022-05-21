@@ -34,7 +34,7 @@ handler
       if (!user || user.id != putUser.id) {
         res.status(403).send("Forbidden")
       }
-  
+
       // retrieve user, merge and update
       const items = new ItemsTable()
       const databaseUser = await items.selectItem(user.id)
@@ -47,8 +47,7 @@ handler
       const updatedUser = await items.selectItem(putUser.id)
       console.debug("PUT /api/user - updatedUser", updatedUser)
       res.json({ data: updatedUser })
-    }    
-    catch (exception) {
+    } catch (exception) {
       console.error("PUT /api/user", exception)
       throw exception
     }

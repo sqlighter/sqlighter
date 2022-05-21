@@ -160,7 +160,7 @@ export function DatabasePanel() {
       setConnection(connection)
       console.log("downloaded", response, buffer)
 
-      const tree = await getTree(connection)
+      const tree = await connection.getTrees()
       setTree(tree)
     } else [console.error(`DatabasePanel.handleOpenClick - sqljs engine not loaded`)]
   }

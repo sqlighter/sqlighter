@@ -6,9 +6,9 @@ import React, { useContext } from "react"
 
 import Box from "@mui/system/Box"
 import Timeline from "@mui/lab/Timeline"
-import FileIcon from '@mui/icons-material/InsertDriveFileOutlined';
+import FileIcon from "@mui/icons-material/InsertDriveFileOutlined"
 import FileUploadIcon from "@mui/icons-material/FileUploadOutlined"
-import ScienceIcon from '@mui/icons-material/ScienceOutlined';
+import ScienceIcon from "@mui/icons-material/ScienceOutlined"
 
 import { useApi } from "../lib/api"
 import { prettyDate } from "../lib/shared"
