@@ -24,6 +24,15 @@ export interface DataSchema {
       sql: string
       columns: string[]
     }[]
+    foreignKeys: {
+      columns: string[]
+      references: {
+        table: string
+        columns: string[]
+        onUpdate: "no action" | "restrict" | "set null" | "set default" | "cascade"
+        onDelete: "no action" | "restrict" | "set null" | "set default" | "cascade"
+      }[]
+    }[]
   }[]
 
   /** Triggers in the schema */

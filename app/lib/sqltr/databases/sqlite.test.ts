@@ -7,8 +7,13 @@ import { SqliteDataConnection } from "./sqlite"
 import initSqlJs, { Database, QueryExecResult } from "sql.js"
 import fs from "fs"
 
-function printThis(value) {
-  console.log(JSON.stringify(value, null, " "))
+function logJson(data) {
+  console.log(JSON.stringify(data, null, " "))
+}
+
+function writeJson(filename, data) {
+  const json = JSON.stringify(data, null, "  ")
+  fs.writeFileSync(filename, json)
 }
 
 // Interpreting schema
@@ -97,6 +102,22 @@ describe("sqlite.ts", () => {
     expect(result1.values[0][0]).toBe(20)
   })
 
+  test("getEntities (chinook.db)", async () => {
+    const connection = await getChinookConnection()
+    const entities = await connection._getEntities()
+    expect(entities).toBeTruthy()
+    expect(entities.length).toBe(21)
+    writeJson("./lib/sqltr/databases/test/chinook.entities.json", entities)
+  })
+
+  test("getEntities (test.db)", async () => {
+    const connection = await getTestConnection()
+    const entities = await connection._getEntities()
+    expect(entities).toBeTruthy()
+    expect(entities.length).toBe(25)
+    writeJson("./lib/sqltr/databases/test/test.entities.json", entities)
+  })
+
   test("getSchema (chinook.db)", async () => {
     const connection = await getChinookConnection()
     const schemas = await connection.getSchemas(false)
@@ -107,8 +128,7 @@ describe("sqlite.ts", () => {
     // TODO SqliteDataConnection.getSchema - index: playlist_track doesn't have a SQL schema
 
     // save schema for verification
-    const json = JSON.stringify(schema, null, "  ")
-    fs.writeFileSync("./lib/sqltr/databases/test/chinook.schema.json", json)
+    writeJson("./lib/sqltr/databases/test/chinook.schema.json", schema)
 
     // save sql for verification
     const sql = []
@@ -149,8 +169,7 @@ describe("sqlite.ts", () => {
     // TODO SqliteDataConnection.getSchema - index: playlist_track doesn't have a SQL schema
 
     // save schema for verification
-    const json = JSON.stringify(schema, null, "  ")
-    fs.writeFileSync("./lib/sqltr/databases/test/test.schema.json", json)
+    writeJson("./lib/sqltr/databases/test/test.schema.json", schema)
 
     // save sql for verification
     const sql = []
@@ -185,8 +204,7 @@ describe("sqlite.ts", () => {
     expect(tree.length).toBe(1)
 
     // save for verification
-    const json = JSON.stringify(tree, null, "  ")
-    fs.writeFileSync("./lib/sqltr/databases/test/chinook.tree.json", json)
+    writeJson("./lib/sqltr/databases/test/chinook.tree.json", tree)
 
     const root = tree[0]
     expect(root.id).toBe("chinook.db")
@@ -252,8 +270,7 @@ describe("sqlite.ts", () => {
     const root = tree[0]
 
     // save for verification
-    const json = JSON.stringify(tree, null, "  ")
-    fs.writeFileSync("./lib/sqltr/databases/test/test.tree.json", json)
+    writeJson("./lib/sqltr/databases/test/test.tree.json", tree)
 
     const triggers = root.children[1]
     expect(triggers.id).toBe("test.db/triggers")

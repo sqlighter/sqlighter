@@ -6,7 +6,13 @@ import initSqlJs, { Database, QueryExecResult } from "sql.js"
 import sqliteParser from "sqlite-parser"
 import { DataConnection, DataConnectionConfigs, DataSchema } from "../connections"
 
-// import fs from "fs"
+function camelCase(str) {
+  return str
+    .replace(/(?:^\w|[A-Z]|\b\w)/g, function (word, index) {
+      return index == 0 ? word.toLowerCase() : word.toUpperCase()
+    })
+    .replace(/\s+/g, "")
+}
 
 export class SqliteDataConnection extends DataConnection {
   /** SQLite database connection */
@@ -135,6 +141,27 @@ export class SqliteDataConnection extends DataConnection {
       tableSchema.indexes = indexes
     }
 
+    // TODO add table with multiple foreign keys and related schema test
+    const fk = tableAst.definition
+      .filter((definition) => definition.variant == "constraint" && definition.definition[0].variant == "foreign key")
+      .map((fkAst) => {
+        const onUpdate = fkAst.definition[0].action.filter(a => a.variant == "on update").map(a => a.action)
+        const onDelete = fkAst.definition[0].action.filter(a => a.variant == "on delete").map(a => a.action)
+
+        return {
+          columns: fkAst.columns.map((c) => c.name),
+          references: {
+            table: fkAst.definition[0].references.name,
+            columns: fkAst.definition[0].references.columns.map((c) => c.name),
+            onUpdate: onUpdate && onUpdate[0],
+            onDelete: onDelete && onDelete[0]
+          },
+        }
+      })
+    if (fk.length > 0) {
+      tableSchema.foreignKeys = fk
+    }
+
     return tableSchema
   }
 
@@ -158,7 +185,7 @@ export class SqliteDataConnection extends DataConnection {
     return {
       name: triggerName,
       sql: triggerEntity.sql,
-      //from: viewAst.result?.from?.name,
+      on: triggerEntity.ast.on?.name,
     }
   }
 
@@ -171,12 +198,9 @@ export class SqliteDataConnection extends DataConnection {
    * @returns An array with a single DataSchema extracted from this database
    * @see https://www.sqlite.org/schematab.html
    * @see https://www.npmjs.com/package/sqlite-parser
+   * @internal
    */
-  public async getSchemas(refresh: boolean = false): Promise<DataSchema[]> {
-    if (this._schemas && !refresh) {
-      return this._schemas
-    }
-
+  public async _getEntities() {
     try {
       // retrieve create statements for all tables, indexes, trigger and views from which we'll parse the schema
       const query = "select type, tbl_name, sql from sqlite_schema where tbl_name not like 'sqlite_%'"
@@ -193,23 +217,40 @@ export class SqliteDataConnection extends DataConnection {
             let ast = sqliteParser(sql)
             ast = ast.statement[0] // remove statement list wrapper
             const name = ast.name?.name || ast.target?.name
+
+            // return type of entity, its name, sql create statement and its abstract syntax tree
             entities.push({ type: ast.format, name, sql, ast })
           } catch (exception) {
             console.error(
-              `SqliteDataConnection.getSchema - ${entity}: ${name}, exception: ${exception}`,
+              `SqliteDataConnection.getEntities - ${entity}: ${name}, exception: ${exception}`,
               sql,
               exception
             )
             throw exception
           }
         } else {
-          console.warn(`SqliteDataConnection.getSchema - ${entity}: ${name} doesn't have a SQL schema`)
+          console.warn(`SqliteDataConnection.getEntities - ${entity}: ${name} doesn't have a SQL schema`)
         }
       }
+      return entities
+    } catch (exception) {
+      console.error(`SqliteDataConnection.getEntities - exception: ${exception}`, exception)
+      throw exception
+    }
+  }
 
-      // save schema for verification
-      // const json = JSON.stringify(entities, null, "  ")
-      // fs.writeFileSync("./lib/sqltr/databases/test/test.entities.json", json)
+  /** Returns database schema in simplified, ready to use format.
+   * @param refresh True if schema should be refreshed (default is using cached version if available)
+   * @returns An array with a single DataSchema extracted from this database
+   */
+  public async getSchemas(refresh: boolean = false): Promise<DataSchema[]> {
+    if (this._schemas && !refresh) {
+      return this._schemas
+    }
+
+    try {
+      // get list of database entities with name, type, sql create statement and abstract syntax tree (AST)
+      const entities = await this._getEntities()
 
       // database name to be used for schema
       let database = "sqlite"
@@ -225,24 +266,24 @@ export class SqliteDataConnection extends DataConnection {
         .map((tableEntity) => this._getTableSchema(entities, tableEntity))
         .sort((a, b) => (a.name < b.name ? -1 : 1))
 
-        const views = entities
+      const views = entities
         .filter((entity) => entity.type == "view")
         .map((viewEntity) => this._getViewSchema(entities, viewEntity))
         .sort((a, b) => (a.name < b.name ? -1 : 1))
 
-        const triggers = entities
+      const triggers = entities
         .filter((entity) => entity.type == "trigger")
-        .map((triggerEntity) => this._getViewSchema(entities, triggerEntity))
+        .map((triggerEntity) => this._getTriggerSchema(entities, triggerEntity))
         .sort((a, b) => (a.name < b.name ? -1 : 1))
 
-      const schema: DataSchema = {
-        database,
-        tables,
-        triggers,
-        views,
-      }
-
-      return [schema]
+      return [
+        {
+          database,
+          tables,
+          triggers,
+          views,
+        },
+      ]
     } catch (exception) {
       console.error(`SqliteDataConnection.getSchema - exception: ${exception}`, exception)
       throw exception

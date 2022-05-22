@@ -100,12 +100,12 @@
               "action": [
                 {
                   "type": "action",
-                  "variant": "on delete",
+                  "variant": "on",
                   "action": "no action"
                 },
                 {
                   "type": "action",
-                  "variant": "on update",
+                  "variant": "on",
                   "action": "no action"
                 }
               ]
@@ -508,12 +508,12 @@
               "action": [
                 {
                   "type": "action",
-                  "variant": "on delete",
+                  "variant": "on",
                   "action": "no action"
                 },
                 {
                   "type": "action",
-                  "variant": "on update",
+                  "variant": "on",
                   "action": "no action"
                 }
               ]
@@ -873,12 +873,12 @@
               "action": [
                 {
                   "type": "action",
-                  "variant": "on delete",
+                  "variant": "on",
                   "action": "no action"
                 },
                 {
                   "type": "action",
-                  "variant": "on update",
+                  "variant": "on",
                   "action": "no action"
                 }
               ]
@@ -1187,12 +1187,12 @@
               "action": [
                 {
                   "type": "action",
-                  "variant": "on delete",
+                  "variant": "on",
                   "action": "no action"
                 },
                 {
                   "type": "action",
-                  "variant": "on update",
+                  "variant": "on",
                   "action": "no action"
                 }
               ]
@@ -1347,12 +1347,12 @@
               "action": [
                 {
                   "type": "action",
-                  "variant": "on delete",
+                  "variant": "on",
                   "action": "no action"
                 },
                 {
                   "type": "action",
-                  "variant": "on update",
+                  "variant": "on",
                   "action": "no action"
                 }
               ]
@@ -1389,12 +1389,12 @@
               "action": [
                 {
                   "type": "action",
-                  "variant": "on delete",
+                  "variant": "on",
                   "action": "no action"
                 },
                 {
                   "type": "action",
-                  "variant": "on update",
+                  "variant": "on",
                   "action": "no action"
                 }
               ]
@@ -1623,12 +1623,12 @@
               "action": [
                 {
                   "type": "action",
-                  "variant": "on delete",
+                  "variant": "on",
                   "action": "no action"
                 },
                 {
                   "type": "action",
-                  "variant": "on update",
+                  "variant": "on",
                   "action": "no action"
                 }
               ]
@@ -1665,12 +1665,12 @@
               "action": [
                 {
                   "type": "action",
-                  "variant": "on delete",
+                  "variant": "on",
                   "action": "no action"
                 },
                 {
                   "type": "action",
-                  "variant": "on update",
+                  "variant": "on",
                   "action": "no action"
                 }
               ]
@@ -1891,12 +1891,12 @@
               "action": [
                 {
                   "type": "action",
-                  "variant": "on delete",
+                  "variant": "on",
                   "action": "no action"
                 },
                 {
                   "type": "action",
-                  "variant": "on update",
+                  "variant": "on",
                   "action": "no action"
                 }
               ]
@@ -1933,12 +1933,12 @@
               "action": [
                 {
                   "type": "action",
-                  "variant": "on delete",
+                  "variant": "on",
                   "action": "no action"
                 },
                 {
                   "type": "action",
-                  "variant": "on update",
+                  "variant": "on",
                   "action": "no action"
                 }
               ]
@@ -1975,12 +1975,12 @@
               "action": [
                 {
                   "type": "action",
-                  "variant": "on delete",
+                  "variant": "on",
                   "action": "no action"
                 },
                 {
                   "type": "action",
-                  "variant": "on update",
+                  "variant": "on",
                   "action": "no action"
                 }
               ]
@@ -2275,211 +2275,6 @@
       },
       "variant": "create",
       "format": "index"
-    }
-  },
-  {
-    "type": "view",
-    "name": "customernames",
-    "sql": "CREATE VIEW CustomerNames as\nselect FirstName, LastName, Company from Customers",
-    "ast": {
-      "type": "statement",
-      "target": {
-        "type": "identifier",
-        "variant": "view",
-        "name": "customernames"
-      },
-      "result": {
-        "type": "statement",
-        "variant": "select",
-        "result": [
-          {
-            "type": "identifier",
-            "variant": "column",
-            "name": "firstname"
-          },
-          {
-            "type": "identifier",
-            "variant": "column",
-            "name": "lastname"
-          },
-          {
-            "type": "identifier",
-            "variant": "column",
-            "name": "company"
-          }
-        ],
-        "from": {
-          "type": "identifier",
-          "variant": "table",
-          "name": "customers"
-        }
-      },
-      "variant": "create",
-      "format": "view"
-    }
-  },
-  {
-    "type": "view",
-    "name": "invoicetotals",
-    "sql": "CREATE VIEW InvoiceTotals as\nselect InvoiceId, Total from Invoices",
-    "ast": {
-      "type": "statement",
-      "target": {
-        "type": "identifier",
-        "variant": "view",
-        "name": "invoicetotals"
-      },
-      "result": {
-        "type": "statement",
-        "variant": "select",
-        "result": [
-          {
-            "type": "identifier",
-            "variant": "column",
-            "name": "invoiceid"
-          },
-          {
-            "type": "identifier",
-            "variant": "column",
-            "name": "total"
-          }
-        ],
-        "from": {
-          "type": "identifier",
-          "variant": "table",
-          "name": "invoices"
-        }
-      },
-      "variant": "create",
-      "format": "view"
-    }
-  },
-  {
-    "type": "view",
-    "name": "doublesales",
-    "sql": "CREATE VIEW DoubleSales as select InvoiceId, (Total * 2) as \"DoubleTotal\" from Invoices",
-    "ast": {
-      "type": "statement",
-      "target": {
-        "type": "identifier",
-        "variant": "view",
-        "name": "doublesales"
-      },
-      "result": {
-        "type": "statement",
-        "variant": "select",
-        "result": [
-          {
-            "type": "identifier",
-            "variant": "column",
-            "name": "invoiceid"
-          },
-          {
-            "type": "expression",
-            "format": "binary",
-            "variant": "operation",
-            "operation": "*",
-            "left": {
-              "type": "identifier",
-              "variant": "column",
-              "name": "total"
-            },
-            "right": {
-              "type": "literal",
-              "variant": "decimal",
-              "value": "2"
-            },
-            "alias": "DoubleTotal"
-          }
-        ],
-        "from": {
-          "type": "identifier",
-          "variant": "table",
-          "name": "invoices"
-        }
-      },
-      "variant": "create",
-      "format": "view"
-    }
-  },
-  {
-    "type": "trigger",
-    "name": "validate_email_before_insert_customers",
-    "sql": "CREATE TRIGGER validate_email_before_insert_customers\n   BEFORE INSERT ON customers\nBEGIN\n   SELECT\n      CASE\n\tWHEN NEW.email NOT LIKE '%_@__%.__%' THEN\n   \t  RAISE (ABORT,'Invalid email address')\n       END;\nEND",
-    "ast": {
-      "type": "statement",
-      "target": {
-        "type": "identifier",
-        "variant": "trigger",
-        "name": "validate_email_before_insert_customers"
-      },
-      "on": {
-        "type": "identifier",
-        "variant": "table",
-        "name": "customers"
-      },
-      "event": {
-        "type": "event",
-        "occurs": "before",
-        "event": "insert"
-      },
-      "by": "row",
-      "action": [
-        {
-          "type": "statement",
-          "variant": "select",
-          "result": [
-            {
-              "type": "expression",
-              "variant": "case",
-              "expression": [
-                {
-                  "type": "condition",
-                  "variant": "when",
-                  "condition": {
-                    "type": "expression",
-                    "format": "binary",
-                    "variant": "operation",
-                    "operation": "not like",
-                    "right": {
-                      "type": "literal",
-                      "variant": "text",
-                      "value": "%_@__%.__%"
-                    },
-                    "left": {
-                      "type": "identifier",
-                      "variant": "column",
-                      "name": "new.email"
-                    }
-                  },
-                  "consequent": {
-                    "type": "error",
-                    "format": "unary",
-                    "variant": "raise",
-                    "expression": {
-                      "type": "error",
-                      "action": "abort",
-                      "message": {
-                        "type": "literal",
-                        "variant": "text",
-                        "value": "Invalid email address"
-                      }
-                    },
-                    "action": "abort",
-                    "message": {
-                      "type": "literal",
-                      "variant": "text",
-                      "value": "Invalid email address"
-                    }
-                  }
-                }
-              ]
-            }
-          ]
-        }
-      ],
-      "variant": "create",
-      "format": "trigger"
     }
   }
 ]

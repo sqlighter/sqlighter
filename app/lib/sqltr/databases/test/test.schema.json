@@ -37,6 +37,21 @@
             "ArtistId"
           ]
         }
+      ],
+      "foreignKeys": [
+        {
+          "columns": [
+            "ArtistId"
+          ],
+          "references": {
+            "table": "artists",
+            "columns": [
+              "ArtistId"
+            ],
+            "onUpdate": "no action",
+            "onDelete": "no action"
+          }
+        }
       ]
     },
     {
@@ -137,6 +152,21 @@
             "SupportRepId"
           ]
         }
+      ],
+      "foreignKeys": [
+        {
+          "columns": [
+            "SupportRepId"
+          ],
+          "references": {
+            "table": "employees",
+            "columns": [
+              "EmployeeId"
+            ],
+            "onUpdate": "no action",
+            "onDelete": "no action"
+          }
+        }
       ]
     },
     {
@@ -223,6 +253,21 @@
             "ReportsTo"
           ]
         }
+      ],
+      "foreignKeys": [
+        {
+          "columns": [
+            "ReportsTo"
+          ],
+          "references": {
+            "table": "employees",
+            "columns": [
+              "EmployeeId"
+            ],
+            "onUpdate": "no action",
+            "onDelete": "no action"
+          }
+        }
       ]
     },
     {
@@ -301,6 +346,34 @@
             "TrackId"
           ]
         }
+      ],
+      "foreignKeys": [
+        {
+          "columns": [
+            "InvoiceId"
+          ],
+          "references": {
+            "table": "invoices",
+            "columns": [
+              "InvoiceId"
+            ],
+            "onUpdate": "no action",
+            "onDelete": "no action"
+          }
+        },
+        {
+          "columns": [
+            "TrackId"
+          ],
+          "references": {
+            "table": "tracks",
+            "columns": [
+              "TrackId"
+            ],
+            "onUpdate": "no action",
+            "onDelete": "no action"
+          }
+        }
       ]
     },
     {
@@ -366,6 +439,21 @@
             "CustomerId"
           ]
         }
+      ],
+      "foreignKeys": [
+        {
+          "columns": [
+            "CustomerId"
+          ],
+          "references": {
+            "table": "customers",
+            "columns": [
+              "CustomerId"
+            ],
+            "onUpdate": "no action",
+            "onDelete": "no action"
+          }
+        }
       ]
     },
     {
@@ -413,6 +501,34 @@
           "columns": [
             "TrackId"
           ]
+        }
+      ],
+      "foreignKeys": [
+        {
+          "columns": [
+            "PlaylistId"
+          ],
+          "references": {
+            "table": "playlists",
+            "columns": [
+              "PlaylistId"
+            ],
+            "onUpdate": "no action",
+            "onDelete": "no action"
+          }
+        },
+        {
+          "columns": [
+            "TrackId"
+          ],
+          "references": {
+            "table": "tracks",
+            "columns": [
+              "TrackId"
+            ],
+            "onUpdate": "no action",
+            "onDelete": "no action"
+          }
         }
       ]
     },
@@ -515,13 +631,55 @@
             "MediaTypeId"
           ]
         }
+      ],
+      "foreignKeys": [
+        {
+          "columns": [
+            "AlbumId"
+          ],
+          "references": {
+            "table": "albums",
+            "columns": [
+              "AlbumId"
+            ],
+            "onUpdate": "no action",
+            "onDelete": "no action"
+          }
+        },
+        {
+          "columns": [
+            "GenreId"
+          ],
+          "references": {
+            "table": "genres",
+            "columns": [
+              "GenreId"
+            ],
+            "onUpdate": "no action",
+            "onDelete": "no action"
+          }
+        },
+        {
+          "columns": [
+            "MediaTypeId"
+          ],
+          "references": {
+            "table": "media_types",
+            "columns": [
+              "MediaTypeId"
+            ],
+            "onUpdate": "no action",
+            "onDelete": "no action"
+          }
+        }
       ]
     }
   ],
   "triggers": [
     {
       "name": "validate_email_before_insert_customers",
-      "sql": "CREATE TRIGGER validate_email_before_insert_customers\n   BEFORE INSERT ON customers\nBEGIN\n   SELECT\n      CASE\n\tWHEN NEW.email NOT LIKE '%_@__%.__%' THEN\n   \t  RAISE (ABORT,'Invalid email address')\n       END;\nEND"
+      "sql": "CREATE TRIGGER validate_email_before_insert_customers\n   BEFORE INSERT ON customers\nBEGIN\n   SELECT\n      CASE\n\tWHEN NEW.email NOT LIKE '%_@__%.__%' THEN\n   \t  RAISE (ABORT,'Invalid email address')\n       END;\nEND",
+      "on": "customers"
     }
   ],
   "views": [

@@ -911,7 +911,10 @@
           {
             "id": "test.db/triggers/validate_email_before_insert_customers",
             "title": "validate_email_before_insert_customers",
-            "type": "trigger"
+            "type": "trigger",
+            "tags": [
+              "customers"
+            ]
           }
         ]
       },
