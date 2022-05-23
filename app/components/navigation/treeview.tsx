@@ -8,10 +8,10 @@ import { useState } from "react"
 import Box from "@mui/material/Box"
 import ButtonBase from "@mui/material/ButtonBase"
 import Chip from "@mui/material/Chip"
-import IconButton from "@mui/material/IconButton"
 import Stack from "@mui/material/Stack"
 import Typography from "@mui/material/Typography"
 import Tooltip from "@mui/material/Tooltip"
+import IconButton from "@mui/material/IconButton"
 
 import { SxProps, Theme } from "@mui/material"
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown"
@@ -21,82 +21,107 @@ import { Command } from "../../lib/data/commands"
 import { Tree } from "../../lib/data/tree"
 import { Icon } from "../ui/icon"
 
-const TREEITEM_STYLES: SxProps<Theme> = {
+// delay before showing tooltips
+const TOOLTIP_ENTER_DELAY_MS = 1000
+
+const TREEVIEW_STYLES: SxProps<Theme> = {
   width: "100%",
-  maxWidth: "100%",
-  overflow: "hidden",
-  minHeight: 32,
-  maxHeight: 32,
-  paddingLeft: 0,
-  paddingRight: 0.5,
+  height: "100%",
+  //  overflowY: "auto",
 
-  display: "flex",
-  flexWrap: "nowrap",
-  alignItems: "center",
-  justifyContent: "start",
-  textAlign: "start",
-  color: "text.secondary",
-
-  "&:hover": {
-    backgroundColor: "action.hover",
-    color: "text.primary",
-
-    ".TreeItem-commandIcon": {
-      color: (theme) => theme.palette.text.disabled,
+  ".MuiChip-root": {
+    borderRadius: "4px",
+    ".MuiChip-label": {
+      fontSize: "0.6rem",
     },
   },
 
-  ".TreeItem-primary": {
-    color: "red",
-  },
-
-  ".TreeItem-collapsibleIcon": {
-    minWidth: 16,
-    width: 16,
-    height: 16,
-    marginLeft: 1,
-  },
-
-  ".TreeItem-labelIcon": {
-    width: 18,
-    height: 18,
-    marginRight: 0.5,
-  },
-
-  ".TreeItem-label": {
-    minWidth: 64,
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-
-    fontWeight: "inherit",
-    paddingRight: 0.5,
-  },
-
-  ".TreeItem-badge": {
-    marginLeft: 0.5,
-  },
-
-  ".TreeItem-tags": {
+  ".TreeItem-root": {
+    width: "100%",
     maxWidth: "100%",
-    overflow: "hidden",
+    minHeight: 32,
+    maxHeight: 32,
+    //  overflowX: "hidden",
+
+    paddingLeft: 0,
+    paddingRight: 0.5,
+
+    display: "flex",
+    flexWrap: "nowrap",
+    alignItems: "center",
+    justifyContent: "start",
+    textAlign: "start",
+    color: "text.secondary",
+
+    "&:hover": {
+      backgroundColor: "action.hover",
+      color: "text.primary",
+
+      ".TreeItem-commandIcon": {
+        color: (theme) => theme.palette.text.disabled,
+      },
+    },
+
+    ".TreeItem-collapsibleIcon": {
+      minWidth: 16,
+      width: 16,
+      height: 16,
+      marginLeft: 1,
+    },
+
+    ".TreeItem-labelIcon": {
+      width: 18,
+      height: 18,
+      marginRight: 0.5,
+    },
+
+    ".TreeItem-label": {
+      minWidth: 64,
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+
+      fontWeight: "inherit",
+      paddingRight: 0.5,
+    },
+
+    ".TreeItem-badge": {
+      marginLeft: 0.5,
+    },
+
+    ".TreeItem-tags": {
+      maxWidth: "100%",
+      overflow: "hidden",
+    },
 
     ".MuiChip-root": {
       cursor: "pointer",
     },
-  },
 
-  ".TreeItem-commandIcon": {
-    width: 20,
-    height: 20,
-    color: "transparent",
+    ".TreeItem-commands": {
+      height: 18,
+    },
 
-    "&:hover": {
-      color: (theme) => theme.palette.text.secondary,
+    ".TreeItem-commandIcon": {
+      width: 18,
+      height: 18,
+      color: "transparent",
+
+      "&:hover": {
+        color: (theme) => theme.palette.text.secondary,
+      },
+    },
+
+    ".TreeItem-pinnedIcon": {
+      color: (theme) => theme.palette.primary.main,
     },
   },
 
-  ".TreeItem-pinnedIcon": {
-    color: (theme) => theme.palette.primary.main,
+  ".TreeItem-primary": {
+    color: "text.primary",
+  },
+
+  ".TreeItem-selected": {
+    backgroundColor: "primary",
   },
 }
 
@@ -105,19 +130,6 @@ const TREEITEM_NORESULTS_STYLES: SxProps = {
   maxHeight: 24,
   lineHeight: "24px",
   color: "text.secondary",
-}
-
-const TREEVIEW_STYLES: SxProps = {
-  width: "100%",
-  height: "100%",
-  overflowY: "auto",
-
-  ".MuiChip-root": {
-    borderRadius: "4px",
-    ".MuiChip-label": {
-      fontSize: "0.6rem",
-    },
-  },
 }
 
 //
@@ -182,7 +194,10 @@ function TreeItem({ item, ...props }: TreeItemProps) {
   //
 
   const depthPadding = `${(props.depth || 0) * DEPTH_PADDING_PX}px`
-  const itemClass = "TreeItem-root" + (props.depth == 0 ? " TreeItem-primary" : null)
+  let itemClass = "TreeItem-root"
+  if (props.depth == 0) {
+    itemClass += " TreeItem-primary"
+  }
 
   function getCollapsibleIcon() {
     if (isCollapsible()) {
@@ -206,17 +221,27 @@ function TreeItem({ item, ...props }: TreeItemProps) {
       className = " TreeItem-pinnedIcon"
     }
 
+    // NOTE the <div> inside Tooltip is necessary since Icon is a passive element that doesn't fire events (unlike IconButton)
     return (
-      <Icon
+      <Tooltip
         key={command.command}
-        className={className}
-        onClick={(e) => {
-          props.onCommand(e, command, item)
-          e.stopPropagation()
-        }}
+        className="TreeItem-commandIconTooltip"
+        title={command.title}
+        placement="top"
+        enterDelay={TOOLTIP_ENTER_DELAY_MS}
       >
-        {command.icon}
-      </Icon>
+        <div>
+          <Icon
+            className={className}
+            onClick={(e) => {
+              props.onCommand(e, command, item)
+              e.stopPropagation()
+            }}
+          >
+            {command.icon}
+          </Icon>
+        </div>
+      </Tooltip>
     )
   }
 
@@ -226,37 +251,35 @@ function TreeItem({ item, ...props }: TreeItemProps) {
       return <Chip key={index} className="TreeItem-tag" label={tag} size="small" />
     }
     return (
-      <Tooltip key={index} title={tag.tooltip} placement="top">
+      <Tooltip key={index} title={tag.tooltip} placement="top" enterDelay={TOOLTIP_ENTER_DELAY_MS}>
         <Chip className="TreeItem-tag" label={tag.title} size="small" />
       </Tooltip>
     )
   }
 
   return (
-    <>
-      <ButtonBase sx={TREEITEM_STYLES} className={itemClass} onClick={handleItemClick}>
-        <Box className="TreeItem-depthPadding" sx={{ minWidth: depthPadding, width: depthPadding }} />
-        {getCollapsibleIcon()}
-        {item.icon && getIcon()}
-        <Typography className="TreeItem-label" variant="body2">
-          {item.title}
-          {item.badge !== null && item.badge !== undefined && (
-            <Chip className="TreeItem-badge" label={item.badge} size="small" />
-          )}
-        </Typography>
-        <Box sx={{ flexGrow: 1 }} />
-        {item.tags && (
-          <Stack className="TreeItem-tags" direction="row" spacing={0.5}>
-            {item.tags.map((tag, index) => getTag(tag, index))}
-          </Stack>
+    <ButtonBase className={itemClass} onClick={handleItemClick}>
+      <Box className="TreeItem-depthPadding" sx={{ minWidth: depthPadding, width: depthPadding }} />
+      {getCollapsibleIcon()}
+      {item.icon && getIcon()}
+      <Typography className="TreeItem-label" variant="body2" color="inherit">
+        {item.title}
+        {item.badge !== null && item.badge !== undefined && (
+          <Chip className="TreeItem-badge" label={item.badge} size="small" />
         )}
-        {item.commands && (
-          <Stack className="TreeItem-commands" direction="row" spacing={0.5}>
-            {item.commands.map((command) => getCommandIcon(command))}
-          </Stack>
-        )}
-      </ButtonBase>
-    </>
+      </Typography>
+      <Box sx={{ flexGrow: 1 }} />
+      {item.tags && (
+        <Stack className="TreeItem-tags" direction="row" spacing={0.5}>
+          {item.tags.map((tag, index) => getTag(tag, index))}
+        </Stack>
+      )}
+      {item.commands && (
+        <Stack className="TreeItem-commands" direction="row" spacing={0.5}>
+          {item.commands.map((command) => getCommandIcon(command))}
+        </Stack>
+      )}
+    </ButtonBase>
   )
 }
 

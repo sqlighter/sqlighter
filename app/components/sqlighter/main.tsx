@@ -18,12 +18,14 @@ import IconButton from "@mui/material/IconButton"
 
 import CloudOutlinedIcon from "@mui/icons-material/CloudOutlined"
 
+
 import DatabaseIcon from "@mui/icons-material/DnsOutlined"
 import QueryIcon from "@mui/icons-material/ArticleOutlined"
 import HistoryIcon from "@mui/icons-material/HistoryOutlined"
 import SearchIcon from "@mui/icons-material/SearchOutlined"
 import SchemaIcon from "@mui/icons-material/WeekendOutlined" // TODO find database icon
 
+import { Icon } from "../../components/ui/icon"
 import { Context } from "../../components/context"
 import { TabsLayout } from "../../components/navigation/tabslayout"
 import { Section } from "../../components/section"
@@ -38,7 +40,7 @@ const activities: PanelProps[] = [
     id: "database-activity",
     title: "Database",
     description: "Database Schema",
-    icon: <DatabaseIcon />,
+    icon: <Icon>database</Icon>,
     sx: { width: "100%", height: "100%" },
     children: <DatabasePanel />,
   },

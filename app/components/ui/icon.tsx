@@ -15,6 +15,12 @@ import TableIcon from "@mui/icons-material/TableChartOutlined"
 import KeyIcon from "@mui/icons-material/KeyOutlined"
 import QuestionMarkIcon from "@mui/icons-material/QuestionMarkOutlined"
 import BoltOutlinedIcon from "@mui/icons-material/BoltOutlined"
+import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined"
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined"
+import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined"
+import PlaylistPlayOutlinedIcon from "@mui/icons-material/PlaylistPlayOutlined"
+import TableRowsOutlinedIcon from "@mui/icons-material/TableRowsOutlined"
+import RefreshOutlinedIcon from "@mui/icons-material/RefreshOutlined"
 
 // Material Design Icons (open source)
 // https://materialdesignicons.com/
@@ -38,8 +44,18 @@ export function Icon(props: IconProps) {
         return <FileIcon {...props} />
       case "folder":
         return <FolderIcon {...props} />
+      case "info":
+        return <InfoOutlinedIcon {...props} />
       case "key":
         return <KeyIcon {...props} />
+      case "more":
+        return <MoreHorizOutlinedIcon {...props} />
+      case "pin":
+        return <StarBorderOutlinedIcon {...props} />
+      case "query":
+        return <TableRowsOutlinedIcon {...props} />
+      case "refresh":
+        return <RefreshOutlinedIcon {...props} />
       case "trigger":
         return <BoltOutlinedIcon {...props} />
       case "table":

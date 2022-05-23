@@ -173,14 +173,14 @@ export function DatabasePanel() {
   //       <TreeView items={items} onCommand={handleCommand} />
 
   return (
-    <Box sx={{}}>
-      <Box>Database schema panel (TBD)</Box>
-      <Typography color="text.primary">text.primary</Typography>
-      <Typography color="text.secondary">text.secondary</Typography>
-      <Button variant="outlined" onClick={handleOpenClick}>
-        Open
-      </Button>
-
+    <Box className="DatabasePanel-root" sx={{ height: "100%", overflowY: "scroll" }}>
+      <Box sx={{ padding: 1 }}>
+        <Box sx={{ textTransform: "uppercase", mb: 1 }}>Database Explorer</Box>
+        <Button variant="outlined" onClick={handleOpenClick}>
+          Open
+        </Button>
+      </Box>
+      
       {!tree && <>No tree</>}
       {tree && <TreeView items={tree} onCommand={handleCommand} />}
     </Box>

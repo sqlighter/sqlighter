@@ -155,6 +155,11 @@ export abstract class DataConnection {
       id: `${schema.database}/tables/${table.name}`,
       title: table.name,
       type: "table",
+      commands: [
+        { command: "sqlighter.viewStructure", icon: "info", title: "View Structure" },
+        { command: "sqlighter.viewData", icon: "query", title: "View Data" },
+        { command: "sqlighter.pin", icon: "pin", title: "Pin" },
+      ],
       children: [
         {
           id: `${schema.database}/tables/${table.name}/columns`,
@@ -206,6 +211,7 @@ export abstract class DataConnection {
         title: schema.database,
         type: "database",
         icon: "database",
+        commands: [{ command: "sqlighter.refreshSchema", icon: "refresh", title: "Refresh" }],
         children: [
           {
             id: `${schema.database}/tables`,
