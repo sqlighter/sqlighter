@@ -14686,6 +14686,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"mdi-material-ui@npm:^7.3.0":
+  version: 7.3.0
+  resolution: "mdi-material-ui@npm:7.3.0"
+  peerDependencies:
+    "@mui/material": ^5.0.0 || ^5.0.0-rc.0
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: 4010612f09f107487278ff3a34e00fd9420e4c1e8cfc18baf2ea8108f0f8221da6a59f7e9d9c04d4a4832e81aa083dce41e5938c8871ee6d9377bf821730669d
+  languageName: node
+  linkType: hard
+
 "mdurl@npm:^1.0.0":
   version: 1.0.1
   resolution: "mdurl@npm:1.0.1"
@@ -18561,6 +18571,7 @@ __metadata:
     jest-html-reporter: ^3.5.0
     jwt-decode: ^3.1.2
     knex: ^2.0.0
+    mdi-material-ui: ^7.3.0
     mysql2: ^2.3.3
     nanoid: ^3.3.4
     next: ^12.1.6
