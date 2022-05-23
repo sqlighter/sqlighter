@@ -120,7 +120,17 @@ export abstract class DataConnection {
 
     if (column.constraints) {
       // show primary key using 🔑 emoji instead of plain text?
-      tree.tags.push(...column.constraints)
+      tree.tags.push(
+        ...column.constraints.map((c) => {
+          switch (c) {
+            case "primary key":
+              return { title: "pk", tooltip: c }
+            case "auto increment":
+              return { title: "ai", tooltip: c }
+          }
+          return c
+        })
+      )
     }
     tree.tags.push(column.datatype)
 
@@ -206,20 +216,20 @@ export abstract class DataConnection {
             children: tables,
           },
           {
-            id: `${schema.database}/triggers`,
-            title: "Triggers",
-            type: "triggers",
-            icon: "trigger",
-            badge: triggers.length.toString(),
-            children: triggers,
-          },
-          {
             id: `${schema.database}/views`,
             title: "Views",
             type: "views",
             icon: "view",
             badge: views.length.toString(),
             children: views,
+          },
+          {
+            id: `${schema.database}/triggers`,
+            title: "Triggers",
+            type: "triggers",
+            icon: "trigger",
+            badge: triggers.length.toString(),
+            children: triggers,
           },
         ],
       }

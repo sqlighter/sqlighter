@@ -7,6 +7,7 @@
 import { useState, useEffect } from "react"
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
+import Typography from "@mui/material/Typography"
 
 import { Command } from "../../lib/data/commands"
 import { FAKE_SCHEMAS } from "../../lib/data/sources"
@@ -145,7 +146,7 @@ export function DatabasePanel() {
 
   async function handleOpenClick(e) {
     if (sqljs) {
-//      const response = await fetch("/chinook.sqlite")
+      //      const response = await fetch("/chinook.sqlite")
       const response = await fetch("/test.db")
       const buffer = await response.arrayBuffer()
       console.log("downloaded", response, buffer)
@@ -172,14 +173,16 @@ export function DatabasePanel() {
   //       <TreeView items={items} onCommand={handleCommand} />
 
   return (
-    <>
+    <Box sx={{}}>
       <Box>Database schema panel (TBD)</Box>
+      <Typography color="text.primary">text.primary</Typography>
+      <Typography color="text.secondary">text.secondary</Typography>
       <Button variant="outlined" onClick={handleOpenClick}>
         Open
       </Button>
 
       {!tree && <>No tree</>}
       {tree && <TreeView items={tree} onCommand={handleCommand} />}
-    </>
+    </Box>
   )
 }

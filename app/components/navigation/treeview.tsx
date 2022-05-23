@@ -9,8 +9,10 @@ import Box from "@mui/material/Box"
 import ButtonBase from "@mui/material/ButtonBase"
 import Chip from "@mui/material/Chip"
 import IconButton from "@mui/material/IconButton"
-import Typography from "@mui/material/Typography"
 import Stack from "@mui/material/Stack"
+import Typography from "@mui/material/Typography"
+import Tooltip from "@mui/material/Tooltip"
+
 import { SxProps, Theme } from "@mui/material"
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown"
 import ArrowRightIcon from "@mui/icons-material/ArrowRight"
@@ -21,6 +23,8 @@ import { Icon } from "../ui/icon"
 
 const TREEITEM_STYLES: SxProps<Theme> = {
   width: "100%",
+  maxWidth: "100%",
+  overflow: "hidden",
   minHeight: 32,
   maxHeight: 32,
   paddingLeft: 0,
@@ -31,30 +35,54 @@ const TREEITEM_STYLES: SxProps<Theme> = {
   alignItems: "center",
   justifyContent: "start",
   textAlign: "start",
+  color: "text.secondary",
 
   "&:hover": {
     backgroundColor: "action.hover",
+    color: "text.primary",
 
     ".TreeItem-commandIcon": {
       color: (theme) => theme.palette.text.disabled,
     },
   },
 
+  ".TreeItem-primary": {
+    color: "red",
+  },
+
   ".TreeItem-collapsibleIcon": {
-    minWidth: 20,
-    width: 20,
-    height: 20,
+    minWidth: 16,
+    width: 16,
+    height: 16,
+    marginLeft: 1,
   },
 
   ".TreeItem-labelIcon": {
-    width: 20,
-    height: 20,
+    width: 18,
+    height: 18,
     marginRight: 0.5,
   },
 
   ".TreeItem-label": {
+    minWidth: 64,
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+
     fontWeight: "inherit",
     paddingRight: 0.5,
+  },
+
+  ".TreeItem-badge": {
+    marginLeft: 0.5,
+  },
+
+  ".TreeItem-tags": {
+    maxWidth: "100%",
+    overflow: "hidden",
+
+    ".MuiChip-root": {
+      cursor: "pointer",
+    },
   },
 
   ".TreeItem-commandIcon": {
@@ -95,6 +123,9 @@ const TREEVIEW_STYLES: SxProps = {
 //
 // TreeItem
 //
+
+// pixels of indentation for each hierarchical level
+const DEPTH_PADDING_PX = 12
 
 export interface TreeItemProps {
   /** Item and children to be shown */
@@ -150,7 +181,8 @@ function TreeItem({ item, ...props }: TreeItemProps) {
   // render
   //
 
-  const depthPadding = `${(props.depth || 0) * 8}px`
+  const depthPadding = `${(props.depth || 0) * DEPTH_PADDING_PX}px`
+  const itemClass = "TreeItem-root" + (props.depth == 0 ? " TreeItem-primary" : null)
 
   function getCollapsibleIcon() {
     if (isCollapsible()) {
@@ -188,28 +220,36 @@ function TreeItem({ item, ...props }: TreeItemProps) {
     )
   }
 
+  /** A tag is rendered as a chip with an optional tooltip */
+  function getTag(tag, index) {
+    if (typeof tag === "string") {
+      return <Chip key={index} className="TreeItem-tag" label={tag} size="small" />
+    }
+    return (
+      <Tooltip key={index} title={tag.tooltip} placement="top">
+        <Chip className="TreeItem-tag" label={tag.title} size="small" />
+      </Tooltip>
+    )
+  }
+
   return (
     <>
-      <ButtonBase sx={TREEITEM_STYLES} className="TreeItem-root" onClick={handleItemClick}>
+      <ButtonBase sx={TREEITEM_STYLES} className={itemClass} onClick={handleItemClick}>
         <Box className="TreeItem-depthPadding" sx={{ minWidth: depthPadding, width: depthPadding }} />
         {getCollapsibleIcon()}
-        {getIcon()}
+        {item.icon && getIcon()}
         <Typography className="TreeItem-label" variant="body2">
           {item.title}
-        </Typography>
-        {item.badge !== null && item.badge !== undefined && (
-          <Chip className="TreeItem-badge" label={item.badge} size="small" />
-        )}
-        <Box sx={{ flexGrow: 1 }} />
-        <Typography variant="caption" color="inherit">
-          {item.tags && (
-            <Stack className="TreeItem-tags" direction="row" spacing={0.5}>
-              {item.tags.map((tag, index) => {
-                return <Chip key={index} className="TreeItem-tag" label={tag} size="small" />
-              })}
-            </Stack>
+          {item.badge !== null && item.badge !== undefined && (
+            <Chip className="TreeItem-badge" label={item.badge} size="small" />
           )}
         </Typography>
+        <Box sx={{ flexGrow: 1 }} />
+        {item.tags && (
+          <Stack className="TreeItem-tags" direction="row" spacing={0.5}>
+            {item.tags.map((tag, index) => getTag(tag, index))}
+          </Stack>
+        )}
         {item.commands && (
           <Stack className="TreeItem-commands" direction="row" spacing={0.5}>
             {item.commands.map((command) => getCommandIcon(command))}

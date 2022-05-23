@@ -48,8 +48,12 @@ export interface Tree {
   /** Item label badge, eg: children count, size, etc (optional) */
   badge?: string | number
 
-  /** Tags shown for this item (optional) */
-  tags?: string[]
+  /**
+   * Tags shown for this item (optional). If a tag is quite long
+   * like 'foreign key' for example it can be passed with a shortened
+   * title like 'fk' and a tooltip with the full text.
+   */
+  tags?: (string | { title: string; tooltip: string })[]
 
   /** Commands shown as icons or in extension menu (optional) */
   commands?: Command[]
