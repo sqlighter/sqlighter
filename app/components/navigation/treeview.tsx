@@ -156,7 +156,7 @@ export interface TreeItemProps {
   pinned?: boolean
 
   /** Callback used when one of the action or "collapse/expand" icons is clicked */
-  onCommand?: (event: React.SyntheticEvent, command: Command, item: Tree) => void
+  onCommand?: (event: React.SyntheticEvent, command: string, args) => void
 }
 
 //
@@ -177,10 +177,10 @@ function TreeItem({ item, ...props }: TreeItemProps) {
   function handleItemClick(e) {
     console.debug("TreeItem.handleItemClick")
     if (isCollapsible()) {
-      props.onCommand(e, { command: props.expanded ? "sqltr.collapseItem" : "sqltr.expandItem" }, item)
+      props.onCommand(e, props.expanded ? "sqltr.collapseItem" : "sqltr.expandItem", { item })
     }
   }
-
+  /*
   function handleCommandClick(e, command) {
     console.debug(`TreeItem.handleCommandClick - ${command.command}`)
     e.stopPropagation()
@@ -188,7 +188,7 @@ function TreeItem({ item, ...props }: TreeItemProps) {
     props.onCommand(e, command, item)
     return 0
   }
-
+*/
   //
   // render
   //
@@ -234,7 +234,7 @@ function TreeItem({ item, ...props }: TreeItemProps) {
           <Icon
             className={className}
             onClick={(e) => {
-              props.onCommand(e, command, item)
+              props.onCommand(e, command.command, { item, command })
               e.stopPropagation()
             }}
           >
@@ -295,7 +295,7 @@ export interface TreeViewProps {
   filter?: string
 
   /** Callback used when one of the item's commands is triggered */
-  onCommand?: (event: React.SyntheticEvent, command: Command, item: Tree) => void
+  onCommand?: (event: React.SyntheticEvent, command: string, args) => void
 }
 
 export function TreeView({ items, onCommand }: TreeViewProps) {
@@ -325,10 +325,11 @@ export function TreeView({ items, onCommand }: TreeViewProps) {
   // handlers
   //
 
-  function handleCommand(event: React.SyntheticEvent, command: Command, item: Tree) {
-    console.debug(`TreeView.handleActionClick - command: ${command.command}, item: ${item.id}`, command, item)
+  function handleCommand(event: React.SyntheticEvent, command: string, args) {
+    const item = args.item
+    console.debug(`TreeView.handleCommand - ${command}`, args)
 
-    switch (command.command) {
+    switch (command) {
       case "sqltr.collapseItem":
         setExpanded(expanded.filter((expandedId) => item.id !== expandedId))
         break
@@ -337,10 +338,11 @@ export function TreeView({ items, onCommand }: TreeViewProps) {
           setExpanded([...expanded, item.id])
         }
         break
-    }
 
-    if (onCommand) {
-      onCommand(event, command, item)
+      default:
+        if (onCommand) {
+          onCommand(event, command, args)
+        }
     }
   }
 
