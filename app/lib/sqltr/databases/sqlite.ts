@@ -253,7 +253,7 @@ export class SqliteDataConnection extends DataConnection {
       const entities = await this._getEntities()
 
       // database name to be used for schema
-      let database = "sqlite"
+      let database = "main"
       if (typeof this._configs?.connection == "object") {
         if (this._configs.connection.database) {
           database = this._configs.connection.database
