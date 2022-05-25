@@ -145,8 +145,8 @@ export class SqliteDataConnection extends DataConnection {
     const fk = tableAst.definition
       .filter((definition) => definition.variant == "constraint" && definition.definition[0].variant == "foreign key")
       .map((fkAst) => {
-        const onUpdate = fkAst.definition[0].action.filter(a => a.variant == "on update").map(a => a.action)
-        const onDelete = fkAst.definition[0].action.filter(a => a.variant == "on delete").map(a => a.action)
+        const onUpdate = fkAst.definition[0].action.filter((a) => a.variant == "on update").map((a) => a.action)
+        const onDelete = fkAst.definition[0].action.filter((a) => a.variant == "on delete").map((a) => a.action)
 
         return {
           columns: fkAst.columns.map((c) => c.name),
@@ -154,7 +154,7 @@ export class SqliteDataConnection extends DataConnection {
             table: fkAst.definition[0].references.name,
             columns: fkAst.definition[0].references.columns.map((c) => c.name),
             onUpdate: onUpdate && onUpdate[0],
-            onDelete: onDelete && onDelete[0]
+            onDelete: onDelete && onDelete[0],
           },
         }
       })

@@ -74,11 +74,13 @@ export function DatabasePanel() {
     <Box className="DatabasePanel-root" sx={{ height: "100%", overflowY: "scroll" }}>
       <Box sx={{ padding: 1 }}>
         <Typography variant="overline">Database Explorer</Typography>
-        {!connection && <Box>
-          <Button variant="outlined" onClick={handleOpenClick}>
-            Open
-          </Button>
-        </Box>}
+        {!connection && (
+          <Box>
+            <Button variant="outlined" onClick={handleOpenClick}>
+              Open
+            </Button>
+          </Box>
+        )}
       </Box>
       {connection && <DatabaseTreeView connection={connection} onCommand={handleCommand} />}
     </Box>

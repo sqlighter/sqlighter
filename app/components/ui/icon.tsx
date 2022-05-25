@@ -16,7 +16,7 @@ import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined"
 import KeyIcon from "@mui/icons-material/KeyOutlined"
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined"
 import PlaylistPlayOutlinedIcon from "@mui/icons-material/PlaylistPlayOutlined"
-import PushPinOutlinedIcon from '@mui/icons-material/PushPinOutlined';
+import PushPinOutlinedIcon from "@mui/icons-material/PushPinOutlined"
 import QuestionMarkIcon from "@mui/icons-material/QuestionMarkOutlined"
 import RefreshOutlinedIcon from "@mui/icons-material/RefreshOutlined"
 import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined"
@@ -54,7 +54,7 @@ export function Icon(props: IconProps) {
         return <MoreHorizOutlinedIcon {...props} />
       case "pin":
       case "pinned":
-        return <PushPinOutlinedIcon {...props} sx={{transform: "rotate(45deg)"}}/>
+        return <PushPinOutlinedIcon {...props} sx={{ transform: "rotate(45deg)" }} />
       case "query":
         return <TableRowsOutlinedIcon {...props} />
       case "refresh":

@@ -8,46 +8,32 @@
         {
           "name": "AlbumId",
           "datatype": "integer",
-          "constraints": [
-            "primary key",
-            "auto increment",
-            "not null"
-          ]
+          "constraints": ["primary key", "auto increment", "not null"]
         },
         {
           "name": "Title",
           "datatype": "nvarchar(160)",
-          "constraints": [
-            "not null"
-          ]
+          "constraints": ["not null"]
         },
         {
           "name": "ArtistId",
           "datatype": "integer",
-          "constraints": [
-            "not null"
-          ]
+          "constraints": ["not null"]
         }
       ],
       "indexes": [
         {
           "name": "IFK_AlbumArtistId",
           "sql": "CREATE INDEX [IFK_AlbumArtistId] ON \"albums\" ([ArtistId])",
-          "columns": [
-            "ArtistId"
-          ]
+          "columns": ["ArtistId"]
         }
       ],
       "foreignKeys": [
         {
-          "columns": [
-            "ArtistId"
-          ],
+          "columns": ["ArtistId"],
           "references": {
             "table": "artists",
-            "columns": [
-              "ArtistId"
-            ],
+            "columns": ["ArtistId"],
             "onUpdate": "no action",
             "onDelete": "no action"
           }
@@ -61,11 +47,7 @@
         {
           "name": "ArtistId",
           "datatype": "integer",
-          "constraints": [
-            "primary key",
-            "auto increment",
-            "not null"
-          ]
+          "constraints": ["primary key", "auto increment", "not null"]
         },
         {
           "name": "Name",
@@ -80,25 +62,17 @@
         {
           "name": "CustomerId",
           "datatype": "integer",
-          "constraints": [
-            "primary key",
-            "auto increment",
-            "not null"
-          ]
+          "constraints": ["primary key", "auto increment", "not null"]
         },
         {
           "name": "FirstName",
           "datatype": "nvarchar(40)",
-          "constraints": [
-            "not null"
-          ]
+          "constraints": ["not null"]
         },
         {
           "name": "LastName",
           "datatype": "nvarchar(20)",
-          "constraints": [
-            "not null"
-          ]
+          "constraints": ["not null"]
         },
         {
           "name": "Company",
@@ -135,9 +109,7 @@
         {
           "name": "Email",
           "datatype": "nvarchar(60)",
-          "constraints": [
-            "not null"
-          ]
+          "constraints": ["not null"]
         },
         {
           "name": "SupportRepId",
@@ -148,21 +120,15 @@
         {
           "name": "IFK_CustomerSupportRepId",
           "sql": "CREATE INDEX [IFK_CustomerSupportRepId] ON \"customers\" ([SupportRepId])",
-          "columns": [
-            "SupportRepId"
-          ]
+          "columns": ["SupportRepId"]
         }
       ],
       "foreignKeys": [
         {
-          "columns": [
-            "SupportRepId"
-          ],
+          "columns": ["SupportRepId"],
           "references": {
             "table": "employees",
-            "columns": [
-              "EmployeeId"
-            ],
+            "columns": ["EmployeeId"],
             "onUpdate": "no action",
             "onDelete": "no action"
           }
@@ -176,25 +142,17 @@
         {
           "name": "EmployeeId",
           "datatype": "integer",
-          "constraints": [
-            "primary key",
-            "auto increment",
-            "not null"
-          ]
+          "constraints": ["primary key", "auto increment", "not null"]
         },
         {
           "name": "LastName",
           "datatype": "nvarchar(20)",
-          "constraints": [
-            "not null"
-          ]
+          "constraints": ["not null"]
         },
         {
           "name": "FirstName",
           "datatype": "nvarchar(20)",
-          "constraints": [
-            "not null"
-          ]
+          "constraints": ["not null"]
         },
         {
           "name": "Title",
@@ -249,21 +207,15 @@
         {
           "name": "IFK_EmployeeReportsTo",
           "sql": "CREATE INDEX [IFK_EmployeeReportsTo] ON \"employees\" ([ReportsTo])",
-          "columns": [
-            "ReportsTo"
-          ]
+          "columns": ["ReportsTo"]
         }
       ],
       "foreignKeys": [
         {
-          "columns": [
-            "ReportsTo"
-          ],
+          "columns": ["ReportsTo"],
           "references": {
             "table": "employees",
-            "columns": [
-              "EmployeeId"
-            ],
+            "columns": ["EmployeeId"],
             "onUpdate": "no action",
             "onDelete": "no action"
           }
@@ -277,11 +229,7 @@
         {
           "name": "GenreId",
           "datatype": "integer",
-          "constraints": [
-            "primary key",
-            "auto increment",
-            "not null"
-          ]
+          "constraints": ["primary key", "auto increment", "not null"]
         },
         {
           "name": "Name",
@@ -296,80 +244,56 @@
         {
           "name": "InvoiceLineId",
           "datatype": "integer",
-          "constraints": [
-            "primary key",
-            "auto increment",
-            "not null"
-          ]
+          "constraints": ["primary key", "auto increment", "not null"]
         },
         {
           "name": "InvoiceId",
           "datatype": "integer",
-          "constraints": [
-            "not null"
-          ]
+          "constraints": ["not null"]
         },
         {
           "name": "TrackId",
           "datatype": "integer",
-          "constraints": [
-            "not null"
-          ]
+          "constraints": ["not null"]
         },
         {
           "name": "UnitPrice",
           "datatype": "numeric(10, 2)",
-          "constraints": [
-            "not null"
-          ]
+          "constraints": ["not null"]
         },
         {
           "name": "Quantity",
           "datatype": "integer",
-          "constraints": [
-            "not null"
-          ]
+          "constraints": ["not null"]
         }
       ],
       "indexes": [
         {
           "name": "IFK_InvoiceLineInvoiceId",
           "sql": "CREATE INDEX [IFK_InvoiceLineInvoiceId] ON \"invoice_items\" ([InvoiceId])",
-          "columns": [
-            "InvoiceId"
-          ]
+          "columns": ["InvoiceId"]
         },
         {
           "name": "IFK_InvoiceLineTrackId",
           "sql": "CREATE INDEX [IFK_InvoiceLineTrackId] ON \"invoice_items\" ([TrackId])",
-          "columns": [
-            "TrackId"
-          ]
+          "columns": ["TrackId"]
         }
       ],
       "foreignKeys": [
         {
-          "columns": [
-            "InvoiceId"
-          ],
+          "columns": ["InvoiceId"],
           "references": {
             "table": "invoices",
-            "columns": [
-              "InvoiceId"
-            ],
+            "columns": ["InvoiceId"],
             "onUpdate": "no action",
             "onDelete": "no action"
           }
         },
         {
-          "columns": [
-            "TrackId"
-          ],
+          "columns": ["TrackId"],
           "references": {
             "table": "tracks",
-            "columns": [
-              "TrackId"
-            ],
+            "columns": ["TrackId"],
             "onUpdate": "no action",
             "onDelete": "no action"
           }
@@ -383,25 +307,17 @@
         {
           "name": "InvoiceId",
           "datatype": "integer",
-          "constraints": [
-            "primary key",
-            "auto increment",
-            "not null"
-          ]
+          "constraints": ["primary key", "auto increment", "not null"]
         },
         {
           "name": "CustomerId",
           "datatype": "integer",
-          "constraints": [
-            "not null"
-          ]
+          "constraints": ["not null"]
         },
         {
           "name": "InvoiceDate",
           "datatype": "datetime",
-          "constraints": [
-            "not null"
-          ]
+          "constraints": ["not null"]
         },
         {
           "name": "BillingAddress",
@@ -426,30 +342,22 @@
         {
           "name": "Total",
           "datatype": "numeric(10, 2)",
-          "constraints": [
-            "not null"
-          ]
+          "constraints": ["not null"]
         }
       ],
       "indexes": [
         {
           "name": "IFK_InvoiceCustomerId",
           "sql": "CREATE INDEX [IFK_InvoiceCustomerId] ON \"invoices\" ([CustomerId])",
-          "columns": [
-            "CustomerId"
-          ]
+          "columns": ["CustomerId"]
         }
       ],
       "foreignKeys": [
         {
-          "columns": [
-            "CustomerId"
-          ],
+          "columns": ["CustomerId"],
           "references": {
             "table": "customers",
-            "columns": [
-              "CustomerId"
-            ],
+            "columns": ["CustomerId"],
             "onUpdate": "no action",
             "onDelete": "no action"
           }
@@ -463,11 +371,7 @@
         {
           "name": "MediaTypeId",
           "datatype": "integer",
-          "constraints": [
-            "primary key",
-            "auto increment",
-            "not null"
-          ]
+          "constraints": ["primary key", "auto increment", "not null"]
         },
         {
           "name": "Name",
@@ -482,50 +386,36 @@
         {
           "name": "PlaylistId",
           "datatype": "integer",
-          "constraints": [
-            "not null"
-          ]
+          "constraints": ["not null"]
         },
         {
           "name": "TrackId",
           "datatype": "integer",
-          "constraints": [
-            "not null"
-          ]
+          "constraints": ["not null"]
         }
       ],
       "indexes": [
         {
           "name": "IFK_PlaylistTrackTrackId",
           "sql": "CREATE INDEX [IFK_PlaylistTrackTrackId] ON \"playlist_track\" ([TrackId])",
-          "columns": [
-            "TrackId"
-          ]
+          "columns": ["TrackId"]
         }
       ],
       "foreignKeys": [
         {
-          "columns": [
-            "PlaylistId"
-          ],
+          "columns": ["PlaylistId"],
           "references": {
             "table": "playlists",
-            "columns": [
-              "PlaylistId"
-            ],
+            "columns": ["PlaylistId"],
             "onUpdate": "no action",
             "onDelete": "no action"
           }
         },
         {
-          "columns": [
-            "TrackId"
-          ],
+          "columns": ["TrackId"],
           "references": {
             "table": "tracks",
-            "columns": [
-              "TrackId"
-            ],
+            "columns": ["TrackId"],
             "onUpdate": "no action",
             "onDelete": "no action"
           }
@@ -539,11 +429,7 @@
         {
           "name": "PlaylistId",
           "datatype": "integer",
-          "constraints": [
-            "primary key",
-            "auto increment",
-            "not null"
-          ]
+          "constraints": ["primary key", "auto increment", "not null"]
         },
         {
           "name": "Name",
@@ -558,18 +444,12 @@
         {
           "name": "TrackId",
           "datatype": "integer",
-          "constraints": [
-            "primary key",
-            "auto increment",
-            "not null"
-          ]
+          "constraints": ["primary key", "auto increment", "not null"]
         },
         {
           "name": "Name",
           "datatype": "nvarchar(200)",
-          "constraints": [
-            "not null"
-          ]
+          "constraints": ["not null"]
         },
         {
           "name": "AlbumId",
@@ -578,9 +458,7 @@
         {
           "name": "MediaTypeId",
           "datatype": "integer",
-          "constraints": [
-            "not null"
-          ]
+          "constraints": ["not null"]
         },
         {
           "name": "GenreId",
@@ -593,9 +471,7 @@
         {
           "name": "Milliseconds",
           "datatype": "integer",
-          "constraints": [
-            "not null"
-          ]
+          "constraints": ["not null"]
         },
         {
           "name": "Bytes",
@@ -604,70 +480,50 @@
         {
           "name": "UnitPrice",
           "datatype": "numeric(10, 2)",
-          "constraints": [
-            "not null"
-          ]
+          "constraints": ["not null"]
         }
       ],
       "indexes": [
         {
           "name": "IFK_TrackAlbumId",
           "sql": "CREATE INDEX [IFK_TrackAlbumId] ON \"tracks\" ([AlbumId])",
-          "columns": [
-            "AlbumId"
-          ]
+          "columns": ["AlbumId"]
         },
         {
           "name": "IFK_TrackGenreId",
           "sql": "CREATE INDEX [IFK_TrackGenreId] ON \"tracks\" ([GenreId])",
-          "columns": [
-            "GenreId"
-          ]
+          "columns": ["GenreId"]
         },
         {
           "name": "IFK_TrackMediaTypeId",
           "sql": "CREATE INDEX [IFK_TrackMediaTypeId] ON \"tracks\" ([MediaTypeId])",
-          "columns": [
-            "MediaTypeId"
-          ]
+          "columns": ["MediaTypeId"]
         }
       ],
       "foreignKeys": [
         {
-          "columns": [
-            "AlbumId"
-          ],
+          "columns": ["AlbumId"],
           "references": {
             "table": "albums",
-            "columns": [
-              "AlbumId"
-            ],
+            "columns": ["AlbumId"],
             "onUpdate": "no action",
             "onDelete": "no action"
           }
         },
         {
-          "columns": [
-            "GenreId"
-          ],
+          "columns": ["GenreId"],
           "references": {
             "table": "genres",
-            "columns": [
-              "GenreId"
-            ],
+            "columns": ["GenreId"],
             "onUpdate": "no action",
             "onDelete": "no action"
           }
         },
         {
-          "columns": [
-            "MediaTypeId"
-          ],
+          "columns": ["MediaTypeId"],
           "references": {
             "table": "media_types",
-            "columns": [
-              "MediaTypeId"
-            ],
+            "columns": ["MediaTypeId"],
             "onUpdate": "no action",
             "onDelete": "no action"
           }
