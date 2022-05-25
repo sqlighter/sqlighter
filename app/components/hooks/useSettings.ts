@@ -8,9 +8,15 @@ import createPersistedState from "use-persisted-state"
 const useSettingsState = createPersistedState("settings")
 
 // Settings need to be serializable/deserializable to json
-export interface Settings {
-  [key: string]: string | string[] | boolean | boolean[] | number | number[] | Settings | Settings[]
-}
+export type Settings =
+  | string
+  | string[]
+  | boolean
+  | boolean[]
+  | number
+  | number[]
+  | { [key: string]: Settings }
+  | Settings[]
 
 /**
  * Hook used to persist user settings across sessions, tabs, windows

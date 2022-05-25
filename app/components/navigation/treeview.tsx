@@ -147,16 +147,19 @@ export function TreeView({ items, onCommand }: TreeViewProps) {
     return expanded.indexOf(itemId) !== -1
   }
 
-  // list of ids of items that are pinned
-  const [pins, setPins] = useSettings("sqlighter.pinned", {})
+  // list of ids of pinned items
+  const [pins, setPins] = useSettings<string[]>("pins", [])
   function isPinned(itemId: string): boolean {
-    return !!pins[itemId]
+    return pins.indexOf(itemId) !== -1
   }
   function setPinned(itemId: string, pinned: boolean) {
-    const updated = Object.assign({}, pins)
-    updated[itemId] = pinned
-    setPins(updated)
-    console.debug(`TreeView.setPinned - itemId: ${itemId}, pinned: ${pinned}`, pins)
+    if (isPinned(itemId) != pinned) {
+      if (pinned) {
+        setPins([...pins, itemId])
+      } else {
+        setPins(pins.filter((p) => p != itemId))
+      }
+    }
   }
 
   //
