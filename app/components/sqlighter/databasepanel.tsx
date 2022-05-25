@@ -14,8 +14,6 @@ import { DataConnection, DataConnectionConfigs } from "../../lib/sqltr/connectio
 import { SqliteDataConnection } from "../../lib/sqltr/databases/sqlite"
 import { DatabaseTreeView } from "./databasetreeview"
 
-
-
 /** A sidebar panel used to display the schema of connected databases */
 export function DatabasePanel() {
   const sqljs = useSqljs()
@@ -75,10 +73,12 @@ export function DatabasePanel() {
   return (
     <Box className="DatabasePanel-root" sx={{ height: "100%", overflowY: "scroll" }}>
       <Box sx={{ padding: 1 }}>
-        <Box sx={{ textTransform: "uppercase", mb: 1 }}>Database Explorer</Box>
-        <Button variant="outlined" onClick={handleOpenClick}>
-          Open
-        </Button>
+        <Typography variant="overline">Database Explorer</Typography>
+        {!connection && <Box>
+          <Button variant="outlined" onClick={handleOpenClick}>
+            Open
+          </Button>
+        </Box>}
       </Box>
       {connection && <DatabaseTreeView connection={connection} onCommand={handleCommand} />}
     </Box>

@@ -16,6 +16,7 @@ import KeyIcon from "@mui/icons-material/KeyOutlined"
 import QuestionMarkIcon from "@mui/icons-material/QuestionMarkOutlined"
 import BoltOutlinedIcon from "@mui/icons-material/BoltOutlined"
 import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined"
+import StarOutlinedIcon from "@mui/icons-material/StarOutlined"
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined"
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined"
 import PlaylistPlayOutlinedIcon from "@mui/icons-material/PlaylistPlayOutlined"
@@ -51,6 +52,9 @@ export function Icon(props: IconProps) {
       case "more":
         return <MoreHorizOutlinedIcon {...props} />
       case "pin":
+        return <StarBorderOutlinedIcon {...props} />
+      case "pinned":
+//        return <StarOutlinedIcon {...props} />
         return <StarBorderOutlinedIcon {...props} />
       case "query":
         return <TableRowsOutlinedIcon {...props} />
