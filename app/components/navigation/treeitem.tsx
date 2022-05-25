@@ -1,9 +1,8 @@
 //
-// treeview.tsx - view used to shown hierachical information
+// treeitem.tsx - renders a node item in a treeview component
 //
 
 import * as React from "react"
-import { useState } from "react"
 
 import Box from "@mui/material/Box"
 import ButtonBase from "@mui/material/ButtonBase"
@@ -11,13 +10,9 @@ import Chip from "@mui/material/Chip"
 import Stack from "@mui/material/Stack"
 import Typography from "@mui/material/Typography"
 import Tooltip from "@mui/material/Tooltip"
-import IconButton from "@mui/material/IconButton"
-
-import { SxProps, Theme } from "@mui/material"
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown"
 import ArrowRightIcon from "@mui/icons-material/ArrowRight"
 
-import { useSettings } from "../hooks/useSettings"
 import { Command } from "../../lib/data/commands"
 import { Tree } from "../../lib/data/tree"
 import { Icon } from "../ui/icon"
@@ -26,7 +21,7 @@ import { Icon } from "../ui/icon"
 const TOOLTIP_ENTER_DELAY_MS = 1000
 
 // pixels of indentation for each hierarchical level
-const DEPTH_PADDING_PX = 12
+export const DEPTH_PADDING_PX = 12
 
 export interface TreeItemProps {
   /** Item and children to be shown */

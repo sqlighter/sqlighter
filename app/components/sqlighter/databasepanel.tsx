@@ -6,26 +6,26 @@
 
 import { useState, useEffect } from "react"
 import Box from "@mui/material/Box"
-import Button from "@mui/material/Button"
 import Typography from "@mui/material/Typography"
 
-import { useSqljs } from "../../lib/useDB"
-import { DataConnection, DataConnectionConfigs } from "../../lib/sqltr/connections"
-import { SqliteDataConnection } from "../../lib/sqltr/databases/sqlite"
 import { DatabaseTreeView } from "./databasetreeview"
+import { ConnectionsMenu } from "./connectionsmenu"
+
+export interface DatabasePanelProps {
+  connection?: any
+
+  connections?: any[]
+
+  /**
+   * Callback used when the view generates an app level command,
+   * for example this may happen when the view generates a command
+   * to view the structure of a table that the user clicked on, etc.
+   */
+  onCommand?: (event: React.SyntheticEvent, command: string, args?) => void
+}
 
 /** A sidebar panel used to display the schema of connected databases */
-export function DatabasePanel() {
-  const sqljs = useSqljs()
-  useEffect(() => {
-    if (sqljs) {
-      console.log("DatabasePanel - has sqljs")
-    }
-  }, [sqljs])
-
-  // database connection that is currently being rendered
-  const [connection, setConnection] = useState<DataConnection>(null)
-
+export function DatabasePanel(props: DatabasePanelProps) {
   //
   // handlers
   //
@@ -39,31 +39,12 @@ export function DatabasePanel() {
         // handled by treeview
         break
 
-      case "sqlighter.viewData":
-        break
-      case "sqlighter.viewStructure":
+      default:
+        if (props.onCommand) {
+          props.onCommand(event, command, args)
+        }
         break
     }
-  }
-
-  async function handleOpenClick(e) {
-    if (sqljs) {
-      //      const response = await fetch("/chinook.sqlite")
-      const response = await fetch("/test.db")
-      const buffer = await response.arrayBuffer()
-      console.log("downloaded", response, buffer)
-      const configs: DataConnectionConfigs = {
-        client: "sqlite3",
-        connection: {
-          buffer: new Uint8Array(buffer) as Buffer,
-        },
-      }
-
-      const connection = await SqliteDataConnection.create(configs, sqljs)
-      console.log("connection", connection)
-      setConnection(connection)
-      console.log("downloaded", response, buffer)
-    } else [console.error(`DatabasePanel.handleOpenClick - sqljs engine not loaded`)]
   }
 
   //
@@ -74,15 +55,9 @@ export function DatabasePanel() {
     <Box className="DatabasePanel-root" sx={{ height: "100%", overflowY: "scroll" }}>
       <Box sx={{ padding: 1 }}>
         <Typography variant="overline">Database Explorer</Typography>
-        {!connection && (
-          <Box>
-            <Button variant="outlined" onClick={handleOpenClick}>
-              Open
-            </Button>
-          </Box>
-        )}
+        <ConnectionsMenu connection={props.connection} connections={props.connections} onCommand={props.onCommand} />
       </Box>
-      {connection && <DatabaseTreeView connection={connection} onCommand={handleCommand} />}
+      {props.connection && <DatabaseTreeView connection={props.connection} onCommand={props.onCommand} />}
     </Box>
   )
 }

@@ -10,7 +10,7 @@ import { SxProps, Theme } from "@mui/material"
 
 import { useSettings } from "../hooks/useSettings"
 import { Tree } from "../../lib/data/tree"
-import { TreeItem } from "./treeitem"
+import { TreeItem, DEPTH_PADDING_PX } from "./treeitem"
 
 /** Custom styles applied to TreeView and TreeItem components */
 const TREEVIEW_STYLES: SxProps<Theme> = {
@@ -197,52 +197,58 @@ export function TreeView({ items, onCommand }: TreeViewProps) {
   // render
   //
 
-  function renderChildren(children, depth, renderingPins) {
-    if (children && children.length > 0) {
-      return children.map((child) => renderItem(child, depth, renderingPins))
-    } else {
-      const marginLeft = `${(depth + 1) * 8 + 24}px`
-      return (
-        <Typography
-          key="children1"
-          className="TreeItem-noResults"
-          variant="body2"
-          sx={TREEITEM_NORESULTS_STYLES}
-          marginLeft={marginLeft}
-        >
-          No results
-        </Typography>
-      )
-    }
-  }
-
   /**
-   * Renders a treeview item
+   * Renders a treeview item and its children
    * @param item Data model for the item to be rendered
    * @param depth Hierarchical depth, root is zero
    * @param renderingPins True if we're rendering the pinned items section
+   * @returns An array of fragments, one for each node item
    */
   function renderItem(item, depth, renderingPins) {
     const expanded = isExpanded(renderingPins ? `pins/${item.id}` : item.id)
     const pinned = isPinned(item.id)
-    return (
-      <>
-        <TreeItem
-          key={item.id}
-          item={item}
-          onCommand={(e, command, args) => handleCommand(e, command, args, renderingPins)}
-          expanded={expanded}
-          selected={isSelected(item.id)}
-          pinned={pinned}
-          depth={depth}
-        />
-        {expanded && renderChildren(item.children, depth + 1, renderingPins)}
-      </>
+
+    const fragments = []
+    fragments.push(
+      <TreeItem
+        item={item}
+        onCommand={(e, command, args) => handleCommand(e, command, args, renderingPins)}
+        expanded={expanded}
+        selected={isSelected(item.id)}
+        pinned={pinned}
+        depth={depth}
+      />
     )
+
+    if (expanded) {
+      if (item.children && item.children.length > 0) {
+        // render each node's child and his children
+        for (const child of item.children) {
+          const childFragments = renderItem(child, depth + 1, renderingPins)
+          fragments.push(childFragments)
+        }
+      } else {
+        // render "no results" if node is expanded but has no children
+        const marginLeft = `${(depth + 1) * DEPTH_PADDING_PX + 24}px`
+        fragments.push(
+          <Typography
+            key="children1"
+            className="TreeItem-noResults"
+            variant="body2"
+            sx={TREEITEM_NORESULTS_STYLES}
+            marginLeft={marginLeft}
+          >
+            No results
+          </Typography>
+        )
+      }
+    }
+
+    return fragments
   }
 
   /** Scan tree looking for items that have been pinned. If found, create a 'Pinned' section. */
-  function renderPins() {
+  function renderPinned() {
     function getPinnedItems(items, pinnedItems) {
       for (const item of items) {
         if (isPinned(item.id)) {
@@ -260,7 +266,7 @@ export function TreeView({ items, onCommand }: TreeViewProps) {
     if (pinnedItems.length > 0) {
       pinnedItems = [
         {
-          id: `pins`,
+          id: `pins`, // TODO should be specific to connection/database?
           title: "Pinned",
           type: "pins",
           icon: "pin",
@@ -278,7 +284,7 @@ export function TreeView({ items, onCommand }: TreeViewProps) {
 
   return (
     <Box className="TreeView-root" sx={TREEVIEW_STYLES}>
-      {renderPins()}
+      {renderPinned()}
       {items?.length > 0 && items.map((item) => renderItem(item, 0, false))}
     </Box>
   )

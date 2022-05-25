@@ -5,7 +5,6 @@
 import * as React from "react"
 import dynamic from "next/dynamic"
 import { useState, useEffect } from "react"
-//import SplitPane, { Pane } from "react-split-pane"
 import Head from "next/head"
 
 import { Allotment } from "allotment"
@@ -14,51 +13,22 @@ import "allotment/dist/style.css"
 import Box from "@mui/material/Box"
 import { useTheme } from "@mui/material/styles"
 import { Typography } from "@mui/material"
-import IconButton from "@mui/material/IconButton"
-
-import CloudOutlinedIcon from "@mui/icons-material/CloudOutlined"
 
 import DatabaseIcon from "@mui/icons-material/DnsOutlined"
 import QueryIcon from "@mui/icons-material/ArticleOutlined"
 import HistoryIcon from "@mui/icons-material/HistoryOutlined"
-import SearchIcon from "@mui/icons-material/SearchOutlined"
-import SchemaIcon from "@mui/icons-material/WeekendOutlined" // TODO find database icon
+
+import { useSqljs } from "../../lib/useDB"
+import { DataConnection, DataConnectionConfigs } from "../../lib/sqltr/connections"
+import { SqliteDataConnection } from "../../lib/sqltr/databases/sqlite"
 
 import { Icon } from "../../components/ui/icon"
 import { Context } from "../../components/context"
 import { TabsLayout } from "../../components/navigation/tabslayout"
-import { Section } from "../../components/section"
-
 import { PanelProps } from "../../components/navigation/panel"
 import { DatabasePanel } from "./databasepanel"
 
 const SSR = typeof window === "undefined"
-
-const activities: PanelProps[] = [
-  {
-    id: "database-activity",
-    title: "Database",
-    description: "Database Schema",
-    icon: <Icon>database</Icon>,
-    sx: { width: "100%", height: "100%" },
-    children: <DatabasePanel />,
-  },
-  {
-    id: "queriesActivity",
-    title: "Queries",
-    description: "Saved Queries",
-    icon: <QueryIcon />,
-    sx: { width: "100%", height: "100%" },
-    children: <>Saved queries activity</>,
-  },
-  {
-    id: "historyActivity",
-    title: "History",
-    description: "History description",
-    icon: <HistoryIcon />,
-    children: <>History activity</>,
-  },
-]
 
 const TABS: PanelProps[] = [
   {
@@ -105,6 +75,7 @@ const SQLighterComponentWithNoSSR = dynamic(
 
 const title = "SQLighter"
 
+
 /** Main component for SQLighter app which includes activities, sidebar, tabs, etc... */
 export default function Main(props) {
   //  <SQLighterComponentWithNoSSR />
@@ -113,6 +84,78 @@ export default function Main(props) {
   const [activityValue, setActivityValue] = useState("activity1")
   const [tabValue, setTabValue] = useState("tab1")
   const [tabs, setTabs] = useState(TABS)
+
+  // all connections
+  const [connections, setConnections] = useState<DataConnection[]>(null)
+
+  // selected connection
+  const [connection, setConnection] = useState<DataConnection>(null)
+
+  //
+  // temporary code while we work out the connection setup panels, etc
+  //
+
+  const sqljs = useSqljs()
+  useEffect(() => {
+    if (sqljs) {
+      console.log("DatabasePanel - has sqljs")
+    }
+  }, [sqljs])
+
+  async function openSomeTestConnection() {
+    if (sqljs) {
+      //      const response = await fetch("/chinook.sqlite")
+      const response = await fetch("/test.db")
+      const buffer = await response.arrayBuffer()
+      console.log("downloaded", response, buffer)
+      const configs: DataConnectionConfigs = {
+        client: "sqlite3",
+        connection: {
+          buffer: new Uint8Array(buffer) as Buffer,
+        },
+      }
+
+      const newConnection = await SqliteDataConnection.create(configs, sqljs)
+      console.log("connection", newConnection)
+      setConnection(newConnection)
+      setConnections([newConnection, newConnection])
+      console.debug(`openSomeTestConnection - opened`, newConnection)
+    } else [console.error(`DatabasePanel.handleOpenClick - sqljs engine not loaded`)]
+  }
+
+  //
+  // activities
+  //
+
+  const activities: PanelProps[] = [
+    {
+      id: "database-activity",
+      title: "Database",
+      description: "Database Schema",
+      icon: <Icon>database</Icon>,
+      sx: { width: "100%", height: "100%" },
+      children: <DatabasePanel connection={connection} connections={connections} onCommand={handleCommand} />,
+    },
+    {
+      id: "queriesActivity",
+      title: "Queries",
+      description: "Saved Queries",
+      icon: <Icon>query</Icon>,
+      sx: { width: "100%", height: "100%" },
+      children: <>Saved queries activity</>,
+    },
+    {
+      id: "historyActivity",
+      title: "History",
+      description: "History description",
+      icon: <HistoryIcon />,
+      children: <>History activity</>,
+    },
+  ]
+
+  //
+  // handlers
+  //
 
   function handleActivityChange(_, activityId) {
     console.debug(`App.handleActivityChange - activityId: ${activityId}`)
@@ -127,6 +170,19 @@ export default function Main(props) {
   function handleAddTabClick(e: React.MouseEvent<HTMLElement>): void {
     // console.debug("Main.handleAddTabClick", e)
   }
+
+  async function handleCommand(event: React.SyntheticEvent, command: string, args) {
+    console.debug(`Main.handleCommand - ${command}`, args)
+    switch (command) {
+      case "sqlighter.manageConnections":
+        await openSomeTestConnection()
+        break
+    }
+  }
+
+  //
+  // rendering
+  //
 
   return (
     <TabsLayout
