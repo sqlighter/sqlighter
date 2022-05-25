@@ -4,13 +4,14 @@
 
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
+import { DataConnection } from "../../lib/sqltr/connections"
 
 export interface ConnectionsMenuProps {
   /** Currently selected connection */
-  connection?: any
+  connection?: DataConnection
 
   /** All available connections */
-  connections?: any[]
+  connections?: DataConnection[]
 
   /** Callback used to dispatch commands back to parent component */
   onCommand?: (event: React.SyntheticEvent, command: string, args?) => void

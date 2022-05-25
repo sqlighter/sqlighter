@@ -8,13 +8,17 @@ import { useState, useEffect } from "react"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 
+import { DataConnection } from "../../lib/sqltr/connections"
 import { DatabaseTreeView } from "./databasetreeview"
 import { ConnectionsMenu } from "./connectionsmenu"
 
 export interface DatabasePanelProps {
-  connection?: any
+  
+  /** Currently selected connection */
+  connection?: DataConnection
 
-  connections?: any[]
+  /** List of available connections (which may or may not be live) */
+  connections?: DataConnection[]
 
   /**
    * Callback used when the view generates an app level command,

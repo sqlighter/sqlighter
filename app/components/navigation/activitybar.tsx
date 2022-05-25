@@ -13,6 +13,7 @@ import TabList from "@mui/lab/TabList"
 import AccountIcon from "@mui/icons-material/AccountCircleOutlined"
 import SettingsIcon from "@mui/icons-material/SettingsOutlined"
 
+import { Icon } from "../ui/icon"
 import { PanelProps } from "./panel"
 import { promptSignin, getDisplayName, getProfileImageUrl } from "../signin"
 
@@ -103,7 +104,7 @@ export function ActivityBar({ activities, activityId, user, onClick, onChange }:
                 key={activity.id}
                 id={activity.id}
                 value={activity.id}
-                icon={activity.icon}
+                icon={typeof activity.icon == "string" ? <Icon>{activity.icon}</Icon> : activity.icon}
                 iconPosition="start"
                 onClick={(e) => handleActivityClick(e, activity.id)}
               />

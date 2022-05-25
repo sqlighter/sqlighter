@@ -7,16 +7,9 @@ import dynamic from "next/dynamic"
 import { useState, useEffect } from "react"
 import Head from "next/head"
 
-import { Allotment } from "allotment"
-import "allotment/dist/style.css"
-
 import Box from "@mui/material/Box"
 import { useTheme } from "@mui/material/styles"
 import { Typography } from "@mui/material"
-
-import DatabaseIcon from "@mui/icons-material/DnsOutlined"
-import QueryIcon from "@mui/icons-material/ArticleOutlined"
-import HistoryIcon from "@mui/icons-material/HistoryOutlined"
 
 import { useSqljs } from "../../lib/useDB"
 import { DataConnection, DataConnectionConfigs } from "../../lib/sqltr/connections"
@@ -33,34 +26,33 @@ const SSR = typeof window === "undefined"
 const TABS: PanelProps[] = [
   {
     id: "tab0",
-    title: "Tab 0",
+    title: "Query 0",
     description: "description of tab 0",
-    icon: <QueryIcon />,
+    icon: "query",
     //sx: { backgroundColor: "beige", width: "100%", height: "100%" },
     children: <>Tab zero panel</>,
   },
   {
     id: "tab1",
-    //    title: "Untitled query, May 15, 2022",
-    title: "Tab 1",
+    title: "Query 1",
     description: "description of tab 1",
-    icon: <QueryIcon />,
+    icon: "query",
     //sx: { backgroundColor: "blue", width: "100%", height: "100%" },
     children: <>Tab 1 panel</>,
   },
   {
     id: "tab2",
-    title: "Tab 2",
+    title: "Table 2",
     description: "description of tab 3",
-    icon: <DatabaseIcon />,
+    icon: "database",
     //sx: { backgroundColor: "yellow", width: "100%", height: "100%" },
     children: <>Tab 2 panel</>,
   },
   {
     id: "tab3",
-    title: "Tab 3",
+    title: "Table 3",
     description: "description of tab 3",
-    icon: <DatabaseIcon />,
+    icon: "database",
     //sx: { backgroundColor: "yellow", width: "100%", height: "100%" },
     children: <>Tab 3 panel</>,
   },
@@ -75,13 +67,12 @@ const SQLighterComponentWithNoSSR = dynamic(
 
 const title = "SQLighter"
 
-
 /** Main component for SQLighter app which includes activities, sidebar, tabs, etc... */
 export default function Main(props) {
   //  <SQLighterComponentWithNoSSR />
   const context = React.useContext(Context)
 
-  const [activityValue, setActivityValue] = useState("activity1")
+  const [activityValue, setActivityValue] = useState("databaseActivity")
   const [tabValue, setTabValue] = useState("tab1")
   const [tabs, setTabs] = useState(TABS)
 
@@ -115,11 +106,11 @@ export default function Main(props) {
         },
       }
 
-      const newConnection = await SqliteDataConnection.create(configs, sqljs)
-      console.log("connection", newConnection)
-      setConnection(newConnection)
-      setConnections([newConnection, newConnection])
-      console.debug(`openSomeTestConnection - opened`, newConnection)
+      const conn = await SqliteDataConnection.create(configs, sqljs)
+      console.debug(`openSomeTestConnection - opened`, conn)
+      // faking it a bit for now to have a list of connections
+      setConnection(conn)
+      setConnections([conn, conn, conn])
     } else [console.error(`DatabasePanel.handleOpenClick - sqljs engine not loaded`)]
   }
 
@@ -129,10 +120,10 @@ export default function Main(props) {
 
   const activities: PanelProps[] = [
     {
-      id: "database-activity",
+      id: "databaseActivity",
       title: "Database",
       description: "Database Schema",
-      icon: <Icon>database</Icon>,
+      icon: "database",
       sx: { width: "100%", height: "100%" },
       children: <DatabasePanel connection={connection} connections={connections} onCommand={handleCommand} />,
     },
@@ -140,7 +131,7 @@ export default function Main(props) {
       id: "queriesActivity",
       title: "Queries",
       description: "Saved Queries",
-      icon: <Icon>query</Icon>,
+      icon: "query",
       sx: { width: "100%", height: "100%" },
       children: <>Saved queries activity</>,
     },
@@ -148,7 +139,7 @@ export default function Main(props) {
       id: "historyActivity",
       title: "History",
       description: "History description",
-      icon: <HistoryIcon />,
+      icon: "history",
       children: <>History activity</>,
     },
   ]

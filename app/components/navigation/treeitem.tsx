@@ -99,7 +99,7 @@ export function TreeItem({ item, ...props }: TreeItemProps) {
       commandIcon = "pinned"
     }
 
-    // NOTE the <div> inside Tooltip is necessary since Icon is a passive element that doesn't fire events (unlike IconButton)
+    // NOTE the <Box> inside Tooltip is necessary since Icon is a passive element that doesn't fire events (unlike IconButton)
     return (
       <Tooltip
         key={command.command}
@@ -108,7 +108,7 @@ export function TreeItem({ item, ...props }: TreeItemProps) {
         placement="top"
         enterDelay={TOOLTIP_ENTER_DELAY_MS}
       >
-        <div>
+        <Box>
           <Icon
             className={commandClass}
             onClick={(e) => {
@@ -118,7 +118,7 @@ export function TreeItem({ item, ...props }: TreeItemProps) {
           >
             {commandIcon}
           </Icon>
-        </div>
+        </Box>
       </Tooltip>
     )
   }

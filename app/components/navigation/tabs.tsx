@@ -15,6 +15,7 @@ import { IconButton } from "@mui/material"
 import AddIcon from "@mui/icons-material/AddOutlined"
 import CloseIcon from "@mui/icons-material/CloseOutlined"
 
+import { Icon } from "../ui/icon"
 import { Panel, PanelProps } from "./panel"
 import { HtmlProps } from "next/dist/shared/lib/html-context"
 
@@ -195,7 +196,7 @@ export function Tabs(props: TabsProps) {
               key={tab.id}
               id={"ciccio" + tab.id}
               value={tab.id}
-              icon={tab.icon}
+              icon={typeof tab.icon === "string" ? <Icon>{tab.icon}</Icon> : tab.icon}
               aria-label={tab.id}
               iconPosition="start"
               component="div"

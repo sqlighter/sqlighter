@@ -12,6 +12,7 @@ import BoltOutlinedIcon from "@mui/icons-material/BoltOutlined"
 import DatabaseIcon from "@mui/icons-material/StorageOutlined"
 import FileIcon from "@mui/icons-material/InsertDriveFileOutlined"
 import FolderIcon from "@mui/icons-material/FolderOutlined"
+import HistoryIcon from "@mui/icons-material/HistoryOutlined"
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined"
 import KeyIcon from "@mui/icons-material/KeyOutlined"
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined"
@@ -46,6 +47,8 @@ export function Icon(props: IconProps) {
         return <FileIcon {...props} />
       case "folder":
         return <FolderIcon {...props} />
+      case "history":
+        return <HistoryIcon {...props} />
       case "info":
         return <InfoOutlinedIcon {...props} />
       case "key":
