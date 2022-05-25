@@ -2,16 +2,13 @@
 // useSettings.ts - user settings saved in localStorage (or the user profile)
 //
 
-// TODO persist settings in user profile if user is signed in
-
-// Persistence based on localStorage APIs
 import createPersistedState from "use-persisted-state"
 
 // Persisted settings sync across sessions, tabs and different browser windows
-const useSettingsState = createPersistedState("sqltr")
+const useSettingsState = createPersistedState("settings")
 
 // Settings need to be serializable/deserializable to json
-interface Settings {
+export interface Settings {
   [key: string]: string | string[] | boolean | boolean[] | number | number[] | Settings | Settings[]
 }
 
@@ -22,26 +19,23 @@ interface Settings {
  * @returns Settings value and function used to update value
  */
 export function useSettings<T extends Settings = {}>(key: string, initialValue: T = null) {
+  // TODO persist settings in user profile if user is signed in
   const [settingsCollection, setSettingsCollection] = useSettingsState({})
-
-  // assign initial value if not set
-  if (settingsCollection[key] == undefined) {
-    const update = Object.assign({}, settingsCollection)
-    update[key] = initialValue
-    setSettingsCollection(update)
-  }
+  console.assert(settingsCollection, `useSettings - settingsCollection is not defined`)
 
   /** Assign new value to setting, persist to storage or profile */
   function setSettings(value: T) {
-    if (settingsCollection[key] !== value) {
+    if (!(key in settingsCollection) || settingsCollection[key] !== value) {
       const update = Object.assign({}, settingsCollection)
       update[key] = value
       setSettingsCollection(update)
-      console.debug(`useSettings.setSettings - key: ${key}, value: ${JSON.stringify(value)}`, update)
+      // console.debug(`useSettings.setSettings - key: ${key}, value: ${JSON.stringify(value)}`, update)
     }
   }
 
-  return [settingsCollection[key], setSettings]
+  const settings =
+    settingsCollection !== undefined && key in settingsCollection ? settingsCollection[key] : initialValue
+  return [settings, setSettings]
 }
 
 // References:
