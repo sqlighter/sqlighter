@@ -17,6 +17,7 @@ import { SxProps, Theme } from "@mui/material"
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown"
 import ArrowRightIcon from "@mui/icons-material/ArrowRight"
 
+import { useSettings } from "../hooks/useSettings"
 import { Command } from "../../lib/data/commands"
 import { Tree } from "../../lib/data/tree"
 import { Icon } from "../ui/icon"
@@ -27,7 +28,6 @@ const TOOLTIP_ENTER_DELAY_MS = 1000
 const TREEVIEW_STYLES: SxProps<Theme> = {
   width: "100%",
   height: "100%",
-  //  overflowY: "auto",
 
   ".MuiChip-root": {
     borderRadius: "4px",
@@ -41,7 +41,6 @@ const TREEVIEW_STYLES: SxProps<Theme> = {
     maxWidth: "100%",
     minHeight: 32,
     maxHeight: 32,
-    //  overflowX: "hidden",
 
     paddingLeft: 0,
     paddingRight: 0.5,
@@ -66,7 +65,7 @@ const TREEVIEW_STYLES: SxProps<Theme> = {
       minWidth: 16,
       width: 16,
       height: 16,
-      marginLeft: 1,
+      marginLeft: 0.5,
     },
 
     ".TreeItem-labelIcon": {
@@ -113,6 +112,9 @@ const TREEVIEW_STYLES: SxProps<Theme> = {
 
     ".TreeItem-pinnedIcon": {
       color: (theme) => theme.palette.primary.main,
+      "&:hover": {
+        color: (theme) => theme.palette.primary.main,
+      },
     },
   },
 
@@ -177,18 +179,10 @@ function TreeItem({ item, ...props }: TreeItemProps) {
   function handleItemClick(e) {
     console.debug("TreeItem.handleItemClick")
     if (isCollapsible()) {
-      props.onCommand(e, props.expanded ? "sqltr.collapseItem" : "sqltr.expandItem", { item })
+      props.onCommand(e, props.expanded ? "sqlighter.collapseItem" : "sqlighter.expandItem", { item })
     }
   }
-  /*
-  function handleCommandClick(e, command) {
-    console.debug(`TreeItem.handleCommandClick - ${command.command}`)
-    e.stopPropagation()
-    e.preventDefault()
-    props.onCommand(e, command, item)
-    return 0
-  }
-*/
+
   //
   // render
   //
@@ -216,9 +210,15 @@ function TreeItem({ item, ...props }: TreeItemProps) {
   }
 
   function getCommandIcon(command: Command) {
-    let className = "TreeItem-commandIcon"
-    if (props.pinned && command.command === "sqltr.pinItem") {
-      className = " TreeItem-pinnedIcon"
+    if (props.pinned) {
+      console.debug(`getCommandIcon - ${item.id} is pinned`)
+    }
+
+    let commandClass = "TreeItem-commandIcon"
+    let commandIcon = command.icon
+    if (props.pinned && command.command === "sqlighter.pin") {
+      commandClass += " TreeItem-pinnedIcon"
+      commandIcon = "pinned"
     }
 
     // NOTE the <div> inside Tooltip is necessary since Icon is a passive element that doesn't fire events (unlike IconButton)
@@ -232,13 +232,13 @@ function TreeItem({ item, ...props }: TreeItemProps) {
       >
         <div>
           <Icon
-            className={className}
+            className={commandClass}
             onClick={(e) => {
               props.onCommand(e, command.command, { item, command })
               e.stopPropagation()
             }}
           >
-            {command.icon}
+            {commandIcon}
           </Icon>
         </div>
       </Tooltip>
@@ -316,27 +316,39 @@ export function TreeView({ items, onCommand }: TreeViewProps) {
   }
 
   // list of ids of items that are pinned
-  const [pinned, setPinned] = useState<string[]>([])
+  const [pins, setPins] = useSettings("sqlighter.pinned", {})
   function isPinned(itemId: string): boolean {
-    return pinned.indexOf(itemId) !== -1
+    return !!pins[itemId]
+  }
+  function setPinned(itemId: string, pinned: boolean) {
+    const updated = Object.assign({}, pins)
+    updated[itemId] = pinned
+    setPins(updated)
+    console.debug(`TreeView.setPinned - itemId: ${itemId}, pinned: ${pinned}`, pins)
   }
 
   //
   // handlers
   //
 
-  function handleCommand(event: React.SyntheticEvent, command: string, args) {
+  function handleCommand(event: React.SyntheticEvent, command: string, args, renderingPins) {
     const item = args.item
+    const pinnedId = renderingPins ? `pins/${item.id}` : item.id
     console.debug(`TreeView.handleCommand - ${command}`, args)
 
     switch (command) {
-      case "sqltr.collapseItem":
-        setExpanded(expanded.filter((expandedId) => item.id !== expandedId))
+      case "sqlighter.collapseItem":
+        setExpanded(expanded.filter((expandedId) => pinnedId !== expandedId))
         break
-      case "sqltr.expandItem":
-        if (!isExpanded(item.id)) {
-          setExpanded([...expanded, item.id])
+      case "sqlighter.expandItem":
+        console.debug(`TreeView.handleCommand - ${command}, ${pinnedId}, isExpanded: ${isExpanded(pinnedId)}`)
+        if (!isExpanded(pinnedId)) {
+          setExpanded([...expanded, pinnedId])
         }
+        break
+
+      case "sqlighter.pin":
+        setPinned(item.id, !isPinned(item.id))
         break
 
       default:
@@ -350,9 +362,9 @@ export function TreeView({ items, onCommand }: TreeViewProps) {
   // render
   //
 
-  function renderChildren(children, depth) {
+  function renderChildren(children, depth, renderingPins) {
     if (children && children.length > 0) {
-      return children.map((child) => renderItem(child, depth))
+      return children.map((child) => renderItem(child, depth, renderingPins))
     } else {
       const marginLeft = `${(depth + 1) * 8 + 24}px`
       return (
@@ -369,27 +381,70 @@ export function TreeView({ items, onCommand }: TreeViewProps) {
     }
   }
 
-  function renderItem(item, depth) {
-    const expanded = isExpanded(item.id)
+  /**
+   * Renders a treeview item
+   * @param item Data model for the item to be rendered
+   * @param depth Hierarchical depth, root is zero
+   * @param renderingPins True if we're rendering the pinned items section
+   */
+  function renderItem(item, depth, renderingPins) {
+    const expanded = isExpanded(renderingPins ? `pins/${item.id}` : item.id)
+    const pinned = isPinned(item.id)
     return (
       <>
         <TreeItem
           key={item.id}
           item={item}
-          onCommand={handleCommand}
+          onCommand={(e, command, args) => handleCommand(e, command, args, renderingPins)}
           expanded={expanded}
           selected={isSelected(item.id)}
-          pinned={isPinned(item.id)}
+          pinned={pinned}
           depth={depth}
         />
-        {expanded && renderChildren(item.children, depth + 1)}
+        {expanded && renderChildren(item.children, depth + 1, renderingPins)}
       </>
     )
   }
 
+  /** Scan tree looking for items that have been pinned. If found, create a 'Pinned' section. */
+  function renderPins() {
+    function getPinnedItems(items, pinnedItems) {
+      for (const item of items) {
+        if (isPinned(item.id)) {
+          pinnedItems.push(item)
+        }
+        if (item.children) {
+          getPinnedItems(item.children, pinnedItems)
+        }
+      }
+    }
+
+    // search for pinned items and if found add a "Pinned" section to the treeview
+    let pinnedItems = []
+    getPinnedItems(items, pinnedItems)
+    if (pinnedItems.length > 0) {
+      pinnedItems = [
+        {
+          id: `pins`,
+          title: "Pinned",
+          type: "pins",
+          icon: "pin",
+          badge: pinnedItems.length.toString(),
+          children: pinnedItems,
+        },
+      ]
+    }
+
+    if (pinnedItems.length > 0) {
+      return pinnedItems.map((item) => renderItem(item, 0, true))
+    }
+    return null
+  }
+
   return (
     <Box className="TreeView-root" sx={TREEVIEW_STYLES}>
-      {items?.length > 0 && items.map((item) => renderItem(item, 0))}
+      {renderPins()}
+      {items?.length > 0 && items.map((item) => renderItem(item, 0, false))}
     </Box>
   )
 }

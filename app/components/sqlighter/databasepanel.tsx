@@ -34,14 +34,14 @@ export function DatabasePanel() {
     console.debug(`DatabasePanel.handleCommand - ${command}`, args)
 
     switch (command) {
-      case "sqltr.collapseItem":
-      case "sqltr.expandItem":
+      case "sqlighter.collapseItem":
+      case "sqlighter.expandItem":
         // handled by treeview
         break
 
-      case "sqltr.viewData":
+      case "sqlighter.viewData":
         break
-      case "sqltr.viewStructure":
+      case "sqlighter.viewStructure":
         break
     }
   }

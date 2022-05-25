@@ -6,7 +6,7 @@ import * as React from "react"
 
 /** A single command shown for example as an icon, in a contextual menu, etc. */
 export interface Command {
-  /** A unique string for this command, eg: sqltr.expandAll (prefix.command) */
+  /** A unique string for this command, eg: sqlighter.expandAll (prefix.command) */
   command: string
 
   /** Icon name or actual icon node for the command (optional) */

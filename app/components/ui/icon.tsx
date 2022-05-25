@@ -8,20 +8,21 @@ import { SvgIconProps } from "@mui/material"
 // Material Icons (Google)
 // https://mui.com/material-ui/material-icons/?query=table&theme=Outlined
 // https://fonts.google.com/icons
+import BoltOutlinedIcon from "@mui/icons-material/BoltOutlined"
 import DatabaseIcon from "@mui/icons-material/StorageOutlined"
 import FileIcon from "@mui/icons-material/InsertDriveFileOutlined"
 import FolderIcon from "@mui/icons-material/FolderOutlined"
-import TableIcon from "@mui/icons-material/TableChartOutlined"
-import KeyIcon from "@mui/icons-material/KeyOutlined"
-import QuestionMarkIcon from "@mui/icons-material/QuestionMarkOutlined"
-import BoltOutlinedIcon from "@mui/icons-material/BoltOutlined"
-import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined"
-import StarOutlinedIcon from "@mui/icons-material/StarOutlined"
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined"
+import KeyIcon from "@mui/icons-material/KeyOutlined"
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined"
 import PlaylistPlayOutlinedIcon from "@mui/icons-material/PlaylistPlayOutlined"
-import TableRowsOutlinedIcon from "@mui/icons-material/TableRowsOutlined"
+import PushPinOutlinedIcon from '@mui/icons-material/PushPinOutlined';
+import QuestionMarkIcon from "@mui/icons-material/QuestionMarkOutlined"
 import RefreshOutlinedIcon from "@mui/icons-material/RefreshOutlined"
+import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined"
+import StarOutlinedIcon from "@mui/icons-material/StarOutlined"
+import TableRowsOutlinedIcon from "@mui/icons-material/TableRowsOutlined"
+import TableIcon from "@mui/icons-material/TableChartOutlined"
 
 // Material Design Icons (open source)
 // https://materialdesignicons.com/
@@ -52,10 +53,8 @@ export function Icon(props: IconProps) {
       case "more":
         return <MoreHorizOutlinedIcon {...props} />
       case "pin":
-        return <StarBorderOutlinedIcon {...props} />
       case "pinned":
-//        return <StarOutlinedIcon {...props} />
-        return <StarBorderOutlinedIcon {...props} />
+        return <PushPinOutlinedIcon {...props} sx={{transform: "rotate(45deg)"}}/>
       case "query":
         return <TableRowsOutlinedIcon {...props} />
       case "refresh":

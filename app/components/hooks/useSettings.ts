@@ -14,7 +14,7 @@ export interface Settings {
 
 /**
  * Hook used to persist user settings across sessions, tabs, windows
- * @param key The settings key should be module.something, eg. sqltr.pins
+ * @param key The settings key should be module.something, eg. sqlighter.pins
  * @param initialValue Initial value to be assigned to this setting
  * @returns Settings value and function used to update value
  */
