@@ -92,7 +92,16 @@ export function DatabaseTreeView({ connection, filter, onCommand }: DatabaseTree
       type: "table",
       commands: [
         { command: "sqlighter.viewStructure", icon: "info", title: "View Structure" },
-        { command: "sqlighter.viewData", icon: "query", title: "View Data" },
+        {
+          // for now we open a generic query panel and select the table's data
+          // TODO launch a table panel that display, edit, insert and remove rows
+          title: "View Data",
+          icon: "query",
+          command: "sqlighter.viewQuery",
+          args: {
+            sql: `SELECT * FROM '${schema.database}.${table.name}'`,
+          },
+        },
         { command: "sqlighter.pin", icon: "pin", title: "Pin" },
       ],
       children: [
