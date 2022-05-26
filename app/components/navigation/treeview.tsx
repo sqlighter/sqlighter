@@ -8,6 +8,7 @@ import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 import { SxProps, Theme } from "@mui/material"
 
+import { Command, CommandEvent } from "../../lib/data/commands"
 import { useSettings } from "../hooks/useSettings"
 import { Tree } from "../../lib/data/tree"
 import { TreeItem, DEPTH_PADDING_PX } from "./treeitem"
@@ -127,10 +128,10 @@ export interface TreeViewProps {
   filter?: string
 
   /** Callback used when one of the item's commands is triggered */
-  onCommand?: (event: React.SyntheticEvent, command: string, args) => void
+  onCommand?: CommandEvent
 }
 
-export function TreeView({ items, onCommand }: TreeViewProps) {
+export function TreeView(props: TreeViewProps) {
   //
   // state
   //
@@ -166,12 +167,11 @@ export function TreeView({ items, onCommand }: TreeViewProps) {
   // handlers
   //
 
-  function handleCommand(event: React.SyntheticEvent, command: string, args, renderingPins) {
-    const item = args.item
+  function handleCommand(event: React.SyntheticEvent, command: Command, item, renderingPins) {
     const pinnedId = renderingPins ? `pins/${item.id}` : item.id
-    console.debug(`TreeView.handleCommand - ${command}`, args)
+    console.debug(`TreeView.handleCommand - ${command}`)
 
-    switch (command) {
+    switch (command.command) {
       case "sqlighter.collapseItem":
         setExpanded(expanded.filter((expandedId) => pinnedId !== expandedId))
         break
@@ -187,8 +187,8 @@ export function TreeView({ items, onCommand }: TreeViewProps) {
         break
 
       default:
-        if (onCommand) {
-          onCommand(event, command, args)
+        if (props.onCommand) {
+          props.onCommand(event, command)
         }
     }
   }
@@ -212,7 +212,7 @@ export function TreeView({ items, onCommand }: TreeViewProps) {
     fragments.push(
       <TreeItem
         item={item}
-        onCommand={(e, command, args) => handleCommand(e, command, args, renderingPins)}
+        onCommand={(e, command) => handleCommand(e, command, item, renderingPins)}
         expanded={expanded}
         selected={isSelected(item.id)}
         pinned={pinned}
@@ -262,7 +262,7 @@ export function TreeView({ items, onCommand }: TreeViewProps) {
 
     // search for pinned items and if found add a "Pinned" section to the treeview
     let pinnedItems = []
-    getPinnedItems(items, pinnedItems)
+    getPinnedItems(props.items, pinnedItems)
     if (pinnedItems.length > 0) {
       pinnedItems = [
         {
@@ -285,7 +285,7 @@ export function TreeView({ items, onCommand }: TreeViewProps) {
   return (
     <Box className="TreeView-root" sx={TREEVIEW_STYLES}>
       {renderPinned()}
-      {items?.length > 0 && items.map((item) => renderItem(item, 0, false))}
+      {props.items?.length > 0 && props.items.map((item) => renderItem(item, 0, false))}
     </Box>
   )
 }

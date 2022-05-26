@@ -13,7 +13,7 @@ import Tooltip from "@mui/material/Tooltip"
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown"
 import ArrowRightIcon from "@mui/icons-material/ArrowRight"
 
-import { Command } from "../../lib/data/commands"
+import { Command, CommandEvent } from "../../lib/data/commands"
 import { Tree } from "../../lib/data/tree"
 import { Icon } from "../ui/icon"
 
@@ -40,7 +40,7 @@ export interface TreeItemProps {
   pinned?: boolean
 
   /** Callback used when one of the action or "collapse/expand" icons is clicked */
-  onCommand?: (event: React.SyntheticEvent, command: string, args) => void
+  onCommand?: CommandEvent
 }
 
 //
@@ -61,7 +61,10 @@ export function TreeItem({ item, ...props }: TreeItemProps) {
   function handleItemClick(e) {
     console.debug("TreeItem.handleItemClick")
     if (isCollapsible()) {
-      props.onCommand(e, props.expanded ? "sqlighter.collapseItem" : "sqlighter.expandItem", { item })
+      props.onCommand(e, {
+        command: props.expanded ? "sqlighter.collapseItem" : "sqlighter.expandItem",
+        args: { item },
+      })
     }
   }
 
@@ -112,7 +115,8 @@ export function TreeItem({ item, ...props }: TreeItemProps) {
           <Icon
             className={commandClass}
             onClick={(e) => {
-              props.onCommand(e, command.command, { item, command })
+//              props.onCommand(e, command.command, { item, command })
+              props.onCommand(e, command)
               e.stopPropagation()
             }}
           >

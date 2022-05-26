@@ -14,4 +14,10 @@ export interface Command {
 
   /** A human-readable string describing this command */
   title?: string
+
+  /** Arguments passed to this command (optional and command-specific) */
+  args?: { [key: string]: any }
 }
+
+/** Callback used to propagate commands within the application */
+export type CommandEvent<T = Command> = (event: React.SyntheticEvent, command: T) => void

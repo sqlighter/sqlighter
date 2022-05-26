@@ -17,7 +17,6 @@ import CloseIcon from "@mui/icons-material/CloseOutlined"
 
 import { Icon } from "../ui/icon"
 import { Panel, PanelProps } from "./panel"
-import { HtmlProps } from "next/dist/shared/lib/html-context"
 
 export const TABLIST_HEIGHT = 48
 

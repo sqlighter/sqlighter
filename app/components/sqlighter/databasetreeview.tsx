@@ -5,6 +5,7 @@
 import * as React from "react"
 import { useState, useEffect } from "react"
 
+import { Command, CommandEvent } from "../../lib/data/commands"
 import { TreeView } from "../navigation/treeview"
 import { Tree } from "../../lib/data/tree"
 import { DataConnection } from "../../lib/sqltr/connections"
@@ -16,30 +17,26 @@ export interface DatabaseTreeViewProps {
   /** Will show filtered results based on given string */
   filter?: string
 
-  /**
-   * Callback used when the view generates an app level command,
-   * for example this may happen when the view generates a command
-   * to view the structure of a table that the user clicked on, etc.
-   */
-  onCommand?: (event: React.SyntheticEvent, command: string, args) => void
+  /** Callback used to dispatch commands back to parent components */
+  onCommand?: CommandEvent
 }
 
 /** A component used to render a database's table, trigger, views, etc as a treeview */
-export function DatabaseTreeView({ connection, filter, onCommand }: DatabaseTreeViewProps) {
+export function DatabaseTreeView(props: DatabaseTreeViewProps) {
   //
   // state
   //
 
   const [trees, setTrees] = useState<Tree[]>()
   useEffect(() => {
-    if (connection) {
+    if (props.connection) {
       const updateTrees = async () => {
-        const trees = await _getTrees(connection, false)
+        const trees = await _getTrees(props.connection, false)
         setTrees(trees)
       }
       updateTrees().catch(console.error)
     } else setTrees(undefined)
-  }, [connection])
+  }, [props.connection])
 
   //
   // adapter from database connection schema to treeview's data structure
@@ -99,7 +96,8 @@ export function DatabaseTreeView({ connection, filter, onCommand }: DatabaseTree
           icon: "query",
           command: "sqlighter.viewQuery",
           args: {
-            sql: `SELECT * FROM '${schema.database}.${table.name}'`,
+//            sql: `SELECT * FROM '${schema.database}.${table.name}'`,
+            sql: `SELECT * FROM ${table.name}`,
           },
         },
         { command: "sqlighter.pin", icon: "pin", title: "Pin" },
@@ -198,20 +196,20 @@ export function DatabaseTreeView({ connection, filter, onCommand }: DatabaseTree
    * level like the refresh of the schema. Other commands, like a request
    * to open a SQL query tab are passed on to the higher level component.
    */
-  async function handleCommand(event: React.SyntheticEvent, command: string, args) {
-    console.debug(`DatabaseTreeView.handleCommand - ${command}`, command, args)
-    switch (command) {
+  async function handleCommand(event: React.SyntheticEvent, command: Command) {
+    console.debug(`DatabaseTreeView.handleCommand - ${command.command}`, command)
+    switch (command.command) {
       case "sqlighter.refreshSchema":
-        if (connection) {
-          const trees = await _getTrees(connection, true)
+        if (props.connection) {
+          const trees = await _getTrees(props.connection, true)
           setTrees(trees)
-          console.debug(`DatabaseTreeView.handleCommand - ${command} done`)
+          console.debug(`DatabaseTreeView.handleCommand - ${command.command} done`)
         }
         break
 
       default:
-        if (onCommand) {
-          onCommand(event, command, args)
+        if (props.onCommand) {
+          props.onCommand(event, command)
         }
     }
   }
@@ -220,5 +218,5 @@ export function DatabaseTreeView({ connection, filter, onCommand }: DatabaseTree
   // render
   //
 
-  return trees && <TreeView items={trees} filter={filter} onCommand={handleCommand} />
+  return trees && <TreeView items={trees} filter={props.filter} onCommand={handleCommand} />
 }

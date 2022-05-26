@@ -11,9 +11,11 @@ import Box from "@mui/material/Box"
 import { useTheme } from "@mui/material/styles"
 import { Typography } from "@mui/material"
 
+import { Command, CommandEvent } from "../../lib/data/commands"
 import { useSqljs } from "../../lib/useDB"
 import { DataConnection, DataConnectionConfigs } from "../../lib/sqltr/connections"
 import { SqliteDataConnection } from "../../lib/sqltr/databases/sqlite"
+import { createQueryTab } from "./querypanel"
 
 import { Icon } from "../../components/ui/icon"
 import { Context } from "../../components/context"
@@ -74,7 +76,7 @@ export default function Main(props) {
 
   const [activityValue, setActivityValue] = useState("databaseActivity")
   const [tabValue, setTabValue] = useState("tab1")
-  const [tabs, setTabs] = useState(TABS)
+  const [tabs, setTabs] = useState<PanelProps[]>(TABS)
 
   // all connections
   const [connections, setConnections] = useState<DataConnection[]>(null)
@@ -162,11 +164,18 @@ export default function Main(props) {
     // console.debug("Main.handleAddTabClick", e)
   }
 
-  async function handleCommand(event: React.SyntheticEvent, command: string, args) {
-    console.debug(`Main.handleCommand - ${command}`, args)
-    switch (command) {
+  async function handleCommand(event: React.SyntheticEvent, command: Command) {
+    console.debug(`Main.handleCommand - ${command.command}`, command)
+    switch (command.command) {
       case "sqlighter.manageConnections":
         await openSomeTestConnection()
+        break
+
+      case "sqlighter.viewQuery":
+        // open a new tab with a query panel
+        const queryTab = createQueryTab(command, connection, connections)
+        setTabs([queryTab, ...tabs])
+        setTabValue(queryTab.id)
         break
     }
   }

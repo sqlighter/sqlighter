@@ -33,7 +33,7 @@ export function CodeEditor(props: CodeEditorProps) {
   function handleChange(value, event) {
     if (props.onCommand) {
       props.onCommand(event, {
-        command: "editor.valueChange",
+        command: "editor.changeValue",
         args: {
           value,
         },

@@ -4,6 +4,8 @@
 
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
+
+import { CommandEvent } from "../../lib/data/commands"
 import { DataConnection } from "../../lib/sqltr/connections"
 
 export interface ConnectionsMenuProps {
@@ -14,17 +16,17 @@ export interface ConnectionsMenuProps {
   connections?: DataConnection[]
 
   /** Callback used to dispatch commands back to parent component */
-  onCommand?: (event: React.SyntheticEvent, command: string, args?) => void
+  onCommand?: CommandEvent
 }
 
-export function ConnectionsMenu({ connection, connections, onCommand }: ConnectionsMenuProps) {
+export function ConnectionsMenu(props: ConnectionsMenuProps) {
   //
   // handlers
   //
 
   function handleOpenClick(e) {
-    if (onCommand) {
-      onCommand(e, "sqlighter.manageConnections")
+    if (props.onCommand) {
+      props.onCommand(e, { command: "sqlighter.manageConnections" })
     }
   }
 
@@ -32,7 +34,7 @@ export function ConnectionsMenu({ connection, connections, onCommand }: Connecti
   // render
   //
 
-  if (!connection) {
+  if (!props.connection) {
     return (
       <Button variant="outlined" onClick={handleOpenClick}>
         Open Demo
@@ -40,5 +42,5 @@ export function ConnectionsMenu({ connection, connections, onCommand }: Connecti
     )
   }
 
-  return <Box sx={{maxHeight: 24}}>ConnectionsMenu/TBD</Box>
+  return <Box sx={{ maxHeight: 24 }}>ConnectionsMenu/TBD</Box>
 }
