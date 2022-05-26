@@ -7,13 +7,12 @@
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 
-import { CommandEvent } from "../../lib/data/commands"
+import { CommandEvent } from "../../lib/commands"
 import { DataConnection } from "../../lib/sqltr/connections"
 import { DatabaseTreeView } from "./databasetreeview"
 import { ConnectionsMenu } from "./connectionsmenu"
 
 export interface DatabasePanelProps {
-  
   /** Currently selected connection */
   connection?: DataConnection
 

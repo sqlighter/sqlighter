@@ -6,7 +6,8 @@
   "keywords": [
     "SQLite",
     "SQLighter",
-    "SQL"
+    "SQL",
+    "Database"
   ],
   "private": true,
   "scripts": {
@@ -23,8 +24,6 @@
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
     "@google-cloud/storage": "^5.19.4",
-    "@google-cloud/translate": "^6.3.1",
-    "@google-cloud/vision": "^2.4.2",
     "@hapi/iron": "^6.0.0",
     "@monaco-editor/react": "^4.4.5",
     "@mui/icons-material": "^5.6.2",

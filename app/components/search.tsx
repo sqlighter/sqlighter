@@ -6,7 +6,7 @@ import useSWR from "swr"
 import List from "@mui/material/List"
 import Typography from "@mui/material/Typography"
 
-import { BiomarkerListItem, ContentListItem, TopicListItem, ArticleListItem, ReferenceListItem } from "./listitems"
+import { ContentListItem, TopicListItem, ArticleListItem, ReferenceListItem } from "./listitems"
 
 interface SearchProps {
   /** The query string */
@@ -18,8 +18,6 @@ function SearchResult(props) {
   switch (props.type) {
     case "article":
       return <ArticleListItem item={props.item} />
-    case "biomarker":
-      return <BiomarkerListItem item={props.item} />
     case "topic":
       return <TopicListItem item={props.item} />
     case "reference":

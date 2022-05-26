@@ -143,22 +143,6 @@ export function ContentListItem({ item, avatar, avatarStyle, secondaryAction, do
   )
 }
 
-/** A list item specifically for biomarker items */
-export function BiomarkerListItem(props: ListItemProps) {
-  let item = props.item
-  if (item) {
-    item = { ...item }
-    if (!item.url) {
-      item.url = `/biomarkers/${item.id}`
-    }
-    if (!item.imageUrl) {
-      item.imageUrl = "/biomarkers/blood.jpeg"
-    }
-  }
-
-  return <ContentListItem item={item} avatarStyle="fancy" dotColor="success" />
-}
-
 /** List item for generic references to external sources and contents */
 export function ReferenceListItem(props: ListItemProps) {
   let item = { ...props.item }
@@ -202,8 +186,6 @@ export function GenericListItem(props: ListItemProps) {
   const item = props.item
 
   switch (item.type) {
-    case "biomarker":
-      return <BiomarkerListItem {...props} />
     case "reference":
       return <ReferenceListItem {...props} />
     case "topic":

@@ -113,21 +113,3 @@ export function TagsCloud({ items }) {
     </Box>
   )
 }
-
-//
-// BiomarkerTag - a clickable biomarker tag chip with a risk level badge
-//
-
-interface BiomarkerTagProps extends TagProps {
-  /** Biomarker risk level (missing, no dot) */
-  risk?: Risk
-}
-
-/** A clickable chip used to show a biomarker possibly with a risk dot */
-export function BiomarkerTag({ risk, ...props }: BiomarkerTagProps) {
-  return (
-    <RiskBadge risk={risk}>
-      <Tag {...props} />
-    </RiskBadge>
-  )
-}

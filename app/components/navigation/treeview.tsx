@@ -8,9 +8,9 @@ import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 import { SxProps, Theme } from "@mui/material"
 
-import { Command, CommandEvent } from "../../lib/data/commands"
+import { Command, CommandEvent } from "../../lib/commands"
 import { useSettings } from "../hooks/useSettings"
-import { Tree } from "../../lib/data/tree"
+import { Tree } from "../../lib/tree"
 import { TreeItem, DEPTH_PADDING_PX } from "./treeitem"
 
 /** Custom styles applied to TreeView and TreeItem components */

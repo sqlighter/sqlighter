@@ -13,8 +13,8 @@ import Tooltip from "@mui/material/Tooltip"
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown"
 import ArrowRightIcon from "@mui/icons-material/ArrowRight"
 
-import { Command, CommandEvent } from "../../lib/data/commands"
-import { Tree } from "../../lib/data/tree"
+import { Command, CommandEvent } from "../../lib/commands"
+import { Tree } from "../../lib/tree"
 import { Icon } from "../ui/icon"
 
 // delay before showing tooltips
@@ -115,7 +115,7 @@ export function TreeItem({ item, ...props }: TreeItemProps) {
           <Icon
             className={commandClass}
             onClick={(e) => {
-//              props.onCommand(e, command.command, { item, command })
+              //              props.onCommand(e, command.command, { item, command })
               props.onCommand(e, command)
               e.stopPropagation()
             }}

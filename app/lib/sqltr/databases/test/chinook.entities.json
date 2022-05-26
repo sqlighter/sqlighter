@@ -100,12 +100,12 @@
               "action": [
                 {
                   "type": "action",
-                  "variant": "on",
+                  "variant": "on delete",
                   "action": "no action"
                 },
                 {
                   "type": "action",
-                  "variant": "on",
+                  "variant": "on update",
                   "action": "no action"
                 }
               ]
@@ -508,12 +508,12 @@
               "action": [
                 {
                   "type": "action",
-                  "variant": "on",
+                  "variant": "on delete",
                   "action": "no action"
                 },
                 {
                   "type": "action",
-                  "variant": "on",
+                  "variant": "on update",
                   "action": "no action"
                 }
               ]
@@ -873,12 +873,12 @@
               "action": [
                 {
                   "type": "action",
-                  "variant": "on",
+                  "variant": "on delete",
                   "action": "no action"
                 },
                 {
                   "type": "action",
-                  "variant": "on",
+                  "variant": "on update",
                   "action": "no action"
                 }
               ]
@@ -1187,12 +1187,12 @@
               "action": [
                 {
                   "type": "action",
-                  "variant": "on",
+                  "variant": "on delete",
                   "action": "no action"
                 },
                 {
                   "type": "action",
-                  "variant": "on",
+                  "variant": "on update",
                   "action": "no action"
                 }
               ]
@@ -1347,12 +1347,12 @@
               "action": [
                 {
                   "type": "action",
-                  "variant": "on",
+                  "variant": "on delete",
                   "action": "no action"
                 },
                 {
                   "type": "action",
-                  "variant": "on",
+                  "variant": "on update",
                   "action": "no action"
                 }
               ]
@@ -1389,12 +1389,12 @@
               "action": [
                 {
                   "type": "action",
-                  "variant": "on",
+                  "variant": "on delete",
                   "action": "no action"
                 },
                 {
                   "type": "action",
-                  "variant": "on",
+                  "variant": "on update",
                   "action": "no action"
                 }
               ]
@@ -1623,12 +1623,12 @@
               "action": [
                 {
                   "type": "action",
-                  "variant": "on",
+                  "variant": "on delete",
                   "action": "no action"
                 },
                 {
                   "type": "action",
-                  "variant": "on",
+                  "variant": "on update",
                   "action": "no action"
                 }
               ]
@@ -1665,12 +1665,12 @@
               "action": [
                 {
                   "type": "action",
-                  "variant": "on",
+                  "variant": "on delete",
                   "action": "no action"
                 },
                 {
                   "type": "action",
-                  "variant": "on",
+                  "variant": "on update",
                   "action": "no action"
                 }
               ]
@@ -1891,12 +1891,12 @@
               "action": [
                 {
                   "type": "action",
-                  "variant": "on",
+                  "variant": "on delete",
                   "action": "no action"
                 },
                 {
                   "type": "action",
-                  "variant": "on",
+                  "variant": "on update",
                   "action": "no action"
                 }
               ]
@@ -1933,12 +1933,12 @@
               "action": [
                 {
                   "type": "action",
-                  "variant": "on",
+                  "variant": "on delete",
                   "action": "no action"
                 },
                 {
                   "type": "action",
-                  "variant": "on",
+                  "variant": "on update",
                   "action": "no action"
                 }
               ]
@@ -1975,12 +1975,12 @@
               "action": [
                 {
                   "type": "action",
-                  "variant": "on",
+                  "variant": "on delete",
                   "action": "no action"
                 },
                 {
                   "type": "action",
-                  "variant": "on",
+                  "variant": "on update",
                   "action": "no action"
                 }
               ]

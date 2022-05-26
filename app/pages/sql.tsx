@@ -11,8 +11,8 @@ import Box from "@mui/material/Box"
 import { DataGrid } from "@mui/x-data-grid"
 
 import { useUser } from "../lib/auth/hooks"
-import { useDB, useDBQuery } from "../lib/useDB"
-import { useBinaryFile } from "../lib/useBinaryFile"
+import { useDB, useDBQuery } from "../components/hooks/useDB"
+import { useBinaryFile } from "../components/hooks/useBinaryFile"
 
 const sqlliteURL = "/chinook.db"
 

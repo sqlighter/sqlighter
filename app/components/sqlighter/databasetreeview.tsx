@@ -5,9 +5,9 @@
 import * as React from "react"
 import { useState, useEffect } from "react"
 
-import { Command, CommandEvent } from "../../lib/data/commands"
+import { Command, CommandEvent } from "../../lib/commands"
 import { TreeView } from "../navigation/treeview"
-import { Tree } from "../../lib/data/tree"
+import { Tree } from "../../lib/tree"
 import { DataConnection } from "../../lib/sqltr/connections"
 
 export interface DatabaseTreeViewProps {
@@ -96,7 +96,7 @@ export function DatabaseTreeView(props: DatabaseTreeViewProps) {
           icon: "query",
           command: "sqlighter.viewQuery",
           args: {
-//            sql: `SELECT * FROM '${schema.database}.${table.name}'`,
+            //            sql: `SELECT * FROM '${schema.database}.${table.name}'`,
             sql: `SELECT * FROM ${table.name}`,
           },
         },

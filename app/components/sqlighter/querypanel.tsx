@@ -10,7 +10,7 @@ import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
 import { DataGrid } from "@mui/x-data-grid"
 
-import { Command, CommandEvent } from "../../lib/data/commands"
+import { Command, CommandEvent } from "../../lib/commands"
 import { DataConnection } from "../../lib/sqltr/connections"
 import { generateId } from "../../lib/items/items"
 import { Panel, PanelProps } from "../navigation/panel"
@@ -61,7 +61,7 @@ export function QueryPanel(props: QueryPanelProps) {
     <>
       Query panel
       <ConnectionsMenu connection={props.connection} connections={props.connections} />
-      <Box sx={{ width: "100%", height: 200, borderStyle: "solid", overflow: "hidden" }}>
+      <Box sx={{ width: "100%", height: 200, overflow: "hidden" }}>
         <SqlEditor value={props.sql} onCommand={handleCommand} />
       </Box>
       <Button onClick={handleRunQuery}>Run Query</Button>
