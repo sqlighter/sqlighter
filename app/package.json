@@ -26,6 +26,7 @@
     "@google-cloud/translate": "^6.3.1",
     "@google-cloud/vision": "^2.4.2",
     "@hapi/iron": "^6.0.0",
+    "@monaco-editor/react": "^4.4.5",
     "@mui/icons-material": "^5.6.2",
     "@mui/lab": "^5.0.0-alpha.81",
     "@mui/material": "^5.8.0",
