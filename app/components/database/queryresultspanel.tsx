@@ -4,6 +4,7 @@
 
 import Box from "@mui/material/Box"
 import { DataGrid } from "./datagrid"
+import { PanelProps } from "../navigation/panel"
 
 // TODO move with data models
 export interface QueryExecResult {
@@ -18,10 +19,21 @@ export interface QueryExecResult {
 
   columns?: any
   values?: any
+
+  children?: React.ReactFragment
 }
 
-export interface QueryResultsPanelProps {
+export interface QueryResultsPanelProps extends PanelProps {
   result: QueryExecResult
+
+  //  startedOn: any
+  //  completedOn?: any
+
+  //  status: "running" | "completed" | "error"
+  //  error?: any
+
+  //  columns?: any
+  //  values?: any
 }
 
 // @param {import("sql.js").QueryExecResult} props
@@ -36,10 +48,10 @@ export function QueryResultsPanel(props: QueryResultsPanelProps) {
   //
 
   const result = props.result
-  console.log(`render result`, result)
-
   return (
-    <Box sx={{ width: 1, height: 1, maxHeight: 1, backgroundColor: "orange", display: "flex", flexDirection: "column" }}>
+    <Box
+      sx={{ width: 1, height: 1, maxHeight: 1, backgroundColor: "orange", display: "flex", flexDirection: "column" }}
+    >
       <Box>id: {result.id}</Box>
       <Box>status: {result.status}</Box>
       <Box>title: {result.title}</Box>

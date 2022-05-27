@@ -27,7 +27,9 @@ import { QueryTab } from "../database/querytab"
 
 const SSR = typeof window === "undefined"
 
-
+function Scatolo(props: any) {
+  return <>{props.children}</>
+}
 
 const TABS: PanelProps[] = [
   {
@@ -36,7 +38,7 @@ const TABS: PanelProps[] = [
     description: "description of tab 0",
     icon: "query",
     sx: { backgroundColor: "beige" },
-    children: <>Tab zero panel</>,
+    children: <Scatolo ciccio="pippo">Tab zero panel</Scatolo>,
   },
   {
     id: "tab1",
@@ -79,7 +81,8 @@ export default function Main(props) {
   const context = React.useContext(Context)
 
   const [activityValue, setActivityValue] = useState("databaseActivity")
-  const [tabValue, setTabValue] = useState("tab1")
+
+  const [tabId, setTabId] = useState(TABS[0].id)
   const [tabs, setTabs] = useState<PanelProps[]>(TABS)
 
   // all connections
@@ -157,13 +160,13 @@ export default function Main(props) {
   function handleActivityChange(_, activityId) {
     console.debug(`App.handleActivityChange - activityId: ${activityId}`)
   }
-
+/*
   function handleTabsChange(tabId?: string, tabs?: PanelProps[]) {
     console.debug(`handleTabsChange - tabId: ${tabId}, tabs: ${tabs && tabs.map((t) => t.id).join(", ")}`)
     setTabs(tabs)
     setTabValue(tabId)
   }
-
+*/
   function handleAddTabClick(e: React.MouseEvent<HTMLElement>): void {
     // console.debug("Main.handleAddTabClick", e)
   }
@@ -178,8 +181,13 @@ export default function Main(props) {
       case "sqlighter.viewQuery":
         // open a new tab with a query panel
         const queryTab = createQueryTab(command, connection, connections)
+        setTabId(queryTab.id)
         setTabs([queryTab, ...tabs])
-        setTabValue(queryTab.id)
+        break
+
+      case "tabs.changeTabs":
+        setTabId(command.args.tabId)
+        setTabs(command.args.tabs)
         break
     }
   }
@@ -196,9 +204,11 @@ export default function Main(props) {
       activities={activities}
       onActivityChange={handleActivityChange}
       //
+      tabId={tabId}
       tabs={tabs}
-      onTabsChange={handleTabsChange}
+//      onTabsChange={handleTabsChange}
       onAddTabClick={handleAddTabClick}
+    onCommand={handleCommand}
       //
       user={context.user}
     />

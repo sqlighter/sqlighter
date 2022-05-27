@@ -30,9 +30,5 @@ export interface PanelProps {
 
 /** A simple panel (used mostly to pass props to tabs or other layout componentsawer, header, footer, basic actions */
 export function Panel({ sx, children }: PanelProps) {
-  return (
-    <Box className="Panel-root" sx={sx}>
-      {children}
-    </Box>
-  )
+  return <>{children}</>
 }

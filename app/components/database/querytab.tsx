@@ -42,6 +42,11 @@ export interface QueryTabProps {
 }
 
 export function QueryTab(props: QueryTabProps) {
+
+  // currently selected result tab
+  const [resultId, setResultId] = useState<string>()
+
+  // list of available results (shown in tabs)
   const [results, setResults] = useState<any[]>([])
 
   const [sql, setSql] = useState<string>(props.sql)
@@ -63,7 +68,9 @@ export function QueryTab(props: QueryTabProps) {
       columns: null,
       values: null,
     }
-    setResults([runningResult, ...results])
+    results.splice(0, 0, runningResult)
+    setResults([...results])
+    setResultId(runningResult.id)
 
     try {
       const queryResults = await props.connection.getResults(sql)
@@ -75,7 +82,6 @@ export function QueryTab(props: QueryTabProps) {
       runningResult.completedOn = new Date()
       runningResult.columns = queryResults[0].columns
       runningResult.values = queryResults[0].values
-
 
       if (queryResults.length > 1) {
         runningResult.title += " (1)"
@@ -109,8 +115,17 @@ export function QueryTab(props: QueryTabProps) {
     console.debug(`QueryPanel.handleCommand - ${command.command}`, command)
     switch (command.command) {
       case "editor.changeValue":
+        // TODO should debounce calls
         setSql(command.args.value)
         break
+
+      case "tabs.changeTabs":
+        setResultId(command.args.tabId)
+
+        const tabs = command.args.tabs
+        const tabsResults = tabs.map(tab => tab.children.props.result)
+        setResults(tabsResults) 
+        break;
     }
   }
 
@@ -147,7 +162,7 @@ export function QueryTab(props: QueryTabProps) {
       }
     })
 
-    return <Tabs tabs={tabs} />
+    return <Tabs tabId={resultId} tabs={tabs} onCommand={handleCommand} />
   }
 
   return (

@@ -12,6 +12,7 @@ import { Theme } from "@mui/material/styles"
 import useMediaQuery from "@mui/material/useMediaQuery"
 import Box from "@mui/material/Box"
 
+import { CommandEvent } from "../../lib/commands"
 import { ActivityBar, ACTIVITYBAR_WIDTH } from "./activitybar"
 import { SideBar, SIDEBAR_MIN_WIDTH } from "./sidebar"
 import { PanelProps } from "./panel"
@@ -32,6 +33,9 @@ interface TabsLayoutProps extends TabsProps {
 
   /** Callback used to notify that selected activity has changed */
   onActivityChange?: (event: React.SyntheticEvent, activityId) => void
+
+  /** Dispatch events when activity is selected, tabs are changed, closed, reordered, etc */
+  onCommand: CommandEvent
 
   /** Signed in user (or null) */
   user?: object
@@ -105,7 +109,7 @@ export function TabsLayout(props: TabsLayoutProps) {
             <SideBar activities={props.activities} activityId={activityId} />
           </Allotment.Pane>
           <Allotment.Pane>
-            <Tabs tabs={props.tabs} onTabsChange={props.onTabsChange} onAddTabClick={props.onAddTabClick} />
+            <Tabs tabId={props.tabId} tabs={props.tabs} onTabsChange={props.onTabsChange} onAddTabClick={props.onAddTabClick} onCommand={props.onCommand} />
           </Allotment.Pane>
         </Allotment>
       </Box>
