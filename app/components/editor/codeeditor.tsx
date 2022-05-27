@@ -51,7 +51,7 @@ export function CodeEditor(props: CodeEditorProps) {
   return (
     <Editor
       className="monacoEditor"
-      height="100%"
+//      height="100%"
       width="100%"
       language={props.language || "javascript"}
       theme={props.theme || "light"}

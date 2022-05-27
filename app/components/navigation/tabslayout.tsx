@@ -90,7 +90,7 @@ export function TabsLayout(props: TabsLayoutProps) {
         <meta name="og:title" content={props.title} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
-      <Box sx={{ width: "100%", height: "100%" }}>
+      <Box sx={{ position: "absolute", left: 0, top: 0, right: 0, bottom: 0 }}>
         <Allotment onVisibleChange={handleSidebarVisibilityChange}>
           <Allotment.Pane maxSize={ACTIVITYBAR_WIDTH} minSize={ACTIVITYBAR_WIDTH} visible>
             <ActivityBar

@@ -188,47 +188,62 @@ export function Tabs(props: TabsProps) {
 
   return (
     <TabContext value={tabId}>
-      <TabList onChange={handleTabsChange} variant="scrollable" sx={TABLIST_STYLES}>
+      <Box sx={{ display: "flex", flexDirection: "column", height: "100%", maxHeight: "100%" }}>
+        <Box sx={{ height: TABLIST_HEIGHT }}>
+          <TabList onChange={handleTabsChange} variant="scrollable" sx={TABLIST_STYLES}>
+            {props.tabs &&
+              props.tabs.map((tab: any) => (
+                <Tab
+                  key={tab.id}
+                  id={"ciccio" + tab.id}
+                  value={tab.id}
+                  icon={typeof tab.icon === "string" ? <Icon>{tab.icon}</Icon> : tab.icon}
+                  aria-label={tab.id}
+                  iconPosition="start"
+                  component="div"
+                  label={
+                    <span>
+                      <Box component="span" className="MuiTab-textLabel">
+                        {tab.title}
+                      </Box>
+                      <IconButton onClick={(e) => handleCloseTab(e, tab.id)} className="MuiTab-closeIcon">
+                        <CloseIcon fontSize="small" />
+                      </IconButton>
+                    </span>
+                  }
+                  draggable="true"
+                  onDragStart={handleTabDragStart}
+                  onDragOver={handleTagDragOver}
+                  onDrop={handleTabDrop}
+                />
+              ))}
+            {props.onAddTabClick && (
+              <Box className="MuiTab-addIcon">
+                <IconButton onClick={props.onAddTabClick}>
+                  <AddIcon fontSize="small" />
+                </IconButton>
+              </Box>
+            )}
+          </TabList>
+        </Box>
         {props.tabs &&
           props.tabs.map((tab: any) => (
-            <Tab
+            <TabPanel
               key={tab.id}
-              id={"ciccio" + tab.id}
               value={tab.id}
-              icon={typeof tab.icon === "string" ? <Icon>{tab.icon}</Icon> : tab.icon}
-              aria-label={tab.id}
-              iconPosition="start"
-              component="div"
-              label={
-                <span>
-                  <Box component="span" className="MuiTab-textLabel">
-                    {tab.title}
-                  </Box>
-                  <IconButton onClick={(e) => handleCloseTab(e, tab.id)} className="MuiTab-closeIcon">
-                    <CloseIcon fontSize="small" />
-                  </IconButton>
-                </span>
-              }
-              draggable="true"
-              onDragStart={handleTabDragStart}
-              onDragOver={handleTagDragOver}
-              onDrop={handleTabDrop}
-            />
+              sx={{
+                padding: 0,
+                backgroundColor: "azure",
+                height: "100%",
+                maxHeight: "100%",
+                overflow: "scroll"
+              }}
+            >
+              {tab.children}
+            </TabPanel>
           ))}
-        {props.onAddTabClick && (
-          <Box className="MuiTab-addIcon">
-            <IconButton onClick={props.onAddTabClick}>
-              <AddIcon fontSize="small" />
-            </IconButton>
-          </Box>
-        )}
-      </TabList>
-      {props.tabs &&
-        props.tabs.map((tab: any) => (
-          <TabPanel key={tab.id} value={tab.id} sx={{ padding: 0, width: "100%", height: "100%" }}>
-            <Panel {...tab} />
-          </TabPanel>
-        ))}
+      </Box>
     </TabContext>
   )
+  //  <Panel {...tab} />
 }
