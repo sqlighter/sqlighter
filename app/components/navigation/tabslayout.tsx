@@ -2,8 +2,8 @@
 // tabslayout.tsx - layout for vscode-like apps with activity bar, sidebar, tabs, etc
 //
 
+import React, { ReactElement, useState } from "react"
 import Head from "next/head"
-import { useState } from "react"
 
 import { Allotment } from "allotment"
 import "allotment/dist/style.css"
@@ -39,6 +39,9 @@ interface TabsLayoutProps extends TabsProps {
 
   /** Signed in user (or null) */
   user?: object
+
+  /** The actual tabs to be shown in this tabs layout */
+  children?: ReactElement[]
 }
 
 /** A shared layout for tab based applications pages, includes: menu drawer, header, footer, basic actions */
@@ -84,6 +87,14 @@ export function TabsLayout(props: TabsLayoutProps) {
   // render
   //
 
+  const tabsCommands = [
+    {
+      command: "tabs.createTab",
+      title: "Add tab",
+      icon: "add",
+    },
+  ]
+
   return (
     <>
       <Head>
@@ -109,7 +120,9 @@ export function TabsLayout(props: TabsLayoutProps) {
             <SideBar activities={props.activities} activityId={activityId} />
           </Allotment.Pane>
           <Allotment.Pane>
-            <Tabs tabId={props.tabId} tabs={props.tabs} onTabsChange={props.onTabsChange} onAddTabClick={props.onAddTabClick} onCommand={props.onCommand} />
+            <Tabs tabId={props.tabId} commands={tabsCommands} onCommand={props.onCommand}>
+              {props.children}
+            </Tabs>
           </Allotment.Pane>
         </Allotment>
       </Box>

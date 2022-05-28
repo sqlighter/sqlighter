@@ -2,7 +2,7 @@
 // querytab.tsx - panel used to edit and run database queries, show results
 //
 
-import React from "react"
+import React, { ReactElement } from "react"
 import { useState } from "react"
 import { parseISO, format } from "date-fns"
 
@@ -16,15 +16,15 @@ import { Command, CommandEvent } from "../../lib/commands"
 import { DataConnection } from "../../lib/sqltr/connections"
 import { generateId } from "../../lib/items/items"
 import { Panel, PanelProps } from "../navigation/panel"
-import { Tabs } from "../navigation/tabs"
+import { Tabs, TabProps } from "../navigation/tabs"
 
 import { ConnectionsMenu } from "./connectionsmenu"
 import { SqlEditor } from "../editor/sqleditor"
-import { QueryResultsPanel, QueryExecResult } from "./queryresultspanel"
+import { QueryResultsPanel, QueryResultsPanelProps } from "./queryresultspanel"
 
 const delay = (ms) => new Promise((res) => setTimeout(res, ms))
 
-export interface QueryTabProps {
+export interface QueryTabProps extends TabProps {
   /** Currently selected connection */
   connection?: DataConnection
 
@@ -42,12 +42,11 @@ export interface QueryTabProps {
 }
 
 export function QueryTab(props: QueryTabProps) {
-
   // currently selected result tab
-  const [resultId, setResultId] = useState<string>()
+  const [tabId, setTabId] = useState<string>()
 
   // list of available results (shown in tabs)
-  const [results, setResults] = useState<any[]>([])
+  const [tabs, setTabs] = useState<ReactElement[]>([])
 
   const [sql, setSql] = useState<string>(props.sql)
 
@@ -58,57 +57,58 @@ export function QueryTab(props: QueryTabProps) {
   async function handleRunQuery(e: React.SyntheticEvent) {
     console.debug(`handleRunQuery - ${sql}`)
 
+    // create a tab that is shown while the query is being executed to display progress, etc.
+    let updatedTabs = [...tabs]
     const startedOn = new Date()
-    const runningResult: QueryExecResult = {
+    const runningProps: QueryResultsPanelProps = {
       id: generateId("tab_"),
       title: startedOn.toLocaleTimeString(),
-      startedOn,
       status: "running",
-
-      columns: null,
-      values: null,
+      startedOn,
     }
-    results.splice(0, 0, runningResult)
-    setResults([...results])
-    setResultId(runningResult.id)
+    updatedTabs = [<QueryResultsPanel {...runningProps} />, ...updatedTabs]
+    setTabs(updatedTabs)
+    setTabId(runningProps.id)
 
     try {
       const queryResults = await props.connection.getResults(sql)
-      console.debug(`risultato query[0]`,queryResults[0])
-      
-      await delay(500)
+      await delay(500) // TODO remove, only used to see updating cycle
+      console.debug(`risultato query[0]`, queryResults[0])
 
-      runningResult.status = "completed"
-      runningResult.completedOn = new Date()
-      runningResult.columns = queryResults[0].columns
-      runningResult.values = queryResults[0].values
+      // first query completed normally
+      runningProps.status = "completed"
+      runningProps.columns = queryResults[0].columns
+      runningProps.values = queryResults[0].values
 
       if (queryResults.length > 1) {
-        runningResult.title += " (1)"
+        runningProps.title += " (1)"
+
         for (let i = 1; i < queryResults.length; i++) {
-          const moreResults = {
-            id: generateId("tab_"),
-            title: `${startedOn.toLocaleTimeString()} (${i + 1})`,
-            startedOn,
-            completedOn: new Date(),
-            status: "completed",
-            columns: queryResults[i].columns,
-            values: queryResults[i].values,
-          }
-          results.splice(i, 0, moreResults)
+          const additionalTab = (
+            <QueryResultsPanel
+              id={generateId("tab_")}
+              title={`${startedOn.toLocaleTimeString()} (${i + 1})`}
+              startedOn={startedOn}
+              completedOn={new Date()}
+              status="completed"
+              columns={queryResults[i].columns}
+              values={queryResults[i].values}
+            />
+          )
+          updatedTabs.splice(i, 0, additionalTab)
         }
       }
-
     } catch (exception) {
-      console.error(`handleRunQuery - ${exception}`, exception)
-      runningResult.status = "error"
-      runningResult.completedOn = new Date()
-      runningResult.error = exception.toString()
-      // throw exception
+      // an error was thrown during query execution
+      runningProps.status = "error"
+      runningProps.error = exception.toString()
     }
 
-    results.splice(0, 1, Object.assign({}, runningResult))
-    setResults([...results])
+    // update first tab with first result of current query
+    // refresh entire list also adding any new additional tabs
+    runningProps.completedOn = new Date()
+    updatedTabs.splice(0, 1, <QueryResultsPanel {...runningProps} />)
+    setTabs([...updatedTabs])
   }
 
   async function handleCommand(e: React.SyntheticEvent, command: Command) {
@@ -120,12 +120,9 @@ export function QueryTab(props: QueryTabProps) {
         break
 
       case "tabs.changeTabs":
-        setResultId(command.args.tabId)
-
-        const tabs = command.args.tabs
-        const tabsResults = tabs.map(tab => tab.children.props.result)
-        setResults(tabsResults) 
-        break;
+        setTabId(command.args.tabId)
+        setTabs(command.args.tabs)
+        break
     }
   }
 
@@ -140,8 +137,8 @@ export function QueryTab(props: QueryTabProps) {
   function renderHeader() {
     return (
       <Box className="PanelWithResults-header" sx={{ height: HEADER_HEIGHT }}>
-        <Box>Title</Box>
-        <Box>Description</Box>
+        <Box>{props.title}</Box>
+        <Box>{props.description}</Box>
         <ConnectionsMenu connection={props.connection} connections={props.connections} />
         <Button onClick={handleRunQuery}>Run Query2</Button>
       </Box>
@@ -153,16 +150,12 @@ export function QueryTab(props: QueryTabProps) {
   }
 
   function renderResults() {
-    const tabs = results &&
-    results.map((result, index) => {
-      return {
-        id: result.id,
-        title: result.title,
-        children: <QueryResultsPanel key={result.id} result={result} />
-      }
-    })
+    if (tabs && tabs.length > 0) {
+      return <Tabs tabId={tabId} onCommand={handleCommand}>{tabs}</Tabs>
+    }
 
-    return <Tabs tabId={resultId} tabs={tabs} onCommand={handleCommand} />
+    // TODO show empty state, eg empty tray icon + your results will appear here or similar
+    return <>No results yet</>
   }
 
   return (
@@ -183,14 +176,15 @@ export function QueryTab(props: QueryTabProps) {
 /** Create a query tab in response to a sqlighter.viewQuery command */
 export function createQueryTab(command: Command, connection?: DataConnection, connections?: DataConnection[]) {
   const title = `Untitled, ${format(new Date(), "LLLL d, yyyy")}`
-
-  const tab: PanelProps = {
-    id: generateId("tab_"),
-    title,
-    description: title + "'s description",
-    icon: "query",
-    children: <QueryTab connection={connection} connections={connections} sql={command?.args?.sql} />,
-  }
-  console.debug(`createTab - tabId: ${tab.id}`, command, tab)
-  return tab
+  return (
+    <QueryTab
+      id={generateId("tab_")}
+      title={title}
+      description={title + "'s description"}
+      icon={"query"}
+      connection={connection}
+      connections={connections}
+      sql={command?.args?.sql}
+    />
+  )
 }

@@ -2,7 +2,7 @@
 // app.tsx - sqlighter as a full page application
 //
 
-import * as React from "react"
+import React, { ReactElement } from "react"
 import dynamic from "next/dynamic"
 import { useState, useEffect } from "react"
 import Head from "next/head"
@@ -22,6 +22,7 @@ import { Icon } from "../../components/ui/icon"
 import { Context } from "../../components/context"
 import { TabsLayout } from "../../components/navigation/tabslayout"
 import { PanelProps } from "../../components/navigation/panel"
+import { Tab, TabProps } from "../../components/navigation/tabs"
 import { DatabasePanel } from "../database/databasepanel"
 import { QueryTab } from "../database/querytab"
 
@@ -31,39 +32,14 @@ function Scatolo(props: any) {
   return <>{props.children}</>
 }
 
-const TABS: PanelProps[] = [
-  {
-    id: "tab0",
-    title: "Query 0",
-    description: "description of tab 0",
-    icon: "query",
-    sx: { backgroundColor: "beige" },
-    children: <Scatolo ciccio="pippo">Tab zero panel</Scatolo>,
-  },
-  {
-    id: "tab1",
-    title: "QueryTab 1",
-    description: "description of tab 1",
-    icon: "query",
-    sx: { backgroundColor: "blue" },
-    children: <QueryTab sql="select * from tracks" variant="right" />,
-  },
-  {
-    id: "tab2",
-    title: "LongText2",
-    description: "description of tab 3",
-    icon: "database",
-    sx: { backgroundColor: "yellow" },
-    children: <Box sx={{ backgroundColor: "yellow" }}>some really really long text</Box>,
-  },
-  {
-    id: "tab3",
-    title: "Table 3",
-    description: "description of tab 3",
-    icon: "database",
-    sx: { backgroundColor: "yellow", height: "100%", maxHeight: "100%" },
-    children: <>Tab 3 panel full height</>,
-  },
+const TABS: React.ReactElement[] = [
+  <Scatolo id="tab0" title="Tab0" icon="query" ciccio="pippo">
+    Tab zero panel
+  </Scatolo>,
+  <QueryTab id="tab1" title="QueryTab1" icon="query" sql="select * from tracks" variant="right" />,
+  <Scatolo id="tab2" title="Tab2" icon="database">
+    some really really long text
+  </Scatolo>,
 ]
 
 /*
@@ -82,8 +58,8 @@ export default function Main(props) {
 
   const [activityValue, setActivityValue] = useState("databaseActivity")
 
-  const [tabId, setTabId] = useState(TABS[0].id)
-  const [tabs, setTabs] = useState<PanelProps[]>(TABS)
+  const [tabId, setTabId] = useState(TABS[0].props.id)
+  const [tabs, setTabs] = useState<ReactElement[]>(TABS)
 
   // all connections
   const [connections, setConnections] = useState<DataConnection[]>(null)
@@ -133,7 +109,6 @@ export default function Main(props) {
       title: "Database",
       description: "Database Schema",
       icon: "database",
-      sx: { width: "100%", height: "100%" },
       children: <DatabasePanel connection={connection} connections={connections} onCommand={handleCommand} />,
     },
     {
@@ -141,7 +116,6 @@ export default function Main(props) {
       title: "Queries",
       description: "Saved Queries",
       icon: "query",
-      sx: { width: "100%", height: "100%" },
       children: <>Saved queries activity</>,
     },
     {
@@ -160,7 +134,7 @@ export default function Main(props) {
   function handleActivityChange(_, activityId) {
     console.debug(`App.handleActivityChange - activityId: ${activityId}`)
   }
-/*
+  /*
   function handleTabsChange(tabId?: string, tabs?: PanelProps[]) {
     console.debug(`handleTabsChange - tabId: ${tabId}, tabs: ${tabs && tabs.map((t) => t.id).join(", ")}`)
     setTabs(tabs)
@@ -181,7 +155,7 @@ export default function Main(props) {
       case "sqlighter.viewQuery":
         // open a new tab with a query panel
         const queryTab = createQueryTab(command, connection, connections)
-        setTabId(queryTab.id)
+        setTabId(queryTab.props.id)
         setTabs([queryTab, ...tabs])
         break
 
@@ -205,12 +179,13 @@ export default function Main(props) {
       onActivityChange={handleActivityChange}
       //
       tabId={tabId}
-      tabs={tabs}
-//      onTabsChange={handleTabsChange}
-      onAddTabClick={handleAddTabClick}
-    onCommand={handleCommand}
+      //      onTabsChange={handleTabsChange}
+      //      onAddTabClick={handleAddTabClick}
+      onCommand={handleCommand}
       //
       user={context.user}
-    />
+    >
+      {tabs}
+    </TabsLayout>
   )
 }
