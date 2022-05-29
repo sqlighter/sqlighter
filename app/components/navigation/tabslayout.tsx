@@ -90,6 +90,16 @@ export function TabsLayout(props: TabsLayoutProps) {
     }
   }
 
+  function handleCommand(event, command: Command) {
+    switch (command.command) {
+      default:
+        if (props.onCommand) {
+          props.onCommand(event, command)
+        }
+        break
+    }
+  }
+
   //
   // render
   //
@@ -123,23 +133,19 @@ export function TabsLayout(props: TabsLayoutProps) {
       </Head>
       <Box sx={{ position: "absolute", left: 0, top: 0, right: 0, bottom: 0 }}>
         <Allotment onVisibleChange={handleSidebarVisibilityChange}>
-            <Allotment.Pane maxSize={ACTIVITYBAR_WIDTH} minSize={ACTIVITYBAR_WIDTH} visible>
-              <ActivityBar
-                activityId={activityId}
-                activities={props.activities}
-                user={props.user}
-                onClick={handleActivityClick}
-                onChange={handleActivityChange}
-              />
-            </Allotment.Pane>
-            <Allotment.Pane
-              minSize={SIDEBAR_MIN_WIDTH}
-              preferredSize={SIDEBAR_MIN_WIDTH}
-              visible={sidebarVisibile}
-              snap
-            >
-              {renderSidebar()}
-            </Allotment.Pane>
+          <Allotment.Pane maxSize={ACTIVITYBAR_WIDTH} minSize={ACTIVITYBAR_WIDTH} visible>
+            <ActivityBar
+              activityId={activityId}
+              activities={props.activities}
+              user={props.user}
+              onClick={handleActivityClick}
+              onChange={handleActivityChange}
+              onCommand={handleCommand}
+            />
+          </Allotment.Pane>
+          <Allotment.Pane minSize={SIDEBAR_MIN_WIDTH} preferredSize={SIDEBAR_MIN_WIDTH} visible={sidebarVisibile} snap>
+            {renderSidebar()}
+          </Allotment.Pane>
           <Allotment.Pane>
             <Tabs tabId={props.tabId} tabs={props.tabs} tabsCommands={props.tabsCommands} onCommand={props.onCommand} />
           </Allotment.Pane>

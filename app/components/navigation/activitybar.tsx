@@ -67,29 +67,40 @@ export interface ActivityBarProps extends PanelProps {
 }
 
 /** An activity bar with clickable main navigation icons */
-export function ActivityBar({ activities, activityId, user, onClick, onChange }: ActivityBarProps) {
-  const displayName = getDisplayName(user)
-  const profileImage = getProfileImageUrl(user)
+export function ActivityBar(props: ActivityBarProps) {
+  const displayName = getDisplayName(props.user)
+  const profileImage = getProfileImageUrl(props.user)
 
   //
   // handlers
   //
 
   function handleActivityClick(e, clickedActivityId) {
-    if (activityId != clickedActivityId) {
-      onChange(e, clickedActivityId)
+    if (props.activityId != clickedActivityId) {
+      props.onCommand(e, { command: "changeActivity", args: { id: clickedActivityId } })
+      props.onChange(e, clickedActivityId)
     } else {
-      onClick(e, clickedActivityId)
+      props.onClick(e, clickedActivityId)
     }
   }
 
+  function handleSettingsClick(event) {
+    if (props.onCommand) {
+      props.onCommand(event, {
+        command: "open.settings"
+      })
+    }
+  }
+
+
   function handleProfileClick(e) {
-    console.debug(`ActivityBar.handleProfileClick`)
-    onClick(e, "profile")
-    if (!user) {
+    if (!props.user) {
       promptSignin()
     } else {
       // TODO show profile menu with signout
+      if (props.onCommand) {
+        props.onCommand(e, { command: "open.profile", args: { user: props.user } })
+      }
     }
   }
 
@@ -98,11 +109,11 @@ export function ActivityBar({ activities, activityId, user, onClick, onChange }:
   //
 
   return (
-    <TabContext value={activityId}>
+    <TabContext value={props.activityId}>
       <Box sx={{ display: "flex", flexDirection: "column", height: "100%", width: ACTIVITYBAR_WIDTH }}>
         <Box sx={{ flexGrow: 1 }}>
           <TabList scrollButtons="auto" orientation="vertical" sx={ACTIVITYBAR_TABLIST_STYLE}>
-            {activities.map((activity: PanelElement) => {
+            {props.activities.map((activity: PanelElement) => {
               const activityProps = activity.props
               return (
                 <Tab
@@ -127,12 +138,12 @@ export function ActivityBar({ activities, activityId, user, onClick, onChange }:
             paddingTop: 2,
           }}
         >
-          <Button onClick={(e) => onClick(e, "settings")} sx={ACTIVITYBAR_BUTTON_STYLE}>
+          <Button onClick={handleSettingsClick} sx={ACTIVITYBAR_BUTTON_STYLE}>
             <SettingsIcon />
           </Button>
           <Button onClick={handleProfileClick} sx={ACTIVITYBAR_BUTTON_STYLE}>
-            {user && <Avatar alt={displayName} src={profileImage} sx={{ width: 24, height: 24 }} />}
-            {!user && <AccountIcon />}
+            {props.user && <Avatar alt={displayName} src={profileImage} sx={{ width: 24, height: 24 }} />}
+            {!props.user && <AccountIcon />}
           </Button>
         </Box>
       </Box>

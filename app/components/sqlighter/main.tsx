@@ -22,7 +22,6 @@ import { Icon } from "../../components/ui/icon"
 import { Context } from "../../components/context"
 import { TabsLayout } from "../../components/navigation/tabslayout"
 import { Panel, PanelProps, PanelElement } from "../../components/navigation/panel"
-import { Tab, TabProps } from "../../components/navigation/tabs"
 import { DatabasePanel } from "../database/databasepanel"
 import { QueryTab } from "../database/querytab"
 
