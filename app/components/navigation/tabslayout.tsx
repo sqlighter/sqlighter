@@ -4,33 +4,20 @@
 
 import React, { useState } from "react"
 import Head from "next/head"
-
 import { Allotment } from "allotment"
 import "allotment/dist/style.css"
-
-import { Theme } from "@mui/material/styles"
-import useMediaQuery from "@mui/material/useMediaQuery"
 import Box from "@mui/material/Box"
-import MuiTabContext from "@mui/lab/TabContext"
 
-import { Command, CommandEvent } from "../../lib/commands"
+import { Command } from "../../lib/commands"
 import { ActivityBar, ACTIVITYBAR_WIDTH } from "./activitybar"
-import { PanelElement } from "./panel"
-import { Tabs, TabsProps } from "./tabs"
+import { PanelElement, PanelProps } from "./panel"
+import { Tabs } from "./tabs"
 
-//export const ACTIVITYBAR_WIDTH = 48
 export const SIDEBAR_MIN_WIDTH = 180
 
-interface TabsLayoutProps extends TabsProps {
-  /** Page title */
-  title?: string
-
-  /** Brief subtitle shown in page's metadata */
-  description?: string
-
-  /** Additional actions to be placed on the right hand side of the tabs */
-  actions?: any
-
+interface TabsLayoutProps extends PanelProps {
+  /** Activity that is currently selected */
+  activityId: string
   /** Activities shown as icons in activity bar and as panels in side bar */
   activities: PanelElement[]
 
@@ -41,62 +28,46 @@ interface TabsLayoutProps extends TabsProps {
   /** Additional command icons shown at the end of the tab bar, eg: create tab icon */
   tabsCommands?: Command[]
 
-  /** Callback used to notify that selected activity has changed */
-  onActivityChange?: (event: React.SyntheticEvent, activityId) => void
-
-  /** Dispatch events when activity is selected, tabs are changed, closed, reordered, etc */
-  onCommand: CommandEvent
-
   /** Signed in user (or null) */
   user?: object
 }
 
 /** A shared layout for tab based applications pages, includes: menu drawer, header, footer, basic actions */
 export function TabsLayout(props: TabsLayoutProps) {
-  // sibar with activities panel is visible?
-  const [sidebarVisibile, setSidebarVisible] = useState(true)
+  //
+  // state
+  //
 
-  // TODO change layout on medium and large screens
-  const isMediumScreen = useMediaQuery((theme: Theme) => theme.breakpoints.up("md"))
-
-  // TODO persist currently selected activity in user preferences
-  const [activityId, setActivityId] = useState(props.activities[0].props.id)
+  // sidebar with activities panel is visible?
+  const [sidebarVisible, setSidebarVisible] = useState(true)
 
   //
   // handlers
   //
 
-  /** Track when a different activity icon is selected */
-  function handleActivityChange(e, clickedActivityId) {
-    setActivityId(clickedActivityId)
-    setSidebarVisible(true)
-    if (props.onActivityChange) {
-      props.onActivityChange(e, clickedActivityId)
-    }
-  }
-
-  /** Clicking currently selected activity icon will toggle sidebar open/close */
-  function handleActivityClick(e, clickedActivityId) {
-    if (clickedActivityId == activityId) {
-      setSidebarVisible(!sidebarVisibile)
-    }
-  }
-
   /** Track sidebar visibility change when user snaps panel shut */
   function handleSidebarVisibilityChange(index, visible) {
     // https://www.npmjs.com/package/allotment
     if (index == 1) {
-      setSidebarVisible(visible)
+      if (props.onCommand) {
+        setSidebarVisible(visible)
+      }
     }
   }
 
   function handleCommand(event, command: Command) {
     switch (command.command) {
-      default:
-        if (props.onCommand) {
-          props.onCommand(event, command)
+      case "changeActivity":
+        // clicking selected activity toggles sidebar opened or closed
+        if (props.activityId == command.args.id) {
+          setSidebarVisible(!sidebarVisible)
+          return
         }
         break
+    }
+
+    if (props.onCommand) {
+      props.onCommand(event, command)
     }
   }
 
@@ -112,7 +83,7 @@ export function TabsLayout(props: TabsLayoutProps) {
    */
   function renderSidebar() {
     return props.activities.map((activity: PanelElement) => {
-      const display = !sidebarVisibile || activity.props.id != activityId ? "none" : null
+      const display = !sidebarVisible || activity.props.id != props.activityId ? "none" : null
       return (
         <Box key={activity.props.id} sx={{ width: 1, height: 1, display }}>
           {activity}
@@ -135,15 +106,13 @@ export function TabsLayout(props: TabsLayoutProps) {
         <Allotment onVisibleChange={handleSidebarVisibilityChange}>
           <Allotment.Pane maxSize={ACTIVITYBAR_WIDTH} minSize={ACTIVITYBAR_WIDTH} visible>
             <ActivityBar
-              activityId={activityId}
+              activityId={props.activityId}
               activities={props.activities}
               user={props.user}
-              onClick={handleActivityClick}
-              onChange={handleActivityChange}
               onCommand={handleCommand}
             />
           </Allotment.Pane>
-          <Allotment.Pane minSize={SIDEBAR_MIN_WIDTH} preferredSize={SIDEBAR_MIN_WIDTH} visible={sidebarVisibile} snap>
+          <Allotment.Pane minSize={SIDEBAR_MIN_WIDTH} preferredSize={SIDEBAR_MIN_WIDTH} visible={sidebarVisible} snap>
             {renderSidebar()}
           </Allotment.Pane>
           <Allotment.Pane>

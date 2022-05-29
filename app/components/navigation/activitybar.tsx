@@ -3,7 +3,7 @@
 // https://code.visualstudio.com/docs/getstarted/userinterface#_activity-bar
 //
 
-import React, { ReactElement } from "react"
+import React from "react"
 
 import Avatar from "@mui/material/Avatar"
 import Box from "@mui/material/Box"
@@ -12,15 +12,12 @@ import Tab from "@mui/material/Tab"
 import TabContext from "@mui/lab/TabContext"
 import TabList from "@mui/lab/TabList"
 
-import AccountIcon from "@mui/icons-material/AccountCircleOutlined"
-import SettingsIcon from "@mui/icons-material/SettingsOutlined"
-
+import { CommandEvent } from "../../lib/commands"
 import { Icon } from "../ui/icon"
-import { Panel, PanelProps, PanelElement } from "./panel"
-import { promptSignin, getDisplayName, getProfileImageUrl } from "../signin"
+import { PanelProps, PanelElement } from "./panel"
+import { getDisplayName, getProfileImageUrl } from "../signin"
 
 export const ACTIVITYBAR_WIDTH = 48
-export const SIDEBAR_MIN_WIDTH = 180
 
 const ACTIVITYBAR_TABLIST_STYLE = {
   ".MuiTabs-indicator": {
@@ -59,11 +56,8 @@ export interface ActivityBarProps extends PanelProps {
   /** Signed in user (toggles behaviour of profile button) */
   user?: object
 
-  /** Called when an activity is clicked (including profile and settings) */
-  onClick: (event: React.SyntheticEvent, activityId: string) => void
-
-  /** Called when selected activity tab changes */
-  onChange: (event: React.SyntheticEvent, activityId: string) => void
+  /** Callback used by this panel to dispatch commands back to parent components (required) */
+  onCommand: CommandEvent
 }
 
 /** An activity bar with clickable main navigation icons */
@@ -75,33 +69,21 @@ export function ActivityBar(props: ActivityBarProps) {
   // handlers
   //
 
-  function handleActivityClick(e, clickedActivityId) {
-    if (props.activityId != clickedActivityId) {
-      props.onCommand(e, { command: "changeActivity", args: { id: clickedActivityId } })
-      props.onChange(e, clickedActivityId)
-    } else {
-      props.onClick(e, clickedActivityId)
-    }
+  function handleActivityClick(event: React.SyntheticEvent, clickedActivityId: string) {
+      props.onCommand(event, {
+        command: "changeActivity",
+        args: { id: clickedActivityId },
+      })
   }
 
   function handleSettingsClick(event) {
-    if (props.onCommand) {
       props.onCommand(event, {
-        command: "open.settings"
+        command: "openSettings",
       })
-    }
   }
 
-
-  function handleProfileClick(e) {
-    if (!props.user) {
-      promptSignin()
-    } else {
-      // TODO show profile menu with signout
-      if (props.onCommand) {
-        props.onCommand(e, { command: "open.profile", args: { user: props.user } })
-      }
-    }
+  function handleProfileClick(event) {
+    props.onCommand(event, { command: props.user ? "openProfile" : "openSignin" })
   }
 
   //
@@ -110,27 +92,24 @@ export function ActivityBar(props: ActivityBarProps) {
 
   return (
     <TabContext value={props.activityId}>
-      <Box sx={{ display: "flex", flexDirection: "column", height: "100%", width: ACTIVITYBAR_WIDTH }}>
+      <Box sx={{ display: "flex", flexDirection: "column", height: 1, width: ACTIVITYBAR_WIDTH }}>
         <Box sx={{ flexGrow: 1 }}>
           <TabList scrollButtons="auto" orientation="vertical" sx={ACTIVITYBAR_TABLIST_STYLE}>
-            {props.activities.map((activity: PanelElement) => {
-              const activityProps = activity.props
-              return (
-                <Tab
-                  key={activityProps.id}
-                  id={activityProps.id}
-                  value={activityProps.id}
-                  icon={<Icon>{activityProps.icon}</Icon>}
-                  iconPosition="start"
-                  onClick={(e) => handleActivityClick(e, activityProps.id)}
-                />
-              )
-            })}
+            {props.activities.map((activity: PanelElement) => (
+              <Tab
+                key={activity.props.id}
+                id={activity.props.id}
+                value={activity.props.id}
+                icon={<Icon>{activity.props.icon}</Icon>}
+                iconPosition="start"
+                onClick={(e) => handleActivityClick(e, activity.props.id)}
+              />
+            ))}
           </TabList>
         </Box>
         <Box
           sx={{
-            width: "100%",
+            width: 1,
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
@@ -139,11 +118,11 @@ export function ActivityBar(props: ActivityBarProps) {
           }}
         >
           <Button onClick={handleSettingsClick} sx={ACTIVITYBAR_BUTTON_STYLE}>
-            <SettingsIcon />
+            <Icon>settings</Icon>
           </Button>
           <Button onClick={handleProfileClick} sx={ACTIVITYBAR_BUTTON_STYLE}>
             {props.user && <Avatar alt={displayName} src={profileImage} sx={{ width: 24, height: 24 }} />}
-            {!props.user && <AccountIcon />}
+            {!props.user && <Icon>account</Icon>}
           </Button>
         </Box>
       </Box>

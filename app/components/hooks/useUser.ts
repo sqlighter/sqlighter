@@ -3,7 +3,7 @@
 //
 
 import useSWR from "swr"
-import { fetcher, putJson } from "../api"
+import { fetcher, putJson } from "../../lib/api"
 
 /** Retrieve information on currently logged in user */
 export function useUser() {

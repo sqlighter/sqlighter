@@ -11,11 +11,11 @@ import { useState } from "react"
 import CssBaseline from "@mui/material/CssBaseline"
 import GlobalStyles from "@mui/material/GlobalStyles"
 import { ThemeProvider } from "@mui/material/styles"
-import Box from "@mui/material/Box"
 
-import { useUser } from "../lib/auth/hooks"
+import { useUser } from "../components/hooks/useUser"
+import { Command } from "../lib/commands"
 import { Context } from "../components/context"
-import { getGoogleSigninClient } from "../components/signin"
+import { getGoogleSigninClient, promptSignin } from "../components/signin"
 import { customTheme, PRIMARY_LIGHTEST } from "../components/theme"
 
 // Google client id used for signin client is bound below at build time
@@ -62,7 +62,7 @@ export default function App({ Component, pageProps }: { Component: any; pageProp
       })
     })
   }
-
+  
   /** Sign out of Google and local sessions, disable session cookie */
   function signout(redirectUrl?: string): void {
     const gsi = getGoogleSigninClient()
@@ -104,6 +104,23 @@ export default function App({ Component, pageProps }: { Component: any; pageProp
     signout,
   }
 
+  //
+  // handlers
+  //
+
+  function handleCommand(event: React.SyntheticEvent, command: Command) {
+    console.debug(`App.handleCommand - command: ${command.command}`, command)
+    switch (command.command) {
+      case "openSignin":
+        promptSignin()
+        break;
+    }
+  }
+
+  //
+  // render
+  //
+
   // <GlobalStyles styles={{ body: { backgroundColor: PRIMARY_LIGHTEST } }} />
   // is used to that you don't see a white strip when you pull the header down
   // we then give all contents a default of background.paper so it's all white as base
@@ -141,7 +158,7 @@ export default function App({ Component, pageProps }: { Component: any; pageProp
                 }}
               />
             </Head>
-            <Component {...pageProps} />
+            <Component {...pageProps} onCommand={handleCommand} />
             <Script
               key="google-signin"
               src="https://accounts.google.com/gsi/client"

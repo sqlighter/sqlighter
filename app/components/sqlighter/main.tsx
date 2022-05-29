@@ -36,12 +36,18 @@ const SQLighterComponentWithNoSSR = dynamic(
 
 const title = "SQLighter"
 
+export interface MainProps {
+
+  pippo?: string
+}
+
 /** Main component for SQLighter app which includes activities, sidebar, tabs, etc... */
 export default function Main(props) {
   //  <SQLighterComponentWithNoSSR />
   const context = React.useContext(Context)
 
-  const [activityValue, setActivityValue] = useState("databaseActivity")
+  // TODO persist currently selected activity in user preferences
+  const [activityId, setActivityId] = useState<string>("act_database")
 
   // currently selected tabId
   const [tabId, setTabId] = useState<string>("tab_0")
@@ -103,9 +109,6 @@ export default function Main(props) {
   // handlers
   //
 
-  function handleActivityChange(_, activityId) {
-    console.debug(`App.handleActivityChange - activityId: ${activityId}`)
-  }
   /*
   function handleTabsChange(tabId?: string, tabs?: PanelProps[]) {
     console.debug(`handleTabsChange - tabId: ${tabId}, tabs: ${tabs && tabs.map((t) => t.id).join(", ")}`)
@@ -134,7 +137,16 @@ export default function Main(props) {
       case "tabs.changeTabs":
         setTabId(command.args.tabId)
         setTabs(command.args.tabs)
-        break
+        return
+
+      case "changeActivity":
+        setActivityId(command.args.id)
+        return
+    }
+
+    // pass to parent?
+    if (props.onCommand) {
+      props.onCommand(event, command)
     }
   }
 
@@ -153,7 +165,7 @@ export default function Main(props) {
         onCommand={handleCommand}
       />,
       <Panel id="act_queries" title="Queries" icon="query">
-        Saved queries
+        Saved queries, pippo: '{props.pippo}'
       </Panel>,
       <Panel id="act_history" title="History" icon="history">
         Bookmarked queries
@@ -174,16 +186,16 @@ export default function Main(props) {
       title="SQLighter"
       description="Lighter, mightier"
       //
+      activityId={activityId}
       activities={renderActivities()}
-      onActivityChange={handleActivityChange}
       //
       tabId={tabId}
       tabs={tabs}
       tabsCommands={tabsCommands}
       //
-      onCommand={handleCommand}
-      //
       user={context.user}
+      //
+      onCommand={handleCommand}
     />
   )
 }

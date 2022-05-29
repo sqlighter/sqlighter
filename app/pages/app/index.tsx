@@ -10,11 +10,7 @@ import dynamic from "next/dynamic"
 // TODO load using <Suspense /> that shows a loading screen
 // https://nextjs.org/docs/advanced-features/dynamic-import
 
-const SSR = typeof window === "undefined"
-
 const MainComponentWithoutSSR = dynamic(() => import("../../components/sqlighter/main"), { ssr: false })
-
-const title = "SQLighter"
 
 export default function AppPage(props) {
   return (

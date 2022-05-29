@@ -10,7 +10,7 @@ import Box from "@mui/material/Box"
 
 import { DataGrid } from "@mui/x-data-grid"
 
-import { useUser } from "../lib/auth/hooks"
+import { useUser } from "../components/hooks/useUser"
 import { useDB, useDBQuery } from "../components/hooks/useDB"
 import { useBinaryFile } from "../components/hooks/useBinaryFile"
 

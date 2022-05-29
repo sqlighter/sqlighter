@@ -8,6 +8,7 @@ import { SvgIconProps } from "@mui/material"
 // Material Icons (Google)
 // https://mui.com/material-ui/material-icons/?query=table&theme=Outlined
 // https://fonts.google.com/icons
+import AccountCircleOutlined from "@mui/icons-material/AccountCircleOutlined"
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined"
 import BentoOutlinedIcon from "@mui/icons-material/BentoOutlined"
 import BoltOutlinedIcon from "@mui/icons-material/BoltOutlined"
@@ -22,6 +23,7 @@ import PlayArrowOutlinedIcon from "@mui/icons-material/PlayArrowOutlined"
 import PushPinOutlinedIcon from "@mui/icons-material/PushPinOutlined"
 import QuestionMarkIcon from "@mui/icons-material/QuestionMarkOutlined"
 import RefreshOutlinedIcon from "@mui/icons-material/RefreshOutlined"
+import SettingsOutlined from "@mui/icons-material/SettingsOutlined"
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined"
 import TableRowsOutlinedIcon from "@mui/icons-material/TableRowsOutlined"
 import TableIcon from "@mui/icons-material/TableChartOutlined"
@@ -46,6 +48,8 @@ export function Icon(props: IconProps) {
   }
 
   switch (props.children) {
+    case "account":
+      return <AccountCircleOutlined {...props} />
     case "add":
       return <AddOutlinedIcon {...props} />
     case "database":
@@ -71,6 +75,8 @@ export function Icon(props: IconProps) {
       return <TableRowsOutlinedIcon {...props} />
     case "refresh":
       return <RefreshOutlinedIcon {...props} />
+    case "settings":
+      return <SettingsOutlined {...props} />
     case "share":
       return <ShareOutlinedIcon {...props} />
     case "tabsRight":
