@@ -20,6 +20,7 @@ import { Panel, PanelProps, PanelElement } from "./panel"
 import { promptSignin, getDisplayName, getProfileImageUrl } from "../signin"
 
 export const ACTIVITYBAR_WIDTH = 48
+export const SIDEBAR_MIN_WIDTH = 180
 
 const ACTIVITYBAR_TABLIST_STYLE = {
   ".MuiTabs-indicator": {
@@ -63,8 +64,6 @@ export interface ActivityBarProps extends PanelProps {
 
   /** Called when selected activity tab changes */
   onChange: (event: React.SyntheticEvent, activityId: string) => void
-
-
 }
 
 /** An activity bar with clickable main navigation icons */
@@ -105,14 +104,16 @@ export function ActivityBar({ activities, activityId, user, onClick, onChange }:
           <TabList scrollButtons="auto" orientation="vertical" sx={ACTIVITYBAR_TABLIST_STYLE}>
             {activities.map((activity: PanelElement) => {
               const activityProps = activity.props
-              return <Tab
-                key={activityProps.id}
-                id={activityProps.id}
-                value={activityProps.id}
-                icon={<Icon>{activityProps.icon}</Icon>}
-                iconPosition="start"
-                onClick={(e) => handleActivityClick(e, activityProps.id)}
-              />
+              return (
+                <Tab
+                  key={activityProps.id}
+                  id={activityProps.id}
+                  value={activityProps.id}
+                  icon={<Icon>{activityProps.icon}</Icon>}
+                  iconPosition="start"
+                  onClick={(e) => handleActivityClick(e, activityProps.id)}
+                />
+              )
             })}
           </TabList>
         </Box>

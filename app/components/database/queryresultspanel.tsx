@@ -6,10 +6,8 @@ import Box from "@mui/material/Box"
 import { DataGrid } from "./datagrid"
 import { PanelProps } from "../navigation/panel"
 
-import { TabProps } from "../navigation/tabs"
-
 // TODO move with data models
-export interface QueryResultsPanelProps extends TabProps {
+export interface QueryResultsPanelProps extends PanelProps {
 
   startedOn: any
   completedOn?: any
@@ -35,7 +33,7 @@ export function QueryResultsPanel(props: QueryResultsPanelProps) {
 
   return (
     <Box
-      sx={{ width: 1, height: 1, maxHeight: 1, backgroundColor: "orange", display: "flex", flexDirection: "column" }}
+      sx={{ width: 1, height: 1, maxHeight: 1, display: "flex", flexDirection: "column" }}
     >
       <Box>id: {props.id}</Box>
       <Box>status: {props.status}</Box>

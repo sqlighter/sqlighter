@@ -18,8 +18,8 @@ import { DataConnection } from "../../lib/sqltr/connections"
 import { generateId } from "../../lib/items/items"
 
 import { Icon } from "../ui/icon"
-import { Panel, PanelProps } from "../navigation/panel"
-import { Tabs, TabProps } from "../navigation/tabs"
+import { Panel, PanelProps, PanelElement } from "../navigation/panel"
+import { Tabs } from "../navigation/tabs"
 
 import { ConnectionsMenu } from "./connectionsmenu"
 import { SqlEditor } from "../editor/sqleditor"
@@ -27,7 +27,7 @@ import { QueryResultsPanel, QueryResultsPanelProps } from "./queryresultspanel"
 
 const delay = (ms) => new Promise((res) => setTimeout(res, ms))
 
-export interface QueryTabProps extends TabProps {
+export interface QueryTabProps extends PanelProps {
   /** Currently selected connection */
   connection?: DataConnection
 
@@ -47,9 +47,8 @@ export interface QueryTabProps extends TabProps {
 export function QueryTab(props: QueryTabProps) {
   // currently selected result tab
   const [tabId, setTabId] = useState<string>()
-
   // list of available results (shown in tabs)
-  const [tabs, setTabs] = useState<ReactElement[]>([])
+  const [tabs, setTabs] = useState<PanelElement[]>([])
 
   const [sql, setSql] = useState<string>(props.sql)
 
@@ -163,11 +162,7 @@ export function QueryTab(props: QueryTabProps) {
 
   function renderResults() {
     if (tabs && tabs.length > 0) {
-      return (
-        <Tabs tabId={tabId} onCommand={handleCommand}>
-          {tabs}
-        </Tabs>
-      )
+      return <Tabs tabId={tabId} tabs={tabs} onCommand={handleCommand} />
     }
 
     // TODO show empty state, eg empty tray icon + your results will appear here or similar

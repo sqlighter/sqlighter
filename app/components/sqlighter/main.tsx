@@ -46,18 +46,23 @@ export default function Main(props) {
 
   // currently selected tabId
   const [tabId, setTabId] = useState<string>("tab_0")
-  // list of 
-  const [tabs, setTabs] = useState<ReactElement[]>([
-    <Panel id="tab_0" title="Tab 0" icon="query">Tab0</Panel>,
-    <Panel id="tab_1" title="Tab 1" icon="query">Tab1</Panel>,
-    <Panel id="tab_2" title="Tab 2" icon="query">Tab2</Panel>,
+  // list of
+  const [tabs, setTabs] = useState<PanelElement[]>([
+    <Panel id="tab_0" title="Tab 0" icon="query">
+      Tab0
+    </Panel>,
+    <Panel id="tab_1" title="Tab 1" icon="query">
+      Tab1
+    </Panel>,
+    <Panel id="tab_2" title="Tab 2" icon="query">
+      Tab2
+    </Panel>,
   ])
 
   // selected connection
   const [connection, setConnection] = useState<DataConnection>(null)
   // all connections
   const [connections, setConnections] = useState<DataConnection[]>(null)
-
 
   //
   // temporary code while we work out the connection setup panels, etc
@@ -94,8 +99,6 @@ export default function Main(props) {
   //
   // activities
   //
-
-  
 
   //
   // handlers
@@ -142,11 +145,30 @@ export default function Main(props) {
 
   function renderActivities(): PanelElement[] {
     return [
-      <DatabasePanel id="act_database" title="Database" icon="database" connection={connection} connections={connections} onCommand={handleCommand} />,
-      <Panel id="act_queries" title="Queries" icon="query">Saved queries</Panel>,
-      <Panel id="act_history" title="History" icon="history">Bookmarked queries</Panel>,
+      <DatabasePanel
+        id="act_database"
+        title="Database"
+        icon="database"
+        connection={connection}
+        connections={connections}
+        onCommand={handleCommand}
+      />,
+      <Panel id="act_queries" title="Queries" icon="query">
+        Saved queries
+      </Panel>,
+      <Panel id="act_history" title="History" icon="history">
+        Bookmarked queries
+      </Panel>,
     ]
   }
+
+  const tabsCommands = [
+    {
+      command: "tabs.createTab",
+      title: "Add tab",
+      icon: "add",
+    },
+  ]
 
   return (
     <TabsLayout
@@ -157,13 +179,12 @@ export default function Main(props) {
       onActivityChange={handleActivityChange}
       //
       tabId={tabId}
-      //      onTabsChange={handleTabsChange}
-      //      onAddTabClick={handleAddTabClick}
+      tabs={tabs}
+      tabsCommands={tabsCommands}
+      //
       onCommand={handleCommand}
       //
       user={context.user}
-    >
-      {tabs}
-    </TabsLayout>
+    />
   )
 }

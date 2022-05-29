@@ -8,9 +8,7 @@ import React, { SyntheticEvent, useState, Children, ReactElement } from "react"
 import Box from "@mui/material/Box"
 import { SxProps } from "@mui/material"
 import { IconButton } from "@mui/material"
-import AddIcon from "@mui/icons-material/AddOutlined"
 import CloseIcon from "@mui/icons-material/CloseOutlined"
-
 import MuiTab from "@mui/material/Tab"
 import MuiTabContext from "@mui/lab/TabContext"
 import MuiTabList from "@mui/lab/TabList"
@@ -18,7 +16,7 @@ import MuiTabPanel from "@mui/lab/TabPanel"
 
 import { Command, CommandEvent } from "../../lib/commands"
 import { Icon } from "../ui/icon"
-import { Panel, PanelProps } from "./panel"
+import { Panel, PanelProps, PanelElement } from "./panel"
 
 export const TABLIST_HEIGHT = 48
 
@@ -70,37 +68,22 @@ const TABLIST_STYLES: SxProps = {
   },
 }
 
-export interface TabProps extends PanelProps {
-  //
-}
-
-export function Tab(props: TabProps) {
-  return props.children
-}
-
 export interface TabsProps {
-  /** Id of selected tab */
+  /** Id of selected tab (controlled by parent) */
   tabId?: string
 
-  /** Additional command icons shown at the end of the tab bar, eg close tab icon */
-  commands?: Command[]
+  /** Components to be used as tab panels (will use panel's id, icon, title for tabs) */
+  tabs?: PanelElement[]
+
+  /** Additional command icons shown at the end of the tab bar, eg: create tab icon */
+  tabsCommands?: Command[]
 
   /** Will dispatch a command when a new tab is selected or when tabs are closed, reordered */
   onCommand?: CommandEvent
-
-  /** Components to be used as tab panels (they must have TabProps so that title, id, etc can be used for tabs) */
-  children?: ReactElement[]
 }
 
 /** A tabbed panel used to switch between different editors or panels */
 export function Tabs(props: TabsProps) {
-  //
-  // state
-  //
-
-  // extract the properties of the tabs passed as children of this component
-  const tabsProps = props.children && (props.children as []).map((child: any) => child.props)
-
   //
   // handlers
   //
@@ -112,7 +95,7 @@ export function Tabs(props: TabsProps) {
         command: "tabs.changeTabs",
         args: {
           tabId, // newly selected tab
-          tabs: props.children, // same list of tabs/children as before
+          tabs: props.tabs, // same list of tabs/children as before
         },
       })
     }
@@ -134,7 +117,7 @@ export function Tabs(props: TabsProps) {
       })
 
       // filter closed tab out of children list and notify parent with new list of tabs/children
-      const updatedTabs = props.children && props.children.filter((tab) => tab.props.id !== closedTabId)
+      const updatedTabs = props.tabs && props.tabs.filter((tab) => tab.props.id !== closedTabId)
       const updatedId =
         props.tabId == closedTabId ? (updatedTabs.length > 0 ? updatedTabs[0].props.id : null) : props.tabId
       props.onCommand(event, {
@@ -150,7 +133,7 @@ export function Tabs(props: TabsProps) {
   /** Tab is starting to be dragged to a new position */
   function handleTabDragStart(e) {
     const draggedTabId = e.target.getAttribute("aria-label")
-    const draggedTabIndex = props.children.findIndex((tab) => tab.props.id == draggedTabId)
+    const draggedTabIndex = props.tabs.findIndex((tab) => tab.props.id == draggedTabId)
     e.dataTransfer.setData("tabId", draggedTabId)
     e.dataTransfer.setData("tabIndex", draggedTabIndex)
     console.debug(`Tabs.handleTabDragStart - dragging tab: ${draggedTabId}, fromIndex: ${draggedTabIndex}`)
@@ -194,15 +177,15 @@ export function Tabs(props: TabsProps) {
     console.debug(`Tabs.handleTabDrop - moving ${draggedTabId}, fromIndex: ${fromIndex}, toIndex: ${toIndex}`)
 
     if (fromIndex != toIndex && props.onCommand) {
-      const updatedTabs = [...props.children]
+      const updatedTabs = [...props.tabs]
       if (toIndex > fromIndex) {
         // moving right, insert in new position, remove from old
-        updatedTabs.splice(toIndex, 0, props.children[fromIndex])
+        updatedTabs.splice(toIndex, 0, props.tabs[fromIndex])
         updatedTabs.splice(fromIndex, 1)
       } else {
         // moving left, remove from old position, insert new
         updatedTabs.splice(fromIndex, 1)
-        updatedTabs.splice(toIndex, 0, props.children[fromIndex])
+        updatedTabs.splice(toIndex, 0, props.tabs[fromIndex])
       }
 
       // select dragged tab, notify parent of reordering
@@ -219,17 +202,13 @@ export function Tabs(props: TabsProps) {
     }
   }
 
-  function handleAddTab(e) {
-    console.debug("Tabs.handleAddTab")
-  }
-
   //
   // render
   //
 
   function renderCommands() {
-    if (props.commands) {
-      return props.commands.map((command) => {
+    if (props.tabsCommands) {
+      return props.tabsCommands.map((command) => {
         return (
           <Box className="MuiTab-addIcon">
             <IconButton onClick={(e) => props.onCommand(e, command)}>
@@ -245,8 +224,8 @@ export function Tabs(props: TabsProps) {
   // TODO render all panels and hide them with css so that tab's state is not lost when moving between tabs
   function renderPanels() {
     return (
-      props.children &&
-      props.children.map((child: any) => (
+      props.tabs &&
+      props.tabs.map((child: any) => (
         <MuiTabPanel
           key={child.props.id}
           value={child.props.id}
@@ -269,8 +248,8 @@ export function Tabs(props: TabsProps) {
       <Box sx={{ display: "flex", flexDirection: "column", height: 1, maxHeight: 1 }}>
         <Box sx={{ height: TABLIST_HEIGHT }}>
           <MuiTabList onChange={handleTabsChange} variant="scrollable" sx={TABLIST_STYLES}>
-            {props.children &&
-              props.children.map((tab: any) => {
+            {props.tabs &&
+              props.tabs.map((tab: any) => {
                 const tabProps = tab.props
                 return (
                   <MuiTab
