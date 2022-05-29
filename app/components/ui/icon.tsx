@@ -8,6 +8,8 @@ import { SvgIconProps } from "@mui/material"
 // Material Icons (Google)
 // https://mui.com/material-ui/material-icons/?query=table&theme=Outlined
 // https://fonts.google.com/icons
+import AddOutlinedIcon from "@mui/icons-material/AddOutlined"
+import BentoOutlinedIcon from "@mui/icons-material/BentoOutlined"
 import BoltOutlinedIcon from "@mui/icons-material/BoltOutlined"
 import DatabaseIcon from "@mui/icons-material/StorageOutlined"
 import FileIcon from "@mui/icons-material/InsertDriveFileOutlined"
@@ -16,12 +18,11 @@ import HistoryIcon from "@mui/icons-material/HistoryOutlined"
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined"
 import KeyIcon from "@mui/icons-material/KeyOutlined"
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined"
-import PlaylistPlayOutlinedIcon from "@mui/icons-material/PlaylistPlayOutlined"
+import PlayArrowOutlinedIcon from "@mui/icons-material/PlayArrowOutlined"
 import PushPinOutlinedIcon from "@mui/icons-material/PushPinOutlined"
 import QuestionMarkIcon from "@mui/icons-material/QuestionMarkOutlined"
 import RefreshOutlinedIcon from "@mui/icons-material/RefreshOutlined"
-import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined"
-import StarOutlinedIcon from "@mui/icons-material/StarOutlined"
+import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined"
 import TableRowsOutlinedIcon from "@mui/icons-material/TableRowsOutlined"
 import TableIcon from "@mui/icons-material/TableChartOutlined"
 
@@ -39,38 +40,50 @@ export interface IconProps extends SvgIconProps {
 }
 
 export function Icon(props: IconProps) {
-  if (typeof props.children === "string") {
-    switch (props.children) {
-      case "database":
-        return <DatabaseOutline {...props} />
-      case "file":
-        return <FileIcon {...props} />
-      case "folder":
-        return <FolderIcon {...props} />
-      case "history":
-        return <HistoryIcon {...props} />
-      case "info":
-        return <InfoOutlinedIcon {...props} />
-      case "key":
-        return <KeyIcon {...props} />
-      case "more":
-        return <MoreHorizOutlinedIcon {...props} />
-      case "pin":
-      case "pinned":
-        return <PushPinOutlinedIcon {...props} sx={{ transform: "rotate(45deg)" }} />
-      case "query":
-        return <TableRowsOutlinedIcon {...props} />
-      case "refresh":
-        return <RefreshOutlinedIcon {...props} />
-      case "trigger":
-        return <BoltOutlinedIcon {...props} />
-      case "table":
-      case "view":
-        return <TableIcon {...props} />
-    }
-    return <QuestionMarkIcon {...props} />
+  if (typeof props.children !== "string") {
+    // if an icon element was passed directly this is just a passthrough component
+    return <>{props.children}</>
   }
 
-  // if an icon element was passed directly this is just a passthrough
-  return <>{props.children}</>
+  switch (props.children) {
+    case "add":
+      return <AddOutlinedIcon {...props} />
+    case "database":
+      return <DatabaseOutline {...props} />
+    case "file":
+      return <FileIcon {...props} />
+    case "folder":
+      return <FolderIcon {...props} />
+    case "history":
+      return <HistoryIcon {...props} />
+    case "info":
+      return <InfoOutlinedIcon {...props} />
+    case "key":
+      return <KeyIcon {...props} />
+    case "more":
+      return <MoreHorizOutlinedIcon {...props} />
+    case "pin":
+    case "pinned":
+      return <PushPinOutlinedIcon {...props} sx={{ transform: "rotate(45deg)" }} />
+    case "play":
+      return <PlayArrowOutlinedIcon {...props} />
+    case "query":
+      return <TableRowsOutlinedIcon {...props} />
+    case "refresh":
+      return <RefreshOutlinedIcon {...props} />
+    case "share":
+      return <ShareOutlinedIcon {...props} />
+    case "tabsRight":
+      return <BentoOutlinedIcon {...props} />
+    case "tabsBottom":
+      return <BentoOutlinedIcon {...props} sx={{ transform: "rotate(90deg)" }} />
+    case "trigger":
+      return <BoltOutlinedIcon {...props} />
+    case "table":
+    case "view":
+      return <TableIcon {...props} />
+
+    default:
+      return <QuestionMarkIcon {...props} />
+  }
 }

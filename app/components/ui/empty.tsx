@@ -10,7 +10,7 @@ import Typography from "@mui/material/Typography"
 import { SxProps } from "@mui/material"
 import { Theme } from "@mui/material/styles"
 
-import { FANCY_RADIUS } from "./listitems"
+import { FANCY_RADIUS } from "../listitems"
 
 interface EmptyProps {
   /** Large image shown as round avatar, centered */

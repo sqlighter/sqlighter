@@ -103,29 +103,7 @@ export default function Main(props) {
   // activities
   //
 
-  const activities: PanelProps[] = [
-    {
-      id: "databaseActivity",
-      title: "Database",
-      description: "Database Schema",
-      icon: "database",
-      children: <DatabasePanel connection={connection} connections={connections} onCommand={handleCommand} />,
-    },
-    {
-      id: "queriesActivity",
-      title: "Queries",
-      description: "Saved Queries",
-      icon: "query",
-      children: <>Saved queries activity</>,
-    },
-    {
-      id: "historyActivity",
-      title: "History",
-      description: "History description",
-      icon: "history",
-      children: <>History activity</>,
-    },
-  ]
+  
 
   //
   // handlers
@@ -170,12 +148,38 @@ export default function Main(props) {
   // rendering
   //
 
+  function renderActivities() {
+    return [
+      {
+        id: "databaseActivity",
+        title: "Database",
+        description: "Database Schema",
+        icon: "database",
+        children: <DatabasePanel connection={connection} connections={connections} onCommand={handleCommand} />,
+      },
+      {
+        id: "queriesActivity",
+        title: "Queries",
+        description: "Saved Queries",
+        icon: "query",
+        children: <>Saved queries activity</>,
+      },
+      {
+        id: "historyActivity",
+        title: "History",
+        description: "History description",
+        icon: "history",
+        children: <>History activity</>,
+      },
+    ]
+  }
+
   return (
     <TabsLayout
       title="SQLighter"
       description="Lighter, mightier"
       //
-      activities={activities}
+      activities={renderActivities()}
       onActivityChange={handleActivityChange}
       //
       tabId={tabId}

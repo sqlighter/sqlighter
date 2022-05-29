@@ -22,7 +22,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBackOutlined"
 import CloseIcon from "@mui/icons-material/CloseOutlined"
 import Typography from "@mui/material/Typography"
 
-import { Menu } from "./menu"
+import { Menu } from "./navigation/menu"
 import { Footer } from "./footer"
 import { SearchResults } from "./search"
 

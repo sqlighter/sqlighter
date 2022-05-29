@@ -11,10 +11,13 @@ import "allotment/dist/style.css"
 
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
+import TextField from "@mui/material/TextField"
 
 import { Command, CommandEvent } from "../../lib/commands"
 import { DataConnection } from "../../lib/sqltr/connections"
 import { generateId } from "../../lib/items/items"
+
+import { Icon } from "../ui/icon"
 import { Panel, PanelProps } from "../navigation/panel"
 import { Tabs, TabProps } from "../navigation/tabs"
 
@@ -136,11 +139,20 @@ export function QueryTab(props: QueryTabProps) {
 
   function renderHeader() {
     return (
-      <Box className="PanelWithResults-header" sx={{ height: HEADER_HEIGHT }}>
-        <Box>{props.title}</Box>
-        <Box>{props.description}</Box>
-        <ConnectionsMenu connection={props.connection} connections={props.connections} />
-        <Button onClick={handleRunQuery}>Run Query2</Button>
+      <Box className="PanelWithResults-header" sx={{ display: "flex", height: HEADER_HEIGHT, m: 1 }}>
+        <Box className="QueryTab-header-left" sx={{ flexGrow: 1 }}>
+          <Box>
+            <TextField id="outlined-basic" variant="outlined" value={props.title} />
+          </Box>
+        </Box>
+        <Box className="QueryTab-header-right">
+          <Box sx={{ display: "flex" }}>
+            <Button variant="contained" onClick={handleRunQuery} startIcon={<Icon>play</Icon>} sx={{ mr: 1 }}>
+              Run all
+            </Button>
+          </Box>
+          <ConnectionsMenu connection={props.connection} connections={props.connections} />
+        </Box>
       </Box>
     )
   }
@@ -151,7 +163,11 @@ export function QueryTab(props: QueryTabProps) {
 
   function renderResults() {
     if (tabs && tabs.length > 0) {
-      return <Tabs tabId={tabId} onCommand={handleCommand}>{tabs}</Tabs>
+      return (
+        <Tabs tabId={tabId} onCommand={handleCommand}>
+          {tabs}
+        </Tabs>
+      )
     }
 
     // TODO show empty state, eg empty tray icon + your results will appear here or similar
@@ -160,13 +176,17 @@ export function QueryTab(props: QueryTabProps) {
 
   return (
     <Box className="QueryPanel-root" sx={{ width: 1, height: 1, maxHeight: 1 }}>
-      <Allotment vertical={props.variant !== "right"}>
+      <Allotment vertical={true}>
         <Allotment.Pane minSize={150} maxSize={150}>
           {renderHeader()}
         </Allotment.Pane>
-        <Allotment.Pane minSize={100}>{renderEditor()}</Allotment.Pane>
-        <Allotment.Pane minSize={100}>
-          <Box sx={{ height: 1, maxHeight: 1 }}>{renderResults()}</Box>
+        <Allotment.Pane>
+          <Allotment vertical={props.variant !== "right"}>
+            <Allotment.Pane minSize={100}>{renderEditor()}</Allotment.Pane>
+            <Allotment.Pane minSize={100}>
+              <Box sx={{ height: 1, maxHeight: 1 }}>{renderResults()}</Box>
+            </Allotment.Pane>
+          </Allotment>
         </Allotment.Pane>
       </Allotment>
     </Box>
@@ -180,7 +200,6 @@ export function createQueryTab(command: Command, connection?: DataConnection, co
     <QueryTab
       id={generateId("tab_")}
       title={title}
-      description={title + "'s description"}
       icon={"query"}
       connection={connection}
       connections={connections}

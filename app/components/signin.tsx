@@ -8,7 +8,7 @@ import * as React from "react"
 import Box from "@mui/material/Box"
 
 import { Context } from "./context"
-import { Empty } from "./empty"
+import { Empty } from "./ui/empty"
 import signinImage from "../public/images/empty3.jpg"
 
 export function getGoogleSigninClient() {

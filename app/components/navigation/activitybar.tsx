@@ -61,6 +61,8 @@ export interface ActivityBarProps {
 
   /** Called when selected activity tab changes */
   onChange: (event: React.SyntheticEvent, activityId: string) => void
+
+  
 }
 
 /** An activity bar with clickable main navigation icons */

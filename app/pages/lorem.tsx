@@ -9,7 +9,7 @@ import { Typography } from "@mui/material"
 
 import { Context } from "../components/context"
 import { AppLayout } from "../components/layouts"
-import { Section } from "../components/section"
+import { Section } from "../components/ui/section"
 
 export default function LoremPage(props) {
   const context = React.useContext(Context)

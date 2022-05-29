@@ -75,11 +75,17 @@ export interface DataConnectionConfigs {
 }
 
 export abstract class DataConnection {
-  /** Active data connections */
-  protected static _connections: DataConnection[] = []
+  /** Persistent unique identifier for this connection  */
+  id?: string
+
+  /** User defined title for the connection */
+  title?: string
 
   /** Configurations used to open this data connection */
   protected _configs: DataConnectionConfigs
+  get configs(): DataConnectionConfigs {
+    return this._configs
+  }
 
   /** Concrete classes only */
   protected constructor(configs: DataConnectionConfigs) {
@@ -87,13 +93,20 @@ export abstract class DataConnection {
   }
 
   //
-  // connections
+  // static
   //
+
+  /** Active data connections */
+  protected static _connections: DataConnection[] = []
 
   /** Returns currently opened connections */
   public static getConnections(): DataConnection[] {
     return DataConnection._connections
   }
+
+  //
+  // connections
+  //
 
   // TODO onConnectionsChange event emitter
   // https://stackoverflow.com/questions/39142858/declaring-events-in-a-typescript-class-which-extends-eventemitter

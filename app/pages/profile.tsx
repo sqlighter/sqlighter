@@ -16,9 +16,9 @@ import { deepmerge } from "@mui/utils"
 
 import { useUser } from "../lib/auth/hooks"
 import { AppLayout } from "../components/layouts"
-import { Section } from "../components/section"
+import { Section } from "../components/ui/section"
 import { SigninPanel } from "../components/signin"
-import { Tip } from "../components/tip"
+import { Tip } from "../components/ui/tip"
 import { DateInput, SelectInput, NumericInput } from "../components/inputs"
 
 interface ProfilePageProps {

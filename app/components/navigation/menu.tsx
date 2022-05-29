@@ -22,8 +22,8 @@ import ProfileIcon from "@mui/icons-material/PersonOutlineOutlined"
 import LogoutIcon from "@mui/icons-material/LogoutOutlined"
 import { Theme } from "@mui/material/styles"
 
-import { Context } from "./context"
-import { SigninButton } from "./signin"
+import { Context } from "../context"
+import { SigninButton } from "../signin"
 
 export function Menu({ width, onClose }) {
   const context = useContext(Context)

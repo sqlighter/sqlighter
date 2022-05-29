@@ -14,9 +14,9 @@ import ListItemText from "@mui/material/ListItemText"
 import ListItemAvatar from "@mui/material/ListItemAvatar"
 import IconButton from "@mui/material/IconButton"
 
-import { getIcon } from "../components/icon"
 import { Content } from "../lib/items/contents"
-import { Logo } from "./logo"
+import { Logo } from "./ui/logo"
+import { Icon } from "./ui/icon"
 
 export const FANCY_RADIUS = "74% 26% 61% 39% / 35% 30% 70% 65%"
 
@@ -32,7 +32,7 @@ export function getImage(src: string, alt: string, width?, height?, objectFit?, 
   if (src) {
     if (src.startsWith("icon://")) {
       const icon = src.substring("icon://".length)
-      return <IconButton>{getIcon(icon)}</IconButton>
+      return <IconButton><Icon>{icon}</Icon></IconButton>
     }
 
     if (src.startsWith("/")) {
