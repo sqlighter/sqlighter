@@ -21,26 +21,12 @@ import { createQueryTab } from "../database/querytab"
 import { Icon } from "../../components/ui/icon"
 import { Context } from "../../components/context"
 import { TabsLayout } from "../../components/navigation/tabslayout"
-import { PanelProps } from "../../components/navigation/panel"
+import { Panel, PanelProps, PanelElement } from "../../components/navigation/panel"
 import { Tab, TabProps } from "../../components/navigation/tabs"
 import { DatabasePanel } from "../database/databasepanel"
 import { QueryTab } from "../database/querytab"
 
 const SSR = typeof window === "undefined"
-
-function Scatolo(props: any) {
-  return <>{props.children}</>
-}
-
-const TABS: React.ReactElement[] = [
-  <Scatolo id="tab0" title="Tab0" icon="query" ciccio="pippo">
-    Tab zero panel
-  </Scatolo>,
-  <QueryTab id="tab1" title="QueryTab1" icon="query" sql="select * from tracks" variant="right" />,
-  <Scatolo id="tab2" title="Tab2" icon="database">
-    some really really long text
-  </Scatolo>,
-]
 
 /*
 const SQLighterComponentWithNoSSR = dynamic(
@@ -58,14 +44,20 @@ export default function Main(props) {
 
   const [activityValue, setActivityValue] = useState("databaseActivity")
 
-  const [tabId, setTabId] = useState(TABS[0].props.id)
-  const [tabs, setTabs] = useState<ReactElement[]>(TABS)
-
-  // all connections
-  const [connections, setConnections] = useState<DataConnection[]>(null)
+  // currently selected tabId
+  const [tabId, setTabId] = useState<string>("tab_0")
+  // list of 
+  const [tabs, setTabs] = useState<ReactElement[]>([
+    <Panel id="tab_0" title="Tab 0" icon="query">Tab0</Panel>,
+    <Panel id="tab_1" title="Tab 1" icon="query">Tab1</Panel>,
+    <Panel id="tab_2" title="Tab 2" icon="query">Tab2</Panel>,
+  ])
 
   // selected connection
   const [connection, setConnection] = useState<DataConnection>(null)
+  // all connections
+  const [connections, setConnections] = useState<DataConnection[]>(null)
+
 
   //
   // temporary code while we work out the connection setup panels, etc
@@ -148,29 +140,11 @@ export default function Main(props) {
   // rendering
   //
 
-  function renderActivities() {
+  function renderActivities(): PanelElement[] {
     return [
-      {
-        id: "databaseActivity",
-        title: "Database",
-        description: "Database Schema",
-        icon: "database",
-        children: <DatabasePanel connection={connection} connections={connections} onCommand={handleCommand} />,
-      },
-      {
-        id: "queriesActivity",
-        title: "Queries",
-        description: "Saved Queries",
-        icon: "query",
-        children: <>Saved queries activity</>,
-      },
-      {
-        id: "historyActivity",
-        title: "History",
-        description: "History description",
-        icon: "history",
-        children: <>History activity</>,
-      },
+      <DatabasePanel id="act_database" title="Database" icon="database" connection={connection} connections={connections} onCommand={handleCommand} />,
+      <Panel id="act_queries" title="Queries" icon="query">Saved queries</Panel>,
+      <Panel id="act_history" title="History" icon="history">Bookmarked queries</Panel>,
     ]
   }
 

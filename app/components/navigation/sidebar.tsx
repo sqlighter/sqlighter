@@ -4,30 +4,33 @@
 //
 
 import Box from "@mui/material/Box"
-import { Panel, PanelProps } from "./panel"
+import { Panel, PanelProps, PanelElement } from "./panel"
 
 export const SIDEBAR_MIN_WIDTH = 180
 
 export interface SideBarProps {
-  /** List of activities to be shown (one at a time) */
-  activities: PanelProps[]
-
   /** Currently selected activity */
   activityId: string
+
+  /** List of activities to be shown (one at a time) */
+  activities: PanelElement[]
 }
 
 /** A sidebar showing one panel at a time from a choice of panels */
 export function SideBar({ activities, activityId }: SideBarProps) {
   return (
     <>
-      {activities.map((activity: PanelProps) => (
-        <Box
-          key={activity.id}
-          sx={{ width: "100%", height: "100%", display: activity.id != activityId ? "none" : null }}
-        >
-          <Panel {...activity} />
-        </Box>
-      ))}
+      {activities.map((activity: PanelElement) => {
+        const activityProps = activity.props
+        return (
+          <Box
+            key={activityProps.id}
+            sx={{ width: "100%", height: "100%", display: activityProps.id != activityId ? "none" : null }}
+          >
+            {activity}
+          </Box>
+        )
+      })}
     </>
   )
 }

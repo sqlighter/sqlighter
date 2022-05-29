@@ -3,6 +3,8 @@
 // https://code.visualstudio.com/docs/getstarted/userinterface#_activity-bar
 //
 
+import React, { ReactElement } from "react"
+
 import Avatar from "@mui/material/Avatar"
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
@@ -14,7 +16,7 @@ import AccountIcon from "@mui/icons-material/AccountCircleOutlined"
 import SettingsIcon from "@mui/icons-material/SettingsOutlined"
 
 import { Icon } from "../ui/icon"
-import { PanelProps } from "./panel"
+import { Panel, PanelProps, PanelElement } from "./panel"
 import { promptSignin, getDisplayName, getProfileImageUrl } from "../signin"
 
 export const ACTIVITYBAR_WIDTH = 48
@@ -46,12 +48,12 @@ const ACTIVITYBAR_BUTTON_STYLE = {
   },
 }
 
-export interface ActivityBarProps {
-  /** List of activities to be shown */
-  activities: PanelProps[]
-
+export interface ActivityBarProps extends PanelProps {
   /** Currently selected activity */
   activityId: string
+
+  /** List of activities to be shown */
+  activities: PanelElement[]
 
   /** Signed in user (toggles behaviour of profile button) */
   user?: object
@@ -62,7 +64,7 @@ export interface ActivityBarProps {
   /** Called when selected activity tab changes */
   onChange: (event: React.SyntheticEvent, activityId: string) => void
 
-  
+
 }
 
 /** An activity bar with clickable main navigation icons */
@@ -101,16 +103,17 @@ export function ActivityBar({ activities, activityId, user, onClick, onChange }:
       <Box sx={{ display: "flex", flexDirection: "column", height: "100%", width: ACTIVITYBAR_WIDTH }}>
         <Box sx={{ flexGrow: 1 }}>
           <TabList scrollButtons="auto" orientation="vertical" sx={ACTIVITYBAR_TABLIST_STYLE}>
-            {activities.map((activity: any) => (
-              <Tab
-                key={activity.id}
-                id={activity.id}
-                value={activity.id}
-                icon={typeof activity.icon == "string" ? <Icon>{activity.icon}</Icon> : activity.icon}
+            {activities.map((activity: PanelElement) => {
+              const activityProps = activity.props
+              return <Tab
+                key={activityProps.id}
+                id={activityProps.id}
+                value={activityProps.id}
+                icon={<Icon>{activityProps.icon}</Icon>}
                 iconPosition="start"
-                onClick={(e) => handleActivityClick(e, activity.id)}
+                onClick={(e) => handleActivityClick(e, activityProps.id)}
               />
-            ))}
+            })}
           </TabList>
         </Box>
         <Box

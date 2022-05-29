@@ -2,7 +2,7 @@
 // panel.tsx - basic box with metadata, eg: title, icon, etc
 //
 
-// TODO support drag and drop inside panel with callback
+import { CommandEvent } from "../../lib/commands"
 
 export interface PanelProps {
   /** Id used for tabs, selections, paths, etc (optional) */
@@ -19,9 +19,15 @@ export interface PanelProps {
 
   /** Layout contents (optional) */
   children?: React.ReactNode
+
+  /** Callback used by this panel to dispatch commands back to parent components */
+  onCommand?: CommandEvent
 }
 
-/** A simple panel (used mostly to pass props to tabs or other layout componentsawer, header, footer, basic actions */
+/** A simple panel (used mostly to as a simple base class to standardize props in tabs, headers, footers, layout components, etc */
 export function Panel(props: PanelProps) {
   return <>{props.children}</>
 }
+
+/** A react element that implements or extend basic panel properties */
+export type PanelElement = React.ReactElement<PanelProps, React.FunctionComponent<PanelProps>>;

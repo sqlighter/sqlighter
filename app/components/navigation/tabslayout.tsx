@@ -15,7 +15,7 @@ import Box from "@mui/material/Box"
 import { CommandEvent } from "../../lib/commands"
 import { ActivityBar, ACTIVITYBAR_WIDTH } from "./activitybar"
 import { SideBar, SIDEBAR_MIN_WIDTH } from "./sidebar"
-import { PanelProps } from "./panel"
+import { Panel, PanelProps, PanelElement } from "./panel"
 import { Tabs, TabsProps } from "./tabs"
 
 interface TabsLayoutProps extends TabsProps {
@@ -29,7 +29,7 @@ interface TabsLayoutProps extends TabsProps {
   actions?: any
 
   /** Activities shown as icons in activity bar and as panels in side bar */
-  activities: PanelProps[]
+  activities: PanelElement[]
 
   /** Callback used to notify that selected activity has changed */
   onActivityChange?: (event: React.SyntheticEvent, activityId) => void
@@ -53,7 +53,7 @@ export function TabsLayout(props: TabsLayoutProps) {
   const isMediumScreen = useMediaQuery((theme: Theme) => theme.breakpoints.up("md"))
 
   // TODO persist currently selected activity in user preferences
-  const [activityId, setActivityId] = useState(props.activities[0].id)
+  const [activityId, setActivityId] = useState(props.activities[0].props.id)
 
   //
   // handlers
@@ -117,7 +117,7 @@ export function TabsLayout(props: TabsLayoutProps) {
             />
           </Allotment.Pane>
           <Allotment.Pane minSize={SIDEBAR_MIN_WIDTH} preferredSize={SIDEBAR_MIN_WIDTH} visible={sidebarVisibile} snap>
-            <SideBar activities={props.activities} activityId={activityId} />
+            <SideBar activityId={activityId} activities={props.activities}  />
           </Allotment.Pane>
           <Allotment.Pane>
             <Tabs tabId={props.tabId} commands={tabsCommands} onCommand={props.onCommand}>

@@ -11,20 +11,13 @@ import { CommandEvent } from "../../lib/commands"
 import { DataConnection } from "../../lib/sqltr/connections"
 import { DatabaseTreeView } from "./databasetreeview"
 import { ConnectionsMenu } from "./connectionsmenu"
+import { PanelProps } from "../navigation/panel"
 
-export interface DatabasePanelProps {
+export interface DatabasePanelProps extends PanelProps {
   /** Currently selected connection */
   connection?: DataConnection
-
   /** List of available connections (which may or may not be live) */
   connections?: DataConnection[]
-
-  /**
-   * Callback used when the view generates an app level command,
-   * for example this may happen when the view generates a command
-   * to view the structure of a table that the user clicked on, etc.
-   */
-  onCommand?: CommandEvent
 }
 
 /** A sidebar panel used to display the schema of connected databases */
