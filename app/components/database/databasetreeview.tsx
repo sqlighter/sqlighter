@@ -5,7 +5,7 @@
 import * as React from "react"
 import { useState, useEffect } from "react"
 
-import { Command, CommandEvent } from "../../lib/commands"
+import { Command, CommandEvent } from "../commands"
 import { TreeView } from "../navigation/treeview"
 import { Tree } from "../../lib/tree"
 import { DataConnection } from "../../lib/sqltr/connections"

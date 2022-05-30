@@ -13,7 +13,7 @@ import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
 import TextField from "@mui/material/TextField"
 
-import { Command, CommandEvent } from "../../lib/commands"
+import { Command, CommandEvent } from "../commands"
 import { DataConnection } from "../../lib/sqltr/connections"
 import { generateId } from "../../lib/items/items"
 

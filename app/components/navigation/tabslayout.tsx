@@ -8,7 +8,7 @@ import { Allotment } from "allotment"
 import "allotment/dist/style.css"
 import Box from "@mui/material/Box"
 
-import { Command } from "../../lib/commands"
+import { Command } from "../commands"
 import { ActivityBar, ACTIVITYBAR_WIDTH } from "./activitybar"
 import { PanelElement, PanelProps } from "./panel"
 import { Tabs } from "./tabs"
@@ -102,7 +102,7 @@ export function TabsLayout(props: TabsLayoutProps) {
         <meta name="og:title" content={props.title} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
-      <Box sx={{ position: "absolute", left: 0, top: 0, right: 0, bottom: 0 }}>
+      <Box className="TabsLayout-root" sx={{ position: "absolute", left: 0, top: 0, right: 0, bottom: 0 }}>
         <Allotment onVisibleChange={handleSidebarVisibilityChange}>
           <Allotment.Pane maxSize={ACTIVITYBAR_WIDTH} minSize={ACTIVITYBAR_WIDTH} visible>
             <ActivityBar

@@ -5,7 +5,7 @@
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
 
-import { CommandEvent } from "../../lib/commands"
+import { CommandEvent } from "../commands"
 import { DataConnection } from "../../lib/sqltr/connections"
 
 export interface ConnectionsMenuProps {

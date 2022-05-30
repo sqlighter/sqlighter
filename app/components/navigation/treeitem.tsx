@@ -13,7 +13,7 @@ import Tooltip from "@mui/material/Tooltip"
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown"
 import ArrowRightIcon from "@mui/icons-material/ArrowRight"
 
-import { Command, CommandEvent } from "../../lib/commands"
+import { Command, CommandEvent } from "../commands"
 import { Tree } from "../../lib/tree"
 import { Icon } from "../ui/icon"
 

@@ -12,7 +12,7 @@ import Tab from "@mui/material/Tab"
 import TabContext from "@mui/lab/TabContext"
 import TabList from "@mui/lab/TabList"
 
-import { CommandEvent } from "../../lib/commands"
+import { CommandEvent } from "../commands"
 import { Icon } from "../ui/icon"
 import { PanelProps, PanelElement } from "./panel"
 import { getDisplayName, getProfileImageUrl } from "../signin"
@@ -118,11 +118,11 @@ export function ActivityBar(props: ActivityBarProps) {
           }}
         >
           <Button onClick={handleSettingsClick} sx={ACTIVITYBAR_BUTTON_STYLE}>
-            <Icon>settings</Icon>
+            <Box><Icon>settings</Icon></Box>
           </Button>
           <Button onClick={handleProfileClick} sx={ACTIVITYBAR_BUTTON_STYLE}>
             {props.user && <Avatar alt={displayName} src={profileImage} sx={{ width: 24, height: 24 }} />}
-            {!props.user && <Icon>account</Icon>}
+            {!props.user && <Box><Icon>account</Icon></Box>}
           </Button>
         </Box>
       </Box>

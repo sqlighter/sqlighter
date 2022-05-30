@@ -14,7 +14,7 @@ import MuiTabContext from "@mui/lab/TabContext"
 import MuiTabList from "@mui/lab/TabList"
 import MuiTabPanel from "@mui/lab/TabPanel"
 
-import { Command, CommandEvent } from "../../lib/commands"
+import { Command, CommandEvent } from "../commands"
 import { Icon } from "../ui/icon"
 import { Panel, PanelProps, PanelElement } from "./panel"
 

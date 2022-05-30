@@ -7,7 +7,7 @@
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 
-import { CommandEvent } from "../../lib/commands"
+import { CommandEvent } from "../commands"
 import { DataConnection } from "../../lib/sqltr/connections"
 import { DatabaseTreeView } from "./databasetreeview"
 import { ConnectionsMenu } from "./connectionsmenu"

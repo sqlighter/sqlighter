@@ -2,7 +2,7 @@
 // panel.tsx - basic box with metadata, eg: title, icon, etc
 //
 
-import { CommandEvent } from "../../lib/commands"
+import { CommandEvent } from "../commands"
 
 export interface PanelProps {
   /** Id used for tabs, selections, paths, etc (optional) */

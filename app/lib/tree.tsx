@@ -10,7 +10,7 @@ import * as React from "react"
 // https://code.visualstudio.com/api/references/vscode-api#TreeDataProvider
 // https://code.visualstudio.com/api/references/vscode-api#TreeItem
 
-import { Command } from "./commands"
+import { Command } from "../components/commands"
 
 /** Data model for hierarchial data rendered with TreeView */
 export interface Tree {

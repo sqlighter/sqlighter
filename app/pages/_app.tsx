@@ -13,10 +13,10 @@ import GlobalStyles from "@mui/material/GlobalStyles"
 import { ThemeProvider } from "@mui/material/styles"
 
 import { useUser } from "../components/hooks/useUser"
-import { Command } from "../lib/commands"
+import { Command } from "../components/commands"
 import { Context } from "../components/context"
 import { getGoogleSigninClient, promptSignin } from "../components/signin"
-import { customTheme, PRIMARY_LIGHTEST } from "../components/theme"
+import { customTheme, CUSTOM_SX, PRIMARY_LIGHTEST } from "../components/theme"
 
 // Google client id used for signin client is bound below at build time
 // https://nextjs.org/docs/basic-features/environment-variables#exposing-environment-variables-to-the-browser
@@ -128,7 +128,7 @@ export default function App({ Component, pageProps }: { Component: any; pageProp
   return (
     <>
       <CssBaseline>
-        <GlobalStyles styles={{ body: { backgroundColor: PRIMARY_LIGHTEST } }} />
+        <GlobalStyles styles={{ body: { backgroundColor: PRIMARY_LIGHTEST }}} />
         <ThemeProvider theme={customTheme()}>
           <Context.Provider value={context}>
             <Head>

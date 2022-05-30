@@ -12,7 +12,7 @@ import { useTheme } from "@mui/material/styles"
 import { Typography } from "@mui/material"
 import { Allotment } from "allotment"
 
-import { Command, CommandEvent } from "../../lib/commands"
+import { Command, CommandEvent, CommandIconButton } from "../commands"
 import { useSqljs } from "../hooks/useDB"
 import { DataConnection, DataConnectionConfigs } from "../../lib/sqltr/connections"
 import { SqliteDataConnection } from "../../lib/sqltr/databases/sqlite"
@@ -55,6 +55,11 @@ export default function Main(props) {
   const [tabs, setTabs] = useState<PanelElement[]>([
     <Panel id="tab_0" title="Tab 0" icon="query">
       Tab0
+      <Box>
+      <CommandIconButton command={{command: "Print", icon: "database"}} onCommand={handleCommand} size="small" />
+      </Box>
+      <CommandIconButton command={{command: "Query", icon: "query"}} onCommand={handleCommand} />
+    more
     </Panel>,
     <Panel id="tab_1" title="Tab 1" icon="query">
       Tab1
