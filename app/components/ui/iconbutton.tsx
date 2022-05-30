@@ -4,6 +4,7 @@
 
 import * as React from "react"
 import { IconButtonProps as MuiIconButtonProps, IconButton as MuiIconButton, SxProps, Theme } from "@mui/material"
+import Box from "@mui/material/Box"
 
 import { Command, CommandEvent } from "../../lib/commands"
 import { Icon } from "./icon"
@@ -49,20 +50,17 @@ export function IconButton(props: IconButtonProps) {
   //
 
   let button = (
-    <MuiIconButton
-      className="IconButton-root"
-      {...buttonProps}
-      onClick={handleClick}
-      sx={IconButton_SxProps}
-    >
-      <Icon fontSize="inherit">{command.icon}</Icon>{props.label && props.command.title}
-    </MuiIconButton>
+    <Box className="IconButton-root">
+      <MuiIconButton {...buttonProps} onClick={handleClick} sx={IconButton_SxProps}>
+        <Icon fontSize="inherit">{command.icon}</Icon>
+        {props.label && props.command.title}
+      </MuiIconButton>
+    </Box>
   )
 
   // optional tooltip if title is defined
   if (props.command.title && !props.label) {
     button = <Tooltip title={command.title}>{button}</Tooltip>
   }
-
   return button
 }
