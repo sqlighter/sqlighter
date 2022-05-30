@@ -23,14 +23,14 @@ describe("shared.ts", () => {
     expect(prettyBytes(size, "it-IT")).toBe("1.023 bytes")
 
     size = 5 * 1024
-    expect(prettyBytes(size)).toBe("5 KB")
-    expect(prettyBytes(size, "en-US")).toBe("5 KB")
-    expect(prettyBytes(size, "it-IT")).toBe("5 KB")
+    expect(prettyBytes(size)).toBe("5 kB")
+    expect(prettyBytes(size, "en-US")).toBe("5 kB")
+    expect(prettyBytes(size, "it-IT")).toBe("5 kB")
 
     size = 60.5 * 1024
-    expect(prettyBytes(size)).toBe("60.5 KB")
-    expect(prettyBytes(size, "en-US")).toBe("60.5 KB")
-    expect(prettyBytes(size, "it-IT")).toBe("60,5 KB")
+    expect(prettyBytes(size)).toBe("60.5 kB")
+    expect(prettyBytes(size, "en-US")).toBe("60.5 kB")
+    expect(prettyBytes(size, "it-IT")).toBe("60,5 kB")
 
     size = 5 * 1024 * 1024
     expect(prettyBytes(size)).toBe("5 MB")

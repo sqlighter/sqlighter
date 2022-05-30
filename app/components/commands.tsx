@@ -27,17 +27,17 @@ export interface Command {
 export type CommandEvent<T = Command> = (event: React.SyntheticEvent, command: T) => void
 
 //
-// CommandButton
+// CommandIconButton
 //
 
 const CommandIconButton_SxProps: SxProps<Theme> = {
   borderRadius: "8px",
 }
 
+/** Shows command as an icon button raising an onCommand event when clicked */
 export interface CommandIconButtonProps extends IconButtonProps {
   /** Command to be rendered by this button */
   command: Command
-
   /** Command handler for button click */
   onCommand?: CommandEvent
 }
@@ -45,7 +45,7 @@ export interface CommandIconButtonProps extends IconButtonProps {
 export function CommandIconButton(props: CommandIconButtonProps) {
   const { command, onCommand, ...buttonProps } = props
   if (!command.icon) {
-    console.warn(`CommandIconButton - command has no icon`, command)
+    console.error(`CommandIconButton - command.icon missing`, command)
   }
 
   function handleClick(event) {
@@ -54,16 +54,25 @@ export function CommandIconButton(props: CommandIconButtonProps) {
     }
   }
 
-  return (
-    <Tooltip title={command.title}>
-      <IconButton
-        className="CommandIconButton-root"
-        {...buttonProps}
-        onClick={handleClick}
-        sx={CommandIconButton_SxProps}
-      >
-        <Icon fontSize="inherit">{command.icon}</Icon>
-      </IconButton>
-    </Tooltip>
+  //
+  // render
+  //
+
+  let button = (
+    <IconButton
+      className="CommandIconButton-root"
+      {...buttonProps}
+      onClick={handleClick}
+      sx={CommandIconButton_SxProps}
+    >
+      <Icon fontSize="inherit">{command.icon}</Icon>
+    </IconButton>
   )
+
+  // optional tooltip if title is defined
+  if (props.command.title) {
+    button = <Tooltip title={command.title}>{button}</Tooltip>
+  }
+
+  return button
 }

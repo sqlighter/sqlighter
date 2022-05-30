@@ -58,7 +58,7 @@ export default function Main(props) {
       <Box>
       <CommandIconButton command={{command: "Print", icon: "database"}} onCommand={handleCommand} size="small" />
       </Box>
-      <CommandIconButton command={{command: "Query", icon: "query"}} onCommand={handleCommand} />
+      <CommandIconButton command={{command: "openQuery", title: "Open Query", icon: "query"}} onCommand={handleCommand} />
     more
     </Panel>,
     <Panel id="tab_1" title="Tab 1" icon="query">

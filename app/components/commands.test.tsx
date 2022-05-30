@@ -3,50 +3,26 @@
  * @jest-environment-options {"url": "https://sqlighter.com/"}
  */
 
- import React from 'react'
- import {rest} from 'msw'
- import {setupServer} from 'msw/node'
- import {render, fireEvent, waitFor, screen} from '@testing-library/react'
- import '@testing-library/jest-dom'
+import React from "react"
+import { render, fireEvent, waitFor, screen } from "@testing-library/react"
+import "@testing-library/jest-dom"
 
- import { prettyBytes, prettyContentType } from "../lib/shared"
+import { CommandIconButton } from "./commands"
 
-function Hello(props) {
-  return <div className="Hello-root">{props.name}</div>
-}
+describe("commands.tsx", () => {
+  test("CommandIconButton - onCommand", () => {
+    const command = {
+      command: "openDatabase",
+      title: "Open Database",
+      icon: "database",
+    }
 
- describe("shared.ts", () => {
-   test("prettyContentType", () => {
-     expect(prettyContentType("application/pdf")).toBe("pdf")
-     expect(prettyContentType("image/jpg")).toBe("jpg")
-     expect(prettyContentType("video/mp4")).toBe("video")
-   })
- 
-   test("prettyBytes", () => {
-     let size = 300
-     expect(prettyBytes(size)).toBe("300 bytes")
-     expect(prettyBytes(size, "en-US")).toBe("300 bytes")
-     expect(prettyBytes(size, "it-IT")).toBe("300 bytes")
- 
+    const mockCallback = jest.fn()
+    render(<CommandIconButton command={command} onCommand={mockCallback} />)
 
-
-     expect(window.location.href).toBe('https://sqlighter.com/');
-   })
-
-   test("testLocation", () => {
-    expect(window.location.href).toBe('https://sqlighter.com/');
+    const component: any = document.querySelector(".CommandIconButton-root")
+    fireEvent.click(component)
+    expect(mockCallback).toHaveBeenCalledTimes(1)
+    expect(mockCallback).toHaveBeenCalledWith(expect.anything(), command)
   })
-
-   test("testProps", () => {
-    render(<Hello name="John" />)
-    
-
-    let component = screen.getByText("John")
-    expect(component).toHaveTextContent("John2")
-    
-
-    expect(window.location.href).toBe('https://sqlighter.com/');
-  })
-
-  })
- 
+})

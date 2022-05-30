@@ -2,6 +2,7 @@
 // tooltip.tsx - regular tooltip with some presets
 //
 
+import React from "react"
 import { Tooltip as MuiTooltip, TooltipProps } from "@mui/material"
 
 // delay before showing tooltips
