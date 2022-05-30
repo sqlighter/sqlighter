@@ -12,6 +12,7 @@ import AccountCircleOutlined from "@mui/icons-material/AccountCircleOutlined"
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined"
 import BentoOutlinedIcon from "@mui/icons-material/BentoOutlined"
 import BoltOutlinedIcon from "@mui/icons-material/BoltOutlined"
+import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined"
 import DatabaseIcon from "@mui/icons-material/StorageOutlined"
 import FileIcon from "@mui/icons-material/InsertDriveFileOutlined"
 import FolderIcon from "@mui/icons-material/FolderOutlined"
@@ -53,6 +54,8 @@ export function Icon(props: IconProps) {
       return <AccountCircleOutlined {...props} />
     case "add":
       return <AddOutlinedIcon {...props} />
+    case "close":
+      return <CloseOutlinedIcon {...props} />
     case "database":
       return <DatabaseOutline {...props} />
     case "file":
