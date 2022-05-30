@@ -8,7 +8,7 @@ import { Allotment } from "allotment"
 import "allotment/dist/style.css"
 import Box from "@mui/material/Box"
 
-import { Command } from "../commands"
+import { Command } from "../../lib/commands"
 import { ActivityBar, ACTIVITYBAR_WIDTH } from "./activitybar"
 import { PanelElement, PanelProps } from "./panel"
 import { Tabs } from "./tabs"

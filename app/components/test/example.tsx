@@ -4,7 +4,7 @@
 
 import React from "react"
 import Button from "@mui/material/Button"
-import { CommandEvent } from "../commands"
+import { CommandEvent } from "../../lib/commands"
 
 export interface ExampleProps {
   name: string

@@ -2,7 +2,7 @@ import React from "react"
 import { ComponentStory, ComponentMeta } from "@storybook/react"
 import Avatar from "@mui/material/Avatar"
 import List from "@mui/material/List"
-import { Section } from "../components/section"
+import { Section } from "../components/ui/section"
 import { ContentListItem } from "../components/listitems"
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export

@@ -5,7 +5,7 @@
 import Box from "@mui/material/Box"
 import { DataGrid } from "./datagrid"
 import { PanelProps } from "../navigation/panel"
-import { Command, CommandIconButton } from "../commands"
+import { Command, CommandIconButton } from "../../lib/commands"
 
 // TODO move with data models
 export interface QueryResultsPanelProps extends PanelProps {

@@ -12,7 +12,7 @@ import { useTheme } from "@mui/material/styles"
 import { Typography } from "@mui/material"
 import { Allotment } from "allotment"
 
-import { Command, CommandEvent, CommandIconButton } from "../commands"
+import { Command, CommandEvent, CommandIconButton } from "../../lib/commands"
 import { useSqljs } from "../hooks/useDB"
 import { DataConnection, DataConnectionConfigs } from "../../lib/sqltr/connections"
 import { SqliteDataConnection } from "../../lib/sqltr/databases/sqlite"

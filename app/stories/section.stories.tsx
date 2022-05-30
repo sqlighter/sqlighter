@@ -1,6 +1,6 @@
 import React from "react"
 import { ComponentStory, ComponentMeta } from "@storybook/react"
-import { Section } from "../components/section"
+import { Section } from "../components/ui/section"
 import { StorybookDecorator } from "../components/storybook"
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export

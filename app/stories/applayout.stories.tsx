@@ -11,7 +11,7 @@ import AlarmIcon from "@mui/icons-material/Alarm"
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart"
 
 import { AppLayout } from "../components/layouts"
-import { Section } from "../components/section"
+import { Section } from "../components/ui/section"
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {

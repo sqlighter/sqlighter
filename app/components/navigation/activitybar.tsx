@@ -12,7 +12,7 @@ import Tab from "@mui/material/Tab"
 import TabContext from "@mui/lab/TabContext"
 import TabList from "@mui/lab/TabList"
 
-import { CommandEvent } from "../commands"
+import { CommandEvent } from "../../lib/commands"
 import { Icon } from "../ui/icon"
 import { PanelProps, PanelElement } from "./panel"
 import { getDisplayName, getProfileImageUrl } from "../signin"

@@ -8,7 +8,7 @@
 // https://microsoft.github.io/monaco-editor/api/index.html
 
 import Editor from "@monaco-editor/react"
-import { CommandEvent } from "../commands"
+import { CommandEvent } from "../../lib/commands"
 
 export interface CodeEditorProps {
   /** Text being edited (initial value, will raise onCommand when changed) */
