@@ -280,7 +280,6 @@ export function Tabs(props: TabsProps) {
           value={child.props.id}
           sx={{
             padding: 0,
-            backgroundColor: "azure",
             height: 1,
             maxHeight: 1,
             overflow: "scroll",

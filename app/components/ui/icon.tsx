@@ -3,7 +3,7 @@
 //
 
 import * as React from "react"
-import { SvgIconProps } from "@mui/material"
+import { SvgIcon, SvgIconProps } from "@mui/material"
 
 // Material Icons (Google)
 // https://mui.com/material-ui/material-icons/?query=table&theme=Outlined
@@ -35,6 +35,9 @@ import TableIcon from "@mui/icons-material/TableChartOutlined"
 // https://github.com/TeamWertarbyte/mdi-material-ui
 // https://pictogrammers.github.io/@mdi/font/6.5.95/
 import { DatabaseOutline } from "mdi-material-ui"
+
+// Custom svg icon files in /icons
+import { SqliteIcon } from "./icons/sqliteicon"
 
 // Font Awesome
 // https://fontawesome.com/icons/server?s=regular
@@ -85,6 +88,8 @@ export function Icon(props: IconProps) {
       return <SettingsOutlined {...props} />
     case "share":
       return <ShareOutlinedIcon {...props} />
+    case "sqlite":
+      return <SqliteIcon {...props} />
     case "tabsRight":
       return <BentoOutlinedIcon {...props} />
     case "tabsBottom":

@@ -5,6 +5,8 @@ import { StorybookDecorator } from "../components/storybook"
 import { IconButton } from "../components/ui/iconbutton"
 import { Display, Headline, Title, Body, Label, TypographyProps} from "../components/ui/typography"
 
+// https://m3.material.io/styles/typography/type-scale-tokens
+
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: "Components/Typography",

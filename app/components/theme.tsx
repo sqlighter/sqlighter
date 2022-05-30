@@ -37,6 +37,7 @@ export const customSx: SxProps<Theme> = {
 
   // https://material.io/blog/roboto-flex
   // https://m3.material.io/styles/typography/type-scale-tokens
+  // TODO font heights should be in rem 
   ".Typography-root": {
     fontFamily: "'Roboto Flex', sans-serif",
     letterSpacing: 0,
@@ -167,8 +168,8 @@ export function customTheme() {
       fontFamily: "'Roboto Flex', Helvetica, Arial, sans-serif",
       fontWeightLight: 300,
       fontWeightRegular: 400,
-      fontWeightMedium: 700,
-      fontWeightBold: 900,
+      fontWeightMedium: 500,
+      fontWeightBold: 700,
     },
   })
 
