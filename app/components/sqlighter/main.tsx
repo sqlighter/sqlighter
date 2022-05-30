@@ -38,7 +38,6 @@ const SQLighterComponentWithNoSSR = dynamic(
 const title = "SQLighter"
 
 export interface MainProps {
-
   pippo?: string
 }
 
@@ -57,10 +56,10 @@ export default function Main(props) {
     <Panel id="tab_0" title="Tab 0" icon="query">
       Tab0
       <Box>
-      <IconButton command={{command: "Print", icon: "database"}} onCommand={handleCommand} size="small" />
+        <IconButton command={{ command: "Print", icon: "database" }} onCommand={handleCommand} size="small" />
       </Box>
-      <IconButton command={{command: "openQuery", title: "Open Query", icon: "query"}} onCommand={handleCommand} />
-    more
+      <IconButton command={{ command: "openQuery", title: "Open Query", icon: "query" }} onCommand={handleCommand} />
+      more
     </Panel>,
     <Panel id="tab_1" title="Tab 1" icon="query">
       Tab1
@@ -145,6 +144,12 @@ export default function Main(props) {
         setTabs(command.args.tabs)
         return
 
+      case "tabs.newTab":
+        const newTab = createQueryTab(command, connection, connections)
+        setTabs([newTab, ...tabs])
+        setTabId(newTab.props.id)
+        break
+
       case "changeActivity":
         setActivityId(command.args.id)
         return
@@ -181,8 +186,8 @@ export default function Main(props) {
 
   const tabsCommands = [
     {
-      command: "tabs.createTab",
-      title: "Add tab",
+      command: "tabs.newTab",
+      title: "New Tab",
       icon: "add",
     },
   ]

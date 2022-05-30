@@ -70,16 +70,16 @@ export function ActivityBar(props: ActivityBarProps) {
   //
 
   function handleActivityClick(event: React.SyntheticEvent, clickedActivityId: string) {
-      props.onCommand(event, {
-        command: "changeActivity",
-        args: { id: clickedActivityId },
-      })
+    props.onCommand(event, {
+      command: "changeActivity",
+      args: { id: clickedActivityId },
+    })
   }
 
   function handleSettingsClick(event) {
-      props.onCommand(event, {
-        command: "openSettings",
-      })
+    props.onCommand(event, {
+      command: "openSettings",
+    })
   }
 
   function handleProfileClick(event) {
@@ -118,11 +118,17 @@ export function ActivityBar(props: ActivityBarProps) {
           }}
         >
           <Button onClick={handleSettingsClick} sx={ACTIVITYBAR_BUTTON_STYLE}>
-            <Box><Icon>settings</Icon></Box>
+            <Box>
+              <Icon>settings</Icon>
+            </Box>
           </Button>
           <Button onClick={handleProfileClick} sx={ACTIVITYBAR_BUTTON_STYLE}>
             {props.user && <Avatar alt={displayName} src={profileImage} sx={{ width: 24, height: 24 }} />}
-            {!props.user && <Box><Icon>account</Icon></Box>}
+            {!props.user && (
+              <Box>
+                <Icon>account</Icon>
+              </Box>
+            )}
           </Button>
         </Box>
       </Box>

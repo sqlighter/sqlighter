@@ -3,12 +3,12 @@
 // https://code.visualstudio.com/docs/getstarted/userinterface#_tabs
 //
 
-import React, { SyntheticEvent, useState, Children, ReactElement } from "react"
+import React, { SyntheticEvent } from "react"
 
 import Box from "@mui/material/Box"
 import { SxProps } from "@mui/material"
-import { IconButton } from "@mui/material"
 import CloseIcon from "@mui/icons-material/CloseOutlined"
+import MuiIconButton from "@mui/material/IconButton"
 import MuiTab from "@mui/material/Tab"
 import MuiTabContext from "@mui/lab/TabContext"
 import MuiTabList from "@mui/lab/TabList"
@@ -16,18 +16,30 @@ import MuiTabPanel from "@mui/lab/TabPanel"
 
 import { Command, CommandEvent } from "../../lib/commands"
 import { Icon } from "../ui/icon"
-import { Panel, PanelProps, PanelElement } from "./panel"
+import { PanelElement } from "./panel"
+import { IconButton } from "../ui/iconbutton"
 
 export const TABLIST_HEIGHT = 48
 
 const TABLIST_STYLES: SxProps = {
   minHeight: TABLIST_HEIGHT,
   height: TABLIST_HEIGHT,
+  display: "flex",
 
   borderBottom: (theme: any) => `1px solid ${theme.palette.divider}`,
 
   ".MuiTabs-flexContainer": {
     height: TABLIST_HEIGHT,
+    display: "flex",
+  },
+
+  ".Tabs-tabsCommands": {
+    flexGrow: 1,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    paddingLeft: 1,
+    paddingRight: 1,
   },
 
   ".MuiTab-root": {
@@ -36,21 +48,30 @@ const TABLIST_STYLES: SxProps = {
     textTransform: "none",
     paddingRight: 1,
 
-    ".MuiTab-textLabel": {
-      position: "relative",
-      top: "1px",
+    ".Tab-tabLabel": {
+      display: "flex",
+      alignItems: "flex-start",
     },
 
     // TODO keep close icons visible on touch devices
-    ".MuiTab-closeIcon": {
-      marginLeft: 1,
+    ".Tab-closeIcon": {
+      position: "relative",
+      left: "4px",
       color: "transparent",
     },
 
     "&:hover": {
       backgroundColor: "action.hover",
-      ".MuiTab-closeIcon": {
+      ".Tab-closeIcon": {
         color: "text.secondary",
+      },
+    },
+  },
+
+  ".Mui-selected": {
+    ".Tab-closeIcon": {
+      "&:hover": {
+        color: "primary",
       },
     },
   },
@@ -102,19 +123,15 @@ export function Tabs(props: TabsProps) {
   }
 
   /** When a tab is closed we remove it from the list of tabs (and select a new one if needed) */
-  function handleCloseTab(event, closedTabId) {
-    // console.debug(`Tabs.handleCloseTab - closedTabId: ${closedTabId}`)
+  function handleCloseTab(event: React.SyntheticEvent, command: Command) {
+    const closedTabId = command.args.id
+    console.debug(`Tabs.handleCloseTab - closedTabId: ${closedTabId}`)
     event.stopPropagation()
 
     // create new list of tabs without the tab that was just closed
     if (props.onCommand) {
       // notify parent that tab is being closed
-      props.onCommand(event, {
-        command: "tabs.closeTab",
-        args: {
-          tabId: closedTabId,
-        },
-      })
+      props.onCommand(event, command)
 
       // filter closed tab out of children list and notify parent with new list of tabs/children
       const updatedTabs = props.tabs && props.tabs.filter((tab) => tab.props.id !== closedTabId)
@@ -206,17 +223,49 @@ export function Tabs(props: TabsProps) {
   // render
   //
 
-  function renderCommands() {
-    if (props.tabsCommands) {
-      return props.tabsCommands.map((command) => {
-        return (
-          <Box className="MuiTab-addIcon">
-            <IconButton onClick={(e) => props.onCommand(e, command)}>
-              <Icon fontSize="small">{command.icon}</Icon>
-            </IconButton>
-          </Box>
-        )
-      })
+  function renderTabLabel(tab) {
+    const tabProps = tab.props
+    const closeCommand = {
+      command: "tabs.closeTab",
+      icon: "close",
+      title: "Close Tab",
+      args: {
+        id: tabProps.id,
+      },
+    }
+
+    return (
+      <MuiTab
+        key={tabProps.id}
+        id={tabProps.id}
+        value={tabProps.id}
+        aria-label={tabProps.id}
+        icon={typeof tabProps.icon && <Icon>{tabProps.icon}</Icon>}
+        iconPosition="start"
+        component="div"
+        label={
+          <>
+            <Box component="span">{tabProps.title}</Box>
+            <IconButton className="Tab-closeIcon" command={closeCommand} onCommand={handleCloseTab} size="small" />
+          </>
+        }
+        draggable="true"
+        onDragStart={handleTabDragStart}
+        onDragOver={handleTagDragOver}
+        onDrop={handleTabDrop}
+      />
+    )
+  }
+
+  function renderTabsCommands() {
+    if (props.tabsCommands && props.tabsCommands.length > 0) {
+      return (
+        <Box className="Tabs-tabsCommands">
+          {props.tabsCommands.map((command) => {
+            return <IconButton command={command} onCommand={props.onCommand} size="small" />
+          })}
+        </Box>
+      )
     }
     return null
   }
@@ -248,36 +297,8 @@ export function Tabs(props: TabsProps) {
       <Box sx={{ display: "flex", flexDirection: "column", height: 1, maxHeight: 1 }}>
         <Box sx={{ height: TABLIST_HEIGHT }}>
           <MuiTabList onChange={handleTabsChange} variant="scrollable" sx={TABLIST_STYLES}>
-            {props.tabs &&
-              props.tabs.map((tab: any) => {
-                const tabProps = tab.props
-                return (
-                  <MuiTab
-                    key={tabProps.id}
-                    id={tabProps.id}
-                    value={tabProps.id}
-                    icon={typeof tabProps.icon === "string" ? <Icon>{tabProps.icon}</Icon> : tabProps.icon}
-                    aria-label={tabProps.id}
-                    iconPosition="start"
-                    component="div"
-                    label={
-                      <span>
-                        <Box component="span" className="MuiTab-textLabel">
-                          {tabProps.title}
-                        </Box>
-                        <IconButton onClick={(e) => handleCloseTab(e, tabProps.id)} className="MuiTab-closeIcon">
-                          <CloseIcon fontSize="small" />
-                        </IconButton>
-                      </span>
-                    }
-                    draggable="true"
-                    onDragStart={handleTabDragStart}
-                    onDragOver={handleTagDragOver}
-                    onDrop={handleTabDrop}
-                  />
-                )
-              })}
-            {renderCommands()}
+            {props.tabs && props.tabs.map((tab: any) => renderTabLabel(tab))}
+            {props.tabsCommands && renderTabsCommands()}
           </MuiTabList>
         </Box>
         {renderPanels()}

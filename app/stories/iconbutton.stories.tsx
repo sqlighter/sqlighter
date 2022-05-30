@@ -51,7 +51,7 @@ const TemplateStack: ComponentStory<typeof IconButton> = (args) => (
 )
 
 const TemplateSizes: ComponentStory<typeof IconButton> = (args) => (
-  <Stack direction="row">
+  <Stack direction="row" sx={{ display: "flex", alignItems: "flex-start" }}>
     <IconButton {...args} command={databaseCommand} size="small" />
     <IconButton {...args} command={databaseCommand} size="medium" />
     <IconButton {...args} command={databaseCommand} size="large" />

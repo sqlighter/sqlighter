@@ -30,4 +30,4 @@ export function Panel(props: PanelProps) {
 }
 
 /** A react element that implements or extend basic panel properties */
-export type PanelElement = React.ReactElement<PanelProps, React.FunctionComponent<PanelProps>>;
+export type PanelElement = React.ReactElement<PanelProps, React.FunctionComponent<PanelProps>>
