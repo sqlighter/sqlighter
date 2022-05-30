@@ -14,34 +14,40 @@
 // Applying type
 // https://m3.material.io/styles/typography/applying-type
 
-import { Typography as MuiTypography, Typography, TypographyProps as MuiTypographyProps } from "@mui/material"
+import { Theme, SxProps } from "@mui/material/styles"
+import { Typography as MuiTypography, TypographyProps as MuiTypographyProps } from "@mui/material"
 
 export interface TypographyProps extends MuiTypographyProps {
+  /** Style when using generic component, default to body */
+  typescale?: "display" | "headline" | "title" | "body" | "label"
+
   /** Relative size, defaults to medium */
   size?: "small" | "medium" | "large"
 }
 
-export function Display(props: TypographyProps) {
+function Typography(props: TypographyProps) {
   const size = props.size || "medium"
-  return <Typography className={`Display-${size}`}>{props.children}</Typography>
+  const typescale = props.typescale || "body"
+  const className = `Typography-root Typography-${typescale}${size.charAt(0).toUpperCase()}${size.slice(1)}`
+  return <MuiTypography className={className}>{props.children}</MuiTypography>
+}
+
+export function Display(props: TypographyProps) {
+  return <Typography typescale="display" {...props} />
 }
 
 export function Headline(props: TypographyProps) {
-  const size = props.size || "medium"
-  return <Typography className={`Headline-${size}`}>{props.children}</Typography>
+  return <Typography typescale="headline" {...props} />
 }
 
 export function Title(props: TypographyProps) {
-  const size = props.size || "medium"
-  return <Typography className={`Title-${size}`}>{props.children}</Typography>
+  return <Typography typescale="title" {...props} />
 }
 
 export function Body(props: TypographyProps) {
-  const size = props.size || "medium"
-  return <Typography className={`Body-${size}`}>{props.children}</Typography>
+  return <Typography typescale="body" {...props} />
 }
 
 export function Label(props: TypographyProps) {
-  const size = props.size || "medium"
-  return <Typography className={`Label-${size}`}>{props.children}</Typography>
+  return <Typography typescale="label" {...props} />
 }

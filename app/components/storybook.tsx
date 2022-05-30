@@ -2,7 +2,7 @@ import Head from "next/head"
 import Script from "next/script"
 import { useRouter } from "next/router"
 import "../styles/global.css"
-import { customTheme, PRIMARY_LIGHTEST } from "./theme"
+import { customTheme, PRIMARY_LIGHTEST, customSx } from "./theme"
 
 import CssBaseline from "@mui/material/CssBaseline"
 import GlobalStyles from "@mui/material/GlobalStyles"
@@ -14,7 +14,7 @@ export function StorybookDecorator(props) {
     <CssBaseline>
       <GlobalStyles styles={{ body: { backgroundColor: PRIMARY_LIGHTEST } }} />
       <ThemeProvider theme={customTheme()}>
-        <Box className="StorybookDecorator-root">{props.children}</Box>
+        <Box className="StorybookDecorator-root" sx={customSx}>{props.children}</Box>
       </ThemeProvider>
     </CssBaseline>
   )

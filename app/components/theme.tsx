@@ -2,7 +2,7 @@
 // theme.tsx - custom theme applied to all components of the application
 //
 
-import { lighten, rgbToHex, createTheme } from "@mui/material/styles"
+import { lighten, rgbToHex, createTheme, Theme, SxProps } from "@mui/material/styles"
 
 // Theming
 // https://bareynol.github.io/mui-theme-creator/
@@ -32,6 +32,102 @@ export const PRIMARY_LIGHTER = rgbToHex(lighten(PRIMARY_COLOR, LIGHTER))
 export const PRIMARY_LIGHTEST = rgbToHex(lighten(PRIMARY_COLOR, LIGHTEST))
 
 export const BORDER_RADIUS_FANCY = "74% 26% 61% 39% / 35% 30% 70% 65%"
+
+export const customSx: SxProps<Theme> = {
+
+  // https://material.io/blog/roboto-flex
+  // https://m3.material.io/styles/typography/type-scale-tokens
+  ".Typography-root": {
+    fontFamily: "'Roboto Flex', sans-serif",
+    letterSpacing: 0,
+  },
+  ".Typography-displayLarge": {
+    fontWeight: 400,
+    lineHeight: "64px",
+    fontSize: "57px",
+  },
+  ".Typography-displayMedium": {
+    fontWeight: 400,
+    lineHeight: "52px",
+    fontSize: "45px",
+  },
+  ".Typography-displaySmall": {
+    fontWeight: 400,
+    lineHeight: "44px",
+    fontSize: "36px",
+  },
+  ".Typography-headlineLarge": {
+    fontWeight: 400,
+    lineHeight: "40px",
+    fontSize: "32px",
+  },
+  ".Typography-headlineMedium": {
+    fontWeight: 400,
+    lineHeight: "36px",
+    fontSize: "28px",
+  },
+  ".Typography-headlineSmall": {
+    fontWeight: 400,
+    lineHeight: "32px",
+    fontSize: "24px",
+  },
+  ".Typography-titleLarge": {
+    fontWeight: 400,
+    lineHeight: "28px",
+    fontSize: "22px",
+  },
+  ".Typography-titleMedium": {
+    fontWeight: 500,
+    lineHeight: "24px",
+    fontSize: "16px",
+  },
+  ".Typography-titleSmall": {
+    fontWeight: 500,
+    lineHeight: "20px",
+    fontSize: "14px",
+    letterSpacing: 0.1,
+  },
+  ".Typography-labelLarge": {
+    fontWeight: 500,
+    lineHeight: "20px",
+    fontSize: "14px",
+    letterSpacing: 0.1,
+  },
+  ".Typography-labelMedium": {
+    fontWeight: 500,
+    lineHeight: "16px",
+    fontSize: "12px",
+    letterSpacing: 0.5,
+  },
+  ".Typography-labelSmall": {
+    fontWeight: 500,
+    lineHeight: "16px",
+    fontSize: "11px",
+    letterSpacing: 0.5,
+  },
+  ".Typography-bodyLarge": {
+    fontWeight: 400,
+    lineHeight: "24px",
+    fontSize: "16px",
+    letterSpacing: 0.5,
+  },
+  ".Typography-bodyMedium": {
+    fontWeight: 400,
+    lineHeight: "20px",
+    fontSize: "14px",
+    letterSpacing: 0.25,
+  },
+  ".Typography-bodySmall": {
+    fontWeight: 400,
+    lineHeight: "16px",
+    fontSize: "12px",
+    letterSpacing: 0.4,
+  },
+
+
+
+
+}
 
 export function customTheme() {
   const baseTheme = createTheme({
@@ -68,7 +164,7 @@ export function customTheme() {
 
     typography: {
       // https://mui.com/customization/typography/#self-hosted-fonts
-      fontFamily: "Lato, Roboto, Helvetica, Arial, sans-serif",
+      fontFamily: "'Roboto Flex', Helvetica, Arial, sans-serif",
       fontWeightLight: 300,
       fontWeightRegular: 400,
       fontWeightMedium: 700,

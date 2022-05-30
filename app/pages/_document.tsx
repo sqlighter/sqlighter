@@ -1,21 +1,41 @@
 // pages/_document.js
-import { Html, Head, Main, NextScript } from "next/document"
-import Box from "@mui/material/Box"
 
-const CUSTOM_FONTS =
-  "https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&display=swap"
+import { Html, Head, Main, NextScript } from "next/document"
+import { Theme, SxProps } from "@mui/material/styles"
+import { customSx } from "../components/theme"
+import Box from "@mui/material/Box"
 
 // To use material icons from fonts add link below (slows initial page loading)
 // <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
+
+const documentSx: SxProps<Theme> = {
+  ...customSx,
+  position: "absolute",
+  left: 0,
+  top: 0,
+  right: 0,
+  bottom: 0,
+  backgroundColor: "white",
+}
 
 export default function Document() {
   return (
     <Html>
       <Head>
-        <link href={CUSTOM_FONTS} rel="stylesheet" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonimous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,400;8..144,500&display=swap"
+          rel="preload"
+          as="style"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,400;8..144,500&display=swap"
+          rel="stylesheet"
+        />
       </Head>
       <body>
-        <Box sx={{ position: "absolute", left: 0, top: 0, right: 0, bottom: 0, backgroundColor: "white" }}>
+        <Box sx={documentSx}>
           <Main />
         </Box>
         <NextScript />
