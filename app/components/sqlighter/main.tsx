@@ -12,7 +12,7 @@ import { useTheme } from "@mui/material/styles"
 import { Typography } from "@mui/material"
 import { Allotment } from "allotment"
 
-import { Command, CommandEvent, CommandIconButton } from "../../lib/commands"
+import { Command } from "../../lib/commands"
 import { useSqljs } from "../hooks/useDB"
 import { DataConnection, DataConnectionConfigs } from "../../lib/sqltr/connections"
 import { SqliteDataConnection } from "../../lib/sqltr/databases/sqlite"
@@ -24,6 +24,7 @@ import { TabsLayout } from "../../components/navigation/tabslayout"
 import { Panel, PanelProps, PanelElement } from "../../components/navigation/panel"
 import { DatabasePanel } from "../database/databasepanel"
 import { QueryTab } from "../database/querytab"
+import { IconButton } from "../ui/iconbutton"
 
 const SSR = typeof window === "undefined"
 
@@ -56,9 +57,9 @@ export default function Main(props) {
     <Panel id="tab_0" title="Tab 0" icon="query">
       Tab0
       <Box>
-      <CommandIconButton command={{command: "Print", icon: "database"}} onCommand={handleCommand} size="small" />
+      <IconButton command={{command: "Print", icon: "database"}} onCommand={handleCommand} size="small" />
       </Box>
-      <CommandIconButton command={{command: "openQuery", title: "Open Query", icon: "query"}} onCommand={handleCommand} />
+      <IconButton command={{command: "openQuery", title: "Open Query", icon: "query"}} onCommand={handleCommand} />
     more
     </Panel>,
     <Panel id="tab_1" title="Tab 1" icon="query">

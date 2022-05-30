@@ -1,11 +1,19 @@
 import React from "react"
 import { ComponentStory, ComponentMeta } from "@storybook/react"
+import { StorybookDecorator } from "../components/storybook"
 import { Tag } from "../components/ui/tags"
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: "Components/Tag",
   component: Tag,
+  decorators: [
+    (Story) => (
+      <StorybookDecorator>
+        <Story />
+      </StorybookDecorator>
+    ),
+  ],
 } as ComponentMeta<typeof Tag>
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args

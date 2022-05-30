@@ -5,7 +5,8 @@
 import Box from "@mui/material/Box"
 import { DataGrid } from "./datagrid"
 import { PanelProps } from "../navigation/panel"
-import { Command, CommandIconButton } from "../../lib/commands"
+import { Command } from "../../lib/commands"
+import {  IconButton } from "../ui/iconbutton"
 
 // TODO move with data models
 export interface QueryResultsPanelProps extends PanelProps {
@@ -49,7 +50,7 @@ export function QueryResultsPanel(props: QueryResultsPanelProps) {
       sx={{ width: 1, height: 1, maxHeight: 1, display: "flex", flexDirection: "column" }}
     >
       <Box>id: {props.id}</Box>
-      <Box>status: {props.status} <CommandIconButton command={command} onCommand={handleCommand} /></Box>
+      <Box>status: {props.status} <IconButton command={command} onCommand={handleCommand} /></Box>
       <Box>title: {props.title}</Box>
       
       {props.error && <Box>error: {props.error}</Box>}

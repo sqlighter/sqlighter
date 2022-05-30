@@ -12,10 +12,10 @@ import { Tooltip } from "./tooltip"
 // https://storybook.js.org/docs/react/writing-tests/test-runner
 
 //
-// CommandIconButton
+// IconButton
 //
 
-const CommandIconButton_SxProps: SxProps<Theme> = {
+const IconButton_SxProps: SxProps<Theme> = {
   borderRadius: "8px",
 }
 
@@ -23,14 +23,19 @@ const CommandIconButton_SxProps: SxProps<Theme> = {
 export interface IconButtonProps extends MuiIconButtonProps {
   /** Command to be rendered by this button */
   command: Command
+
+  /** True if button's title should be shown next to icon (default false) */
+  label?: boolean
+
   /** Command handler for button click */
   onCommand?: CommandEvent
 }
 
+/** A customized icon button that raises onCommand events */
 export function IconButton(props: IconButtonProps) {
   const { command, onCommand, ...buttonProps } = props
   if (!command.icon) {
-    console.error(`CommandIconButton - command.icon missing`, command)
+    console.error(`IconButton - command.icon missing`, command)
   }
 
   function handleClick(event) {
@@ -48,14 +53,14 @@ export function IconButton(props: IconButtonProps) {
       className="IconButton-root"
       {...buttonProps}
       onClick={handleClick}
-      sx={CommandIconButton_SxProps}
+      sx={IconButton_SxProps}
     >
-      <Icon fontSize="inherit">{command.icon}</Icon> pippo
+      <Icon fontSize="inherit">{command.icon}</Icon>{props.label && props.command.title}
     </MuiIconButton>
   )
 
   // optional tooltip if title is defined
-  if (props.command.title) {
+  if (props.command.title && !props.label) {
     button = <Tooltip title={command.title}>{button}</Tooltip>
   }
 
