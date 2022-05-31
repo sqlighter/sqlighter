@@ -10,7 +10,7 @@ import Typography from "@mui/material/Typography"
 import { CommandEvent } from "../../lib/commands"
 import { DataConnection } from "../../lib/sqltr/connections"
 import { DatabaseTreeView } from "./databasetreeview"
-import { ConnectionsMenu } from "./connectionsmenu"
+import { ConnectionPicker } from "./connectionsmenu"
 import { PanelProps } from "../navigation/panel"
 
 export interface DatabasePanelProps extends PanelProps {
@@ -27,12 +27,14 @@ export function DatabasePanel(props: DatabasePanelProps) {
   //
 
   return (
-    <Box className="DatabasePanel-root" sx={{ height: "100%", overflowY: "scroll" }}>
-      <Box sx={{ padding: 1 }}>
-        <Typography variant="overline">Database Explorer</Typography>
-        <ConnectionsMenu connection={props.connection} connections={props.connections} onCommand={props.onCommand} />
+      <Box className="DatabasePanel-root" sx={{ height: "100%", overflowY: "scroll" }}>
+        <Box sx={{ padding: 1 }}>
+          <Box>
+            <Typography variant="overline">Database Explorer</Typography>
+          </Box>
+          <ConnectionPicker connection={props.connection} connections={props.connections} onCommand={props.onCommand} />
+        </Box>
+        {props.connection && <DatabaseTreeView connection={props.connection} onCommand={props.onCommand} />}
       </Box>
-      {props.connection && <DatabaseTreeView connection={props.connection} onCommand={props.onCommand} />}
-    </Box>
   )
 }

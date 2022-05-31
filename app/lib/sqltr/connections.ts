@@ -3,6 +3,7 @@
 //
 
 import { QueryExecResult } from "sql.js"
+import { generateId } from "../../lib/items/items"
 
 /** Database schema */
 export interface DataSchema {
@@ -89,6 +90,7 @@ export abstract class DataConnection {
 
   /** Concrete classes only */
   protected constructor(configs: DataConnectionConfigs) {
+    this.id = generateId("dbc_")
     this._configs = configs
   }
 

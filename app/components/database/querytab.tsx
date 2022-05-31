@@ -21,7 +21,7 @@ import { Icon } from "../ui/icon"
 import { Panel, PanelProps, PanelElement } from "../navigation/panel"
 import { Tabs } from "../navigation/tabs"
 
-import { ConnectionsMenu } from "./connectionsmenu"
+import { ConnectionPicker } from "./connectionsmenu"
 import { SqlEditor } from "../editor/sqleditor"
 import { QueryResultsPanel, QueryResultsPanelProps } from "./queryresultspanel"
 
@@ -163,7 +163,7 @@ export function QueryTab(props: QueryTabProps) {
               Run all
             </Button>
           </Box>
-          <ConnectionsMenu connection={props.connection} connections={props.connections} />
+          <ConnectionPicker connection={props.connection} connections={props.connections} />
         </Box>
       </Box>
     )

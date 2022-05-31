@@ -5,6 +5,7 @@
 import initSqlJs, { Database, QueryExecResult } from "sql.js"
 import sqliteParser from "sqlite-parser"
 import { DataConnection, DataConnectionConfigs, DataSchema } from "../connections"
+import { generateId } from "../../items/items"
 
 function camelCase(str) {
   return str
@@ -23,6 +24,9 @@ export class SqliteDataConnection extends DataConnection {
 
   protected constructor(configs: DataConnectionConfigs) {
     super(configs)
+
+    // TODO should use filename that buffer was generated from
+    this.title = "chinook.db" //(this._database as any)?.filename
   }
 
   public static async create(configs: DataConnectionConfigs, engine): Promise<SqliteDataConnection> {
