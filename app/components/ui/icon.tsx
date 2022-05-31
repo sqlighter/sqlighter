@@ -4,6 +4,7 @@
 
 import * as React from "react"
 import { SvgIcon, SvgIconProps } from "@mui/material"
+import Badge from "@mui/material/Badge"
 
 // Material Icons (Google)
 // https://mui.com/material-ui/material-icons/?query=table&theme=Outlined
@@ -14,6 +15,7 @@ import BentoOutlinedIcon from "@mui/icons-material/BentoOutlined"
 import BoltOutlinedIcon from "@mui/icons-material/BoltOutlined"
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined"
 import DatabaseIcon from "@mui/icons-material/StorageOutlined"
+import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined"
 import FileIcon from "@mui/icons-material/InsertDriveFileOutlined"
 import FolderIcon from "@mui/icons-material/FolderOutlined"
 import HistoryIcon from "@mui/icons-material/HistoryOutlined"
@@ -43,64 +45,85 @@ import { SqliteIcon } from "./icons/sqliteicon"
 // https://fontawesome.com/icons/server?s=regular
 
 export interface IconProps extends SvgIconProps {
+  /** Display a dot badge with the given color (default none) */
+  dotColor?: "default" | "success" | "primary" | "secondary" | "error" | "info" | "warning"
+
+  /** Normally the content is a string with the icon's name but it could be an icon itself or other element */
   children: string | React.ReactNode
 }
 
 export function Icon(props: IconProps) {
-  if (typeof props.children !== "string") {
-    // if an icon element was passed directly this is just a passthrough component
-    return <>{props.children}</>
+  function getIcon(name) {
+    switch (name) {
+      case "account":
+        return <AccountCircleOutlined {...props} />
+      case "add":
+        return <AddOutlinedIcon {...props} />
+      case "close":
+        return <CloseOutlinedIcon {...props} />
+      case "database":
+        return <DatabaseOutline {...props} />
+      case "expand":
+        return <ExpandMoreOutlinedIcon {...props} />
+      case "file":
+        return <FileIcon {...props} />
+      case "folder":
+        return <FolderIcon {...props} />
+      case "history":
+        return <HistoryIcon {...props} />
+      case "info":
+        return <InfoOutlinedIcon {...props} />
+      case "key":
+        return <KeyIcon {...props} />
+      case "more":
+        return <MoreHorizOutlinedIcon {...props} />
+      case "pin":
+      case "pinned":
+        return <PushPinOutlinedIcon {...props} sx={{ transform: "rotate(45deg)" }} />
+      case "play":
+        return <PlayArrowOutlinedIcon {...props} />
+      case "print":
+        return <PrintOutlinedIcon {...props} />
+      case "query":
+        return <TableRowsOutlinedIcon {...props} />
+      case "refresh":
+        return <RefreshOutlinedIcon {...props} />
+      case "settings":
+        return <SettingsOutlined {...props} />
+      case "share":
+        return <ShareOutlinedIcon {...props} />
+      case "sqlite":
+      case "sqlite3":
+        return <SqliteIcon {...props} />
+      case "tabsRight":
+        return <BentoOutlinedIcon {...props} />
+      case "tabsBottom":
+        return <BentoOutlinedIcon {...props} sx={{ transform: "rotate(90deg)" }} />
+      case "trigger":
+        return <BoltOutlinedIcon {...props} />
+      case "table":
+      case "view":
+        return <TableIcon {...props} />
+
+      default:
+        return <QuestionMarkIcon {...props} />
+    }
   }
 
-  switch (props.children) {
-    case "account":
-      return <AccountCircleOutlined {...props} />
-    case "add":
-      return <AddOutlinedIcon {...props} />
-    case "close":
-      return <CloseOutlinedIcon {...props} />
-    case "database":
-      return <DatabaseOutline {...props} />
-    case "file":
-      return <FileIcon {...props} />
-    case "folder":
-      return <FolderIcon {...props} />
-    case "history":
-      return <HistoryIcon {...props} />
-    case "info":
-      return <InfoOutlinedIcon {...props} />
-    case "key":
-      return <KeyIcon {...props} />
-    case "more":
-      return <MoreHorizOutlinedIcon {...props} />
-    case "pin":
-    case "pinned":
-      return <PushPinOutlinedIcon {...props} sx={{ transform: "rotate(45deg)" }} />
-    case "play":
-      return <PlayArrowOutlinedIcon {...props} />
-    case "print":
-      return <PrintOutlinedIcon {...props} />
-    case "query":
-      return <TableRowsOutlinedIcon {...props} />
-    case "refresh":
-      return <RefreshOutlinedIcon {...props} />
-    case "settings":
-      return <SettingsOutlined {...props} />
-    case "share":
-      return <ShareOutlinedIcon {...props} />
-    case "sqlite":
-      return <SqliteIcon {...props} />
-    case "tabsRight":
-      return <BentoOutlinedIcon {...props} />
-    case "tabsBottom":
-      return <BentoOutlinedIcon {...props} sx={{ transform: "rotate(90deg)" }} />
-    case "trigger":
-      return <BoltOutlinedIcon {...props} />
-    case "table":
-    case "view":
-      return <TableIcon {...props} />
+  let icon = typeof props.children !== "string" ? <>{props.children}</> : getIcon(props.children)
 
-    default:
-      return <QuestionMarkIcon {...props} />
+  if (props.dotColor) {
+    icon = (
+      <Badge
+        overlap="circular"
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        variant="dot"
+        color={props.dotColor}
+      >
+        {icon}
+      </Badge>
+    )
   }
+
+  return icon
 }
