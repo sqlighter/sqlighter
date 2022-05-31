@@ -10,7 +10,7 @@ import Typography from "@mui/material/Typography"
 import { CommandEvent } from "../../lib/commands"
 import { DataConnection } from "../../lib/sqltr/connections"
 import { DatabaseTreeView } from "./databasetreeview"
-import { ConnectionPicker } from "./connectionsmenu"
+import { ConnectionPicker } from "./connectionspicker"
 import { PanelProps } from "../navigation/panel"
 
 export interface DatabasePanelProps extends PanelProps {

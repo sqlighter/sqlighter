@@ -21,7 +21,7 @@ import { Icon } from "../ui/icon"
 import { Panel, PanelProps, PanelElement } from "../navigation/panel"
 import { Tabs } from "../navigation/tabs"
 
-import { ConnectionPicker } from "./connectionsmenu"
+import { ConnectionPicker } from "./connectionspicker"
 import { SqlEditor } from "../editor/sqleditor"
 import { QueryResultsPanel, QueryResultsPanelProps } from "./queryresultspanel"
 

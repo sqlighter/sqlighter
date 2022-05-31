@@ -5,20 +5,13 @@
 import React, { ReactElement } from "react"
 import dynamic from "next/dynamic"
 import { useState, useEffect } from "react"
-import Head from "next/head"
-
 import Box from "@mui/material/Box"
-import { useTheme } from "@mui/material/styles"
-import { Typography } from "@mui/material"
-import { Allotment } from "allotment"
 
 import { Command } from "../../lib/commands"
 import { useSqljs } from "../hooks/useDB"
 import { DataConnection, DataConnectionConfigs } from "../../lib/sqltr/connections"
 import { SqliteDataConnection } from "../../lib/sqltr/databases/sqlite"
 import { createQueryTab } from "../database/querytab"
-
-import { Icon } from "../../components/ui/icon"
 import { Context } from "../../components/context"
 import { TabsLayout } from "../../components/navigation/tabslayout"
 import { Panel, PanelProps, PanelElement } from "../../components/navigation/panel"
@@ -106,7 +99,7 @@ export default function Main(props) {
   async function openSomeTestConnection() {
     if (sqljs) {
       const conn1 = await getDatabaseConnection("/test.db")
-      conn1.title = "yogibear.db"
+      conn1.title = "test.db"
 
       const conn2 = await getDatabaseConnection("/test.db")
       conn2.title = "chinook.db"
@@ -114,9 +107,8 @@ export default function Main(props) {
       const conn3 = await getDatabaseConnection("/databases/northwind.db")
       conn3.title = "northwind.db"
 
-      setConnection(conn3)
+      setConnection(conn2)
       setConnections([conn1, conn2, conn3])
-
     } else console.error(`DatabasePanel.handleOpenClick - sqljs engine not loaded`)
   }
 
@@ -128,24 +120,9 @@ export default function Main(props) {
   // handlers
   //
 
-  /*
-  function handleTabsChange(tabId?: string, tabs?: PanelProps[]) {
-    console.debug(`handleTabsChange - tabId: ${tabId}, tabs: ${tabs && tabs.map((t) => t.id).join(", ")}`)
-    setTabs(tabs)
-    setTabValue(tabId)
-  }
-*/
-  function handleAddTabClick(e: React.MouseEvent<HTMLElement>): void {
-    // console.debug("Main.handleAddTabClick", e)
-  }
-
   async function handleCommand(event: React.SyntheticEvent, command: Command) {
     console.debug(`Main.handleCommand - ${command.command}`, command)
     switch (command.command) {
-      case "sqlighter.manageConnections":
-        await openSomeTestConnection()
-        break
-
       case "sqlighter.viewQuery":
         // open a new tab with a query panel
         const queryTab = createQueryTab(command, connection, connections)
@@ -167,6 +144,17 @@ export default function Main(props) {
       case "changeActivity":
         setActivityId(command.args.id)
         return
+
+      case "changeConnection":
+        setConnection(command.args.connection)
+        break
+
+      case "manageConnections":
+        if (!connections) {
+          // TODO open a custom tab where use can create and configure data connections
+          await openSomeTestConnection()
+        }
+        break
     }
 
     // pass to parent?
@@ -198,14 +186,6 @@ export default function Main(props) {
     ]
   }
 
-  const tabsCommands = [
-    {
-      command: "tabs.newTab",
-      title: "New Tab",
-      icon: "add",
-    },
-  ]
-
   return (
     <TabsLayout
       title="SQLighter"
@@ -216,7 +196,13 @@ export default function Main(props) {
       //
       tabId={tabId}
       tabs={tabs}
-      tabsCommands={tabsCommands}
+      tabsCommands={[
+        {
+          command: "tabs.newTab",
+          title: "New Tab",
+          icon: "add",
+        },
+      ]}
       //
       user={context.user}
       //
