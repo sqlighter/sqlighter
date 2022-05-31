@@ -85,12 +85,10 @@ export default function Main(props) {
     }
   }, [sqljs])
 
-  async function openSomeTestConnection() {
+  async function getDatabaseConnection(url) {
     if (sqljs) {
-      //      const response = await fetch("/chinook.sqlite")
-      const response = await fetch("/test.db")
+      const response = await fetch(url)
       const buffer = await response.arrayBuffer()
-      console.log("downloaded", response, buffer)
       const configs: DataConnectionConfigs = {
         client: "sqlite3",
         connection: {
@@ -98,12 +96,28 @@ export default function Main(props) {
         },
       }
 
-      const conn = await SqliteDataConnection.create(configs, sqljs)
-      console.debug(`openSomeTestConnection - opened`, conn)
-      // faking it a bit for now to have a list of connections
-      setConnection(conn)
-      setConnections([conn, conn, conn])
-    } else [console.error(`DatabasePanel.handleOpenClick - sqljs engine not loaded`)]
+      const connection = await SqliteDataConnection.create(configs, sqljs)
+      connection.title = url
+      console.debug(`getDatabaseConnection - ${url} opened`, connection)
+      return connection
+    }
+  }
+
+  async function openSomeTestConnection() {
+    if (sqljs) {
+      const conn1 = await getDatabaseConnection("/test.db")
+      conn1.title = "yogibear.db"
+
+      const conn2 = await getDatabaseConnection("/test.db")
+      conn2.title = "chinook.db"
+
+      const conn3 = await getDatabaseConnection("/databases/northwind.db")
+      conn3.title = "northwind.db"
+
+      setConnection(conn3)
+      setConnections([conn1, conn2, conn3])
+
+    } else console.error(`DatabasePanel.handleOpenClick - sqljs engine not loaded`)
   }
 
   //

@@ -108,13 +108,15 @@ export function ConnectionPicker(props: ConnectionPickerProps) {
   function renderMenuItems() {
     return (
       <>
-        <Box sx={{ ml: 2, mr: 1, mb: 2, mt: 1 }}>
+        <Box sx={{ ml: 2, mr: 2, mb: 2, mt: 1 }}>
           <TextField id="filter" size="small" placeholder="Filter connections" variant="outlined" sx={{ mr: 1 }} />
-          <Button variant="outlined" sx={{ minWidth: 40, width: 40, height: 40 }}>
-            <Icon>add</Icon>
-          </Button>
+          <Tooltip title="Create connection">
+            <Button variant="outlined" sx={{ minWidth: 40, width: 40, height: 40 }}>
+              <Icon>add</Icon>
+            </Button>
+          </Tooltip>
         </Box>
-        <Divider />
+        <Divider sx={{ mb: 1 }} />
         {props.connections.map((conn) => {
           return (
             <MenuItem key={conn.id} onClick={handleClose}>
