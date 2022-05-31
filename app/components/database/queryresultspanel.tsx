@@ -2,6 +2,7 @@
 // queryresultspanel.tsx - results from a query in tabular form, later charts, plugins, exports, etc...
 //
 
+import React, { useRef, useEffect } from "react"
 import Box from "@mui/material/Box"
 import { DataGrid } from "./datagrid"
 import { PanelProps } from "../navigation/panel"
@@ -52,7 +53,7 @@ export function QueryResultsPanel(props: QueryResultsPanelProps) {
       <Box>title: {props.title}</Box>
 
       {props.error && <Box>error: {props.error}</Box>}
-      <Box sx={{ flexGrow: 1, width: 1 }}>
+      <Box sx={{ flexGrow: 1, height: 1, width: 1 }}>
         {props.columns && props.values && <DataGrid columns={props.columns} values={props.values} />}
       </Box>
     </Box>

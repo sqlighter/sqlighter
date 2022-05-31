@@ -52,6 +52,8 @@ export function QueryTab(props: QueryTabProps) {
   // results shown below sql or to the right?
   const [variant, setVariant] = useState<"bottom" | "right">("bottom")
 
+  const allotmentRef = React.useRef(null)
+
   //
   // handlers
   //
@@ -127,7 +129,15 @@ export function QueryTab(props: QueryTabProps) {
         break
 
       case "toggleResults":
+        console.debug(
+          `QueryTab.toggleResults - variant: ${variant}, ref: ${allotmentRef.current}`,
+          allotmentRef.current
+        )
         setVariant(variant == "bottom" ? "right" : "bottom")
+        if (allotmentRef && allotmentRef.current) {
+          //   (allotmentRef.current as any).reset()
+          ;(allotmentRef.current as any).resize([100, 100])
+        }
         return
     }
   }
@@ -178,6 +188,34 @@ export function QueryTab(props: QueryTabProps) {
     return <>No results yet</>
   }
 
+  /**
+   * Render the split panel with editor on top and results below or
+   * editor on the left and result below. An easier version of this code
+   * would simply use vertical={variant == 'bottom'} however for some
+   * reason due to how react/allotment refresh it doesn't work. Instead
+   * we add a box that makes the two versions different and hence require
+   * a whole updated render.
+   */
+  function renderAlloment() {
+    if (variant == "bottom") {
+      return (
+        <Allotment className={`QueryTabs-bottomResults`} vertical={true} proportionalLayout={true}>
+          <Allotment.Pane>{renderEditor()}</Allotment.Pane>
+          <Allotment.Pane>{renderResults()}</Allotment.Pane>
+        </Allotment>
+      )
+    } else {
+      return (
+        <Box sx={{ width: 1, height: 1 }}>
+          <Allotment ref={allotmentRef} className={`QueryTabs-rightResults`} vertical={false} proportionalLayout={true}>
+            <Allotment.Pane>{renderEditor()}</Allotment.Pane>
+            <Allotment.Pane>{renderResults()}</Allotment.Pane>
+          </Allotment>
+        </Box>
+      )
+    }
+  }
+
   return (
     <Box className="QueryPanel-root" sx={{ width: 1, height: 1, maxHeight: 1 }}>
       <Allotment vertical={true}>
@@ -185,12 +223,7 @@ export function QueryTab(props: QueryTabProps) {
           {renderHeader()}
         </Allotment.Pane>
         <Allotment.Pane>
-          <Allotment vertical={variant == "bottom"}>
-            <Allotment.Pane minSize={100}>{renderEditor()}</Allotment.Pane>
-            <Allotment.Pane minSize={100}>
-              <Box sx={{ height: 1, maxHeight: 1 }}>{renderResults()}</Box>
-            </Allotment.Pane>
-          </Allotment>
+          <Box sx={{ width: 1, height: 1 }}>{renderAlloment()}</Box>
         </Allotment.Pane>
       </Allotment>
     </Box>

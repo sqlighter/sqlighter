@@ -66,6 +66,7 @@
     "tempy": "^3.0.0",
     "tokenizr": "^1.6.6",
     "use-persisted-state": "^0.3.3",
+    "use-resize-observer": "^9.0.0",
     "uuid": "^8.3.2",
     "yaml": "^2.1.1"
   },

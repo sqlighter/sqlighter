@@ -18,6 +18,7 @@ import { Command, CommandEvent } from "../../lib/commands"
 import { Icon } from "../ui/icon"
 import { PanelElement } from "./panel"
 import { IconButton } from "../ui/iconbutton"
+import { Label } from "../ui/typography"
 
 export const TABLIST_HEIGHT = 48
 
@@ -240,14 +241,13 @@ export function Tabs(props: TabsProps) {
         id={tabProps.id}
         value={tabProps.id}
         aria-label={tabProps.id}
-        icon={typeof tabProps.icon && <Icon>{tabProps.icon}</Icon>}
-        iconPosition="start"
         component="div"
         label={
-          <>
-            <Box component="span">{tabProps.title}</Box>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Icon sx={{ mr: 0.5 }}>{tabProps.icon}</Icon>
+            <Label size="large">{tabProps.title}</Label>
             <IconButton className="Tab-closeIcon" command={closeCommand} onCommand={handleCloseTab} size="small" />
-          </>
+          </Box>
         }
         draggable="true"
         onDragStart={handleTabDragStart}
