@@ -261,8 +261,8 @@ export function Tabs(props: TabsProps) {
     if (props.tabsCommands && props.tabsCommands.length > 0) {
       return (
         <Box className="Tabs-tabsCommands">
-          {props.tabsCommands.map((command) => {
-            return <IconButton command={command} onCommand={props.onCommand} size="small" />
+          {props.tabsCommands.map((command, index) => {
+            return <IconButton key={index} command={command} onCommand={props.onCommand} size="small" />
           })}
         </Box>
       )
