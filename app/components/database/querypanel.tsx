@@ -70,6 +70,7 @@ export function QueryPanel(props: QueryPanelProps) {
 
     // create a tab that is shown while the query is being executed to display progress, etc.
     const running = new QueryRun()
+    running.parentId = query.id
     running.query = query
     running.status = "running"
     running.sql = query.sql
@@ -89,7 +90,7 @@ export function QueryPanel(props: QueryPanelProps) {
 
       // first query completed normally
       running.status = "completed"
-      running.completedAt = new Date()
+      running.updatedAt = new Date()
       running.columns = queryResults[0].columns
       running.values = queryResults[0].values
       console.debug(`QueryPanel.runQuery - completed`, running)
@@ -100,10 +101,11 @@ export function QueryPanel(props: QueryPanelProps) {
 
         for (let i = 1; i < queryResults.length; i++) {
           const additionalRun = new QueryRun()
+          additionalRun.parentId = query.id
           additionalRun.query = running.query
           additionalRun.title = `${baseTitle} (${i + 1})`
           additionalRun.createdAt = running.createdAt
-          additionalRun.completedAt = new Date()
+          additionalRun.updatedAt = new Date()
           additionalRun.status = "completed"
           additionalRun.sql = running.sql
           additionalRun.columns = queryResults[i].columns

@@ -65,14 +65,10 @@ export class QueryRun extends Item {
 
   /** Query that was executed */
   query?: Query
-  /** Connection used to run this query */
-  connection?: DataConnection
 
   /** SQL code that was executed (can be a subset of query's code) */
   sql?: string
 
-  /** Time when execution was completed */
-  completedAt?: string | Date
   /** Execution status */
   status: "created" | "running" | "completed" | "error"
 
@@ -81,6 +77,7 @@ export class QueryRun extends Item {
 
   /** Resulting columns */
   columns?: any
+
   /** Resulting data */
   values?: any
 
