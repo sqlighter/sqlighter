@@ -3,9 +3,9 @@
 //
 
 import React, { ReactElement } from "react"
-import dynamic from "next/dynamic"
 import { useState, useEffect } from "react"
 import Box from "@mui/material/Box"
+import Typography from "@mui/material/Typography"
 
 import { Command } from "../../lib/commands"
 import { useSqljs } from "../hooks/useDB"
@@ -178,10 +178,14 @@ export default function Main(props) {
         onCommand={handleCommand}
       />,
       <Panel id="act_bookmarks" title="Bookmarks" icon="bookmark">
-        <Box m={1}>Bookmarks (tbd)</Box>
+        <Box p={1}>
+          <Typography variant="overline">Bookmarks (tbd)</Typography>
+        </Box>
       </Panel>,
       <Panel id="act_history" title="History" icon="history">
-        <Box m={1}>History (tbd)</Box>
+        <Box p={1}>
+          <Typography variant="overline">History (tbd)</Typography>
+        </Box>
       </Panel>,
     ]
   }

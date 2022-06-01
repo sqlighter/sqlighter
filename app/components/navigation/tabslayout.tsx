@@ -62,6 +62,8 @@ export function TabsLayout(props: TabsLayoutProps) {
         if (props.activityId == command.args.id) {
           setSidebarVisible(!sidebarVisible)
           return
+        } else {
+          setSidebarVisible(true)
         }
         break
     }
