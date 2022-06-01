@@ -40,7 +40,7 @@ export function QueryPanel(props: QueryPanelProps) {
   const query = props.query
 
   // connection used by the query
-  const connection = props.connections.find((c) => c.id == query.connectionId)
+  const connection = props.connections?.find((c) => c.id == query.connectionId)
   if (!connection) {
     console.error(`QueryPanel - connection ${query.connectionId} not found`)
   }
@@ -57,6 +57,17 @@ export function QueryPanel(props: QueryPanelProps) {
 
   // used to force a refresh when data model changes
   const forceUpdate = useForceUpdate()
+  function notifyChanges() {
+    forceUpdate()
+    if (props.onCommand) {
+      props.onCommand(null, {
+        command: "itemChanged",
+        args: {
+          item: query,
+        },
+      })
+    }
+  }
 
   //
   // running query
@@ -79,7 +90,7 @@ export function QueryPanel(props: QueryPanelProps) {
     console.debug(`QueryPanel.runQuery - running`, running)
     query.runs = query.runs ? [running, ...query.runs] : [running]
     setRunId(running.id)
-    forceUpdate()
+    notifyChanges()
 
     try {
       // TODO split sql into separate statements and run each query separately in sequence to provide correct stats
@@ -123,7 +134,7 @@ export function QueryPanel(props: QueryPanelProps) {
 
     // update first tab with first result of current query
     // refresh entire list also adding any new additional tabs
-    forceUpdate()
+    notifyChanges()
   }
 
   //
@@ -142,7 +153,7 @@ export function QueryPanel(props: QueryPanelProps) {
         // extract data models from views, update query, notify viewers
         query.runs = command.args.tabs.map((tab) => tab.props.run)
         setRunId(command.args.tabId)
-        forceUpdate()
+        notifyChanges()
         break
 
       case "toggleResults":
@@ -151,7 +162,7 @@ export function QueryPanel(props: QueryPanelProps) {
 
       case "changeConnection":
         query.connectionId = command.args?.connection?.id
-        forceUpdate()
+        notifyChanges()
         break
     }
   }
