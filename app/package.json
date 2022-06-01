@@ -58,7 +58,7 @@
     "react-dom": "^18.1.0",
     "react-uploader-hook": "^1.1.2",
     "set-clustering": "^1.1.0",
-    "sharp": "^0.30.4",
+    "sharp": "^0.30.5",
     "showdown": "^2.1.0",
     "sql.js": "^1.6.2",
     "sqlite-parser": "https://github.com/gionatamettifogo/sqlite-parser.git",
