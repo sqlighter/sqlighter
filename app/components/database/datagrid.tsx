@@ -60,7 +60,7 @@ export function DataGrid(props: DataGridProps) {
     }
   }
 
-  console.debug(`DataGrid - ${width}x${height}`)
+  // console.debug(`DataGrid - ${width}x${height}`)
 
   return (
     <Box ref={ref} sx={{ width: 1, height: 1 }}>

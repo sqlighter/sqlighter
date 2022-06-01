@@ -18,6 +18,7 @@ import BookmarksOutlinedIcon from "@mui/icons-material/BookmarksOutlined"
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined"
 import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined"
 import FileIcon from "@mui/icons-material/InsertDriveFileOutlined"
+import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined"
 import FolderIcon from "@mui/icons-material/FolderOutlined"
 import HistoryIcon from "@mui/icons-material/HistoryOutlined"
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined"
@@ -73,6 +74,8 @@ export function Icon(props: IconProps) {
         return <ExpandMoreOutlinedIcon {...props} />
       case "file":
         return <FileIcon {...props} />
+      case "filter":
+        return <FilterAltOutlinedIcon {...props} />
       case "folder":
         return <FolderIcon {...props} />
       case "history":

@@ -1,0 +1,90 @@
+//
+// query.ts - a data connection query based on sql
+//
+
+import { generateId, Item } from "./items"
+import { format } from "date-fns"
+import { DataConnection } from "../sqltr/connections"
+
+export const QUERY_TYPE = "query"
+export const QUERY_PREFIX = "sql_"
+
+export const QUERY_RUN_TYPE = "run"
+export const QUERY_RUN_PREFIX = "run_"
+
+/** A data connection query with display properties, executions, sharing, etc */
+export class Query extends Item {
+  constructor() {
+    super()
+    this.id = generateId(QUERY_PREFIX)
+    this.type = QUERY_TYPE
+    this.title = `Untitled, ${format(new Date(), "LLLL d, yyyy")}`
+  }
+
+  /** Data connection used to run this query */
+  connectionId?: string
+  /** Database used for this query when connection has multiple databases (optional) */
+  database?: string
+
+  /** Query title, eg. Best customers (optional) */
+  title?: string
+  /** Short description, eg. Customers from main datalake filtered by x (optional) */
+  description?: string
+
+  /** SQL query */
+  sql?: string
+
+  /** Shared access rights, eg: participants, rights, viewing modes */
+  sharing?: {
+    // TDB
+  }
+
+  /** Preferences used to visualize this query, for example a charting tool's settings */
+  visualizations?: {
+    /** Preferences for a specific visualization mode, eg. 'table', 'chart', 'code', etc... */
+    [toolId: string]: any // TBD
+  }
+
+  /** Query executions (usually these are not persisted but client only) */
+  runs?: QueryRun[]
+}
+
+/**
+ * Results from the execution of a query. This class is normally not persisted
+ * in storage rather it's used on the client as a data model for query results
+ */
+export class QueryRun extends Item {
+  constructor() {
+    super()
+    this.id = generateId(QUERY_RUN_PREFIX)
+    this.type = QUERY_RUN_TYPE
+    this.createdAt = new Date()
+    this.title = (this.createdAt).toLocaleTimeString()
+    this.status = "created"
+  }  
+
+  /** Query that was executed */
+  query?: Query
+  /** Connection used to run this query */
+  connection?: DataConnection
+
+  /** SQL code that was executed (can be a subset of query's code) */
+  sql?: string
+
+  /** Time when execution was completed */
+  completedAt?: string | Date
+  /** Execution status */
+  status: "created" | "running" | "completed" | "error"
+
+  /** Error string if status is 'error' */
+  error?: any
+
+  /** Resulting columns */
+  columns?: any
+  /** Resulting data */
+  values?: any
+
+  // TODO coud have a function here returning the data rather than the data itself (to support large sets and paging)
+}
+
+export default Query

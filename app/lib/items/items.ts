@@ -5,6 +5,7 @@
 import assert from "assert"
 
 // secure ids with low collision probability
+import { CommandEvent } from "../commands"
 import { customAlphabet } from "nanoid"
 const nanoid = customAlphabet("1234567890abcdefghijklmnopqrstuvwxyz", 20)
 
@@ -47,13 +48,13 @@ export class Metadata {
 export class Item {
   constructor() {}
 
-  /** Unique id for item, eg. usr_xxx, crd_xxx, trn_xxx */
+  /** Unique id for item, eg. usr_xxx, sql_xxx, trn_xxx */
   id: string
 
   /** Item's parent id (optional) */
   parentId?: string
 
-  /** Type of item, eg. 'user', 'card', 'transaction', etc... */
+  /** Type of item, eg. 'user', 'query', 'transaction', etc... */
   type?: string
 
   /** Time when item was originally created */
