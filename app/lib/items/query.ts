@@ -18,6 +18,7 @@ export class Query extends Item {
     super()
     this.id = generateId(QUERY_PREFIX)
     this.type = QUERY_TYPE
+    this.createdAt = new Date()
     this.title = `Untitled, ${format(new Date(), "LLLL d, yyyy")}`
   }
 
