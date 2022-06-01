@@ -127,6 +127,20 @@ export function ConnectionPicker(props: ConnectionPickerProps) {
     }
   }
 
+  // user clicked plus button to create a connection
+  function handleCreateConnection(event) {
+    handleCloseMenu(event)
+    if (props.onCommand) {
+      props.onCommand(event, {
+        command: "createConnection",
+        args: {
+          connection: props.connection,
+          connections: props.connections,
+        },
+      })
+    }
+  }
+
   // user clicked plus button or manage connections menu item
   function handleManageConnections(event) {
     handleCloseMenu(event)

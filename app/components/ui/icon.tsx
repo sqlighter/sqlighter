@@ -2,8 +2,8 @@
 // icon.tsx - svg based icon from an icon's name, eg: <Icon>database</Icon>
 //
 
-import * as React from "react"
-import { SvgIcon, SvgIconProps } from "@mui/material"
+import React from "react"
+import { SvgIconProps } from "@mui/material"
 import Badge from "@mui/material/Badge"
 
 // Material Icons (Google)
@@ -13,8 +13,9 @@ import AccountCircleOutlined from "@mui/icons-material/AccountCircleOutlined"
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined"
 import BentoOutlinedIcon from "@mui/icons-material/BentoOutlined"
 import BoltOutlinedIcon from "@mui/icons-material/BoltOutlined"
+import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlined"
+import BookmarksOutlinedIcon from "@mui/icons-material/BookmarksOutlined"
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined"
-import DatabaseIcon from "@mui/icons-material/StorageOutlined"
 import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined"
 import FileIcon from "@mui/icons-material/InsertDriveFileOutlined"
 import FolderIcon from "@mui/icons-material/FolderOutlined"
@@ -52,6 +53,7 @@ export interface IconProps extends SvgIconProps {
   children: string | React.ReactNode
 }
 
+/** An svg icon from its name */
 export function Icon(props: IconProps) {
   function getIcon(name) {
     switch (name) {
@@ -59,6 +61,10 @@ export function Icon(props: IconProps) {
         return <AccountCircleOutlined {...props} />
       case "add":
         return <AddOutlinedIcon {...props} />
+      case "bookmark":
+        return <BookmarkBorderOutlinedIcon {...props} />
+      case "bookmarks":
+        return <BookmarksOutlinedIcon {...props} />
       case "close":
         return <CloseOutlinedIcon {...props} />
       case "database":

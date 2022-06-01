@@ -177,11 +177,11 @@ export default function Main(props) {
         connections={connections}
         onCommand={handleCommand}
       />,
-      <Panel id="act_queries" title="Queries" icon="query">
-        Saved queries, pippo: '{props.pippo}'
+      <Panel id="act_bookmarks" title="Bookmarks" icon="bookmark">
+        <Box m={1}>Bookmarks (tbd)</Box>
       </Panel>,
       <Panel id="act_history" title="History" icon="history">
-        Bookmarked queries
+        <Box m={1}>History (tbd)</Box>
       </Panel>,
     ]
   }
