@@ -135,5 +135,5 @@ export abstract class DataConnection {
    * completed INSERT, UPDATE or DELETE statement on the database. Executing any other
    * type of SQL statement does not modify the value returned by this function.
    */
-  public abstract async getRowsModified(): Promise<number>
+  public abstract getRowsModified(): Promise<number>
 }
