@@ -3,18 +3,19 @@
  */
 
 import * as React from "react"
-import { IconButtonProps as MuiIconButtonProps, IconButton as MuiIconButton, SxProps, Theme } from "@mui/material"
-import Box from "@mui/material/Box"
+import {
+  Box,
+  IconButtonProps as MuiIconButtonProps,
+  IconButton as MuiIconButton,
+  SxProps,
+  Theme,
+  Typography,
+} from "@mui/material"
 
 import { Command, CommandEvent } from "../../lib/commands"
 import { Icon } from "./icon"
 import { Tooltip } from "./tooltip"
 
-// https://storybook.js.org/docs/react/writing-tests/test-runner
-
-//
-// IconButton
-//
 
 const IconButton_SxProps: SxProps<Theme> = {
   borderRadius: "8px",
@@ -51,9 +52,15 @@ export function IconButton(props: IconButtonProps) {
 
   let button = (
     <Box className="IconButton-root">
-      <MuiIconButton {...buttonProps} onClick={handleClick} sx={IconButton_SxProps}>
-        <Icon fontSize="inherit">{command.icon}</Icon>
-        {props.label && props.command.title}
+      <MuiIconButton className="IconButton-button" {...buttonProps} onClick={handleClick} sx={IconButton_SxProps}>
+        <Icon className="IconButton-icon" fontSize="inherit">
+          {command.icon}
+        </Icon>
+        {props.label && (
+          <Typography className="IconButton-label" variant="button" sx={{ ml: 0.5 }}>
+            {props.command.title}
+          </Typography>
+        )}
       </MuiIconButton>
     </Box>
   )

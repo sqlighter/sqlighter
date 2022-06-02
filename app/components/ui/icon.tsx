@@ -28,6 +28,7 @@ import FullscreenOutlinedIcon from "@mui/icons-material/FullscreenOutlined"
 import FolderIcon from "@mui/icons-material/FolderOutlined"
 import HistoryIcon from "@mui/icons-material/HistoryOutlined"
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined"
+import InsertChartOutlinedIcon from '@mui/icons-material/InsertChartOutlined';
 import KeyIcon from "@mui/icons-material/KeyOutlined"
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined"
 import PlayArrowOutlinedIcon from "@mui/icons-material/PlayArrowOutlined"
@@ -81,7 +82,8 @@ export function Icon(props: IconProps) {
       case "close":
         return <CloseOutlinedIcon {...props} />
       case "chart":
-        return <BarChartOutlinedIcon {...props} />
+        // return <BarChartOutlinedIcon {...props} />
+        return <InsertChartOutlinedIcon {...props} />
       case "database":
         return <DatabaseOutline {...props} />
       case "download":

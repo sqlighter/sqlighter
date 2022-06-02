@@ -71,7 +71,7 @@ export function QueryStatus(props: QueryStatusProps) {
       <Box sx={{ display: "flex", flexDirection: "column", ml: 1 }}>
         <Typography
           className="QueryStatus-label"
-          variant="body1"
+          variant="body2"
           color={titleColor}
           sx={{ position: "relative", top: "-2px" }}
         >

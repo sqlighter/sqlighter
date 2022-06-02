@@ -6,22 +6,7 @@ import { Stack } from "@mui/material"
 import { Command } from "../lib/commands"
 import { StorybookDecorator } from "../components/storybook"
 import { IconButton } from "../components/ui/iconbutton"
-
-const databaseCommand: Command = {
-  command: "openDatabase",
-  title: "Open Database",
-  icon: "database",
-}
-const queryCommand: Command = {
-  command: "openQuery",
-  title: "Open Query",
-  icon: "query",
-}
-const printCommand: Command = {
-  command: "print",
-  title: "Print",
-  icon: "print",
-}
+import { chartsCommand, databaseCommand, queryCommand } from "./fakedata"
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -46,7 +31,7 @@ const TemplateStack: ComponentStory<typeof IconButton> = (args) => (
   <Stack direction="row">
     <IconButton {...args} command={databaseCommand} />
     <IconButton {...args} command={queryCommand} />
-    <IconButton {...args} command={printCommand} />
+    <IconButton {...args} command={chartsCommand} />
   </Stack>
 )
 
@@ -76,8 +61,18 @@ export const Sizes = TemplateSizes.bind({})
 
 export const Stacked = TemplateStack.bind({})
 
+export const StackedWithLabels = TemplateStack.bind({})
+StackedWithLabels.args = {
+  label: true
+}
+
 export const WithLabel = Template.bind({})
 WithLabel.args = {
+  command: {
+    command: "print",
+    title: "Print",
+    icon: "print",
+  },
   label: true,
 }
 

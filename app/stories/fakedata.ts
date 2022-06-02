@@ -5,6 +5,7 @@
 import { DataConnection } from "../lib/sqltr/connections"
 import { Query, QueryRun } from "../lib/items/query"
 import { addSeconds, subSeconds, parseISO, subMilliseconds } from "date-fns"
+import { Command } from "../lib/commands"
 
 // DataConnection (fake)
 export const fake_connection1 = {
@@ -50,3 +51,25 @@ fake_queryError1.query = fake_query1
 fake_queryError1.sql = fake_query1.sql
 fake_queryError1.status = "error"
 fake_queryError1.error = 'error: Error: near "FROM1": syntax error'
+
+// Various commands with labels and icons
+export const databaseCommand: Command = {
+  command: "showSql",
+  title: "SQL",
+  icon: "database",
+}
+export const queryCommand: Command = {
+  command: "openQuery",
+  title: "Data",
+  icon: "table",
+}
+export const chartsCommand: Command = {
+  command: "openCharts",
+  title: "Charts",
+  icon: "chart",
+}
+export const printCommand: Command = {
+  command: "print",
+  title: "Print",
+  icon: "print",
+}
