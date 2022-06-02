@@ -13,7 +13,6 @@ import capitalize from "@mui/material/utils/capitalize"
 // model
 import { DataConnection } from "../../lib/sqltr/connections"
 import { QueryRun } from "../../lib/items/query"
-import { formatSeconds } from "../client"
 // view
 import { ConnectionIcon } from "./connectionspicker"
 import { Command } from "../../lib/commands"
@@ -21,11 +20,11 @@ import { DataGrid } from "./datagrid"
 import { Icon } from "../ui/icon"
 import { IconButton } from "../ui/iconbutton"
 import { PanelProps } from "../navigation/panel"
+import { QueryStatus } from "./querystatus"
 
 export interface QueryRunPanelProps extends PanelProps {
   /** Database connection used to run this query */
   connection?: DataConnection
-
   /** Data model for query run shown in panel */
   run: QueryRun
 }
@@ -60,54 +59,13 @@ export function QueryRunPanel(props: QueryRunPanelProps) {
     icon: "database",
   }
 
-  function renderStatus() {
-    const status = capitalize(run.status)
-
-    let titleColor = "text.primary"
-    let secondaryText = null
-    const elapsed = formatSeconds(run.createdAt, run.updatedAt)
-    switch (run.status) {
-      case "completed":
-        titleColor = "success.main"
-        if (run.values) {
-          secondaryText = `${run.values?.[0]?.length} rows in ${elapsed}`
-        } else {
-          if (run.rowsModified !== undefined) {
-            secondaryText = `${run.rowsModified} modified in ${elapsed}`
-          }
-        }
-        break
-      case "running":
-        titleColor = "info.main"
-        secondaryText = elapsed
-        break
-      case "error":
-        titleColor = "error.main"
-        break
-    }
-
-    return (
-      <Box sx={{ display: "flex", alignItems: "flex-start" }}>
-        <ConnectionIcon connection={props.connection} />
-        <Box sx={{ display: "flex", flexDirection: "column", ml: 1 }}>
-          <Typography variant="body1" color={titleColor} sx={{position: "relative", top: "-2px"}}>
-            {status}
-          </Typography>
-          {secondaryText && (
-            <Typography variant="caption" color="text.secondary" sx={{position: "relative", top: "-6px"}}>
-              {secondaryText}
-            </Typography>
-          )}
-        </Box>
-      </Box>
-    )
-  }
-
   return (
     <Box sx={{ width: 1, height: 1, maxHeight: 1, display: "flex", flexDirection: "column" }}>
       <Box>
         <Box sx={{ display: "flex", m: 1 }}>
-          <Box sx={{ flexGrow: 1 }}>{renderStatus()}</Box>
+          <Box sx={{ flexGrow: 1 }}>
+            <QueryStatus connection={props.connection} run={run} />
+          </Box>
           <Box sx={{ flexGrow: 1 }}>
             <BottomNavigation
               showLabels
