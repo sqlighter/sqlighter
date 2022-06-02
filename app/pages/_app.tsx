@@ -62,7 +62,7 @@ export default function App({ Component, pageProps }: { Component: any; pageProp
       })
     })
   }
-  
+
   /** Sign out of Google and local sessions, disable session cookie */
   function signout(redirectUrl?: string): void {
     const gsi = getGoogleSigninClient()
@@ -113,7 +113,7 @@ export default function App({ Component, pageProps }: { Component: any; pageProp
     switch (command.command) {
       case "openSignin":
         promptSignin()
-        break;
+        break
     }
   }
 
@@ -128,7 +128,7 @@ export default function App({ Component, pageProps }: { Component: any; pageProp
   return (
     <>
       <CssBaseline>
-        <GlobalStyles styles={{ body: { backgroundColor: PRIMARY_LIGHTEST }}} />
+        <GlobalStyles styles={{ body: { backgroundColor: PRIMARY_LIGHTEST } }} />
         <ThemeProvider theme={customTheme()}>
           <Context.Provider value={context}>
             <Head>
@@ -136,27 +136,8 @@ export default function App({ Component, pageProps }: { Component: any; pageProp
               <meta name="user" content={user?.id} />
               <meta name="theme-color" content={PRIMARY_LIGHTEST} />
               <meta name="google_id" content={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID} />
-
               <link rel="preconnect" href="https://fonts.googleapis.com" />
               <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-
-              {/* Global Site Tag (gtag.js) - Google Analytics */}
-              <script
-                async
-                src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
-              />
-              <script
-                dangerouslySetInnerHTML={{
-                  __html: `
-                    window.dataLayer = window.dataLayer || [];
-                    function gtag(){dataLayer.push(arguments);}
-                    gtag('js', new Date());
-                    gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}', {
-                      page_path: window.location.pathname,
-                    });
-                  `,
-                }}
-              />
             </Head>
             <Component {...pageProps} user={user} onCommand={handleCommand} />
             <Script
@@ -165,6 +146,21 @@ export default function App({ Component, pageProps }: { Component: any; pageProp
               strategy="lazyOnload"
               onLoad={onGoogleSigninLoaded}
             />
+            {/* Global Site Tag (gtag.js) - Google Analytics */}
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
+              strategy="afterInteractive"
+            />
+            <Script id="google-analytics" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){window.dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}', {
+                  page_path: window.location.pathname,
+                });
+              `}
+            </Script>
           </Context.Provider>
         </ThemeProvider>
       </CssBaseline>
