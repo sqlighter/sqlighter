@@ -55,9 +55,12 @@ import { SqliteIcon } from "./icons/sqliteicon"
 // Font Awesome
 // https://fontawesome.com/icons/server?s=regular
 
+/** Display a dot badge with the given color (default none) */
+export type DotColor = "default" | "success" | "primary" | "secondary" | "error" | "info" | "warning"
+
 export interface IconProps extends SvgIconProps {
   /** Display a dot badge with the given color (default none) */
-  dotColor?: "default" | "success" | "primary" | "secondary" | "error" | "info" | "warning"
+  dotColor?: DotColor
 
   /** Normally the content is a string with the icon's name but it could be an icon itself or other element */
   children: string | React.ReactNode

@@ -14,7 +14,7 @@ import TextField from "@mui/material/TextField"
 
 import { CommandEvent } from "../../lib/commands"
 import { DataConnection } from "../../lib/sqltr/connections"
-import { Icon } from "../ui/icon"
+import { Icon, DotColor } from "../ui/icon"
 import { Label } from "../ui/typography"
 import { Tooltip } from "../ui/tooltip"
 
@@ -56,7 +56,10 @@ const ConnectionPicker_Sx: SxProps<Theme> = {
 //
 
 export interface ConnectionIconProps {
+  /** Connection we're showing the status for */
   connection?: DataConnection
+  /** Display a dot badge with the given color (default none) */
+  dotColor?: DotColor
 }
 
 /** An icon showing the type of database and a little green dot if connected */
@@ -64,7 +67,7 @@ export function ConnectionIcon(props: ConnectionIconProps) {
   if (props.connection) {
     // TODO show dot based on current connection status, eg. database ready, busy, disconnected
     return (
-      <Icon className="ConnectionPicker-icon" dotColor="success">
+      <Icon className="ConnectionPicker-icon" dotColor={props.dotColor || "success"}>
         {props.connection.configs.client}
       </Icon>
     )

@@ -11,6 +11,7 @@ import { DataConnection } from "../../lib/sqltr/connections"
 import { QueryRun } from "../../lib/items/query"
 import { formatSeconds } from "../client"
 import { ConnectionIcon } from "./connectionspicker"
+import { DotColor } from "../ui/icon"
 
 export interface QueryStatusProps {
   /** Database connection used to run this query */
@@ -40,7 +41,8 @@ export function QueryStatus(props: QueryStatusProps) {
   // render
   //
 
-  let titleColor = "text.primary"
+  let dotColor: DotColor = "success"
+  let titleColor = "success.main"
   let secondaryText = null
   const elapsed = formatSeconds(run.createdAt, run.updatedAt)
   switch (run.status) {
@@ -55,17 +57,17 @@ export function QueryStatus(props: QueryStatusProps) {
       }
       break
     case "running":
-      titleColor = "info.main"
       secondaryText = elapsed
       break
     case "error":
+      dotColor = "error"
       titleColor = "error.main"
       break
   }
 
   return (
     <Box className="QueryStatus-root" sx={{ display: "flex", alignItems: "flex-start" }}>
-      <ConnectionIcon connection={props.connection} />
+      <ConnectionIcon connection={props.connection} dotColor={dotColor} />
       <Box sx={{ display: "flex", flexDirection: "column", ml: 1 }}>
         <Typography
           className="QueryStatus-label"
