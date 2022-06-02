@@ -48,6 +48,7 @@ export function QueryRunPanel(props: QueryRunPanelProps) {
       </Box>
       <Box>title: {run.query.title}</Box>
       {run.error && <Box>error: {run.error}</Box>}
+      {run.rowsModified &&<Box>rows modified: {run.rowsModified}</Box>}
       <Box sx={{ flexGrow: 1, height: 1, width: 1 }}>
         {run.columns && run.values && <DataGrid columns={run.columns} values={run.values} />}
       </Box>

@@ -316,6 +316,16 @@ export class SqliteDataConnection extends DataConnection {
     }
     return results[0]
   }
+
+  /**
+   * Returns the number of changed rows (modified, inserted or deleted) by the latest 
+   * completed INSERT, UPDATE or DELETE statement on the database. Executing any other 
+   * type of SQL statement does not modify the value returned by this function.
+   */
+  public async getRowsModified(): Promise<number> {
+    // TODO this number needs to somehow reset when new queries are run
+    return this._database.getRowsModified();
+  }
 }
 
 // class also acts as default export for module

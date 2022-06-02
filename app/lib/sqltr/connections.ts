@@ -129,4 +129,11 @@ export abstract class DataConnection {
 
   /** Run a SQL query that generates a single result set */
   public abstract getResult(sql: string): Promise<QueryExecResult>
+
+  /**
+   * Returns the number of changed rows (modified, inserted or deleted) by the latest
+   * completed INSERT, UPDATE or DELETE statement on the database. Executing any other
+   * type of SQL statement does not modify the value returned by this function.
+   */
+  public abstract async getRowsModified(): Promise<number>
 }
