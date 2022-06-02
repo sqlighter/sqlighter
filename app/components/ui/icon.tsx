@@ -3,22 +3,28 @@
 //
 
 import React from "react"
-import { SvgIconProps } from "@mui/material"
 import Badge from "@mui/material/Badge"
+import Box from "@mui/material/Box"
+import { SvgIconProps } from "@mui/material"
 
 // Material Icons (Google)
 // https://mui.com/material-ui/material-icons/?query=table&theme=Outlined
 // https://fonts.google.com/icons
 import AccountCircleOutlined from "@mui/icons-material/AccountCircleOutlined"
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined"
+import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined"
 import BentoOutlinedIcon from "@mui/icons-material/BentoOutlined"
 import BoltOutlinedIcon from "@mui/icons-material/BoltOutlined"
 import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlined"
 import BookmarksOutlinedIcon from "@mui/icons-material/BookmarksOutlined"
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined"
+import CloudDownloadOutlinedIcon from "@mui/icons-material/CloudDownloadOutlined"
+import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined"
 import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined"
 import FileIcon from "@mui/icons-material/InsertDriveFileOutlined"
+import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined"
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined"
+import FullscreenOutlinedIcon from "@mui/icons-material/FullscreenOutlined"
 import FolderIcon from "@mui/icons-material/FolderOutlined"
 import HistoryIcon from "@mui/icons-material/HistoryOutlined"
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined"
@@ -29,6 +35,7 @@ import PrintOutlinedIcon from "@mui/icons-material/PrintOutlined"
 import PushPinOutlinedIcon from "@mui/icons-material/PushPinOutlined"
 import QuestionMarkIcon from "@mui/icons-material/QuestionMarkOutlined"
 import RefreshOutlinedIcon from "@mui/icons-material/RefreshOutlined"
+import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined"
 import SettingsOutlined from "@mui/icons-material/SettingsOutlined"
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined"
 import TableRowsOutlinedIcon from "@mui/icons-material/TableRowsOutlined"
@@ -39,6 +46,8 @@ import TableIcon from "@mui/icons-material/TableChartOutlined"
 // https://github.com/TeamWertarbyte/mdi-material-ui
 // https://pictogrammers.github.io/@mdi/font/6.5.95/
 import { DatabaseOutline } from "mdi-material-ui"
+import { DatabaseExportOutline } from "mdi-material-ui"
+import { ArrowExpand } from "mdi-material-ui"
 
 // Custom svg icon files in /icons
 import { SqliteIcon } from "./icons/sqliteicon"
@@ -68,16 +77,25 @@ export function Icon(props: IconProps) {
         return <BookmarksOutlinedIcon {...props} />
       case "close":
         return <CloseOutlinedIcon {...props} />
+      case "chart":
+        return <BarChartOutlinedIcon {...props} />
       case "database":
         return <DatabaseOutline {...props} />
+      case "download":
+        return <CloudDownloadOutlinedIcon {...props} />
       case "expand":
         return <ExpandMoreOutlinedIcon {...props} />
+      case "export":
+        return <FileDownloadOutlinedIcon {...props} />
       case "file":
         return <FileIcon {...props} />
       case "filter":
         return <FilterAltOutlinedIcon {...props} />
       case "folder":
         return <FolderIcon {...props} />
+      case "fullscreen":
+        // return <FullscreenOutlinedIcon {...props} />
+        return <ArrowExpand {...props} />
       case "history":
         return <HistoryIcon {...props} />
       case "info":
@@ -97,6 +115,8 @@ export function Icon(props: IconProps) {
         return <TableRowsOutlinedIcon {...props} />
       case "refresh":
         return <RefreshOutlinedIcon {...props} />
+      case "search":
+        return <SearchOutlinedIcon {...props} />
       case "settings":
         return <SettingsOutlined {...props} />
       case "share":
@@ -111,8 +131,11 @@ export function Icon(props: IconProps) {
       case "trigger":
         return <BoltOutlinedIcon {...props} />
       case "table":
+        return <TableIcon {...props} />
       case "view":
         return <TableIcon {...props} />
+      case "upload":
+        return <CloudUploadOutlinedIcon {...props} />
 
       default:
         return <QuestionMarkIcon {...props} />
@@ -123,14 +146,16 @@ export function Icon(props: IconProps) {
 
   if (props.dotColor) {
     icon = (
-      <Badge
-        overlap="circular"
-        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-        variant="dot"
-        color={props.dotColor}
-      >
-        {icon}
-      </Badge>
+      <Box>
+        <Badge
+          overlap="circular"
+          anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+          variant="dot"
+          color={props.dotColor}
+        >
+          {icon}
+        </Badge>
+      </Box>
     )
   }
 
