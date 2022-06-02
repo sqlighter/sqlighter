@@ -94,7 +94,9 @@ export function QueryPanel(props: QueryPanelProps) {
 
     try {
       // TODO split sql into separate statements and run each query separately in sequence to provide correct stats
+      // see https://sql.js.org/documentation/Database.html#%5B%22iterateStatements%22%5D
       const queryResults = await connection.getResults(query.sql)
+      console.debug(`QueryPanel.runQuery - results`, queryResults)
 
       // TODO remove artificial delay used only to develop "in progress" updates
       await delay(200)
@@ -102,8 +104,9 @@ export function QueryPanel(props: QueryPanelProps) {
       // first query completed normally
       running.status = "completed"
       running.updatedAt = new Date()
-      running.columns = queryResults[0].columns
-      running.values = queryResults[0].values
+      running.rowsModified = await connection.getRowsModified()
+      running.columns = queryResults?.[0]?.columns
+      running.values = queryResults?.[0]?.values
       console.debug(`QueryPanel.runQuery - completed`, running)
 
       if (queryResults.length > 1) {

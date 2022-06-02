@@ -2,8 +2,7 @@
 // app.tsx - sqlighter as a full page application
 //
 
-import React, { ReactElement } from "react"
-import { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 
@@ -12,42 +11,26 @@ import { useSqljs } from "../hooks/useDB"
 import { DataConnection, DataConnectionConfigs } from "../../lib/sqltr/connections"
 import { SqliteDataConnection } from "../../lib/sqltr/databases/sqlite"
 import { QueryPanel } from "../database/querypanel"
-import { Context } from "../../components/context"
 import { TabsLayout } from "../../components/navigation/tabslayout"
-import { Panel, PanelProps, PanelElement } from "../../components/navigation/panel"
+import { Panel, PanelElement, PanelProps } from "../../components/navigation/panel"
 import { DatabasePanel } from "../database/databasepanel"
 import { IconButton } from "../ui/iconbutton"
-
 import { Query } from "../../lib/items/query"
-import { query } from "express"
 
-const SSR = typeof window === "undefined"
-
-/*
-const SQLighterComponentWithNoSSR = dynamic(
-  () => import('../components/layouts/tabsapp'),
-  { ssr: false }
-)
-*/
-
-const title = "SQLighter"
-
-export interface MainProps {
-  pippo?: string
+export interface MainProps extends PanelProps {
+  /** User currently signedin (if any) */
+  user?: object
 }
 
 /** Main component for SQLighter app which includes activities, sidebar, tabs, etc... */
-export default function Main(props) {
-  //  <SQLighterComponentWithNoSSR />
-  const context = React.useContext(Context)
-
+export default function Main(props: MainProps) {
   // TODO persist currently selected activity in user preferences
   const [activityId, setActivityId] = useState<string>("act_database")
 
   // currently selected tabId
   const [tabId, setTabId] = useState<string>("tab_0")
   // list of data models for tabs (actual tabs are rendered on demand)
-  const [tabsData, setTabsData] = useState<(ReactElement | Query)[]>([
+  const [tabs, setTabs] = useState<PanelElement[]>([
     <Panel id="tab_0" title="Tab 0" icon="query">
       Tab0
       <Box>
@@ -125,31 +108,31 @@ export default function Main(props) {
   async function handleCommand(event: React.SyntheticEvent, command: Command) {
     console.debug(`Main.handleCommand - ${command.command}`, command)
     switch (command.command) {
+      // open a new tab with a query panel
       case "sqlighter.viewQuery":
-        {
-          // open a new tab with a query panel
-          const query = new Query()
-          query.connectionId = connection.id
-          query.sql = command.args.sql
-          setTabsData([query, ...tabsData])
-          setTabId(query.id)
-        }
+      case "tabs.newTab":
+        const query = new Query()
+        query.connectionId = connection?.id
+        query.sql = command.args?.sql // newTab doesn't have a query
+        const tab = (
+          <QueryPanel
+            key={query.id}
+            id={query.id}
+            title={query.title}
+            icon="query"
+            connections={connections}
+            query={query}
+            onCommand={handleCommand}
+          />
+        )
+        setTabs([tab, ...tabs])
+        setTabId(query.id)
         break
 
       case "tabs.changeTabs":
         setTabId(command.args.tabId)
-        setTabsData(command.args.tabs)
+        setTabs(command.args.tabs)
         return
-
-      case "tabs.newTab":
-        {
-          const query = new Query()
-          query.connectionId = connection.id
-          query.sql = command.args.sql
-          setTabsData([query, ...tabsData])
-          setTabId(query.props.id)
-        }
-        break
 
       case "changeActivity":
         setActivityId(command.args.id)
@@ -176,17 +159,6 @@ export default function Main(props) {
   //
   // rendering
   //
-
-  function renderTabs() {
-    return tabsData.map(tab => {
-      if (tab instanceof Query) {
-        const tabQuery = tab as Query
-        return <QueryPanel id={tabQuery.id} title={tabQuery.title} icon="query" connections={connections} query={tabQuery} />
-      }
-
-      return tab
-    })
-  }
 
   function renderActivities(): PanelElement[] {
     return [
@@ -220,7 +192,7 @@ export default function Main(props) {
       activities={renderActivities()}
       //
       tabId={tabId}
-      tabs={renderTabs()}
+      tabs={tabs}
       tabsCommands={[
         {
           command: "tabs.newTab",
@@ -229,7 +201,7 @@ export default function Main(props) {
         },
       ]}
       //
-      user={context.user}
+      user={props.user}
       //
       onCommand={handleCommand}
     />
