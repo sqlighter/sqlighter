@@ -76,6 +76,9 @@ export class QueryRun extends Item {
   /** Error string if status is 'error' */
   error?: any
 
+  /** Number of rows modified in case of inserts, delete, etc */
+  rowsModified?: number
+
   /** Resulting columns */
   columns?: any
 

@@ -212,7 +212,8 @@ export function QueryPanel(props: QueryPanelProps) {
     if (runs && runs.length > 0) {
       const tabs = runs.map((run) => {
         const runClone = Object.assign(new QueryRun(), run)
-        return <QueryRunPanel key={run.id} id={run.id} title={run.title} run={runClone} />
+        const runConnection = props.connections.find(conn => conn.id == run.query.connectionId)
+        return <QueryRunPanel key={run.id} id={run.id} title={run.title} run={runClone} connection={runConnection} />
       })
       return <Tabs tabId={runId} tabs={tabs} tabsCommands={[toggleResults]} onCommand={handleCommand} />
     }
