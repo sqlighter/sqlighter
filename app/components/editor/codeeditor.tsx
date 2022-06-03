@@ -20,6 +20,9 @@ export interface CodeEditorProps {
   /** Theme, defaults to 'light'  */
   theme?: "light" | "vs-dark" | string
 
+  /** Should the editor be read only? Defaults to false */
+  readOnly?: boolean
+
   /** Callback used to dispatch commands back to parent component */
   onCommand?: CommandEvent
 }
@@ -46,12 +49,13 @@ export function CodeEditor(props: CodeEditorProps) {
     minimap: {
       enabled: false,
     },
+    readOnly: props.readOnly,
   }
 
   return (
     <Editor
       className="monacoEditor"
-//      height="100%"
+      //      height="100%"
       width="100%"
       language={props.language || "javascript"}
       theme={props.theme || "light"}

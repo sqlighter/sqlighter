@@ -26,10 +26,7 @@ const IconButton_SxProps: SxProps<Theme> = {
   },
 
   ".IconButton-selected": {
-    backgroundColor: (theme: Theme | any) => {
-      console.log(theme.palette.materialyou.primary)
-      return theme.palette.materialyou.primary.light
-    },
+    backgroundColor: (theme: Theme | any) => theme.palette.materialyou.primary.light,
   },
 }
 

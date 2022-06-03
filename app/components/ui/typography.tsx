@@ -1,6 +1,6 @@
 //
 // typography.tsx - simplified typography choices styled after material 3 specs
-// 
+//
 
 // Material Design 3, Typography Overview
 // https://m3.material.io/styles/typography/overview
@@ -18,6 +18,9 @@ import { Theme, SxProps } from "@mui/material/styles"
 import { Typography as MuiTypography, TypographyProps as MuiTypographyProps } from "@mui/material"
 
 export interface TypographyProps extends MuiTypographyProps {
+  /** Class to be applied to this element (optional) */
+  className?: string
+
   /** Style when using generic component, default to body */
   typescale?: "display" | "headline" | "title" | "body" | "label"
 
@@ -28,7 +31,10 @@ export interface TypographyProps extends MuiTypographyProps {
 function Typography(props: TypographyProps) {
   const size = props.size || "medium"
   const typescale = props.typescale || "body"
-  const className = `Typography-root Typography-${typescale}${size.charAt(0).toUpperCase()}${size.slice(1)}`
+  let className = `Typography-root Typography-${typescale}${size.charAt(0).toUpperCase()}${size.slice(1)}`
+  if (props.className) {
+    className += " " + props.className
+  }
   return <MuiTypography className={className}>{props.children}</MuiTypography>
 }
 
