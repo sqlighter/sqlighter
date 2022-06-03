@@ -10,6 +10,7 @@ export const parameters = {
       date: /Date$/,
     },
   },
+  grid: { cellSize: 8 },
 }
 
 // TODO figure out why using decorator in preview.jsx locks storybook into an infinite spinner
