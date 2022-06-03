@@ -3,6 +3,7 @@
 //
 
 import React, { useState, useEffect } from "react"
+import { Theme, SxProps } from "@mui/material"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 import capitalize from "@mui/material/utils/capitalize"
@@ -12,6 +13,19 @@ import { QueryRun } from "../../lib/items/query"
 import { formatSeconds } from "../client"
 import { ConnectionIcon } from "./connectionspicker"
 import { DotColor } from "../ui/icon"
+
+// styles applied to main and subcomponents
+const QueryStatus_SxProps: SxProps<Theme> = {
+  display: "flex",
+
+  ".QueryStatus-info": {
+    ml: 1,
+  },
+
+  ".QueryStatus-label": {
+    lineHeight: 1,
+  },
+}
 
 export interface QueryStatusProps {
   /** Database connection used to run this query */
@@ -66,24 +80,14 @@ export function QueryStatus(props: QueryStatusProps) {
   }
 
   return (
-    <Box className="QueryStatus-root" sx={{ display: "flex", alignItems: "flex-start" }}>
+    <Box className="QueryStatus-root" sx={QueryStatus_SxProps}>
       <ConnectionIcon connection={props.connection} dotColor={dotColor} />
-      <Box sx={{ display: "flex", flexDirection: "column", ml: 1 }}>
-        <Typography
-          className="QueryStatus-label"
-          variant="body2"
-          color={titleColor}
-          sx={{ position: "relative", top: "-2px" }}
-        >
+      <Box className="QueryStatus-info">
+        <Typography className="QueryStatus-label" variant="body2" color={titleColor}>
           {status}
         </Typography>
         {secondaryText && (
-          <Typography
-            className="QueryStatus-secondary"
-            variant="caption"
-            color="text.secondary"
-            sx={{ position: "relative", top: "-6px" }}
-          >
+          <Typography className="QueryStatus-secondaryLabel" variant="caption" color="text.secondary">
             {secondaryText}
           </Typography>
         )}

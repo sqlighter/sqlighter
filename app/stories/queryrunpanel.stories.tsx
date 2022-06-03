@@ -23,11 +23,14 @@ export default {
     connection: fake_connection1,
     run: fake_queryCompleted1,
   },
+  parameters: {
+    grid: { cellSize: 8 },
+  },
 } as ComponentMeta<typeof QueryRunPanel>
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: ComponentStory<typeof QueryRunPanel> = (args) => (
-  <Box sx={{ height: 450, backgroundColor: "yellow" }}>
+  <Box sx={{ height: 450, backgroundColor: "rgba(255,0,0,0.25)" }}>
     <QueryRunPanel {...args} />
   </Box>
 )
