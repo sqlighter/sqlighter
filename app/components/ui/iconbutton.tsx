@@ -16,9 +16,21 @@ import { Command, CommandEvent } from "../../lib/commands"
 import { Icon } from "./icon"
 import { Tooltip } from "./tooltip"
 
-
 const IconButton_SxProps: SxProps<Theme> = {
-  borderRadius: "8px",
+  ".IconButton-button": {
+    borderRadius: "8px",
+
+    "&:hover": {
+      borderRadius: "8px",
+    },
+  },
+
+  ".IconButton-selected": {
+    backgroundColor: (theme: Theme | any) => {
+      console.log(theme.palette.materialyou.primary)
+      return theme.palette.materialyou.primary.light
+    },
+  },
 }
 
 /** Shows command as an icon button raising an onCommand event when clicked */
@@ -28,6 +40,9 @@ export interface IconButtonProps extends MuiIconButtonProps {
 
   /** True if button's title should be shown next to icon (default false) */
   label?: boolean
+
+  /** True if button should be selected/higlighted */
+  selected?: boolean
 
   /** Command handler for button click */
   onCommand?: CommandEvent
@@ -51,8 +66,12 @@ export function IconButton(props: IconButtonProps) {
   //
 
   let button = (
-    <Box className="IconButton-root">
-      <MuiIconButton className="IconButton-button" {...buttonProps} onClick={handleClick} sx={IconButton_SxProps}>
+    <Box className="IconButton-root" sx={IconButton_SxProps}>
+      <MuiIconButton
+        className={props.selected ? "IconButton-button IconButton-selected Mui-selected" : "IconButton-root"}
+        onClick={handleClick}
+        {...buttonProps}
+      >
         <Icon className="IconButton-icon" fontSize="inherit">
           {command.icon}
         </Icon>
@@ -65,9 +84,13 @@ export function IconButton(props: IconButtonProps) {
     </Box>
   )
 
-  // optional tooltip if title is defined
+  // Optional tooltip if title is defined
   if (props.command.title && !props.label) {
-    button = <Tooltip title={command.title}>{button}</Tooltip>
+    button = (
+      <Tooltip className="IconButton-tooltip" title={command.title}>
+        {button}
+      </Tooltip>
+    )
   }
   return button
 }
