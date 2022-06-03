@@ -21,6 +21,7 @@ import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined"
 import CloudDownloadOutlinedIcon from "@mui/icons-material/CloudDownloadOutlined"
 import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined"
 import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined"
+import ExtensionOutlinedIcon from '@mui/icons-material/ExtensionOutlined';
 import FileIcon from "@mui/icons-material/InsertDriveFileOutlined"
 import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined"
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined"
@@ -92,6 +93,8 @@ export function Icon(props: IconProps) {
         return <ExpandMoreOutlinedIcon {...props} />
       case "export":
         return <FileDownloadOutlinedIcon {...props} />
+      case "extension":
+        return <ExtensionOutlinedIcon {...props} />
       case "file":
         return <FileIcon {...props} />
       case "filter":
