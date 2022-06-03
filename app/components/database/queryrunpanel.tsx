@@ -9,7 +9,6 @@ import Box from "@mui/material/Box"
 import Stack from "@mui/material/Stack"
 
 // model
-import { useBeta } from "../hooks/useBeta"
 import { DataConnection } from "../../lib/sqltr/connections"
 import { QueryRun } from "../../lib/items/query"
 
@@ -95,9 +94,6 @@ export function QueryRunPanel(props: QueryRunPanelProps) {
   // which visualization panel is currently visible?
   const [mode, setMode] = useState<string>("viewData")
 
-  // beta mode? show features under development
-  const [beta] = useBeta()
-
   //
   // handlers
   //
@@ -129,19 +125,19 @@ export function QueryRunPanel(props: QueryRunPanelProps) {
       <Stack className="QueryRunPanel-modes" direction="row" spacing={1}>
         <IconButton command={sqlCmd} label={true} selected={mode == sqlCmd.command} onCommand={handleCommand} />
         <IconButton command={dataCmd} label={true} selected={mode == dataCmd.command} onCommand={handleCommand} />
-        {beta && <IconButton command={chartCmd} label={true} selected={mode == chartCmd.command} onCommand={handleCommand} />}
-        {beta && <IconButton command={addonCmd} label={true} selected={mode == addonCmd.command} onCommand={handleCommand} />}
       </Stack>
     )
+    // <IconButton command={chartCmd} label={true} selected={mode == chartCmd.command} onCommand={handleCommand} />
+    // <IconButton command={addonCmd} label={true} selected={mode == addonCmd.command} onCommand={handleCommand} />
   }
 
   function renderCommands() {
+    // <IconButton command={fullscreenCmd} onCommand={handleCommand} />
+    // <IconButton command={searchCmd} onCommand={handleCommand} />
     return (
       <Stack className="QueryRunPanel-commands" direction="row">
-        {beta && <IconButton command={fullscreenCmd} onCommand={handleCommand} />}
         <IconButton command={exportCmd} onCommand={handleCommand} />
         <IconButton command={shareCmd} onCommand={handleCommand} />
-        {beta && <IconButton command={searchCmd} onCommand={handleCommand} />}
       </Stack>
     )
   }
