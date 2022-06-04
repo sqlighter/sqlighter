@@ -14,14 +14,20 @@ import TextField from "@mui/material/TextField"
 
 import { CommandEvent } from "../../lib/commands"
 import { DataConnection } from "../../lib/sqltr/connections"
-import { Icon, DotColor } from "../ui/icon"
+import { Icon } from "../ui/icon"
 import { Label } from "../ui/typography"
 import { Tooltip } from "../ui/tooltip"
+import { ConnectionIcon } from "./connectionicon"
 
 // styles for connections picker and subcomponents
 const ConnectionPicker_Sx: SxProps<Theme> = {
   // TODO connection picker should not be larger than activities panel when database name is long
   maxWidth: 1,
+
+  ".ConnectionPicker-button": {
+    // borderRadius: "8px",
+    // it's better to apply border radius to entire theme...
+  },
 
   ".ConnectionPicker-buttonChildren": {
     display: "flex",
@@ -49,34 +55,12 @@ const ConnectionPicker_Sx: SxProps<Theme> = {
       textOverflow: "ellipsis",
     },
   },
-}
 
-//
-// ConnectionIcon
-//
-
-export interface ConnectionIconProps {
-  /** Connection we're showing the status for */
-  connection?: DataConnection
-  /** Display a dot badge with the given color (default none) */
-  dotColor?: DotColor
-}
-
-/** An icon showing the type of database and a little green dot if connected */
-export function ConnectionIcon(props: ConnectionIconProps) {
-  if (props.connection) {
-    // TODO show dot based on current connection status, eg. database ready, busy, disconnected
-    return (
-      <Icon className="ConnectionPicker-icon" dotColor={props.dotColor || "success"}>
-        {props.connection.configs.client}
-      </Icon>
-    )
+  // TODO add a space between button and menu
+  "& .MuiModal-root": {
+    marginTop: "8px", // or 1
   }
 }
-
-//
-// ConnectionPicker
-//
 
 export interface ConnectionPickerProps {
   /** Currently selected connection */
@@ -134,13 +118,7 @@ export function ConnectionPicker(props: ConnectionPickerProps) {
   function handleCreateConnection(event) {
     handleCloseMenu(event)
     if (props.onCommand) {
-      props.onCommand(event, {
-        command: "createConnection",
-        args: {
-          connection: props.connection,
-          connections: props.connections,
-        },
-      })
+      props.onCommand(event, { command: "createConnection" })
     }
   }
 
@@ -148,13 +126,7 @@ export function ConnectionPicker(props: ConnectionPickerProps) {
   function handleManageConnections(event) {
     handleCloseMenu(event)
     if (props.onCommand) {
-      props.onCommand(event, {
-        command: "manageConnections",
-        args: {
-          connection: props.connection,
-          connections: props.connections,
-        },
-      })
+      props.onCommand(event, { command: "manageConnections" })
     }
   }
 
@@ -172,7 +144,7 @@ export function ConnectionPicker(props: ConnectionPickerProps) {
 
     return (
       <Menu
-        id="connection-menu"
+        id="connection-picker-menu"
         className="ConnectionPicker-menu"
         anchorEl={anchorEl}
         open={open}
@@ -183,7 +155,7 @@ export function ConnectionPicker(props: ConnectionPickerProps) {
       >
         <Box sx={{ ml: 2, mr: 2, mb: 2, mt: 1 }} onKeyDown={(e) => e.stopPropagation()}>
           <TextField
-            id="connections-filter"
+            id="connection-picker-filter"
             className="ConnectionPicker-filter"
             size="small"
             placeholder="Filter connections"
@@ -195,7 +167,7 @@ export function ConnectionPicker(props: ConnectionPickerProps) {
             sx={{ mr: 1 }}
           />
           <Tooltip title="Create connection">
-            <Button variant="outlined" onClick={handleManageConnections} sx={{ minWidth: 40, width: 40, height: 40 }}>
+            <Button variant="outlined" onClick={handleCreateConnection} sx={{ minWidth: 40, width: 40, height: 40 }}>
               <Icon>add</Icon>
             </Button>
           </Tooltip>
@@ -242,7 +214,12 @@ export function ConnectionPicker(props: ConnectionPickerProps) {
   return (
     <Box className="ConnectionPicker-root" sx={ConnectionPicker_Sx}>
       <Tooltip title={tooltipTitle}>
-        <Button id="connection-button" onClick={handleClick} color="inherit">
+        <Button
+          className="ConnectionPicker-button"
+          id="connection-picker-button"
+          onClick={handleClick}
+          variant="outlined"
+        >
           <Box className="ConnectionPicker-buttonChildren">
             <ConnectionIcon connection={props.connection} />
             <Box className="ConnectionPicker-label">

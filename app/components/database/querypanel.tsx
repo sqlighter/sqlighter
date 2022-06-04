@@ -22,7 +22,7 @@ import Query, { QueryRun } from "../../lib/items/query"
 import { Icon } from "../ui/icon"
 import { PanelProps } from "../navigation/panel"
 import { Tabs } from "../navigation/tabs"
-import { ConnectionPicker } from "./connectionspicker"
+import { ConnectionPicker } from "./connectionpicker"
 import { SqlEditor } from "../editor/sqleditor"
 import { QueryRunPanel } from "./queryrunpanel"
 import { useForceUpdate } from "../hooks/useforceupdate"
@@ -39,17 +39,19 @@ const QueryPanel_SxProps: SxProps<Theme> = {
   // area with title, connections picker, run button
   ".QueryPanel-headerRow": {
     width: 1,
-    height: 80,
-    display: "flex",
-    padding: 2,
+    paddingTop: 1,
+    paddingLeft: 1,
+    paddingRight: 2,
+    paddingBottom: 2
   },
 
   ".QueryPanel-title": {
     flexGrow: 1,
-    maxWidth: 400,
   },
 
-  ".QueryPanel-run": {},
+  ".QueryPanel-run": {
+    width: 120
+  },
 }
 
 export interface QueryPanelProps extends PanelProps {
@@ -207,7 +209,7 @@ export function QueryPanel(props: QueryPanelProps) {
   function renderHeader() {
     return (
       <>
-        <Box className="QueryPanel-headerRow">
+        <Stack className="QueryPanel-headerRow" direction="row" spacing={1}>
           <TitleField className="QueryPanel-title" value={props.query?.title} onCommand={handleCommand} />
           <Box sx={{ flexGrow: 1 }}></Box>
           <ConnectionPicker connection={connection} connections={props.connections} onCommand={handleCommand} />
@@ -216,18 +218,12 @@ export function QueryPanel(props: QueryPanelProps) {
               Run all
             </Button>
           </Box>
-        </Box>
+        </Stack>
         <Box className="QueryPanel-commandsRow">
           <Stack direction="row" spacing={1}>
-            <Button className="QueryPanel-run" variant="contained" onClick={runQuery} startIcon={<Icon>play</Icon>}>
-              Run all
-            </Button>
-            <Button className="QueryPanel-run" variant="contained" onClick={runQuery} startIcon={<Icon>play</Icon>}>
-              Run all
-            </Button>
-            <Button className="QueryPanel-run" variant="contained" onClick={runQuery} startIcon={<Icon>play</Icon>}>
-              Run all
-            </Button>
+            <Button variant="outlined">Stampa</Button>
+            <Button variant="outlined">Stampa</Button>
+            <Button variant="outlined">Stampa</Button>
           </Stack>
         </Box>
       </>
