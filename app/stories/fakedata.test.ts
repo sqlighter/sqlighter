@@ -44,7 +44,7 @@ describe("fakedata.test.ts", () => {
           faker.address.city,
           faker.address.state,
           faker.phone.phoneNumber,
-          () => faker.date.between("2000-01-01", "2022-12-31"),
+          () => faker.date.between("2000-01-01", new Date()),
         ],
       },
       "./stories/data/customers.js"
