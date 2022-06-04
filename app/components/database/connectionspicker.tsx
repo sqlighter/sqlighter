@@ -124,7 +124,7 @@ export function ConnectionPicker(props: ConnectionPickerProps) {
       props.onCommand(event, {
         command: "changeConnection",
         args: {
-          connection,
+          item: connection,
         },
       })
     }

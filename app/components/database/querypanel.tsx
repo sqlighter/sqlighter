@@ -10,6 +10,7 @@ import { Allotment } from "allotment"
 import "allotment/dist/style.css"
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
+import Stack from "@mui/material/Stack"
 import TextField from "@mui/material/TextField"
 
 // model
@@ -25,6 +26,7 @@ import { ConnectionPicker } from "./connectionspicker"
 import { SqlEditor } from "../editor/sqleditor"
 import { QueryRunPanel } from "./queryrunpanel"
 import { useForceUpdate } from "../hooks/useforceupdate"
+import { TitleField } from "../ui/titlefield"
 
 const delay = (ms) => new Promise((res) => setTimeout(res, ms))
 
@@ -34,15 +36,17 @@ const QueryPanel_SxProps: SxProps<Theme> = {
   height: 1,
   maxHeight: 1,
 
-  ".QueryPanel-header": {
+  // area with title, connections picker, run button
+  ".QueryPanel-headerRow": {
     width: 1,
-    height: 150,
+    height: 80,
     display: "flex",
-    margin: 2,
+    padding: 2,
   },
 
-  ".QueryTab-title": {
+  ".QueryPanel-title": {
     flexGrow: 1,
+    maxWidth: 400,
   },
 
   ".QueryPanel-run": {},
@@ -82,7 +86,7 @@ export function QueryPanel(props: QueryPanelProps) {
     forceUpdate()
     if (props.onCommand) {
       props.onCommand(null, {
-        command: "itemChanged",
+        command: "changeQuery",
         args: {
           item: query,
         },
@@ -185,9 +189,14 @@ export function QueryPanel(props: QueryPanelProps) {
         return
 
       case "changeConnection":
-        query.connectionId = command.args?.connection?.id
+        query.connectionId = command.args?.item?.id
         notifyChanges()
-        break
+        return
+
+      case "changeTitle":
+        query.title = command.args?.item
+        notifyChanges()
+        return
     }
   }
 
@@ -197,13 +206,31 @@ export function QueryPanel(props: QueryPanelProps) {
 
   function renderHeader() {
     return (
-      <Box className="QueryPanel-header">
-        <TextField className="QueryPanel-title" id="outlined-basic" variant="outlined" value={props.title} />
-        <ConnectionPicker connection={connection} connections={props.connections} onCommand={handleCommand} />
-        <Button className="QueryPanel-run" variant="contained" onClick={runQuery} startIcon={<Icon>play</Icon>}>
-          Run all
-        </Button>
-      </Box>
+      <>
+        <Box className="QueryPanel-headerRow">
+          <TitleField className="QueryPanel-title" value={props.query?.title} onCommand={handleCommand} />
+          <Box sx={{ flexGrow: 1 }}></Box>
+          <ConnectionPicker connection={connection} connections={props.connections} onCommand={handleCommand} />
+          <Box>
+            <Button className="QueryPanel-run" variant="contained" onClick={runQuery} startIcon={<Icon>play</Icon>}>
+              Run all
+            </Button>
+          </Box>
+        </Box>
+        <Box className="QueryPanel-commandsRow">
+          <Stack direction="row" spacing={1}>
+            <Button className="QueryPanel-run" variant="contained" onClick={runQuery} startIcon={<Icon>play</Icon>}>
+              Run all
+            </Button>
+            <Button className="QueryPanel-run" variant="contained" onClick={runQuery} startIcon={<Icon>play</Icon>}>
+              Run all
+            </Button>
+            <Button className="QueryPanel-run" variant="contained" onClick={runQuery} startIcon={<Icon>play</Icon>}>
+              Run all
+            </Button>
+          </Stack>
+        </Box>
+      </>
     )
   }
 
