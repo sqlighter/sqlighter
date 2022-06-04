@@ -63,7 +63,7 @@ export function QueryStatus(props: QueryStatusProps) {
     case "completed":
       titleColor = "success.main"
       if (run.values) {
-        secondaryText = `${run.values?.[0]?.length} rows in ${elapsed}`
+        secondaryText = `${run.values?.length} rows in ${elapsed}`
       } else {
         if (run.rowsModified !== undefined) {
           secondaryText = `${run.rowsModified} modified in ${elapsed}`

@@ -7,7 +7,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react"
 import { Box } from "@mui/material"
 import { StorybookDecorator } from "../components/storybook"
 import { QueryStatus } from "../components/database/querystatus"
-import { fake_connection1, fake_queryCompleted1, fake_queryRunning1, fake_queryError1 } from "./fakedata"
+import { fake_connection1, fake_queryCompletedLarge, fake_queryRunning1, fake_queryError1 } from "./fakedata"
 
 export default {
   title: "Components/QueryStatus",
@@ -21,7 +21,7 @@ export default {
   ],
   args: {
     connection: fake_connection1,
-    run: fake_queryCompleted1,
+    run: fake_queryCompletedLarge,
   },
 } as ComponentMeta<typeof QueryStatus>
 

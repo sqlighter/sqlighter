@@ -18,7 +18,7 @@ import { Theme, SxProps } from "@mui/material/styles"
 import { Typography as MuiTypography, TypographyProps as MuiTypographyProps } from "@mui/material"
 
 export interface TypographyProps extends MuiTypographyProps {
-  /** Class to be applied to this element (optional) */
+  /** Class name to be applied to this element's root (optional) */
   className?: string
 
   /** Style when using generic component, default to body */

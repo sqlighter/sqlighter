@@ -2,30 +2,51 @@
 // querypanel.tsx - panel used to edit and run database queries, show results
 //
 
+// libs
 import React from "react"
 import { useState } from "react"
-
+import { Theme, SxProps } from "@mui/material"
 import { Allotment } from "allotment"
 import "allotment/dist/style.css"
-
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
 import TextField from "@mui/material/TextField"
 
+// model
 import { Command } from "../../lib/commands"
 import { DataConnection } from "../../lib/sqltr/connections"
+import Query, { QueryRun } from "../../lib/items/query"
 
+// components
 import { Icon } from "../ui/icon"
 import { PanelProps } from "../navigation/panel"
 import { Tabs } from "../navigation/tabs"
-
 import { ConnectionPicker } from "./connectionspicker"
 import { SqlEditor } from "../editor/sqleditor"
-import Query, { QueryRun } from "../../lib/items/query"
 import { QueryRunPanel } from "./queryrunpanel"
 import { useForceUpdate } from "../hooks/useforceupdate"
 
 const delay = (ms) => new Promise((res) => setTimeout(res, ms))
+
+// styles applied to main and subcomponents
+const QueryPanel_SxProps: SxProps<Theme> = {
+  width: 1,
+  height: 1,
+  maxHeight: 1,
+
+  ".QueryPanel-header": {
+    width: 1,
+    height: 150,
+    display: "flex",
+    margin: 2,
+  },
+
+  ".QueryTab-title": {
+    flexGrow: 1,
+  },
+
+  ".QueryPanel-run": {},
+}
 
 export interface QueryPanelProps extends PanelProps {
   /** All available data connections */
@@ -174,25 +195,14 @@ export function QueryPanel(props: QueryPanelProps) {
   // render
   //
 
-  const HEADER_HEIGHT = 150
-  const MAIN_HEIGHT = 200
-
   function renderHeader() {
     return (
-      <Box className="PanelWithResults-header" sx={{ display: "flex", height: HEADER_HEIGHT, m: 1 }}>
-        <Box className="QueryTab-header-left" sx={{ flexGrow: 1 }}>
-          <Box>
-            <TextField id="outlined-basic" variant="outlined" value={props.title} />
-          </Box>
-        </Box>
-        <Box className="QueryTab-header-right">
-          <Box sx={{ display: "flex" }}>
-            <Button variant="contained" onClick={runQuery} startIcon={<Icon>play</Icon>} sx={{ mr: 1 }}>
-              Run all
-            </Button>
-          </Box>
-          <ConnectionPicker connection={connection} connections={props.connections} onCommand={handleCommand} />
-        </Box>
+      <Box className="QueryPanel-header">
+        <TextField className="QueryPanel-title" id="outlined-basic" variant="outlined" value={props.title} />
+        <ConnectionPicker connection={connection} connections={props.connections} onCommand={handleCommand} />
+        <Button className="QueryPanel-run" variant="contained" onClick={runQuery} startIcon={<Icon>play</Icon>}>
+          Run all
+        </Button>
       </Box>
     )
   }
@@ -212,7 +222,7 @@ export function QueryPanel(props: QueryPanelProps) {
     if (runs && runs.length > 0) {
       const tabs = runs.map((run) => {
         const runClone = Object.assign(new QueryRun(), run)
-        const runConnection = props.connections.find(conn => conn.id == run.query.connectionId)
+        const runConnection = props.connections.find((conn) => conn.id == run.query.connectionId)
         return <QueryRunPanel key={run.id} id={run.id} title={run.title} run={runClone} connection={runConnection} />
       })
       return <Tabs tabId={runId} tabs={tabs} tabsCommands={[toggleResults]} onCommand={handleCommand} />
@@ -251,7 +261,7 @@ export function QueryPanel(props: QueryPanelProps) {
   }
 
   return (
-    <Box className="QueryPanel-root" sx={{ width: 1, height: 1, maxHeight: 1 }}>
+    <Box className="QueryPanel-root" sx={QueryPanel_SxProps}>
       <Allotment vertical={true}>
         <Allotment.Pane minSize={150} maxSize={150}>
           {renderHeader()}

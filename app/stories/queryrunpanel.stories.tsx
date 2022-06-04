@@ -7,7 +7,13 @@ import { ComponentStory, ComponentMeta } from "@storybook/react"
 import { Box } from "@mui/material"
 import { StorybookDecorator } from "../components/storybook"
 import { QueryRunPanel } from "../components/database/queryrunpanel"
-import { fake_connection1, fake_queryCompleted1, fake_queryRunning1, fake_queryError1 } from "./fakedata"
+import {
+  fake_connection1,
+  fake_queryCompletedSmall,
+  fake_queryCompletedLarge,
+  fake_queryRunning1,
+  fake_queryError1,
+} from "./fakedata"
 
 export default {
   title: "Components/QueryRunPanel",
@@ -21,7 +27,7 @@ export default {
   ],
   args: {
     connection: fake_connection1,
-    run: fake_queryCompleted1,
+    run: fake_queryCompletedLarge,
   },
   parameters: {
     grid: { cellSize: 8 },
@@ -38,6 +44,11 @@ const Template: ComponentStory<typeof QueryRunPanel> = (args) => (
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 
 export const Completed = Template.bind({})
+
+export const CompletedSmall = Template.bind({})
+CompletedSmall.args = {
+  run: fake_queryCompletedSmall,
+}
 
 export const Running = Template.bind({})
 Running.args = {
