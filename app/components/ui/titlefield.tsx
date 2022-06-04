@@ -38,6 +38,8 @@ export interface TitleFieldProps {
   className?: string
   /** Value is required as title is a controlled component */
   value?: string
+  /** The short hint displayed in the `input` before the user enters a value */
+  placeholder?: string
   /** Callback used to dispatch commands back to parent component */
   onCommand?: CommandEvent
 }
@@ -66,6 +68,7 @@ export function TitleField(props: TitleFieldProps) {
       variant="outlined"
       multiline={false}
       fullWidth={true}
+      placeholder={props.placeholder || "Title"}
       size="small"
       onChange={handleChange}
       sx={TitleField_SxProps}

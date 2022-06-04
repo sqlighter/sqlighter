@@ -2,7 +2,7 @@
 // app.tsx - sqlighter as a full page application
 //
 
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, ReactElement } from "react"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 
@@ -28,24 +28,9 @@ export default function Main(props: MainProps) {
   const [activityId, setActivityId] = useState<string>("act_database")
 
   // currently selected tabId
-  const [tabId, setTabId] = useState<string>("tab_0")
+  const [tabId, setTabId] = useState<string>()
   // list of data models for tabs (actual tabs are rendered on demand)
-  const [tabs, setTabs] = useState<PanelElement[]>([
-    <Panel id="tab_0" title="Tab 0" icon="query">
-      Tab0
-      <Box>
-        <IconButton command={{ command: "Print", icon: "database" }} onCommand={handleCommand} size="small" />
-      </Box>
-      <IconButton command={{ command: "openQuery", title: "Open Query", icon: "query" }} onCommand={handleCommand} />
-      more
-    </Panel>,
-    <Panel id="tab_1" title="Tab 1" icon="query">
-      Tab1
-    </Panel>,
-    <Panel id="tab_2" title="Tab 2" icon="query">
-      Tab2
-    </Panel>,
-  ])
+  const [tabs, setTabs] = useState<{ id: string; component: string; props?: any }[]>([])
 
   // selected connection
   const [connection, setConnection] = useState<DataConnection>(null)
@@ -114,24 +99,18 @@ export default function Main(props: MainProps) {
         const query = new Query()
         query.connectionId = connection?.id
         query.sql = command.args?.sql // newTab doesn't have a query
-        const tab = (
-          <QueryPanel
-            key={query.id}
-            id={query.id}
-            title={query.title}
-            icon="query"
-            connections={connections}
-            query={query}
-            onCommand={handleCommand}
-          />
-        )
+        const tab = { id: query.id, component: "QueryPanel", props: { query } }
         setTabs([tab, ...tabs])
         setTabId(query.id)
         break
 
       case "tabs.changeTabs":
+        console.debug(`changeTabs`, command.args.tabs)
+        const changedTabs = command.args.tabs.map((tabElement: ReactElement) =>
+          tabs.find((tab) => tabElement.key == tab.id)
+        )
         setTabId(command.args.tabId)
-        setTabs(command.args.tabs)
+        setTabs(changedTabs)
         return
 
       case "changeActivity":
@@ -141,6 +120,10 @@ export default function Main(props: MainProps) {
       case "changeConnection":
         setConnection(command.args.connection)
         break
+
+      case "changeQuery":
+        setTabs([...tabs])
+        return
 
       case "manageConnections":
         if (!connections) {
@@ -183,6 +166,31 @@ export default function Main(props: MainProps) {
     ]
   }
 
+  function renderTabs() {
+    return tabs.map((tab) => {
+      console.debug(`renderTabs - tab`, tab)
+      switch (tab.component) {
+        case "QueryPanel":
+          const query = tab.props.query
+          return (
+            <QueryPanel
+              key={query.id}
+              id={query.id}
+              title={query.title}
+              icon="query"
+              connections={connections}
+              query={query}
+              onCommand={handleCommand}
+            />
+          )
+      }
+    })
+  }
+
+  function renderEmpty() {
+    return <>Your queries will appear here once you create a tab</>
+  }
+
   return (
     <TabsLayout
       title="SQLighter"
@@ -192,7 +200,7 @@ export default function Main(props: MainProps) {
       activities={renderActivities()}
       //
       tabId={tabId}
-      tabs={tabs}
+      tabs={tabs ? renderTabs() : []}
       tabsCommands={[
         {
           command: "tabs.newTab",
