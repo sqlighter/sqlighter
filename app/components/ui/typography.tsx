@@ -1,59 +1,90 @@
 //
 // typography.tsx - simplified typography choices styled after material 3 specs
 //
-
+// Recommended usage (simplified typescale):
+// - Display/medium
+//   - Headline/medium
+//     - Title/large
+//       - Title/medium + Body/medium
+//       - Title/small + Body/small
+//       - Label/medium
+//
 // Material Design 3, Typography Overview
 // https://m3.material.io/styles/typography/overview
-
 // Fonts
 // https://m3.material.io/styles/typography/fonts
-
 // Type scale and tokens
 // https://m3.material.io/styles/typography/type-scale-tokens
-
 // Applying type
 // https://m3.material.io/styles/typography/applying-type
+// Roboto Flex (light 300, regular 400, medium 500, semibold 600)
+// https://fonts.google.com/specimen/Roboto+Flex
+//
 
 import { Theme, SxProps } from "@mui/material/styles"
-import { Typography as MuiTypography, TypographyProps as MuiTypographyProps } from "@mui/material"
+import { Typography, TypographyProps as MuiTypographyProps } from "@mui/material"
 
 export interface TypographyProps extends MuiTypographyProps {
   /** Class name to be applied to this element's root (optional) */
   className?: string
 
-  /** Style when using generic component, default to body */
-  typescale?: "display" | "headline" | "title" | "body" | "label"
-
   /** Relative size, defaults to medium */
   size?: "small" | "medium" | "large"
 }
 
-function Typography(props: TypographyProps) {
-  const size = props.size || "medium"
-  const typescale = props.typescale || "body"
-  let className = `Typography-root Typography-${typescale}${size.charAt(0).toUpperCase()}${size.slice(1)}`
-  if (props.className) {
-    className += " " + props.className
-  }
-  return <MuiTypography className={className}>{props.children}</MuiTypography>
-}
-
 export function Display(props: TypographyProps) {
-  return <Typography typescale="display" {...props} />
+  switch (props.size) {
+    case "large":
+      // use sparingly
+      return <Typography variant="h2" {...props} />
+    case "small":
+      // use sparingly
+      return <Typography variant="h4" {...props} />
+  }
+  // recommended
+  return <Typography variant="h3" {...props} />
 }
 
 export function Headline(props: TypographyProps) {
-  return <Typography typescale="headline" {...props} />
+  switch (props.size) {
+    case "large":
+      // use sparingly
+      return <Typography variant="h4" {...props} />
+    case "small":
+      // use sparingly
+      return <Typography variant="h6" {...props} />
+  }
+  // recommended
+  return <Typography variant="h5" {...props} />
 }
 
 export function Title(props: TypographyProps) {
-  return <Typography typescale="title" {...props} />
+  switch (props.size) {
+    case "large":
+      // recommended
+      return <Typography variant="h6" {...props} />
+    case "small":
+      // recommended
+      return <Typography variant="subtitle2" {...props} />
+  }
+  // recommended
+  return <Typography variant="subtitle1" {...props} />
 }
 
 export function Body(props: TypographyProps) {
-  return <Typography typescale="body" {...props} />
+  switch (props.size) {
+    case "large":
+      // use sparingly
+      return <Typography variant="body1" {...props} />
+    case "small":
+      // recommended
+      return <Typography variant="body2" {...props} />
+  }
+  // recommended
+  return <Typography variant="body1" {...props} />
 }
 
 export function Label(props: TypographyProps) {
-  return <Typography typescale="label" {...props} />
+  // recommended
+  return <Typography variant="caption" {...props} />
 }

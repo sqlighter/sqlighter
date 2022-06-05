@@ -33,97 +33,14 @@ export const PRIMARY_LIGHTEST = rgbToHex(lighten(PRIMARY_COLOR, LIGHTEST))
 
 export const BORDER_RADIUS_FANCY = "74% 26% 61% 39% / 35% 30% 70% 65%"
 
-export const customSx: SxProps<Theme> = {
+// Roboto Flex
+export const LIGHT_WEIGHT = 300
+export const REGULAR_WEIGHT = 400
+export const MEDIUM_WEIGHT = 500
+export const BOLD_WEIGHT = 700
 
-  // https://material.io/blog/roboto-flex
-  // https://m3.material.io/styles/typography/type-scale-tokens
-  // TODO font heights should be in rem 
-  ".Typography-root": {
-    fontFamily: "'Roboto Flex', sans-serif",
-    letterSpacing: 0,
-  },
-  ".Typography-displayLarge": {
-    fontWeight: 400,
-    lineHeight: "64px",
-    fontSize: "57px",
-  },
-  ".Typography-displayMedium": {
-    fontWeight: 400,
-    lineHeight: "52px",
-    fontSize: "45px",
-  },
-  ".Typography-displaySmall": {
-    fontWeight: 400,
-    lineHeight: "44px",
-    fontSize: "36px",
-  },
-  ".Typography-headlineLarge": {
-    fontWeight: 400,
-    lineHeight: "40px",
-    fontSize: "32px",
-  },
-  ".Typography-headlineMedium": {
-    fontWeight: 400,
-    lineHeight: "36px",
-    fontSize: "28px",
-  },
-  ".Typography-headlineSmall": {
-    fontWeight: 400,
-    lineHeight: "32px",
-    fontSize: "24px",
-  },
-  ".Typography-titleLarge": {
-    fontWeight: 400,
-    lineHeight: "28px",
-    fontSize: "22px",
-  },
-  ".Typography-titleMedium": {
-    fontWeight: 500,
-    lineHeight: "24px",
-    fontSize: "16px",
-  },
-  ".Typography-titleSmall": {
-    fontWeight: 500,
-    lineHeight: "20px",
-    fontSize: "14px",
-    letterSpacing: 0.1,
-  },
-  ".Typography-labelLarge": {
-    fontWeight: 500,
-    lineHeight: "20px",
-    fontSize: "14px",
-    letterSpacing: 0.1,
-  },
-  ".Typography-labelMedium": {
-    fontWeight: 500,
-    lineHeight: "16px",
-    fontSize: "12px",
-    letterSpacing: 0.5,
-  },
-  ".Typography-labelSmall": {
-    fontWeight: 500,
-    lineHeight: "16px",
-    fontSize: "11px",
-    letterSpacing: 0.5,
-  },
-  ".Typography-bodyLarge": {
-    fontWeight: 400,
-    lineHeight: "24px",
-    fontSize: "16px",
-    letterSpacing: 0.5,
-  },
-  ".Typography-bodyMedium": {
-    fontWeight: 400,
-    lineHeight: "20px",
-    fontSize: "14px",
-    letterSpacing: 0.25,
-  },
-  ".Typography-bodySmall": {
-    fontWeight: 400,
-    lineHeight: "16px",
-    fontSize: "12px",
-    letterSpacing: 0.4,
-  },
+// Styles applied to all components
+export const customSx: SxProps<Theme> = {
 
 
 
@@ -166,51 +83,54 @@ export function customTheme() {
     typography: {
       // https://mui.com/customization/typography/#self-hosted-fonts
       fontFamily: "'Roboto Flex', Helvetica, Arial, sans-serif",
-      fontWeightLight: 300,
-      fontWeightRegular: 400,
-      fontWeightMedium: 500,
-      fontWeightBold: 700,
+      fontWeightLight: LIGHT_WEIGHT,
+      fontWeightRegular: REGULAR_WEIGHT,
+      fontWeightMedium: MEDIUM_WEIGHT,
+      fontWeightBold: BOLD_WEIGHT,
     },
   })
 
   const customTheme = createTheme(baseTheme, {
     typography: {
       h1: {
-        fontWeight: 900,
-        fontSize: baseTheme.typography.h3.fontSize,
-        lineHeight: baseTheme.typography.h3.lineHeight,
-        letterSpacing: baseTheme.typography.h3.letterSpacing,
+        fontWeight: REGULAR_WEIGHT,
       },
       h2: {
-        fontWeight: 900,
-        fontSize: baseTheme.typography.h4.fontSize,
-        lineHeight: baseTheme.typography.h4.lineHeight,
-        letterSpacing: baseTheme.typography.h4.letterSpacing,
+        fontWeight: REGULAR_WEIGHT,
       },
       h3: {
-        fontWeight: 900,
-        fontSize: baseTheme.typography.h5.fontSize,
-        lineHeight: baseTheme.typography.h5.lineHeight,
-        letterSpacing: baseTheme.typography.h5.letterSpacing,
+        fontWeight: REGULAR_WEIGHT,
       },
       h4: {
-        fontWeight: 900,
-        fontSize: baseTheme.typography.h6.fontSize,
-        lineHeight: baseTheme.typography.h6.lineHeight,
-        letterSpacing: baseTheme.typography.h6.letterSpacing,
+        fontWeight: REGULAR_WEIGHT,
       },
       h5: {
-        fontWeight: 900,
-        fontSize: "1rem",
-        lineHeight: "1.1",
-        letterSpacing: "0em",
+        fontWeight: REGULAR_WEIGHT,
       },
       h6: {
-        fontWeight: 900,
-        fontSize: "1rem",
-        lineHeight: "1",
-        letterSpacing: "0em",
+        fontWeight: REGULAR_WEIGHT,
       },
+      body1: {
+        fontWeight: MEDIUM_WEIGHT
+      },
+      body2: {
+        fontWeight: MEDIUM_WEIGHT
+      },
+      subtitle1: {
+        fontWeight: MEDIUM_WEIGHT
+      },
+      subtitle2: {
+        fontWeight: MEDIUM_WEIGHT
+      },
+      button: {
+        fontWeight: MEDIUM_WEIGHT
+      },
+      caption: {
+        fontWeight: MEDIUM_WEIGHT
+      },
+      overline: {
+        fontWeight: MEDIUM_WEIGHT
+      },      
     },
 
     components: {
