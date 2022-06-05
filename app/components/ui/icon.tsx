@@ -12,6 +12,7 @@ import { SvgIconProps } from "@mui/material"
 // https://fonts.google.com/icons
 import AccountCircleOutlined from "@mui/icons-material/AccountCircleOutlined"
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined"
+import AlignHorizontalLeftOutlinedIcon from "@mui/icons-material/AlignHorizontalLeftOutlined"
 import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined"
 import BentoOutlinedIcon from "@mui/icons-material/BentoOutlined"
 import BoltOutlinedIcon from "@mui/icons-material/BoltOutlined"
@@ -21,15 +22,16 @@ import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined"
 import CloudDownloadOutlinedIcon from "@mui/icons-material/CloudDownloadOutlined"
 import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined"
 import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined"
-import ExtensionOutlinedIcon from '@mui/icons-material/ExtensionOutlined';
+import ExtensionOutlinedIcon from "@mui/icons-material/ExtensionOutlined"
 import FileIcon from "@mui/icons-material/InsertDriveFileOutlined"
 import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined"
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined"
 import FullscreenOutlinedIcon from "@mui/icons-material/FullscreenOutlined"
 import FolderIcon from "@mui/icons-material/FolderOutlined"
 import HistoryIcon from "@mui/icons-material/HistoryOutlined"
+import InboxOutlinedIcon from "@mui/icons-material/InboxOutlined"
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined"
-import InsertChartOutlinedIcon from '@mui/icons-material/InsertChartOutlined';
+import InsertChartOutlinedIcon from "@mui/icons-material/InsertChartOutlined"
 import KeyIcon from "@mui/icons-material/KeyOutlined"
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined"
 import PlayArrowOutlinedIcon from "@mui/icons-material/PlayArrowOutlined"
@@ -50,6 +52,7 @@ import TableIcon from "@mui/icons-material/TableChartOutlined"
 import { DatabaseOutline } from "mdi-material-ui"
 import { DatabaseExportOutline } from "mdi-material-ui"
 import { ArrowExpand } from "mdi-material-ui"
+import { ImageText } from "mdi-material-ui"
 
 // Custom svg icon files in /icons
 import { SqliteIcon } from "./icons/sqliteicon"
@@ -87,6 +90,8 @@ export function Icon(props: IconProps) {
         return <InsertChartOutlinedIcon {...props} />
       case "database":
         return <DatabaseOutline {...props} />
+      case "description":
+        return <ImageText {...props} />
       case "download":
         return <CloudDownloadOutlinedIcon {...props} />
       case "expand":
@@ -101,11 +106,15 @@ export function Icon(props: IconProps) {
         return <FilterAltOutlinedIcon {...props} />
       case "folder":
         return <FolderIcon {...props} />
+      case "format":
+        return <AlignHorizontalLeftOutlinedIcon {...props} />
       case "fullscreen":
         // return <FullscreenOutlinedIcon {...props} />
         return <ArrowExpand {...props} />
       case "history":
         return <HistoryIcon {...props} />
+      case "inbox":
+        return <InboxOutlinedIcon {...props} />
       case "info":
         return <InfoOutlinedIcon {...props} />
       case "key":

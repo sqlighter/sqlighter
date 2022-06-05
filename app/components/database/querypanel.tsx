@@ -20,6 +20,7 @@ import Query, { QueryRun } from "../../lib/items/query"
 
 // components
 import { Icon } from "../ui/icon"
+import { IconButton } from "../ui/iconbutton"
 import { PanelProps } from "../navigation/panel"
 import { Tabs } from "../navigation/tabs"
 import { ConnectionPicker } from "./connectionpicker"
@@ -219,14 +220,18 @@ export function QueryPanel(props: QueryPanelProps) {
             </Button>
           </Box>
         </Stack>
-        <Box className="QueryPanel-commandsRow">
-          <Stack direction="row" spacing={1}>
-            <Button variant="outlined">Stampa</Button>
-            <Button variant="outlined">Stampa</Button>
-            <Button variant="outlined">Stampa</Button>
-          </Stack>
-        </Box>
+        {renderCommands()}
       </>
+    )
+  }
+
+  function renderCommands() {
+    return (
+      <Stack className="QueryPanel-commands" direction="row" spacing={0}>
+        <IconButton command={{ command: "info", icon: "info", title: "Show Description" }} label={true} size="medium" />
+        <IconButton command={{ command: "bookmark", icon: "bookmark", title: "Bookmark Query" }} size="medium" />
+        <IconButton command={{ command: "format", icon: "format", title: "Format Document" }} size="medium" />
+      </Stack>
     )
   }
 

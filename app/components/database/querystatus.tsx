@@ -11,7 +11,7 @@ import capitalize from "@mui/material/utils/capitalize"
 import { DataConnection } from "../../lib/sqltr/connections"
 import { QueryRun } from "../../lib/items/query"
 import { formatSeconds } from "../client"
-import { ConnectionIcon } from "./connectionpicker"
+import { ConnectionIcon } from "./connectionicon"
 import { DotColor } from "../ui/icon"
 
 // styles applied to main and subcomponents

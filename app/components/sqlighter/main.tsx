@@ -118,7 +118,7 @@ export default function Main(props: MainProps) {
         return
 
       case "changeConnection":
-        setConnection(command.args.connection)
+        setConnection(command.args.item)
         break
 
       case "changeQuery":
