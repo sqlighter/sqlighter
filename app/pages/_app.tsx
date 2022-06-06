@@ -5,6 +5,9 @@
 import Head from "next/head"
 import Script from "next/script"
 import { useRouter } from "next/router"
+
+// allotment styles + global overrides
+import "allotment/dist/style.css"
 import "../styles/global.css"
 
 import { useState } from "react"
