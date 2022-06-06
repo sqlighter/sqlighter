@@ -7,7 +7,7 @@ import { Theme, SxProps } from "@mui/material/styles"
 import Box from "@mui/material/Box"
 import { PanelElement, PanelProps } from "./panel"
 
-export const SIDEBAR_MIN_WIDTH = 180
+export const SIDEBAR_MIN_WIDTH = 200
 
 // Styles applied to all components
 export const Sidebar_SxProps: SxProps<Theme> = {

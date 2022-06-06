@@ -132,7 +132,7 @@ export function TreeItem({ item, ...props }: TreeItemProps) {
       return <Chip key={index} className="TreeItem-tag" label={tag} size="small" />
     }
     return (
-      <Tooltip key={index} title={tag.tooltip} placement="top" enterDelay={TOOLTIP_ENTER_DELAY_MS}>
+      <Tooltip key={index} title={tag.tooltip} enterDelay={TOOLTIP_ENTER_DELAY_MS}>
         <Chip className="TreeItem-tag" label={tag.title} size="small" />
       </Tooltip>
     )
@@ -143,12 +143,14 @@ export function TreeItem({ item, ...props }: TreeItemProps) {
       <Box className="TreeItem-depthPadding" sx={{ minWidth: depthPadding, width: depthPadding }} />
       {getCollapsibleIcon()}
       {item.icon && getIcon()}
-      <Typography className="TreeItem-label" variant="body2" color="inherit">
-        {item.title}
-        {item.badge !== null && item.badge !== undefined && (
-          <Chip className="TreeItem-badge" label={item.badge} size="small" />
-        )}
-      </Typography>
+      <Tooltip className="TreeItem-labelTooltip" title={item.title}>
+        <Typography className="TreeItem-label" variant="body2" color="inherit" noWrap>
+          {item.title}
+          {item.badge !== null && item.badge !== undefined && (
+            <Chip className="TreeItem-badge" label={item.badge} size="small" />
+          )}
+        </Typography>
+      </Tooltip>
       <Box sx={{ flexGrow: 1 }} />
       {item.tags && (
         <Stack className="TreeItem-tags" direction="row" spacing={0.5}>

@@ -12,9 +12,8 @@ import { Command } from "../../lib/commands"
 import { ActivityBar, ACTIVITYBAR_WIDTH } from "./activitybar"
 import { PanelElement, PanelProps } from "./panel"
 import { Tabs } from "./tabs"
-import { Sidebar } from "./sidebar"
-
-export const SIDEBAR_MIN_WIDTH = 180
+import { Sidebar, SIDEBAR_MIN_WIDTH } from "./sidebar"
+import { Icon } from "../ui/icon"
 
 // Styles applied to all components
 export const TabsLayout_SxProps: SxProps<Theme> = {

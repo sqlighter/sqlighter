@@ -35,12 +35,22 @@ const TreeView_SxProps: SxProps<Theme> = {
     textAlign: "start",
     color: "text.secondary",
 
+    ".TreeItem-commands": {
+      height: 18,
+      display: "none",
+    },
+
     "&:hover": {
       borderStartEndRadius: 16,
       borderEndEndRadius: 16,
 
       backgroundColor: "action.hover",
       color: "text.primary",
+
+      // shown commands only on hover
+      ".TreeItem-commands": {
+        display: "flex",
+      },
 
       ".TreeItem-commandIcon": {
         color: (theme) => theme.palette.text.disabled,
@@ -61,7 +71,7 @@ const TreeView_SxProps: SxProps<Theme> = {
     },
 
     ".TreeItem-label": {
-      minWidth: 64,
+      minWidth: 80,
       overflow: "hidden",
       textOverflow: "ellipsis",
 
@@ -74,19 +84,22 @@ const TreeView_SxProps: SxProps<Theme> = {
     },
 
     ".TreeItem-tags": {
+      maxHeight: 24,
       maxWidth: 1,
+
+      // show only the tags that
+      display: "flex",
+      justifyContent: "flex-end",
+      flexWrap: "wrap",
       overflow: "hidden",
 
       ".MuiChip-root": {
+        //    display: "block",
         cursor: "pointer",
         ".MuiChip-label": {
           fontSize: "9px",
         },
       },
-    },
-
-    ".TreeItem-commands": {
-      height: 18,
     },
 
     ".TreeItem-commandIcon": {

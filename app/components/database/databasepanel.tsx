@@ -20,6 +20,7 @@ export const DatabasePanel_SxProps: SxProps<Theme> = {
   overflowY: "auto",
 
   ".DatabasePanel-header": {
+    width: 1,
     padding: 1,
   },
 }

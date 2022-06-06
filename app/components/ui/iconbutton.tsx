@@ -3,18 +3,14 @@
  */
 
 import * as React from "react"
-import {
-  Box,
-  IconButtonProps as MuiIconButtonProps,
-  IconButton as MuiIconButton,
-  SxProps,
-  Theme,
-  Typography,
-} from "@mui/material"
+import { IconButtonProps as MuiIconButtonProps, SxProps, Theme } from "@mui/material"
+import MuiIconButton from "@mui/material/IconButton"
+import Box from "@mui/material/Box"
+import Tooltip from "@mui/material/Tooltip"
+import Typography from "@mui/material/Typography"
 
 import { Command, CommandEvent } from "../../lib/commands"
 import { Icon } from "./icon"
-import { Tooltip } from "./tooltip"
 
 const IconButton_SxProps: SxProps<Theme> = {
   ".IconButton-button": {
@@ -28,7 +24,7 @@ const IconButton_SxProps: SxProps<Theme> = {
   ".IconButton-selected": {
     color: "primary.main",
     backgroundColor: "primary.light",
-//    backgroundColor: (theme: Theme | any) => theme.palette.materialyou.primary.light,
+    //    backgroundColor: (theme: Theme | any) => theme.palette.materialyou.primary.light,
   },
 }
 

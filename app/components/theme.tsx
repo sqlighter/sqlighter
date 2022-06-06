@@ -174,6 +174,14 @@ export function customTheme() {
           },
         },
       },
+
+      MuiTooltip: {
+        defaultProps: {
+          placement: "top",
+          // show tooltip only when user waits on the item for a while (ms)
+          enterDelay: 1200
+        }
+      }
     },
   })
 
