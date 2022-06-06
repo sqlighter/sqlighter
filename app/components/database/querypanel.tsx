@@ -9,8 +9,9 @@ import { Theme, SxProps } from "@mui/material"
 import { Allotment } from "allotment"
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
-import Stack from "@mui/material/Stack"
 import Paper from "@mui/material/Paper"
+import Stack from "@mui/material/Stack"
+import Typography from "@mui/material/Typography"
 
 // model
 import { Command } from "../../lib/commands"
@@ -236,8 +237,9 @@ export function QueryPanel(props: QueryPanelProps) {
 
   function renderEditor() {
     return (
-      <Box sx={{ width: 1, height: 1, padding: 1 }}>
-        <Paper variant="outlined" sx={{ width: 1, height: 1, overflow: "hidden" }}>
+      <Box sx={{ width: 1, height: 1, display: "flex", flexDirection: "column", padding: 1 }}>
+        <Typography variant="subtitle1">Query</Typography>
+        <Paper variant="outlined" sx={{ flexGrow: 1, width: 1, overflow: "hidden" }}>
           <SqlEditor value={query.sql} onCommand={handleCommand} />
         </Paper>
       </Box>
