@@ -11,28 +11,25 @@ import Divider from "@mui/material/Divider"
 import Menu from "@mui/material/Menu"
 import MenuItem from "@mui/material/MenuItem"
 import TextField from "@mui/material/TextField"
+import Tooltip from "@mui/material/Tooltip"
+import Typography from "@mui/material/Typography"
 
 import { CommandEvent } from "../../lib/commands"
 import { DataConnection } from "../../lib/sqltr/connections"
 import { Icon } from "../ui/icon"
-import { Label } from "../ui/typography"
-import { Tooltip } from "../ui/tooltip"
 import { ConnectionIcon } from "./connectionicon"
+
+export const CONNECTIONPICKER_MIN_WIDTH = 140
+export const CONNECTIONPICKER_MAX_WIDTH = 240
 
 // styles for connections picker and subcomponents
 const ConnectionPicker_Sx: SxProps<Theme> = {
-  // TODO connection picker should not be larger than activities panel when database name is long
-  maxWidth: 1,
+  maxWidth: CONNECTIONPICKER_MAX_WIDTH,
+  height: 36,
 
   ".ConnectionPicker-button": {
-    // borderRadius: "8px",
-    // it's better to apply border radius to entire theme...
-  },
-
-  ".ConnectionPicker-buttonChildren": {
-    display: "flex",
-    flexWrap: "nowrap",
-    alignItems: "center",
+    maxWidth: CONNECTIONPICKER_MAX_WIDTH,
+    height: 36,
   },
 
   ".ConnectionPicker-icon": {
@@ -59,7 +56,7 @@ const ConnectionPicker_Sx: SxProps<Theme> = {
   // TODO add a space between button and menu
   "& .MuiModal-root": {
     marginTop: "8px", // or 1
-  }
+  },
 }
 
 export interface ConnectionPickerProps {
@@ -220,13 +217,11 @@ export function ConnectionPicker(props: ConnectionPickerProps) {
           onClick={handleClick}
           variant="outlined"
         >
-          <Box className="ConnectionPicker-buttonChildren">
-            <ConnectionIcon connection={props.connection} />
-            <Box className="ConnectionPicker-label">
-              <Label>{title}</Label>
-            </Box>
-            <Icon className="ConnectionPicker-expandIcon">expand</Icon>
-          </Box>
+          <ConnectionIcon connection={props.connection} />
+          <Typography className="ConnectionPicker-label" variant="button" noWrap>
+            {title}
+          </Typography>
+          <Icon className="ConnectionPicker-expandIcon">expand</Icon>
         </Button>
       </Tooltip>
       {renderMenu()}

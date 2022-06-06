@@ -14,8 +14,9 @@ class FakeConnection extends DataConnection {
   id = "dbc_fake01"
   title = "company.db"
   
-  public constructor(configs: DataConnectionConfigs) {
+  public constructor(configs: DataConnectionConfigs, title) {
     super(configs)
+    this.title = title
   }
   public async getSchemas(refresh: boolean = false): Promise<DataSchema[]> {
     return null // TODO
@@ -34,10 +35,18 @@ class FakeConnection extends DataConnection {
 export const fake_connection1 = new FakeConnection({
   client: "sqlite3",
   connection: {},
-})
+}, "chinook.db")
+export const fake_connection2 = new FakeConnection({
+  client: "sqlite3",
+  connection: {},
+}, "CorporateDatabaseWeeklyBackup.db")
+export const fake_connection3 = new FakeConnection({
+  client: "sqlite3",
+  connection: {},
+}, "A.db")
 
 // DataConnection[]
-export const fake_connections1: DataConnection[] = [fake_connection1]
+export const fake_connections1: DataConnection[] = [fake_connection1, fake_connection2, fake_connection3]
 
 // Query (simple)
 export const fake_query1 = new Query()
