@@ -12,7 +12,6 @@ import "../styles/global.css"
 
 import { useState } from "react"
 import CssBaseline from "@mui/material/CssBaseline"
-import GlobalStyles from "@mui/material/GlobalStyles"
 import { ThemeProvider } from "@mui/material/styles"
 
 import { useUser } from "../components/hooks/useUser"
@@ -124,14 +123,9 @@ export default function App({ Component, pageProps }: { Component: any; pageProp
   // render
   //
 
-  // <GlobalStyles styles={{ body: { backgroundColor: PRIMARY_LIGHTEST } }} />
-  // is used to that you don't see a white strip when you pull the header down
-  // we then give all contents a default of background.paper so it's all white as base
-
   return (
     <>
       <CssBaseline>
-        <GlobalStyles styles={{ body: { backgroundColor: PRIMARY_LIGHTEST } }} />
         <ThemeProvider theme={customTheme()}>
           <Context.Provider value={context}>
             <Head>
