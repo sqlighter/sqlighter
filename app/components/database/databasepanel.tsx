@@ -15,10 +15,6 @@ import { PanelProps } from "../navigation/panel"
 
 // Styles applied to component and subcomponents
 export const DatabasePanel_SxProps: SxProps<Theme> = {
-  height: 1,
-  maxHeight: 1,
-  overflowY: "auto",
-
   ".DatabasePanel-header": {
     width: 1,
     padding: 1,

@@ -27,6 +27,7 @@ export const Sidebar_SxProps: SxProps<Theme> = {
 
   ".Sidebar-activities": {
     flexGrow: 1,
+    overflow: "scroll",
   },
 
   ".Sidebar-activity": {

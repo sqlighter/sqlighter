@@ -16,8 +16,9 @@ import { TreeItem, DEPTH_PADDING_PX } from "./treeitem"
 /** Custom styles applied to TreeView and TreeItem components */
 const TreeView_SxProps: SxProps<Theme> = {
   width: 1,
-  height: 1,
+//  height: 1,
   paddingRight: 0.75,
+  overflow: "scroll",
 
   ".TreeItem-root": {
     width: 1,

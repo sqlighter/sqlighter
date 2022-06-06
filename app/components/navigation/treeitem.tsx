@@ -129,10 +129,14 @@ export function TreeItem({ item, ...props }: TreeItemProps) {
   /** A tag is rendered as a chip with an optional tooltip */
   function getTag(tag, index) {
     if (typeof tag === "string") {
-      return <Chip key={index} className="TreeItem-tag" label={tag} size="small" />
+      return (
+        <Tooltip key={index} title={tag}>
+          <Chip className="TreeItem-tag" label={tag} size="small" />
+        </Tooltip>
+      )
     }
     return (
-      <Tooltip key={index} title={tag.tooltip} enterDelay={TOOLTIP_ENTER_DELAY_MS}>
+      <Tooltip key={index} title={tag.tooltip}>
         <Chip className="TreeItem-tag" label={tag.title} size="small" />
       </Tooltip>
     )
