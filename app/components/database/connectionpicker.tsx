@@ -215,7 +215,7 @@ export function ConnectionPicker(props: ConnectionPickerProps) {
           className="ConnectionPicker-button"
           id="connection-picker-button"
           onClick={handleClick}
-          variant="outlined"
+          variant="text"
         >
           <ConnectionIcon connection={props.connection} />
           <Typography className="ConnectionPicker-label" variant="button" noWrap>
