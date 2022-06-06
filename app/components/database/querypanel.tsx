@@ -9,7 +9,7 @@ import { Theme, SxProps } from "@mui/material"
 import { Allotment } from "allotment"
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
-import Paper from "@mui/material/Paper"
+import Card from "@mui/material/Card"
 import Stack from "@mui/material/Stack"
 import Typography from "@mui/material/Typography"
 
@@ -28,6 +28,7 @@ import { SqlEditor } from "../editor/sqleditor"
 import { QueryRunPanel } from "./queryrunpanel"
 import { useForceUpdate } from "../hooks/useforceupdate"
 import { TitleField } from "../ui/titlefield"
+import { Empty } from "../ui/empty"
 
 const delay = (ms) => new Promise((res) => setTimeout(res, ms))
 
@@ -36,6 +37,8 @@ const QueryPanel_SxProps: SxProps<Theme> = {
   width: 1,
   height: 1,
   maxHeight: 1,
+
+  background: "rgba(0,255,0,0.2)",
 
   // area with title, connections picker, run button
   ".QueryPanel-headerRow": {
@@ -236,14 +239,7 @@ export function QueryPanel(props: QueryPanelProps) {
   }
 
   function renderEditor() {
-    return (
-      <Box sx={{ width: 1, height: 1, display: "flex", flexDirection: "column", padding: 1 }}>
-        <Typography variant="subtitle1">Query</Typography>
-        <Paper variant="outlined" sx={{ flexGrow: 1, width: 1, overflow: "hidden" }}>
-          <SqlEditor value={query.sql} onCommand={handleCommand} />
-        </Paper>
-      </Box>
-    )
+    return <SqlEditor value={query.sql} onCommand={handleCommand} />
   }
 
   function renderRuns() {
@@ -260,17 +256,18 @@ export function QueryPanel(props: QueryPanelProps) {
         const runConnection = props.connections.find((conn) => conn.id == run.query.connectionId)
         return <QueryRunPanel key={run.id} id={run.id} title={run.title} run={runClone} connection={runConnection} />
       })
-      return (
-        <Box sx={{ width: 1, height: 1, padding: 1 }}>
-          <Paper variant="outlined" sx={{ width: 1, height: 1, overflow: "hidden" }}>
-            <Tabs tabId={runId} tabs={tabs} tabsCommands={[toggleResults]} onCommand={handleCommand} />
-          </Paper>
-        </Box>
-      )
+      return <Tabs tabId={runId} tabs={tabs} tabsCommands={[toggleResults]} onCommand={handleCommand} />
     }
 
     // TODO show empty state, eg empty tray icon + your results will appear here or similar
-    return <>No results yet</>
+    return (
+      <Empty
+        icon="table"
+        title="No results yet"
+        description="The results of your query will appear here"
+        variant="fancy"
+      />
+    )
   }
 
   /**
@@ -285,8 +282,20 @@ export function QueryPanel(props: QueryPanelProps) {
     if (variant == "bottom") {
       return (
         <Allotment className={`QueryPanel-bottomResults`} vertical={true} proportionalLayout={true}>
-          <Allotment.Pane>{renderEditor()}</Allotment.Pane>
-          <Allotment.Pane>{renderRuns()}</Allotment.Pane>
+          <Allotment.Pane>
+            <Box sx={{ width: 1, height: 1, display: "flex", flexDirection: "column", paddingBottom: "6px" }}>
+              <Card variant="outlined" sx={{ flexGrow: 1, width: 1, overflow: "hidden" }}>
+                {renderEditor()}
+              </Card>
+            </Box>
+          </Allotment.Pane>
+          <Allotment.Pane>
+            <Box sx={{ width: 1, height: 1, display: "flex", flexDirection: "column", paddingTop: "2px" }}>
+              <Card variant="outlined" sx={{ flexGrow: 1, width: 1, overflow: "hidden" }}>
+                {renderRuns()}
+              </Card>
+            </Box>
+          </Allotment.Pane>
         </Allotment>
       )
     } else {
