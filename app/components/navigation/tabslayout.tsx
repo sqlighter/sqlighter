@@ -24,8 +24,10 @@ export const TabsLayout_SxProps: SxProps<Theme> = {
   right: 0,
   bottom: 0,
 
-  // light gray
+  // light gray with a border on bottom since the page is white underneat
   backgroundColor: "background.default",
+  borderBottom: 1,
+  borderBottomColor: "divider",
 
   ".TabsLayout-sidebarLogo": {
     minHeight: ACTIVITYBAR_WIDTH,
