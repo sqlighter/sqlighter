@@ -13,7 +13,7 @@ export interface Command {
   icon?: string | React.ReactNode
 
   /** A human-readable string describing this command (used as tooltip for icon buttons) */
-  title?: string
+  title?: string | React.ReactNode
 
   /** Arguments passed to this command (optional and command-specific) */
   args?: { [key: string]: any }

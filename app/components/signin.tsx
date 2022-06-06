@@ -34,6 +34,11 @@ export function getDisplayName(user) {
   return user?.passport?.displayName || ""
 }
 
+/** Returns user's email (if available) */
+export function getEmail(user) {
+  return user?.passport?.emails?.[0]?.value
+}
+
 export function getProfileImageUrl(user) {
   return user?.passport?.photos?.[0]?.value
 }

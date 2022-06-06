@@ -8,7 +8,6 @@ import React from "react"
 import { Theme, SxProps } from "@mui/material/styles"
 import Avatar from "@mui/material/Avatar"
 import Box from "@mui/material/Box"
-import Button from "@mui/material/Button"
 import Tab from "@mui/material/Tab"
 import TabContext from "@mui/lab/TabContext"
 import TabList from "@mui/lab/TabList"
@@ -17,7 +16,7 @@ import { CommandEvent } from "../../lib/commands"
 import { Icon } from "../ui/icon"
 import { IconButton } from "../ui/iconbutton"
 import { PanelProps, PanelElement } from "./panel"
-import { getDisplayName, getProfileImageUrl } from "../signin"
+import { getDisplayName, getProfileImageUrl, getEmail } from "../signin"
 
 export const ACTIVITYBAR_WIDTH = 48
 
@@ -93,6 +92,7 @@ export interface ActivityBarProps extends PanelProps {
 export function ActivityBar(props: ActivityBarProps) {
   const displayName = getDisplayName(props.user)
   const profileImage = getProfileImageUrl(props.user)
+  const email = getEmail(props.user)
 
   //
   // handlers
@@ -105,13 +105,50 @@ export function ActivityBar(props: ActivityBarProps) {
     })
   }
 
-  function handleProfileClick(event) {
-    props.onCommand(event, { command: props.user ? "openProfile" : "openSignin" })
-  }
-
   //
   // render
   //
+
+  /** Profile avatar if user is logged in or signin command otherwise */
+  function renderProfile() {
+    if (!props.user) {
+      return (
+        <IconButton
+          className="ActivityBar-button"
+          onCommand={props.onCommand}
+          command={{
+            command: "openSignin",
+            icon: "account",
+            title: "Sign in",
+          }}
+        />
+      )
+    }
+
+    const avatar = <Avatar alt={displayName} src={profileImage} sx={{ width: 24, height: 24 }} />
+    const avatarTooltip =
+      displayName || email ? (
+        <div>
+          {displayName}
+          <br />
+          {email}
+        </div>
+      ) : (
+        "Profile"
+      )
+
+    return (
+      <IconButton
+        className="ActivityBar-button"
+        onCommand={props.onCommand}
+        command={{
+          command: "openProfile",
+          icon: avatar,
+          title: avatarTooltip,
+        }}
+      />
+    )
+  }
 
   return (
     <TabContext value={props.activityId}>
@@ -126,7 +163,6 @@ export function ActivityBar(props: ActivityBarProps) {
               title: "Home",
             }}
           />
-
           <TabList scrollButtons="auto" orientation="vertical">
             {props.activities.map((activity: PanelElement) => (
               <Tab
@@ -150,14 +186,7 @@ export function ActivityBar(props: ActivityBarProps) {
               title: "Settings",
             }}
           />
-          <Button className="ActivityBar-button" onClick={handleProfileClick}>
-            {props.user && <Avatar alt={displayName} src={profileImage} sx={{ width: 24, height: 24 }} />}
-            {!props.user && (
-              <Box>
-                <Icon>account</Icon>
-              </Box>
-            )}
-          </Button>
+          {renderProfile()}
         </Box>
       </Box>
     </TabContext>
