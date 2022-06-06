@@ -26,7 +26,9 @@ const IconButton_SxProps: SxProps<Theme> = {
   },
 
   ".IconButton-selected": {
-    backgroundColor: (theme: Theme | any) => theme.palette.materialyou.primary.light,
+    color: "primary.main",
+    backgroundColor: "primary.light",
+//    backgroundColor: (theme: Theme | any) => theme.palette.materialyou.primary.light,
   },
 }
 
@@ -65,7 +67,7 @@ export function IconButton(props: IconButtonProps) {
   let button = (
     <Box className="IconButton-root" sx={IconButton_SxProps}>
       <MuiIconButton
-        className={props.selected ? "IconButton-button IconButton-selected Mui-selected" : "IconButton-root"}
+        className={props.selected ? "IconButton-button IconButton-selected Mui-selected" : "IconButton-button"}
         onClick={handleClick}
         {...buttonProps}
       >

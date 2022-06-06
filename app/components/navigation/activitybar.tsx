@@ -5,6 +5,7 @@
 
 import React from "react"
 
+import { Theme, SxProps } from "@mui/material/styles"
 import Avatar from "@mui/material/Avatar"
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
@@ -14,12 +15,34 @@ import TabList from "@mui/lab/TabList"
 
 import { CommandEvent } from "../../lib/commands"
 import { Icon } from "../ui/icon"
+import { IconButton } from "../ui/iconbutton"
 import { PanelProps, PanelElement } from "./panel"
 import { getDisplayName, getProfileImageUrl } from "../signin"
 
 export const ACTIVITYBAR_WIDTH = 48
 
-const ACTIVITYBAR_TABLIST_STYLE = {
+export const ActivityBar_SxProps: SxProps<Theme> = {
+  display: "flex",
+  flexDirection: "column",
+  height: 1,
+  width: ACTIVITYBAR_WIDTH,
+
+  borderRight: 1,
+  borderRightColor: "divider",
+
+  ".ActivityBar-top": {
+    flexGrow: 1,
+  },
+
+  ".ActivityBar-bottom": {
+    width: 1,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingTop: 2,
+  },
+
   ".MuiTabs-indicator": {
     left: 0,
   },
@@ -30,19 +53,25 @@ const ACTIVITYBAR_TABLIST_STYLE = {
       backgroundColor: "action.hover",
     },
   },
-}
 
-const ACTIVITYBAR_BUTTON_STYLE = {
-  color: "text.secondary",
-  minWidth: ACTIVITYBAR_WIDTH,
-  width: ACTIVITYBAR_WIDTH,
-  height: ACTIVITYBAR_WIDTH,
-  borderRadius: 0,
-  ".MuiTouchRipple-child": {
-    backgroundColor: "primary.main",
+  ".ActivityBar-button": {
+    color: "text.secondary",
+    minWidth: ACTIVITYBAR_WIDTH,
+    width: ACTIVITYBAR_WIDTH,
+    height: ACTIVITYBAR_WIDTH,
+    borderRadius: 0,
+    ".MuiTouchRipple-child": {
+      backgroundColor: "primary.main",
+    },
+    "&:hover": {
+      backgroundColor: "action.hover",
+    },
   },
-  "&:hover": {
-    backgroundColor: "action.hover",
+
+  ".ActivityBar-logo": {
+    backgroundColor: "background.paper",
+    borderBottom: 1,
+    borderBottomColor: "divider",
   },
 }
 
@@ -76,12 +105,6 @@ export function ActivityBar(props: ActivityBarProps) {
     })
   }
 
-  function handleSettingsClick(event) {
-    props.onCommand(event, {
-      command: "openSettings",
-    })
-  }
-
   function handleProfileClick(event) {
     props.onCommand(event, { command: props.user ? "openProfile" : "openSignin" })
   }
@@ -92,9 +115,19 @@ export function ActivityBar(props: ActivityBarProps) {
 
   return (
     <TabContext value={props.activityId}>
-      <Box sx={{ display: "flex", flexDirection: "column", height: 1, width: ACTIVITYBAR_WIDTH }}>
-        <Box sx={{ flexGrow: 1 }}>
-          <TabList scrollButtons="auto" orientation="vertical" sx={ACTIVITYBAR_TABLIST_STYLE}>
+      <Box sx={ActivityBar_SxProps}>
+        <Box className="ActivityBar-top">
+          <IconButton
+            className="ActivityBar-button ActivityBar-logo"
+            onCommand={props.onCommand}
+            command={{
+              command: "home",
+              icon: "home",
+              title: "Home",
+            }}
+          />
+
+          <TabList scrollButtons="auto" orientation="vertical">
             {props.activities.map((activity: PanelElement) => (
               <Tab
                 key={activity.props.id}
@@ -107,22 +140,17 @@ export function ActivityBar(props: ActivityBarProps) {
             ))}
           </TabList>
         </Box>
-        <Box
-          sx={{
-            width: 1,
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            paddingTop: 2,
-          }}
-        >
-          <Button onClick={handleSettingsClick} sx={ACTIVITYBAR_BUTTON_STYLE}>
-            <Box>
-              <Icon>settings</Icon>
-            </Box>
-          </Button>
-          <Button onClick={handleProfileClick} sx={ACTIVITYBAR_BUTTON_STYLE}>
+        <Box className="ActivityBar-bottom">
+          <IconButton
+            className="ActivityBar-button"
+            onCommand={props.onCommand}
+            command={{
+              command: "openSettings",
+              icon: "settings",
+              title: "Settings",
+            }}
+          />
+          <Button className="ActivityBar-button" onClick={handleProfileClick}>
             {props.user && <Avatar alt={displayName} src={profileImage} sx={{ width: 24, height: 24 }} />}
             {!props.user && (
               <Box>

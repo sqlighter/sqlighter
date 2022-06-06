@@ -5,15 +5,44 @@
 import React, { useState } from "react"
 import Head from "next/head"
 import { Allotment } from "allotment"
-import "allotment/dist/style.css"
+import { Theme, SxProps } from "@mui/material/styles"
 import Box from "@mui/material/Box"
 
 import { Command } from "../../lib/commands"
 import { ActivityBar, ACTIVITYBAR_WIDTH } from "./activitybar"
 import { PanelElement, PanelProps } from "./panel"
 import { Tabs } from "./tabs"
+import { Sidebar } from "./sidebar"
 
 export const SIDEBAR_MIN_WIDTH = 180
+
+// Styles applied to all components
+export const TabsLayout_SxProps: SxProps<Theme> = {
+  position: "absolute",
+  left: 0,
+  top: 0,
+  right: 0,
+  bottom: 0,
+
+  // light gray
+  backgroundColor: "background.default",
+
+  ".TabsLayout-sidebarLogo": {
+    minHeight: ACTIVITYBAR_WIDTH,
+    maxHeight: ACTIVITYBAR_WIDTH,
+    width: 1,
+    backgroundColor: "background.paper",
+  },
+
+  ".TabsLayout-tabs": {
+    width: 1,
+    height: 1,
+
+    ".MuiTabs-root": {
+      backgroundColor: "background.paper",
+    },
+  },
+}
 
 interface TabsLayoutProps extends PanelProps {
   /** Activity that is currently selected */
@@ -77,23 +106,6 @@ export function TabsLayout(props: TabsLayoutProps) {
   // render
   //
 
-  /**
-   * Sidebar shows the activity highlighted in the activity bar. The sidebar can be
-   * opened or closed by clicking on the selected activity or by snapping closed the
-   * allotment pane. The content of the activity is always shown for now to make it
-   * easier to retain the state of the content, eg. data, scrolling position, etc.
-   */
-  function renderSidebar() {
-    return props.activities.map((activity: PanelElement) => {
-      const display = !sidebarVisible || activity.props.id != props.activityId ? "none" : null
-      return (
-        <Box key={activity.props.id} sx={{ width: 1, height: 1, display }}>
-          {activity}
-        </Box>
-      )
-    })
-  }
-
   return (
     <>
       <Head>
@@ -104,7 +116,7 @@ export function TabsLayout(props: TabsLayoutProps) {
         <meta name="og:title" content={props.title} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
-      <Box className="TabsLayout-root" sx={{ position: "absolute", left: 0, top: 0, right: 0, bottom: 0 }}>
+      <Box className="TabsLayout-root" sx={TabsLayout_SxProps}>
         <Allotment onVisibleChange={handleSidebarVisibilityChange}>
           <Allotment.Pane maxSize={ACTIVITYBAR_WIDTH} minSize={ACTIVITYBAR_WIDTH} visible>
             <ActivityBar
@@ -115,10 +127,17 @@ export function TabsLayout(props: TabsLayoutProps) {
             />
           </Allotment.Pane>
           <Allotment.Pane minSize={SIDEBAR_MIN_WIDTH} preferredSize={SIDEBAR_MIN_WIDTH} visible={sidebarVisible} snap>
-            {renderSidebar()}
+            <Sidebar activityId={props.activityId} activities={props.activities} visible={sidebarVisible} />
           </Allotment.Pane>
           <Allotment.Pane>
-            <Tabs tabId={props.tabId} tabs={props.tabs} tabsCommands={props.tabsCommands} onCommand={props.onCommand} />
+            <Box className="TabsLayout-tabs">
+              <Tabs
+                tabId={props.tabId}
+                tabs={props.tabs}
+                tabsCommands={props.tabsCommands}
+                onCommand={props.onCommand}
+              />
+            </Box>
           </Allotment.Pane>
         </Allotment>
       </Box>

@@ -7,11 +7,9 @@ import React from "react"
 import { useState } from "react"
 import { Theme, SxProps } from "@mui/material"
 import { Allotment } from "allotment"
-import "allotment/dist/style.css"
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
 import Stack from "@mui/material/Stack"
-import TextField from "@mui/material/TextField"
 
 // model
 import { Command } from "../../lib/commands"
@@ -43,7 +41,7 @@ const QueryPanel_SxProps: SxProps<Theme> = {
     paddingTop: 1,
     paddingLeft: 1,
     paddingRight: 2,
-    paddingBottom: 2
+    paddingBottom: 2,
   },
 
   ".QueryPanel-title": {
@@ -51,7 +49,7 @@ const QueryPanel_SxProps: SxProps<Theme> = {
   },
 
   ".QueryPanel-run": {
-    width: 120
+    width: 120,
   },
 }
 
