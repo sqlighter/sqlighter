@@ -18,6 +18,7 @@ import BentoOutlinedIcon from "@mui/icons-material/BentoOutlined"
 import BoltOutlinedIcon from "@mui/icons-material/BoltOutlined"
 import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlined"
 import BookmarksOutlinedIcon from "@mui/icons-material/BookmarksOutlined"
+import BungalowOutlinedIcon from '@mui/icons-material/BungalowOutlined';
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined"
 import CloudDownloadOutlinedIcon from "@mui/icons-material/CloudDownloadOutlined"
 import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined"
@@ -29,6 +30,7 @@ import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined"
 import FullscreenOutlinedIcon from "@mui/icons-material/FullscreenOutlined"
 import FolderIcon from "@mui/icons-material/FolderOutlined"
 import HistoryIcon from "@mui/icons-material/HistoryOutlined"
+import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import InboxOutlinedIcon from "@mui/icons-material/InboxOutlined"
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined"
 import InsertChartOutlinedIcon from "@mui/icons-material/InsertChartOutlined"
@@ -44,6 +46,7 @@ import SettingsOutlined from "@mui/icons-material/SettingsOutlined"
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined"
 import TableRowsOutlinedIcon from "@mui/icons-material/TableRowsOutlined"
 import TableIcon from "@mui/icons-material/TableChartOutlined"
+import WhatshotOutlinedIcon from "@mui/icons-material/WhatshotOutlined"
 
 // Material Design Icons (open source)
 // https://materialdesignicons.com/
@@ -56,9 +59,13 @@ import { ImageText } from "mdi-material-ui"
 
 // Custom svg icon files in /icons
 import { SqliteIcon } from "./icons/sqliteicon"
+import { FireIcon } from "./icons/fireicon"
 
 // Font Awesome
 // https://fontawesome.com/icons/server?s=regular
+
+// IconScout
+// https://iconscout.com/unicons/explore/line
 
 /** Display a dot badge with the given color (default none) */
 export type DotColor = "default" | "success" | "primary" | "secondary" | "error" | "info" | "warning"
@@ -104,6 +111,8 @@ export function Icon(props: IconProps) {
         return <FileIcon {...props} />
       case "filter":
         return <FilterAltOutlinedIcon {...props} />
+      case "fire":
+        return <FireIcon {...props} />
       case "folder":
         return <FolderIcon {...props} />
       case "format":
@@ -111,6 +120,9 @@ export function Icon(props: IconProps) {
       case "fullscreen":
         // return <FullscreenOutlinedIcon {...props} />
         return <ArrowExpand {...props} />
+      case "home":
+        // return <BungalowOutlinedIcon {...props} />
+        return <HomeOutlinedIcon {...props} />
       case "history":
         return <HistoryIcon {...props} />
       case "inbox":
@@ -153,6 +165,8 @@ export function Icon(props: IconProps) {
         return <TableIcon {...props} />
       case "upload":
         return <CloudUploadOutlinedIcon {...props} />
+      case "whatshot":
+        return <WhatshotOutlinedIcon {...props} />
 
       default:
         return <QuestionMarkIcon {...props} />
