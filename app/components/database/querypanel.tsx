@@ -10,6 +10,7 @@ import { Allotment } from "allotment"
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
 import Stack from "@mui/material/Stack"
+import Paper from "@mui/material/Paper"
 
 // model
 import { Command } from "../../lib/commands"
@@ -234,7 +235,13 @@ export function QueryPanel(props: QueryPanelProps) {
   }
 
   function renderEditor() {
-    return <SqlEditor value={query.sql} onCommand={handleCommand} />
+    return (
+      <Box sx={{ width: 1, height: 1, padding: 1 }}>
+        <Paper variant="outlined" sx={{ width: 1, height: 1, overflow: "hidden" }}>
+          <SqlEditor value={query.sql} onCommand={handleCommand} />
+        </Paper>
+      </Box>
+    )
   }
 
   function renderRuns() {
@@ -251,7 +258,13 @@ export function QueryPanel(props: QueryPanelProps) {
         const runConnection = props.connections.find((conn) => conn.id == run.query.connectionId)
         return <QueryRunPanel key={run.id} id={run.id} title={run.title} run={runClone} connection={runConnection} />
       })
-      return <Tabs tabId={runId} tabs={tabs} tabsCommands={[toggleResults]} onCommand={handleCommand} />
+      return (
+        <Box sx={{ width: 1, height: 1, padding: 1 }}>
+          <Paper variant="outlined" sx={{ width: 1, height: 1, overflow: "hidden" }}>
+            <Tabs tabId={runId} tabs={tabs} tabsCommands={[toggleResults]} onCommand={handleCommand} />
+          </Paper>
+        </Box>
+      )
     }
 
     // TODO show empty state, eg empty tray icon + your results will appear here or similar
