@@ -18,7 +18,7 @@ import BentoOutlinedIcon from "@mui/icons-material/BentoOutlined"
 import BoltOutlinedIcon from "@mui/icons-material/BoltOutlined"
 import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlined"
 import BookmarksOutlinedIcon from "@mui/icons-material/BookmarksOutlined"
-import BungalowOutlinedIcon from '@mui/icons-material/BungalowOutlined';
+import BungalowOutlinedIcon from "@mui/icons-material/BungalowOutlined"
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined"
 import CloudDownloadOutlinedIcon from "@mui/icons-material/CloudDownloadOutlined"
 import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined"
@@ -30,7 +30,7 @@ import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined"
 import FullscreenOutlinedIcon from "@mui/icons-material/FullscreenOutlined"
 import FolderIcon from "@mui/icons-material/FolderOutlined"
 import HistoryIcon from "@mui/icons-material/HistoryOutlined"
-import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined"
 import InboxOutlinedIcon from "@mui/icons-material/InboxOutlined"
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined"
 import InsertChartOutlinedIcon from "@mui/icons-material/InsertChartOutlined"
@@ -134,8 +134,7 @@ export function Icon(props: IconProps) {
       case "more":
         return <MoreHorizOutlinedIcon {...props} />
       case "pin":
-      case "pinned":
-        return <PushPinOutlinedIcon {...props} sx={{ transform: "rotate(45deg)" }} />
+        return <PushPinOutlinedIcon {...props} />
       case "play":
         return <PlayArrowOutlinedIcon {...props} />
       case "print":
@@ -163,6 +162,8 @@ export function Icon(props: IconProps) {
         return <TableIcon {...props} />
       case "view":
         return <TableIcon {...props} />
+      case "unpin":
+        return <PushPinOutlinedIcon {...props} sx={{ transform: "rotate(45deg)" }} />
       case "upload":
         return <CloudUploadOutlinedIcon {...props} />
       case "whatshot":
