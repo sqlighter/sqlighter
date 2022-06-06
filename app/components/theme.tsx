@@ -26,6 +26,7 @@ const LIGHT = 0.92
 const LIGHTER = 0.95
 const LIGHTEST = 0.97
 
+// export const PRIMARY_COLOR = "#446927" // green
 export const PRIMARY_COLOR = "#0072e5" // blue
 export const PRIMARY_LIGHT = rgbToHex(lighten(PRIMARY_COLOR, LIGHT))
 export const PRIMARY_LIGHTER = rgbToHex(lighten(PRIMARY_COLOR, LIGHTER))
@@ -33,32 +34,30 @@ export const PRIMARY_LIGHTEST = rgbToHex(lighten(PRIMARY_COLOR, LIGHTEST))
 
 export const BORDER_RADIUS_FANCY = "74% 26% 61% 39% / 35% 30% 70% 65%"
 
-// Roboto Flex
+// Roboto Flex weights
 export const LIGHT_WEIGHT = 300
 export const REGULAR_WEIGHT = 400
 export const MEDIUM_WEIGHT = 500
 export const BOLD_WEIGHT = 700
 
 // Styles applied to all components
-export const customSx: SxProps<Theme> = {
-
-
-
-
-}
+export const customSx: SxProps<Theme> = {}
 
 export function customTheme() {
+  // default theme explorer:
+  // https://mui.com/material-ui/customization/default-theme/
   const baseTheme = createTheme({
     palette: {
       primary: {
         main: PRIMARY_COLOR,
+        light: PRIMARY_LIGHT,
       },
       secondary: {
         main: "#7ab6a8",
       },
       background: {
+        // default: "rgb(248, 249, 250)", // light gray google style
         default: PRIMARY_LIGHTEST,
-        /*   paper: "#fF00FF", */
       },
       text: {
         primary: "#3d4043",
@@ -67,16 +66,7 @@ export function customTheme() {
       action: {
         active: "#001E3C",
       },
-      success: {
-        500: "#009688",
-      },
-      materialyou: {
-        primary: {
-          light: PRIMARY_LIGHT,
-          lighter: PRIMARY_LIGHTER,
-          lightest: PRIMARY_LIGHTEST,
-        },
-      },
+
       tonalOffset: 0.4,
     },
 
@@ -91,6 +81,20 @@ export function customTheme() {
   })
 
   const customTheme = createTheme(baseTheme, {
+    shape: {
+      borderRadius: 8,
+    },
+
+    palette: {
+      primary: {
+        // add lighter, lightest tones as in material 3
+        main: PRIMARY_COLOR,
+        light: PRIMARY_LIGHT,
+        lighter: PRIMARY_LIGHTER,
+        lightest: PRIMARY_LIGHTEST,
+      },
+    },
+
     typography: {
       h1: {
         fontWeight: REGULAR_WEIGHT,
@@ -111,26 +115,26 @@ export function customTheme() {
         fontWeight: REGULAR_WEIGHT,
       },
       body1: {
-        fontWeight: MEDIUM_WEIGHT
+        fontWeight: MEDIUM_WEIGHT,
       },
       body2: {
-        fontWeight: MEDIUM_WEIGHT
+        fontWeight: MEDIUM_WEIGHT,
       },
       subtitle1: {
-        fontWeight: MEDIUM_WEIGHT
+        fontWeight: MEDIUM_WEIGHT,
       },
       subtitle2: {
-        fontWeight: MEDIUM_WEIGHT
+        fontWeight: MEDIUM_WEIGHT,
       },
       button: {
-        fontWeight: MEDIUM_WEIGHT
+        fontWeight: MEDIUM_WEIGHT,
       },
       caption: {
-        fontWeight: MEDIUM_WEIGHT
+        fontWeight: MEDIUM_WEIGHT,
       },
       overline: {
-        fontWeight: MEDIUM_WEIGHT
-      },      
+        fontWeight: MEDIUM_WEIGHT,
+      },
     },
 
     components: {
