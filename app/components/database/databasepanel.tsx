@@ -1,18 +1,30 @@
 //
 // databasepanel.tsx - a panel used to show the schema of connected databases
-// normally used as an activity shown with an icon in the activity bar and panel
+// normally used as an activity with an icon in the activity bar and panel
 // inside the sidebar. helps with new connections, shows tables, views, etc.
 //
 
+import { Theme, SxProps } from "@mui/material/styles"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 
-import { CommandEvent } from "../../lib/commands"
 import { DataConnection } from "../../lib/sqltr/connections"
 import { DatabaseTreeView } from "./databasetreeview"
 import { ConnectionPicker } from "./connectionpicker"
 import { PanelProps } from "../navigation/panel"
 
+// Styles applied to component and subcomponents
+export const DatabasePanel_SxProps: SxProps<Theme> = {
+  height: 1,
+  maxHeight: 1,
+  overflowY: "auto",
+
+  ".DatabasePanel-header": {
+    padding: 1,
+  },
+}
+
+/** Database panel in the sidebar */
 export interface DatabasePanelProps extends PanelProps {
   /** Currently selected connection */
   connection?: DataConnection
@@ -22,19 +34,13 @@ export interface DatabasePanelProps extends PanelProps {
 
 /** A sidebar panel used to display the schema of connected databases */
 export function DatabasePanel(props: DatabasePanelProps) {
-  //
-  // render
-  //
-
   return (
-      <Box className="DatabasePanel-root" sx={{ height: "100%", overflowY: "scroll" }}>
-        <Box sx={{ padding: 1 }}>
-          <Box>
-            <Typography variant="overline">Database Explorer</Typography>
-          </Box>
-          <ConnectionPicker connection={props.connection} connections={props.connections} onCommand={props.onCommand} />
-        </Box>
-        {props.connection && <DatabaseTreeView connection={props.connection} onCommand={props.onCommand} />}
+    <Box className="DatabasePanel-root" sx={DatabasePanel_SxProps}>
+      <Box className="DatabasePanel-header">
+        <Typography variant="overline">Database Explorer</Typography>
+        <ConnectionPicker connection={props.connection} connections={props.connections} onCommand={props.onCommand} />
       </Box>
+      {props.connection && <DatabaseTreeView connection={props.connection} onCommand={props.onCommand} />}
+    </Box>
   )
 }

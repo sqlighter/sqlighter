@@ -14,12 +14,19 @@ export const Sidebar_SxProps: SxProps<Theme> = {
   width: 1,
   height: 1,
 
+  display: "flex",
+  flexDirection: "column",
+
   ".Sidebar-logo": {
     minHeight: 48,
     height: 48,
     backgroundColor: "background.paper",
     borderBottom: 1,
     borderBottomColor: "divider",
+  },
+
+  ".Sidebar-activities": {
+    flexGrow: 1,
   },
 
   ".Sidebar-activity": {
@@ -51,14 +58,16 @@ export function Sidebar(props: SidebarProps) {
   return (
     <Box className="Sidebar-root" sx={Sidebar_SxProps}>
       <Box className="Sidebar-logo"></Box>
-      {props.activities.map((activity: PanelElement) => {
-        const display = !props.visible || activity.props.id != props.activityId ? "none" : null
-        return (
-          <Box className="Sidebar-activity" key={activity.props.id} sx={{ display }}>
-            {activity}
-          </Box>
-        )
-      })}
+      <Box className="Sidebar-activities">
+        {props.activities.map((activity: PanelElement) => {
+          const display = !props.visible || activity.props.id != props.activityId ? "none" : null
+          return (
+            <Box className="Sidebar-activity" key={activity.props.id} sx={{ display }}>
+              {activity}
+            </Box>
+          )
+        })}
+      </Box>
     </Box>
   )
 }

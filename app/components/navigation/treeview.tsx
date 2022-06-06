@@ -14,18 +14,19 @@ import { Tree } from "../../lib/tree"
 import { TreeItem, DEPTH_PADDING_PX } from "./treeitem"
 
 /** Custom styles applied to TreeView and TreeItem components */
-const TREEVIEW_STYLES: SxProps<Theme> = {
-  width: "100%",
-  height: "100%",
+const TreeView_SxProps: SxProps<Theme> = {
+  width: 1,
+  height: 1,
+  paddingRight: 0.75,
 
   ".TreeItem-root": {
-    width: "100%",
-    maxWidth: "100%",
-    minHeight: 32,
-    maxHeight: 32,
+    width: 1,
+    maxWidth: 1,
+    minHeight: 36,
+    maxHeight: 36,
 
     paddingLeft: 0,
-    paddingRight: 0.5,
+    paddingRight: 1,
 
     display: "flex",
     flexWrap: "nowrap",
@@ -35,6 +36,9 @@ const TREEVIEW_STYLES: SxProps<Theme> = {
     color: "text.secondary",
 
     "&:hover": {
+      borderStartEndRadius: 16,
+      borderEndEndRadius: 16,
+
       backgroundColor: "action.hover",
       color: "text.primary",
 
@@ -70,8 +74,15 @@ const TREEVIEW_STYLES: SxProps<Theme> = {
     },
 
     ".TreeItem-tags": {
-      maxWidth: "100%",
+      maxWidth: 1,
       overflow: "hidden",
+
+      ".MuiChip-root": {
+        cursor: "pointer",
+        ".MuiChip-label": {
+          fontSize: "9px",
+        },
+      },
     },
 
     ".TreeItem-commands": {
@@ -82,16 +93,8 @@ const TREEVIEW_STYLES: SxProps<Theme> = {
       width: 18,
       height: 18,
       color: "transparent",
-
       "&:hover": {
-        color: (theme) => theme.palette.text.secondary,
-      },
-    },
-
-    ".TreeItem-pinnedIcon": {
-      color: (theme) => theme.palette.primary.main,
-      "&:hover": {
-        color: (theme) => theme.palette.primary.main,
+        color: "primary.main",
       },
     },
   },
@@ -101,23 +104,15 @@ const TREEVIEW_STYLES: SxProps<Theme> = {
   },
 
   ".TreeItem-selected": {
-    backgroundColor: "primary",
+    backgroundColor: "primary.light",
   },
 
-  ".MuiChip-root": {
-    cursor: "pointer",
-    borderRadius: "4px",
-    ".MuiChip-label": {
-      fontSize: "0.6rem",
-    },
+  ".TreeItem-noResults": {
+    minHeight: 24,
+    maxHeight: 24,
+    lineHeight: "24px",
+    color: "text.secondary",
   },
-}
-
-const TREEITEM_NORESULTS_STYLES: SxProps = {
-  minHeight: 24,
-  maxHeight: 24,
-  lineHeight: "24px",
-  color: "text.secondary",
 }
 
 export interface TreeViewProps {
@@ -231,13 +226,7 @@ export function TreeView(props: TreeViewProps) {
         // render "no results" if node is expanded but has no children
         const marginLeft = `${(depth + 1) * DEPTH_PADDING_PX + 24}px`
         fragments.push(
-          <Typography
-            key="children1"
-            className="TreeItem-noResults"
-            variant="body2"
-            sx={TREEITEM_NORESULTS_STYLES}
-            marginLeft={marginLeft}
-          >
+          <Typography className="TreeItem-noResults" key="children1" variant="body2" marginLeft={marginLeft}>
             No results
           </Typography>
         )
@@ -283,7 +272,7 @@ export function TreeView(props: TreeViewProps) {
   }
 
   return (
-    <Box className="TreeView-root" sx={TREEVIEW_STYLES}>
+    <Box className="TreeView-root" sx={TreeView_SxProps}>
       {renderPinned()}
       {props.items?.length > 0 && props.items.map((item) => renderItem(item, 0, false))}
     </Box>

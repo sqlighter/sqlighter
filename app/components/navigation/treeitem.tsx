@@ -95,11 +95,10 @@ export function TreeItem({ item, ...props }: TreeItemProps) {
   }
 
   function getCommandIcon(command: Command) {
-    let commandClass = "TreeItem-commandIcon"
-    let commandIcon = command.icon
+    // alter pin command for items that are already pinned
     if (props.pinned && command.command === "sqlighter.pin") {
-      commandClass += " TreeItem-pinnedIcon"
-      commandIcon = "pinned"
+      command.title = "Unpin"
+      command.icon = "unpin"
     }
 
     // NOTE the <Box> inside Tooltip is necessary since Icon is a passive element that doesn't fire events (unlike IconButton)
@@ -113,14 +112,14 @@ export function TreeItem({ item, ...props }: TreeItemProps) {
       >
         <Box>
           <Icon
-            className={commandClass}
+            className="TreeItem-commandIcon"
             onClick={(e) => {
               //              props.onCommand(e, command.command, { item, command })
               props.onCommand(e, command)
               e.stopPropagation()
             }}
           >
-            {commandIcon}
+            {command.icon}
           </Icon>
         </Box>
       </Tooltip>
