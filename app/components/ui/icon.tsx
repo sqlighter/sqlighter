@@ -22,6 +22,7 @@ import BungalowOutlinedIcon from "@mui/icons-material/BungalowOutlined"
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined"
 import CloudDownloadOutlinedIcon from "@mui/icons-material/CloudDownloadOutlined"
 import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined"
+import DragHandleIcon from "@mui/icons-material/DragHandle"
 import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined"
 import ExtensionOutlinedIcon from "@mui/icons-material/ExtensionOutlined"
 import FileIcon from "@mui/icons-material/InsertDriveFileOutlined"
@@ -101,6 +102,10 @@ export function Icon(props: IconProps) {
         return <ImageText {...props} />
       case "download":
         return <CloudDownloadOutlinedIcon {...props} />
+      case "dragHorizontal":
+        return <DragHandleIcon {...props} />
+      case "dragVertical":
+        return <DragHandleIcon {...props} sx={{ transform: "rotate(90deg)" }} />
       case "expand":
         return <ExpandMoreOutlinedIcon {...props} />
       case "export":
