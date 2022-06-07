@@ -35,7 +35,7 @@ const delay = (ms) => new Promise((res) => setTimeout(res, ms))
 // styles applied to main and subcomponents
 const QueryPanel_SxProps: SxProps<Theme> = {
   width: 1,
-  minWidth: 500,
+  minWidth: 420,
   height: 1,
   maxHeight: 1,
 
@@ -329,7 +329,7 @@ export function QueryPanel(props: QueryPanelProps) {
         return <QueryRunPanel key={run.id} id={run.id} title={run.title} run={runClone} connection={runConnection} />
       })
       return (
-        <Tabs tabId={runId} tabs={tabs} tabsCommands={isMediumScreen && [toggleResults]} onCommand={handleCommand} />
+        <Tabs tabId={runId} tabs={tabs} tabsCommands={isMediumScreen && [toggleResults]} onCommand={handleCommand} variant="above" />
       )
     }
 

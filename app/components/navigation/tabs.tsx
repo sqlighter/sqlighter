@@ -6,9 +6,7 @@
 import React, { SyntheticEvent } from "react"
 
 import Box from "@mui/material/Box"
-import { SxProps } from "@mui/material"
-import CloseIcon from "@mui/icons-material/CloseOutlined"
-import MuiIconButton from "@mui/material/IconButton"
+import { SxProps, Theme } from "@mui/material"
 import MuiTab from "@mui/material/Tab"
 import MuiTabContext from "@mui/lab/TabContext"
 import MuiTabList from "@mui/lab/TabList"
@@ -22,12 +20,28 @@ import { Label } from "../ui/typography"
 
 export const TABLIST_HEIGHT = 48
 
-const TABLIST_STYLES: SxProps = {
-  minHeight: TABLIST_HEIGHT,
-  height: TABLIST_HEIGHT,
+const Tabs_SxProps: SxProps<Theme> = {
   display: "flex",
+  flexDirection: "column",
+  height: 1,
+  maxHeight: 1,
 
-  borderBottom: (theme: any) => `1px solid ${theme.palette.divider}`,
+  ".Tabs-tabList": {
+    minHeight: TABLIST_HEIGHT,
+    height: TABLIST_HEIGHT,
+    display: "flex",
+
+    borderBottom: (theme: any) => `1px solid ${theme.palette.divider}`,
+  },
+
+  // variant="above" with indicator on top and no divider
+  ".Tabs-indicatorAbove .MuiTabs-indicator": {
+    bottom: undefined,
+    top: 0,
+  },
+  ".Tabs-indicatorAbove .Tabs-tabList": {
+    borderBottom: "none",
+  },
 
   ".MuiTabs-flexContainer": {
     height: TABLIST_HEIGHT,
@@ -99,6 +113,9 @@ export interface TabsProps {
 
   /** Additional command icons shown at the end of the tab bar, eg: create tab icon */
   tabsCommands?: Command[]
+
+  /** Tab selection indicator below tab (default) or above tab? */
+  variant?: "below" | "above"
 
   /** Will dispatch a command when a new tab is selected or when tabs are closed, reordered */
   onCommand?: CommandEvent
@@ -291,11 +308,12 @@ export function Tabs(props: TabsProps) {
     )
   }
 
+  const className = "Tabs-root" + (props.variant == "above" ? " Tabs-indicatorAbove" : "")
   return (
     <MuiTabContext value={props.tabId}>
-      <Box sx={{ display: "flex", flexDirection: "column", height: 1, maxHeight: 1 }}>
+      <Box className={className} sx={Tabs_SxProps}>
         <Box sx={{ height: TABLIST_HEIGHT }}>
-          <MuiTabList onChange={handleTabsChange} variant="scrollable" sx={TABLIST_STYLES}>
+          <MuiTabList className="Tabs-tabList" onChange={handleTabsChange} variant="scrollable">
             {props.tabs && props.tabs.map((tab: any) => renderTabLabel(tab))}
             {props.tabsCommands && renderTabsCommands()}
           </MuiTabList>
