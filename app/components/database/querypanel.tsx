@@ -47,9 +47,10 @@ const QueryPanel_SxProps: SxProps<Theme> = {
   display: "flex",
   flexDirection: "column",
 
-  // area with title, connections picker, run button
-  ".QueryPanel-headerRow": {
+  // area with title, connections picker, run button, commands
+  ".QueryPanel-header": {
     width: 1,
+    paddingBottom: 2,
   },
 
   ".QueryPanel-title": {
@@ -58,12 +59,54 @@ const QueryPanel_SxProps: SxProps<Theme> = {
   },
 
   ".QueryPanel-commands": {
-    paddingBottom: 2,
+    paddingTop: 0.5,
   },
 
   ".QueryPanel-run": {
     height: 36,
     width: 100,
+  },
+
+  // stacked editor and results
+  ".QueryPanel-bottomResults": {
+    ".QueryPanel-editorBox": {
+      width: 1,
+      height: 1,
+      display: "flex",
+      flexDirection: "column",
+      paddingBottom: "6px",
+    },
+    ".QueryPanel-resultsBox": {
+      width: 1,
+      height: 1,
+      display: "flex",
+      flexDirection: "column",
+      paddingTop: "2px",
+    },
+  },
+
+  // editor and results side by side
+  ".QueryPanel-rightResults": {
+    ".QueryPanel-editorBox": {
+      width: 1,
+      height: 1,
+      display: "flex",
+      flexDirection: "column",
+      paddingRight: "6px",
+    },
+    ".QueryPanel-resultsBox": {
+      width: 1,
+      height: 1,
+      display: "flex",
+      flexDirection: "column",
+      paddingLeft: "2px",
+    },
+  },
+
+  ".QueryPanel-card": {
+    flexGrow: 1,
+    width: 1,
+    overflow: "hidden",
   },
 }
 
@@ -226,7 +269,7 @@ export function QueryPanel(props: QueryPanelProps) {
     const connectionVariant = isMediumScreen ? "default" : "compact"
     return (
       <Box className="QueryPanel-header">
-        <Stack className="QueryPanel-headerRow" direction="row" spacing={1}>
+        <Stack direction="row" spacing={1} sx={{ width: 1 }}>
           <TitleField className="QueryPanel-title" value={props.query?.title} onCommand={handleCommand} />
           <ConnectionPicker
             connection={connection}
@@ -246,6 +289,7 @@ export function QueryPanel(props: QueryPanelProps) {
   }
 
   function renderCommands() {
+    // TODO show a user's avatar or list of users which share this query instead of plain info icon
     return (
       <Stack className="QueryPanel-commands" direction="row">
         <IconButton command={{ command: "info", icon: "info", title: "Details" }} size="small" />
@@ -284,7 +328,9 @@ export function QueryPanel(props: QueryPanelProps) {
         const runConnection = props.connections.find((conn) => conn.id == run.query.connectionId)
         return <QueryRunPanel key={run.id} id={run.id} title={run.title} run={runClone} connection={runConnection} />
       })
-      return <Tabs tabId={runId} tabs={tabs} tabsCommands={isMediumScreen && [toggleResults]} onCommand={handleCommand} />
+      return (
+        <Tabs tabId={runId} tabs={tabs} tabsCommands={isMediumScreen && [toggleResults]} onCommand={handleCommand} />
+      )
     }
 
     return (
@@ -309,21 +355,21 @@ export function QueryPanel(props: QueryPanelProps) {
     if (variant == "bottom" || !isMediumScreen) {
       return (
         <Allotment
-          className={`QueryPanel-bottomResults`}
+          className="QueryPanel-bottomResults"
           vertical={true}
           proportionalLayout={true}
           defaultSizes={[100, 400]}
         >
           <Allotment.Pane minSize={120}>
-            <Box sx={{ width: 1, height: 1, display: "flex", flexDirection: "column", paddingBottom: "6px" }}>
-              <Card variant="outlined" sx={{ flexGrow: 1, width: 1, overflow: "hidden" }}>
+            <Box className="QueryPanel-editorBox">
+              <Card className="QueryPanel-card" variant="outlined">
                 {renderEditor()}
               </Card>
             </Box>
           </Allotment.Pane>
           <Allotment.Pane>
-            <Box sx={{ width: 1, height: 1, display: "flex", flexDirection: "column", paddingTop: "2px" }}>
-              <Card variant="outlined" sx={{ flexGrow: 1, width: 1, overflow: "hidden" }}>
+            <Box className="QueryPanel-resultsBox">
+              <Card className="QueryPanel-card" variant="outlined">
                 {renderRuns()}
               </Card>
             </Box>
@@ -333,17 +379,17 @@ export function QueryPanel(props: QueryPanelProps) {
     } else {
       return (
         <Box sx={{ width: 1, height: 1 }}>
-          <Allotment className={`QueryPanel-rightResults`} proportionalLayout={true} defaultSizes={[100, 200]}>
+          <Allotment className="QueryPanel-rightResults" proportionalLayout={true} defaultSizes={[100, 200]}>
             <Allotment.Pane minSize={240}>
-              <Box sx={{ width: 1, height: 1, display: "flex", flexDirection: "column", paddingRight: "6px" }}>
-                <Card variant="outlined" sx={{ flexGrow: 1, width: 1, overflow: "hidden" }}>
+              <Box className="QueryPanel-editorBox">
+                <Card className="QueryPanel-card" variant="outlined">
                   {renderEditor()}
                 </Card>
               </Box>
             </Allotment.Pane>
             <Allotment.Pane>
-              <Box sx={{ width: 1, height: 1, display: "flex", flexDirection: "column", paddingLeft: "2px" }}>
-                <Card variant="outlined" sx={{ flexGrow: 1, width: 1, overflow: "hidden" }}>
+              <Box className="QueryPanel-resultsBox">
+                <Card className="QueryPanel-card" variant="outlined">
                   {renderRuns()}
                 </Card>
               </Box>
