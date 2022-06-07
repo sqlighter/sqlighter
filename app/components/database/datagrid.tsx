@@ -4,8 +4,18 @@
 
 import React, { useState, useEffect, useRef } from "react"
 import useResizeObserver from "use-resize-observer"
+import { Theme, SxProps } from "@mui/material/styles"
 import Box from "@mui/material/Box"
 import { DataGrid as MuiDataGrid } from "@mui/x-data-grid"
+
+const DataGrid_SxProps: SxProps<Theme> = {
+  width: 1, 
+  height: 1,
+
+  ".MuiDataGrid-root": {
+    border: "none"
+  }
+}
 
 export interface DataGridProps {
   /**
@@ -50,9 +60,9 @@ export function DataGrid(props: DataGridProps) {
           <MuiDataGrid
             rows={rows}
             columns={columns}
-            pageSize={50}
-            rowsPerPageOptions={[10, 50, 100]}
-            checkboxSelection
+            pageSize={100}
+            rowsPerPageOptions={[100]}
+ //           checkboxSelection
             disableSelectionOnClick
           />
         </Box>
@@ -61,9 +71,8 @@ export function DataGrid(props: DataGridProps) {
   }
 
   // console.debug(`DataGrid - ${width}x${height}`)
-
   return (
-    <Box ref={ref} sx={{ width: 1, height: 1 }}>
+    <Box className="DataGrid-root" ref={ref} sx={DataGrid_SxProps}>
       {width > 20 && height > 20 && renderGrid()}
     </Box>
   )
