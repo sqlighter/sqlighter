@@ -41,7 +41,7 @@ const ConnectionPicker_Sx: SxProps<Theme> = {
     flexShrink: 1,
     textAlign: "start",
 
-    minWidth: 40,
+    minWidth: 20,
     maxWidth: 240,
 
     ".MuiTypography-root": {
@@ -68,6 +68,12 @@ export interface ConnectionPickerProps {
 
   /** Callback used to dispatch commands back to parent component */
   onCommand?: CommandEvent
+
+  /** Compact variant has no label and is shorter */
+  variant?: "default" | "compact"
+
+  /** If set, the button will take up the full width of its container (default, false) */
+  fullWidth?: boolean
 }
 
 /** Shows the current connection status and name plus a menu to pick a different connection */
@@ -131,6 +137,7 @@ export function ConnectionPicker(props: ConnectionPickerProps) {
   // render
   //
 
+  // TODO connectionmenu should have checkmark next to currently selected connection
   function renderMenu() {
     let menuConnections = props.connections
     if (filter.length > 0) {
@@ -215,12 +222,15 @@ export function ConnectionPicker(props: ConnectionPickerProps) {
           className="ConnectionPicker-button"
           id="connection-picker-button"
           onClick={handleClick}
+          fullWidth={props.fullWidth}
           variant="text"
         >
           <ConnectionIcon connection={props.connection} />
-          <Typography className="ConnectionPicker-label" variant="button" noWrap>
-            {title}
-          </Typography>
+          {props.variant != "compact" && (
+            <Typography className="ConnectionPicker-label" variant="button" noWrap>
+              {title}
+            </Typography>
+          )}
           <Icon className="ConnectionPicker-expandIcon">expand</Icon>
         </Button>
       </Tooltip>

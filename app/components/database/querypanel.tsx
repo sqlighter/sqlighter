@@ -10,9 +10,8 @@ import { Allotment } from "allotment"
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
 import Card from "@mui/material/Card"
-import Divider from "@mui/material/Divider"
 import Stack from "@mui/material/Stack"
-import Typography from "@mui/material/Typography"
+import useMediaQuery from "@mui/material/useMediaQuery"
 
 // model
 import { Command } from "../../lib/commands"
@@ -36,6 +35,7 @@ const delay = (ms) => new Promise((res) => setTimeout(res, ms))
 // styles applied to main and subcomponents
 const QueryPanel_SxProps: SxProps<Theme> = {
   width: 1,
+  minWidth: 500,
   height: 1,
   maxHeight: 1,
 
@@ -57,9 +57,13 @@ const QueryPanel_SxProps: SxProps<Theme> = {
     paddingLeft: 0.75,
   },
 
+  ".QueryPanel-commands": {
+    paddingBottom: 2,
+  },
+
   ".QueryPanel-run": {
     height: 36,
-    width: 120,
+    width: 100,
   },
 }
 
@@ -84,6 +88,9 @@ export function QueryPanel(props: QueryPanelProps) {
   //
   // state
   //
+
+  // layout changes on medium and large screens
+  const isMediumScreen = useMediaQuery((theme: Theme) => theme.breakpoints.up("md"))
 
   // currently selected run
   const [runId, setRunId] = useState<string>(query?.runs?.[0]?.id)
@@ -216,14 +223,20 @@ export function QueryPanel(props: QueryPanelProps) {
   //
 
   function renderHeader() {
+    const connectionVariant = isMediumScreen ? "default" : "compact"
     return (
       <Box className="QueryPanel-header">
         <Stack className="QueryPanel-headerRow" direction="row" spacing={1}>
           <TitleField className="QueryPanel-title" value={props.query?.title} onCommand={handleCommand} />
-          <ConnectionPicker connection={connection} connections={props.connections} onCommand={handleCommand} />
+          <ConnectionPicker
+            connection={connection}
+            connections={props.connections}
+            onCommand={handleCommand}
+            variant={connectionVariant}
+          />
           <Box>
             <Button className="QueryPanel-run" variant="outlined" onClick={runQuery} startIcon={<Icon>play</Icon>}>
-              Run all
+              Run
             </Button>
           </Box>
         </Stack>
@@ -234,7 +247,7 @@ export function QueryPanel(props: QueryPanelProps) {
 
   function renderCommands() {
     return (
-      <Stack className="QueryPanel-commands" direction="row" spacing={0} sx={{ paddingBottom: 2 }}>
+      <Stack className="QueryPanel-commands" direction="row">
         <IconButton command={{ command: "info", icon: "info", title: "Details" }} size="small" />
         <IconButton command={{ command: "bookmark", icon: "bookmark", title: "Bookmark" }} size="small" />
         <IconButton
@@ -271,7 +284,7 @@ export function QueryPanel(props: QueryPanelProps) {
         const runConnection = props.connections.find((conn) => conn.id == run.query.connectionId)
         return <QueryRunPanel key={run.id} id={run.id} title={run.title} run={runClone} connection={runConnection} />
       })
-      return <Tabs tabId={runId} tabs={tabs} tabsCommands={[toggleResults]} onCommand={handleCommand} />
+      return <Tabs tabId={runId} tabs={tabs} tabsCommands={isMediumScreen && [toggleResults]} onCommand={handleCommand} />
     }
 
     return (
@@ -293,7 +306,7 @@ export function QueryPanel(props: QueryPanelProps) {
    * a whole updated render.
    */
   function renderAlloment() {
-    if (variant == "bottom") {
+    if (variant == "bottom" || !isMediumScreen) {
       return (
         <Allotment
           className={`QueryPanel-bottomResults`}
