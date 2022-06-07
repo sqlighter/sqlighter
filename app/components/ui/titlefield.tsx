@@ -2,32 +2,46 @@
 // titlefield.tsx
 //
 
-import React from "react"
+import React, { useState } from "react"
 import { Theme, SxProps } from "@mui/material"
-import { TextField, OutlinedTextFieldProps } from "@mui/material"
+import { TextField } from "@mui/material"
+import InputAdornment from "@mui/material/InputAdornment"
+
 import { CommandEvent } from "../../lib/commands"
+import { Icon } from "./icon"
 
 // styles applied to main and subcomponents
 const TitleField_SxProps: SxProps<Theme> = {
-  //  height: 40,
-
-  // disable outline normally so it looks like a label, not an editfield
-  "& .MuiOutlinedInput-root": {
-    "& > fieldset": {
-      borderColor: "transparent",
-    },
+  ".MuiInput-input": {
+    fontSize: (theme) => theme.typography.h6.fontSize,
   },
 
-  // light outline on hover
-  "&:hover .MuiOutlinedInput-root": {
-    "& > fieldset": {
-      borderColor: "text.secondary",
-    },
+  // underline visible on hover and focus
+  ".MuiInput-underline:before": {
+    borderBottom: "transparent",
+  },
+  // hover (double-ampersand needed for specificity reasons.
+  "&& .MuiInput-underline:hover:before": {
+    borderBottomColor: "text.primary",
+  },
+  // focused
+  ".MuiInput-underline:after": {
+    borderBottomColor: "primary.main",
   },
 
-  "& .MuiOutlinedInput-root.Mui-focused": {
-    "& > fieldset": {
-      borderColor: "primary.main",
+  // edit icon visible on hover and focus
+  ".MuiInputAdornment-root": {
+    color: "transparent",
+  },
+  "&:hover": {
+    ".MuiInputAdornment-root": {
+      color: "text.primary",
+    },
+  },
+  // TODO titlefield edit icon should use primary color when field is focused
+  "&:after": {
+    ".MuiInputAdornment-root": {
+      color: "primary.main",
     },
   },
 }
@@ -44,6 +58,7 @@ export interface TitleFieldProps {
   onCommand?: CommandEvent
 }
 
+/** A textfield that can be used to titles that are rarely changed with low visual weight */
 export function TitleField(props: TitleFieldProps) {
   //
   // handlers
@@ -59,18 +74,32 @@ export function TitleField(props: TitleFieldProps) {
   //
   // render
   //
+  const iconAdornment = /*isSelected &&*/ {
+    endAdornment: (
+      <InputAdornment position="end">
+        <Icon>edit</Icon>
+      </InputAdornment>
+    ),
+  }
 
   const className = props.className ? "TitleField-root " + props.className : "TitleField-root"
   return (
     <TextField
       className={className}
       value={props.value}
-      variant="outlined"
+      variant="standard"
       multiline={false}
       fullWidth={true}
       placeholder={props.placeholder || "Title"}
-      size="small"
+      size="small" // small padding, large type
       onChange={handleChange}
+      InputProps={{
+        endAdornment: (
+          <InputAdornment position="end">
+            <Icon>edit</Icon>
+          </InputAdornment>
+        ),
+      }}
       sx={TitleField_SxProps}
     />
   )

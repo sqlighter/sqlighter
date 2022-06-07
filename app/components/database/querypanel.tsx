@@ -38,6 +38,8 @@ const QueryPanel_SxProps: SxProps<Theme> = {
   height: 1,
   maxHeight: 1,
 
+  padding: 1,
+
   // background: "rgba(0,255,0,0.2)",
 
   // area with title, connections picker, run button
@@ -51,6 +53,7 @@ const QueryPanel_SxProps: SxProps<Theme> = {
 
   ".QueryPanel-title": {
     flexGrow: 1,
+    marginLeft: -1
   },
 
   ".QueryPanel-run": {
