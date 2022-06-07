@@ -22,7 +22,7 @@ const TitleField_SxProps: SxProps<Theme> = {
   },
   // hover (double-ampersand needed for specificity reasons.
   "&& .MuiInput-underline:hover:before": {
-    borderBottomColor: "action.active",
+    borderBottomColor: "action.disabled",
   },
   // focused
   ".MuiInput-underline:after": {
@@ -35,7 +35,7 @@ const TitleField_SxProps: SxProps<Theme> = {
   },
   "&:hover": {
     ".MuiInputAdornment-root": {
-      color: "action.active",
+      color: "action.disabled",
     },
   },
   // TODO titlefield edit icon should use primary color when field is focused
