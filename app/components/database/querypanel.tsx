@@ -38,7 +38,7 @@ const QueryPanel_SxProps: SxProps<Theme> = {
   height: 1,
   maxHeight: 1,
 
-  background: "rgba(0,255,0,0.2)",
+  // background: "rgba(0,255,0,0.2)",
 
   // area with title, connections picker, run button
   ".QueryPanel-headerRow": {

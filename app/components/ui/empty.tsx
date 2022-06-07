@@ -6,7 +6,7 @@ import Image from "next/image"
 import Stack from "@mui/material/Stack"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
-import { alpha, SxProps } from "@mui/material"
+import { alpha, lighten, darken, SxProps } from "@mui/material"
 import { Theme } from "@mui/material/styles"
 
 import { FANCY_RADIUS } from "../listitems"
@@ -38,9 +38,9 @@ const Empty_SxProps: SxProps<Theme> = {
     mb: 2,
 
     borderRadius: "50%",
-    backgroundColor: (theme) => alpha(theme.palette.text.primary, 0.02),
+    // backgroundColor: (theme) => alpha(theme.palette.text.primary, 0.05),
     // light background with tint from the primary color in the theme
-    // backgroundColor: (theme) => alpha(theme.palette.primary.main, 0.03),
+    backgroundColor: (theme) => alpha(theme.palette.primary.main, 0.05),
 
     display: "flex",
     justifyContent: "center",
@@ -49,7 +49,7 @@ const Empty_SxProps: SxProps<Theme> = {
 
   ".Empty-icon": {
     fontSize: 100,
-    color: (theme) => alpha(theme.palette.text.primary, 0.09),
+    color: "background.paper",
     // light background with tint from the primary color in the theme
     // color: (theme) => alpha(theme.palette.primary.main, 0.09),
 },
