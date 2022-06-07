@@ -31,7 +31,7 @@ export default {
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: ComponentStory<typeof QueryPanel> = (args) => {
   return (
-    <Box sx={{ height: 800, backgroundColor: "rgba(255,0,0,0.25)" }}>
+    <Box sx={{ height: 800, backgroundColor: "rgba(255,0,0,0.05)" }}>
       <QueryPanel {...args} title={args.query.title} />
     </Box>
   )

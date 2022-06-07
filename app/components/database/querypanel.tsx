@@ -10,6 +10,7 @@ import { Allotment } from "allotment"
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
 import Card from "@mui/material/Card"
+import Divider from "@mui/material/Divider"
 import Stack from "@mui/material/Stack"
 import Typography from "@mui/material/Typography"
 
@@ -38,25 +39,26 @@ const QueryPanel_SxProps: SxProps<Theme> = {
   height: 1,
   maxHeight: 1,
 
-  padding: 1,
+  paddingTop: 2,
+  paddingLeft: 1,
+  paddingRight: 1,
+  paddingBottom: 1,
 
-  // background: "rgba(0,255,0,0.2)",
+  display: "flex",
+  flexDirection: "column",
 
   // area with title, connections picker, run button
   ".QueryPanel-headerRow": {
     width: 1,
-    paddingTop: 1,
-    paddingLeft: 1,
-    paddingRight: 2,
-    paddingBottom: 2,
   },
 
   ".QueryPanel-title": {
     flexGrow: 1,
-    marginLeft: -1
+    paddingLeft: 0.75,
   },
 
   ".QueryPanel-run": {
+    height: 36,
     width: 120,
   },
 }
@@ -215,28 +217,38 @@ export function QueryPanel(props: QueryPanelProps) {
 
   function renderHeader() {
     return (
-      <>
+      <Box className="QueryPanel-header">
         <Stack className="QueryPanel-headerRow" direction="row" spacing={1}>
           <TitleField className="QueryPanel-title" value={props.query?.title} onCommand={handleCommand} />
-          <Box sx={{ flexGrow: 1 }}></Box>
           <ConnectionPicker connection={connection} connections={props.connections} onCommand={handleCommand} />
           <Box>
-            <Button className="QueryPanel-run" variant="contained" onClick={runQuery} startIcon={<Icon>play</Icon>}>
+            <Button className="QueryPanel-run" variant="outlined" onClick={runQuery} startIcon={<Icon>play</Icon>}>
               Run all
             </Button>
           </Box>
         </Stack>
         {renderCommands()}
-      </>
+      </Box>
     )
   }
 
   function renderCommands() {
     return (
-      <Stack className="QueryPanel-commands" direction="row" spacing={0}>
-        <IconButton command={{ command: "info", icon: "info", title: "Show Description" }} label={true} size="medium" />
-        <IconButton command={{ command: "bookmark", icon: "bookmark", title: "Bookmark Query" }} size="medium" />
-        <IconButton command={{ command: "format", icon: "format", title: "Format Document" }} size="medium" />
+      <Stack className="QueryPanel-commands" direction="row" spacing={0} sx={{ paddingBottom: 2 }}>
+        <IconButton command={{ command: "info", icon: "info", title: "Details" }} size="small" />
+        <IconButton command={{ command: "bookmark", icon: "bookmark", title: "Bookmark" }} size="small" />
+        <IconButton
+          command={{ command: "history", icon: "history", title: "History" }}
+          size="small"
+          sx={{ marginRight: 2 }}
+        />
+        <IconButton
+          command={{ command: "prettify", icon: "prettify", title: "Prettify" }}
+          size="small"
+          sx={{ marginRight: 2 }}
+        />
+        <IconButton command={{ command: "comment", icon: "comment", title: "Comments" }} size="small" />
+        <IconButton command={{ command: "share", icon: "share", title: "Share" }} size="small" />
       </Stack>
     )
   }
@@ -262,7 +274,6 @@ export function QueryPanel(props: QueryPanelProps) {
       return <Tabs tabId={runId} tabs={tabs} tabsCommands={[toggleResults]} onCommand={handleCommand} />
     }
 
-    // TODO show empty state, eg empty tray icon + your results will appear here or similar
     return (
       <Empty
         icon="table"
@@ -284,8 +295,13 @@ export function QueryPanel(props: QueryPanelProps) {
   function renderAlloment() {
     if (variant == "bottom") {
       return (
-        <Allotment className={`QueryPanel-bottomResults`} vertical={true} proportionalLayout={true}>
-          <Allotment.Pane>
+        <Allotment
+          className={`QueryPanel-bottomResults`}
+          vertical={true}
+          proportionalLayout={true}
+          defaultSizes={[100, 400]}
+        >
+          <Allotment.Pane minSize={120}>
             <Box sx={{ width: 1, height: 1, display: "flex", flexDirection: "column", paddingBottom: "6px" }}>
               <Card variant="outlined" sx={{ flexGrow: 1, width: 1, overflow: "hidden" }}>
                 {renderEditor()}
@@ -304,9 +320,21 @@ export function QueryPanel(props: QueryPanelProps) {
     } else {
       return (
         <Box sx={{ width: 1, height: 1 }}>
-          <Allotment className={`QueryPanel-rightResults`} vertical={false} proportionalLayout={true}>
-            <Allotment.Pane>{renderEditor()}</Allotment.Pane>
-            <Allotment.Pane>{renderRuns()}</Allotment.Pane>
+          <Allotment className={`QueryPanel-rightResults`} proportionalLayout={true} defaultSizes={[100, 200]}>
+            <Allotment.Pane minSize={240}>
+              <Box sx={{ width: 1, height: 1, display: "flex", flexDirection: "column", paddingRight: "6px" }}>
+                <Card variant="outlined" sx={{ flexGrow: 1, width: 1, overflow: "hidden" }}>
+                  {renderEditor()}
+                </Card>
+              </Box>
+            </Allotment.Pane>
+            <Allotment.Pane>
+              <Box sx={{ width: 1, height: 1, display: "flex", flexDirection: "column", paddingLeft: "2px" }}>
+                <Card variant="outlined" sx={{ flexGrow: 1, width: 1, overflow: "hidden" }}>
+                  {renderRuns()}
+                </Card>
+              </Box>
+            </Allotment.Pane>
           </Allotment>
         </Box>
       )
@@ -315,14 +343,8 @@ export function QueryPanel(props: QueryPanelProps) {
 
   return (
     <Box className="QueryPanel-root" sx={QueryPanel_SxProps}>
-      <Allotment vertical={true}>
-        <Allotment.Pane minSize={150} maxSize={150}>
-          {renderHeader()}
-        </Allotment.Pane>
-        <Allotment.Pane>
-          <Box sx={{ width: 1, height: 1 }}>{renderAlloment()}</Box>
-        </Allotment.Pane>
-      </Allotment>
+      {renderHeader()}
+      <Box sx={{ width: 1, flexGrow: 1 }}>{renderAlloment()}</Box>
     </Box>
   )
 }

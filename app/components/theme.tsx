@@ -60,11 +60,11 @@ export function customTheme() {
         default: PRIMARY_LIGHTEST,
       },
       text: {
-        primary: "#3d4043",
-        secondary: "#606367",
+    //    primary: "#3d4043",
+      //  secondary: "#606367",
       },
       action: {
-        active: "#001E3C",
+    //    active: "#001E3C",
       },
 
       tonalOffset: 0.4,

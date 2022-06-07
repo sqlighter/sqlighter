@@ -19,6 +19,7 @@ import BoltOutlinedIcon from "@mui/icons-material/BoltOutlined"
 import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlined"
 import BookmarksOutlinedIcon from "@mui/icons-material/BookmarksOutlined"
 import BungalowOutlinedIcon from "@mui/icons-material/BungalowOutlined"
+import ChildCareOutlinedIcon from "@mui/icons-material/ChildCareOutlined"
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined"
 import CloudDownloadOutlinedIcon from "@mui/icons-material/CloudDownloadOutlined"
 import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined"
@@ -37,6 +38,7 @@ import InboxOutlinedIcon from "@mui/icons-material/InboxOutlined"
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined"
 import InsertChartOutlinedIcon from "@mui/icons-material/InsertChartOutlined"
 import KeyIcon from "@mui/icons-material/KeyOutlined"
+import ModeCommentOutlinedIcon from "@mui/icons-material/ModeCommentOutlined"
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined"
 import PlayArrowOutlinedIcon from "@mui/icons-material/PlayArrowOutlined"
 import PrintOutlinedIcon from "@mui/icons-material/PrintOutlined"
@@ -94,6 +96,8 @@ export function Icon(props: IconProps) {
         return <BookmarksOutlinedIcon {...props} />
       case "close":
         return <CloseOutlinedIcon {...props} />
+      case "comment":
+        return <ModeCommentOutlinedIcon {...props} />
       case "chart":
         // return <BarChartOutlinedIcon {...props} />
         return <InsertChartOutlinedIcon {...props} />
@@ -145,6 +149,8 @@ export function Icon(props: IconProps) {
         return <PushPinOutlinedIcon {...props} />
       case "play":
         return <PlayArrowOutlinedIcon {...props} />
+      case "prettify":
+        return <ChildCareOutlinedIcon {...props} />
       case "print":
         return <PrintOutlinedIcon {...props} />
       case "query":
