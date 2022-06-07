@@ -16,6 +16,7 @@ import { DotColor } from "../ui/icon"
 
 // styles applied to main and subcomponents
 const QueryStatus_SxProps: SxProps<Theme> = {
+  height: 36,
   display: "flex",
 
   ".QueryStatus-info": {
@@ -24,6 +25,12 @@ const QueryStatus_SxProps: SxProps<Theme> = {
 
   ".QueryStatus-label": {
     lineHeight: 1,
+  },
+
+  ".QueryStatus-secondaryLabel": {
+    lineHeight: 1,
+    position: "relative",
+    top: "-2px",
   },
 }
 

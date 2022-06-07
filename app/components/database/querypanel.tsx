@@ -35,7 +35,7 @@ const delay = (ms) => new Promise((res) => setTimeout(res, ms))
 // styles applied to main and subcomponents
 const QueryPanel_SxProps: SxProps<Theme> = {
   width: 1,
-  minWidth: 420,
+  minWidth: 360,
   height: 1,
   maxHeight: 1,
 

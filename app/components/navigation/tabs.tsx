@@ -11,6 +11,7 @@ import MuiTab from "@mui/material/Tab"
 import MuiTabContext from "@mui/lab/TabContext"
 import MuiTabList from "@mui/lab/TabList"
 import MuiTabPanel from "@mui/lab/TabPanel"
+import Typography from "@mui/material/Typography"
 
 import { Command, CommandEvent } from "../../lib/commands"
 import { Icon } from "../ui/icon"
@@ -262,7 +263,7 @@ export function Tabs(props: TabsProps) {
         label={
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <Icon sx={{ mr: 0.5 }}>{tabProps.icon}</Icon>
-            <Label size="large">{tabProps.title}</Label>
+            <Typography variant="body2">{tabProps.title}</Typography>
             <IconButton className="Tab-closeIcon" command={closeCommand} onCommand={handleCloseTab} size="small" />
           </Box>
         }

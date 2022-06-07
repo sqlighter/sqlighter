@@ -71,7 +71,7 @@ export function IconButton(props: IconButtonProps) {
           {command.icon}
         </Icon>
         {props.label && (
-          <Typography className="IconButton-label" variant="button" sx={{ ml: 0.5 }}>
+          <Typography className="IconButton-label" variant="body2" sx={{ ml: 0.5 }}>
             {props.command.title}
           </Typography>
         )}

@@ -123,8 +123,20 @@ export function QueryRunPanel(props: QueryRunPanelProps) {
   function renderModes() {
     return (
       <Stack className="QueryRunPanel-modes" direction="row" spacing={1}>
-        <IconButton command={sqlCmd} label={true} selected={mode == sqlCmd.command} onCommand={handleCommand} />
-        <IconButton command={dataCmd} label={true} selected={mode == dataCmd.command} onCommand={handleCommand} />
+        <IconButton
+          command={sqlCmd}
+          label={true}
+          selected={mode == sqlCmd.command}
+          onCommand={handleCommand}
+          size="small"
+        />
+        <IconButton
+          command={dataCmd}
+          label={true}
+          selected={mode == dataCmd.command}
+          onCommand={handleCommand}
+          size="small"
+        />
       </Stack>
     )
     // <IconButton command={chartCmd} label={true} selected={mode == chartCmd.command} onCommand={handleCommand} />
@@ -136,8 +148,8 @@ export function QueryRunPanel(props: QueryRunPanelProps) {
     // <IconButton command={searchCmd} onCommand={handleCommand} />
     return (
       <Stack className="QueryRunPanel-commands" direction="row">
-        <IconButton command={exportCmd} onCommand={handleCommand} />
-        <IconButton command={shareCmd} onCommand={handleCommand} />
+        <IconButton command={exportCmd} onCommand={handleCommand} size="small" />
+        <IconButton command={shareCmd} onCommand={handleCommand} size="small" />
       </Stack>
     )
   }
