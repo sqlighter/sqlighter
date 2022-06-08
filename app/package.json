@@ -15,10 +15,8 @@
     "build": "next build",
     "start": "next start",
     "format": "prettier --write \"**/*.{js,ts,tsx,vue,md,yaml,json,scss,css}\"",
-    "test": "jest --runInBand --detectOpenHandles",
-    "test-single": "jest sqlite.test.ts -t 'getTree' --runInBand",
+    "test": "jest",
     "storybook": "start-storybook -p 6006 -s ./public",
-    "build-storybook": "build-storybook",
     "test-storybook": "test-storybook"
   },
   "dependencies": {
@@ -102,7 +100,6 @@
     "@types/supertest": "^2.0.12",
     "babel-jest": "^28.1.0",
     "babel-loader": "^8.2.5",
-    "chromatic": "^6.5.6",
     "eslint": "^8.16.0",
     "eslint-config-next": "^12.1.6",
     "eslint-plugin-prettier": "^4.0.0",

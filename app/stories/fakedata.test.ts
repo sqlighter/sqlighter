@@ -17,6 +17,7 @@ async function generateFakerJson(specs, filename, rows = 3000) {
   await fs.writeFile(filename, js)
 }
 
+/*
 describe("fakedata.test.ts", () => {
   test("generateData (customers.json)", async () => {
     await generateFakerJson(
@@ -51,3 +52,4 @@ describe("fakedata.test.ts", () => {
     )
   })
 })
+*/
