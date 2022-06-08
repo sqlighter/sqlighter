@@ -64,6 +64,11 @@ const Tabs_SxProps: SxProps<Theme> = {
     textTransform: "none",
     paddingRight: 1,
 
+    ".Tab-icon": {
+      mr: 0.5,
+      fontSize: "18px",
+    },
+
     ".Tab-tabLabel": {
       display: "flex",
       alignItems: "flex-start",
@@ -262,7 +267,7 @@ export function Tabs(props: TabsProps) {
         component="div"
         label={
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            <Icon sx={{ mr: 0.5 }}>{tabProps.icon}</Icon>
+            <Icon className="Tab-icon">{tabProps.icon}</Icon>
             <Typography variant="body2">{tabProps.title}</Typography>
             <IconButton className="Tab-closeIcon" command={closeCommand} onCommand={handleCloseTab} size="small" />
           </Box>

@@ -275,7 +275,7 @@ export function QueryPanel(props: QueryPanelProps) {
             connections={props.connections}
             onCommand={handleCommand}
             variant="compact"
-            buttonProps={{ sx: { width: 80 } }}
+            buttonProps={{ sx: { width: 60 } }}
           >
             <Button className="QueryPanel-run" onClick={runQuery} startIcon={<Icon>play</Icon>}>
               Run
@@ -325,7 +325,7 @@ export function QueryPanel(props: QueryPanelProps) {
       const tabs = runs.map((run) => {
         const runClone = Object.assign(new QueryRun(), run)
         const runConnection = props.connections.find((conn) => conn.id == run.query.connectionId)
-        return <QueryRunPanel key={run.id} id={run.id} title={run.title} run={runClone} connection={runConnection} />
+        return <QueryRunPanel key={run.id} id={run.id} title={run.title} icon="run" run={runClone} connection={runConnection} />
       })
       return (
         <Tabs
@@ -387,14 +387,14 @@ export function QueryPanel(props: QueryPanelProps) {
           <Allotment className="QueryPanel-rightResults" proportionalLayout={true} defaultSizes={[100, 200]}>
             <Allotment.Pane minSize={240}>
               <Box className="QueryPanel-editorBox">
-                <Card className="QueryPanel-card" variant="outlined">
+                <Card className="QueryPanel-card" variant="outlined" square={true}>
                   {renderEditor()}
                 </Card>
               </Box>
             </Allotment.Pane>
             <Allotment.Pane>
               <Box className="QueryPanel-resultsBox">
-                <Card className="QueryPanel-card" variant="outlined">
+                <Card className="QueryPanel-card" variant="outlined" square={true}>
                   {renderRuns()}
                 </Card>
               </Box>

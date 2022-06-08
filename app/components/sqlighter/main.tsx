@@ -177,7 +177,7 @@ export default function Main(props: MainProps) {
               key={query.id}
               id={query.id}
               title={query.title}
-              icon="query"
+              icon="code"
               connections={connections}
               query={query}
               onCommand={handleCommand}
