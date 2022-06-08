@@ -7,7 +7,7 @@
 // https://microsoft.github.io/monaco-editor/index.html
 // https://microsoft.github.io/monaco-editor/api/index.html
 
-import Editor from "@monaco-editor/react"
+import Editor, { OnMount } from "@monaco-editor/react"
 import { CommandEvent } from "../../lib/commands"
 
 export interface CodeEditorProps {
@@ -25,6 +25,14 @@ export interface CodeEditorProps {
 
   /** Callback used to dispatch commands back to parent component */
   onCommand?: CommandEvent
+
+  /**
+   * Signature: function(editor: monaco.editor.IStandaloneCodeEditor, monaco: Monaco) => void
+   * An event is emitted when the editor is mounted
+   * It gets the editor instance as a first argument and the monaco instance as a second
+   * Defaults to "noop"
+   */
+  onMount?: OnMount
 }
 
 export function CodeEditor(props: CodeEditorProps) {
@@ -55,13 +63,13 @@ export function CodeEditor(props: CodeEditorProps) {
   return (
     <Editor
       className="monacoEditor"
-      //      height="100%"
       width="100%"
       language={props.language || "javascript"}
       theme={props.theme || "light"}
       value={props.value}
       defaultValue="// some comment"
       options={options}
+      onMount={props.onMount}
       onChange={handleChange}
     />
   )

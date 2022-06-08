@@ -13,18 +13,19 @@ import { SvgIconProps } from "@mui/material"
 import AccountCircleOutlined from "@mui/icons-material/AccountCircleOutlined"
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined"
 import AlignHorizontalLeftOutlinedIcon from "@mui/icons-material/AlignHorizontalLeftOutlined"
+import AutoFixHighOutlinedIcon from "@mui/icons-material/AutoFixHighOutlined"
 import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined"
 import BentoOutlinedIcon from "@mui/icons-material/BentoOutlined"
 import BoltOutlinedIcon from "@mui/icons-material/BoltOutlined"
 import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlined"
 import BookmarksOutlinedIcon from "@mui/icons-material/BookmarksOutlined"
 import BungalowOutlinedIcon from "@mui/icons-material/BungalowOutlined"
-import CodeOutlinedIcon from '@mui/icons-material/CodeOutlined';
+import CodeOutlinedIcon from "@mui/icons-material/CodeOutlined"
 import ChildCareOutlinedIcon from "@mui/icons-material/ChildCareOutlined"
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined"
 import CloudDownloadOutlinedIcon from "@mui/icons-material/CloudDownloadOutlined"
 import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined"
-import DirectionsRunOutlinedIcon from '@mui/icons-material/DirectionsRunOutlined';
+import DirectionsRunOutlinedIcon from "@mui/icons-material/DirectionsRunOutlined"
 import DragHandleIcon from "@mui/icons-material/DragHandle"
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined"
 import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined"
@@ -90,6 +91,8 @@ export function Icon(props: IconProps) {
     switch (name) {
       case "account":
         return <AccountCircleOutlined {...props} />
+      case "autofix":
+        return <AutoFixHighOutlinedIcon {...props} />
       case "add":
         return <AddOutlinedIcon {...props} />
       case "bookmark":

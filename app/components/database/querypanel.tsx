@@ -4,9 +4,10 @@
 
 // libs
 import React from "react"
-import { useState } from "react"
+import { useState, useRef } from "react"
 import { Theme, SxProps } from "@mui/material"
 import { Allotment } from "allotment"
+import { format } from "sql-formatter"
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
 import Card from "@mui/material/Card"
@@ -21,6 +22,7 @@ import Query, { QueryRun } from "../../lib/items/query"
 // components
 import { Icon } from "../ui/icon"
 import { IconButton } from "../ui/iconbutton"
+import { IconButtonGroup } from "../ui/iconbuttongroup"
 import { PanelProps } from "../navigation/panel"
 import { Tabs } from "../navigation/tabs"
 import { ConnectionPicker } from "./connectionpicker"
@@ -140,6 +142,9 @@ export function QueryPanel(props: QueryPanelProps) {
   // results shown below sql or to the right?
   const [variant, setVariant] = useState<"bottom" | "right">("bottom")
 
+  /** Monaco editor used for SQL */
+  const monacoRef = useRef(null)
+
   // used to force a refresh when data model changes
   const forceUpdate = useForceUpdate()
   function notifyChanges() {
@@ -229,6 +234,11 @@ export function QueryPanel(props: QueryPanelProps) {
   // handlers
   //
 
+  /** Store reference to monaco's editor when it mounts */
+  function handleEditorDidMount(editor, monaco) {
+    monacoRef.current = editor
+  }
+
   async function handleCommand(e: React.SyntheticEvent, command: Command) {
     console.debug(`QueryPanel.handleCommand - ${command.command}`, command)
     switch (command.command) {
@@ -256,6 +266,15 @@ export function QueryPanel(props: QueryPanelProps) {
       case "changeTitle":
         query.title = command.args?.item
         notifyChanges()
+        return
+
+      case "prettify":
+        if (monacoRef.current && props.query.sql) {
+          // format and update data model
+          props.query.sql = format(props.query.sql)
+          monacoRef.current.getModel()?.setValue(props.query.sql)
+          notifyChanges()
+        }
         return
     }
   }
@@ -287,30 +306,25 @@ export function QueryPanel(props: QueryPanelProps) {
     )
   }
 
+  /** Commands shown below query title */
   function renderCommands() {
+    const commands: (Command | "spacing")[] = [
+      { command: "info", icon: "info", title: "Details" },
+      { command: "bookmark", icon: "bookmark", title: "Bookmark" },
+      { command: "history", icon: "history", title: "History" },
+      "spacing",
+      { command: "prettify", icon: "autofix", title: "Prettify" },
+      "spacing",
+      { command: "comment", icon: "comment", title: "Comments" },
+      { command: "share", icon: "share", title: "Share" },
+    ]
+
     // TODO show a user's avatar or list of users which share this query instead of plain info icon
-    return (
-      <Stack className="QueryPanel-commands" direction="row">
-        <IconButton command={{ command: "info", icon: "info", title: "Details" }} size="small" />
-        <IconButton command={{ command: "bookmark", icon: "bookmark", title: "Bookmark" }} size="small" />
-        <IconButton
-          command={{ command: "history", icon: "history", title: "History" }}
-          size="small"
-          sx={{ marginRight: 2 }}
-        />
-        <IconButton
-          command={{ command: "prettify", icon: "prettify", title: "Prettify" }}
-          size="small"
-          sx={{ marginRight: 2 }}
-        />
-        <IconButton command={{ command: "comment", icon: "comment", title: "Comments" }} size="small" />
-        <IconButton command={{ command: "share", icon: "share", title: "Share" }} size="small" />
-      </Stack>
-    )
+    return <IconButtonGroup commands={commands} size="small" onCommand={handleCommand} />
   }
 
   function renderEditor() {
-    return <SqlEditor value={query.sql} onCommand={handleCommand} />
+    return <SqlEditor value={query.sql} onCommand={handleCommand} onMount={handleEditorDidMount} />
   }
 
   function renderRuns() {

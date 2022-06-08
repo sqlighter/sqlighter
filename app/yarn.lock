@@ -17973,6 +17973,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"sql-formatter@npm:^6.1.2":
+  version: 6.1.2
+  resolution: "sql-formatter@npm:6.1.2"
+  dependencies:
+    argparse: ^2.0.1
+  bin:
+    sql-formatter: bin/sql-formatter-cli.js
+  checksum: be16800748e38bfe1bb386a891f6612e4ef92a28b6491e38f481021928c71d1ff0ca77d04137948ff55a0d1d04852bd864738dd31499b3b9397c4e66f0b42c57
+  languageName: node
+  linkType: hard
+
 "sql.js@npm:^1.6.2":
   version: 1.7.0
   resolution: "sql.js@npm:1.7.0"
@@ -18058,6 +18069,7 @@ __metadata:
     set-clustering: ^1.1.0
     sharp: ^0.30.5
     showdown: ^2.1.0
+    sql-formatter: ^6.1.2
     sql.js: ^1.6.2
     sqlite-parser: "https://github.com/gionatamettifogo/sqlite-parser.git"
     storybook-addon-next-router: ^4.0.0
