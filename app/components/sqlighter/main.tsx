@@ -204,7 +204,7 @@ export default function Main(props: MainProps) {
       tabsCommands={[
         {
           command: "tabs.newTab",
-          title: "New Tab",
+          title: "New Query",
           icon: "add",
         },
       ]}

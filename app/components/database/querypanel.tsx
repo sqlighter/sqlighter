@@ -39,7 +39,7 @@ const QueryPanel_SxProps: SxProps<Theme> = {
   height: 1,
   maxHeight: 1,
 
-  paddingTop: 2,
+  paddingTop: 1.5,
   paddingLeft: 1,
   paddingRight: 1,
   paddingBottom: 1,
@@ -181,7 +181,7 @@ export function QueryPanel(props: QueryPanelProps) {
       // TODO split sql into separate statements and run each query separately in sequence to provide correct stats
       // see https://sql.js.org/documentation/Database.html#%5B%22iterateStatements%22%5D
       const queryResults = await connection.getResults(query.sql)
-      console.debug(`QueryPanel.runQuery - results`, queryResults)
+      // console.debug(`QueryPanel.runQuery - results`, queryResults)
 
       // TODO remove artificial delay used only to develop "in progress" updates
       await delay(200)
@@ -192,7 +192,7 @@ export function QueryPanel(props: QueryPanelProps) {
       running.rowsModified = await connection.getRowsModified()
       running.columns = queryResults?.[0]?.columns
       running.values = queryResults?.[0]?.values
-      console.debug(`QueryPanel.runQuery - completed`, running)
+      // console.debug(`QueryPanel.runQuery - completed`, running)
 
       if (queryResults.length > 1) {
         const baseTitle = running.title
@@ -325,7 +325,16 @@ export function QueryPanel(props: QueryPanelProps) {
       const tabs = runs.map((run) => {
         const runClone = Object.assign(new QueryRun(), run)
         const runConnection = props.connections.find((conn) => conn.id == run.query.connectionId)
-        return <QueryRunPanel key={run.id} id={run.id} title={run.title} icon="run" run={runClone} connection={runConnection} />
+        return (
+          <QueryRunPanel
+            key={run.id}
+            id={run.id}
+            title={run.title}
+            icon="run"
+            run={runClone}
+            connection={runConnection}
+          />
+        )
       })
       return (
         <Tabs

@@ -13,7 +13,7 @@ import { QueryExecResult } from "sql.js"
 class FakeConnection extends DataConnection {
   id = "dbc_fake01"
   title = "company.db"
-  
+
   public constructor(configs: DataConnectionConfigs, title) {
     super(configs)
     this.title = title
@@ -32,18 +32,27 @@ class FakeConnection extends DataConnection {
   }
 }
 
-export const fake_connection1 = new FakeConnection({
-  client: "sqlite3",
-  connection: {},
-}, "chinook.db")
-export const fake_connection2 = new FakeConnection({
-  client: "sqlite3",
-  connection: {},
-}, "CorporateDatabaseWeeklyBackup.db")
-export const fake_connection3 = new FakeConnection({
-  client: "sqlite3",
-  connection: {},
-}, "A.db")
+export const fake_connection1 = new FakeConnection(
+  {
+    client: "sqlite3",
+    connection: {},
+  },
+  "chinook.db"
+)
+export const fake_connection2 = new FakeConnection(
+  {
+    client: "sqlite3",
+    connection: {},
+  },
+  "CorporateDatabaseWeeklyBackup.db"
+)
+export const fake_connection3 = new FakeConnection(
+  {
+    client: "sqlite3",
+    connection: {},
+  },
+  "A.db"
+)
 
 // DataConnection[]
 export const fake_connections1: DataConnection[] = [fake_connection1, fake_connection2, fake_connection3]
@@ -93,23 +102,11 @@ fake_queryError1.status = "error"
 fake_queryError1.error = 'error: Error: near "FROM1": syntax error'
 
 // Various commands with labels and icons
-export const databaseCommand: Command = {
-  command: "showSql",
-  title: "SQL",
-  icon: "database",
-}
-export const queryCommand: Command = {
-  command: "openQuery",
-  title: "Data",
-  icon: "table",
-}
-export const chartsCommand: Command = {
-  command: "openCharts",
-  title: "Charts",
-  icon: "chart",
-}
-export const printCommand: Command = {
-  command: "print",
-  title: "Print",
-  icon: "print",
-}
+export const databaseCommand: Command = { command: "openDatabase", title: "Database", icon: "database" }
+export const queryCommand: Command = { command: "openQuery", title: "Data", icon: "table" }
+export const printCommand: Command = { command: "print", title: "Print", icon: "print" }
+
+export const sqlCmd: Command = { command: "viewSql", title: "SQL", icon: "code" }
+export const dataCmd: Command = { command: "viewData", title: "Data", icon: "table" }
+export const chartCommand: Command = { command: "viewChart", title: "Charts", icon: "chart" }
+export const addonCmd: Command = { command: "viewAddon", title: "More", icon: "extension" }

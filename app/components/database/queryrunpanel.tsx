@@ -16,10 +16,12 @@ import { QueryRun } from "../../lib/items/query"
 import { Command } from "../../lib/commands"
 import { DataGrid } from "./datagrid"
 import { IconButton } from "../ui/iconbutton"
+import { IconButtonGroup } from "../ui/iconbuttongroup"
 import { PanelProps } from "../navigation/panel"
 import { QueryStatus } from "./querystatus"
 import { SqlEditor } from "../editor/sqleditor"
 import { Body } from "../ui/typography"
+import { Empty } from "../ui/empty"
 
 // styles applied to main and subcomponents
 const QueryRunPanel_SxProps: SxProps<Theme> = {
@@ -33,23 +35,24 @@ const QueryRunPanel_SxProps: SxProps<Theme> = {
   ".QueryRunPanel-controls": {
     heigth: 40,
     margin: 1,
+    marginBottom: 2,
     display: "flex",
     alignItems: "center",
   },
 
   ".QueryRunPanel-status": {
-    minWidth: 140,
-    width: 140,
-    flexGrow: 1,
+    minWidth: 160,
+    width: 180,
+    height: 40,
   },
 
   ".QueryRunPanel-modes": {
-    //
+    flexGrow: 1,
   },
 
   ".QueryRunPanel-commands": {
     minWidth: 140,
-    flexGrow: 1,
+    width: 140,
     justifyContent: "flex-end",
   },
 
@@ -62,6 +65,11 @@ const QueryRunPanel_SxProps: SxProps<Theme> = {
   ".QueryRunPanel-errorLabel": {
     margin: 1,
   },
+
+  "& .MuiToggleButtonGroup-grouped": {
+    //    margin: theme.spacing(0.5),
+    border: 0,
+  },
 }
 
 export interface QueryRunPanelProps extends PanelProps {
@@ -72,16 +80,16 @@ export interface QueryRunPanelProps extends PanelProps {
 }
 
 // commands used for view modes navigation bar
-const sqlCmd: Command = { command: "viewSql", title: "SQL", icon: "code" }
-const dataCmd: Command = { command: "viewData", title: "Data", icon: "table" }
-const chartCmd: Command = { command: "viewChart", title: "Charts", icon: "chart" }
-const addonCmd: Command = { command: "viewAddon", title: "More", icon: "extension" }
+export const sqlCmd: Command = { command: "viewSql", title: "SQL", icon: "code" }
+export const dataCmd: Command = { command: "viewData", title: "Data", icon: "table" }
+export const chartCmd: Command = { command: "viewChart", title: "Charts", icon: "chart" }
+export const addonCmd: Command = { command: "viewAddon", title: "More", icon: "extension" }
 
 // additional commands shown as icon buttons
-const fullscreenCmd: Command = { command: "fullscreen", title: "Fullscreen", icon: "fullscreen" }
-const exportCmd: Command = { command: "export", title: "Export", icon: "export" }
-const shareCmd: Command = { command: "share", title: "Share", icon: "share" }
-const searchCmd: Command = { command: "search", title: "Search", icon: "search" }
+export const fullscreenCmd: Command = { command: "fullscreen", title: "Fullscreen", icon: "fullscreen" }
+export const exportCmd: Command = { command: "export", title: "Export", icon: "export" }
+export const shareCmd: Command = { command: "share", title: "Share", icon: "share" }
+export const searchCmd: Command = { command: "search", title: "Search", icon: "search" }
 
 /** Results of a query execution in tabular form, code, charts, etc. */
 export function QueryRunPanel(props: QueryRunPanelProps) {
@@ -115,6 +123,11 @@ export function QueryRunPanel(props: QueryRunPanelProps) {
     }
   }
 
+  function handleModeChange(e, newMode) {
+    console.log(e)
+    setMode(newMode)
+  }
+
   //
   // render
   //
@@ -122,35 +135,26 @@ export function QueryRunPanel(props: QueryRunPanelProps) {
   /** Render navigation bar with visualization modes */
   function renderModes() {
     return (
-      <Stack className="QueryRunPanel-modes" direction="row" spacing={1}>
-        <IconButton
-          command={sqlCmd}
-          label={true}
-          selected={mode == sqlCmd.command}
-          onCommand={handleCommand}
-          size="small"
-        />
-        <IconButton
-          command={dataCmd}
-          label={true}
-          selected={mode == dataCmd.command}
-          onCommand={handleCommand}
-          size="small"
-        />
-      </Stack>
+      <IconButtonGroup
+        className="QueryRunPanel-modes"
+        selected={mode}
+        commands={[sqlCmd, dataCmd, chartCmd]}
+        size="medium"
+        onCommand={handleCommand}
+      />
     )
-    // <IconButton command={chartCmd} label={true} selected={mode == chartCmd.command} onCommand={handleCommand} />
-    // <IconButton command={addonCmd} label={true} selected={mode == addonCmd.command} onCommand={handleCommand} />
   }
 
   function renderCommands() {
     // <IconButton command={fullscreenCmd} onCommand={handleCommand} />
     // <IconButton command={searchCmd} onCommand={handleCommand} />
     return (
-      <Stack className="QueryRunPanel-commands" direction="row">
-        <IconButton command={exportCmd} onCommand={handleCommand} size="small" />
-        <IconButton command={shareCmd} onCommand={handleCommand} size="small" />
-      </Stack>
+      <IconButtonGroup
+        className="QueryRunPanel-commands"
+        commands={[exportCmd, shareCmd]}
+        size="small"
+        onCommand={handleCommand}
+      />
     )
   }
 
@@ -181,7 +185,17 @@ export function QueryRunPanel(props: QueryRunPanelProps) {
     if (mode == "viewData") {
       return renderData()
     }
-    return <>{mode}/tbd</>
+    if (mode == "viewChart") {
+      return (
+        <Empty
+          image="/images/work-in-progress.webp"
+          title="Working..."
+          description="Charts will appear here soon"
+          variant="fancy"
+        />
+      )
+    }
+    return null
   }
 
   // most controls are shown only once query is done
@@ -190,9 +204,7 @@ export function QueryRunPanel(props: QueryRunPanelProps) {
   return (
     <Box className="QueryRunPanel-root" sx={QueryRunPanel_SxProps}>
       <Box className="QueryRunPanel-controls">
-        <Box className="QueryRunPanel-status">
-          <QueryStatus connection={props.connection} run={run} />
-        </Box>
+        <QueryStatus className="QueryRunPanel-status" connection={props.connection} run={run} />
         {hasCompleted && renderModes()}
         {hasCompleted && renderCommands()}
       </Box>

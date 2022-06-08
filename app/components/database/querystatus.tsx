@@ -18,6 +18,7 @@ import { DotColor } from "../ui/icon"
 const QueryStatus_SxProps: SxProps<Theme> = {
   height: 36,
   display: "flex",
+  alignItems: "center",
 
   ".QueryStatus-info": {
     ml: 1,
@@ -25,16 +26,20 @@ const QueryStatus_SxProps: SxProps<Theme> = {
 
   ".QueryStatus-label": {
     lineHeight: 1,
+    position: "relative",
+    top: "4px",
   },
 
   ".QueryStatus-secondaryLabel": {
     lineHeight: 1,
     position: "relative",
-    top: "-2px",
+    top: "2px",
   },
 }
 
 export interface QueryStatusProps {
+  /** Class to be applied to this component */
+  className?: string
   /** Database connection used to run this query */
   connection?: DataConnection
   /** Data model for query run shown in panel */
@@ -87,14 +92,14 @@ export function QueryStatus(props: QueryStatusProps) {
   }
 
   return (
-    <Box className="QueryStatus-root" sx={QueryStatus_SxProps}>
+    <Box className={`QueryStatus-root ${props.className}`} sx={QueryStatus_SxProps}>
       <ConnectionIcon connection={props.connection} dotColor={dotColor} />
       <Box className="QueryStatus-info">
-        <Typography className="QueryStatus-label" variant="body2" color={titleColor}>
+        <Typography className="QueryStatus-label" variant="caption" color={titleColor} noWrap component="div">
           {status}
         </Typography>
         {secondaryText && (
-          <Typography className="QueryStatus-secondaryLabel" variant="caption" color="text.secondary">
+          <Typography className="QueryStatus-secondaryLabel" variant="caption" color="text.secondary" noWrap>
             {secondaryText}
           </Typography>
         )}
