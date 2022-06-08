@@ -271,7 +271,7 @@ export function QueryPanel(props: QueryPanelProps) {
       case "prettify":
         if (monacoRef.current && props.query.sql) {
           // format and update data model
-          props.query.sql = format(props.query.sql)
+          props.query.sql = format(props.query.sql, { language: "sqlite" })
           monacoRef.current.getModel()?.setValue(props.query.sql)
           notifyChanges()
         }
