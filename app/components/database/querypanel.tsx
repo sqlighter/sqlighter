@@ -65,7 +65,7 @@ const QueryPanel_SxProps: SxProps<Theme> = {
   },
 
   ".QueryPanel-run": {
-    height: 36,
+    //height: 36,
   },
 
   // stacked editor and results
@@ -294,6 +294,7 @@ export function QueryPanel(props: QueryPanelProps) {
             connections={props.connections}
             onCommand={handleCommand}
             variant="compact"
+            // buttonVariant="outlined"
             buttonProps={{ sx: { width: 60 } }}
           >
             <Button className="QueryPanel-run" onClick={runQuery} startIcon={<Icon>play</Icon>}>

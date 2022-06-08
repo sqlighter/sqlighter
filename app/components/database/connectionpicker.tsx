@@ -51,6 +51,16 @@ const ConnectionPicker_Sx: SxProps<Theme> = {
     },
   },
 
+  ".ConnectionPicker-check": {
+    minWidth: 24,
+    width: 24,
+    height: 24,
+  },
+
+  ".ConnectionPicker-connectionIcon": {
+    marginRight: 1,
+  },
+
   // TODO add a space between button and menu
   "& .MuiModal-root": {
     marginTop: "8px", // or 1
@@ -60,8 +70,8 @@ const ConnectionPicker_Sx: SxProps<Theme> = {
   ".MuiButton-root": {
     whiteSpace: "nowrap",
     overflow: "hidden",
-    textOverflow: "ellipsis"
-  }
+    textOverflow: "ellipsis",
+  },
 }
 
 export interface ConnectionPickerProps {
@@ -157,10 +167,13 @@ export function ConnectionPicker(props: ConnectionPickerProps) {
       )
     }
 
+    // list of connection includes selected connection? make space for ✓
+    const showChecks = !!props.connections?.find((conn) => conn.id == props.connection.id)
+
     return (
       <Menu
         id="connection-picker-menu"
-        className="ConnectionPicker-menu"
+        className="ConnectionPickerMenu-root"
         anchorEl={anchorEl}
         open={open}
         onClose={handleCloseMenu}
@@ -171,7 +184,7 @@ export function ConnectionPicker(props: ConnectionPickerProps) {
         <Box sx={{ ml: 2, mr: 2, mb: 2, mt: 1 }} onKeyDown={(e) => e.stopPropagation()}>
           <TextField
             id="connection-picker-filter"
-            className="ConnectionPicker-filter"
+            className="ConnectionPickerMenu-filter"
             size="small"
             placeholder="Filter connections"
             variant="outlined"
@@ -192,16 +205,26 @@ export function ConnectionPicker(props: ConnectionPickerProps) {
           return (
             <MenuItem key={conn.id} onClick={(e) => handleSelectConnection(e, conn)}>
               <Box sx={{ display: "flex", alignItems: "center" }}>
-                <Box sx={{ mr: 1 }}>
-                  <ConnectionIcon connection={conn} />
-                </Box>
-                <Box>{conn.title}</Box>
+                {showChecks && (
+                  <Box className="ConnectionPickerMenu-checkbox" sx={{ width: 20 }}>
+                    {props.connection.id == conn.id && (
+                      <Icon
+                        fontSize="small"
+                        sx={{ verticalAlign: "middle", position: "relative", left: "-4px", paddingRight: 0 }}
+                      >
+                        check
+                      </Icon>
+                    )}
+                  </Box>
+                )}
+                <ConnectionIcon className="ConnectionPickerMenu-connectionIcon" connection={conn} />
+                <Box sx={{ ml: 1 }}>{conn.title}</Box>
               </Box>
             </MenuItem>
           )
         })}
         {menuConnections.length > 0 && <Divider />}
-        <MenuItem className="ConnectionPicker-manageConnections" onClick={handleManageConnections}>
+        <MenuItem className="ConnectionPickerMenu-manageConnections" onClick={handleManageConnections}>
           Manage connections
         </MenuItem>
       </Menu>

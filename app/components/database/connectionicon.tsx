@@ -6,6 +6,8 @@ import { DataConnection } from "../../lib/sqltr/connections"
 import { Icon, DotColor } from "../ui/icon"
 
 export interface ConnectionIconProps {
+  /** Class applied to this component */
+  className?: string
   /** Connection we're showing the status for */
   connection?: DataConnection
   /** Display a dot badge with the given color (default none) */
@@ -21,7 +23,7 @@ export function ConnectionIcon(props: ConnectionIconProps) {
       dotColor = "success"
     }
     return (
-      <Icon className="ConnectionPicker-icon" dotColor={dotColor}>
+      <Icon className={`ConnectionPicker-icon ${props.className}`} dotColor={dotColor}>
         {props.connection.configs.client}
       </Icon>
     )

@@ -21,6 +21,7 @@ import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlin
 import BookmarksOutlinedIcon from "@mui/icons-material/BookmarksOutlined"
 import BungalowOutlinedIcon from "@mui/icons-material/BungalowOutlined"
 import CodeOutlinedIcon from "@mui/icons-material/CodeOutlined"
+import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 import ChildCareOutlinedIcon from "@mui/icons-material/ChildCareOutlined"
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined"
 import CloudDownloadOutlinedIcon from "@mui/icons-material/CloudDownloadOutlined"
@@ -108,6 +109,8 @@ export function Icon(props: IconProps) {
       case "chart":
         // return <BarChartOutlinedIcon {...props} />
         return <InsertChartOutlinedIcon {...props} />
+      case "check":
+        return <CheckOutlinedIcon {...props} />
       case "database":
         return <DatabaseOutline {...props} />
       case "description":
