@@ -100,7 +100,7 @@
     "@types/supertest": "^2.0.12",
     "babel-jest": "^28.1.0",
     "babel-loader": "^8.2.5",
-    "eslint": "^8.16.0",
+    "eslint": "^8.17.0",
     "eslint-config-next": "^12.1.6",
     "eslint-plugin-prettier": "^4.0.0",
     "jest": "27.5.1",
