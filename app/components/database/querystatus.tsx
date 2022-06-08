@@ -22,18 +22,16 @@ const QueryStatus_SxProps: SxProps<Theme> = {
 
   ".QueryStatus-info": {
     ml: 1,
+    display: "flex",
+    flexDirection: "column",
   },
 
   ".QueryStatus-label": {
-    lineHeight: 1,
-    position: "relative",
-    top: "4px",
+    lineHeight: 1.3,
   },
 
   ".QueryStatus-secondaryLabel": {
-    lineHeight: 1,
-    position: "relative",
-    top: "2px",
+    lineHeight: 1.3,
   },
 }
 
