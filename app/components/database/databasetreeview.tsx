@@ -88,17 +88,19 @@ export function DatabaseTreeView(props: DatabaseTreeViewProps) {
       title: table.name,
       type: "table",
       commands: [
-        { command: "sqlighter.viewStructure", icon: "info", title: "View Structure" },
+        {
+          command: "sqlighter.viewStructure",
+          icon: "info",
+          title: "View Structure",
+          args: { title: `All ${table.name}`, sql: `SELECT * FROM ${table.name}` },
+        },
         {
           // for now we open a generic query panel and select the table's data
           // TODO launch a table panel that display, edit, insert and remove rows
           title: "View Data",
           icon: "query",
           command: "sqlighter.viewQuery",
-          args: {
-            //            sql: `SELECT * FROM '${schema.database}.${table.name}'`,
-            sql: `SELECT * FROM ${table.name}`,
-          },
+          args: { title: `All ${table.name}`, sql: `SELECT * FROM ${table.name}` },
         },
         { command: "sqlighter.pin", icon: "pin", title: "Pin" },
       ],

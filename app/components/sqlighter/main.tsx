@@ -94,11 +94,15 @@ export default function Main(props: MainProps) {
     console.debug(`Main.handleCommand - ${command.command}`, command)
     switch (command.command) {
       // open a new tab with a query panel
+      case "sqlighter.viewStructure": // TODO will have its own panel but just open sql for now
       case "sqlighter.viewQuery":
       case "tabs.newTab":
         const query = new Query()
         query.connectionId = connection?.id
         query.sql = command.args?.sql // newTab doesn't have a query
+        if (command.args?.title) {
+          query.title = command.args.title
+        }
         const tab = { id: query.id, component: "QueryPanel", props: { query } }
         setTabs([tab, ...tabs])
         setTabId(query.id)
