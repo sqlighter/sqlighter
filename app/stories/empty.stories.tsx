@@ -33,4 +33,7 @@ export const WithImage = Template.bind({})
 WithImage.args = {
   image: "/images/empty2.jpg",
   icon: undefined,
+  variant: "fancy",
+  title: "Is this art?",
+  description: "Drawing rectangles is where it's at"
 }

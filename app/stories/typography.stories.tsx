@@ -76,8 +76,10 @@ const PrimaryTemplate: ComponentStory<typeof IconButton> = (args) => {
         <Title size="small">Small Title</Title>
       </Boxy>
 
-      <Label size="medium">Label (m)</Label>
-      <Label size="small">medium</Label>
+      <Box sx={{ display: "flex", flexDirection: "column" }}>
+        <Label size="medium">Label (medium)</Label>
+        <Label size="small">Label (small)</Label>
+      </Box>
     </>
   )
 }
@@ -87,61 +89,76 @@ const SideBySideTemplate: ComponentStory<typeof IconButton> = (args) => {
   return (
     <>
       <Stack direction="row" spacing={2}>
-        <Box sx={{ width: 480 }}>
+        <Box sx={{ display: "flex", flexDirection: "column", width: 480, paddingRight: 2 }}>
+          <Typography variant="caption" color="primary.main">
+            Material UI
+          </Typography>
+
           <Typography variant="h1">h1. Heading</Typography>
           <Typography variant="h2">h2. Heading</Typography>
           <Typography variant="h3">h3. Heading</Typography>
           <Typography variant="h4">h4. Heading</Typography>
           <Typography variant="h5">h5. Heading</Typography>
-          <Typography variant="h6">h6. Heading</Typography>
+          <Typography variant="h6" mb={2}>
+            h6. Heading
+          </Typography>
+
+          <Typography variant="subtitle1">subtitle1. Lorem ipsum dolor sit amet</Typography>
+          <Typography variant="subtitle2" mb={2}>
+            subtitle2. Lorem ipsum dolor sit amet
+          </Typography>
+
+          <Typography variant="body1" mb={2}>
+            body1. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit, quam
+            beatae rerum inventore consectetur, neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti?
+            Eum quasi quidem quibusdam.
+          </Typography>
+          <Typography variant="body2" mb={2}>
+            body2. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit, quam
+            beatae rerum inventore consectetur, neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti?
+            Eum quasi quidem quibusdam.
+          </Typography>
+
+          <Typography variant="button">Button Text</Typography>
+          <Typography variant="caption">Caption Text</Typography>
+          <Typography variant="overline">Overline Text</Typography>
         </Box>
-        <Box sx={{ width: 400 }}>
+        <Box sx={{ width: 480 }}>
+          <Typography variant="caption" color="primary.main">
+            Material 3
+          </Typography>
+
           <Display size="medium">Display (medium)</Display>
-          <Body>
+          <Body mb={2}>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit, quam beatae
             rerum inventore consectetur, neque doloribus.
           </Body>
 
           <Headline size="medium">Headline (medium)</Headline>
-          <Body>
+          <Body mb={2}>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit, quam beatae
             rerum inventore consectetur, neque doloribus.
           </Body>
+
           <Title size="large">Title (large)</Title>
-          <Body>
+          <Body mb={2}>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit, quam beatae
             rerum inventore consectetur, neque doloribus.
           </Body>
+
           <Title size="medium">Title (medium)</Title>
-          <Body>
+          <Body mb={2}>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit, quam beatae
             rerum inventore consectetur, neque doloribus.
           </Body>
+
           <Title size="small">Title (small)</Title>
-          <Body size="small">
+          <Body size="small" mb={2}>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit, quam beatae
             rerum inventore consectetur, neque doloribus.
           </Body>
         </Box>
       </Stack>
-
-      <Typography variant="subtitle1">subtitle1. Lorem ipsum dolor sit amet</Typography>
-      <Typography variant="subtitle2">subtitle2. Lorem ipsum dolor sit amet</Typography>
-
-      <Typography variant="body1">
-        body1. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit, quam
-        beatae rerum inventore consectetur, neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti? Eum
-        quasi quidem quibusdam.
-      </Typography>
-      <Typography variant="body2">
-        body2. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit, quam
-        beatae rerum inventore consectetur, neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti? Eum
-        quasi quidem quibusdam.
-      </Typography>
-
-      <Typography variant="button">Button Text</Typography>
-      <Typography variant="caption">Caption Text</Typography>
-      <Typography variant="overline">Overline Text</Typography>
     </>
   )
 }
