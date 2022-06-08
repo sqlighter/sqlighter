@@ -6,7 +6,7 @@ import { Stack } from "@mui/material"
 import { Command } from "../lib/commands"
 import { StorybookDecorator } from "../components/storybook"
 import { IconButton } from "../components/ui/iconbutton"
-import { chartsCommand, databaseCommand, queryCommand } from "./fakedata"
+import { chartCommand, databaseCommand, queryCommand } from "./fakedata"
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -31,7 +31,7 @@ const TemplateStack: ComponentStory<typeof IconButton> = (args) => (
   <Stack direction="row">
     <IconButton {...args} command={databaseCommand} />
     <IconButton {...args} command={queryCommand} />
-    <IconButton {...args} command={chartsCommand} />
+    <IconButton {...args} command={chartCommand} />
   </Stack>
 )
 
@@ -105,7 +105,7 @@ Autotesting.play = async () => {
   userEvent.hover(button)
 
   // no tooltip right away
-  const tooltip1 = screen.queryAllByText(databaseCommand.title)
+  const tooltip1 = screen.queryAllByText(databaseCommand.title as string)
   expect(tooltip1).toHaveLength(0)
 
   // tooltip shows after a delay

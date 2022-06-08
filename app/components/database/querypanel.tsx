@@ -177,7 +177,6 @@ export function QueryPanel(props: QueryPanelProps) {
     running.sql = query.sql
 
     // add run, update query watchers
-    console.debug(`QueryPanel.runQuery - running`, running)
     query.runs = query.runs ? [running, ...query.runs] : [running]
     setRunId(running.id)
     notifyChanges()
@@ -186,7 +185,6 @@ export function QueryPanel(props: QueryPanelProps) {
       // TODO split sql into separate statements and run each query separately in sequence to provide correct stats
       // see https://sql.js.org/documentation/Database.html#%5B%22iterateStatements%22%5D
       const queryResults = await connection.getResults(query.sql)
-      // console.debug(`QueryPanel.runQuery - results`, queryResults)
 
       // TODO remove artificial delay used only to develop "in progress" updates
       await delay(200)

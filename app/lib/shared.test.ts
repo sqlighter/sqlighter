@@ -1,6 +1,6 @@
-/**
- * @jest-environment jsdom
- */
+//
+// shared.test.ts
+//
 
 import { prettyBytes, prettyContentType } from "./shared"
 
