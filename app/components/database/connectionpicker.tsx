@@ -158,17 +158,14 @@ export function ConnectionPicker(props: ConnectionPickerProps) {
   // render
   //
 
-  // TODO connectionmenu should have checkmark next to currently selected connection
   function renderMenu() {
     let menuConnections = props.connections
     if (filter.length > 0) {
-      menuConnections = menuConnections.filter(
+      menuConnections = [...menuConnections].filter(
         (conn) => conn.title && conn.title.toLowerCase().indexOf(filter.toLowerCase()) != -1
       )
+      menuConnections = menuConnections.sort((a, b) => (a.title < b.title ? -1 : 1))
     }
-
-    // list of connection includes selected connection? make space for ✓
-    const showChecks = !!props.connections?.find((conn) => conn.id == props.connection.id)
 
     return (
       <Menu
@@ -205,18 +202,16 @@ export function ConnectionPicker(props: ConnectionPickerProps) {
           return (
             <MenuItem key={conn.id} onClick={(e) => handleSelectConnection(e, conn)}>
               <Box sx={{ display: "flex", alignItems: "center" }}>
-                {showChecks && (
-                  <Box className="ConnectionPickerMenu-checkbox" sx={{ width: 20 }}>
-                    {props.connection.id == conn.id && (
-                      <Icon
-                        fontSize="small"
-                        sx={{ verticalAlign: "middle", position: "relative", left: "-4px", paddingRight: 0 }}
-                      >
-                        check
-                      </Icon>
-                    )}
-                  </Box>
-                )}
+                <Box className="ConnectionPickerMenu-checkbox" sx={{ width: 20 }}>
+                  {props.connection.id == conn.id && (
+                    <Icon
+                      fontSize="small"
+                      sx={{ verticalAlign: "middle", position: "relative", left: "-4px", paddingRight: 0 }}
+                    >
+                      check
+                    </Icon>
+                  )}
+                </Box>
                 <ConnectionIcon className="ConnectionPickerMenu-connectionIcon" connection={conn} />
                 <Box sx={{ ml: 1 }}>{conn.title}</Box>
               </Box>
