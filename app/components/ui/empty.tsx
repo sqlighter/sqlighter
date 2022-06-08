@@ -2,12 +2,14 @@
 // empty.tsx - shows an empty state with image, title, description and an optional action item like a signin button
 //
 
+import { ReactElement } from "react"
 import Image from "next/image"
 import Stack from "@mui/material/Stack"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 import { alpha, lighten, darken, SxProps } from "@mui/material"
 import { Theme } from "@mui/material/styles"
+import Link from "@mui/material/Link"
 
 import { FANCY_RADIUS } from "../listitems"
 import { Icon } from "./icon"
@@ -52,7 +54,7 @@ const Empty_SxProps: SxProps<Theme> = {
     color: "background.paper",
     // light background with tint from the primary color in the theme
     // color: (theme) => alpha(theme.palette.primary.main, 0.09),
-},
+  },
 
   ".Empty-fancyBox": {
     borderRadius: FANCY_RADIUS,
@@ -60,53 +62,65 @@ const Empty_SxProps: SxProps<Theme> = {
 }
 
 export interface EmptyProps {
+  /** Class to be applied to this component */
+  className?: string
   /** Large image shown as round avatar, centered */
   image?: any
-
   /** Icon (optional, in alternative to image) */
   icon?: string
-
   /** Empty state title, eg. No documents */
   title?: string
-
   /** Empty state description (optional) */
   description?: string
-
-  /** Optional action item below empty state, for example a <SigninButton /> */
-  action?: any
-
   /** Round image, or fancy shape (default centered) */
   variant?: "round" | "fancy"
-
   /** Margin top, default: 4 */
   sx?: SxProps<Theme>
+  /** Optional action item below empty state, for example a <SigninButton /> */
+  children?: ReactElement
 }
 
+/** An empty state placeholder with a visual + message (eg. no messages in your inbox) */
 export function Empty(props: EmptyProps) {
   const variant = props.variant || "round"
+
+  // NOTE image is "unoptimized" to avoid issues with next.js in storybook
   return (
-    <Stack className="Empty-root" sx={Empty_SxProps}>
+    <Stack className={`Empty-root ${props.className}`} sx={Empty_SxProps}>
       {props.image && (
         <Box className={`Empty-imageBox Empty-${variant}Box`}>
           <Image src={props.image} layout="fill" objectFit="cover" unoptimized />
         </Box>
       )}
-      {props.icon && (
+      {!props.image && props.icon && (
         <Box className={`Empty-iconBox Empty-${variant}Box`}>
           <Icon className="Empty-icon">{props.icon}</Icon>
         </Box>
       )}
       {props.title && (
-        <Typography variant="subtitle1" color="text.primary" noWrap={true}>
+        <Typography className="Empty-title" variant="subtitle1" color="text.primary" noWrap={true}>
           {props.title}
         </Typography>
       )}
       {props.description && (
-        <Typography variant="caption" color="text.secondary">
+        <Typography className="Empty-description" variant="body2" color="text.secondary">
           {props.description}
         </Typography>
       )}
-      {props.action && <Box mt={2}>{props.action}</Box>}
+      {props.children && <Box className="Empty-children">{props.children}</Box>}
     </Stack>
+  )
+}
+
+/** An empty state for missing features */
+export function MissingFeature(props: EmptyProps) {
+  return (
+    <Empty
+      {...props}
+      image="/images/work-in-progress.webp"
+      title="Not quite there"
+      description="We're still working on this feature..."
+      variant="fancy"
+    />
   )
 }

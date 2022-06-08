@@ -6,7 +6,6 @@
 import React, { useState } from "react"
 import { Theme, SxProps } from "@mui/material"
 import Box from "@mui/material/Box"
-import Stack from "@mui/material/Stack"
 
 // model
 import { DataConnection } from "../../lib/sqltr/connections"
@@ -15,13 +14,12 @@ import { QueryRun } from "../../lib/items/query"
 // view
 import { Command } from "../../lib/commands"
 import { DataGrid } from "./datagrid"
-import { IconButton } from "../ui/iconbutton"
 import { IconButtonGroup } from "../ui/iconbuttongroup"
 import { PanelProps } from "../navigation/panel"
 import { QueryStatus } from "./querystatus"
 import { SqlEditor } from "../editor/sqleditor"
 import { Body } from "../ui/typography"
-import { Empty } from "../ui/empty"
+import { Empty, MissingFeature } from "../ui/empty"
 
 // styles applied to main and subcomponents
 const QueryRunPanel_SxProps: SxProps<Theme> = {
@@ -123,11 +121,6 @@ export function QueryRunPanel(props: QueryRunPanelProps) {
     }
   }
 
-  function handleModeChange(e, newMode) {
-    console.log(e)
-    setMode(newMode)
-  }
-
   //
   // render
   //
@@ -138,7 +131,7 @@ export function QueryRunPanel(props: QueryRunPanelProps) {
       <IconButtonGroup
         className="QueryRunPanel-modes"
         selected={mode}
-        commands={[sqlCmd, dataCmd, chartCmd]}
+        commands={[sqlCmd, dataCmd]}
         size="medium"
         onCommand={handleCommand}
       />
@@ -172,7 +165,7 @@ export function QueryRunPanel(props: QueryRunPanelProps) {
 
   function renderData() {
     if (!run.values) {
-      return <>No data</>
+      return <Empty title="No data" description="This query didn't return any results" icon="code" />
     }
     return <DataGrid columns={run.columns} values={run.values} />
   }
@@ -186,14 +179,7 @@ export function QueryRunPanel(props: QueryRunPanelProps) {
       return renderData()
     }
     if (mode == "viewChart") {
-      return (
-        <Empty
-          image="/images/work-in-progress.webp"
-          title="Working..."
-          description="Charts will appear here soon"
-          variant="fancy"
-        />
-      )
+      return <MissingFeature />
     }
     return null
   }

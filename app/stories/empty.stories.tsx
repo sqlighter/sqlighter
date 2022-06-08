@@ -5,7 +5,7 @@
 import React from "react"
 import { ComponentStory, ComponentMeta } from "@storybook/react"
 import { StorybookDecorator } from "../components/storybook"
-import { Empty } from "../components/ui/empty"
+import { Empty, MissingFeature } from "../components/ui/empty"
 
 export default {
   title: "UI/Empty",
@@ -37,3 +37,6 @@ WithImage.args = {
   title: "Is this art?",
   description: "Drawing rectangles is where it's at"
 }
+
+const MissingFeatureTemplate: ComponentStory<typeof Empty> = (args) => <MissingFeature {...args} />
+export const WithMissingFeature = MissingFeatureTemplate.bind([])

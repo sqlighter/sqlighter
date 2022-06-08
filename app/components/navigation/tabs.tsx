@@ -77,8 +77,10 @@ const Tabs_SxProps: SxProps<Theme> = {
     // TODO keep close icons visible on touch devices
     ".Tab-closeIcon": {
       position: "relative",
-      left: "4px",
+      left: "2px",
       color: "transparent",
+      padding: "2px",
+      borderRadius: "4px",
     },
 
     "&:hover": {

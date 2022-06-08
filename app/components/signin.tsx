@@ -76,11 +76,8 @@ export function SigninPanel() {
   }, [context.isGoogleSigninLoaded])
 
   return (
-    <Empty
-      title="Welcome"
-      description="Sign in securely to access your data"
-      image={signinImage}
-      action={<SigninButton />}
-    />
+    <Empty title="Welcome" description="Sign in securely to access your data" image={signinImage}>
+      <SigninButton />
+    </Empty>
   )
 }
