@@ -10,7 +10,7 @@ import { QueryPanel } from "../components/database/querypanel"
 import { fake_connections1, fake_connection1, fake_query1 } from "./fakedata"
 
 export default {
-  title: "Components/QueryPanel",
+  title: "Database/QueryPanel",
   component: QueryPanel,
   decorators: [
     (Story) => (

@@ -2,11 +2,12 @@
 // connectionspicker.tsx - shows list of available connections, selects current connection, opens connections manager panel
 //
 
-import { useState } from "react"
+import { useState, ReactElement } from "react"
 import { SxProps, Theme } from "@mui/material"
 
 import Box from "@mui/material/Box"
-import Button from "@mui/material/Button"
+import ButtonGroup from "@mui/material/ButtonGroup"
+import Button, { ButtonProps } from "@mui/material/Button"
 import Divider from "@mui/material/Divider"
 import Menu from "@mui/material/Menu"
 import MenuItem from "@mui/material/MenuItem"
@@ -24,12 +25,9 @@ export const CONNECTIONPICKER_MAX_WIDTH = 240
 
 // styles for connections picker and subcomponents
 const ConnectionPicker_Sx: SxProps<Theme> = {
-  maxWidth: CONNECTIONPICKER_MAX_WIDTH,
-  height: 36,
-
   ".ConnectionPicker-button": {
     maxWidth: CONNECTIONPICKER_MAX_WIDTH,
-    height: 36,
+    //  height: 36,
   },
 
   ".ConnectionPicker-icon": {
@@ -57,6 +55,13 @@ const ConnectionPicker_Sx: SxProps<Theme> = {
   "& .MuiModal-root": {
     marginTop: "8px", // or 1
   },
+
+  // button labels should not wrap
+  ".MuiButton-root": {
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis"
+  }
 }
 
 export interface ConnectionPickerProps {
@@ -69,11 +74,17 @@ export interface ConnectionPickerProps {
   /** Callback used to dispatch commands back to parent component */
   onCommand?: CommandEvent
 
-  /** Compact variant has no label and is shorter */
+  /** Regular or smaller */
   variant?: "default" | "compact"
 
-  /** If set, the button will take up the full width of its container (default, false) */
-  fullWidth?: boolean
+  /** Variant passed to button for styling */
+  buttonVariant?: "contained" | "outlined" | "text"
+
+  /** Button can be grouped with other buttons passed as children */
+  children?: ReactElement
+
+  /** Props that should be passed to button */
+  buttonProps?: ButtonProps
 }
 
 /** Shows the current connection status and name plus a menu to pick a different connection */
@@ -217,23 +228,26 @@ export function ConnectionPicker(props: ConnectionPickerProps) {
 
   return (
     <Box className="ConnectionPicker-root" sx={ConnectionPicker_Sx}>
-      <Tooltip title={tooltipTitle}>
-        <Button
-          className="ConnectionPicker-button"
-          id="connection-picker-button"
-          onClick={handleClick}
-          fullWidth={props.fullWidth}
-          variant="text"
-        >
-          <ConnectionIcon connection={props.connection} />
-          {props.variant != "compact" && (
-            <Typography className="ConnectionPicker-label" variant="button" noWrap>
-              {title}
-            </Typography>
-          )}
-          <Icon className="ConnectionPicker-expandIcon">expand</Icon>
-        </Button>
-      </Tooltip>
+      <ButtonGroup variant={props.buttonVariant || "text"}>
+        {props.children}
+        <Tooltip title={tooltipTitle}>
+          <Button
+            {...props.buttonProps}
+            className="ConnectionPicker-button"
+            id="connection-picker-button"
+            onClick={handleClick}
+            variant={props.buttonVariant || "text"}
+          >
+            <ConnectionIcon connection={props.connection} />
+            {props.variant != "compact" && (
+              <Typography className="ConnectionPicker-label" variant="button" noWrap>
+                {title}
+              </Typography>
+            )}
+            <Icon className="ConnectionPicker-expandIcon">expand</Icon>
+          </Button>
+        </Tooltip>
+      </ButtonGroup>
       {renderMenu()}
     </Box>
   )

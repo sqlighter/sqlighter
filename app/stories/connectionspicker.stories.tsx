@@ -9,10 +9,11 @@ import Stack from "@mui/material/Stack"
 
 import { StorybookDecorator } from "../components/storybook"
 import { ConnectionPicker } from "../components/database/connectionpicker"
+import { Icon } from "../components/ui/icon"
 import { fake_connections1, fake_connection1, fake_connection2, fake_connection3 } from "./fakedata"
 
 export default {
-  title: "Components/ConnectionPicker",
+  title: "Database/ConnectionPicker",
   component: ConnectionPicker,
   decorators: [
     (Story) => (
@@ -30,7 +31,6 @@ export default {
   },
 } as ComponentMeta<typeof ConnectionPicker>
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: ComponentStory<typeof ConnectionPicker> = (args) => {
   return (
     <Stack direction="row" spacing={1}>
@@ -51,4 +51,27 @@ LongLabel.args = {
 export const ShortLabel = Template.bind({})
 ShortLabel.args = {
   connection: fake_connection3,
+}
+
+export const Compact = Template.bind({})
+Compact.args = {
+  variant: "compact",
+  buttonVariant: "outlined",
+}
+
+const GroupedTemplate: ComponentStory<typeof ConnectionPicker> = (args) => {
+  return (
+    <Stack direction="row" spacing={1}>
+      <Button variant="outlined">Eat</Button>
+      <ConnectionPicker {...args}>
+        <Button startIcon={<Icon>play</Icon>}>Run</Button>
+      </ConnectionPicker>
+      <Button variant="contained">Sleep</Button>
+    </Stack>
+  )
+}
+
+export const Grouped = GroupedTemplate.bind({})
+Grouped.args = {
+  variant: "compact",
 }

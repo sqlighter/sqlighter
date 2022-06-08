@@ -64,7 +64,6 @@ const QueryPanel_SxProps: SxProps<Theme> = {
 
   ".QueryPanel-run": {
     height: 36,
-    width: 100,
   },
 
   // stacked editor and results
@@ -266,7 +265,7 @@ export function QueryPanel(props: QueryPanelProps) {
   //
 
   function renderHeader() {
-    const connectionVariant = isMediumScreen ? "default" : "compact"
+    // TODO run label could change automatically to: run, run selection, run all based on editor selection
     return (
       <Box className="QueryPanel-header">
         <Stack direction="row" spacing={1} sx={{ width: 1 }}>
@@ -275,13 +274,13 @@ export function QueryPanel(props: QueryPanelProps) {
             connection={connection}
             connections={props.connections}
             onCommand={handleCommand}
-            variant={connectionVariant}
-          />
-          <Box>
-            <Button className="QueryPanel-run" variant="outlined" onClick={runQuery} startIcon={<Icon>play</Icon>}>
+            variant="compact"
+            buttonProps={{ sx: { width: 80 } }}
+          >
+            <Button className="QueryPanel-run" onClick={runQuery} startIcon={<Icon>play</Icon>}>
               Run
             </Button>
-          </Box>
+          </ConnectionPicker>
         </Stack>
         {renderCommands()}
       </Box>
@@ -329,7 +328,13 @@ export function QueryPanel(props: QueryPanelProps) {
         return <QueryRunPanel key={run.id} id={run.id} title={run.title} run={runClone} connection={runConnection} />
       })
       return (
-        <Tabs tabId={runId} tabs={tabs} tabsCommands={isMediumScreen && [toggleResults]} onCommand={handleCommand} variant="above" />
+        <Tabs
+          tabId={runId}
+          tabs={tabs}
+          tabsCommands={isMediumScreen && [toggleResults]}
+          onCommand={handleCommand}
+          variant="above"
+        />
       )
     }
 
@@ -362,14 +367,14 @@ export function QueryPanel(props: QueryPanelProps) {
         >
           <Allotment.Pane minSize={120}>
             <Box className="QueryPanel-editorBox">
-              <Card className="QueryPanel-card" variant="outlined">
+              <Card className="QueryPanel-card" variant="outlined" square={true}>
                 {renderEditor()}
               </Card>
             </Box>
           </Allotment.Pane>
           <Allotment.Pane>
             <Box className="QueryPanel-resultsBox">
-              <Card className="QueryPanel-card" variant="outlined">
+              <Card className="QueryPanel-card" variant="outlined" square={true}>
                 {renderRuns()}
               </Card>
             </Box>

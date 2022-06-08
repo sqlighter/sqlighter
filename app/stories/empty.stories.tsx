@@ -8,7 +8,7 @@ import { StorybookDecorator } from "../components/storybook"
 import { Empty } from "../components/ui/empty"
 
 export default {
-  title: "Components/Empty",
+  title: "UI/Empty",
   component: Empty,
   decorators: [
     (Story) => (

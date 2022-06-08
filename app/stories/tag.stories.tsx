@@ -5,7 +5,7 @@ import { Tag } from "../components/ui/tags"
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: "Components/Tag",
+  title: "UI/Tag",
   component: Tag,
   decorators: [
     (Story) => (

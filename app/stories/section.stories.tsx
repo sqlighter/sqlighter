@@ -5,7 +5,7 @@ import { StorybookDecorator } from "../components/storybook"
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: "Components/Section",
+  title: "UI/Section",
   component: Section,
 
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
@@ -37,19 +37,19 @@ const Template: ComponentStory<typeof Section> = (args) => (
 
 export const Primary = Template.bind({})
 Primary.args = {
-  title: "Biomarkers",
+  title: "Blockbuster movies",
   subtitle: "A comprehensive list",
 }
 
 export const WithoutSubtitle = Template.bind({})
 WithoutSubtitle.args = {
-  title: "Biomarkers",
+  title: "Blockbuster movies",
   subtitle: null,
 }
 
 export const WithLargeStyle = Template.bind({})
 WithLargeStyle.args = {
-  title: "Biomarkers",
+  title: "Blockbuster movies",
   subtitle: "A comprehensive list",
   large: true,
 }

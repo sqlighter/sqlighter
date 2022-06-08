@@ -10,7 +10,7 @@ import { chartsCommand, databaseCommand, queryCommand } from "./fakedata"
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: "Components/IconButton",
+  title: "UI/IconButton",
   component: IconButton,
   decorators: [
     (Story) => (

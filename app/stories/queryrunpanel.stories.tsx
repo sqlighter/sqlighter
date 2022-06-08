@@ -16,7 +16,7 @@ import {
 } from "./fakedata"
 
 export default {
-  title: "Components/QueryRunPanel",
+  title: "Database/QueryRunPanel",
   component: QueryRunPanel,
   decorators: [
     (Story) => (

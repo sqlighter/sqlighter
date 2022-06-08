@@ -10,7 +10,7 @@ import { chartsCommand, databaseCommand, queryCommand } from "./fakedata"
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: "Components/NavigationBar",
+  title: "Navigation/NavigationBar",
   component: NavigationBar,
   decorators: [
     (Story) => (
