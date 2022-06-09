@@ -57,6 +57,12 @@ Large.args = {
   size: "large",
 }
 
+export const Selected = Template.bind({})
+Selected.args = {
+  selected: true,
+}
+
+
 export const Sizes = TemplateSizes.bind({})
 
 export const Stacked = TemplateStack.bind({})

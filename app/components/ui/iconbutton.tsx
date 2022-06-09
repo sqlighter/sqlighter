@@ -5,7 +5,6 @@
 import * as React from "react"
 import { IconButtonProps as MuiIconButtonProps, SxProps, Theme } from "@mui/material"
 import MuiIconButton from "@mui/material/IconButton"
-import Box from "@mui/material/Box"
 import Tooltip from "@mui/material/Tooltip"
 import Typography from "@mui/material/Typography"
 
@@ -13,24 +12,19 @@ import { Command, CommandEvent } from "../../lib/commands"
 import { Icon } from "./icon"
 
 const IconButton_SxProps: SxProps<Theme> = {
-  ".IconButton-button": {
+  borderRadius: "8px",
+  "&:hover": {
     borderRadius: "8px",
-
-    "&:hover": {
-      borderRadius: "8px",
-    },
   },
-
-  ".IconButton-selected": {
+  "&.Mui-selected": {
     color: "primary.main",
     backgroundColor: "primary.light",
-    //    backgroundColor: (theme: Theme | any) => theme.palette.materialyou.primary.light,
   },
 }
 
 /** Shows command as an icon button raising an onCommand event when clicked */
 export interface IconButtonProps extends MuiIconButtonProps {
-  /** Class to be applied to this component */
+  /** Class name to be applied to this component */
   className?: string
 
   /** Command to be rendered by this button */
@@ -63,23 +57,18 @@ export function IconButton(props: IconButtonProps) {
   // render
   //
 
+  let className = `IconButton-root ${props.selected ? " Mui-selected" : ""} ${props.className}`
   let button = (
-    <Box className={`IconButton-root ${props.className}`} sx={IconButton_SxProps}>
-      <MuiIconButton
-        className={props.selected ? "IconButton-button IconButton-selected Mui-selected" : "IconButton-button"}
-        onClick={handleClick}
-        {...buttonProps}
-      >
-        <Icon className="IconButton-icon" fontSize="inherit">
-          {command.icon}
-        </Icon>
-        {props.label && (
-          <Typography className="IconButton-label" variant="body2" sx={{ ml: 0.5 }}>
-            {props.command.title}
-          </Typography>
-        )}
-      </MuiIconButton>
-    </Box>
+    <MuiIconButton className={className} onClick={handleClick} sx={IconButton_SxProps} {...buttonProps}>
+      <Icon className="IconButton-icon" fontSize="inherit">
+        {command.icon}
+      </Icon>
+      {props.label && (
+        <Typography className="IconButton-label" variant="body2" sx={{ ml: 0.5 }}>
+          {props.command.title}
+        </Typography>
+      )}
+    </MuiIconButton>
   )
 
   // Optional tooltip if title is defined

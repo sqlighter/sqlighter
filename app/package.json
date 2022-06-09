@@ -15,7 +15,7 @@
     "build": "next build",
     "start": "next start",
     "format": "prettier --write \"**/*.{js,ts,tsx,vue,md,yaml,json,scss,css}\"",
-    "test": "jest",
+    "test": "jest --runInBand",
     "storybook": "start-storybook -p 6006 -s ./public",
     "test-storybook": "test-storybook"
   },
@@ -104,7 +104,7 @@
     "eslint-config-next": "^12.1.6",
     "eslint-plugin-prettier": "^4.0.0",
     "jest": "27.5.1",
-    "jest-environment-jsdom": "^28.1.0",
+    "jest-environment-jsdom": "27.5.1",
     "jest-html-reporter": "^3.5.0",
     "prettier": "^2.6.2",
     "storybook-addon-next-router": "^4.0.0",
@@ -123,7 +123,7 @@
     "tabWidth": 2
   },
   "jest": {
-    "testTimeout": 60000,
+    "testTimeout": 6000,
     "transform": {
       "^.+\\.(t|j)sx?$": [
         "@swc-node/jest"
