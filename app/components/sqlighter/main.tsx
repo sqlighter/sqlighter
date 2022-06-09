@@ -4,6 +4,7 @@
 
 import React, { useState, useEffect, ReactElement } from "react"
 import Box from "@mui/material/Box"
+import Button from "@mui/material/Button"
 import Typography from "@mui/material/Typography"
 
 import { Command } from "../../lib/commands"
@@ -81,10 +82,12 @@ export default function Main(props: MainProps) {
     } else console.error(`DatabasePanel.handleOpenClick - sqljs engine not loaded`)
   }
 
-  async function openFile(file: File) {
-    console.debug(`openFile - ${typeof file}`, file)
+  async function openFile(file: File | FileSystemFileHandle) {
+    console.debug(`openFile - ${typeof file}, typeof: ${typeof file}`, file)
 
-    //    const buffer = await file.arrayBuffer()
+    if (file instanceof FileSystemFileHandle) {
+      file = await file.getFile()
+    }
 
     const configs: ConnectionConfigs = {
       filename: file.name,
@@ -106,6 +109,27 @@ export default function Main(props: MainProps) {
   //
   // handlers
   //
+
+  async function handleOpenFile(event) {
+    const pickerOpts = {
+      types: [
+        {
+          description: 'SQLite',
+          accept: {
+            'application/*': ['.db', '.sqlite']
+          }
+        },
+      ],
+      excludeAcceptAllOption: true,
+      multiple: false
+    };
+
+    const [fileHandle] = await (window as any).showOpenFilePicker(pickerOpts);
+    if (fileHandle) {
+      console.debug(`handleOpenFile - fileHandle: $`)
+      await openFile(fileHandle)
+    }
+  }
 
   async function handleCommand(event: React.SyntheticEvent, command: Command) {
     console.debug(`Main.handleCommand - ${command.command}`, command)
@@ -217,10 +241,17 @@ export default function Main(props: MainProps) {
   }
 
   function renderEmpty() {
-    return <>Your queries will appear here once you create a tab</>
+    if (!connections) {
+      return (
+        <Empty icon="fileOpen" title="Open a database file to get started" description="or drag and drop it here">
+          <Button variant="outlined" sx={{ mt: 2 }} onClick={handleOpenFile}>
+            Open File
+          </Button>
+        </Empty>
+      )
+    }
+    return null
   }
-
-  const empty = <Empty icon="download" title="Drag a database here to get started" description=".db or .sqlite" />
 
   return (
     <TabsLayout
@@ -239,7 +270,7 @@ export default function Main(props: MainProps) {
           icon: "add",
         },
       ]}
-      empty={empty}
+      empty={renderEmpty()}
       //
       user={props.user}
       //

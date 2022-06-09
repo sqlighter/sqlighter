@@ -19,7 +19,10 @@ export interface ConnectionConfigs {
   port?: number
   user?: string
   password?: string
+
+  /** Name of the connected database, eg. main */
   database?: string
+
   filename?: string
 
   url?: string

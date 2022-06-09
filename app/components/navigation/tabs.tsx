@@ -3,8 +3,7 @@
 // https://code.visualstudio.com/docs/getstarted/userinterface#_tabs
 //
 
-import React, { SyntheticEvent } from "react"
-
+import React, { SyntheticEvent, ReactElement } from "react"
 import Box from "@mui/material/Box"
 import { SxProps, Theme } from "@mui/material"
 import MuiTab from "@mui/material/Tab"
@@ -17,7 +16,6 @@ import { Command, CommandEvent } from "../../lib/commands"
 import { Icon } from "../ui/icon"
 import { PanelElement } from "./panel"
 import { IconButton } from "../ui/iconbutton"
-import { Label } from "../ui/typography"
 
 export const TABLIST_HEIGHT = 48
 
@@ -49,7 +47,7 @@ const Tabs_SxProps: SxProps<Theme> = {
     height: TABLIST_HEIGHT,
     backgroundColor: "background.paper",
     display: "flex",
-    
+
     // borderBottom: (theme: any) => `1px solid ${theme.palette.divider}`,
   },
 
@@ -62,9 +60,11 @@ const Tabs_SxProps: SxProps<Theme> = {
     paddingRight: 1,
   },
 
-  ".Tabs-emptyTabs": {
-    height: TABLIST_HEIGHT,
-    backgroundColor: "red"
+  ".Tabs-empty": {
+    flexGrow: 1,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
 
   ".MuiTab-root": {
@@ -350,7 +350,7 @@ export function Tabs(props: TabsProps) {
   return (
     <Box className={className} sx={Tabs_SxProps}>
       <Box className="Tabs-tabList">{props.tabsCommands && renderTabsCommands()}</Box>
-      {props.empty}
+      {props.empty && <Box className="Tabs-empty">{props.empty}</Box>}
     </Box>
   )
 }

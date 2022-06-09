@@ -14,11 +14,8 @@ function camelCase(str) {
     .replace(/\s+/g, "")
 }
 
-
-
 export class SqliteDataConnection extends DataConnection {
-
-  readonly client:ConnectionClient = "sqlite"
+  readonly client: ConnectionClient = "sqlite"
 
   /** SQLite database connection */
   private _database: Database
@@ -32,7 +29,6 @@ export class SqliteDataConnection extends DataConnection {
 
   public static async create(configs: ConnectionConfigs, engine): Promise<SqliteDataConnection> {
     try {
-
       // TODO open sqlite from filename, url, etc.
       if (!configs.buffer) {
         throw new Error("SqliteDataConnection.connect - can only create in memory connections from buffer data")
@@ -256,10 +252,8 @@ export class SqliteDataConnection extends DataConnection {
 
       // database name to be used for schema
       let database = "main"
-      if (typeof this._configs?.connection == "object") {
-        if (this._configs.connection.database) {
-          database = this._configs.connection.database
-        }
+      if (this.configs.database) {
+        database = this.configs.database
       }
 
       // convert entities abstract syntax tree to simplified schema structure
@@ -316,13 +310,13 @@ export class SqliteDataConnection extends DataConnection {
   }
 
   /**
-   * Returns the number of changed rows (modified, inserted or deleted) by the latest 
-   * completed INSERT, UPDATE or DELETE statement on the database. Executing any other 
+   * Returns the number of changed rows (modified, inserted or deleted) by the latest
+   * completed INSERT, UPDATE or DELETE statement on the database. Executing any other
    * type of SQL statement does not modify the value returned by this function.
    */
   public async getRowsModified(): Promise<number> {
     // TODO this number needs to somehow reset when new queries are run
-    return this._database.getRowsModified();
+    return this._database.getRowsModified()
   }
 }
 

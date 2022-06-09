@@ -21,7 +21,7 @@ import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlin
 import BookmarksOutlinedIcon from "@mui/icons-material/BookmarksOutlined"
 import BungalowOutlinedIcon from "@mui/icons-material/BungalowOutlined"
 import CodeOutlinedIcon from "@mui/icons-material/CodeOutlined"
-import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
+import CheckOutlinedIcon from "@mui/icons-material/CheckOutlined"
 import ChildCareOutlinedIcon from "@mui/icons-material/ChildCareOutlined"
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined"
 import CloudDownloadOutlinedIcon from "@mui/icons-material/CloudDownloadOutlined"
@@ -32,6 +32,7 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined"
 import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined"
 import ExtensionOutlinedIcon from "@mui/icons-material/ExtensionOutlined"
 import FileIcon from "@mui/icons-material/InsertDriveFileOutlined"
+import FileOpenOutlinedIcon from "@mui/icons-material/FileOpenOutlined"
 import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined"
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined"
 import FullscreenOutlinedIcon from "@mui/icons-material/FullscreenOutlined"
@@ -131,6 +132,8 @@ export function Icon(props: IconProps) {
         return <ExtensionOutlinedIcon {...props} />
       case "file":
         return <FileIcon {...props} />
+      case "fileOpen":
+        return <FileOpenOutlinedIcon {...props} />
       case "filter":
         return <FilterAltOutlinedIcon {...props} />
       case "fire":
