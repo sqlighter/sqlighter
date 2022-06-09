@@ -2,7 +2,7 @@
 
 <img align="left" src="https://user-images.githubusercontent.com/2813336/172672872-9692f678-1c05-4477-82e1-1f4f3427b0d6.png">
 
-[SQLighter](https://sqlighter.com/app) is a database explorer born for SQLite that helps you learn SQL, design and deploy your application's database in minutes. Open your SQLite database by dragging its file on the page. All queries run locally in the browser with top speed. No need to install or update any apps on your desktop. Works on mobile devices as well.
+[SQLighter](https://sqlighter.com/app) is a database explorer born for SQLite that helps you design and deploy your application database in minutes. Drag your database on the page to open it run your queries locally in the browser with top speed. No need to install or update any apps on your desktop. SQLighter works on mobile devices as well.
 
 ### Tools 
 
