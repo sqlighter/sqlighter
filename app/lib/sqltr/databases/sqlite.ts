@@ -42,7 +42,7 @@ export class SqliteDataConnection extends DataConnection {
 */
 
       // create database from memory buffer
-      const connection = new SqliteDataConnection("sqlite", configs)
+      const connection = new SqliteDataConnection("sqlite3", configs)
       connection._database = new engine.Database(configs.buffer)
 
       /*
