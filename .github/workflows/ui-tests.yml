@@ -1,5 +1,10 @@
 name: "UI Tests"
 on: push
+
+defaults:
+  run:
+    working-directory: app
+
 jobs:
   # Run interaction and accessibility tests
   # see https://storybook.js.org/tutorials/ui-testing-handbook/react/en/automate/
