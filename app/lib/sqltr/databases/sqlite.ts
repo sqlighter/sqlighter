@@ -4,8 +4,7 @@
 
 import initSqlJs, { Database, QueryExecResult } from "sql.js"
 import sqliteParser from "sqlite-parser"
-import { DataConnection, DataConnectionConfigs, DataSchema } from "../connections"
-import { generateId } from "../../items/items"
+import { DataConnection, ConnectionClient, ConnectionConfigs, DataSchema } from "../connections"
 
 function camelCase(str) {
   return str
@@ -15,28 +14,27 @@ function camelCase(str) {
     .replace(/\s+/g, "")
 }
 
+
+
 export class SqliteDataConnection extends DataConnection {
+
+  readonly client:ConnectionClient = "sqlite"
+
   /** SQLite database connection */
   private _database: Database
 
   /** Data source schema */
   protected _schemas: DataSchema[]
 
-  protected constructor(configs: DataConnectionConfigs) {
-    super(configs)
-
-    // TODO should use filename that buffer was generated from
-    this.title = "chinook.db" //(this._database as any)?.filename
+  protected constructor(client: ConnectionClient, configs: ConnectionConfigs) {
+    super(client, configs)
   }
 
-  public static async create(configs: DataConnectionConfigs, engine): Promise<SqliteDataConnection> {
+  public static async create(configs: ConnectionConfigs, engine): Promise<SqliteDataConnection> {
     try {
-      if (typeof configs.connection === "string") {
-        throw new Error("Not implemented yet")
-      }
 
       // TODO open sqlite from filename, url, etc.
-      if (configs.client !== "sqlite3" || !configs.connection.buffer) {
+      if (!configs.buffer) {
         throw new Error("SqliteDataConnection.connect - can only create in memory connections from buffer data")
       }
       /*
@@ -48,8 +46,8 @@ export class SqliteDataConnection extends DataConnection {
 */
 
       // create database from memory buffer
-      const connection = new SqliteDataConnection(configs)
-      connection._database = new engine.Database(configs.connection.buffer)
+      const connection = new SqliteDataConnection("sqlite", configs)
+      connection._database = new engine.Database(configs.buffer)
 
       /*
       try {

@@ -24,7 +24,7 @@ export function ConnectionIcon(props: ConnectionIconProps) {
     }
     return (
       <Icon className={`ConnectionPicker-icon ${props.className}`} dotColor={dotColor}>
-        {props.connection.configs.client}
+        {props.connection.client}
       </Icon>
     )
   }

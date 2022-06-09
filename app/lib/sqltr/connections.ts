@@ -5,6 +5,35 @@
 import { QueryExecResult } from "sql.js"
 import { generateId } from "../../lib/items/items"
 
+
+/** Client used to connect to a database, @see http://knexjs.org/guide/#node-js */
+export type ConnectionClient = "sqlite3" | "mysql" | "pg" | "oracledb" | "tedius" | string
+
+/**
+ * Configuration used to connect with data source
+ * @see http://knexjs.org/guide/#configuration-options
+ */
+export interface ConnectionConfigs {
+  // TDB...
+  host?: string
+  port?: number
+  user?: string
+  password?: string
+  database?: string
+  filename?: string
+
+  url?: string
+
+  /** Binary buffer containing the actual database data, eg. sqlite3 */
+  buffer?: Buffer
+
+  /**
+   * A file containing the database data
+   * @see https://developer.mozilla.org/en-US/docs/Web/API/File
+   */
+  file?: File
+}
+
 /** Database schema */
 export interface DataSchema {
   /** Name of database for this schema */
@@ -50,48 +79,28 @@ export interface DataSchema {
   }[]
 }
 
-export interface DataConnectionConfigParams {
-  // TDB...
-  host?: string
-  port?: number
-  user?: string
-  password?: string
-  database?: string
-  filename?: string
-
-  /** Binary buffer containing the actual database data, eg. sqlite3 */
-  buffer?: Buffer
-}
-
-/**
- * Configuration used to connect with data source
- * @see http://knexjs.org/#Installation-client
- */
-export interface DataConnectionConfigs {
-  /** Type of client that should be used to connect */
-  client: "sqlite3" | "mysql" // etc...
-
-  /** Connection string or object with detailed connection parameters */
-  connection: string | DataConnectionConfigParams
-}
-
+/** An abstract class for a data connection capable of retrieving, modifying data and schemas */
 export abstract class DataConnection {
+  /** Client used to connect with database */
+  readonly client: ConnectionClient
+
   /** Persistent unique identifier for this connection  */
-  id?: string
+  readonly id: string
+
+  /** Configuration used to open this data connection */
+  readonly configs: ConnectionConfigs
 
   /** User defined title for the connection */
   title?: string
 
-  /** Configurations used to open this data connection */
-  protected _configs: DataConnectionConfigs
-  get configs(): DataConnectionConfigs {
-    return this._configs
-  }
-
   /** Concrete classes only */
-  protected constructor(configs: DataConnectionConfigs) {
+  protected constructor(client: ConnectionClient, configs: string | ConnectionConfigs) {
+    this.client = client
     this.id = generateId("dbc_")
-    this._configs = configs
+    this.configs = parseConnectionConfigs(configs)
+
+    // use filename as connection's title if provided
+    this.title = this.configs?.filename || this.id
   }
 
   //
@@ -136,4 +145,15 @@ export abstract class DataConnection {
    * type of SQL statement does not modify the value returned by this function.
    */
   public abstract getRowsModified(): Promise<number>
+}
+
+/** Parse connection string into an object or prepare/expand connection configurations */
+function parseConnectionConfigs(connection: string | ConnectionConfigs): ConnectionConfigs {
+  if (typeof connection === "string") {
+    return {
+      // TODO parse url into parts
+      url: connection,
+    }
+  }
+  return connection
 }

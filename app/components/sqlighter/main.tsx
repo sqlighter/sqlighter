@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography"
 
 import { Command } from "../../lib/commands"
 import { useSqljs } from "../hooks/useDB"
-import { DataConnection, DataConnectionConfigs } from "../../lib/sqltr/connections"
+import { DataConnection, ConnectionConfigs } from "../../lib/sqltr/connections"
 import { SqliteDataConnection } from "../../lib/sqltr/databases/sqlite"
 import { QueryPanel } from "../database/querypanel"
 import { TabsLayout } from "../../components/navigation/tabslayout"
@@ -16,6 +16,8 @@ import { Panel, PanelElement, PanelProps } from "../../components/navigation/pan
 import { DatabasePanel } from "../database/databasepanel"
 import { IconButton } from "../ui/iconbutton"
 import { Query } from "../../lib/items/query"
+import { compareAsc } from "date-fns"
+import { Empty } from "../ui/empty"
 
 export interface MainProps extends PanelProps {
   /** User currently signedin (if any) */
@@ -52,11 +54,8 @@ export default function Main(props: MainProps) {
     if (sqljs) {
       const response = await fetch(url)
       const buffer = await response.arrayBuffer()
-      const configs: DataConnectionConfigs = {
-        client: "sqlite3",
-        connection: {
-          buffer: new Uint8Array(buffer) as Buffer,
-        },
+      const configs: ConnectionConfigs = {
+        buffer: new Uint8Array(buffer) as Buffer,
       }
 
       const connection = await SqliteDataConnection.create(configs, sqljs)
@@ -80,6 +79,24 @@ export default function Main(props: MainProps) {
       setConnection(conn2)
       setConnections([conn1, conn2, conn3])
     } else console.error(`DatabasePanel.handleOpenClick - sqljs engine not loaded`)
+  }
+
+  async function openFile(file: File) {
+    console.debug(`openFile - ${typeof file}`, file)
+
+    //    const buffer = await file.arrayBuffer()
+
+    const configs: ConnectionConfigs = {
+      filename: file.name,
+      buffer: new Uint8Array(await file.arrayBuffer()) as Buffer,
+    }
+
+    const connection = await SqliteDataConnection.create(configs, sqljs)
+    //  connection.title = file.name
+    console.debug(`connection opened`, connection)
+
+    setConnection(connection)
+    setConnections([connection, ...(connections || [])])
   }
 
   //
@@ -135,6 +152,14 @@ export default function Main(props: MainProps) {
           await openSomeTestConnection()
         }
         break
+
+      case "dropFiles":
+        if (command.args.files) {
+          for (const file of command.args.files) {
+            await openFile(file)
+          }
+        }
+        return
     }
 
     // pass to parent?
@@ -195,6 +220,8 @@ export default function Main(props: MainProps) {
     return <>Your queries will appear here once you create a tab</>
   }
 
+  const empty = <Empty icon="download" title="Drag a database here to get started" description=".db or .sqlite" />
+
   return (
     <TabsLayout
       title="SQLighter"
@@ -212,6 +239,7 @@ export default function Main(props: MainProps) {
           icon: "add",
         },
       ]}
+      empty={empty}
       //
       user={props.user}
       //

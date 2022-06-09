@@ -131,6 +131,9 @@ export interface TabsProps {
   /** Additional command icons shown at the end of the tab bar, eg: create tab icon */
   tabsCommands?: Command[]
 
+  /** Element to be shown when there are no tabs (usually an <Empty/> placeholder) */
+  empty?: ReactElement
+
   /** Tab selection indicator below tab (default) or above tab? */
   variant?: "below" | "above"
 
@@ -347,6 +350,7 @@ export function Tabs(props: TabsProps) {
   return (
     <Box className={className} sx={Tabs_SxProps}>
       <Box className="Tabs-tabList">{props.tabsCommands && renderTabsCommands()}</Box>
+      {props.empty}
     </Box>
   )
 }

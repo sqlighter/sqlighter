@@ -2,7 +2,7 @@
 // tabslayout.tsx - layout for vscode-like apps with activity bar, sidebar, tabs, etc
 //
 
-import React, { useState } from "react"
+import React, { useState, ReactElement } from "react"
 import Head from "next/head"
 import { Allotment } from "allotment"
 import { Theme, SxProps } from "@mui/material/styles"
@@ -61,6 +61,8 @@ interface TabsLayoutProps extends PanelProps {
   tabs?: PanelElement[]
   /** Additional command icons shown at the end of the tab bar, eg: create tab icon */
   tabsCommands?: Command[]
+  /** Element to be shown when there are no tabs (usually an <Empty/> placeholder) */
+  empty?: ReactElement
 
   /** Signed in user (or null) */
   user?: object
@@ -112,36 +114,27 @@ export function TabsLayout(props: TabsLayoutProps) {
   //
 
   // https://react-dnd.github.io/react-dnd/docs/api/use-drop
-  const [{ canDrop, isOver }, drop] = useDrop(
+  const [{ isDragging }, drop] = useDrop(
     () => ({
       accept: [NativeTypes.FILE],
-      drop(item: { files: any[] }) {
+      drop(item: { files: any[], items: any[] }) {
         console.debug(`TabsLayout.drop - ${item.files?.length} files`, item.files)
+        console.debug(`TabsLayout.drop - ${item.items?.length} items`, item.items)
         if (props.onCommand) {
           props.onCommand(null, {
             command: "dropFiles",
-            args: { files: item.files },
+            args: { ...item },
           })
         }
       },
-
       collect: (monitor: DropTargetMonitor) => {
-        const item = monitor.getItem() as any
-        if (item) {
-          console.log("collect1", item.files, item.items)
-        }
-
         return {
-          isOver: monitor.isOver(),
-          canDrop: monitor.canDrop(),
+          isDragging: monitor.isOver(),
         }
       },
     }),
     [props]
   )
-
-  // files are being dragged onto the page and a backdrop should be shown?
-  const isDragging = canDrop && isOver
 
   //
   // render
@@ -177,6 +170,7 @@ export function TabsLayout(props: TabsLayoutProps) {
                 tabId={props.tabId}
                 tabs={props.tabs}
                 tabsCommands={props.tabsCommands}
+                empty={props.empty}
                 onCommand={props.onCommand}
               />
             </Box>
