@@ -32,6 +32,7 @@ const Tabs_SxProps: SxProps<Theme> = {
     height: TABLIST_HEIGHT,
     display: "flex",
 
+    backgroundColor: "background.paper",
     borderBottom: (theme: any) => `1px solid ${theme.palette.divider}`,
   },
 
@@ -47,8 +48,9 @@ const Tabs_SxProps: SxProps<Theme> = {
   ".MuiTabs-flexContainer": {
     height: TABLIST_HEIGHT,
     backgroundColor: "background.paper",
-    borderBottom: (theme) => `1px solid ${theme.palette.divider}`,
     display: "flex",
+    
+    // borderBottom: (theme: any) => `1px solid ${theme.palette.divider}`,
   },
 
   ".Tabs-tabsCommands": {
@@ -344,7 +346,7 @@ export function Tabs(props: TabsProps) {
   // no tabs, show empty state
   return (
     <Box className={className} sx={Tabs_SxProps}>
-      <Box className="MuiTabs-flexContainer">{props.tabsCommands && renderTabsCommands()}</Box>
+      <Box className="Tabs-tabList">{props.tabsCommands && renderTabsCommands()}</Box>
     </Box>
   )
 }
