@@ -26,7 +26,7 @@ const LIGHT = 0.92
 const LIGHTER = 0.95
 const LIGHTEST = 0.97
 
-// export const PRIMARY_COLOR = "#446927" // green
+//export const PRIMARY_COLOR = "#446927" // green
 export const PRIMARY_COLOR = "#0072e5" // blue
 export const PRIMARY_LIGHT = rgbToHex(lighten(PRIMARY_COLOR, LIGHT))
 export const PRIMARY_LIGHTER = rgbToHex(lighten(PRIMARY_COLOR, LIGHTER))
@@ -39,9 +39,6 @@ export const LIGHT_WEIGHT = 300
 export const REGULAR_WEIGHT = 400
 export const MEDIUM_WEIGHT = 500
 export const BOLD_WEIGHT = 700
-
-// Styles applied to all components
-export const customSx: SxProps<Theme> = {}
 
 export function customTheme() {
   // default theme explorer:
@@ -60,11 +57,11 @@ export function customTheme() {
         default: PRIMARY_LIGHTEST,
       },
       text: {
-    //    primary: "#3d4043",
-      //  secondary: "#606367",
+        //    primary: "#3d4043",
+        //  secondary: "#606367",
       },
       action: {
-    //    active: "#001E3C",
+        //    active: "#001E3C",
       },
 
       tonalOffset: 0.4,
@@ -179,9 +176,9 @@ export function customTheme() {
         defaultProps: {
           placement: "top",
           // show tooltip only when user waits on the item for a while (ms)
-          enterDelay: 1200
-        }
-      }
+          enterDelay: 1200,
+        },
+      },
     },
   })
 

@@ -8,12 +8,16 @@ import { Allotment } from "allotment"
 import { Theme, SxProps } from "@mui/material/styles"
 import Box from "@mui/material/Box"
 
+import type { DropTargetMonitor } from "react-dnd"
+import { useDrop } from "react-dnd"
+import { NativeTypes } from "react-dnd-html5-backend"
+
 import { Command } from "../../lib/commands"
 import { ActivityBar, ACTIVITYBAR_WIDTH } from "./activitybar"
 import { PanelElement, PanelProps } from "./panel"
 import { Tabs } from "./tabs"
 import { Sidebar, SIDEBAR_MIN_WIDTH } from "./sidebar"
-import { Icon } from "../ui/icon"
+import { FilesBackdrop } from "../ui/filesbackdrop"
 
 // Styles applied to all components
 export const TabsLayout_SxProps: SxProps<Theme> = {
@@ -104,6 +108,42 @@ export function TabsLayout(props: TabsLayoutProps) {
   }
 
   //
+  // drag and drop
+  //
+
+  // https://react-dnd.github.io/react-dnd/docs/api/use-drop
+  const [{ canDrop, isOver }, drop] = useDrop(
+    () => ({
+      accept: [NativeTypes.FILE],
+      drop(item: { files: any[] }) {
+        console.debug(`TabsLayout.drop - ${item.files?.length} files`, item.files)
+        if (props.onCommand) {
+          props.onCommand(null, {
+            command: "dropFiles",
+            args: { files: item.files },
+          })
+        }
+      },
+
+      collect: (monitor: DropTargetMonitor) => {
+        const item = monitor.getItem() as any
+        if (item) {
+          console.log("collect1", item.files, item.items)
+        }
+
+        return {
+          isOver: monitor.isOver(),
+          canDrop: monitor.canDrop(),
+        }
+      },
+    }),
+    [props]
+  )
+
+  // files are being dragged onto the page and a backdrop should be shown?
+  const isDragging = canDrop && isOver
+
+  //
   // render
   //
 
@@ -117,7 +157,8 @@ export function TabsLayout(props: TabsLayoutProps) {
         <meta name="og:title" content={props.title} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
-      <Box className="TabsLayout-root" sx={TabsLayout_SxProps}>
+      <Box ref={drop} className="TabsLayout-root" sx={TabsLayout_SxProps}>
+        <FilesBackdrop className="TabsLayout-backdrop" open={isDragging} />
         <Allotment onVisibleChange={handleSidebarVisibilityChange}>
           <Allotment.Pane maxSize={ACTIVITYBAR_WIDTH} minSize={ACTIVITYBAR_WIDTH} visible>
             <ActivityBar

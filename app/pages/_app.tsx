@@ -10,6 +10,9 @@ import { useRouter } from "next/router"
 import "allotment/dist/style.css"
 import "../styles/global.css"
 
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
+
 import { useState } from "react"
 import CssBaseline from "@mui/material/CssBaseline"
 import { ThemeProvider } from "@mui/material/styles"
@@ -128,6 +131,7 @@ export default function App({ Component, pageProps }: { Component: any; pageProp
       <CssBaseline>
         <ThemeProvider theme={customTheme()}>
           <Context.Provider value={context}>
+          <DndProvider backend={HTML5Backend}>
             <Head>
               <meta name="viewport" content="initial-scale=1, width=device-width" />
               <meta name="user" content={user?.id} />
@@ -158,6 +162,7 @@ export default function App({ Component, pageProps }: { Component: any; pageProp
                 });
               `}
             </Script>
+            </DndProvider>
           </Context.Provider>
         </ThemeProvider>
       </CssBaseline>

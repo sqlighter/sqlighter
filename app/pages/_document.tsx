@@ -2,14 +2,12 @@
 
 import { Html, Head, Main, NextScript } from "next/document"
 import { Theme, SxProps } from "@mui/material/styles"
-import { customSx } from "../components/theme"
 import Box from "@mui/material/Box"
 
 // To use material icons from fonts add link below (slows initial page loading)
 // <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
 
 const documentSx: SxProps<Theme> = {
-  ...customSx,
   position: "absolute",
   left: 0,
   top: 0,
