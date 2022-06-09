@@ -46,6 +46,8 @@ const Tabs_SxProps: SxProps<Theme> = {
 
   ".MuiTabs-flexContainer": {
     height: TABLIST_HEIGHT,
+    backgroundColor: "background.paper",
+    borderBottom: (theme) => `1px solid ${theme.palette.divider}`,
     display: "flex",
   },
 
@@ -56,6 +58,11 @@ const Tabs_SxProps: SxProps<Theme> = {
     justifyContent: "flex-end",
     paddingLeft: 1,
     paddingRight: 1,
+  },
+
+  ".Tabs-emptyTabs": {
+    height: TABLIST_HEIGHT,
+    backgroundColor: "red"
   },
 
   ".MuiTab-root": {
@@ -317,17 +324,27 @@ export function Tabs(props: TabsProps) {
   }
 
   const className = "Tabs-root" + (props.variant == "above" ? " Tabs-indicatorAbove" : "")
-  return (
-    <MuiTabContext value={props.tabId}>
-      <Box className={className} sx={Tabs_SxProps}>
-        <Box sx={{ height: TABLIST_HEIGHT }}>
-          <MuiTabList className="Tabs-tabList" onChange={handleTabsChange} variant="scrollable">
-            {props.tabs && props.tabs.map((tab: any) => renderTabLabel(tab))}
-            {props.tabsCommands && renderTabsCommands()}
-          </MuiTabList>
+
+  if (props.tabs?.length > 0) {
+    return (
+      <MuiTabContext value={props.tabId}>
+        <Box className={className} sx={Tabs_SxProps}>
+          <Box sx={{ height: TABLIST_HEIGHT }}>
+            <MuiTabList className="Tabs-tabList" onChange={handleTabsChange} variant="scrollable">
+              {props.tabs && props.tabs.map((tab: any) => renderTabLabel(tab))}
+              {props.tabsCommands && renderTabsCommands()}
+            </MuiTabList>
+          </Box>
+          {renderPanels()}
         </Box>
-        {renderPanels()}
-      </Box>
-    </MuiTabContext>
+      </MuiTabContext>
+    )
+  }
+
+  // no tabs, show empty state
+  return (
+    <Box className={className} sx={Tabs_SxProps}>
+      <Box className="MuiTabs-flexContainer">{props.tabsCommands && renderTabsCommands()}</Box>
+    </Box>
   )
 }
