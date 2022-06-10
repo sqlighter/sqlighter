@@ -23,7 +23,7 @@
     "@date-io/dayjs": "^2.14.0",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
-    "@google-cloud/storage": "^5.20.5",
+    "@google-cloud/storage": "^6.1.0",
     "@hapi/iron": "^6.0.0",
     "@monaco-editor/react": "^4.4.5",
     "@mui/icons-material": "^5.8.0",
