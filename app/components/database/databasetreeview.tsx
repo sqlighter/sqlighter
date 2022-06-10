@@ -8,7 +8,7 @@ import { useState, useEffect } from "react"
 import { Command, CommandEvent } from "../../lib/commands"
 import { TreeView } from "../navigation/treeview"
 import { Tree } from "../../lib/tree"
-import { DataConnection } from "../../lib/data/connections"
+import { DataConnection, DataSchema } from "../../lib/data/connections"
 
 export interface DatabaseTreeViewProps {
   /** Database connection shown in tree view */
@@ -31,162 +31,12 @@ export function DatabaseTreeView(props: DatabaseTreeViewProps) {
   useEffect(() => {
     if (props.connection) {
       const updateTrees = async () => {
-        const trees = await _getTrees(props.connection, false)
+        const trees = await getTrees(props.connection, false)
         setTrees(trees)
       }
       updateTrees().catch(console.error)
     } else setTrees(undefined)
   }, [props.connection])
-
-  //
-  // adapter from database connection schema to treeview's data structure
-  //
-
-  function _getTableColumnTree(schema, table, column) {
-    const tree: Tree = {
-      id: `${schema.database}/tables/${table.name}/columns/${column.name}`,
-      title: column.name,
-      type: "column",
-      tags: [],
-    }
-
-    if (column.constraints) {
-      // show primary key using 🔑 emoji instead of plain text?
-      tree.tags.push(
-        ...column.constraints.map((c) => {
-          switch (c) {
-            case "primary key":
-              return { title: "pk", tooltip: c }
-            case "auto increment":
-              return { title: "ai", tooltip: c }
-          }
-          return c
-        })
-      )
-    }
-    tree.tags.push(column.datatype)
-
-    return tree
-  }
-
-  function _getTableTree(schema, table) {
-    const columns = table.columns && table.columns.map((column) => _getTableColumnTree(schema, table, column))
-
-    const indexes =
-      table.indexes &&
-      table.indexes.map((index) => {
-        return {
-          id: `${schema.database}/tables/${table.name}/indexes/${index.name}`,
-          title: index.name,
-          type: "index",
-          tags: [...index.columns],
-        }
-      })
-
-    return {
-      id: `${schema.database}/tables/${table.name}`,
-      title: table.name,
-      type: "table",
-      commands: [
-        {
-          command: "sqlighter.viewStructure",
-          icon: "info",
-          title: "View Structure",
-          args: { title: `All ${table.name}`, sql: `SELECT * FROM ${table.name}` },
-        },
-        {
-          // for now we open a generic query panel and select the table's data
-          // TODO launch a table panel that display, edit, insert and remove rows
-          title: "View Data",
-          icon: "query",
-          command: "sqlighter.viewQuery",
-          args: { title: `All ${table.name}`, sql: `SELECT * FROM ${table.name}` },
-        },
-        { command: "sqlighter.pin", icon: "pin", title: "Pin" },
-      ],
-      children: [
-        {
-          id: `${schema.database}/tables/${table.name}/columns`,
-          title: "Columns",
-          type: "columns",
-          badge: (columns ? columns.length : 0).toString(),
-          children: columns,
-        },
-        {
-          id: `${schema.database}/tables/${table.name}/indexes`,
-          title: "Indexes",
-          type: "indexes",
-          badge: (indexes ? indexes.length : 0).toString(),
-          children: indexes,
-        },
-      ],
-    }
-  }
-
-  function _getTriggerTree(schema, trigger) {
-    return {
-      id: `${schema.database}/triggers/${trigger.name}`,
-      title: trigger.name,
-      type: "trigger",
-      tags: trigger.on ? [trigger.on] : undefined,
-    }
-  }
-
-  function _getViewTree(schema, view) {
-    return {
-      id: `${schema.database}/views/${view.name}`,
-      title: view.name,
-      type: "view",
-      tags: view.from ? [view.from] : undefined,
-    }
-  }
-
-  async function _getTrees(connection, refresh: boolean = false): Promise<Tree[]> {
-    const schemas = await connection.getSchemas(refresh)
-    const trees: Tree[] = []
-
-    for (const schema of schemas) {
-      const tables = schema.tables.map((table) => _getTableTree(schema, table))
-      const triggers = schema.triggers.map((trigger) => _getTriggerTree(schema, trigger))
-      const views = schema.views.map((view) => _getViewTree(schema, view))
-
-      const tree: Tree = {
-        id: schema.database,
-        title: schema.database,
-        type: "database",
-        icon: "database",
-        commands: [{ command: "sqlighter.refreshSchema", icon: "refresh", title: "Refresh" }],
-        children: [
-          {
-            id: `${schema.database}/tables`,
-            title: "Tables",
-            type: "tables",
-            icon: "table",
-            badge: tables.length.toString(),
-            children: tables,
-          },
-          {
-            id: `${schema.database}/views`,
-            title: "Views",
-            type: "views",
-            icon: "view",
-            badge: views.length.toString(),
-            children: views,
-          },
-          {
-            id: `${schema.database}/triggers`,
-            title: "Triggers",
-            type: "triggers",
-            icon: "trigger",
-            badge: triggers.length.toString(),
-            children: triggers,
-          },
-        ],
-      }
-      trees.push(tree)
-    }
-    return trees
-  }
 
   //
   // handlers
@@ -203,7 +53,7 @@ export function DatabaseTreeView(props: DatabaseTreeViewProps) {
     switch (command.command) {
       case "sqlighter.refreshSchema":
         if (props.connection) {
-          const trees = await _getTrees(props.connection, true)
+          const trees = await getTrees(props.connection, true)
           setTrees(trees)
           console.debug(`DatabaseTreeView.handleCommand - ${command.command} done`)
         }
@@ -221,4 +71,158 @@ export function DatabaseTreeView(props: DatabaseTreeViewProps) {
   //
 
   return trees && <TreeView items={trees} filter={props.filter} onCommand={handleCommand} />
+}
+
+//
+// adapters
+//
+
+function _getTableColumnTree(schema: DataSchema, table, column) {
+  const tree: Tree = {
+    id: `${schema.database}/tables/${table.name}/columns/${column.name}`,
+    title: column.name,
+    type: "column",
+    tags: [],
+  }
+
+  if (column.constraints) {
+    // show primary key using 🔑 emoji instead of plain text?
+    tree.tags.push(
+      ...column.constraints.map((c) => {
+        switch (c) {
+          case "primary key":
+            return { title: "pk", tooltip: c }
+          case "auto increment":
+            return { title: "ai", tooltip: c }
+        }
+        return c
+      })
+    )
+  }
+  tree.tags.push(column.datatype)
+
+  return tree
+}
+
+function _getTableTree(schema: DataSchema, table) {
+  const columns = table.columns && table.columns.map((column) => _getTableColumnTree(schema, table, column))
+
+  const indexes =
+    table.indexes &&
+    table.indexes.map((index) => {
+      return {
+        id: `${schema.database}/tables/${table.name}/indexes/${index.name}`,
+        title: index.name,
+        type: "index",
+        tags: [...index.columns],
+      }
+    })
+
+  return {
+    id: `${schema.database}/tables/${table.name}`,
+    title: table.name,
+    type: "table",
+    commands: [
+      {
+        command: "sqlighter.viewStructure",
+        icon: "info",
+        title: "View Structure",
+        args: { title: `All ${table.name}`, sql: `SELECT * FROM ${table.name}` },
+      },
+      {
+        // for now we open a generic query panel and select the table's data
+        // TODO launch a table panel that display, edit, insert and remove rows
+        title: "View Data",
+        icon: "query",
+        command: "sqlighter.viewQuery",
+        args: { title: `All ${table.name}`, sql: `SELECT * FROM ${table.name}` },
+      },
+      { command: "sqlighter.pin", icon: "pin", title: "Pin" },
+    ],
+    children: [
+      {
+        id: `${schema.database}/tables/${table.name}/columns`,
+        title: "Columns",
+        type: "columns",
+        badge: (columns ? columns.length : 0).toString(),
+        children: columns,
+      },
+      {
+        id: `${schema.database}/tables/${table.name}/indexes`,
+        title: "Indexes",
+        type: "indexes",
+        badge: (indexes ? indexes.length : 0).toString(),
+        children: indexes,
+      },
+    ],
+  }
+}
+
+function _getTriggerTree(schema: DataSchema, trigger) {
+  return {
+    id: `${schema.database}/triggers/${trigger.name}`,
+    title: trigger.name,
+    type: "trigger",
+    tags: trigger.on ? [trigger.on] : undefined,
+  }
+}
+
+function _getViewTree(schema: DataSchema, view) {
+  return {
+    id: `${schema.database}/views/${view.name}`,
+    title: view.name,
+    type: "view",
+    tags: view.from ? [view.from] : undefined,
+  }
+}
+
+/**
+ * Converts one or more data schemas obtained from a data connection
+ * into trees that can be rendered using <DatabaseTreeView /> component
+ */
+export async function getTrees(connection: DataConnection, refresh: boolean = false): Promise<Tree[]> {
+  const schemas = await connection.getSchemas(refresh)
+  const trees: Tree[] = []
+
+  for (const schema of schemas) {
+    const tables = schema.tables.map((table) => _getTableTree(schema, table))
+    const triggers = schema.triggers.map((trigger) => _getTriggerTree(schema, trigger))
+    const views = schema.views.map((view) => _getViewTree(schema, view))
+
+    const tree: Tree = {
+      id: schema.database,
+      title: schema.database,
+      type: "database",
+      icon: "database",
+      commands: [{ command: "sqlighter.refreshSchema", icon: "refresh", title: "Refresh" }],
+      children: [
+        {
+          id: `${schema.database}/tables`,
+          title: "Tables",
+          type: "tables",
+          icon: "table",
+          badge: tables.length.toString(),
+          children: tables,
+        },
+        {
+          id: `${schema.database}/views`,
+          title: "Views",
+          type: "views",
+          icon: "view",
+          badge: views.length.toString(),
+          children: views,
+        },
+        {
+          id: `${schema.database}/triggers`,
+          title: "Triggers",
+          type: "triggers",
+          icon: "trigger",
+          badge: triggers.length.toString(),
+          children: triggers,
+        },
+      ],
+    }
+    trees.push(tree)
+  }
+  return trees
 }

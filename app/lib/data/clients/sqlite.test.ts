@@ -2,15 +2,10 @@
 // sqlite.test.ts
 //
 
+import fs from "fs"
 import { DataConfig } from "../connections"
 import { SqliteDataConnection } from "./sqlite"
-import initSqlJs from "sql.js"
-import fs from "fs"
-
-function writeJson(filename, data) {
-  const json = JSON.stringify(data, null, "  ")
-  fs.writeFileSync(filename, json)
-}
+import { getChinookConnection, getTestConnection, writeJson } from "../../test/utilities"
 
 // Interpreting schema
 // https://www.sqlite.org/schematab.html
@@ -19,30 +14,6 @@ function writeJson(filename, data) {
 
 // client side testing
 // https://jestjs.io/docs/configuration#testenvironment-string
-
-async function getChinookConnection() {
-  const engine = await initSqlJs()
-  const configs: DataConfig = {
-    client: "sqlite3",
-    title: "chinook.db",
-    connection: {
-      file: fs.readFileSync("./lib/data/clients/test/chinook.db"),
-    },
-  }
-  return await SqliteDataConnection.create(configs, engine)
-}
-
-async function getTestConnection() {
-  const engine = await initSqlJs()
-  const configs: DataConfig = {
-    client: "sqlite3",
-    title: "test.db",
-    connection: {
-      file: fs.readFileSync("./lib/data/clients/test/test.db"),
-    },
-  }
-  return await SqliteDataConnection.create(configs, engine)
-}
 
 describe("sqlite.ts (node env)", () => {
   test("getResult (single select)", async () => {
@@ -97,7 +68,7 @@ describe("sqlite.ts (node env)", () => {
     const entities = await connection._getEntities()
     expect(entities).toBeTruthy()
     expect(entities.length).toBe(21)
-    writeJson("./lib/data/clients/test/chinook.entities.json", entities)
+    writeJson("./lib/test/artifacts/chinook.entities.json", entities)
   })
 
   test("getEntities (test.db)", async () => {
@@ -105,7 +76,7 @@ describe("sqlite.ts (node env)", () => {
     const entities = await connection._getEntities()
     expect(entities).toBeTruthy()
     expect(entities.length).toBe(25)
-    writeJson("./lib/data/clients/test/test.entities.json", entities)
+    writeJson("./lib/test/artifacts/test.entities.json", entities)
   })
 
   test("getSchema (chinook.db)", async () => {
@@ -118,7 +89,7 @@ describe("sqlite.ts (node env)", () => {
     // TODO SqliteDataConnection.getSchema - index: playlist_track doesn't have a SQL schema
 
     // save schema for verification
-    writeJson("./lib/data/clients/test/chinook.schema.json", schema)
+    writeJson("./lib/test/artifacts/chinook.schema.json", schema)
 
     // save sql for verification
     const sql = []
@@ -131,7 +102,7 @@ describe("sqlite.ts (node env)", () => {
       }
     }
     const sqlJoin = sql.join(";\n\n")
-    fs.writeFileSync("./lib/data/clients/test/chinook.sql", sqlJoin)
+    fs.writeFileSync("./lib/test/artifacts/chinook.sql", sqlJoin)
 
     const tableNames = schema.tables.map((t) => t.name).join(", ")
     expect(tableNames).toBe(
@@ -159,7 +130,7 @@ describe("sqlite.ts (node env)", () => {
     // TODO SqliteDataConnection.getSchema - index: playlist_track doesn't have a SQL schema
 
     // save schema for verification
-    writeJson("./lib/data/clients/test/test.schema.json", schema)
+    writeJson("./lib/test/artifacts/test.schema.json", schema)
 
     // save sql for verification
     const sql = []
@@ -178,7 +149,7 @@ describe("sqlite.ts (node env)", () => {
       sql.push(view.sql)
     }
     const sqlJoin = sql.join(";\n\n")
-    fs.writeFileSync("./lib/data/clients/test/test.sql", sqlJoin)
+    fs.writeFileSync("./lib/test/artifacts/test.sql", sqlJoin)
 
     const triggersNames = schema.triggers.map((t) => t.name).join(", ")
     expect(triggersNames).toBe("validate_email_before_insert_customers")
@@ -186,99 +157,4 @@ describe("sqlite.ts (node env)", () => {
     const viewsNames = schema.views.map((v) => v.name).join(" ")
     expect(viewsNames).toBe("customernames doublesales invoicetotals")
   })
-/*
-  test("getTree (chinook.db)", async () => {
-    const connection = await getChinookConnection()
-    const tree = await connection.getSchemas(false)
-    expect(tree).toBeTruthy()
-    expect(tree.length).toBe(1)
-
-    // save for verification
-    writeJson("./lib/data/clients/test/chinook.tree.json", tree)
-
-    const root = tree[0]
-    expect(root.id).toBe("chinook.db")
-    expect(root.title).toBe("chinook.db")
-    expect(root.icon).toBe("database")
-    expect(root.children.length).toBe(3)
-    const rootTitles = root.children.map((c) => c.title).join(", ")
-    expect(rootTitles).toBe("Tables, Triggers, Views")
-
-    const tables = root.children[0]
-    expect(tables.id).toBe("chinook.db/tables")
-    expect(tables.title).toBe("Tables")
-    expect(tables.icon).toBe("table")
-    expect(tables.badge).toBe("11")
-    expect(tables.children.length).toBe(11)
-    const tablesTitles = tables.children.map((c) => c.title).join(", ")
-    expect(tablesTitles).toBe(
-      "albums, artists, customers, employees, genres, invoice_items, invoices, media_types, playlist_track, playlists, tracks"
-    )
-
-    const albums = tables.children[0]
-    expect(albums.id).toBe("chinook.db/tables/albums")
-    expect(albums.title).toBe("albums")
-    expect(albums.icon).toBeUndefined()
-    expect(albums.badge).toBeUndefined()
-    expect(albums.children.length).toBe(2) // columns, indexes
-
-    const albumsColumns = albums.children[0]
-    expect(albumsColumns.id).toBe("chinook.db/tables/albums/columns")
-    expect(albumsColumns.title).toBe("Columns")
-    expect(albumsColumns.icon).toBeUndefined()
-    expect(albumsColumns.badge).toBe("3")
-    expect(albumsColumns.children.length).toBe(3)
-    const albumsColumnsTitles = albumsColumns.children.map((c) => c.title).join(", ")
-    expect(albumsColumnsTitles).toBe("AlbumId, Title, ArtistId")
-
-    const albumIdColumn = albumsColumns.children[0]
-    expect(albumIdColumn.id).toBe("chinook.db/tables/albums/columns/AlbumId")
-    expect(albumIdColumn.title).toBe("AlbumId")
-    expect(albumIdColumn.tags[0]).toBe("primary key")
-    expect(albumIdColumn.tags[1]).toBe("auto increment")
-    expect(albumIdColumn.tags[2]).toBe("not null")
-    expect(albumIdColumn.tags[3]).toBe("integer")
-    expect(albumIdColumn.icon).toBeUndefined()
-    expect(albumIdColumn.badge).toBeUndefined()
-    expect(albumIdColumn.children).toBeUndefined()
-
-    const titleColumn = albumsColumns.children[1]
-    expect(titleColumn.id).toBe("chinook.db/tables/albums/columns/Title")
-    expect(titleColumn.title).toBe("Title")
-    expect(titleColumn.tags[0]).toBe("not null")
-    expect(titleColumn.tags[1]).toBe("nvarchar(160)")
-    expect(titleColumn.icon).toBeUndefined()
-    expect(titleColumn.badge).toBeUndefined()
-    expect(titleColumn.children).toBeUndefined()
-  })
-
-  test("getTree (test.db)", async () => {
-    const connection = await getTestConnection()
-    const tree = await connection.getTrees(false)
-    expect(tree).toBeTruthy()
-    expect(tree.length).toBe(1)
-    const root = tree[0]
-
-    // save for verification
-    writeJson("./lib/sqltr/databases/test/test.tree.json", tree)
-
-    const triggers = root.children[1]
-    expect(triggers.id).toBe("test.db/triggers")
-    expect(triggers.title).toBe("Triggers")
-    expect(triggers.icon).toBe("trigger")
-    expect(triggers.badge).toBe("1")
-    expect(triggers.children.length).toBe(1)
-    const triggersTitles = triggers.children.map((c) => c.title).join(", ")
-    expect(triggersTitles).toBe("validate_email_before_insert_customers")
-
-    const views = root.children[2]
-    expect(views.id).toBe("test.db/views")
-    expect(views.title).toBe("Views")
-    expect(views.icon).toBe("view")
-    expect(views.badge).toBe("3")
-    expect(views.children.length).toBe(3)
-    const viewsTitles = views.children.map((c) => c.title).join(", ")
-    expect(viewsTitles).toBe("customernames, doublesales, invoicetotals")
-  })
-*/
 })
