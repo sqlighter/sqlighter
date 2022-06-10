@@ -16,7 +16,7 @@ import useMediaQuery from "@mui/material/useMediaQuery"
 
 // model
 import { Command } from "../../lib/commands"
-import { DataConnection } from "../../lib/sqltr/connections"
+import { DataConnection } from "../../lib/data/connections"
 import Query, { QueryRun } from "../../lib/items/query"
 
 // components

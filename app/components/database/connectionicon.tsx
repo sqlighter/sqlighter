@@ -2,7 +2,7 @@
 // connectionicon.tsx
 //
 
-import { DataConnection } from "../../lib/sqltr/connections"
+import { DataConnection } from "../../lib/data/connections"
 import { Icon, DotColor } from "../ui/icon"
 
 export interface ConnectionIconProps {
@@ -24,7 +24,7 @@ export function ConnectionIcon(props: ConnectionIconProps) {
     }
     return (
       <Icon className={`ConnectionPicker-icon ${props.className}`} dotColor={dotColor}>
-        {props.connection.client}
+        {props.connection.configs.client}
       </Icon>
     )
   }

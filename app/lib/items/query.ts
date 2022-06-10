@@ -4,7 +4,7 @@
 
 import { generateId, Item } from "./items"
 import { format } from "date-fns"
-import { DataConnection } from "../sqltr/connections"
+import { DataConnection } from "../data/connections"
 
 export const QUERY_TYPE = "query"
 export const QUERY_PREFIX = "sql_"

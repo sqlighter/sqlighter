@@ -2,14 +2,10 @@
 // sqlite.test.ts
 //
 
-import { DataConnectionConfigs } from "../connections"
+import { DataConfig } from "../connections"
 import { SqliteDataConnection } from "./sqlite"
-import initSqlJs, { Database, QueryExecResult } from "sql.js"
+import initSqlJs from "sql.js"
 import fs from "fs"
-
-function logJson(data) {
-  console.log(JSON.stringify(data, null, " "))
-}
 
 function writeJson(filename, data) {
   const json = JSON.stringify(data, null, "  ")
@@ -25,18 +21,12 @@ function writeJson(filename, data) {
 // https://jestjs.io/docs/configuration#testenvironment-string
 
 async function getChinookConnection() {
-  // create sqlite engine
-  const engine = await initSqlJs({
-    // Required to load the wasm binary asynchronously. Of course, you can host it wherever you want
-    // You can omit locateFile completely when running in node
-    locateFile: file => `https://sql.js.org/dist/${file}`
-  })
-
-  const configs: DataConnectionConfigs = {
+  const engine = await initSqlJs()
+  const configs: DataConfig = {
     client: "sqlite3",
+    title: "chinook.db",
     connection: {
-      database: "chinook.db",
-      buffer: fs.readFileSync("./lib/sqltr/databases/test/chinook.db"),
+      file: fs.readFileSync("./lib/data/clients/test/chinook.db"),
     },
   }
   return await SqliteDataConnection.create(configs, engine)
@@ -44,17 +34,17 @@ async function getChinookConnection() {
 
 async function getTestConnection() {
   const engine = await initSqlJs()
-  const configs: DataConnectionConfigs = {
+  const configs: DataConfig = {
     client: "sqlite3",
+    title: "test.db",
     connection: {
-      database: "test.db",
-      buffer: fs.readFileSync("./lib/sqltr/databases/test/test.db"),
+      file: fs.readFileSync("./lib/data/clients/test/test.db"),
     },
   }
   return await SqliteDataConnection.create(configs, engine)
 }
 
-describe("sqlite.ts", () => {
+describe("sqlite.ts (node env)", () => {
   test("getResult (single select)", async () => {
     const connection = await getChinookConnection()
     const result = await connection.getResult("select 10 'Colonna'")
@@ -107,7 +97,7 @@ describe("sqlite.ts", () => {
     const entities = await connection._getEntities()
     expect(entities).toBeTruthy()
     expect(entities.length).toBe(21)
-    writeJson("./lib/sqltr/databases/test/chinook.entities.json", entities)
+    writeJson("./lib/data/clients/test/chinook.entities.json", entities)
   })
 
   test("getEntities (test.db)", async () => {
@@ -115,7 +105,7 @@ describe("sqlite.ts", () => {
     const entities = await connection._getEntities()
     expect(entities).toBeTruthy()
     expect(entities.length).toBe(25)
-    writeJson("./lib/sqltr/databases/test/test.entities.json", entities)
+    writeJson("./lib/data/clients/test/test.entities.json", entities)
   })
 
   test("getSchema (chinook.db)", async () => {
@@ -128,7 +118,7 @@ describe("sqlite.ts", () => {
     // TODO SqliteDataConnection.getSchema - index: playlist_track doesn't have a SQL schema
 
     // save schema for verification
-    writeJson("./lib/sqltr/databases/test/chinook.schema.json", schema)
+    writeJson("./lib/data/clients/test/chinook.schema.json", schema)
 
     // save sql for verification
     const sql = []
@@ -141,7 +131,7 @@ describe("sqlite.ts", () => {
       }
     }
     const sqlJoin = sql.join(";\n\n")
-    fs.writeFileSync("./lib/sqltr/databases/test/chinook.sql", sqlJoin)
+    fs.writeFileSync("./lib/data/clients/test/chinook.sql", sqlJoin)
 
     const tableNames = schema.tables.map((t) => t.name).join(", ")
     expect(tableNames).toBe(
@@ -169,7 +159,7 @@ describe("sqlite.ts", () => {
     // TODO SqliteDataConnection.getSchema - index: playlist_track doesn't have a SQL schema
 
     // save schema for verification
-    writeJson("./lib/sqltr/databases/test/test.schema.json", schema)
+    writeJson("./lib/data/clients/test/test.schema.json", schema)
 
     // save sql for verification
     const sql = []
@@ -188,7 +178,7 @@ describe("sqlite.ts", () => {
       sql.push(view.sql)
     }
     const sqlJoin = sql.join(";\n\n")
-    fs.writeFileSync("./lib/sqltr/databases/test/test.sql", sqlJoin)
+    fs.writeFileSync("./lib/data/clients/test/test.sql", sqlJoin)
 
     const triggersNames = schema.triggers.map((t) => t.name).join(", ")
     expect(triggersNames).toBe("validate_email_before_insert_customers")
@@ -204,7 +194,7 @@ describe("sqlite.ts", () => {
     expect(tree.length).toBe(1)
 
     // save for verification
-    writeJson("./lib/sqltr/databases/test/chinook.tree.json", tree)
+    writeJson("./lib/data/clients/test/chinook.tree.json", tree)
 
     const root = tree[0]
     expect(root.id).toBe("chinook.db")

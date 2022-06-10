@@ -2,7 +2,7 @@
 // fakedata.ts
 //
 
-import { DataConnection, ConnectionClient, ConnectionConfigs, DataSchema } from "../lib/sqltr/connections"
+import { DataConnection, DataClient, DataConfig, DataSchema } from "../lib/data/connections"
 import { Query, QueryRun } from "../lib/items/query"
 import { parseISO } from "date-fns"
 import { Command } from "../lib/commands"
@@ -11,12 +11,8 @@ import { QueryExecResult } from "sql.js"
 
 // DataConnection (fake)
 class FakeConnection extends DataConnection {
-  id = "dbc_fake01"
-  title = "company.db"
-
-  public constructor(configs: ConnectionConfigs, title) {
-    super("sqlite3", configs)
-    this.title = title
+  public constructor(configs: DataConfig) {
+    super(configs)
   }
   public async getSchemas(refresh: boolean = false): Promise<DataSchema[]> {
     return null // TODO
@@ -32,9 +28,21 @@ class FakeConnection extends DataConnection {
   }
 }
 
-export const fake_connection1 = new FakeConnection({}, "chinook.db")
-export const fake_connection2 = new FakeConnection({}, "CorporateDatabaseWeeklyBackup.db")
-export const fake_connection3 = new FakeConnection({}, "A.db")
+export const fake_connection1 = new FakeConnection({
+  client: "sqlite3",
+  title: "chinook.db",
+  connection: {},
+})
+export const fake_connection2 = new FakeConnection({
+  client: "sqlite3",
+  title: "CorporateDatabaseWeeklyBackup.db",
+  connection: {},
+})
+export const fake_connection3 = new FakeConnection({
+  client: "sqlite3",
+  title: "A.db",
+  connection: {},
+})
 
 // DataConnection[]
 export const fake_connections1: DataConnection[] = [fake_connection1, fake_connection2, fake_connection3]

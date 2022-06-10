@@ -8,7 +8,7 @@ import { useState, useEffect } from "react"
 import { Command, CommandEvent } from "../../lib/commands"
 import { TreeView } from "../navigation/treeview"
 import { Tree } from "../../lib/tree"
-import { DataConnection } from "../../lib/sqltr/connections"
+import { DataConnection } from "../../lib/data/connections"
 
 export interface DatabaseTreeViewProps {
   /** Database connection shown in tree view */

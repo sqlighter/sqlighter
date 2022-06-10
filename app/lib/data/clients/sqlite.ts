@@ -1,77 +1,106 @@
 //
-// sqlite.ts - DataSource for SQLite databases
+// sqlite.ts - data connection client for SQLite
 //
 
-import initSqlJs, { Database, QueryExecResult } from "sql.js"
+import { DataConnection, DataConfig, DataSchema, DataError, prepareConfigs } from "../connections"
+import { Database, QueryExecResult } from "sql.js"
 import sqliteParser from "sqlite-parser"
-import { DataConnection, ConnectionClient, ConnectionConfigs, DataSchema } from "../connections"
 
-function camelCase(str) {
-  return str
-    .replace(/(?:^\w|[A-Z]|\b\w)/g, function (word, index) {
-      return index == 0 ? word.toLowerCase() : word.toUpperCase()
-    })
-    .replace(/\s+/g, "")
-}
+// To create a connection you will need to provide a sql.js engine
+// https://sql.js.org
+//
+// If you are running in node get the engine with:
+//   import initSqlJs from "sql.js"
+//
+// If you are running in the browser you'll need something like:
+//   const engine = await initSqlJs({
+//     locateFile: file => `https://sql.js.org/dist/${file}`
+//   })
 
 export class SqliteDataConnection extends DataConnection {
-  readonly client: ConnectionClient = "sqlite"
-
   /** SQLite database connection */
   private _database: Database
 
   /** Data source schema */
   protected _schemas: DataSchema[]
 
-  protected constructor(client: ConnectionClient, configs: ConnectionConfigs) {
-    super(client, configs)
+  protected constructor(configs: DataConfig) {
+    super(configs)
   }
 
-  public static async create(configs: ConnectionConfigs, engine): Promise<SqliteDataConnection> {
-    try {
-      // TODO open sqlite from filename, url, etc.
-      if (!configs.buffer) {
-        throw new Error("SqliteDataConnection.connect - can only create in memory connections from buffer data")
+  /**
+   * Creates a SqliteDataConnection from given configuration and enging
+   * @param configs Connection configuration
+   * @param engine window.initSqlJs in the browser or import sql.js in node
+   * @returns Connection configured, tested, ready to query
+   */
+  public static async create(configs: DataConfig, engine?): Promise<SqliteDataConnection> {
+    if (configs.client !== "sqlite3") {
+      throw new DataError("SqliteDataConnection - driver should be 'sqlite3'", { configs })
+    }
+
+    if (!engine) {
+      // works only in browser if loading script is done loading wasm file
+      engine = (window as any)?.initSqlJs
+      if (!engine) {
+        throw new DataError(`SqliteDataConnection - sql.js engine was not found`, { configs })
       }
-      /*
-      const engine = await initSqlJs({
-        // Required to load the wasm binary asynchronously. Of course, you can host it wherever you want
-        // You can omit locateFile completely when running in node
-        // locateFile: file => `https://sql.js.org/dist/${file}`
-      })
-*/
+    }
 
-      // create database from memory buffer
-      const connection = new SqliteDataConnection("sqlite3", configs)
-      connection._database = new engine.Database(configs.buffer)
+    try {
+      configs = await prepareConfigs(configs)
+      const connection = new SqliteDataConnection(configs)
+      let buffer = null
 
-      /*
-      try {
-        if (window) {
-          // @ts-ignore
-          if (window.loadSQL) {
-            console.log("Should try initSQLJS")
-            // @ts-ignore
-            const SQL = await window.loadSQL()
-            connection._database = SQL(configs.connection.buffer)
+      // read data from remote url?
+      if (configs.connection.url) {
+        const response = await fetch(configs.connection.url)
+        buffer = new Uint8Array(await response.arrayBuffer()) as Buffer
+      }
+
+      if (configs.connection.file) {
+        try {
+          // read data from File? (browser only, not supported in node)
+          if (configs.connection.file instanceof File) {
+            const data = await configs.connection.file.arrayBuffer()
+            buffer = new Uint8Array(data) as Buffer
+          }
+        } catch (exception) {
+          if (!(exception instanceof ReferenceError)) {
+            throw exception
           }
         }
-      } catch (exception) {
-        const SQL = await initSqlJs({
-          // Required to load the wasm binary asynchronously. Of course, you can host it wherever you want
-          // You can omit locateFile completely when running in node
-          // locateFile: file => `https://sql.js.org/dist/${file}`
-        })
-        connection._database = new SQL.Database(configs.connection.buffer)
-      }
-*/
-      // register connection in
-      DataConnection._connections.push(connection)
 
+        try {
+          // reading FileSystemFileHandle?
+          if (configs.connection.file instanceof FileSystemFileHandle) {
+            const file = await configs.connection.file.getFile()
+            const data = await file.arrayBuffer()
+            buffer = new Uint8Array(data) as Buffer
+          }
+        } catch (exception) {
+          if (!(exception instanceof ReferenceError)) {
+            throw exception
+          }
+        }
+
+        // reading Buffer?
+        if (configs.connection.file instanceof Buffer) {
+          buffer = configs.connection.file
+        }
+      }
+
+      // create database from memory buffer, verify that it's working
+      connection._database = new engine.Database(buffer)
+      await connection.getResult("select * from sqlite_schema")
+
+      // register connection in static list
+      DataConnection._connections.push(connection)
+      console.debug(`SqliteDataConnection - created ${connection.id}`, connection)
       return connection
     } catch (exception) {
-      console.error(`SqliteDataConnection.create - exception: ${exception}`, exception)
-      throw exception
+      console.error(`SqliteDataConnection - exception: ${exception}`, exception)
+      throw new DataError("Couln't create connection", { cause: exception, configs })
     }
   }
 
@@ -252,8 +281,8 @@ export class SqliteDataConnection extends DataConnection {
 
       // database name to be used for schema
       let database = "main"
-      if (this.configs.database) {
-        database = this.configs.database
+      if (this.configs.connection.database) {
+        database = this.configs.connection.database
       }
 
       // convert entities abstract syntax tree to simplified schema structure

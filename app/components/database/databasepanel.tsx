@@ -8,7 +8,7 @@ import { Theme, SxProps } from "@mui/material/styles"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 
-import { DataConnection } from "../../lib/sqltr/connections"
+import { DataConnection } from "../../lib/data/connections"
 import { DatabaseTreeView } from "./databasetreeview"
 import { ConnectionPicker } from "./connectionpicker"
 import { PanelProps } from "../navigation/panel"

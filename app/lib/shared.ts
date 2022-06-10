@@ -2,15 +2,9 @@
 // shared.ts - various utilities that work on both client and server
 //
 
-import { stringify } from "querystring"
-
 import dayjs from "dayjs"
 import localizedFormat from "dayjs/plugin/localizedFormat"
 dayjs.extend(localizedFormat)
-
-//
-//const description = dayjs(item.createdAt).format()
-
 export const DEFAULT_LOCALE = "en-US"
 
 /** Will Capitalize given string */
@@ -21,10 +15,16 @@ export function capitalize(str: string): string {
   return str
 }
 
-//
-// Localization and content related utilities
-//
+/** Convert string to camelCase */
+function camelCase(str) {
+  return str
+    .replace(/(?:^\w|[A-Z]|\b\w)/g, function (word, index) {
+      return index == 0 ? word.toLowerCase() : word.toUpperCase()
+    })
+    .replace(/\s+/g, "")
+}
 
+/** Localize date object or string */
 export function prettyDate(date?: string | dayjs.Dayjs): string {
   if (typeof date == "string") {
     date = dayjs(date)

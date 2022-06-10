@@ -16,7 +16,7 @@ import Tooltip from "@mui/material/Tooltip"
 import Typography from "@mui/material/Typography"
 
 import { CommandEvent } from "../../lib/commands"
-import { DataConnection } from "../../lib/sqltr/connections"
+import { DataConnection } from "../../lib/data/connections"
 import { Icon } from "../ui/icon"
 import { ConnectionIcon } from "./connectionicon"
 

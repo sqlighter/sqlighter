@@ -9,8 +9,8 @@ import Typography from "@mui/material/Typography"
 
 import { Command } from "../../lib/commands"
 import { useSqljs } from "../hooks/useDB"
-import { DataConnection, ConnectionConfigs } from "../../lib/sqltr/connections"
-import { SqliteDataConnection } from "../../lib/sqltr/databases/sqlite"
+import { DataConnection, DataConfig } from "../../lib/data/connections"
+import { SqliteDataConnection } from "../../lib/data/clients/sqlite"
 import { QueryPanel } from "../database/querypanel"
 import { TabsLayout } from "../../components/navigation/tabslayout"
 import { Panel, PanelElement, PanelProps } from "../../components/navigation/panel"
@@ -51,16 +51,18 @@ export default function Main(props: MainProps) {
     }
   }, [sqljs])
 
-  async function getDatabaseConnection(url) {
+  async function getDatabaseConnection(url, title) {
     if (sqljs) {
-      const response = await fetch(url)
-      const buffer = await response.arrayBuffer()
-      const configs: ConnectionConfigs = {
-        buffer: new Uint8Array(buffer) as Buffer,
-      }
-
-      const connection = await SqliteDataConnection.create(configs, sqljs)
-      connection.title = url
+      const connection = await SqliteDataConnection.create(
+        {
+          client: "sqlite3",
+          title,
+          connection: {
+            url,
+          },
+        },
+        sqljs
+      )
       console.debug(`getDatabaseConnection - ${url} opened`, connection)
       return connection
     }
@@ -68,14 +70,9 @@ export default function Main(props: MainProps) {
 
   async function openSomeTestConnection() {
     if (sqljs) {
-      const conn1 = await getDatabaseConnection("/test.db")
-      conn1.title = "test.db"
-
-      const conn2 = await getDatabaseConnection("/test.db")
-      conn2.title = "chinook.db"
-
-      const conn3 = await getDatabaseConnection("/databases/northwind.db")
-      conn3.title = "northwind.db"
+      const conn1 = await getDatabaseConnection("/test.db", "test.db")
+      const conn2 = await getDatabaseConnection("/test.db", "chinook.db")
+      const conn3 = await getDatabaseConnection("/databases/northwind.db", "northwind.db")
 
       setConnection(conn2)
       setConnections([conn1, conn2, conn3])
@@ -89,14 +86,15 @@ export default function Main(props: MainProps) {
       file = await file.getFile()
     }
 
-    const configs: ConnectionConfigs = {
-      filename: file.name,
-      buffer: new Uint8Array(await file.arrayBuffer()) as Buffer,
-    }
-
-    const connection = await SqliteDataConnection.create(configs, sqljs)
-    //  connection.title = file.name
-    console.debug(`connection opened`, connection)
+    const connection = await SqliteDataConnection.create(
+      {
+        client: "sqlite3",
+        connection: {
+          file,
+        },
+      },
+      sqljs
+    )
 
     setConnection(connection)
     setConnections([connection, ...(connections || [])])
@@ -114,17 +112,17 @@ export default function Main(props: MainProps) {
     const pickerOpts = {
       types: [
         {
-          description: 'SQLite',
+          description: "SQLite",
           accept: {
-            'application/*': ['.db', '.sqlite']
-          }
+            "application/*": [".db", ".sqlite"],
+          },
         },
       ],
       excludeAcceptAllOption: true,
-      multiple: false
-    };
+      multiple: false,
+    }
 
-    const [fileHandle] = await (window as any).showOpenFilePicker(pickerOpts);
+    const [fileHandle] = await (window as any).showOpenFilePicker(pickerOpts)
     if (fileHandle) {
       console.debug(`handleOpenFile - fileHandle: $`)
       await openFile(fileHandle)

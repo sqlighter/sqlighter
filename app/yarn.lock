@@ -18847,7 +18847,7 @@ __metadata:
     swr: ^1.3.0
     tempy: ^3.0.0
     tokenizr: ^1.6.6
-    ts-jest: ^28.0.3
+    ts-jest: ^28.0.4
     ts-node: ^10.8.0
     typescript: ^4.7.2
     use-persisted-state: ^0.3.3
@@ -19843,7 +19843,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-jest@npm:^28.0.3":
+"ts-jest@npm:^28.0.4":
   version: 28.0.4
   resolution: "ts-jest@npm:28.0.4"
   dependencies:

@@ -1,5 +1,5 @@
 {
-  "database": "test.db",
+  "database": "main",
   "tables": [
     {
       "name": "albums",

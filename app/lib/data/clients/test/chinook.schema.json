@@ -1,5 +1,5 @@
 {
-  "database": "chinook.db",
+  "database": "main",
   "tables": [
     {
       "name": "albums",

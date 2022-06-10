@@ -8,7 +8,7 @@ import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 import capitalize from "@mui/material/utils/capitalize"
 
-import { DataConnection } from "../../lib/sqltr/connections"
+import { DataConnection } from "../../lib/data/connections"
 import { QueryRun } from "../../lib/items/query"
 import { formatSeconds } from "../client"
 import { ConnectionIcon } from "./connectionicon"

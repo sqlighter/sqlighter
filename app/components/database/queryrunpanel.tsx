@@ -8,7 +8,7 @@ import { Theme, SxProps } from "@mui/material"
 import Box from "@mui/material/Box"
 
 // model
-import { DataConnection } from "../../lib/sqltr/connections"
+import { DataConnection } from "../../lib/data/connections"
 import { QueryRun } from "../../lib/items/query"
 
 // view
