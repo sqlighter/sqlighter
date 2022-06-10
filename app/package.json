@@ -24,7 +24,7 @@
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
     "@google-cloud/storage": "^6.1.0",
-    "@hapi/iron": "^6.0.0",
+    "@hapi/iron": "^7.0.0",
     "@monaco-editor/react": "^4.4.5",
     "@mui/icons-material": "^5.8.0",
     "@mui/lab": "^5.0.0-alpha.83",
