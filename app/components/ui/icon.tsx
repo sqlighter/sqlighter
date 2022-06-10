@@ -89,6 +89,7 @@ export interface IconProps extends SvgIconProps {
 
 /** An svg icon from its name */
 export function Icon(props: IconProps) {
+  const { dotColor, children, ...svgProps } = props
   function getIcon(name) {
     switch (name) {
       case "account":
@@ -137,7 +138,7 @@ export function Icon(props: IconProps) {
       case "filter":
         return <FilterAltOutlinedIcon {...props} />
       case "fire":
-        return <FireIcon {...props} />
+        return <FireIcon {...svgProps} />
       case "folder":
         return <FolderIcon {...props} />
       case "format":
@@ -180,7 +181,7 @@ export function Icon(props: IconProps) {
         return <ShareOutlinedIcon {...props} />
       case "sqlite":
       case "sqlite3":
-        return <SqliteIcon {...props} />
+        return <SqliteIcon {...svgProps} />
       case "tabsRight":
         return <BentoOutlinedIcon {...props} />
       case "tabsBottom":

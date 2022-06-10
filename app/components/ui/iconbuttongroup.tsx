@@ -62,13 +62,13 @@ export function IconButtonGroup(props: IconButtonGroupProps) {
       {props.commands &&
         props.commands.map((command, index) => {
           if (command === "spacing") {
-            return <Box className="IconButtonGroup-spacing" sx={{ marginRight: 1 }} />
+            return <Box key={index} className="IconButtonGroup-spacing" sx={{ marginRight: 1 }} />
           }
           if (command === "divider") {
             return (
               <Divider
-                className="IconButtonGroup-divider"
                 key={index}
+                className="IconButtonGroup-divider"
                 orientation="vertical"
                 variant="middle"
                 flexItem
@@ -77,7 +77,7 @@ export function IconButtonGroup(props: IconButtonGroupProps) {
           }
           return (
             <IconButton
-              key={command.command}
+              key={index}
               command={command}
               selected={props.selected == command.command}
               size={props.size || "medium"}

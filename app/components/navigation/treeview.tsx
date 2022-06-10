@@ -16,7 +16,7 @@ import { TreeItem, DEPTH_PADDING_PX } from "./treeitem"
 /** Custom styles applied to TreeView and TreeItem components */
 const TreeView_SxProps: SxProps<Theme> = {
   width: 1,
-//  height: 1,
+  //  height: 1,
   paddingRight: 0.75,
   overflow: "scroll",
 
@@ -178,14 +178,11 @@ export function TreeView(props: TreeViewProps) {
 
   function handleCommand(event: React.SyntheticEvent, command: Command, item, renderingPins) {
     const pinnedId = renderingPins ? `pins/${item.id}` : item.id
-    console.debug(`TreeView.handleCommand - ${command}`)
-
     switch (command.command) {
       case "sqlighter.collapseItem":
         setExpanded(expanded.filter((expandedId) => pinnedId !== expandedId))
         break
       case "sqlighter.expandItem":
-        console.debug(`TreeView.handleCommand - ${command}, ${pinnedId}, isExpanded: ${isExpanded(pinnedId)}`)
         if (!isExpanded(pinnedId)) {
           setExpanded([...expanded, pinnedId])
         }
@@ -220,6 +217,7 @@ export function TreeView(props: TreeViewProps) {
     const fragments = []
     fragments.push(
       <TreeItem
+        key={item.id}
         item={item}
         onCommand={(e, command) => handleCommand(e, command, item, renderingPins)}
         expanded={expanded}
@@ -240,7 +238,12 @@ export function TreeView(props: TreeViewProps) {
         // render "no results" if node is expanded but has no children
         const marginLeft = `${(depth + 1) * DEPTH_PADDING_PX + 24}px`
         fragments.push(
-          <Typography className="TreeItem-noResults" key="children1" variant="body2" marginLeft={marginLeft}>
+          <Typography
+            key={item.id + "-noResults"}
+            className="TreeItem-noResults"
+            variant="body2"
+            marginLeft={marginLeft}
+          >
             No results
           </Typography>
         )

@@ -7,9 +7,9 @@ export function SqliteIcon(props: SvgIconProps) {
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 6.554 6.555" preserveAspectRatio="xMidYMid">
         <defs>
           <linearGradient x1="2.983" y1=".53" x2="2.983" y2="4.744" id="A" gradientUnits="userSpaceOnUse">
-            <stop stop-color="#97d9f6" offset="0%" />
-            <stop stop-color="#0f80cc" offset="92.024%" />
-            <stop stop-color="#0f80cc" offset="100%" />
+            <stop stopColor="#97d9f6" offset="0%" />
+            <stop stopColor="#0f80cc" offset="92.024%" />
+            <stop stopColor="#0f80cc" offset="100%" />
           </linearGradient>
         </defs>
         <path

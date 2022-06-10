@@ -59,7 +59,6 @@ export function TreeItem({ item, ...props }: TreeItemProps) {
   //
 
   function handleItemClick(e) {
-    console.debug("TreeItem.handleItemClick")
     if (isCollapsible()) {
       props.onCommand(e, {
         command: props.expanded ? "sqlighter.collapseItem" : "sqlighter.expandItem",
@@ -131,13 +130,13 @@ export function TreeItem({ item, ...props }: TreeItemProps) {
     if (typeof tag === "string") {
       return (
         <Tooltip key={index} title={tag}>
-          <Chip className="TreeItem-tag" label={tag} size="small" />
+          <Chip className="TreeItem-tag" label={tag} size="small" component="span" />
         </Tooltip>
       )
     }
     return (
       <Tooltip key={index} title={tag.tooltip}>
-        <Chip className="TreeItem-tag" label={tag.title} size="small" />
+        <Chip className="TreeItem-tag" label={tag.title} size="small" component="span" />
       </Tooltip>
     )
   }
@@ -151,7 +150,7 @@ export function TreeItem({ item, ...props }: TreeItemProps) {
         <Typography className="TreeItem-label" variant="body2" color="inherit" noWrap>
           {item.title}
           {item.badge !== null && item.badge !== undefined && (
-            <Chip className="TreeItem-badge" label={item.badge} size="small" />
+            <Chip className="TreeItem-badge" label={item.badge} size="small" component="span" />
           )}
         </Typography>
       </Tooltip>

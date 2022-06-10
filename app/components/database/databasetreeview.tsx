@@ -49,13 +49,12 @@ export function DatabaseTreeView(props: DatabaseTreeViewProps) {
    * to open a SQL query tab are passed on to the higher level component.
    */
   async function handleCommand(event: React.SyntheticEvent, command: Command) {
-    console.debug(`DatabaseTreeView.handleCommand - ${command.command}`, command)
+    // console.debug(`DatabaseTreeView.handleCommand - ${command.command}`, command)
     switch (command.command) {
       case "sqlighter.refreshSchema":
         if (props.connection) {
           const trees = await getTrees(props.connection, true)
           setTrees(trees)
-          console.debug(`DatabaseTreeView.handleCommand - ${command.command} done`)
         }
         break
 
