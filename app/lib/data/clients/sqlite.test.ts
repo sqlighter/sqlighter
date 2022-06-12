@@ -3,15 +3,12 @@
 //
 
 import fs from "fs"
-import { DataConfig } from "../connections"
-import { SqliteDataConnection } from "./sqlite"
 import { getChinookConnection, getTestConnection, writeJson } from "../../test/utilities"
 
 // Interpreting schema
 // https://www.sqlite.org/schematab.html
 // AST tool
 // https://astexplorer.net/
-
 // client side testing
 // https://jestjs.io/docs/configuration#testenvironment-string
 

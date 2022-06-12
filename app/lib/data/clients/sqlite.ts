@@ -6,6 +6,8 @@ import { DataConnection, DataConfig, DataSchema, DataError, prepareConfigs } fro
 import { Database, QueryExecResult } from "sql.js"
 import sqliteParser from "sqlite-parser"
 
+export const SQLITE3_CLIENT_ID = "sqlite3"
+
 // To create a connection you will need to provide a sql.js engine
 // https://sql.js.org
 //
@@ -24,19 +26,27 @@ export class SqliteDataConnection extends DataConnection {
   /** Data source schema */
   protected _schemas: DataSchema[]
 
-  protected constructor(configs: DataConfig) {
+  public constructor(configs: DataConfig) {
     super(configs)
   }
 
+  /** Returns true if there is an active SQLite database */
+  public get isConnected(): boolean {
+    return !!this._database
+  }
+
   /**
-   * Creates a SqliteDataConnection from given configuration and enging
+   * Connects a SqliteDataConnection from given configuration and engine
    * @param configs Connection configuration
    * @param engine window.initSqlJs in the browser or import sql.js in node
    * @returns Connection configured, tested, ready to query
    */
-  public static async create(configs: DataConfig, engine?): Promise<SqliteDataConnection> {
-    if (configs.client !== "sqlite3") {
-      throw new DataError("SqliteDataConnection - driver should be 'sqlite3'", { configs })
+  public async connect(engine?): Promise<void> {
+    await super.connect()
+    const configs = this._configs
+
+    if (configs.client !== SQLITE3_CLIENT_ID) {
+      throw new DataError(`SqliteDataConnection - driver should be ${SQLITE3_CLIENT_ID}`, { configs })
     }
 
     if (!engine) {
@@ -48,8 +58,6 @@ export class SqliteDataConnection extends DataConnection {
     }
 
     try {
-      configs = await prepareConfigs(configs)
-      const connection = new SqliteDataConnection(configs)
       let buffer = null
 
       // read data from remote url?
@@ -60,9 +68,11 @@ export class SqliteDataConnection extends DataConnection {
 
       if (configs.connection.file) {
         try {
-          // read data from File? (browser only, not supported in node)
-          if (configs.connection.file instanceof File) {
-            const data = await configs.connection.file.arrayBuffer()
+          // reading FileSystemFileHandle?
+          if (configs.connection.file instanceof FileSystemFileHandle) {
+            // TODO preserve handle a create a writeable connection?
+            const file = await configs.connection.file.getFile()
+            const data = await file.arrayBuffer()
             buffer = new Uint8Array(data) as Buffer
           }
         } catch (exception) {
@@ -72,10 +82,9 @@ export class SqliteDataConnection extends DataConnection {
         }
 
         try {
-          // reading FileSystemFileHandle?
-          if (configs.connection.file instanceof FileSystemFileHandle) {
-            const file = await configs.connection.file.getFile()
-            const data = await file.arrayBuffer()
+          // read data from File? (browser only, not supported in node)
+          if (configs.connection.file instanceof File) {
+            const data = await configs.connection.file.arrayBuffer()
             buffer = new Uint8Array(data) as Buffer
           }
         } catch (exception) {
@@ -91,16 +100,12 @@ export class SqliteDataConnection extends DataConnection {
       }
 
       // create database from memory buffer, verify that it's working
-      connection._database = new engine.Database(buffer)
-      await connection.getResult("select * from sqlite_schema")
-
-      // register connection in static list
-      DataConnection._connections.push(connection)
-      console.debug(`SqliteDataConnection - created ${connection.id}`, connection)
-      return connection
+      this._database = new engine.Database(buffer)
+      await this.getResult("select * from sqlite_schema")
+      console.debug(`SqliteDataConnection - created ${this.id}`, this)
     } catch (exception) {
       console.error(`SqliteDataConnection - exception: ${exception}`, exception)
-      throw new DataError("Couln't create connection", { cause: exception, configs })
+      throw new DataError("Couln't create connection", { cause: exception, configs: configs })
     }
   }
 
