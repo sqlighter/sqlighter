@@ -100,7 +100,7 @@ export function ActivityBar(props: ActivityBarProps) {
 
   function handleActivityClick(event: React.SyntheticEvent, clickedActivityId: string) {
     props.onCommand(event, {
-      command: "changeActivity",
+      command: "changedActivity",
       args: { id: clickedActivityId },
     })
   }
@@ -158,7 +158,7 @@ export function ActivityBar(props: ActivityBarProps) {
             className="ActivityBar-button ActivityBar-logo"
             onCommand={props.onCommand}
             command={{
-              command: "home",
+              command: "openHome",
               icon: "home",
               title: "Home",
             }}

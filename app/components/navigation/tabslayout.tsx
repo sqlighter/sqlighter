@@ -122,7 +122,7 @@ export function TabsLayout(props: TabsLayoutProps) {
         console.debug(`TabsLayout.drop - ${item.items?.length} items`, item.items)
         if (props.onCommand) {
           props.onCommand(null, {
-            command: "dropFiles",
+            command: "dropItems",
             args: { ...item },
           })
         }

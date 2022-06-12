@@ -51,6 +51,12 @@ const ConnectionPicker_Sx: SxProps<Theme> = {
     },
   },
 
+  ".ConnectionPicker-add": {
+    minWidth: 40,
+    width: 40,
+    height: 40,
+  },
+
   ".ConnectionPicker-check": {
     minWidth: 24,
     width: 24,
@@ -58,6 +64,36 @@ const ConnectionPicker_Sx: SxProps<Theme> = {
   },
 
   ".ConnectionPicker-connectionIcon": {
+    marginRight: 1,
+  },
+
+  // TODO add a space between button and menu
+  "& .MuiModal-root": {
+    marginTop: "8px", // or 1
+  },
+
+  // button labels should not wrap
+  ".MuiButton-root": {
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+  },
+}
+
+const ConnectionPickerMenu_Sx: SxProps<Theme> = {
+  ".ConnectionPickerMenu-add": {
+    minWidth: 40,
+    width: 40,
+    height: 40,
+  },
+
+  ".ConnectionPickerMenu-check": {
+    minWidth: 24,
+    width: 24,
+    height: 24,
+  },
+
+  ".ConnectionPickerMenu-connectionIcon": {
     marginRight: 1,
   },
 
@@ -130,7 +166,7 @@ export function ConnectionPicker(props: ConnectionPickerProps) {
     handleCloseMenu(event)
     if (props.onCommand) {
       props.onCommand(event, {
-        command: "changeConnection",
+        command: "changedConnection",
         args: {
           item: connection,
         },
@@ -138,21 +174,21 @@ export function ConnectionPicker(props: ConnectionPickerProps) {
     }
   }
 
-  // user clicked plus button to create a connection
-  function handleCreateConnection(event) {
-    handleCloseMenu(event)
-    if (props.onCommand) {
-      props.onCommand(event, { command: "createConnection" })
-    }
-  }
-
-  // user clicked plus button or manage connections menu item
+  /** Clicked on 'Manage connections' */
   function handleManageConnections(event) {
     handleCloseMenu(event)
     if (props.onCommand) {
-      props.onCommand(event, { command: "manageConnections" })
+      props.onCommand(event, { command: "openHome" })
     }
   }
+
+  function handleOpenFile(event) {
+    handleCloseMenu(event)
+    if (props.onCommand) {
+      props.onCommand(event, { command: "openFile" })
+    }
+  }
+
 
   //
   // render
@@ -174,6 +210,7 @@ export function ConnectionPicker(props: ConnectionPickerProps) {
         anchorEl={anchorEl}
         open={open}
         onClose={handleCloseMenu}
+        sx={ConnectionPickerMenu_Sx}
         MenuListProps={{
           "aria-labelledby": "connection-button",
         }}
@@ -192,7 +229,7 @@ export function ConnectionPicker(props: ConnectionPickerProps) {
             sx={{ mr: 1 }}
           />
           <Tooltip title="Create connection">
-            <Button variant="outlined" onClick={handleCreateConnection} sx={{ minWidth: 40, width: 40, height: 40 }}>
+            <Button className="ConnectionPickerMenu-add" variant="outlined" onClick={handleOpenFile}>
               <Icon>add</Icon>
             </Button>
           </Tooltip>
@@ -229,8 +266,8 @@ export function ConnectionPicker(props: ConnectionPickerProps) {
   // TODO more gracious empty state for connection picker
   if (!props.connection) {
     return (
-      <Button variant="outlined" onClick={handleManageConnections}>
-        Open Demo
+      <Button className="ConnectionPicker-root" variant={props.buttonVariant || "text"} onClick={handleOpenFile}>
+        Open File
       </Button>
     )
   }

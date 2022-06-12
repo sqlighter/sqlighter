@@ -3,18 +3,11 @@ import { ComponentStory, ComponentMeta } from "@storybook/react"
 import { Section } from "../components/ui/section"
 import { StorybookDecorator } from "../components/storybook"
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: "UI/Section",
   component: Section,
-
-  // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-  argTypes: {
-    //
-  },
 } as ComponentMeta<typeof Section>
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: ComponentStory<typeof Section> = (args) => (
   <StorybookDecorator>
     <Section {...args}>
@@ -33,8 +26,6 @@ const Template: ComponentStory<typeof Section> = (args) => (
   </StorybookDecorator>
 )
 
-// More on args: https://storybook.js.org/docs/react/writing-stories/args
-
 export const Primary = Template.bind({})
 Primary.args = {
   title: "Blockbuster movies",
@@ -47,9 +38,9 @@ WithoutSubtitle.args = {
   subtitle: null,
 }
 
-export const WithLargeStyle = Template.bind({})
-WithLargeStyle.args = {
+export const WithLargeVariant = Template.bind({})
+WithLargeVariant.args = {
   title: "Blockbuster movies",
   subtitle: "A comprehensive list",
-  large: true,
+  variant: "large",
 }

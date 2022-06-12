@@ -4,6 +4,7 @@
 
 import fs from "fs"
 import { DataConfig } from "../data/connections"
+import { DataConnectionFactory } from "../data/factory"
 import { SqliteDataConnection } from "../data/clients/sqlite"
 import initSqlJs from "sql.js"
 
@@ -12,7 +13,7 @@ export function writeJson(filename, data) {
   fs.writeFileSync(filename, json)
 }
 
-export async function getChinookConnection() {
+export async function getChinookConnection(): Promise<SqliteDataConnection> {
   const engine = await initSqlJs()
   const configs: DataConfig = {
     client: "sqlite3",
@@ -21,10 +22,12 @@ export async function getChinookConnection() {
       file: fs.readFileSync("./lib/test/artifacts/chinook.db"),
     },
   }
-  return await SqliteDataConnection.create(configs, engine)
+  const connection = DataConnectionFactory.create(configs) as SqliteDataConnection
+  await connection.connect(engine)
+  return connection
 }
 
-export async function getTestConnection() {
+export async function getTestConnection(): Promise<SqliteDataConnection> {
   const engine = await initSqlJs()
   const configs: DataConfig = {
     client: "sqlite3",
@@ -33,5 +36,7 @@ export async function getTestConnection() {
       file: fs.readFileSync("./lib/test/artifacts/test.db"),
     },
   }
-  return await SqliteDataConnection.create(configs, engine)
+  const connection = DataConnectionFactory.create(configs) as SqliteDataConnection
+  await connection.connect(engine)
+  return connection
 }

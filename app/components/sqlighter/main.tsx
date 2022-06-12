@@ -10,8 +10,10 @@ import Typography from "@mui/material/Typography"
 import { Command } from "../../lib/commands"
 import { useSqljs } from "../hooks/useDB"
 import { DataConnection, DataConfig } from "../../lib/data/connections"
+import { DataConnectionFactory } from "../../lib/data/factory"
 import { SqliteDataConnection } from "../../lib/data/clients/sqlite"
-import { QueryPanel } from "../database/querypanel"
+import { QueryPanel } from "../panels/querypanel"
+import { HomePanel, HOME_PANEL_ID } from "../panels/homepanel"
 import { TabsLayout } from "../../components/navigation/tabslayout"
 import { Panel, PanelElement, PanelProps } from "../../components/navigation/panel"
 import { DatabasePanel } from "../database/databasepanel"
@@ -27,13 +29,19 @@ export interface MainProps extends PanelProps {
 
 /** Main component for SQLighter app which includes activities, sidebar, tabs, etc... */
 export default function Main(props: MainProps) {
+  //
+  // state
+  //
+
   // TODO persist currently selected activity in user preferences
   const [activityId, setActivityId] = useState<string>("act_database")
 
   // currently selected tabId
-  const [tabId, setTabId] = useState<string>()
+  const [tabId, setTabId] = useState<string>(HOME_PANEL_ID)
   // list of data models for tabs (actual tabs are rendered on demand)
-  const [tabs, setTabs] = useState<{ id: string; component: string; props?: any }[]>([])
+  const [tabs, setTabs] = useState<{ id: string; component: string; props?: any }[]>([
+    { id: HOME_PANEL_ID, component: "HomePanel" },
+  ])
 
   // selected connection
   const [connection, setConnection] = useState<DataConnection>(null)
@@ -53,51 +61,65 @@ export default function Main(props: MainProps) {
 
   async function getDatabaseConnection(url, title) {
     if (sqljs) {
-      const connection = await SqliteDataConnection.create(
-        {
-          client: "sqlite3",
-          title,
-          connection: {
-            url,
-          },
-        },
-        sqljs
-      )
+      const connection = DataConnectionFactory.create({ client: "sqlite3", title, connection: { url } })
+      await connection.connect(sqljs)
       console.debug(`getDatabaseConnection - ${url} opened`, connection)
       return connection
     }
   }
 
-  async function openSomeTestConnection() {
-    if (sqljs) {
-      const conn1 = await getDatabaseConnection("/test.db", "test.db")
-      const conn2 = await getDatabaseConnection("/test.db", "chinook.db")
-      const conn3 = await getDatabaseConnection("/databases/northwind.db", "northwind.db")
+  /**
+   * Open a file based database connection from a provided File or FileSystemFileHandle
+   * that points to a SQLite database file. If the file parameter is not provided, prompt
+   * the user to select a local file that should be opened. If the connection is opened
+   * succesfully it added to list of current connections and selected.
+   */
+  async function openFile(file?: File | FileSystemFileHandle): Promise<DataConnection> {
+    try {
+      if (!file) {
+        // let user pick a database file to open
+        const pickerOpts = {
+          types: [{ description: "SQLite", accept: { "application/*": [".db", ".sqlite"] } }],
+          excludeAcceptAllOption: true,
+          multiple: false,
+        }
 
-      setConnection(conn2)
-      setConnections([conn1, conn2, conn3])
-    } else console.error(`DatabasePanel.handleOpenClick - sqljs engine not loaded`)
+        try {
+          // TODO need to use regular file input for for Firefox and other browsers
+          // https://developer.mozilla.org/en-US/docs/Web/API/Window/showOpenFilePicker
+          file = (await (window as any).showOpenFilePicker(pickerOpts))[0]
+        } catch (exception) {
+          console.warn(`Main.openFile - user cancelled open file picker`, exception)
+          return
+        }
+      }
+
+      // TODO will recognize .csv files and parse them separately maybe with special connection?
+
+      const config = { client: "sqlite3", connection: { file } }
+      const connection = DataConnectionFactory.create(config)
+      await connection.connect(sqljs)
+
+      setConnection(connection)
+      setConnections([connection, ...(connections || [])])
+      return connection
+    } catch (exception) {
+      // TODO show toast with error explanation
+      console.error(`Main.openFile - ${exception}`, exception)
+      throw exception
+    }
   }
 
-  async function openFile(file: File | FileSystemFileHandle) {
-    console.debug(`openFile - ${typeof file}, typeof: ${typeof file}`, file)
-
-    if (file instanceof FileSystemFileHandle) {
-      file = await file.getFile()
+  /** Will open a connection, if needed, then make it the current connection */
+  async function openConnection(connection: DataConnection) {
+    if (!connection.isConnected) {
+      await connection.connect()
     }
-
-    const connection = await SqliteDataConnection.create(
-      {
-        client: "sqlite3",
-        connection: {
-          file,
-        },
-      },
-      sqljs
-    )
-
+    const hasConnection = connections && connections.find((conn) => conn.id == connection.id)
+    if (!hasConnection) {
+      setConnections([connection, ...(connections || [])])
+    }
     setConnection(connection)
-    setConnections([connection, ...(connections || [])])
   }
 
   //
@@ -108,30 +130,26 @@ export default function Main(props: MainProps) {
   // handlers
   //
 
-  async function handleOpenFile(event) {
-    const pickerOpts = {
-      types: [
-        {
-          description: "SQLite",
-          accept: {
-            "application/*": [".db", ".sqlite"],
-          },
-        },
-      ],
-      excludeAcceptAllOption: true,
-      multiple: false,
-    }
-
-    const [fileHandle] = await (window as any).showOpenFilePicker(pickerOpts)
-    if (fileHandle) {
-      console.debug(`handleOpenFile - fileHandle: $`)
-      await openFile(fileHandle)
-    }
-  }
-
   async function handleCommand(event: React.SyntheticEvent, command: Command) {
     console.debug(`Main.handleCommand - ${command.command}`, command)
     switch (command.command) {
+      case "openHome":
+        // add home panel if not opened yet, select tab
+        if (!tabs.find((tab) => tab.id === HOME_PANEL_ID)) {
+          const homeTab = { id: HOME_PANEL_ID, component: "HomePanel" }
+          setTabs([homeTab, ...tabs])
+        }
+        setTabId(HOME_PANEL_ID)
+        break
+
+      case "openFile":
+        await openFile(command.args?.file)
+        return
+
+      case "openConnection":
+        await openConnection(command.args?.item)
+        return
+
       // open a new tab with a query panel
       case "sqlighter.viewStructure": // TODO will have its own panel but just open sql for now
       case "sqlighter.viewQuery":
@@ -147,16 +165,16 @@ export default function Main(props: MainProps) {
         setTabId(query.id)
         break
 
-      case "tabs.changeTabs":
-        console.debug(`changeTabs`, command.args.tabs)
+      // tabs rearranged, opened, closed, etc
+      case "changedTabs":
         const changedTabs = command.args.tabs.map((tabElement: ReactElement) =>
           tabs.find((tab) => tabElement.key == tab.id)
         )
-        setTabId(command.args.tabId)
+        setTabId(command.args.id)
         setTabs(changedTabs)
         return
 
-      case "changeActivity":
+      case "changedActivity":
         setActivityId(command.args.id)
         return
 
@@ -164,18 +182,13 @@ export default function Main(props: MainProps) {
         setConnection(command.args.item)
         break
 
+      // data model for query has changed, force tabs redraw
       case "changeQuery":
         setTabs([...tabs])
         return
 
-      case "manageConnections":
-        if (!connections) {
-          // TODO open a custom tab where use can create and configure data connections
-          await openSomeTestConnection()
-        }
-        break
-
-      case "dropFiles":
+      // receive files from drag and drop
+      case "dropItems":
         if (command.args.files) {
           for (const file of command.args.files) {
             await openFile(file)
@@ -221,11 +234,23 @@ export default function Main(props: MainProps) {
     return tabs.map((tab) => {
       console.debug(`renderTabs - tab`, tab)
       switch (tab.component) {
+        case "HomePanel":
+          return (
+            <HomePanel
+              key={HOME_PANEL_ID}
+              id={HOME_PANEL_ID}
+              title="Home"
+              icon="home"
+              connection={connection}
+              connections={connections}
+              onCommand={handleCommand}
+            />
+          )
         case "QueryPanel":
           const query = tab.props.query
           return (
             <QueryPanel
-              key={query.id}
+              key={tab.id}
               id={query.id}
               title={query.title}
               icon="code"
@@ -242,7 +267,7 @@ export default function Main(props: MainProps) {
     if (!connections) {
       return (
         <Empty icon="fileOpen" title="Open a database file to get started" description="or drag and drop it here">
-          <Button variant="outlined" sx={{ mt: 2 }} onClick={handleOpenFile}>
+          <Button variant="outlined" sx={{ mt: 2 }} onClick={(e) => openFile()}>
             Open File
           </Button>
         </Empty>
@@ -255,10 +280,8 @@ export default function Main(props: MainProps) {
     <TabsLayout
       title="SQLighter"
       description="Lighter, mightier"
-      //
       activityId={activityId}
       activities={renderActivities()}
-      //
       tabId={tabId}
       tabs={tabs ? renderTabs() : []}
       tabsCommands={[
@@ -269,9 +292,7 @@ export default function Main(props: MainProps) {
         },
       ]}
       empty={renderEmpty()}
-      //
       user={props.user}
-      //
       onCommand={handleCommand}
     />
   )

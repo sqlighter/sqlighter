@@ -1,7 +1,9 @@
 {
     "files.exclude": {
         "**/.swc": true,
-        "**/node_modules": true
+        "**/.yarn": true,
+        "**/.next": true,
+        "**/node_modules": true,
     },
     "jestrunner.runOptions": [
         "--runInBand",

@@ -48,6 +48,8 @@ export function IconButton(props: IconButtonProps) {
   }
 
   function handleClick(event) {
+    event.preventDefault()
+    event.stopPropagation()
     if (onCommand) {
       onCommand(event, command)
     }

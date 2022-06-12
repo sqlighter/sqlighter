@@ -25,9 +25,9 @@ import { IconButton } from "../ui/iconbutton"
 import { IconButtonGroup } from "../ui/iconbuttongroup"
 import { PanelProps } from "../navigation/panel"
 import { Tabs } from "../navigation/tabs"
-import { ConnectionPicker } from "./connectionpicker"
+import { ConnectionPicker } from "../database/connectionpicker"
 import { SqlEditor } from "../editor/sqleditor"
-import { QueryRunPanel } from "./queryrunpanel"
+import { QueryRunPanel } from "../database/queryrunpanel"
 import { useForceUpdate } from "../hooks/useforceupdate"
 import { TitleField } from "../ui/titlefield"
 import { Empty } from "../ui/empty"
@@ -245,10 +245,10 @@ export function QueryPanel(props: QueryPanelProps) {
         // does NOT need a forceUpdate since the editor's model is not controlled
         break
 
-      case "tabs.changeTabs":
-        // extract data models from views, update query, notify viewers
+      // extract data models from views, update query, notify viewers
+      case "changedTabs":
         query.runs = command.args.tabs.map((tab) => tab.props.run)
-        setRunId(command.args.tabId)
+        setRunId(command.args.id)
         notifyChanges()
         break
 
@@ -256,7 +256,7 @@ export function QueryPanel(props: QueryPanelProps) {
         setVariant(variant == "bottom" ? "right" : "bottom")
         return
 
-      case "changeConnection":
+      case "changedConnection":
         query.connectionId = command.args?.item?.id
         notifyChanges()
         return

@@ -151,9 +151,9 @@ export function Tabs(props: TabsProps) {
   function handleTabsChange(event: SyntheticEvent<Element, Event>, tabId: string) {
     if (props.onCommand) {
       props.onCommand(event, {
-        command: "tabs.changeTabs",
+        command: "changedTabs",
         args: {
-          tabId, // newly selected tab
+          id: tabId, // newly selected tab
           tabs: props.tabs, // same list of tabs/children as before
         },
       })
@@ -176,9 +176,9 @@ export function Tabs(props: TabsProps) {
       const updatedId =
         props.tabId == closedTabId ? (updatedTabs.length > 0 ? updatedTabs[0].props.id : null) : props.tabId
       props.onCommand(event, {
-        command: "tabs.changeTabs",
+        command: "changedTabs",
         args: {
-          tabId: updatedId,
+          id: updatedId,
           tabs: updatedTabs,
         },
       })
@@ -247,9 +247,9 @@ export function Tabs(props: TabsProps) {
       console.debug(`Tabs.handleTabDrop - moving ${draggedTabId}, fromIndex: ${fromIndex}, toIndex: ${toIndex}`)
       if (props.onCommand) {
         props.onCommand(event, {
-          command: "tabs.changeTabs",
+          command: "changedTabs",
           args: {
-            tabId: draggedTabId,
+            id: draggedTabId,
             tabs: updatedTabs,
           },
         })
@@ -264,7 +264,7 @@ export function Tabs(props: TabsProps) {
   function renderTabLabel(tab) {
     const tabProps = tab.props
     const closeCommand = {
-      command: "tabs.closeTab",
+      command: "closeTab",
       icon: "close",
       title: "Close Tab",
       args: {
