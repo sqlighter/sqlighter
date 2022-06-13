@@ -2,7 +2,7 @@
 // sqlite.ts - data connection client for SQLite
 //
 
-import { DataConnection, DataConfig, DataSchema, DataError, prepareConfigs } from "../connections"
+import { DataConnection, DataConfig, DataSchema, DataError } from "../connections"
 import { Database, QueryExecResult } from "sql.js"
 import sqliteParser from "sqlite-parser"
 
@@ -100,8 +100,12 @@ export class SqliteDataConnection extends DataConnection {
       }
 
       // create database from memory buffer, verify that it's working
-      this._database = new engine.Database(buffer)
-      await this.getResult("select * from sqlite_schema")
+      this._database = buffer ? new engine.Database(buffer) : (new engine.Database())
+      await this.getResult("select 1")
+      
+      // TODO fix for empty database
+      // await this.getResult("select * from sqlite_schema")
+
       console.debug(`SqliteDataConnection - created ${this.id}`, this)
     } catch (exception) {
       console.error(`SqliteDataConnection - exception: ${exception}`, exception)

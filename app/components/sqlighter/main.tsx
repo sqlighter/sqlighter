@@ -113,7 +113,36 @@ export default function Main(props: MainProps) {
   /** Will open a connection, if needed, then make it the current connection */
   async function openConnection(connection: DataConnection) {
     if (!connection.isConnected) {
-      await connection.connect()
+ 
+ 
+      const db = new sqljs.Database();
+      // NOTE: You can also use new SQL.Database(data) where
+      // data is an Uint8Array representing an SQLite database file
+      
+      
+      // Execute a single SQL string that contains multiple statements
+      let sqlstr = "CREATE TABLE hello (a int, b char); \
+      INSERT INTO hello VALUES (0, 'hello'); \
+      INSERT INTO hello VALUES (1, 'world');";
+      db.run(sqlstr); // Run the query without returning anything
+      
+      // Prepare an sql statement
+      const stmt = db.prepare("SELECT * FROM hello WHERE a=:aval AND b=:bval");
+      
+      // Bind values to the parameters and fetch the results of the query
+      const result = stmt.getAsObject({':aval' : 1, ':bval' : 'world'});
+      console.log(result); // Will print {a:1, b:'world'}
+      
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+      await connection.connect(sqljs)
     }
     const hasConnection = connections && connections.find((conn) => conn.id == connection.id)
     if (!hasConnection) {
@@ -147,7 +176,9 @@ export default function Main(props: MainProps) {
         return
 
       case "openConnection":
-        await openConnection(command.args?.item)
+        if (command.args?.connection) {
+          await openConnection(command.args.connection)
+        }
         return
 
       // open a new tab with a query panel

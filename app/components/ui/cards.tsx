@@ -81,7 +81,7 @@ export interface ConnectionCardProps {
 export function ConnectionCard(props: ConnectionCardProps) {
   function handleOpenClick(event) {
     if (props.onCommand) {
-      props.onCommand(event, { command: "openConnection", args: { item: props.connection } })
+      props.onCommand(event, { command: "openConnection", args: { connection: props.connection } })
     }
   }
 

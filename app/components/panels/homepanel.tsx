@@ -239,6 +239,14 @@ export function HomePanel(props: HomePanelProps) {
   }
 
   function renderActions() {
+    const memoryDatabase = DataConnectionFactory.create({
+      client: "sqlite3",
+      title: "Empty.db",
+      connection: {
+        filename: ":memory:",
+      },
+    })
+
     return (
       <Box className="HomePanel-section" sx={{ mb: 4 }}>
         <Typography className="HomePanel-sectionTitle" gutterBottom variant="subtitle1">
@@ -246,7 +254,7 @@ export function HomePanel(props: HomePanelProps) {
         </Typography>
         <Box className="HomePanel-collection">
           <ActionCard
-            command={{ command: "openBlank", title: "Blank database" }}
+            command={{ command: "openConnection", title: "Blank database", args: { connection: memoryDatabase } }}
             description="Create a new database, add tables, add data, then download it to your desktop"
             overline="SQLite"
             image="/images/empty5.jpg"
@@ -289,13 +297,8 @@ export function HomePanel(props: HomePanelProps) {
           <Box sx={{ display: "flex", flexWrap: "wrap" }}>
             {props.connections.map((connection) => {
               return (
-                <Box sx={{ mr: 2, mb: 2 }}>
-                  <ConnectionCard
-                    key={connection.id}
-                    connection={connection}
-                    showSettings={true}
-                    onCommand={props.onCommand}
-                  />
+                <Box key={connection.id} sx={{ mr: 2, mb: 2 }}>
+                  <ConnectionCard connection={connection} showSettings={true} onCommand={props.onCommand} />
                 </Box>
               )
             })}
@@ -311,10 +314,10 @@ export function HomePanel(props: HomePanelProps) {
       return (
         <Section className="HomePanel-templates" title="Templates">
           <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-            {connections.map((connection, index) => {
+            {connections.map(connection => {
               return (
-                <Box sx={{ mr: 2, mb: 2 }}>
-                  <ConnectionCard key={connection.id} connection={connection} onCommand={props.onCommand} />
+                <Box key={connection.id} sx={{ mr: 2, mb: 2 }}>
+                  <ConnectionCard connection={connection} onCommand={props.onCommand} />
                 </Box>
               )
             })}

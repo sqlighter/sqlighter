@@ -137,6 +137,42 @@ export abstract class DataConnection {
 
   /** Concrete classes only */
   protected constructor(configs: DataConfig) {
+    configs = { ...configs }
+    const connection = configs.connection
+
+    if (!configs.id) {
+      configs.id = generateId("dbc_")
+    }
+
+    // detect filename if available
+    if (connection.file && !connection.filename) {
+      try {
+        if (connection.file instanceof File) {
+          connection.filename = connection.file.name
+        }
+        if (connection.file instanceof FileSystemFileHandle) {
+          connection.filename = connection.file.name
+        }
+      } catch (error) {
+        // File and FileSystemFileHandle do not exist when running on the server
+        // silence this issue so we can share code between client and server side
+        if (!(error instanceof ReferenceError)) {
+          throw error
+        }
+      }
+    }
+
+    if (connection.url) {
+      // TODO parse url into parts
+    }
+
+    if (!configs.title) {
+      configs.title = configs.id
+      if (configs.connection.filename && configs.connection.filename !== ":memory:") {
+        configs.title = configs.connection.filename
+      }
+    }
+
     this._configs = configs
   }
 
@@ -155,7 +191,6 @@ export abstract class DataConnection {
 
   /** Connect this connection to remote server or load data from files, etc */
   public async connect(...args): Promise<void> {
-    this._configs = await prepareConfigs(this._configs)
     // subclasses implement further connection logic if needed
   }
 
@@ -187,47 +222,6 @@ export abstract class DataConnection {
    * type of SQL statement does not modify the value returned by this function.
    */
   public abstract getRowsModified(): Promise<number>
-}
-
-/** Parse connection string into an object or prepare/expand connection configurations */
-export async function prepareConfigs(configs: DataConfig): Promise<DataConfig> {
-  configs = { ...configs }
-  const connection = configs.connection
-
-  if (!configs.id) {
-    configs.id = generateId("dbc_")
-  }
-
-  // detect filename if available
-  if (connection.file && !connection.filename) {
-    try {
-      if (connection.file instanceof File) {
-        connection.filename = connection.file.name
-      }
-      if (connection.file instanceof FileSystemFileHandle) {
-        connection.filename = (await connection.file.getFile()).name
-      }
-    } catch (error) {
-      // File and FileSystemFileHandle do not exist when running on the server
-      // silence this issue so we can share code between client and server side
-      if (!(error instanceof ReferenceError)) {
-        throw error
-      }
-    }
-  }
-
-  if (connection.url) {
-    // TODO parse url into parts
-  }
-
-  if (!configs.title) {
-    configs.title = configs.id
-    if (configs.connection.filename && configs.connection.filename !== ":memory:") {
-      configs.title = configs.connection.filename
-    }
-  }
-
-  return configs
 }
 
 //
