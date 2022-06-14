@@ -53,6 +53,7 @@ import RefreshOutlinedIcon from "@mui/icons-material/RefreshOutlined"
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined"
 import SettingsOutlined from "@mui/icons-material/SettingsOutlined"
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined"
+import SwipeLeftOutlinedIcon from '@mui/icons-material/SwipeLeftOutlined';
 import TableRowsOutlinedIcon from "@mui/icons-material/TableRowsOutlined"
 import TableIcon from "@mui/icons-material/TableChartOutlined"
 import WhatshotOutlinedIcon from "@mui/icons-material/WhatshotOutlined"
@@ -123,6 +124,8 @@ export function Icon(props: IconProps) {
         return <DragHandleIcon {...props} />
       case "dragVertical":
         return <DragHandleIcon {...props} sx={{ transform: "rotate(90deg)" }} />
+      case "dragAndDrop":
+        return <SwipeLeftOutlinedIcon {...props} />
       case "edit":
         return <EditOutlinedIcon {...props} />
       case "expand":
