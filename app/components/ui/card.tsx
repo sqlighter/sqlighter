@@ -1,18 +1,17 @@
 //
-// connectioncard.tsx
+// card.tsx
 //
 
 import { ReactElement } from "react"
 import { SxProps, Theme, alpha } from "@mui/material"
 import Box from "@mui/material/Box"
-import Card from "@mui/material/Card"
-import CardActionArea from "@mui/material/CardActionArea"
+import MuiCard from "@mui/material/Card"
+import MuiCardActionArea from "@mui/material/CardActionArea"
 import CardActions from "@mui/material/CardActions"
 import CardContent from "@mui/material/CardContent"
-import CardHeader from "@mui/material/CardHeader"
-import CardMedia from "@mui/material/CardMedia"
-import { CardProps } from "@mui/material"
-import Typography from "@mui/material/Typography"
+import MuiCardHeader from "@mui/material/CardHeader"
+import MuiCardMedia from "@mui/material/CardMedia"
+import { CardProps as MuiCardProps } from "@mui/material"
 import Tooltip from "@mui/material/Tooltip"
 
 import { IconButton } from "./iconbutton"
@@ -25,8 +24,8 @@ import { Icon } from "./icon"
 // CommandCard
 //
 
-const CommandCard_SxProps: SxProps<Theme> = {
-  ".CommandCard-media": {
+const Card_SxProps: SxProps<Theme> = {
+  ".Card-media": {
     height: 120,
 
     // backgroundColor: (theme) => alpha(theme.palette.text.primary, 0.05),
@@ -36,7 +35,7 @@ const CommandCard_SxProps: SxProps<Theme> = {
     textAlign: "right",
   },
 
-  ".CommandCard-icon": {
+  ".Card-icon": {
     ".MuiSvgIcon-root": {
       fontSize: 128,
 
@@ -54,9 +53,16 @@ const CommandCard_SxProps: SxProps<Theme> = {
     overflow: "hidden",
     textOverflow: "ellipsis",
   },
+
+  ".MuiCardHeader-action": {
+    // align icon vertically centered like avatar
+    alignSelf: "auto",
+    marginTop: 0,
+    marginBottom: 0,
+  },
 }
 
-export interface CommandCardProps extends CardProps {
+export interface CommandCardProps extends MuiCardProps {
   /** Image to be shown, if missing will show the command's icon */
   image?: string
   /** Command that will be emitted when clicked, will use title, description and icon from this command */
@@ -68,70 +74,35 @@ export interface CommandCardProps extends CardProps {
 }
 
 /** Display a card with media area, avatar, title, description and possibly a secondary command */
-export function CommandCard(props: CommandCardProps) {
+export function Card(props: CommandCardProps) {
   let { image, command, secondaryCommand, onCommand, ...cardProps } = props
   const className = "CommandCard-root" + (props.className ? " " + props.className : "")
 
   return (
-    <Card
+    <MuiCard
       className={className}
       variant="outlined"
       square
       onClick={(event) => onCommand(event, command)}
-      sx={CommandCard_SxProps}
+      sx={Card_SxProps}
       {...cardProps}
     >
-      <CardActionArea>
-        {image && <CardMedia className="CommandCard-media CommandCard-icon" image={image} />}
+      <MuiCardActionArea>
+        {image && <MuiCardMedia className="Card-media Card-icon" image={image} />}
         {!image && (
-          <CardMedia className="CommandCard-media">
+          <MuiCardMedia className="Card-media">
             <Icon>{command.icon}</Icon>
-          </CardMedia>
+          </MuiCardMedia>
         )}
         <Tooltip title={command.description}>
-          <CardHeader
+          <MuiCardHeader
             avatar={<Icon>{command.icon}</Icon>}
             action={secondaryCommand && <IconButton command={secondaryCommand} onCommand={onCommand} />}
             title={command.title}
             subheader={command.description}
           />
         </Tooltip>
-      </CardActionArea>
-    </Card>
+      </MuiCardActionArea>
+    </MuiCard>
   )
-}
-
-//
-// ConnectionCard
-//
-
-export interface ConnectionCardProps extends CardProps {
-  /** The connection to be shown */
-  connection: DataConnection
-  /** Show settings icon button so connection can be modified */
-  showSettings?: boolean
-  /** Will raise 'openConnection' or 'configureConnection' */
-  onCommand?: CommandEvent
-}
-
-/** A command card used to display a connection that can be opened or modified */
-export function ConnectionCard(props: ConnectionCardProps) {
-  const { className, connection, showSettings, onCommand, ...cardProps } = props
-  const image = props.connection?.configs?.metadata?.image
-
-  const command = {
-    command: "openConnection",
-    title: connection.title,
-    description: connection.configs?.metadata?.description,
-    icon: <ConnectionIcon connection={connection} />,
-    args: { connection: props.connection },
-  }
-
-  const secondaryCommand = showSettings && {
-    command: "configureConnection",
-    title: "Settings",
-    icon: "settings",
-  }
-
-  return <CommandCard className="ConnectionCard-root" image={image} command={command} secondaryCommand={secondaryCommand} onCommand={onCommand} />
 }

@@ -17,7 +17,8 @@ import { useApi } from "../../lib/api"
 
 // components
 import { PanelProps } from "../navigation/panel"
-import { ConnectionCard, CommandCard } from "../ui/cards"
+import { Card } from "../ui/card"
+import { ConnectionCard } from "../database/connectioncard"
 import { FilesBackdrop } from "../ui/filesbackdrop"
 import { Section } from "../ui/section"
 
@@ -88,7 +89,7 @@ export function HomePanel(props: HomePanelProps) {
       <Section className="HomePanel-actions" title="Let's get some data">
         <Grid container spacing={1}>
           <Grid item xs={12} sm={6} md={4}>
-            <CommandCard
+            <Card
               command={{
                 command: "openConnection",
                 title: "Blank database",
@@ -101,7 +102,7 @@ export function HomePanel(props: HomePanelProps) {
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
-            <CommandCard
+            <Card
               command={{
                 command: "openFile",
                 title: "Open file",
@@ -113,7 +114,7 @@ export function HomePanel(props: HomePanelProps) {
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
-            <CommandCard
+            <Card
               command={{
                 command: "dragnDrop",
                 title: "Drag and drop",
