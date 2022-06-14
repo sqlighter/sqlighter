@@ -42,7 +42,7 @@ export function Section(props: SectionProps) {
           {props.subtitle}
         </Typography>
       )}
-      {props.children && <Box mb={4} sx={props.sx}>{props.children}</Box>}
+      {props.children && <Box mt={1} mb={4} sx={props.sx}>{props.children}</Box>}
     </section>
   )
 }
