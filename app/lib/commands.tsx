@@ -46,8 +46,11 @@ export interface Command {
   /** Icon name or actual icon node for the command (optional) */
   icon?: string | ReactElement
 
-  /** A human-readable string describing this command (used as tooltip for icon buttons) */
+  /** A human-readable short string describing this command (used as tooltip for icon buttons if description is not available) */
   title?: string | ReactElement
+
+  /** A brief description of this command, used as tooltip if availabe (optional) */
+  description?: string
 
   /** Arguments passed to this command (optional and command-specific) */
   args?: { [key: string]: any }
