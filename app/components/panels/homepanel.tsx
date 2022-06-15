@@ -7,7 +7,6 @@ import React from "react"
 import { useState } from "react"
 import { Theme, SxProps } from "@mui/material"
 import Box from "@mui/material/Box"
-import Typography from "@mui/material/Typography"
 import Grid from "@mui/material/Grid"
 
 // model
@@ -155,15 +154,13 @@ export function HomePanel(props: HomePanelProps) {
   return (
     <Box className="HomePanel-root" sx={HomePanel_SxProps}>
       <FilesBackdrop open={showingDragnDrop} onMouseUp={(e) => setTimeout(() => setShowingDragnDrop(false), 200)} />
-      <Box sx={{ display: "flex", flexDirection: "column" }}>
-        <Typography variant="h5">SQLighter</Typography>
-        <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 4 }}>
-          Lighter, easier, faster. Pick any three.
-        </Typography>
-        {props.connections && renderConnections()}
-        {renderActions()}
-        {templates && renderTemplates()}
-      </Box>
+      <Section title="SQLighter" description="Lighter, easier, faster. Pick any three." variant="large">
+        <Box sx={{ mt: 4 }}>
+          {props.connections && renderConnections()}
+          {renderActions()}
+          {templates && renderTemplates()}
+        </Box>
+      </Section>
     </Box>
   )
 }
