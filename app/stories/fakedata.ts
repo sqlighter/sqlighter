@@ -98,19 +98,19 @@ fake_queryError1.status = "error"
 fake_queryError1.error = 'error: Error: near "FROM1": syntax error'
 
 // Various commands with labels and icons
-export const databaseCommand: Command = {
+export const databaseCmd: Command = {
   command: "openDatabase",
   title: "Database",
   description: "Open a database",
   icon: "database",
 }
-export const queryCommand: Command = {
+export const queryCmd: Command = {
   command: "openQuery",
   title: "Data",
   description: "Run SQL queries",
   icon: "table",
 }
-export const printCommand: Command = {
+export const printCmd: Command = {
   command: "print",
   title: "Print",
   description: "Print this document",
@@ -119,7 +119,7 @@ export const printCommand: Command = {
 
 export const sqlCmd: Command = { command: "viewSql", title: "SQL", icon: "code" }
 export const dataCmd: Command = { command: "viewData", title: "Data", icon: "table" }
-export const chartCommand: Command = { command: "viewChart", title: "Charts", icon: "chart" }
+export const chartCmd: Command = { command: "viewChart", title: "Charts", icon: "chart" }
 export const addonCmd: Command = { command: "viewAddon", title: "More", icon: "extension" }
 export const settingsCmd: Command = {
   command: "openSettings",

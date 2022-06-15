@@ -1,11 +1,20 @@
+//
+// section.stories.tsx
+//
+
 import React from "react"
 import { ComponentStory, ComponentMeta } from "@storybook/react"
 import { Section } from "../components/ui/section"
 import { StorybookDecorator } from "../components/storybook"
+import { sqlCmd, dataCmd, chartCmd, printCmd } from "./fakedata"
 
 export default {
   title: "UI/Section",
   component: Section,
+  args: {
+    title: "Blockbuster movies",
+    description: "A comprehensive list",
+  },
 } as ComponentMeta<typeof Section>
 
 const Template: ComponentStory<typeof Section> = (args) => (
@@ -27,20 +36,24 @@ const Template: ComponentStory<typeof Section> = (args) => (
 )
 
 export const Primary = Template.bind({})
-Primary.args = {
-  title: "Blockbuster movies",
-  subtitle: "A comprehensive list",
-}
 
-export const WithoutSubtitle = Template.bind({})
-WithoutSubtitle.args = {
-  title: "Blockbuster movies",
-  subtitle: null,
+export const WithoutDescription = Template.bind({})
+WithoutDescription.args = {
+  description: null,
 }
 
 export const WithLargeVariant = Template.bind({})
 WithLargeVariant.args = {
-  title: "Blockbuster movies",
-  subtitle: "A comprehensive list",
   variant: "large",
+}
+
+export const WithAction = Template.bind({})
+WithAction.args = {
+  action: printCmd,
+}
+
+export const WithActionAndCommands = Template.bind({})
+WithActionAndCommands.args = {
+  commands: [sqlCmd, dataCmd, chartCmd, "spacing", printCmd],
+  action: printCmd,
 }

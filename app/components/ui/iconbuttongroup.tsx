@@ -4,15 +4,11 @@
 
 import * as React from "react"
 import { IconButtonProps as MuiIconButtonProps, SxProps, Theme } from "@mui/material"
-import MuiIconButton from "@mui/material/IconButton"
 import Box from "@mui/material/Box"
 import Divider from "@mui/material/Divider"
-import Tooltip from "@mui/material/Tooltip"
-import Typography from "@mui/material/Typography"
 import Stack from "@mui/material/Stack"
 
 import { Command, CommandEvent } from "../../lib/commands"
-import { Icon } from "./icon"
 import { IconButton } from "./iconbutton"
 
 const IconButtonGroup_SxProps: SxProps<Theme> = {
