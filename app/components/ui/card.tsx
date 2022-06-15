@@ -2,35 +2,24 @@
 // card.tsx
 //
 
-import { ReactElement } from "react"
-import { SxProps, Theme, alpha } from "@mui/material"
-import Box from "@mui/material/Box"
+import { SxProps, Theme } from "@mui/material"
 import MuiCard from "@mui/material/Card"
 import MuiCardActionArea from "@mui/material/CardActionArea"
-import CardActions from "@mui/material/CardActions"
-import CardContent from "@mui/material/CardContent"
 import MuiCardHeader from "@mui/material/CardHeader"
 import MuiCardMedia from "@mui/material/CardMedia"
 import { CardProps as MuiCardProps } from "@mui/material"
 import Tooltip from "@mui/material/Tooltip"
 
 import { IconButton } from "./iconbutton"
-import { ConnectionIcon } from "../database/connectionicon"
-import { DataConnection } from "../../lib/data/connections"
 import { Command, CommandEvent } from "../../lib/commands"
 import { Icon } from "./icon"
-
-//
-// CommandCard
-//
 
 const Card_SxProps: SxProps<Theme> = {
   ".Card-media": {
     height: 120,
 
-    // backgroundColor: (theme) => alpha(theme.palette.text.primary, 0.05),
     // light background with tint from the primary color in the theme
-    backgroundColor: (theme) => alpha(theme.palette.primary.main, 0.1),
+    backgroundColor: (theme: any) => theme.palette.primary.lighter, // extension
 
     textAlign: "right",
   },
@@ -38,8 +27,7 @@ const Card_SxProps: SxProps<Theme> = {
   ".Card-icon": {
     ".MuiSvgIcon-root": {
       fontSize: 128,
-
-      color: (theme) => alpha(theme.palette.background.paper, 0.4),
+      color: "background.paper",
     },
   },
 
@@ -82,7 +70,7 @@ export interface CommandCardProps extends MuiCardProps {
 /** Display a card with media area, avatar, title, description and possibly a secondary command */
 export function Card(props: CommandCardProps) {
   let { image, command, secondaryCommand, onCommand, ...cardProps } = props
-  const className = "CommandCard-root" + (props.className ? " " + props.className : "")
+  const className = "Card-root" + (props.className ? " " + props.className : "")
 
   return (
     <MuiCard
@@ -94,9 +82,9 @@ export function Card(props: CommandCardProps) {
       {...cardProps}
     >
       <MuiCardActionArea>
-        {image && <MuiCardMedia className="Card-media Card-icon" image={image} />}
+        {image && <MuiCardMedia className="Card-media" image={image} />}
         {!image && (
-          <MuiCardMedia className="Card-media">
+          <MuiCardMedia className="Card-media Card-icon">
             <Icon>{command.icon}</Icon>
           </MuiCardMedia>
         )}

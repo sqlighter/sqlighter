@@ -4,7 +4,6 @@
 
 import React from "react"
 import { ComponentStory, ComponentMeta } from "@storybook/react"
-import Box from "@mui/material/Box"
 import Grid from "@mui/material/Grid"
 import { StorybookDecorator } from "../components/storybook"
 import { Card } from "../components/ui/card"
@@ -53,10 +52,15 @@ WithSecondaryCommand.args = {
 }
 
 export const WithLongLabels = Template.bind({})
-WithSecondaryCommand.args = {
+WithLongLabels.args = {
   command: {
     ...databaseCommand,
     title: databaseCommand.title + " this is a much longer title",
     description: databaseCommand.description + " this is a much longer description",
   },
+}
+
+export const WithoutImage = Template.bind({})
+WithoutImage.args = {
+  image: undefined,
 }
