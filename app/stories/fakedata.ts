@@ -32,6 +32,12 @@ export const fake_connection1 = new FakeConnection({
   client: "sqlite3",
   title: "chinook.db",
   connection: {},
+  metadata: {
+    description:
+      "Chinook is a sample database available for many database engines. It can be created by running a single SQL script. Chinook database is an alternative to the Northwind database, being ideal for demos and testing ORM tools targeting single and multiple database servers.",
+    image: "/databases/chinook.jpg",
+    url: "https://github.com/lerocha/chinook-database#:~:text=Chinook%20is%20a%20sample%20database,single%20and%20multiple%20database%20servers.",
+  },
 })
 export const fake_connection2 = new FakeConnection({
   client: "sqlite3",
@@ -92,14 +98,32 @@ fake_queryError1.status = "error"
 fake_queryError1.error = 'error: Error: near "FROM1": syntax error'
 
 // Various commands with labels and icons
-export const databaseCommand: Command = { command: "openDatabase", title: "Database", description: "Open a database", icon: "database" }
-export const queryCommand: Command = { command: "openQuery", title: "Data", description: "Run SQL queries", icon: "table" }
-export const printCommand: Command = { command: "print", title: "Print", description: "Print this document", icon: "print" }
+export const databaseCommand: Command = {
+  command: "openDatabase",
+  title: "Database",
+  description: "Open a database",
+  icon: "database",
+}
+export const queryCommand: Command = {
+  command: "openQuery",
+  title: "Data",
+  description: "Run SQL queries",
+  icon: "table",
+}
+export const printCommand: Command = {
+  command: "print",
+  title: "Print",
+  description: "Print this document",
+  icon: "print",
+}
 
 export const sqlCmd: Command = { command: "viewSql", title: "SQL", icon: "code" }
 export const dataCmd: Command = { command: "viewData", title: "Data", icon: "table" }
 export const chartCommand: Command = { command: "viewChart", title: "Charts", icon: "chart" }
 export const addonCmd: Command = { command: "viewAddon", title: "More", icon: "extension" }
-export const settingsCmd: Command = { command: "openSettings", title: "Settings", description: "Open settings and configurations", icon: "settings"}
-
-
+export const settingsCmd: Command = {
+  command: "openSettings",
+  title: "Settings",
+  description: "Open settings and configurations",
+  icon: "settings",
+}

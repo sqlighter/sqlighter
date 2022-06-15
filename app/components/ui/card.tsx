@@ -59,17 +59,21 @@ const Card_SxProps: SxProps<Theme> = {
 export interface CommandCardProps extends MuiCardProps {
   /** Image to be shown, if missing will show the command's icon */
   image?: string
+  /** An icon to be shown (if image is null). Default is null and will use command's icon */
+  icon?: string
+
   /** Command that will be emitted when clicked, will use title, description and icon from this command */
   command: Command
   /** An optional secondary command shown on the right in the action area, like 'settings', etc (optional) */
   secondaryCommand?: Command
+
   /** Event handler for primary or secondary command */
   onCommand?: CommandEvent
 }
 
 /** Display a card with media area, avatar, title, description and possibly a secondary command */
 export function Card(props: CommandCardProps) {
-  let { image, command, secondaryCommand, onCommand, ...cardProps } = props
+  let { image, icon, command, secondaryCommand, onCommand, ...cardProps } = props
   const className = "Card-root" + (props.className ? " " + props.className : "")
 
   return (
@@ -85,7 +89,7 @@ export function Card(props: CommandCardProps) {
         {image && <MuiCardMedia className="Card-media" image={image} />}
         {!image && (
           <MuiCardMedia className="Card-media Card-icon">
-            <Icon>{command.icon}</Icon>
+            <Icon>{icon || command.icon}</Icon>
           </MuiCardMedia>
         )}
         <Tooltip title={command.description}>

@@ -66,7 +66,7 @@ export function HomePanel(props: HomePanelProps) {
             {props.connections.map((connection) => {
               return (
                 <Grid item key={connection.id} xs={12} sm={6} md={4}>
-                  <ConnectionCard connection={connection} showSettings={true} onCommand={props.onCommand} />
+                  <ConnectionCard connection={connection} canConfigure={true} onCommand={props.onCommand} />
                 </Grid>
               )
             })}

@@ -10,17 +10,17 @@ import { CommandEvent } from "../../lib/commands"
 import { Card } from "../ui/card"
 
 export interface ConnectionCardProps extends MuiCardProps {
-  /** The connection to be shown */
+  /** Connection to be shown */
   connection: DataConnection
-  /** Show settings icon button so connection can be modified */
-  showSettings?: boolean
+  /** Show configure connection button so connection can be modified (default false) */
+  canConfigure?: boolean
   /** Will raise 'openConnection' or 'configureConnection' */
   onCommand?: CommandEvent
 }
 
 /** A command card used to display a connection that can be opened or modified */
 export function ConnectionCard(props: ConnectionCardProps) {
-  const { className, connection, showSettings, onCommand, ...cardProps } = props
+  const { className, connection, canConfigure, onCommand, ...cardProps } = props
   const image = props.connection?.configs?.metadata?.image
 
   const command = {
@@ -31,11 +31,23 @@ export function ConnectionCard(props: ConnectionCardProps) {
     args: { connection: props.connection },
   }
 
-  const secondaryCommand = showSettings && {
+  const configureCommand = canConfigure && {
     command: "configureConnection",
-    title: "Settings",
+    title: "Configure",
     icon: "settings",
+    args: {
+      item: connection,
+    },
   }
 
-  return <Card className="ConnectionCard-root" image={image} command={command} secondaryCommand={secondaryCommand} onCommand={onCommand} />
+  return (
+    <Card
+      className="ConnectionCard-root"
+      image={image}
+      icon="database"
+      command={command}
+      secondaryCommand={configureCommand}
+      onCommand={onCommand}
+    />
+  )
 }
