@@ -47,6 +47,12 @@ const Card_SxProps: SxProps<Theme> = {
     overflow: "hidden",
   },
 
+  ".MuiCardHeader-title": {
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+  },
+
   ".MuiCardHeader-subheader": {
     width: 1,
     whiteSpace: "nowrap",
