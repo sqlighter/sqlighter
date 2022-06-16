@@ -18,6 +18,12 @@ export type CommandType =
   | "openSettings"
   /** Open given connection @param item The connection to be opened */
   | "openConnection"
+  /** Show database panel @param connection The database connection */
+  | "openDatabase"
+  /** Open database table panel @param connection The database connection, @param table The table to be shown */
+  | "openTable"
+  /** Open a query panel @param connection The database connection @sql The sql statement to run */
+  | "openQuery"
 
   /** Change selected activity @param id Activity unique id */
   | "changedActivity"
@@ -34,6 +40,11 @@ export type CommandType =
   
   /** Modify a connection settings @param item The connection to modify */
   | "configureConnection"
+
+  /** Pin item in tree view */
+  | "pin"
+  /** Unpin item from tree view */
+  | "unpin"
 
   | string
 

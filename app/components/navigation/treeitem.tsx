@@ -95,7 +95,7 @@ export function TreeItem({ item, ...props }: TreeItemProps) {
 
   function getCommandIcon(command: Command) {
     // alter pin command for items that are already pinned
-    if (props.pinned && command.command === "sqlighter.pin") {
+    if (props.pinned && command.command === "pin") {
       command.title = "Unpin"
       command.icon = "unpin"
     }

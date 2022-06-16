@@ -2,25 +2,28 @@
 // app.tsx - sqlighter as a full page application
 //
 
+// libs
 import React, { useState, useEffect, ReactElement } from "react"
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
 import Typography from "@mui/material/Typography"
 
+// model
 import { Command } from "../../lib/commands"
-import { useSqljs } from "../hooks/useDB"
-import { DataConnection, DataConfig } from "../../lib/data/connections"
+import { DataConnection } from "../../lib/data/connections"
 import { DataConnectionFactory } from "../../lib/data/factory"
-import { SqliteDataConnection } from "../../lib/data/clients/sqlite"
-import { QueryPanel } from "../panels/querypanel"
-import { HomePanel, HOME_PANEL_ID } from "../panels/homepanel"
-import { TabsLayout } from "../../components/navigation/tabslayout"
-import { Panel, PanelElement, PanelProps } from "../../components/navigation/panel"
-import { DatabasePanel } from "../database/databasepanel"
-import { IconButton } from "../ui/iconbutton"
 import { Query } from "../../lib/items/query"
-import { compareAsc } from "date-fns"
+
+// components
+import { DatabaseActivity } from "../database/databaseactivity"
+import { DatabasePanel } from "../panels/databasepanel"
 import { Empty } from "../ui/empty"
+import { HomePanel, HOME_PANEL_ID } from "../panels/homepanel"
+import { Panel, PanelElement, PanelProps } from "../navigation/panel"
+import { TablePanel } from "../panels/tablepanel"
+import { QueryPanel } from "../panels/querypanel"
+import { TabsLayout } from "../navigation/tabslayout"
+import { useSqljs } from "../hooks/useDB"
 
 export interface MainProps extends PanelProps {
   /** User currently signedin (if any) */
@@ -113,35 +116,26 @@ export default function Main(props: MainProps) {
   /** Will open a connection, if needed, then make it the current connection */
   async function openConnection(connection: DataConnection) {
     if (!connection.isConnected) {
- 
- 
-      const db = new sqljs.Database();
+      const db = new sqljs.Database()
       // NOTE: You can also use new SQL.Database(data) where
       // data is an Uint8Array representing an SQLite database file
-      
-      
+
+      // TODO remove these checks
+
       // Execute a single SQL string that contains multiple statements
-      let sqlstr = "CREATE TABLE hello (a int, b char); \
+      let sqlstr =
+        "CREATE TABLE hello (a int, b char); \
       INSERT INTO hello VALUES (0, 'hello'); \
-      INSERT INTO hello VALUES (1, 'world');";
-      db.run(sqlstr); // Run the query without returning anything
-      
+      INSERT INTO hello VALUES (1, 'world');"
+      db.run(sqlstr) // Run the query without returning anything
+
       // Prepare an sql statement
-      const stmt = db.prepare("SELECT * FROM hello WHERE a=:aval AND b=:bval");
-      
+      const stmt = db.prepare("SELECT * FROM hello WHERE a=:aval AND b=:bval")
+
       // Bind values to the parameters and fetch the results of the query
-      const result = stmt.getAsObject({':aval' : 1, ':bval' : 'world'});
-      console.log(result); // Will print {a:1, b:'world'}
-      
- 
- 
- 
- 
- 
- 
- 
- 
- 
+      const result = stmt.getAsObject({ ":aval": 1, ":bval": "world" })
+      console.log(result) // Will print {a:1, b:'world'}
+
       await connection.connect(sqljs)
     }
     const hasConnection = connections && connections.find((conn) => conn.id == connection.id)
@@ -149,6 +143,27 @@ export default function Main(props: MainProps) {
       setConnections([connection, ...(connections || [])])
     }
     setConnection(connection)
+  }
+
+  /** Opens a database tab to show this database structure or selects it if already open */
+  function openDatabase(connection: DataConnection) {
+    const databaseTabId = `pnl_database_${connection.id}`
+    if (!tabs.find((tab) => tab.id === databaseTabId)) {
+      const databaseTab = { id: databaseTabId, component: "DatabasePanel", props: { connection } }
+      setTabs([databaseTab, ...tabs])
+    }
+    setTabId(databaseTabId)
+  }
+
+  /** Add <TablePanel> tab for the table indicated in the command, or selects existing panel if already open. */
+  function openTable(command: Command) {
+    const tabId = `pnl_table_${connection.id}_${command.args.database}_${command.args.table}`
+    console.debug(`openTable - ${tabId}`)
+    if (!tabs.find((tab) => tab.id === tabId)) {
+      const tableTab = { id: tabId, component: "TablePanel", props: { ...command.args } }
+      setTabs([tableTab, ...tabs])
+    }
+    setTabId(tabId)
   }
 
   //
@@ -181,9 +196,18 @@ export default function Main(props: MainProps) {
         }
         return
 
+      case "openDatabase":
+        if (command.args?.connection) {
+          openDatabase(command.args.connection)
+        }
+        return
+
+      case "openTable":
+        openTable(command)
+        return
+
       // open a new tab with a query panel
-      case "sqlighter.viewStructure": // TODO will have its own panel but just open sql for now
-      case "sqlighter.viewQuery":
+      case "openQuery":
       case "tabs.newTab":
         const query = new Query()
         query.connectionId = connection?.id
@@ -240,7 +264,7 @@ export default function Main(props: MainProps) {
 
   function renderActivities(): PanelElement[] {
     return [
-      <DatabasePanel
+      <DatabaseActivity
         id="act_database"
         title="Database"
         icon="database"
@@ -274,6 +298,28 @@ export default function Main(props: MainProps) {
               icon="home"
               connection={connection}
               connections={connections}
+              onCommand={handleCommand}
+            />
+          )
+        case "DatabasePanel":
+          return (
+            <DatabasePanel
+              key={tab.id}
+              id={tab.id}
+              title={tab.props.connection.title}
+              icon="database"
+              connection={tab.props.connection}
+              onCommand={handleCommand}
+            />
+          )
+        case "TablePanel":
+          return (
+            <TablePanel
+              key={tab.id}
+              id={tab.id}
+              title={tab.props.title}
+              icon="table"
+              {...tab.props}
               onCommand={handleCommand}
             />
           )

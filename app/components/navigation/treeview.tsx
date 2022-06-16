@@ -188,7 +188,7 @@ export function TreeView(props: TreeViewProps) {
         }
         break
 
-      case "sqlighter.pin":
+      case "pin":
         setPinned(item.id, !isPinned(item.id))
         break
 

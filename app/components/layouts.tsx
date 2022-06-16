@@ -47,7 +47,7 @@ interface LayoutProps {
   /** Page title */
   title?: string
 
-  /** Brief subtitle shown in page's header */
+  /** Brief description shown in page's header */
   description?: string
 
   /** Layout contents */

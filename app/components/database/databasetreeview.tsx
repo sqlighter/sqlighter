@@ -51,7 +51,7 @@ export function DatabaseTreeView(props: DatabaseTreeViewProps) {
   async function handleCommand(event: React.SyntheticEvent, command: Command) {
     // console.debug(`DatabaseTreeView.handleCommand - ${command.command}`, command)
     switch (command.command) {
-      case "sqlighter.refreshSchema":
+      case "refreshSchema":
         if (props.connection) {
           const trees = await getTrees(props.connection, true)
           setTrees(trees)
@@ -103,7 +103,7 @@ function _getTableColumnTree(schema: DataSchema, table, column) {
   return tree
 }
 
-function _getTableTree(schema: DataSchema, table) {
+function _getTableTree(connection: DataConnection, schema: DataSchema, table) {
   const columns = table.columns && table.columns.map((column) => _getTableColumnTree(schema, table, column))
 
   const indexes =
@@ -117,26 +117,30 @@ function _getTableTree(schema: DataSchema, table) {
       }
     })
 
+  const tableId = `${schema.database}/tables/${table.name}`
   return {
-    id: `${schema.database}/tables/${table.name}`,
+    id: tableId,
     title: table.name,
     type: "table",
     commands: [
       {
-        command: "sqlighter.viewStructure",
-        icon: "info",
+        command: "openTable",
         title: "View Structure",
-        args: { title: `All ${table.name}`, sql: `SELECT * FROM ${table.name}` },
+        icon: "info",
+        args: {
+          title: `${table.name}`,
+          connection,
+          database: schema.database,
+          table: table.name,
+        },
       },
       {
-        // for now we open a generic query panel and select the table's data
-        // TODO launch a table panel that display, edit, insert and remove rows
-        title: "View Data",
+        command: "openQuery",
+        title: "Query Data",
         icon: "query",
-        command: "sqlighter.viewQuery",
         args: { title: `All ${table.name}`, sql: `SELECT * FROM ${table.name}` },
       },
-      { command: "sqlighter.pin", icon: "pin", title: "Pin" },
+      { command: "pin", icon: "pin", title: "Pin" },
     ],
     children: [
       {
@@ -184,7 +188,7 @@ export async function getTrees(connection: DataConnection, refresh: boolean = fa
   const trees: Tree[] = []
 
   for (const schema of schemas) {
-    const tables = schema.tables.map((table) => _getTableTree(schema, table))
+    const tables = schema.tables.map((table) => _getTableTree(connection, schema, table))
     const triggers = schema.triggers.map((trigger) => _getTriggerTree(schema, trigger))
     const views = schema.views.map((view) => _getViewTree(schema, view))
 
@@ -193,7 +197,10 @@ export async function getTrees(connection: DataConnection, refresh: boolean = fa
       title: schema.database,
       type: "database",
       icon: "database",
-      commands: [{ command: "sqlighter.refreshSchema", icon: "refresh", title: "Refresh" }],
+      commands: [
+        { command: "openDatabase", icon: "info", title: "View Structure", args: { connection } },
+        { command: "refreshSchema", icon: "refresh", title: "Refresh Schema" },
+      ],
       children: [
         {
           id: `${schema.database}/tables`,
