@@ -172,6 +172,7 @@ export function TabsLayout(props: TabsLayoutProps) {
                 tabsCommands={props.tabsCommands}
                 empty={props.empty}
                 onCommand={props.onCommand}
+                canClose
               />
             </Box>
           </Allotment.Pane>

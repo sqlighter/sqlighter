@@ -47,8 +47,6 @@ const Tabs_SxProps: SxProps<Theme> = {
     height: TABLIST_HEIGHT,
     backgroundColor: "background.paper",
     display: "flex",
-
-    // borderBottom: (theme: any) => `1px solid ${theme.palette.divider}`,
   },
 
   ".Tabs-tabsCommands": {
@@ -122,6 +120,9 @@ const Tabs_SxProps: SxProps<Theme> = {
 }
 
 export interface TabsProps {
+  /** Class applied to this component */
+  className?: string
+
   /** Id of selected tab (controlled by parent) */
   tabId?: string
 
@@ -130,6 +131,9 @@ export interface TabsProps {
 
   /** Additional command icons shown at the end of the tab bar, eg: create tab icon */
   tabsCommands?: Command[]
+
+  /** True if tabs can be closed, default false */
+  canClose?: boolean
 
   /** Element to be shown when there are no tabs (usually an <Empty/> placeholder) */
   empty?: ReactElement
@@ -280,10 +284,12 @@ export function Tabs(props: TabsProps) {
         aria-label={tabProps.id}
         component="div"
         label={
-          <Box sx={{ display: "flex", alignItems: "center" }}>
+          <Box sx={{ display: "flex", alignItems: "center", paddingRight: props.canClose ? 0 : 2 }}>
             <Icon className="Tab-icon">{tabProps.icon}</Icon>
             <Typography variant="body2">{tabProps.title}</Typography>
-            <IconButton className="Tab-closeIcon" command={closeCommand} onCommand={handleCloseTab} size="small" />
+            {props.canClose && (
+              <IconButton className="Tab-closeIcon" command={closeCommand} onCommand={handleCloseTab} size="small" />
+            )}
           </Box>
         }
         draggable="true"
@@ -328,7 +334,10 @@ export function Tabs(props: TabsProps) {
     )
   }
 
-  const className = "Tabs-root" + (props.variant == "above" ? " Tabs-indicatorAbove" : "")
+  const className =
+    "Tabs-root" +
+    (props.variant == "above" ? " Tabs-indicatorAbove" : "") +
+    (props.className ? " " + props.className : "")
 
   if (props.tabs?.length > 0) {
     return (

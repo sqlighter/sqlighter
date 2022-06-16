@@ -356,6 +356,7 @@ export function QueryPanel(props: QueryPanelProps) {
           tabsCommands={isMediumScreen && [toggleResults]}
           onCommand={handleCommand}
           variant="above"
+          canClose
         />
       )
     }
