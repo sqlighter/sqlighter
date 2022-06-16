@@ -1,5 +1,5 @@
 //
-// databasepanel.tsx - a panel used to show the schema of connected databases
+// DatabaseActivity.tsx - a panel used to show the schema of connected databases
 // normally used as an activity with an icon in the activity bar and panel
 // inside the sidebar. helps with new connections, shows tables, views, etc.
 //
@@ -14,15 +14,15 @@ import { ConnectionPicker } from "./connectionpicker"
 import { PanelProps } from "../navigation/panel"
 
 // Styles applied to component and subcomponents
-export const DatabasePanel_SxProps: SxProps<Theme> = {
-  ".DatabasePanel-header": {
+export const DatabaseActivity_SxProps: SxProps<Theme> = {
+  ".DatabaseActivity-header": {
     width: 1,
     padding: 1,
   },
 }
 
 /** Database panel in the sidebar */
-export interface DatabasePanelProps extends PanelProps {
+export interface DatabaseActivityProps extends PanelProps {
   /** Currently selected connection */
   connection?: DataConnection
   /** List of available connections (which may or may not be live) */
@@ -30,10 +30,10 @@ export interface DatabasePanelProps extends PanelProps {
 }
 
 /** A sidebar panel used to display the schema of connected databases */
-export function DatabasePanel(props: DatabasePanelProps) {
+export function DatabaseActivity(props: DatabaseActivityProps) {
   return (
-    <Box className="DatabasePanel-root" sx={DatabasePanel_SxProps}>
-      <Box className="DatabasePanel-header">
+    <Box className="DatabaseActivity-root" sx={DatabaseActivity_SxProps}>
+      <Box className="DatabaseActivity-header">
         <Typography variant="overline">Database Explorer</Typography>
         <ConnectionPicker connection={props.connection} connections={props.connections} onCommand={props.onCommand} />
       </Box>
