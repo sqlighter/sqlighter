@@ -1,5 +1,5 @@
 //
-// section.tsx - a section of content
+// section.tsx - a section of content with title and optional desription, commands, action, contents
 //
 
 import { ReactElement } from "react"
@@ -12,7 +12,26 @@ import { PanelProps } from "../navigation/panel"
 import { Command, CommandEvent } from "../../lib/commands"
 import { IconButtonGroup } from "./iconbuttongroup"
 
-const Section_SxProps: SxProps<Theme> = {}
+const Section_SxProps: SxProps<Theme> = {
+  width: 1,
+  display: "flex",
+  flexDirection: "column",
+
+  ".Section-action": {
+    height: 40,
+    minWidth: 80,
+  },
+
+  ".Section-commands": {
+    marginTop: 2,
+    marginLeft: -1,
+  },
+
+  ".Section-children": {
+    marginTop: 2,
+    flexGrow: 1,
+  },
+}
 
 export interface SectionProps extends PanelProps {
   /** Class name applied to this component */
@@ -28,7 +47,7 @@ export interface SectionProps extends PanelProps {
   commands?: (Command | "divider" | "spacing")[]
 
   /** Large action command shown to the right of section's title */
-  action?: Command | ReactElement
+  action?: Command
 
   /** Larger title? Default regular */
   variant?: "default" | "large"
@@ -42,50 +61,48 @@ export interface SectionProps extends PanelProps {
 
 /** A content section with standardized style and structure */
 export function Section(props: SectionProps) {
-  const className = "Section-root" + (props.className ? " " + props.className : "")
+  //
+  // render
+  //
 
   function renderAction() {
     if (props.action) {
-      if (props.action?.command) {
-        const actionCmd = props.action as Command
-        return (
-          <Button variant="outlined" onClick={(e) => props.onCommand(e, actionCmd)}>{actionCmd.title}</Button>
-        )
-      }
-      return props.action
+      const actionCmd = props.action as Command
+      return (
+        <Button className="Section-action" variant="outlined" onClick={(e) => props.onCommand(e, actionCmd)}>
+          {actionCmd.title}
+        </Button>
+      )
     }
     return null
   }
 
+  const className = "Section-root" + (props.className ? " " + props.className : "")
   return (
-    <section aria-label={props.title}>
-      <Box className={className} sx={Section_SxProps}>
-        <Box sx={{ display: "flex", width: 1 }}>
-          <Box sx={{ flexGrow: 1 }}>
-            {props.title && (
-              <Typography
-                className="Section-title"
-                variant={props.variant === "large" ? "h5" : "h6"}
-                color="text.primary"
-              >
-                {props.title}
-              </Typography>
-            )}
-            {props.description && (
-              <Typography className="Section-description" variant="body1" color="text.secondary">
-                {props.description}
-              </Typography>
-            )}
-          </Box>
-          {renderAction()}
+    <Box className={className} sx={Section_SxProps}>
+      <Box className="Section-header" sx={{ display: "flex", width: 1 }}>
+        <Box sx={{ flexGrow: 1 }}>
+          {props.title && (
+            <Typography
+              className="Section-title"
+              variant={props.variant === "large" ? "h5" : "h6"}
+              color="text.primary"
+            >
+              {props.title}
+            </Typography>
+          )}
+          {props.description && (
+            <Typography className="Section-description" variant="body2" color="text.secondary">
+              {props.description}
+            </Typography>
+          )}
         </Box>
-        {props.commands && <IconButtonGroup commands={props.commands} onCommand={props.onCommand} />}
-        {props.children && (
-          <Box mt={1} mb={4}>
-            {props.children}
-          </Box>
-        )}
+        {renderAction()}
       </Box>
-    </section>
+      {props.commands && (
+        <IconButtonGroup className="Section-commands" commands={props.commands} size="small" onCommand={props.onCommand} />
+      )}
+      {props.children && <Box className="Section-children">{props.children}</Box>}
+    </Box>
   )
 }
