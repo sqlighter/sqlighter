@@ -8,6 +8,9 @@ import { parseISO } from "date-fns"
 import { Command } from "../lib/commands"
 import fakeCustomers from "./data/customers"
 import { QueryExecResult } from "sql.js"
+import { DataConnectionFactory } from "../lib/data/factory"
+import { SqliteDataConnection } from "../lib/data/clients/sqlite"
+//import initSqlJs from "sql.js"
 
 // DataConnection (fake)
 class FakeConnection extends DataConnection {
@@ -30,7 +33,7 @@ class FakeConnection extends DataConnection {
 
 export const fake_connection1 = new FakeConnection({
   client: "sqlite3",
-  title: "chinook.db",
+  title: "fakenook.db",
   connection: {},
   metadata: {
     description:
@@ -126,4 +129,26 @@ export const settingsCmd: Command = {
   title: "Settings",
   description: "Open settings and configurations",
   icon: "settings",
+}
+
+//
+// actual chinook.db database loaded on the spot from the network
+//
+
+const initSqlJs = (window as any).initSqlJs;
+export async function getChinookConnection(): Promise<SqliteDataConnection> {
+  const engine = await initSqlJs({
+    locateFile: file => `/${file}`
+  });  
+  const configs: DataConfig = {
+    id: "dbc_chinook",
+    client: "sqlite3",
+    title: "chinook.db",
+    connection: {
+      url: "https://sqlighter.com/databases/chinook.db"
+    },
+  }
+  const connection = DataConnectionFactory.create(configs) as SqliteDataConnection
+  await connection.connect(engine)
+  return connection
 }

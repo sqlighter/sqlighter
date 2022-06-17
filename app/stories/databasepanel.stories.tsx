@@ -7,7 +7,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react"
 import { Box } from "@mui/material"
 import { StorybookDecorator } from "../components/storybook"
 import { DatabasePanel } from "../components/panels/databasepanel"
-import { fake_connection1 } from "./fakedata"
+import { fake_connection1, getChinookConnection } from "./fakedata"
 
 export default {
   title: "Database/DatabasePanel",
@@ -37,3 +37,18 @@ const Template: ComponentStory<typeof DatabasePanel> = (args) => {
 }
 
 export const Primary = Template.bind({})
+
+// template with actual database loaded asynchronously from network
+const ChinookTemplate: ComponentStory<typeof DatabasePanel> = (args, { loaded: { connection } }) => {
+  return (
+    <Box sx={{ height: 800, width: 1 }}>
+      <DatabasePanel {...args} connection={connection} />
+    </Box>
+  )
+}
+export const WithChinook = ChinookTemplate.bind({})
+WithChinook.loaders = [
+  async () => ({
+    connection: await getChinookConnection(),
+  }),
+];
