@@ -9,6 +9,7 @@ jobs:
   # Run interaction and accessibility tests
   # see https://storybook.js.org/tutorials/ui-testing-handbook/react/en/automate/
   interaction-and-accessibility:
+    name: "Interaction and Accessibility"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
