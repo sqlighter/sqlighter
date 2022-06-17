@@ -1,0 +1,2482 @@
+[
+  {
+    "type": "table",
+    "name": "albums",
+    "sql": "CREATE TABLE \"albums\"\r\n(\r\n    [AlbumId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\r\n    [Title] NVARCHAR(160)  NOT NULL,\r\n    [ArtistId] INTEGER  NOT NULL,\r\n    FOREIGN KEY ([ArtistId]) REFERENCES \"artists\" ([ArtistId]) \r\n\t\tON DELETE NO ACTION ON UPDATE NO ACTION\r\n)",
+    "ast": {
+      "type": "statement",
+      "variant": "list",
+      "statement": [
+        {
+          "type": "statement",
+          "name": {
+            "type": "identifier",
+            "variant": "table",
+            "name": "albums"
+          },
+          "variant": "create",
+          "format": "table",
+          "definition": [
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "AlbumId",
+              "definition": [
+                {
+                  "type": "constraint",
+                  "variant": "primary key",
+                  "autoIncrement": true
+                },
+                {
+                  "type": "constraint",
+                  "variant": "not null"
+                }
+              ],
+              "datatype": {
+                "type": "datatype",
+                "variant": "integer",
+                "affinity": "integer"
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "Title",
+              "definition": [
+                {
+                  "type": "constraint",
+                  "variant": "not null"
+                }
+              ],
+              "datatype": {
+                "type": "datatype",
+                "variant": "nvarchar",
+                "affinity": "text",
+                "args": {
+                  "type": "expression",
+                  "variant": "list",
+                  "expression": [
+                    {
+                      "type": "literal",
+                      "variant": "decimal",
+                      "value": "160"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "ArtistId",
+              "definition": [
+                {
+                  "type": "constraint",
+                  "variant": "not null"
+                }
+              ],
+              "datatype": {
+                "type": "datatype",
+                "variant": "integer",
+                "affinity": "integer"
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "constraint",
+              "definition": [
+                {
+                  "type": "constraint",
+                  "variant": "foreign key",
+                  "references": {
+                    "type": "identifier",
+                    "variant": "expression",
+                    "format": "table",
+                    "name": "artists",
+                    "columns": [
+                      {
+                        "type": "identifier",
+                        "variant": "column",
+                        "name": "ArtistId"
+                      }
+                    ]
+                  },
+                  "action": [
+                    {
+                      "type": "action",
+                      "variant": "on",
+                      "action": "no action"
+                    },
+                    {
+                      "type": "action",
+                      "variant": "on",
+                      "action": "no action"
+                    }
+                  ]
+                }
+              ],
+              "columns": [
+                {
+                  "type": "identifier",
+                  "variant": "column",
+                  "name": "ArtistId"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "table",
+    "name": "sqlite_sequence",
+    "sql": "CREATE TABLE sqlite_sequence(name,seq)",
+    "ast": {
+      "type": "statement",
+      "variant": "list",
+      "statement": [
+        {
+          "type": "statement",
+          "name": {
+            "type": "identifier",
+            "variant": "table",
+            "name": "sqlite_sequence"
+          },
+          "variant": "create",
+          "format": "table",
+          "definition": [
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "name",
+              "definition": []
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "seq",
+              "definition": []
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "table",
+    "name": "artists",
+    "sql": "CREATE TABLE \"artists\"\r\n(\r\n    [ArtistId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\r\n    [Name] NVARCHAR(120)\r\n)",
+    "ast": {
+      "type": "statement",
+      "variant": "list",
+      "statement": [
+        {
+          "type": "statement",
+          "name": {
+            "type": "identifier",
+            "variant": "table",
+            "name": "artists"
+          },
+          "variant": "create",
+          "format": "table",
+          "definition": [
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "ArtistId",
+              "definition": [
+                {
+                  "type": "constraint",
+                  "variant": "primary key",
+                  "autoIncrement": true
+                },
+                {
+                  "type": "constraint",
+                  "variant": "not null"
+                }
+              ],
+              "datatype": {
+                "type": "datatype",
+                "variant": "integer",
+                "affinity": "integer"
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "Name",
+              "definition": [],
+              "datatype": {
+                "type": "datatype",
+                "variant": "nvarchar",
+                "affinity": "text",
+                "args": {
+                  "type": "expression",
+                  "variant": "list",
+                  "expression": [
+                    {
+                      "type": "literal",
+                      "variant": "decimal",
+                      "value": "120"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "table",
+    "name": "customers",
+    "sql": "CREATE TABLE \"customers\"\r\n(\r\n    [CustomerId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\r\n    [FirstName] NVARCHAR(40)  NOT NULL,\r\n    [LastName] NVARCHAR(20)  NOT NULL,\r\n    [Company] NVARCHAR(80),\r\n    [Address] NVARCHAR(70),\r\n    [City] NVARCHAR(40),\r\n    [State] NVARCHAR(40),\r\n    [Country] NVARCHAR(40),\r\n    [PostalCode] NVARCHAR(10),\r\n    [Phone] NVARCHAR(24),\r\n    [Fax] NVARCHAR(24),\r\n    [Email] NVARCHAR(60)  NOT NULL,\r\n    [SupportRepId] INTEGER,\r\n    FOREIGN KEY ([SupportRepId]) REFERENCES \"employees\" ([EmployeeId]) \r\n\t\tON DELETE NO ACTION ON UPDATE NO ACTION\r\n)",
+    "ast": {
+      "type": "statement",
+      "variant": "list",
+      "statement": [
+        {
+          "type": "statement",
+          "name": {
+            "type": "identifier",
+            "variant": "table",
+            "name": "customers"
+          },
+          "variant": "create",
+          "format": "table",
+          "definition": [
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "CustomerId",
+              "definition": [
+                {
+                  "type": "constraint",
+                  "variant": "primary key",
+                  "autoIncrement": true
+                },
+                {
+                  "type": "constraint",
+                  "variant": "not null"
+                }
+              ],
+              "datatype": {
+                "type": "datatype",
+                "variant": "integer",
+                "affinity": "integer"
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "FirstName",
+              "definition": [
+                {
+                  "type": "constraint",
+                  "variant": "not null"
+                }
+              ],
+              "datatype": {
+                "type": "datatype",
+                "variant": "nvarchar",
+                "affinity": "text",
+                "args": {
+                  "type": "expression",
+                  "variant": "list",
+                  "expression": [
+                    {
+                      "type": "literal",
+                      "variant": "decimal",
+                      "value": "40"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "LastName",
+              "definition": [
+                {
+                  "type": "constraint",
+                  "variant": "not null"
+                }
+              ],
+              "datatype": {
+                "type": "datatype",
+                "variant": "nvarchar",
+                "affinity": "text",
+                "args": {
+                  "type": "expression",
+                  "variant": "list",
+                  "expression": [
+                    {
+                      "type": "literal",
+                      "variant": "decimal",
+                      "value": "20"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "Company",
+              "definition": [],
+              "datatype": {
+                "type": "datatype",
+                "variant": "nvarchar",
+                "affinity": "text",
+                "args": {
+                  "type": "expression",
+                  "variant": "list",
+                  "expression": [
+                    {
+                      "type": "literal",
+                      "variant": "decimal",
+                      "value": "80"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "Address",
+              "definition": [],
+              "datatype": {
+                "type": "datatype",
+                "variant": "nvarchar",
+                "affinity": "text",
+                "args": {
+                  "type": "expression",
+                  "variant": "list",
+                  "expression": [
+                    {
+                      "type": "literal",
+                      "variant": "decimal",
+                      "value": "70"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "City",
+              "definition": [],
+              "datatype": {
+                "type": "datatype",
+                "variant": "nvarchar",
+                "affinity": "text",
+                "args": {
+                  "type": "expression",
+                  "variant": "list",
+                  "expression": [
+                    {
+                      "type": "literal",
+                      "variant": "decimal",
+                      "value": "40"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "State",
+              "definition": [],
+              "datatype": {
+                "type": "datatype",
+                "variant": "nvarchar",
+                "affinity": "text",
+                "args": {
+                  "type": "expression",
+                  "variant": "list",
+                  "expression": [
+                    {
+                      "type": "literal",
+                      "variant": "decimal",
+                      "value": "40"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "Country",
+              "definition": [],
+              "datatype": {
+                "type": "datatype",
+                "variant": "nvarchar",
+                "affinity": "text",
+                "args": {
+                  "type": "expression",
+                  "variant": "list",
+                  "expression": [
+                    {
+                      "type": "literal",
+                      "variant": "decimal",
+                      "value": "40"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "PostalCode",
+              "definition": [],
+              "datatype": {
+                "type": "datatype",
+                "variant": "nvarchar",
+                "affinity": "text",
+                "args": {
+                  "type": "expression",
+                  "variant": "list",
+                  "expression": [
+                    {
+                      "type": "literal",
+                      "variant": "decimal",
+                      "value": "10"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "Phone",
+              "definition": [],
+              "datatype": {
+                "type": "datatype",
+                "variant": "nvarchar",
+                "affinity": "text",
+                "args": {
+                  "type": "expression",
+                  "variant": "list",
+                  "expression": [
+                    {
+                      "type": "literal",
+                      "variant": "decimal",
+                      "value": "24"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "Fax",
+              "definition": [],
+              "datatype": {
+                "type": "datatype",
+                "variant": "nvarchar",
+                "affinity": "text",
+                "args": {
+                  "type": "expression",
+                  "variant": "list",
+                  "expression": [
+                    {
+                      "type": "literal",
+                      "variant": "decimal",
+                      "value": "24"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "Email",
+              "definition": [
+                {
+                  "type": "constraint",
+                  "variant": "not null"
+                }
+              ],
+              "datatype": {
+                "type": "datatype",
+                "variant": "nvarchar",
+                "affinity": "text",
+                "args": {
+                  "type": "expression",
+                  "variant": "list",
+                  "expression": [
+                    {
+                      "type": "literal",
+                      "variant": "decimal",
+                      "value": "60"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "SupportRepId",
+              "definition": [],
+              "datatype": {
+                "type": "datatype",
+                "variant": "integer",
+                "affinity": "integer"
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "constraint",
+              "definition": [
+                {
+                  "type": "constraint",
+                  "variant": "foreign key",
+                  "references": {
+                    "type": "identifier",
+                    "variant": "expression",
+                    "format": "table",
+                    "name": "employees",
+                    "columns": [
+                      {
+                        "type": "identifier",
+                        "variant": "column",
+                        "name": "EmployeeId"
+                      }
+                    ]
+                  },
+                  "action": [
+                    {
+                      "type": "action",
+                      "variant": "on",
+                      "action": "no action"
+                    },
+                    {
+                      "type": "action",
+                      "variant": "on",
+                      "action": "no action"
+                    }
+                  ]
+                }
+              ],
+              "columns": [
+                {
+                  "type": "identifier",
+                  "variant": "column",
+                  "name": "SupportRepId"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "table",
+    "name": "employees",
+    "sql": "CREATE TABLE \"employees\"\r\n(\r\n    [EmployeeId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\r\n    [LastName] NVARCHAR(20)  NOT NULL,\r\n    [FirstName] NVARCHAR(20)  NOT NULL,\r\n    [Title] NVARCHAR(30),\r\n    [ReportsTo] INTEGER,\r\n    [BirthDate] DATETIME,\r\n    [HireDate] DATETIME,\r\n    [Address] NVARCHAR(70),\r\n    [City] NVARCHAR(40),\r\n    [State] NVARCHAR(40),\r\n    [Country] NVARCHAR(40),\r\n    [PostalCode] NVARCHAR(10),\r\n    [Phone] NVARCHAR(24),\r\n    [Fax] NVARCHAR(24),\r\n    [Email] NVARCHAR(60),\r\n    FOREIGN KEY ([ReportsTo]) REFERENCES \"employees\" ([EmployeeId]) \r\n\t\tON DELETE NO ACTION ON UPDATE NO ACTION\r\n)",
+    "ast": {
+      "type": "statement",
+      "variant": "list",
+      "statement": [
+        {
+          "type": "statement",
+          "name": {
+            "type": "identifier",
+            "variant": "table",
+            "name": "employees"
+          },
+          "variant": "create",
+          "format": "table",
+          "definition": [
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "EmployeeId",
+              "definition": [
+                {
+                  "type": "constraint",
+                  "variant": "primary key",
+                  "autoIncrement": true
+                },
+                {
+                  "type": "constraint",
+                  "variant": "not null"
+                }
+              ],
+              "datatype": {
+                "type": "datatype",
+                "variant": "integer",
+                "affinity": "integer"
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "LastName",
+              "definition": [
+                {
+                  "type": "constraint",
+                  "variant": "not null"
+                }
+              ],
+              "datatype": {
+                "type": "datatype",
+                "variant": "nvarchar",
+                "affinity": "text",
+                "args": {
+                  "type": "expression",
+                  "variant": "list",
+                  "expression": [
+                    {
+                      "type": "literal",
+                      "variant": "decimal",
+                      "value": "20"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "FirstName",
+              "definition": [
+                {
+                  "type": "constraint",
+                  "variant": "not null"
+                }
+              ],
+              "datatype": {
+                "type": "datatype",
+                "variant": "nvarchar",
+                "affinity": "text",
+                "args": {
+                  "type": "expression",
+                  "variant": "list",
+                  "expression": [
+                    {
+                      "type": "literal",
+                      "variant": "decimal",
+                      "value": "20"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "Title",
+              "definition": [],
+              "datatype": {
+                "type": "datatype",
+                "variant": "nvarchar",
+                "affinity": "text",
+                "args": {
+                  "type": "expression",
+                  "variant": "list",
+                  "expression": [
+                    {
+                      "type": "literal",
+                      "variant": "decimal",
+                      "value": "30"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "ReportsTo",
+              "definition": [],
+              "datatype": {
+                "type": "datatype",
+                "variant": "integer",
+                "affinity": "integer"
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "BirthDate",
+              "definition": [],
+              "datatype": {
+                "type": "datatype",
+                "variant": "datetime",
+                "affinity": "numeric"
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "HireDate",
+              "definition": [],
+              "datatype": {
+                "type": "datatype",
+                "variant": "datetime",
+                "affinity": "numeric"
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "Address",
+              "definition": [],
+              "datatype": {
+                "type": "datatype",
+                "variant": "nvarchar",
+                "affinity": "text",
+                "args": {
+                  "type": "expression",
+                  "variant": "list",
+                  "expression": [
+                    {
+                      "type": "literal",
+                      "variant": "decimal",
+                      "value": "70"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "City",
+              "definition": [],
+              "datatype": {
+                "type": "datatype",
+                "variant": "nvarchar",
+                "affinity": "text",
+                "args": {
+                  "type": "expression",
+                  "variant": "list",
+                  "expression": [
+                    {
+                      "type": "literal",
+                      "variant": "decimal",
+                      "value": "40"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "State",
+              "definition": [],
+              "datatype": {
+                "type": "datatype",
+                "variant": "nvarchar",
+                "affinity": "text",
+                "args": {
+                  "type": "expression",
+                  "variant": "list",
+                  "expression": [
+                    {
+                      "type": "literal",
+                      "variant": "decimal",
+                      "value": "40"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "Country",
+              "definition": [],
+              "datatype": {
+                "type": "datatype",
+                "variant": "nvarchar",
+                "affinity": "text",
+                "args": {
+                  "type": "expression",
+                  "variant": "list",
+                  "expression": [
+                    {
+                      "type": "literal",
+                      "variant": "decimal",
+                      "value": "40"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "PostalCode",
+              "definition": [],
+              "datatype": {
+                "type": "datatype",
+                "variant": "nvarchar",
+                "affinity": "text",
+                "args": {
+                  "type": "expression",
+                  "variant": "list",
+                  "expression": [
+                    {
+                      "type": "literal",
+                      "variant": "decimal",
+                      "value": "10"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "Phone",
+              "definition": [],
+              "datatype": {
+                "type": "datatype",
+                "variant": "nvarchar",
+                "affinity": "text",
+                "args": {
+                  "type": "expression",
+                  "variant": "list",
+                  "expression": [
+                    {
+                      "type": "literal",
+                      "variant": "decimal",
+                      "value": "24"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "Fax",
+              "definition": [],
+              "datatype": {
+                "type": "datatype",
+                "variant": "nvarchar",
+                "affinity": "text",
+                "args": {
+                  "type": "expression",
+                  "variant": "list",
+                  "expression": [
+                    {
+                      "type": "literal",
+                      "variant": "decimal",
+                      "value": "24"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "Email",
+              "definition": [],
+              "datatype": {
+                "type": "datatype",
+                "variant": "nvarchar",
+                "affinity": "text",
+                "args": {
+                  "type": "expression",
+                  "variant": "list",
+                  "expression": [
+                    {
+                      "type": "literal",
+                      "variant": "decimal",
+                      "value": "60"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "constraint",
+              "definition": [
+                {
+                  "type": "constraint",
+                  "variant": "foreign key",
+                  "references": {
+                    "type": "identifier",
+                    "variant": "expression",
+                    "format": "table",
+                    "name": "employees",
+                    "columns": [
+                      {
+                        "type": "identifier",
+                        "variant": "column",
+                        "name": "EmployeeId"
+                      }
+                    ]
+                  },
+                  "action": [
+                    {
+                      "type": "action",
+                      "variant": "on",
+                      "action": "no action"
+                    },
+                    {
+                      "type": "action",
+                      "variant": "on",
+                      "action": "no action"
+                    }
+                  ]
+                }
+              ],
+              "columns": [
+                {
+                  "type": "identifier",
+                  "variant": "column",
+                  "name": "ReportsTo"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "table",
+    "name": "genres",
+    "sql": "CREATE TABLE \"genres\"\r\n(\r\n    [GenreId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\r\n    [Name] NVARCHAR(120)\r\n)",
+    "ast": {
+      "type": "statement",
+      "variant": "list",
+      "statement": [
+        {
+          "type": "statement",
+          "name": {
+            "type": "identifier",
+            "variant": "table",
+            "name": "genres"
+          },
+          "variant": "create",
+          "format": "table",
+          "definition": [
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "GenreId",
+              "definition": [
+                {
+                  "type": "constraint",
+                  "variant": "primary key",
+                  "autoIncrement": true
+                },
+                {
+                  "type": "constraint",
+                  "variant": "not null"
+                }
+              ],
+              "datatype": {
+                "type": "datatype",
+                "variant": "integer",
+                "affinity": "integer"
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "Name",
+              "definition": [],
+              "datatype": {
+                "type": "datatype",
+                "variant": "nvarchar",
+                "affinity": "text",
+                "args": {
+                  "type": "expression",
+                  "variant": "list",
+                  "expression": [
+                    {
+                      "type": "literal",
+                      "variant": "decimal",
+                      "value": "120"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "table",
+    "name": "invoices",
+    "sql": "CREATE TABLE \"invoices\"\r\n(\r\n    [InvoiceId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\r\n    [CustomerId] INTEGER  NOT NULL,\r\n    [InvoiceDate] DATETIME  NOT NULL,\r\n    [BillingAddress] NVARCHAR(70),\r\n    [BillingCity] NVARCHAR(40),\r\n    [BillingState] NVARCHAR(40),\r\n    [BillingCountry] NVARCHAR(40),\r\n    [BillingPostalCode] NVARCHAR(10),\r\n    [Total] NUMERIC(10,2)  NOT NULL,\r\n    FOREIGN KEY ([CustomerId]) REFERENCES \"customers\" ([CustomerId]) \r\n\t\tON DELETE NO ACTION ON UPDATE NO ACTION\r\n)",
+    "ast": {
+      "type": "statement",
+      "variant": "list",
+      "statement": [
+        {
+          "type": "statement",
+          "name": {
+            "type": "identifier",
+            "variant": "table",
+            "name": "invoices"
+          },
+          "variant": "create",
+          "format": "table",
+          "definition": [
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "InvoiceId",
+              "definition": [
+                {
+                  "type": "constraint",
+                  "variant": "primary key",
+                  "autoIncrement": true
+                },
+                {
+                  "type": "constraint",
+                  "variant": "not null"
+                }
+              ],
+              "datatype": {
+                "type": "datatype",
+                "variant": "integer",
+                "affinity": "integer"
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "CustomerId",
+              "definition": [
+                {
+                  "type": "constraint",
+                  "variant": "not null"
+                }
+              ],
+              "datatype": {
+                "type": "datatype",
+                "variant": "integer",
+                "affinity": "integer"
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "InvoiceDate",
+              "definition": [
+                {
+                  "type": "constraint",
+                  "variant": "not null"
+                }
+              ],
+              "datatype": {
+                "type": "datatype",
+                "variant": "datetime",
+                "affinity": "numeric"
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "BillingAddress",
+              "definition": [],
+              "datatype": {
+                "type": "datatype",
+                "variant": "nvarchar",
+                "affinity": "text",
+                "args": {
+                  "type": "expression",
+                  "variant": "list",
+                  "expression": [
+                    {
+                      "type": "literal",
+                      "variant": "decimal",
+                      "value": "70"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "BillingCity",
+              "definition": [],
+              "datatype": {
+                "type": "datatype",
+                "variant": "nvarchar",
+                "affinity": "text",
+                "args": {
+                  "type": "expression",
+                  "variant": "list",
+                  "expression": [
+                    {
+                      "type": "literal",
+                      "variant": "decimal",
+                      "value": "40"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "BillingState",
+              "definition": [],
+              "datatype": {
+                "type": "datatype",
+                "variant": "nvarchar",
+                "affinity": "text",
+                "args": {
+                  "type": "expression",
+                  "variant": "list",
+                  "expression": [
+                    {
+                      "type": "literal",
+                      "variant": "decimal",
+                      "value": "40"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "BillingCountry",
+              "definition": [],
+              "datatype": {
+                "type": "datatype",
+                "variant": "nvarchar",
+                "affinity": "text",
+                "args": {
+                  "type": "expression",
+                  "variant": "list",
+                  "expression": [
+                    {
+                      "type": "literal",
+                      "variant": "decimal",
+                      "value": "40"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "BillingPostalCode",
+              "definition": [],
+              "datatype": {
+                "type": "datatype",
+                "variant": "nvarchar",
+                "affinity": "text",
+                "args": {
+                  "type": "expression",
+                  "variant": "list",
+                  "expression": [
+                    {
+                      "type": "literal",
+                      "variant": "decimal",
+                      "value": "10"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "Total",
+              "definition": [
+                {
+                  "type": "constraint",
+                  "variant": "not null"
+                }
+              ],
+              "datatype": {
+                "type": "datatype",
+                "variant": "numeric",
+                "affinity": "numeric",
+                "args": {
+                  "type": "expression",
+                  "variant": "list",
+                  "expression": [
+                    {
+                      "type": "literal",
+                      "variant": "decimal",
+                      "value": "10"
+                    },
+                    {
+                      "type": "literal",
+                      "variant": "decimal",
+                      "value": "2"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "constraint",
+              "definition": [
+                {
+                  "type": "constraint",
+                  "variant": "foreign key",
+                  "references": {
+                    "type": "identifier",
+                    "variant": "expression",
+                    "format": "table",
+                    "name": "customers",
+                    "columns": [
+                      {
+                        "type": "identifier",
+                        "variant": "column",
+                        "name": "CustomerId"
+                      }
+                    ]
+                  },
+                  "action": [
+                    {
+                      "type": "action",
+                      "variant": "on",
+                      "action": "no action"
+                    },
+                    {
+                      "type": "action",
+                      "variant": "on",
+                      "action": "no action"
+                    }
+                  ]
+                }
+              ],
+              "columns": [
+                {
+                  "type": "identifier",
+                  "variant": "column",
+                  "name": "CustomerId"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "table",
+    "name": "invoice_items",
+    "sql": "CREATE TABLE \"invoice_items\"\r\n(\r\n    [InvoiceLineId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\r\n    [InvoiceId] INTEGER  NOT NULL,\r\n    [TrackId] INTEGER  NOT NULL,\r\n    [UnitPrice] NUMERIC(10,2)  NOT NULL,\r\n    [Quantity] INTEGER  NOT NULL,\r\n    FOREIGN KEY ([InvoiceId]) REFERENCES \"invoices\" ([InvoiceId]) \r\n\t\tON DELETE NO ACTION ON UPDATE NO ACTION,\r\n    FOREIGN KEY ([TrackId]) REFERENCES \"tracks\" ([TrackId]) \r\n\t\tON DELETE NO ACTION ON UPDATE NO ACTION\r\n)",
+    "ast": {
+      "type": "statement",
+      "variant": "list",
+      "statement": [
+        {
+          "type": "statement",
+          "name": {
+            "type": "identifier",
+            "variant": "table",
+            "name": "invoice_items"
+          },
+          "variant": "create",
+          "format": "table",
+          "definition": [
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "InvoiceLineId",
+              "definition": [
+                {
+                  "type": "constraint",
+                  "variant": "primary key",
+                  "autoIncrement": true
+                },
+                {
+                  "type": "constraint",
+                  "variant": "not null"
+                }
+              ],
+              "datatype": {
+                "type": "datatype",
+                "variant": "integer",
+                "affinity": "integer"
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "InvoiceId",
+              "definition": [
+                {
+                  "type": "constraint",
+                  "variant": "not null"
+                }
+              ],
+              "datatype": {
+                "type": "datatype",
+                "variant": "integer",
+                "affinity": "integer"
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "TrackId",
+              "definition": [
+                {
+                  "type": "constraint",
+                  "variant": "not null"
+                }
+              ],
+              "datatype": {
+                "type": "datatype",
+                "variant": "integer",
+                "affinity": "integer"
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "UnitPrice",
+              "definition": [
+                {
+                  "type": "constraint",
+                  "variant": "not null"
+                }
+              ],
+              "datatype": {
+                "type": "datatype",
+                "variant": "numeric",
+                "affinity": "numeric",
+                "args": {
+                  "type": "expression",
+                  "variant": "list",
+                  "expression": [
+                    {
+                      "type": "literal",
+                      "variant": "decimal",
+                      "value": "10"
+                    },
+                    {
+                      "type": "literal",
+                      "variant": "decimal",
+                      "value": "2"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "Quantity",
+              "definition": [
+                {
+                  "type": "constraint",
+                  "variant": "not null"
+                }
+              ],
+              "datatype": {
+                "type": "datatype",
+                "variant": "integer",
+                "affinity": "integer"
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "constraint",
+              "definition": [
+                {
+                  "type": "constraint",
+                  "variant": "foreign key",
+                  "references": {
+                    "type": "identifier",
+                    "variant": "expression",
+                    "format": "table",
+                    "name": "invoices",
+                    "columns": [
+                      {
+                        "type": "identifier",
+                        "variant": "column",
+                        "name": "InvoiceId"
+                      }
+                    ]
+                  },
+                  "action": [
+                    {
+                      "type": "action",
+                      "variant": "on",
+                      "action": "no action"
+                    },
+                    {
+                      "type": "action",
+                      "variant": "on",
+                      "action": "no action"
+                    }
+                  ]
+                }
+              ],
+              "columns": [
+                {
+                  "type": "identifier",
+                  "variant": "column",
+                  "name": "InvoiceId"
+                }
+              ]
+            },
+            {
+              "type": "definition",
+              "variant": "constraint",
+              "definition": [
+                {
+                  "type": "constraint",
+                  "variant": "foreign key",
+                  "references": {
+                    "type": "identifier",
+                    "variant": "expression",
+                    "format": "table",
+                    "name": "tracks",
+                    "columns": [
+                      {
+                        "type": "identifier",
+                        "variant": "column",
+                        "name": "TrackId"
+                      }
+                    ]
+                  },
+                  "action": [
+                    {
+                      "type": "action",
+                      "variant": "on",
+                      "action": "no action"
+                    },
+                    {
+                      "type": "action",
+                      "variant": "on",
+                      "action": "no action"
+                    }
+                  ]
+                }
+              ],
+              "columns": [
+                {
+                  "type": "identifier",
+                  "variant": "column",
+                  "name": "TrackId"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "table",
+    "name": "media_types",
+    "sql": "CREATE TABLE \"media_types\"\r\n(\r\n    [MediaTypeId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\r\n    [Name] NVARCHAR(120)\r\n)",
+    "ast": {
+      "type": "statement",
+      "variant": "list",
+      "statement": [
+        {
+          "type": "statement",
+          "name": {
+            "type": "identifier",
+            "variant": "table",
+            "name": "media_types"
+          },
+          "variant": "create",
+          "format": "table",
+          "definition": [
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "MediaTypeId",
+              "definition": [
+                {
+                  "type": "constraint",
+                  "variant": "primary key",
+                  "autoIncrement": true
+                },
+                {
+                  "type": "constraint",
+                  "variant": "not null"
+                }
+              ],
+              "datatype": {
+                "type": "datatype",
+                "variant": "integer",
+                "affinity": "integer"
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "Name",
+              "definition": [],
+              "datatype": {
+                "type": "datatype",
+                "variant": "nvarchar",
+                "affinity": "text",
+                "args": {
+                  "type": "expression",
+                  "variant": "list",
+                  "expression": [
+                    {
+                      "type": "literal",
+                      "variant": "decimal",
+                      "value": "120"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "table",
+    "name": "playlists",
+    "sql": "CREATE TABLE \"playlists\"\r\n(\r\n    [PlaylistId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\r\n    [Name] NVARCHAR(120)\r\n)",
+    "ast": {
+      "type": "statement",
+      "variant": "list",
+      "statement": [
+        {
+          "type": "statement",
+          "name": {
+            "type": "identifier",
+            "variant": "table",
+            "name": "playlists"
+          },
+          "variant": "create",
+          "format": "table",
+          "definition": [
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "PlaylistId",
+              "definition": [
+                {
+                  "type": "constraint",
+                  "variant": "primary key",
+                  "autoIncrement": true
+                },
+                {
+                  "type": "constraint",
+                  "variant": "not null"
+                }
+              ],
+              "datatype": {
+                "type": "datatype",
+                "variant": "integer",
+                "affinity": "integer"
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "Name",
+              "definition": [],
+              "datatype": {
+                "type": "datatype",
+                "variant": "nvarchar",
+                "affinity": "text",
+                "args": {
+                  "type": "expression",
+                  "variant": "list",
+                  "expression": [
+                    {
+                      "type": "literal",
+                      "variant": "decimal",
+                      "value": "120"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "table",
+    "name": "playlist_track",
+    "sql": "CREATE TABLE \"playlist_track\"\r\n(\r\n    [PlaylistId] INTEGER  NOT NULL,\r\n    [TrackId] INTEGER  NOT NULL,\r\n    CONSTRAINT [PK_PlaylistTrack] PRIMARY KEY  ([PlaylistId], [TrackId]),\r\n    FOREIGN KEY ([PlaylistId]) REFERENCES \"playlists\" ([PlaylistId]) \r\n\t\tON DELETE NO ACTION ON UPDATE NO ACTION,\r\n    FOREIGN KEY ([TrackId]) REFERENCES \"tracks\" ([TrackId]) \r\n\t\tON DELETE NO ACTION ON UPDATE NO ACTION\r\n)",
+    "ast": {
+      "type": "statement",
+      "variant": "list",
+      "statement": [
+        {
+          "type": "statement",
+          "name": {
+            "type": "identifier",
+            "variant": "table",
+            "name": "playlist_track"
+          },
+          "variant": "create",
+          "format": "table",
+          "definition": [
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "PlaylistId",
+              "definition": [
+                {
+                  "type": "constraint",
+                  "variant": "not null"
+                }
+              ],
+              "datatype": {
+                "type": "datatype",
+                "variant": "integer",
+                "affinity": "integer"
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "TrackId",
+              "definition": [
+                {
+                  "type": "constraint",
+                  "variant": "not null"
+                }
+              ],
+              "datatype": {
+                "type": "datatype",
+                "variant": "integer",
+                "affinity": "integer"
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "constraint",
+              "definition": [
+                {
+                  "type": "constraint",
+                  "variant": "primary key"
+                }
+              ],
+              "columns": [
+                {
+                  "type": "identifier",
+                  "variant": "column",
+                  "name": "PlaylistId"
+                },
+                {
+                  "type": "identifier",
+                  "variant": "column",
+                  "name": "TrackId"
+                }
+              ],
+              "name": "PK_PlaylistTrack"
+            },
+            {
+              "type": "definition",
+              "variant": "constraint",
+              "definition": [
+                {
+                  "type": "constraint",
+                  "variant": "foreign key",
+                  "references": {
+                    "type": "identifier",
+                    "variant": "expression",
+                    "format": "table",
+                    "name": "playlists",
+                    "columns": [
+                      {
+                        "type": "identifier",
+                        "variant": "column",
+                        "name": "PlaylistId"
+                      }
+                    ]
+                  },
+                  "action": [
+                    {
+                      "type": "action",
+                      "variant": "on",
+                      "action": "no action"
+                    },
+                    {
+                      "type": "action",
+                      "variant": "on",
+                      "action": "no action"
+                    }
+                  ]
+                }
+              ],
+              "columns": [
+                {
+                  "type": "identifier",
+                  "variant": "column",
+                  "name": "PlaylistId"
+                }
+              ]
+            },
+            {
+              "type": "definition",
+              "variant": "constraint",
+              "definition": [
+                {
+                  "type": "constraint",
+                  "variant": "foreign key",
+                  "references": {
+                    "type": "identifier",
+                    "variant": "expression",
+                    "format": "table",
+                    "name": "tracks",
+                    "columns": [
+                      {
+                        "type": "identifier",
+                        "variant": "column",
+                        "name": "TrackId"
+                      }
+                    ]
+                  },
+                  "action": [
+                    {
+                      "type": "action",
+                      "variant": "on",
+                      "action": "no action"
+                    },
+                    {
+                      "type": "action",
+                      "variant": "on",
+                      "action": "no action"
+                    }
+                  ]
+                }
+              ],
+              "columns": [
+                {
+                  "type": "identifier",
+                  "variant": "column",
+                  "name": "TrackId"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "table",
+    "name": "tracks",
+    "sql": "CREATE TABLE \"tracks\"\r\n(\r\n    [TrackId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\r\n    [Name] NVARCHAR(200)  NOT NULL,\r\n    [AlbumId] INTEGER,\r\n    [MediaTypeId] INTEGER  NOT NULL,\r\n    [GenreId] INTEGER,\r\n    [Composer] NVARCHAR(220),\r\n    [Milliseconds] INTEGER  NOT NULL,\r\n    [Bytes] INTEGER,\r\n    [UnitPrice] NUMERIC(10,2)  NOT NULL,\r\n    FOREIGN KEY ([AlbumId]) REFERENCES \"albums\" ([AlbumId]) \r\n\t\tON DELETE NO ACTION ON UPDATE NO ACTION,\r\n    FOREIGN KEY ([GenreId]) REFERENCES \"genres\" ([GenreId]) \r\n\t\tON DELETE NO ACTION ON UPDATE NO ACTION,\r\n    FOREIGN KEY ([MediaTypeId]) REFERENCES \"media_types\" ([MediaTypeId]) \r\n\t\tON DELETE NO ACTION ON UPDATE NO ACTION\r\n)",
+    "ast": {
+      "type": "statement",
+      "variant": "list",
+      "statement": [
+        {
+          "type": "statement",
+          "name": {
+            "type": "identifier",
+            "variant": "table",
+            "name": "tracks"
+          },
+          "variant": "create",
+          "format": "table",
+          "definition": [
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "TrackId",
+              "definition": [
+                {
+                  "type": "constraint",
+                  "variant": "primary key",
+                  "autoIncrement": true
+                },
+                {
+                  "type": "constraint",
+                  "variant": "not null"
+                }
+              ],
+              "datatype": {
+                "type": "datatype",
+                "variant": "integer",
+                "affinity": "integer"
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "Name",
+              "definition": [
+                {
+                  "type": "constraint",
+                  "variant": "not null"
+                }
+              ],
+              "datatype": {
+                "type": "datatype",
+                "variant": "nvarchar",
+                "affinity": "text",
+                "args": {
+                  "type": "expression",
+                  "variant": "list",
+                  "expression": [
+                    {
+                      "type": "literal",
+                      "variant": "decimal",
+                      "value": "200"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "AlbumId",
+              "definition": [],
+              "datatype": {
+                "type": "datatype",
+                "variant": "integer",
+                "affinity": "integer"
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "MediaTypeId",
+              "definition": [
+                {
+                  "type": "constraint",
+                  "variant": "not null"
+                }
+              ],
+              "datatype": {
+                "type": "datatype",
+                "variant": "integer",
+                "affinity": "integer"
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "GenreId",
+              "definition": [],
+              "datatype": {
+                "type": "datatype",
+                "variant": "integer",
+                "affinity": "integer"
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "Composer",
+              "definition": [],
+              "datatype": {
+                "type": "datatype",
+                "variant": "nvarchar",
+                "affinity": "text",
+                "args": {
+                  "type": "expression",
+                  "variant": "list",
+                  "expression": [
+                    {
+                      "type": "literal",
+                      "variant": "decimal",
+                      "value": "220"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "Milliseconds",
+              "definition": [
+                {
+                  "type": "constraint",
+                  "variant": "not null"
+                }
+              ],
+              "datatype": {
+                "type": "datatype",
+                "variant": "integer",
+                "affinity": "integer"
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "Bytes",
+              "definition": [],
+              "datatype": {
+                "type": "datatype",
+                "variant": "integer",
+                "affinity": "integer"
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "UnitPrice",
+              "definition": [
+                {
+                  "type": "constraint",
+                  "variant": "not null"
+                }
+              ],
+              "datatype": {
+                "type": "datatype",
+                "variant": "numeric",
+                "affinity": "numeric",
+                "args": {
+                  "type": "expression",
+                  "variant": "list",
+                  "expression": [
+                    {
+                      "type": "literal",
+                      "variant": "decimal",
+                      "value": "10"
+                    },
+                    {
+                      "type": "literal",
+                      "variant": "decimal",
+                      "value": "2"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "definition",
+              "variant": "constraint",
+              "definition": [
+                {
+                  "type": "constraint",
+                  "variant": "foreign key",
+                  "references": {
+                    "type": "identifier",
+                    "variant": "expression",
+                    "format": "table",
+                    "name": "albums",
+                    "columns": [
+                      {
+                        "type": "identifier",
+                        "variant": "column",
+                        "name": "AlbumId"
+                      }
+                    ]
+                  },
+                  "action": [
+                    {
+                      "type": "action",
+                      "variant": "on",
+                      "action": "no action"
+                    },
+                    {
+                      "type": "action",
+                      "variant": "on",
+                      "action": "no action"
+                    }
+                  ]
+                }
+              ],
+              "columns": [
+                {
+                  "type": "identifier",
+                  "variant": "column",
+                  "name": "AlbumId"
+                }
+              ]
+            },
+            {
+              "type": "definition",
+              "variant": "constraint",
+              "definition": [
+                {
+                  "type": "constraint",
+                  "variant": "foreign key",
+                  "references": {
+                    "type": "identifier",
+                    "variant": "expression",
+                    "format": "table",
+                    "name": "genres",
+                    "columns": [
+                      {
+                        "type": "identifier",
+                        "variant": "column",
+                        "name": "GenreId"
+                      }
+                    ]
+                  },
+                  "action": [
+                    {
+                      "type": "action",
+                      "variant": "on",
+                      "action": "no action"
+                    },
+                    {
+                      "type": "action",
+                      "variant": "on",
+                      "action": "no action"
+                    }
+                  ]
+                }
+              ],
+              "columns": [
+                {
+                  "type": "identifier",
+                  "variant": "column",
+                  "name": "GenreId"
+                }
+              ]
+            },
+            {
+              "type": "definition",
+              "variant": "constraint",
+              "definition": [
+                {
+                  "type": "constraint",
+                  "variant": "foreign key",
+                  "references": {
+                    "type": "identifier",
+                    "variant": "expression",
+                    "format": "table",
+                    "name": "media_types",
+                    "columns": [
+                      {
+                        "type": "identifier",
+                        "variant": "column",
+                        "name": "MediaTypeId"
+                      }
+                    ]
+                  },
+                  "action": [
+                    {
+                      "type": "action",
+                      "variant": "on",
+                      "action": "no action"
+                    },
+                    {
+                      "type": "action",
+                      "variant": "on",
+                      "action": "no action"
+                    }
+                  ]
+                }
+              ],
+              "columns": [
+                {
+                  "type": "identifier",
+                  "variant": "column",
+                  "name": "MediaTypeId"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "index",
+    "name": "IFK_AlbumArtistId",
+    "sql": "CREATE INDEX [IFK_AlbumArtistId] ON \"albums\" ([ArtistId])",
+    "ast": {
+      "type": "statement",
+      "variant": "list",
+      "statement": [
+        {
+          "type": "statement",
+          "target": {
+            "type": "identifier",
+            "variant": "index",
+            "name": "IFK_AlbumArtistId"
+          },
+          "on": {
+            "type": "identifier",
+            "variant": "expression",
+            "format": "table",
+            "name": "albums",
+            "columns": [
+              {
+                "type": "identifier",
+                "variant": "column",
+                "name": "ArtistId"
+              }
+            ]
+          },
+          "variant": "create",
+          "format": "index"
+        }
+      ]
+    }
+  },
+  {
+    "type": "index",
+    "name": "IFK_CustomerSupportRepId",
+    "sql": "CREATE INDEX [IFK_CustomerSupportRepId] ON \"customers\" ([SupportRepId])",
+    "ast": {
+      "type": "statement",
+      "variant": "list",
+      "statement": [
+        {
+          "type": "statement",
+          "target": {
+            "type": "identifier",
+            "variant": "index",
+            "name": "IFK_CustomerSupportRepId"
+          },
+          "on": {
+            "type": "identifier",
+            "variant": "expression",
+            "format": "table",
+            "name": "customers",
+            "columns": [
+              {
+                "type": "identifier",
+                "variant": "column",
+                "name": "SupportRepId"
+              }
+            ]
+          },
+          "variant": "create",
+          "format": "index"
+        }
+      ]
+    }
+  },
+  {
+    "type": "index",
+    "name": "IFK_EmployeeReportsTo",
+    "sql": "CREATE INDEX [IFK_EmployeeReportsTo] ON \"employees\" ([ReportsTo])",
+    "ast": {
+      "type": "statement",
+      "variant": "list",
+      "statement": [
+        {
+          "type": "statement",
+          "target": {
+            "type": "identifier",
+            "variant": "index",
+            "name": "IFK_EmployeeReportsTo"
+          },
+          "on": {
+            "type": "identifier",
+            "variant": "expression",
+            "format": "table",
+            "name": "employees",
+            "columns": [
+              {
+                "type": "identifier",
+                "variant": "column",
+                "name": "ReportsTo"
+              }
+            ]
+          },
+          "variant": "create",
+          "format": "index"
+        }
+      ]
+    }
+  },
+  {
+    "type": "index",
+    "name": "IFK_InvoiceCustomerId",
+    "sql": "CREATE INDEX [IFK_InvoiceCustomerId] ON \"invoices\" ([CustomerId])",
+    "ast": {
+      "type": "statement",
+      "variant": "list",
+      "statement": [
+        {
+          "type": "statement",
+          "target": {
+            "type": "identifier",
+            "variant": "index",
+            "name": "IFK_InvoiceCustomerId"
+          },
+          "on": {
+            "type": "identifier",
+            "variant": "expression",
+            "format": "table",
+            "name": "invoices",
+            "columns": [
+              {
+                "type": "identifier",
+                "variant": "column",
+                "name": "CustomerId"
+              }
+            ]
+          },
+          "variant": "create",
+          "format": "index"
+        }
+      ]
+    }
+  },
+  {
+    "type": "index",
+    "name": "IFK_InvoiceLineInvoiceId",
+    "sql": "CREATE INDEX [IFK_InvoiceLineInvoiceId] ON \"invoice_items\" ([InvoiceId])",
+    "ast": {
+      "type": "statement",
+      "variant": "list",
+      "statement": [
+        {
+          "type": "statement",
+          "target": {
+            "type": "identifier",
+            "variant": "index",
+            "name": "IFK_InvoiceLineInvoiceId"
+          },
+          "on": {
+            "type": "identifier",
+            "variant": "expression",
+            "format": "table",
+            "name": "invoice_items",
+            "columns": [
+              {
+                "type": "identifier",
+                "variant": "column",
+                "name": "InvoiceId"
+              }
+            ]
+          },
+          "variant": "create",
+          "format": "index"
+        }
+      ]
+    }
+  },
+  {
+    "type": "index",
+    "name": "IFK_InvoiceLineTrackId",
+    "sql": "CREATE INDEX [IFK_InvoiceLineTrackId] ON \"invoice_items\" ([TrackId])",
+    "ast": {
+      "type": "statement",
+      "variant": "list",
+      "statement": [
+        {
+          "type": "statement",
+          "target": {
+            "type": "identifier",
+            "variant": "index",
+            "name": "IFK_InvoiceLineTrackId"
+          },
+          "on": {
+            "type": "identifier",
+            "variant": "expression",
+            "format": "table",
+            "name": "invoice_items",
+            "columns": [
+              {
+                "type": "identifier",
+                "variant": "column",
+                "name": "TrackId"
+              }
+            ]
+          },
+          "variant": "create",
+          "format": "index"
+        }
+      ]
+    }
+  },
+  {
+    "type": "index",
+    "name": "IFK_PlaylistTrackTrackId",
+    "sql": "CREATE INDEX [IFK_PlaylistTrackTrackId] ON \"playlist_track\" ([TrackId])",
+    "ast": {
+      "type": "statement",
+      "variant": "list",
+      "statement": [
+        {
+          "type": "statement",
+          "target": {
+            "type": "identifier",
+            "variant": "index",
+            "name": "IFK_PlaylistTrackTrackId"
+          },
+          "on": {
+            "type": "identifier",
+            "variant": "expression",
+            "format": "table",
+            "name": "playlist_track",
+            "columns": [
+              {
+                "type": "identifier",
+                "variant": "column",
+                "name": "TrackId"
+              }
+            ]
+          },
+          "variant": "create",
+          "format": "index"
+        }
+      ]
+    }
+  },
+  {
+    "type": "index",
+    "name": "IFK_TrackAlbumId",
+    "sql": "CREATE INDEX [IFK_TrackAlbumId] ON \"tracks\" ([AlbumId])",
+    "ast": {
+      "type": "statement",
+      "variant": "list",
+      "statement": [
+        {
+          "type": "statement",
+          "target": {
+            "type": "identifier",
+            "variant": "index",
+            "name": "IFK_TrackAlbumId"
+          },
+          "on": {
+            "type": "identifier",
+            "variant": "expression",
+            "format": "table",
+            "name": "tracks",
+            "columns": [
+              {
+                "type": "identifier",
+                "variant": "column",
+                "name": "AlbumId"
+              }
+            ]
+          },
+          "variant": "create",
+          "format": "index"
+        }
+      ]
+    }
+  },
+  {
+    "type": "index",
+    "name": "IFK_TrackGenreId",
+    "sql": "CREATE INDEX [IFK_TrackGenreId] ON \"tracks\" ([GenreId])",
+    "ast": {
+      "type": "statement",
+      "variant": "list",
+      "statement": [
+        {
+          "type": "statement",
+          "target": {
+            "type": "identifier",
+            "variant": "index",
+            "name": "IFK_TrackGenreId"
+          },
+          "on": {
+            "type": "identifier",
+            "variant": "expression",
+            "format": "table",
+            "name": "tracks",
+            "columns": [
+              {
+                "type": "identifier",
+                "variant": "column",
+                "name": "GenreId"
+              }
+            ]
+          },
+          "variant": "create",
+          "format": "index"
+        }
+      ]
+    }
+  },
+  {
+    "type": "index",
+    "name": "IFK_TrackMediaTypeId",
+    "sql": "CREATE INDEX [IFK_TrackMediaTypeId] ON \"tracks\" ([MediaTypeId])",
+    "ast": {
+      "type": "statement",
+      "variant": "list",
+      "statement": [
+        {
+          "type": "statement",
+          "target": {
+            "type": "identifier",
+            "variant": "index",
+            "name": "IFK_TrackMediaTypeId"
+          },
+          "on": {
+            "type": "identifier",
+            "variant": "expression",
+            "format": "table",
+            "name": "tracks",
+            "columns": [
+              {
+                "type": "identifier",
+                "variant": "column",
+                "name": "MediaTypeId"
+              }
+            ]
+          },
+          "variant": "create",
+          "format": "index"
+        }
+      ]
+    }
+  },
+  {
+    "type": "table",
+    "name": "sqlite_stat1",
+    "sql": "CREATE TABLE sqlite_stat1(tbl,idx,stat)",
+    "ast": {
+      "type": "statement",
+      "variant": "list",
+      "statement": [
+        {
+          "type": "statement",
+          "name": {
+            "type": "identifier",
+            "variant": "table",
+            "name": "sqlite_stat1"
+          },
+          "variant": "create",
+          "format": "table",
+          "definition": [
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "tbl",
+              "definition": []
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "idx",
+              "definition": []
+            },
+            {
+              "type": "definition",
+              "variant": "column",
+              "name": "stat",
+              "definition": []
+            }
+          ]
+        }
+      ]
+    }
+  }
+]

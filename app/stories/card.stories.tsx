@@ -7,7 +7,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react"
 import Grid from "@mui/material/Grid"
 import { StorybookDecorator } from "../components/storybook"
 import { Card } from "../components/ui/card"
-import { databaseCommand, queryCommand, printCommand, settingsCmd } from "./fakedata"
+import { databaseCmd, queryCmd, printCmd, settingsCmd } from "./fakedata"
 
 export default {
   title: "UI/Card",
@@ -21,7 +21,7 @@ export default {
   ],
   args: {
     image: "/images/empty7.jpg",
-    command: databaseCommand,
+    command: databaseCmd,
   },
   parameters: {
     grid: { cellSize: 8 },
@@ -35,10 +35,10 @@ const Template: ComponentStory<typeof Card> = (args) => {
         <Card {...args} />
       </Grid>
       <Grid item sm={4}>
-        <Card {...args} command={queryCommand} image="/images/empty8.jpg" />
+        <Card {...args} command={queryCmd} image="/images/empty8.jpg" />
       </Grid>
       <Grid item sm={4}>
-        <Card {...args} command={printCommand} image="/images/empty9.jpg" />
+        <Card {...args} command={printCmd} image="/images/empty9.jpg" />
       </Grid>
     </Grid>
   )
@@ -54,9 +54,9 @@ WithSecondaryCommand.args = {
 export const WithLongLabels = Template.bind({})
 WithLongLabels.args = {
   command: {
-    ...databaseCommand,
-    title: databaseCommand.title + " this is a much longer title",
-    description: databaseCommand.description + " this is a much longer description",
+    ...databaseCmd,
+    title: databaseCmd.title + " this is a much longer title",
+    description: databaseCmd.description + " this is a much longer description",
   },
 }
 

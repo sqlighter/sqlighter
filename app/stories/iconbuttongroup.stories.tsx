@@ -6,7 +6,7 @@ import React, { useState } from "react"
 import { ComponentStory, ComponentMeta } from "@storybook/react"
 import { StorybookDecorator } from "../components/storybook"
 import { IconButtonGroup } from "../components/ui/iconbuttongroup"
-import { sqlCmd, dataCmd, chartCommand, addonCmd } from "./fakedata"
+import { sqlCmd, dataCmd, chartCmd, addonCmd } from "./fakedata"
 
 function Tester(props) {
   const [mode, setMode] = useState(props.selected || props.commands[0].command)
@@ -28,7 +28,7 @@ export default {
     ),
   ],
   args: {
-    commands: [sqlCmd, dataCmd, chartCommand, addonCmd],
+    commands: [sqlCmd, dataCmd, chartCmd, addonCmd],
   },
 } as ComponentMeta<typeof IconButtonGroup>
 
@@ -37,12 +37,12 @@ export const Primary = Template.bind({})
 
 export const WithSpacing = Template.bind({})
 WithSpacing.args = {
-  commands: [sqlCmd, dataCmd, chartCommand, "spacing", addonCmd],
+  commands: [sqlCmd, dataCmd, chartCmd, "spacing", addonCmd],
 }
 
 export const WithDivider = Template.bind({})
 WithDivider.args = {
-  commands: [sqlCmd, dataCmd, chartCommand, "divider", addonCmd],
+  commands: [sqlCmd, dataCmd, chartCmd, "divider", addonCmd],
 }
 
 const TemplateToggles: ComponentStory<typeof IconButtonGroup> = (args) => <Tester {...args} />
@@ -55,5 +55,5 @@ TogglesWithLabels.args = {
 
 export const TogglesWithGrouping = TemplateToggles.bind({})
 TogglesWithGrouping.args = {
-  commands: [sqlCmd, dataCmd, chartCommand, "divider", addonCmd],
+  commands: [sqlCmd, dataCmd, chartCmd, "divider", addonCmd],
 }

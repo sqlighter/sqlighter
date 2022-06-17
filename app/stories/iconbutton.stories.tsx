@@ -1,12 +1,11 @@
 import React from "react"
 import { ComponentStory, ComponentMeta } from "@storybook/react"
-import { fireEvent, screen, userEvent, waitFor, within } from "@storybook/testing-library"
+import { screen, userEvent, waitFor } from "@storybook/testing-library"
 import { expect } from "@storybook/jest"
 import { Stack } from "@mui/material"
-import { Command } from "../lib/commands"
 import { StorybookDecorator } from "../components/storybook"
 import { IconButton } from "../components/ui/iconbutton"
-import { chartCommand, databaseCommand, queryCommand } from "./fakedata"
+import { chartCmd, databaseCmd, queryCmd } from "./fakedata"
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -20,7 +19,7 @@ export default {
     ),
   ],
   args: {
-    command: databaseCommand,
+    command: databaseCmd,
   },
 } as ComponentMeta<typeof IconButton>
 
@@ -29,17 +28,17 @@ const Template: ComponentStory<typeof IconButton> = (args) => <IconButton {...ar
 
 const TemplateStack: ComponentStory<typeof IconButton> = (args) => (
   <Stack direction="row">
-    <IconButton {...args} command={databaseCommand} />
-    <IconButton {...args} command={queryCommand} />
-    <IconButton {...args} command={chartCommand} />
+    <IconButton {...args} command={databaseCmd} />
+    <IconButton {...args} command={queryCmd} />
+    <IconButton {...args} command={chartCmd} />
   </Stack>
 )
 
 const TemplateSizes: ComponentStory<typeof IconButton> = (args) => (
   <Stack direction="row" sx={{ display: "flex", alignItems: "flex-start" }}>
-    <IconButton {...args} command={databaseCommand} size="small" />
-    <IconButton {...args} command={databaseCommand} size="medium" />
-    <IconButton {...args} command={databaseCommand} size="large" />
+    <IconButton {...args} command={databaseCmd} size="small" />
+    <IconButton {...args} command={databaseCmd} size="medium" />
+    <IconButton {...args} command={databaseCmd} size="large" />
   </Stack>
 )
 
@@ -62,14 +61,13 @@ Selected.args = {
   selected: true,
 }
 
-
 export const Sizes = TemplateSizes.bind({})
 
 export const Stacked = TemplateStack.bind({})
 
 export const StackedWithLabels = TemplateStack.bind({})
 StackedWithLabels.args = {
-  label: true
+  label: true,
 }
 
 export const WithLabel = Template.bind({})
@@ -106,41 +104,44 @@ Autotesting.args = {
 }
 Autotesting.play = async () => {
   const button = document.querySelector(".IconButton-root")
+  expect(button).not.toBeNull()
 
-  // check tooltip
-  userEvent.hover(button)
+  if (button) {
+    // check tooltip
+    userEvent.hover(button)
 
-  // no tooltip right away
-  const tooltip1 = screen.queryAllByText(databaseCommand.title as string)
-  expect(tooltip1).toHaveLength(0)
+    // no tooltip right away
+    const tooltip1 = screen.queryAllByText(databaseCmd.title as string)
+    expect(tooltip1).toHaveLength(0)
 
-  // tooltip shows after a delay
-  // https://testing-library.com/docs/dom-testing-library/api-async#waitfor
-  await waitFor(
-    () => {
-      const tooltip2 = screen.getByRole("tooltip")
-      expect(tooltip2).toHaveTextContent(databaseCommand.title)
-    },
-    { timeout: 2500 }
-  )
+    // tooltip shows after a delay
+    // https://testing-library.com/docs/dom-testing-library/api-async#waitfor
+    await waitFor(
+      () => {
+        const tooltip2 = screen.getByRole("tooltip")
+        expect(tooltip2).toHaveTextContent(databaseCmd.title)
+      },
+      { timeout: 2500 }
+    )
 
-  userEvent.unhover(button)
+    userEvent.unhover(button)
 
-  // tooltip goes away after a delay
-  await waitFor(
-    () => {
-      const tooltip4 = screen.queryAllByText("Open Database")
-      expect(tooltip4).toHaveLength(0)
-    },
-    { timeout: 500 }
-  )
+    // tooltip goes away after a delay
+    await waitFor(
+      () => {
+        const tooltip4 = screen.queryAllByText("Open Database")
+        expect(tooltip4).toHaveLength(0)
+      },
+      { timeout: 500 }
+    )
 
-  // TODO run a test similar to the one in iconbutton.test.tsx where button is clicked, command event checked
-  //  const handleClick = jest.fn()
-  //  const mockCallback = jest.fn()
-  // button.addEventListener("onCommand", (e, command) => {
-  //   console.debug(command)
-  // })
+    // TODO run a test similar to the one in iconbutton.test.tsx where button is clicked, command event checked
+    //  const handleClick = jest.fn()
+    //  const mockCallback = jest.fn()
+    // button.addEventListener("onCommand", (e, command) => {
+    //   console.debug(command)
+    // })
 
-  userEvent.click(button)
+    userEvent.click(button)
+  }
 }
