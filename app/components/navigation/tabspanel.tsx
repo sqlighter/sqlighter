@@ -109,7 +109,7 @@ export function TabsPanel(props: TabsPanelProps) {
         onCommand={props.onCommand}
       >
         <Card className="TabsPanel-card" variant="outlined" square={true}>
-          <Tabs className="TabsPanel-tabs" tabId={tabId} tabs={props.tabs} onCommand={handleCommand} />
+          <Tabs className="TabsPanel-tabs" tabId={tabId} tabs={props.tabs} onCommand={handleCommand} variant="above" />
         </Card>
       </Section>
     </Box>
