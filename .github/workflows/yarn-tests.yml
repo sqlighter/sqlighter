@@ -4,12 +4,12 @@ on: push
 defaults:
   run:
     working-directory: app
+    environment: testing
 
 jobs:
   build:
     name: "Jest Tests"
     runs-on: ubuntu-latest
-    environment: testing
     steps:
     - uses: actions/checkout@v2
     - name: Install modules
