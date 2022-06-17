@@ -1,3 +1,6 @@
+[![CodeQL Analysis](https://github.com/sqlighter/sqlighter/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/sqlighter/sqlighter/actions/workflows/codeql-analysis.yml) [![Storybook Tests](https://github.com/sqlighter/sqlighter/actions/workflows/storybook-tests.yml/badge.svg)](https://github.com/sqlighter/sqlighter/actions/workflows/storybook-tests.yml) [![Yarn Tests](https://github.com/sqlighter/sqlighter/actions/workflows/yarn-tests.yml/badge.svg)](https://github.com/sqlighter/sqlighter/actions/workflows/yarn-tests.yml)
+
+
 ### SQLighter (beta)
 
 [SQLighter](https://sqlighter.com/app) is a database explorer born for SQLite that helps you design and deploy your application database in minutes. Drag your database on the page to open it run your queries locally in the browser with top speed. No need to install or update any apps on your desktop. SQLighter works on mobile devices as well.
