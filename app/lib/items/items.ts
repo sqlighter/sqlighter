@@ -3,7 +3,7 @@
 //
 
 import assert from "assert"
-import { generateId } from "../nanoid"
+import { generateId } from "../shared"
 
 /** Item entries are basic values arranged in dictionaries and arrays */
 export type ItemAttribute =

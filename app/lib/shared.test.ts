@@ -2,9 +2,23 @@
 // shared.test.ts
 //
 
-import { prettyBytes, prettyContentType } from "./shared"
+import { prettyBytes, prettyContentType, generateId } from "./shared"
 
 describe("shared.ts", () => {
+  test("generateId", () => {
+    const id1 = generateId("tst_")
+    const id2 = generateId("tst_")
+
+    expect(id1).not.toBeNull()
+    expect(id1).toHaveLength(4 + 20)
+    expect(id1.startsWith("tst_")).toBeTruthy()
+
+    expect(id2).not.toBeNull()
+    expect(id2).toHaveLength(4 + 20)
+    expect(id2.startsWith("tst_")).toBeTruthy()
+    expect(id2).not.toMatch(id1)
+  })
+
   test("prettyContentType", () => {
     expect(prettyContentType("application/pdf")).toBe("pdf")
     expect(prettyContentType("image/jpg")).toBe("jpg")

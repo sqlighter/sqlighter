@@ -3,9 +3,8 @@
 //
 
 import { Item } from "./items"
-import { generateId } from "../nanoid"
+import { generateId } from "../shared"
 import { format } from "date-fns"
-import { DataConnection } from "../data/connections"
 
 export const QUERY_TYPE = "query"
 export const QUERY_PREFIX = "sql_"

@@ -74,3 +74,12 @@ export function prettyBytes(size: number, locale = DEFAULT_LOCALE) {
   }
   return size.toLocaleString(locale, { maximumFractionDigits: 2 }) + " bytes"
 }
+
+/** Generate a unique id with a type prefix, eg. crd_ followed by 20 alphanumeric digits */
+export function generateId(prefix, length = 20): string {
+  const customAlphabet = "1234567890abcdefghijklmnopqrstuvwxyz"
+  for (var i = 0; i < length; i++) {
+    prefix += customAlphabet.charAt(Math.floor(Math.random() * customAlphabet.length))
+  }
+  return prefix
+}

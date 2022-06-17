@@ -4,7 +4,6 @@
 
 import React from "react"
 import { ComponentStory, ComponentMeta } from "@storybook/react"
-import { Box } from "@mui/material"
 import { StorybookDecorator } from "../components/storybook"
 import { QueryStatus } from "../components/database/querystatus"
 import { fake_connection1, fake_queryCompletedLarge, fake_queryRunning1, fake_queryError1 } from "./fakedata"
@@ -27,7 +26,7 @@ export default {
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: ComponentStory<typeof QueryStatus> = (args) => <QueryStatus {...args} />
-
+   
 export const Completed = Template.bind({})
 
 export const Running = Template.bind({})
