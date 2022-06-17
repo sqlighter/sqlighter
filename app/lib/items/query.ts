@@ -2,7 +2,8 @@
 // query.ts - a data connection query based on sql
 //
 
-import { generateId, Item } from "./items"
+import { Item } from "./items"
+import { generateId } from "../nanoid"
 import { format } from "date-fns"
 import { DataConnection } from "../data/connections"
 
@@ -60,9 +61,9 @@ export class QueryRun extends Item {
     this.id = generateId(QUERY_RUN_PREFIX)
     this.type = QUERY_RUN_TYPE
     this.createdAt = new Date()
-    this.title = (this.createdAt).toLocaleTimeString()
+    this.title = this.createdAt.toLocaleTimeString()
     this.status = "created"
-  }  
+  }
 
   /** Query that was executed */
   query?: Query

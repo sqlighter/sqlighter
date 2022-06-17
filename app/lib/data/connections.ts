@@ -6,7 +6,7 @@ import { SignalCellularConnectedNoInternet4BarRounded } from "@mui/icons-materia
 import { config } from "dotenv"
 import { ReactElement } from "react"
 import { QueryExecResult } from "sql.js"
-import { generateId } from "../items/items"
+import { generateId } from "../nanoid"
 
 export const CONNECTION_TYPE = "connection"
 export const CONNECTION_PREFIX = "dbc_"

@@ -3,16 +3,7 @@
 //
 
 import assert from "assert"
-
-// secure ids with low collision probability
-import { CommandEvent } from "../commands"
-import { customAlphabet } from "nanoid"
-const nanoid = customAlphabet("1234567890abcdefghijklmnopqrstuvwxyz", 20)
-
-export function generateId(prefix): string {
-  assert(prefix && prefix.length == 4 && prefix.endsWith("_"))
-  return prefix + nanoid()
-}
+import { generateId } from "../nanoid"
 
 /** Item entries are basic values arranged in dictionaries and arrays */
 export type ItemAttribute =
@@ -82,7 +73,7 @@ export class Item {
 
   /** Generate a random id that is crytographically secure */
   public static generateId(): string {
-    return this.itemPrefix + nanoid()
+    return generateId(this.itemPrefix)
   }
 
   public static fromObject<T extends Item = Item>(obj: any, TCreator: new () => T): T {
