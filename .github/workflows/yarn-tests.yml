@@ -16,5 +16,6 @@ jobs:
       run: yarn install
     - name: Run tests
       env: # as an environment variable
+        DATABASE_URL: ${{ secrets.TEST_DATABASE_URL }}
         TEST_DATABASE_URL: ${{ secrets.TEST_DATABASE_URL }}
       run: yarn test
