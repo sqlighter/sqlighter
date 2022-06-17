@@ -4,15 +4,17 @@ on: push
 defaults:
   run:
     working-directory: app
-    environment: testing
 
 jobs:
   build:
     name: "Jest Tests"
     runs-on: ubuntu-latest
+    environment: testing
     steps:
     - uses: actions/checkout@v2
     - name: Install modules
       run: yarn install
     - name: Run tests
+      env: # as an environment variable
+        TEST_DATABASE_URL: ${{ secrets.TEST_DATABASE_URL }}
       run: yarn test
