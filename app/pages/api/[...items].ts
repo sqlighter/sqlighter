@@ -99,7 +99,7 @@ handler
     }
     storageMedata.metadata[itemType] = itemId
     await storageFile.setMetadata(storageMedata)
-    const [apiRes, objRes]: [any, any] = await storageBucket.file(storagePath).get()
+    const [, /* apiRes */ objRes]: [any, any] = await storageBucket.file(storagePath).get()
     const itemFile = {
       id: filename,
       url: objRes.selfLink, // https://www.googleapis.com/storage/v1/b/sqlighter/...

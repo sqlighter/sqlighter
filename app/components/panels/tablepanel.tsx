@@ -4,7 +4,7 @@
 
 // libs
 import React, { useState } from "react"
-import { Theme, SxProps } from "@mui/material"
+//import { Theme, SxProps } from "@mui/material"
 
 // model
 import { Command } from "../../lib/commands"
@@ -14,7 +14,7 @@ import { DataConnection } from "../../lib/data/connections"
 import { PanelProps } from "../navigation/panel"
 import { useForceUpdate } from "../hooks/useforceupdate"
 import { TabsPanel } from "../navigation/tabspanel"
-
+/*
 // styles applied to main and subcomponents
 const TablePanel_SxProps: SxProps<Theme> = {
   width: 1,
@@ -27,7 +27,7 @@ const TablePanel_SxProps: SxProps<Theme> = {
   paddingRight: 1,
   paddingBottom: 1,
 }
-
+*/
 export interface TablePanelProps extends PanelProps {
   /** Connection rendered by this panel */
   connection: DataConnection
@@ -38,7 +38,7 @@ export interface TablePanelProps extends PanelProps {
 
 /** Shows schema and data of a database table  */
 export function TablePanel(props: TablePanelProps) {
-  const { connection, table, onCommand } = props
+  const { connection, onCommand } = props
 
   //
   // state

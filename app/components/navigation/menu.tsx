@@ -19,7 +19,7 @@ import Typography from "@mui/material/Typography"
 import JournalIcon from "@mui/icons-material/AssignmentOutlined"
 import LibraryIcon from "@mui/icons-material/LocalLibraryOutlined"
 import ProfileIcon from "@mui/icons-material/PersonOutlineOutlined"
-import LogoutIcon from "@mui/icons-material/LogoutOutlined"
+// import LogoutIcon from "@mui/icons-material/LogoutOutlined"
 import { Theme } from "@mui/material/styles"
 
 import { Context } from "../context"

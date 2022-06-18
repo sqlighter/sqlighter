@@ -27,7 +27,7 @@ interface ProfilePageProps {
 
 function ProfilePanel() {
   // retrieve user information from current session
-  const [user, { mutate: mutateUser, loading: userLoading, setUser }] = useUser()
+  const [user, { /* mutate: mutateUser, loading: userLoading, */ setUser }] = useUser()
 
   // user's customized profile (not the passport used for identity)
   const [profile, setProfile] = useState(user?.profile || {})

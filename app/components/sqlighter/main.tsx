@@ -61,7 +61,7 @@ export default function Main(props: MainProps) {
       console.log("DatabasePanel - has sqljs")
     }
   }, [sqljs])
-
+/*
   async function getDatabaseConnection(url, title) {
     if (sqljs) {
       const connection = DataConnectionFactory.create({ client: "sqlite3", title, connection: { url } })
@@ -70,7 +70,7 @@ export default function Main(props: MainProps) {
       return connection
     }
   }
-
+*/
   /**
    * Open a file based database connection from a provided File or FileSystemFileHandle
    * that points to a SQLite database file. If the file parameter is not provided, prompt

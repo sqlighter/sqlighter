@@ -2,7 +2,6 @@
 // panel.tsx - basic box with metadata, eg: title, icon, etc
 //
 
-import { ReactElement } from "react"
 import { CommandEvent } from "../../lib/commands"
 
 export interface PanelProps {
