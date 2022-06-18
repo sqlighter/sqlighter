@@ -6,6 +6,7 @@ import { ReactElement } from "react"
 import { SxProps, Theme } from "@mui/material"
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
+import Tooltip from "@mui/material/Tooltip"
 import Typography from "@mui/material/Typography"
 
 import { PanelProps } from "../navigation/panel"
@@ -23,12 +24,12 @@ const Section_SxProps: SxProps<Theme> = {
   },
 
   ".Section-commands": {
-    marginTop: 2,
-    marginLeft: -1,
+    paddingTop: 2,
+    marginLeft: -0.5,
   },
 
   ".Section-children": {
-    marginTop: 2,
+    paddingTop: 2,
     flexGrow: 1,
   },
 }
@@ -68,11 +69,15 @@ export function Section(props: SectionProps) {
   function renderAction() {
     if (props.action) {
       const actionCmd = props.action as Command
-      return (
-        <Button className="Section-action" variant="outlined" onClick={(e) => props.onCommand(e, actionCmd)}>
+      let button = (
+        <Button className="Section-action" variant="text" onClick={(e) => props.onCommand(e, actionCmd)}>
           {actionCmd.title}
         </Button>
       )
+      if (actionCmd.description) {
+        button = <Tooltip title={actionCmd.description}>{button}</Tooltip>
+      }
+      return button
     }
     return null
   }
@@ -100,7 +105,12 @@ export function Section(props: SectionProps) {
         {renderAction()}
       </Box>
       {props.commands && (
-        <IconButtonGroup className="Section-commands" commands={props.commands} size="small" onCommand={props.onCommand} />
+        <IconButtonGroup
+          className="Section-commands"
+          commands={props.commands}
+          size="small"
+          onCommand={props.onCommand}
+        />
       )}
       {props.children && <Box className="Section-children">{props.children}</Box>}
     </Box>

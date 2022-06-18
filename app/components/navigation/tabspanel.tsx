@@ -49,7 +49,7 @@ const TabsPanel_SxProps: SxProps<Theme> = {
 
   ".TabsPanel-card": {
     height: 1
-  }
+  },
 }
 
 export interface TabsPanelProps extends PanelProps {

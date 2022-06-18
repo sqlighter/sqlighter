@@ -37,7 +37,7 @@ export default function App({ Component, pageProps }: { Component: any; pageProp
   const router = useRouter()
 
   // retrieve user information from current session
-  const [user, { mutate: mutateUser, loading: userLoading }] = useUser()
+  const [user, { mutate: mutateUser }] = useUser()
 
   // true if google signin script has lazy loaded and has been initialized, i.e. is active
   const [isGoogleSigninLoaded, setGoogleSigninLoaded] = useState(false)
@@ -114,7 +114,7 @@ export default function App({ Component, pageProps }: { Component: any; pageProp
   //
 
   function handleCommand(event: React.SyntheticEvent, command: Command) {
-    console.debug(`App.handleCommand - command: ${command.command}`, command)
+    // console.debug(`App.handleCommand - command: ${command.command}`, command)
     switch (command.command) {
       case "openSignin":
         promptSignin()

@@ -38,22 +38,23 @@ export function DatabasePanel(props: DatabasePanelProps) {
   // currently selected tab
   const [tabId, setTabId] = useState<string>("tab_schema")
 
-  /** Commands shown below section title */
-  const commands: (Command | "spacing")[] = [
-    { command: "downloadDatabase", icon: "download", title: "Download Database" },
-  ]
+  // can download entire database?
+  const canDownload = props.connection.canExport()
+  const downloadCommand: Command = {
+    command: "downloadDatabase",
+    title: "Download",
+    description: "Download Database",
+    icon: "download",
+  }
 
-  const actionCmd: Command = {
-    command: "print",
-    title: "Print",
-    description: "Print this document",
-    icon: "print",
+  /** Commands shown below section title */
+  const commands: (Command | "spacing")[] = []
+  if (canDownload) {
+    commands.push(downloadCommand)
   }
 
   const tabs = [
     <DatabaseSchemaPanel id="tab_schema" title="Schema" icon="database" connection={props.connection} />,
-    <DatabaseSchemaPanel id="tab_schema2" title="Schema" icon="database" connection={props.connection} />,
-    <DatabaseSchemaPanel id="tab_schema3" title="Schema" icon="database" connection={props.connection} />,
   ]
 
   //
@@ -130,7 +131,7 @@ export function DatabasePanel(props: DatabasePanelProps) {
       title={props.connection.title}
       description={renderDescription()}
       commands={commands}
-      action={actionCmd}
+      action={canDownload && downloadCommand}
       tabId={tabId}
       tabs={tabs}
       onCommand={handleCommand}
