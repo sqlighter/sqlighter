@@ -3,7 +3,7 @@
 //
 
 // libs
-import React, { useState, ReactElement } from "react"
+import React, { useState } from "react"
 import { Theme, SxProps } from "@mui/material"
 import Box from "@mui/material/Box"
 import Card from "@mui/material/Card"
@@ -94,7 +94,7 @@ export function TabsPanel(props: TabsPanelProps) {
         onCommand={props.onCommand}
       >
         <Card className="TabsPanel-card" variant="outlined" square={true}>
-          <Tabs className="TabsPanel-tabs" tabId={tabId} tabs={props.tabs} onCommand={handleCommand} variant="above" />
+          <Tabs className="TabsPanel-tabs" tabId={tabId} tabs={props.tabs} onCommand={handleCommand} variant="below" />
         </Card>
       </Section>
     </Box>

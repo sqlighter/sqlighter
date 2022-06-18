@@ -13,7 +13,7 @@ export interface PanelProps {
   title?: string
 
   /** Description as a string or other elements like tags, etc (optional) */
-  description?: string | ReactElement
+  description?: string
 
   /** Icon that can be used to represent this panel for tabs, navigation, menus (optional) */
   icon?: React.ReactNode | string

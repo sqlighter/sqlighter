@@ -160,7 +160,7 @@ export default function Main(props: MainProps) {
     const tabId = `pnl_table_${connection.id}_${command.args.database}_${command.args.table}`
     console.debug(`openTable - ${tabId}`)
     if (!tabs.find((tab) => tab.id === tabId)) {
-      const tableTab = { id: tabId, component: "TablePanel", props: { ...command.args } }
+      const tableTab = { id: tabId, component: "TablePanel", props: { ...command.args, title: command.args.table } }
       setTabs([tableTab, ...tabs])
     }
     setTabId(tabId)

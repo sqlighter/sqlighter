@@ -15,7 +15,7 @@ import { prettyBytes } from "../../lib/shared"
 
 // components
 import { PanelProps } from "../navigation/panel"
-import { DatabaseSchemaPanel } from "./databaseschemapanel"
+import { TablesSchemaPanel } from "./schemapanels"
 import { TabsPanel } from "../navigation/tabspanel"
 
 export interface DatabasePanelProps extends PanelProps {
@@ -37,6 +37,9 @@ export function DatabasePanel(props: DatabasePanelProps) {
     })
   }, [props.connection])
 
+  // TODO consider multiple schemas for non SQLite scenarios (or attached SQLite databases other than 'main')
+  const schema = schemas?.[0]
+
   // currently selected tab
   const [tabId, setTabId] = useState<string>("tab_schema")
 
@@ -55,7 +58,7 @@ export function DatabasePanel(props: DatabasePanelProps) {
     commands.push(downloadCommand)
   }
 
-  const tabs = [<DatabaseSchemaPanel id="tab_schema" title="Schema" icon="database" connection={props.connection} />]
+  const tabs = [<TablesSchemaPanel id="tab_schema" title="Tables" icon="table" connection={props.connection} schema={schema} onCommand={handleCommand} />]
 
   //
   //
@@ -99,9 +102,7 @@ export function DatabasePanel(props: DatabasePanelProps) {
   //
 
   /** Extract from schema something like: 11 tables, 15607 rows, 864 kB */
-  function renderDescription() {
-    // TODO consider multiple schemas for non SQLite scenarios (or attached SQLite databases other than 'main')
-    const schema = schemas?.[0]
+  function renderDescription() {    
     if (!schema) {
       return "Loading schema..."
     }

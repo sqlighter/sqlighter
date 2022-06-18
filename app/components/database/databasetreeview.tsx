@@ -128,7 +128,6 @@ function _getTableTree(connection: DataConnection, schema: DataSchema, table) {
         title: "View Structure",
         icon: "info",
         args: {
-          title: `${table.name}`,
           connection,
           database: schema.database,
           table: table.name,

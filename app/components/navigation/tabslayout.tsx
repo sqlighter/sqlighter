@@ -93,7 +93,7 @@ export function TabsLayout(props: TabsLayoutProps) {
 
   function handleCommand(event, command: Command) {
     switch (command.command) {
-      case "changeActivity":
+      case "changedActivity":
         // clicking selected activity toggles sidebar opened or closed
         if (props.activityId == command.args.id) {
           setSidebarVisible(!sidebarVisible)
