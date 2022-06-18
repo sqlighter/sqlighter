@@ -344,7 +344,7 @@ export class SqliteDataConnection extends DataConnection {
   }
 
   //
-  // data
+  // query
   //
 
   /** Run a SQL query and return zero o more results from it */
@@ -374,6 +374,40 @@ export class SqliteDataConnection extends DataConnection {
   public async getRowsModified(): Promise<number> {
     // TODO this number needs to somehow reset when new queries are run
     return this._database.getRowsModified()
+  }
+
+  //
+  // export
+  //
+
+  /**
+   * True if data connection can export data for the given database, table and format
+   * @param database Which specific database to export? Default null for entire database
+   * @param table Specific table to be exported, default null for all contents
+   * @param format Specific format to export in, default null for native format
+   * @returns True if this connection can perform the requested data export
+   */
+  public canExport(database?: string, table?: string, format?: string): boolean {
+    // can only export entire database in native format
+    if (!database && !table && !format) {
+      return true
+    }
+    return false
+  }
+
+  /** 
+   * Exports data in the given format
+   * @param database Which specific database to export? Default null for entire database
+   * @param table Specific table to be exported, default null for all contents
+   * @param format Specific format to export in, default null for native format
+   * @returns Exported data as byte array and data mime type
+   */
+  public async export(database?: string, table?: string, format?: string): Promise<{data: Uint8Array, type: string}> {
+    const data = this._database.export()
+    console.debug(
+      `SqliteDataConnection.export - database: ${database}, table: ${table}, format: ${format} > size: ${data?.length}`
+    )
+    return { data, type: "application/x-sqlite3"}
   }
 }
 

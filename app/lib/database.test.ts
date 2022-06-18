@@ -55,12 +55,12 @@ describe("database.ts", () => {
 
   test("insert with children", async () => {
     // insert items
-    const u1 = await itemsTable.insertItem({ id: "usr_1", type: "user" })
-    const u2 = await itemsTable.insertItem({ id: "usr_2", type: "user" })
+    await itemsTable.insertItem({ id: "usr_1", type: "user" })
+    await itemsTable.insertItem({ id: "usr_2", type: "user" })
 
     // insert children
-    const c1 = await itemsTable.insertItem({ id: "usr_10", parentId: "usr_1", type: "user" })
-    const c2 = await itemsTable.insertItem({ id: "usr_20", parentId: "usr_2", type: "user" })
+    await itemsTable.insertItem({ id: "usr_10", parentId: "usr_1", type: "user" })
+    await itemsTable.insertItem({ id: "usr_20", parentId: "usr_2", type: "user" })
 
     const items1 = await itemsTable.select().where("type", "user")
     expect(items1).toHaveLength(4)
@@ -68,12 +68,12 @@ describe("database.ts", () => {
 
   test("insertItem with invalid parent", async () => {
     // insert item
-    const u1 = await itemsTable.insertItem({ id: "usr_1", type: "user" })
+    await itemsTable.insertItem({ id: "usr_1", type: "user" })
 
     // insert invalid parentId
     let hasThrown = false
     try {
-      const c1 = await itemsTable.insertItem({ id: "usr_10", parentId: "usr_invalid", type: "user" })
+      await itemsTable.insertItem({ id: "usr_10", parentId: "usr_invalid", type: "user" })
     } catch {
       hasThrown = true
     }

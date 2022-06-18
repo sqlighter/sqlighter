@@ -40,14 +40,7 @@ export function DatabasePanel(props: DatabasePanelProps) {
 
   /** Commands shown below section title */
   const commands: (Command | "spacing")[] = [
-    { command: "info", icon: "info", title: "Details" },
-    { command: "bookmark", icon: "bookmark", title: "Bookmark" },
-    { command: "history", icon: "history", title: "History" },
-    "spacing",
-    { command: "prettify", icon: "autofix", title: "Prettify" },
-    "spacing",
-    { command: "comment", icon: "comment", title: "Comments" },
-    { command: "share", icon: "share", title: "Share" },
+    { command: "downloadDatabase", icon: "download", title: "Download Database" },
   ]
 
   const actionCmd: Command = {
@@ -64,6 +57,22 @@ export function DatabasePanel(props: DatabasePanelProps) {
   ]
 
   //
+  //
+  //
+
+  /** Export entire SQLite database */
+  async function downloadDatabase() {
+    const exportData = await props.connection.export()
+    if (exportData) {
+      var blob = new Blob([exportData.data], { type: exportData.type })
+      var link = document.createElement("a")
+      link.href = window.URL.createObjectURL(blob)
+      link.download = props.connection.title
+      link.click()
+    }
+  }
+
+  //
   // handlers
   //
 
@@ -72,6 +81,10 @@ export function DatabasePanel(props: DatabasePanelProps) {
     switch (command.command) {
       case "changedTabs":
         setTabId(command.args.id)
+        break
+
+      case "downloadDatabase":
+        await downloadDatabase()
         break
     }
 

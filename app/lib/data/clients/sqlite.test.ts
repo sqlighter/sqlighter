@@ -163,4 +163,19 @@ describe("sqlite.ts (node env)", () => {
     const viewsNames = schema.views.map((v) => v.name).join(" ")
     expect(viewsNames).toBe("customernames doublesales invoicetotals")
   })
+
+  test("canExport (chinook.db)", async () => {
+    const connection = await getChinookConnection()
+    expect(connection.canExport()).toBeTruthy()
+    expect(connection.canExport("main", "customers")).not.toBeTruthy()
+  })
+
+  test("export (chinook.db)", async () => {
+    const connection = await getChinookConnection()
+    const exportData = await connection.export()
+
+    expect(exportData.data).toBeTruthy()
+    expect(exportData.data.length).toBe(884736)
+    expect(exportData.type).toBe("application/x-sqlite3")
+  })
 })

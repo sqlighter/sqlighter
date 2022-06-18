@@ -4,7 +4,7 @@
 
 import { Profile } from "passport"
 import { Item } from "./items"
-import { items, unpackItem } from "../database"
+import { items } from "../database"
 import { assert } from "console"
 
 export const USER_TYPE = "user"

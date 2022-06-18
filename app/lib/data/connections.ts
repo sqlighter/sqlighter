@@ -2,9 +2,6 @@
 // connections.ts - base class for data connections that can provide data, schemas, etc.
 //
 
-import { SignalCellularConnectedNoInternet4BarRounded } from "@mui/icons-material"
-import { config } from "dotenv"
-import { ReactElement } from "react"
 import { QueryExecResult } from "sql.js"
 import { generateId } from "../shared"
 
@@ -217,7 +214,7 @@ export abstract class DataConnection {
   public abstract getSchemas(refresh: boolean): Promise<DataSchema[]>
 
   //
-  // data
+  // query
   //
 
   /** Run a SQL query and return zero o more results from it */
@@ -232,6 +229,24 @@ export abstract class DataConnection {
    * type of SQL statement does not modify the value returned by this function.
    */
   public abstract getRowsModified(): Promise<number>
+
+  //
+  // export
+  //
+
+  /** True if data connection can export data for the given database, table and format */
+  public canExport(database?: string, table?: string, format?: string): boolean {
+    return false
+  }
+
+  /** 
+   * Exports data in the given format
+   * @param database Which specific database to export? Default null for entire database
+   * @param table Specific table to be exported, default null for all contents
+   * @param format Specific format to export in, default null for native format
+   * @returns Exported data as byte array and data mime type
+   */
+   public abstract export(database?: string, table?: string, format?: string): Promise<{data: Uint8Array, type: string}>
 }
 
 //

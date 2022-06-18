@@ -41,6 +41,9 @@ export type CommandType =
   /** Modify a connection settings @param item The connection to modify */
   | "configureConnection"
 
+  /** Download data from connection @param format The format for the download */
+  | "downloadData"
+
   /** Pin item in tree view */
   | "pin"
   /** Unpin item from tree view */
