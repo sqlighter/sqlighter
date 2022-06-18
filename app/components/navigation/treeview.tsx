@@ -95,11 +95,7 @@ const TreeView_SxProps: SxProps<Theme> = {
       overflow: "hidden",
 
       ".MuiChip-root": {
-        //    display: "block",
         cursor: "pointer",
-        ".MuiChip-label": {
-          fontSize: "9px",
-        },
       },
     },
 

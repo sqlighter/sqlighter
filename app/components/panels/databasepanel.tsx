@@ -5,6 +5,8 @@
 // libs
 import React from "react"
 import { useState, useEffect } from "react"
+// import Chip from "@mui/material/Chip"
+// import Stack from "@mui/material/Stack"
 
 // model
 import { Command } from "../../lib/commands"
@@ -53,9 +55,7 @@ export function DatabasePanel(props: DatabasePanelProps) {
     commands.push(downloadCommand)
   }
 
-  const tabs = [
-    <DatabaseSchemaPanel id="tab_schema" title="Schema" icon="database" connection={props.connection} />,
-  ]
+  const tabs = [<DatabaseSchemaPanel id="tab_schema" title="Schema" icon="database" connection={props.connection} />]
 
   //
   //
@@ -122,7 +122,24 @@ export function DatabasePanel(props: DatabasePanelProps) {
       labels.push(prettyBytes(schema.stats.size))
     }
 
+    // labels as plain text
     return labels.join(", ")
+/*
+    return (
+      <Stack className="DatabasePanel-tags" direction="row" spacing={1} sx={{ marginTop: 1 }}>
+        {labels.map((label) => (
+          <Chip
+            className="DatabasePanel-tag"
+            label={label}
+            size="small"
+            component="span"
+            variant="outlined"
+            sx={{ color: "text.secondary" }}
+          />
+        ))}
+      </Stack>
+    )
+*/
   }
 
   return (

@@ -3,33 +3,18 @@
 //
 
 // libs
-import React from "react"
-import { useState } from "react"
+import React, { useState, ReactElement } from "react"
 import { Theme, SxProps } from "@mui/material"
 import Box from "@mui/material/Box"
-import Button from "@mui/material/Button"
 import Card from "@mui/material/Card"
-import Stack from "@mui/material/Stack"
 
 // model
 import { Command } from "../../lib/commands"
-import { DataConnection } from "../../lib/data/connections"
-import Query, { QueryRun } from "../../lib/items/query"
 
 // components
-import { Icon } from "../ui/icon"
-import { IconButton } from "../ui/iconbutton"
-import { IconButtonGroup } from "../ui/iconbuttongroup"
 import { PanelProps, PanelElement } from "./panel"
 import { Tabs } from "./tabs"
-import { ConnectionPicker } from "../database/connectionpicker"
-import { SqlEditor } from "../editor/sqleditor"
-import { QueryRunPanel } from "../database/queryrunpanel"
-import { useForceUpdate } from "../hooks/useforceupdate"
-import { TitleField } from "../ui/titlefield"
-import { Empty } from "../ui/empty"
 import { Section } from "../ui/section"
-import { DatabaseSchemaPanel } from "../panels/databaseschemapanel"
 
 // styles applied to main and subcomponents
 const TabsPanel_SxProps: SxProps<Theme> = {

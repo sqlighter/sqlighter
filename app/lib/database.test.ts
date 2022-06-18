@@ -38,7 +38,7 @@ describe("database.ts", () => {
 
   test("insert with unicode", async () => {
     // insert item with unicode chars
-    const t1 = await itemsTable.insertItem({
+    await itemsTable.insertItem({
       id: "usr_香蕉",
       type: "user",
       name: "one",
