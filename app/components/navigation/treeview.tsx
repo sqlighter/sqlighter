@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography"
 import { SxProps, Theme } from "@mui/material"
 
 import { Command, CommandEvent } from "../../lib/commands"
-import { useSettings } from "../hooks/usesettings2"
+import { useSettings } from "../hooks/usesettings"
 import { Tree } from "../../lib/tree"
 import { TreeItem, DEPTH_PADDING_PX } from "./treeitem"
 

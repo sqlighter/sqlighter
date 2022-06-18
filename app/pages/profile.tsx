@@ -14,7 +14,7 @@ import MenuItem from "@mui/material/MenuItem"
 import Typography from "@mui/material/Typography"
 import { deepmerge } from "@mui/utils"
 
-import { useUser } from "../components/hooks/useuser2"
+import { useUser } from "../components/hooks/useuser"
 import { AppLayout } from "../components/layouts"
 import { Section } from "../components/ui/section"
 import { SigninPanel } from "../components/signin"

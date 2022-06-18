@@ -38,8 +38,6 @@ export interface TablePanelProps extends PanelProps {
 
 /** Shows schema and data of a database table  */
 export function TablePanel(props: TablePanelProps) {
-  const { connection, onCommand } = props
-
   //
   // state
   //
@@ -55,7 +53,7 @@ export function TablePanel(props: TablePanelProps) {
       props.onCommand(null, {
         command: "changedConnection",
         args: {
-          item: connection,
+          item: props.connection,
         },
       })
     }
