@@ -102,7 +102,7 @@ export function TabsPanel(props: TabsPanelProps) {
       <Section
         className="TabsPanel-section"
         title={props.title}
-        description="short description of panel like 8 tables"
+        description={props.description}
         commands={props.commands}
         action={props.action}
         variant="large"

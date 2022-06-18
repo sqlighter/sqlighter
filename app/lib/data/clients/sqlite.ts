@@ -323,12 +323,18 @@ export class SqliteDataConnection extends DataConnection {
         .map((triggerEntity) => this._getTriggerSchema(entities, triggerEntity))
         .sort((a, b) => (a.name < b.name ? -1 : 1))
 
+      // calculate database size
+      const sizeResults = await this.getResults("pragma page_size; pragma page_count;")
+
       return [
         {
           database,
           tables,
           triggers,
           views,
+          stats: {
+            size: (sizeResults[0].values[0][0] as number) * (sizeResults[1].values[0][0] as number),
+          },
         },
       ]
     } catch (exception) {

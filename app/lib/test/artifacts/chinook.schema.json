@@ -709,5 +709,8 @@
     }
   ],
   "triggers": [],
-  "views": []
+  "views": [],
+  "stats": {
+    "size": 884736
+  }
 }

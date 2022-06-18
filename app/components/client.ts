@@ -2,7 +2,7 @@
 // client.ts - client only utility methods
 //
 
-import { Duration, formatDistance, differenceInSeconds, differenceInMilliseconds } from "date-fns"
+import { formatDistance, differenceInMilliseconds } from "date-fns"
 
 //
 // math
@@ -16,7 +16,6 @@ export function round(value: number, digits: number = 2) {
 //
 // formatting
 //
-
 
 /**
  * Returns time distance in seconds

@@ -1,52 +1,20 @@
 //
-// databasepanel.tsx - panel used to show information regarding a database connection (info, tables, etc)
+// databasepanel.tsx - show info on a database connection (stats, schema, etc)
 //
 
 // libs
 import React from "react"
-import { useState, useRef } from "react"
-import { Theme, SxProps } from "@mui/material"
-import { Allotment } from "allotment"
-import { format } from "sql-formatter"
-import Box from "@mui/material/Box"
-import Button from "@mui/material/Button"
-import Card from "@mui/material/Card"
-import Stack from "@mui/material/Stack"
-import useMediaQuery from "@mui/material/useMediaQuery"
+import { useState, useEffect } from "react"
 
 // model
 import { Command } from "../../lib/commands"
-import { DataConnection } from "../../lib/data/connections"
-import Query, { QueryRun } from "../../lib/items/query"
+import { DataConnection, DataSchema } from "../../lib/data/connections"
+import { prettyBytes } from "../../lib/shared"
 
 // components
-import { Icon } from "../ui/icon"
-import { IconButton } from "../ui/iconbutton"
-import { IconButtonGroup } from "../ui/iconbuttongroup"
 import { PanelProps } from "../navigation/panel"
-import { Tabs } from "../navigation/tabs"
-import { ConnectionPicker } from "../database/connectionpicker"
-import { SqlEditor } from "../editor/sqleditor"
-import { QueryRunPanel } from "../database/queryrunpanel"
-import { useForceUpdate } from "../hooks/useforceupdate"
-import { TitleField } from "../ui/titlefield"
-import { Empty } from "../ui/empty"
-import { Section } from "../ui/section"
 import { DatabaseSchemaPanel } from "./databaseschemapanel"
 import { TabsPanel } from "../navigation/tabspanel"
-
-// styles applied to main and subcomponents
-const DatabasePanel_SxProps: SxProps<Theme> = {
-  width: 1,
-  minWidth: 360,
-  height: 1,
-  maxHeight: 1,
-
-  paddingTop: 1.5,
-  paddingLeft: 1,
-  paddingRight: 1,
-  paddingBottom: 1,
-}
 
 export interface DatabasePanelProps extends PanelProps {
   /** Connection rendered by this panel */
@@ -55,31 +23,20 @@ export interface DatabasePanelProps extends PanelProps {
 
 /** Panel used to edit and run database queries, show results  */
 export function DatabasePanel(props: DatabasePanelProps) {
-  const { connection, onCommand } = props
-
   //
   // state
   //
 
-  // layout changes on medium and large screens
-  const isMediumScreen = useMediaQuery((theme: Theme) => theme.breakpoints.up("md"))
+  // schema are requested asynchronously from connection
+  const [schemas, setSchemas] = useState<DataSchema[]>(null)
+  useEffect(() => {
+    props.connection.getSchemas(false).then((schemas) => {
+      setSchemas(schemas)
+    })
+  }, [props.connection])
 
   // currently selected tab
   const [tabId, setTabId] = useState<string>("tab_schema")
-
-  // used to force a refresh when data model changes
-  const forceUpdate = useForceUpdate()
-  function notifyChanges() {
-    forceUpdate()
-    if (props.onCommand) {
-      props.onCommand(null, {
-        command: "changedConnection",
-        args: {
-          item: connection,
-        },
-      })
-    }
-  }
 
   /** Commands shown below section title */
   const commands: (Command | "spacing")[] = [
@@ -101,40 +58,64 @@ export function DatabasePanel(props: DatabasePanelProps) {
   }
 
   const tabs = [
-    <DatabaseSchemaPanel id="tab_schema" title="Schema" icon="database" connection={connection} />,
-    <DatabaseSchemaPanel id="tab_schema2" title="Schema" icon="database" connection={connection} />,
-    <DatabaseSchemaPanel id="tab_schema3" title="Schema" icon="database" connection={connection} />,
+    <DatabaseSchemaPanel id="tab_schema" title="Schema" icon="database" connection={props.connection} />,
+    <DatabaseSchemaPanel id="tab_schema2" title="Schema" icon="database" connection={props.connection} />,
+    <DatabaseSchemaPanel id="tab_schema3" title="Schema" icon="database" connection={props.connection} />,
   ]
 
   //
   // handlers
   //
 
-  async function handleCommand(e: React.SyntheticEvent, command: Command) {
+  async function handleCommand(event: React.SyntheticEvent, command: Command) {
     console.debug(`DatabasePanel.handleCommand - ${command.command}`, command)
     switch (command.command) {
       case "changedTabs":
         setTabId(command.args.id)
         break
-
-      case "changedConnection":
-        notifyChanges()
-        return
     }
 
-    // propagate commands
-    props.onCommand(e, command)
+    if (props.onCommand) {
+      props.onCommand(event, command)
+    }
   }
 
   //
   // render
   //
 
+  /** Extract from schema something like: 11 tables, 15607 rows, 864 kB */
+  function renderDescription() {
+    if (!schemas) {
+      return "Loading schema..."
+    }
+
+    // TODO consider multiple schemas for non SQLite scenarios (or attached SQLite databases other than 'main')
+    const schema = schemas[0]
+    const labels: string[] = []
+
+    if (schema.tables) {
+      labels.push(`${schema.tables.length} tables`)
+
+      // count total rows
+      let rows = schema.tables.reduce((t1, t2) => t1 + t2.stats?.rows, 0)
+      if (rows > 0) {
+        labels.push(`${rows} rows`)
+      }
+    }
+
+    if (schema.stats?.size > 0) {
+      labels.push(prettyBytes(schema.stats.size))
+    }
+
+    return labels.join(", ")
+  }
+
   return (
     <TabsPanel
       className="DatabasePanel-root"
-      title={connection.title}
-      description="short description of panel like 8 tables"
+      title={props.connection.title}
+      description={renderDescription()}
       commands={commands}
       action={actionCmd}
       tabId={tabId}

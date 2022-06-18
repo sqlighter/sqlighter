@@ -66,7 +66,7 @@ export interface DataConfig {
 
 /** Database schema */
 export interface DataSchema {
-  /** Name of database for this schema */
+  /** Name of database for this schema, eg: 'main' */
   database?: string
 
   /** Tables in the schema */
@@ -111,6 +111,12 @@ export interface DataSchema {
     sql: string
     from?: string
   }[]
+
+  /** Database level statistics */
+  stats?: {
+    /** Database size in bytes */
+    size?: number
+  }
 }
 
 // generic data connection client constructor

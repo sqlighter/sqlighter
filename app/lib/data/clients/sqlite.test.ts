@@ -121,6 +121,9 @@ describe("sqlite.ts (node env)", () => {
     expect(indexNames).toBe(
       "IFK_AlbumArtistId  IFK_CustomerSupportRepId IFK_EmployeeReportsTo  IFK_InvoiceLineInvoiceId IFK_InvoiceLineTrackId IFK_InvoiceCustomerId  IFK_PlaylistTrackTrackId  IFK_TrackAlbumId IFK_TrackGenreId IFK_TrackMediaTypeId"
     )
+
+    // total database size
+    expect(schema.stats?.size).toBe(884736)
   })
 
   test("getSchema (test.db)", async () => {
