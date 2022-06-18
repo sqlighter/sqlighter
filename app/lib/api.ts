@@ -33,7 +33,7 @@ export async function putJson(url, data) {
 }
 
 /** Retrieve data and metadata from relative url pointing to our APIs */
-export function useApi<T = any>(url: string) {
+export function useApi<T = any>(url?: string) {
   if (!url) {
     return {
       data: null,
@@ -43,7 +43,6 @@ export function useApi<T = any>(url: string) {
     }
   }
 
-  console.assert(url != null)
   const { data, error } = useSWR(url, fetcher)
   return {
     data: data?.data as T,

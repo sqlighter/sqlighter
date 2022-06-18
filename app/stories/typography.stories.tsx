@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react"
 import { Box, Stack, Typography } from "@mui/material"
 import { StorybookDecorator } from "../components/storybook"
 import { IconButton } from "../components/ui/iconbutton"
-import { Display, Headline, Title, Body, Label, TypographyProps } from "../components/ui/typography"
+import { Display, Headline, Title, Body, Label } from "../components/ui/typography"
 import Chip from "@mui/material/Chip"
 
 function Boxy(props) {

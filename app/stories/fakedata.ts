@@ -2,7 +2,7 @@
 // fakedata.ts
 //
 
-import { DataConnection, DataClient, DataConfig, DataSchema } from "../lib/data/connections"
+import { DataConnection, DataConfig, DataSchema } from "../lib/data/connections"
 import { Query, QueryRun } from "../lib/items/query"
 import { parseISO } from "date-fns"
 import { Command } from "../lib/commands"
@@ -10,7 +10,6 @@ import fakeCustomers from "./data/customers"
 import { QueryExecResult } from "sql.js"
 import { DataConnectionFactory } from "../lib/data/factory"
 import { SqliteDataConnection } from "../lib/data/clients/sqlite"
-//import initSqlJs from "sql.js"
 
 // DataConnection (fake)
 class FakeConnection extends DataConnection {

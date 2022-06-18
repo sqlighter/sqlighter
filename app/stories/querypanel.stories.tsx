@@ -7,7 +7,8 @@ import { ComponentStory, ComponentMeta } from "@storybook/react"
 import { Box } from "@mui/material"
 import { StorybookDecorator } from "../components/storybook"
 import { QueryPanel } from "../components/panels/querypanel"
-import { fake_connections1, fake_query1, getChinookConnection } from "./fakedata"
+import { fake_connections1, fake_query1 } from "./fakedata"
+// import { getChinookConnection } from "./fakedata"
 
 export default {
   title: "Database/QueryPanel",
@@ -17,7 +18,7 @@ export default {
       <StorybookDecorator>
         <Story />
       </StorybookDecorator>
-    ),
+    ), 
   ],
   args: {
     connections: fake_connections1,

@@ -5243,7 +5243,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jest@npm:*, @types/jest@npm:>=26.0.0, @types/jest@npm:^28.1.0":
+"@types/jest@npm:*, @types/jest@npm:>=26.0.0, @types/jest@npm:^28.1.2":
   version: 28.1.2
   resolution: "@types/jest@npm:28.1.2"
   dependencies:
@@ -5324,7 +5324,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*":
+"@types/node@npm:*, @types/node@npm:^18.0.0":
   version: 18.0.0
   resolution: "@types/node@npm:18.0.0"
   checksum: aab2b325727a2599f6d25ebe0dedf58c40fb66a51ce4ca9c0226ceb70fcda2d3afccdca29db5942eb48b158ee8585a274a1e3750c718bbd5399d7f41d62dfdcc
@@ -5335,13 +5335,6 @@ __metadata:
   version: 16.11.41
   resolution: "@types/node@npm:16.11.41"
   checksum: 808e4d65757bb13cf25e88dfa4e65880efef06652b04baecb051eb90cf090dda9812aa3505b31e963a48041eed7dbe0fc59c44c7c5e117da952ff951bf3a584a
-  languageName: node
-  linkType: hard
-
-"@types/node@npm:^17.0.36":
-  version: 17.0.45
-  resolution: "@types/node@npm:17.0.45"
-  checksum: aa04366b9103b7d6cfd6b2ef64182e0eaa7d4462c3f817618486ea0422984c51fc69fd0d436eae6c9e696ddfdbec9ccaa27a917f7c2e8c75c5d57827fe3d95e8
   languageName: node
   linkType: hard
 
@@ -18233,8 +18226,8 @@ __metadata:
     "@swc-node/jest": ^1.5.2
     "@testing-library/jest-dom": ^5.16.4
     "@testing-library/react": ^13.3.0
-    "@types/jest": ^28.1.0
-    "@types/node": ^17.0.36
+    "@types/jest": ^28.1.2
+    "@types/node": ^18.0.0
     "@types/passport": ^1.0.7
     "@types/react": ^18.0.9
     "@types/showdown": ^2.0.0

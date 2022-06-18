@@ -9,10 +9,6 @@ import Typography from "@mui/material/Typography"
 import { StorybookDecorator } from "../components/storybook"
 import { FilesBackdrop } from "../components/ui/filesbackdrop"
 
-import type { DropTargetMonitor } from "react-dnd"
-import { useDrop } from "react-dnd"
-import { NativeTypes } from "react-dnd-html5-backend"
-
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: "UI/FilesBackdrop",

@@ -7,7 +7,7 @@ import fs from "fs/promises"
 
 async function generateFakerJson(specs, filename, rows = 3000) {
   console.assert(specs.values.length == specs.columns.length)
-  const rowValues = []
+  const rowValues: any[] = []
   for (let i = 0; i < rows; i++) {
     const row = specs.values.map((callable) => callable())
     rowValues.push(row)
