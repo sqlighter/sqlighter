@@ -211,16 +211,41 @@ export class SqliteDataConnection extends DataConnection {
     return tableSchema
   }
 
-  private _getViewSchema(entities, viewEntity) {
+  private async _getViewSchema(entities, viewEntity) {
     const viewAst = viewEntity.ast
     const viewName = viewAst.target.name
-
-    // TODO parse view's columns, expressions, etc
-    return {
+    const viewSchema = {
       name: viewName,
       sql: viewEntity.sql,
       from: viewAst.result?.from?.name,
+      columns: null,
+      stats: null,
     }
+
+    try {
+      // number of rows in view
+      const statsResult = await this.getResult(`select count(*) 'rows' from main.'${viewSchema.name}'`)
+      viewSchema.stats = {
+        // count is first and only result
+        rows: statsResult.values[0][0],
+      }
+
+      // extract row names by running a simple select query for a single line
+      // we could extract columns from the ast but there are many variants like views
+      // from simple selects, views from joins, unions, calculations, etc...
+      const columnsResult = await this.getResult(`select * from main.'${viewSchema.name}' limit 1`)
+      viewSchema.columns = columnsResult.columns.map((column) => {
+        return { name: column }
+      })
+    } catch (exception) {
+      console.error(
+        `SqliteDataConnection._getViewSchema - view: '${viewName}', exception: ${exception}`,
+        viewSchema,
+        exception
+      )
+    }
+
+    return viewSchema
   }
 
   private _getTriggerSchema(entities, triggerEntity) {
@@ -313,10 +338,14 @@ export class SqliteDataConnection extends DataConnection {
       }
       tables.sort((a, b) => (a.name < b.name ? -1 : 1))
 
-      const views = entities
-        .filter((entity) => entity.type == "view")
-        .map((viewEntity) => this._getViewSchema(entities, viewEntity))
-        .sort((a, b) => (a.name < b.name ? -1 : 1))
+      // convert entities abstract syntax tree to simplified schema structure
+      const views = []
+      for (const viewEntity of entities) {
+        if (viewEntity.type === "view") {
+          views.push(await this._getViewSchema(entities, viewEntity))
+        }
+      }
+      views.sort((a, b) => (a.name < b.name ? -1 : 1))
 
       const triggers = entities
         .filter((entity) => entity.type == "trigger")
@@ -395,19 +424,19 @@ export class SqliteDataConnection extends DataConnection {
     return false
   }
 
-  /** 
+  /**
    * Exports data in the given format
    * @param database Which specific database to export? Default null for entire database
    * @param table Specific table to be exported, default null for all contents
    * @param format Specific format to export in, default null for native format
    * @returns Exported data as byte array and data mime type
    */
-  public async export(database?: string, table?: string, format?: string): Promise<{data: Uint8Array, type: string}> {
+  public async export(database?: string, table?: string, format?: string): Promise<{ data: Uint8Array; type: string }> {
     const data = this._database.export()
     console.debug(
       `SqliteDataConnection.export - database: ${database}, table: ${table}, format: ${format} > size: ${data?.length}`
     )
-    return { data, type: "application/x-sqlite3"}
+    return { data, type: "application/x-sqlite3" }
   }
 }
 

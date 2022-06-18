@@ -3,7 +3,7 @@
 //
 
 import fs from "fs"
-import { getChinookConnection, getTestConnection, writeJson } from "../../test/utilities"
+import { getChinookConnection, getTestConnection, getNorthwindConnection, writeJson } from "../../test/utilities"
 
 // Interpreting schema
 // https://www.sqlite.org/schematab.html
@@ -74,6 +74,14 @@ describe("sqlite.ts (node env)", () => {
     expect(entities).toBeTruthy()
     expect(entities.length).toBe(25)
     writeJson("./lib/test/artifacts/test.entities.json", entities)
+  })
+
+  test("getEntities (nortwind.db)", async () => {
+    const connection = await getNorthwindConnection()
+    const entities = await connection._getEntities()
+    expect(entities).toBeTruthy()
+    expect(entities.length).toBe(29)
+    writeJson("./lib/test/artifacts/northwind.entities.json", entities)
   })
 
   test("getSchema (chinook.db)", async () => {
@@ -162,6 +170,32 @@ describe("sqlite.ts (node env)", () => {
 
     const viewsNames = schema.views.map((v) => v.name).join(" ")
     expect(viewsNames).toBe("customernames doublesales invoicetotals")
+  })
+
+  test("getSchema (northwind.db)", async () => {
+    const connection = await getNorthwindConnection()
+    const schemas = await connection.getSchemas(false)
+    expect(schemas).toBeTruthy()
+    expect(schemas.length).toBe(1)
+
+    // save schema for verification
+    const schema = schemas[0]
+    writeJson("./lib/test/artifacts/northwind.schema.json", schema)
+
+    expect(schema.tables).toHaveLength(13)
+    const tablesNames = schema.tables.map((t) => `'${t.name}'`).join(", ")
+    expect(tablesNames).toBe(
+      "'Categories', 'CustomerCustomerDemo', 'CustomerDemographics', 'Customers', 'EmployeeTerritories', 'Employees', 'Order Details', 'Orders', 'Products', 'Regions', 'Shippers', 'Suppliers', 'Territories'"
+    )
+    
+    expect(schema.views).toHaveLength(16)
+    const viewsNames = schema.views.map((v) => `'${v.name}'`).join(", ")
+    expect(viewsNames).toBe(
+      "'Alphabetical list of products', 'Category Sales for 1997', 'Current Product List', 'Customer and Suppliers by City', 'Invoices', 'Order Details Extended', 'Order Subtotals', 'Orders Qry', 'Product Sales for 1997', 'Products Above Average Price', 'Products by Category', 'Quarterly Orders', 'Sales Totals by Amount', 'Sales by Category', 'Summary of Sales by Quarter', 'Summary of Sales by Year'"
+    )
+
+    // no triggers
+    expect(schema.triggers).toHaveLength(0)
   })
 
   test("canExport (chinook.db)", async () => {

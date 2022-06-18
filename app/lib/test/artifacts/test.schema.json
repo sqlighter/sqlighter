@@ -719,17 +719,53 @@
     {
       "name": "customernames",
       "sql": "CREATE VIEW CustomerNames as\nselect FirstName, LastName, Company from Customers",
-      "from": "customers"
+      "from": "customers",
+      "columns": [
+        {
+          "name": "FirstName"
+        },
+        {
+          "name": "LastName"
+        },
+        {
+          "name": "Company"
+        }
+      ],
+      "stats": {
+        "rows": 60
+      }
     },
     {
       "name": "doublesales",
       "sql": "CREATE VIEW DoubleSales as select InvoiceId, (Total * 2) as \"DoubleTotal\" from Invoices",
-      "from": "invoices"
+      "from": "invoices",
+      "columns": [
+        {
+          "name": "InvoiceId"
+        },
+        {
+          "name": "DoubleTotal"
+        }
+      ],
+      "stats": {
+        "rows": 412
+      }
     },
     {
       "name": "invoicetotals",
       "sql": "CREATE VIEW InvoiceTotals as\nselect InvoiceId, Total from Invoices",
-      "from": "invoices"
+      "from": "invoices",
+      "columns": [
+        {
+          "name": "InvoiceId"
+        },
+        {
+          "name": "Total"
+        }
+      ],
+      "stats": {
+        "rows": 412
+      }
     }
   ],
   "stats": {

@@ -107,6 +107,10 @@ export interface DataSchema {
     name: string
     sql: string
     from?: string
+    stats?: {
+      /** Number of rows in this view */
+      rows?: number
+    }
   }[]
 
   /** Database level statistics */
