@@ -9,7 +9,7 @@ jobs:
   build:
     name: "Jest Tests"
     runs-on: ubuntu-latest
-    environment: testing
+    environment: Preview
     steps:
     - uses: actions/checkout@v2
     - name: Install modules
