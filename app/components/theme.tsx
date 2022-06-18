@@ -2,7 +2,7 @@
 // theme.tsx - custom theme applied to all components of the application
 //
 
-import { lighten, rgbToHex, createTheme, Theme, SxProps } from "@mui/material/styles"
+import { lighten, rgbToHex, createTheme, Theme } from "@mui/material/styles"
 
 // Theming
 // https://bareynol.github.io/mui-theme-creator/
@@ -40,7 +40,7 @@ export const REGULAR_WEIGHT = 400
 export const MEDIUM_WEIGHT = 500
 export const BOLD_WEIGHT = 700
 
-export function customTheme() {
+export function customTheme(): Theme {
   // default theme explorer:
   // https://mui.com/material-ui/customization/default-theme/
   const baseTheme = createTheme({

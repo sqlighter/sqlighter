@@ -76,7 +76,7 @@ export function IconButton(props: IconButtonProps) {
   // Optional tooltip if title is defined
   if (props.command.title && !props.label) {
     button = (
-      <Tooltip className="IconButton-tooltip" title={command.title}>
+      <Tooltip className="IconButton-tooltip" title={command.description || command.title}>
         {button}
       </Tooltip>
     )

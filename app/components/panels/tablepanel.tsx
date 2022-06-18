@@ -3,36 +3,16 @@
 //
 
 // libs
-import React from "react"
-import { useState, useRef } from "react"
+import React, { useState } from "react"
 import { Theme, SxProps } from "@mui/material"
-import { Allotment } from "allotment"
-import { format } from "sql-formatter"
-import Box from "@mui/material/Box"
-import Button from "@mui/material/Button"
-import Card from "@mui/material/Card"
-import Stack from "@mui/material/Stack"
-import useMediaQuery from "@mui/material/useMediaQuery"
 
 // model
 import { Command } from "../../lib/commands"
 import { DataConnection } from "../../lib/data/connections"
-import Query, { QueryRun } from "../../lib/items/query"
 
 // components
-import { Icon } from "../ui/icon"
-import { IconButton } from "../ui/iconbutton"
-import { IconButtonGroup } from "../ui/iconbuttongroup"
 import { PanelProps } from "../navigation/panel"
-import { Tabs } from "../navigation/tabs"
-import { ConnectionPicker } from "../database/connectionpicker"
-import { SqlEditor } from "../editor/sqleditor"
-import { QueryRunPanel } from "../database/queryrunpanel"
 import { useForceUpdate } from "../hooks/useforceupdate"
-import { TitleField } from "../ui/titlefield"
-import { Empty } from "../ui/empty"
-import { Section } from "../ui/section"
-import { DatabaseSchemaPanel } from "./databaseschemapanel"
 import { TabsPanel } from "../navigation/tabspanel"
 
 // styles applied to main and subcomponents
