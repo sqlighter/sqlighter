@@ -21,7 +21,6 @@ import Query, { QueryRun } from "../../lib/items/query"
 
 // components
 import { Icon } from "../ui/icon"
-import { IconButton } from "../ui/iconbutton"
 import { IconButtonGroup } from "../ui/iconbuttongroup"
 import { PanelProps } from "../navigation/panel"
 import { Tabs } from "../navigation/tabs"

@@ -74,13 +74,6 @@ export function TitleField(props: TitleFieldProps) {
   //
   // render
   //
-  const iconAdornment = /*isSelected &&*/ {
-    endAdornment: (
-      <InputAdornment position="end">
-        <Icon>edit</Icon>
-      </InputAdornment>
-    ),
-  }
 
   const className = props.className ? "TitleField-root " + props.className : "TitleField-root"
   return (

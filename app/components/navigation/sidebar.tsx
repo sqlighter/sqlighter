@@ -2,7 +2,7 @@
 // sidebar.tsx - panel shown by tabs layout with alternative activities
 //
 
-import React, { useState } from "react"
+import React from "react"
 import { Theme, SxProps } from "@mui/material/styles"
 import Box from "@mui/material/Box"
 import { PanelElement, PanelProps } from "./panel"

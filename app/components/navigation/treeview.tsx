@@ -142,7 +142,7 @@ export function TreeView(props: TreeViewProps) {
   //
 
   // list of ids of items that are selected
-  const [selected, setSelected] = useState<string[]>([])
+  const [selected /*, setSelected */] = useState<string[]>([])
   function isSelected(itemId: string): boolean {
     return selected.indexOf(itemId) !== -1
   }
