@@ -99,12 +99,12 @@ export function DatabasePanel(props: DatabasePanelProps) {
 
   /** Extract from schema something like: 11 tables, 15607 rows, 864 kB */
   function renderDescription() {
-    if (!schemas) {
+    // TODO consider multiple schemas for non SQLite scenarios (or attached SQLite databases other than 'main')
+    const schema = schemas?.[0]
+    if (!schema) {
       return "Loading schema..."
     }
 
-    // TODO consider multiple schemas for non SQLite scenarios (or attached SQLite databases other than 'main')
-    const schema = schemas[0]
     const labels: string[] = []
 
     if (schema.tables) {
