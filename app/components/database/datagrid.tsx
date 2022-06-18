@@ -2,7 +2,7 @@
 // datagrid.tsx - shows query results in tabular form
 //
 
-import React, { useState, useEffect, useRef } from "react"
+import React from "react"
 import useResizeObserver from "use-resize-observer"
 import { Theme, SxProps } from "@mui/material/styles"
 import Box from "@mui/material/Box"
@@ -62,7 +62,6 @@ export function DataGrid(props: DataGridProps) {
             columns={columns}
             pageSize={100}
             rowsPerPageOptions={[100]}
- //           checkboxSelection
             disableSelectionOnClick
           />
         </Box>

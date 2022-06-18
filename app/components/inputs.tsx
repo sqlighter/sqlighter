@@ -116,12 +116,8 @@ interface NumericInputProps extends InputProps {
 
 /** A numeric input with measurement units, conversions, etc */
 export function NumericInput(props: NumericInputProps) {
-  const [value, setValue] = useState<string>(props.value)
-  // console.debug(`NumericInput - id: ${props.id}, value:${props.value}`)
-
   function onChange(event: React.ChangeEvent<HTMLInputElement>) {
     console.debug(`NumericInput.onChange - id: ${props.id}, value:${event.target.value}`)
-    setValue(event.target.value)
     if (props.onChange) {
       props.onChange(event.target.value)
     }

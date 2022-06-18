@@ -162,14 +162,6 @@ export function ReferenceListItem(props: ListItemProps) {
 /** List item specifically for internal (or blog) articles */
 export function ArticleListItem(props: ListItemProps) {
   let item = { ...props.item, url: `/articles/${props.item.id}` }
-
-  // a logo of the organization is shown on the right
-  const secondaryAction = item.organization && (
-    <Box ml={2}>
-      <Logo organizationId={item.organization} height={24} width={36} objectPosition="left center" />
-    </Box>
-  )
-
   return <ContentListItem item={item} avatarStyle="rounded" secondaryAction={getSecondaryAction(item)} />
 }
 

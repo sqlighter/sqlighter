@@ -3,7 +3,7 @@
  */
 
 import * as React from "react"
-import { IconButtonProps as MuiIconButtonProps, SxProps, Theme } from "@mui/material"
+import { SxProps, Theme } from "@mui/material"
 import Box from "@mui/material/Box"
 import Divider from "@mui/material/Divider"
 import Stack from "@mui/material/Stack"
@@ -53,8 +53,9 @@ export function IconButtonGroup(props: IconButtonGroupProps) {
   // render
   //
 
+  const className = "IconButtonGroup-root" + (props.className ? " " + props.className :  "")
   return (
-    <Stack className={`IconButtonGroup-root ${props.className}`} direction="row" sx={IconButtonGroup_SxProps}>
+    <Stack className={className} direction="row" sx={IconButtonGroup_SxProps}>
       {props.commands &&
         props.commands.map((command, index) => {
           if (command === "spacing") {

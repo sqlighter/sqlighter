@@ -21,7 +21,6 @@
 // https://fonts.google.com/specimen/Roboto+Flex
 //
 
-import { Theme, SxProps } from "@mui/material/styles"
 import { Typography, TypographyProps as MuiTypographyProps } from "@mui/material"
 
 export interface TypographyProps extends MuiTypographyProps {

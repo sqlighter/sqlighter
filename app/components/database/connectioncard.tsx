@@ -20,23 +20,22 @@ export interface ConnectionCardProps extends MuiCardProps {
 
 /** A command card used to display a connection that can be opened or modified */
 export function ConnectionCard(props: ConnectionCardProps) {
-  const { className, connection, canConfigure, onCommand, ...cardProps } = props
   const image = props.connection?.configs?.metadata?.image
 
   const command = {
     command: "openConnection",
-    title: connection.title,
-    description: connection.configs?.metadata?.description,
-    icon: <ConnectionIcon connection={connection} />,
+    title: props.connection.title,
+    description: props.connection.configs?.metadata?.description,
+    icon: <ConnectionIcon connection={props.connection} />,
     args: { connection: props.connection },
   }
 
-  const configureCommand = canConfigure && {
+  const configureCommand = props.canConfigure && {
     command: "configureConnection",
     title: "Configure",
     icon: "settings",
     args: {
-      item: connection,
+      item: props.connection,
     },
   }
 
@@ -47,7 +46,7 @@ export function ConnectionCard(props: ConnectionCardProps) {
       icon="database"
       command={command}
       secondaryCommand={configureCommand}
-      onCommand={onCommand}
+      onCommand={props.onCommand}
     />
   )
 }

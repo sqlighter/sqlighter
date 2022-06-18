@@ -3,15 +3,9 @@
  */
 
 import * as React from "react"
-import { SxProps, Theme } from "@mui/material"
 import Stack from "@mui/material/Stack"
-
 import { Command, CommandEvent } from "../../lib/commands"
 import { IconButton } from "../ui/iconbutton"
-
-const IconButton_SxProps: SxProps<Theme> = {
-  borderRadius: "8px",
-}
 
 export interface NavigationBarProps {
   /** Commands rendered in this navigation bar */

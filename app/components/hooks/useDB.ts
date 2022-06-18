@@ -1,10 +1,10 @@
+
 import { useEffect, useState } from "react"
 
 // NOTE check https://usehooks.com/useScript/
 
 export function useSqljs() {
   const [engine, setEngine] = useState(null)
-  const [db, setDB] = useState(null)
   const [windowWatcher, setWindowWatcher] = useState(false)
 
   useEffect(() => {

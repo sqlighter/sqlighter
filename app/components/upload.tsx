@@ -5,7 +5,6 @@
 import React, { useCallback } from "react"
 import useFileUploader, { FileBag } from "react-uploader-hook"
 import { useSWRConfig } from "swr"
-import Button from "@mui/material/Button"
 import LoadingButton from "@mui/lab/LoadingButton"
 
 import { Item } from "../lib/items/items"

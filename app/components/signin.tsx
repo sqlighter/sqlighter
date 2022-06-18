@@ -2,8 +2,6 @@
 // signin.tsx - components and functions used to facilitate google signin
 //
 
-import { useRouter } from "next/router"
-
 import * as React from "react"
 import Box from "@mui/material/Box"
 
