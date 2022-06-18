@@ -101,13 +101,19 @@ describe("sqlite.ts (node env)", () => {
     const sqlJoin = sql.join(";\n\n")
     fs.writeFileSync("./lib/test/artifacts/chinook.sql", sqlJoin)
 
+    // list of tables, sorted alphabetically
     const tableNames = schema.tables.map((t) => t.name).join(", ")
     expect(tableNames).toBe(
       "albums, artists, customers, employees, genres, invoice_items, invoices, media_types, playlist_track, playlists, tracks"
     )
 
+    // number of columns in each table
     const tableColumns = schema.tables.map((t) => t.columns?.length).join(", ")
     expect(tableColumns).toBe("3, 2, 13, 15, 2, 5, 9, 2, 2, 2, 9")
+
+    // number of rows in each table
+    const tableRowsStats = schema.tables.map((t) => t.stats.rows).join(", ")
+    expect(tableRowsStats).toBe("347, 275, 59, 8, 25, 2240, 412, 5, 8715, 18, 3503")
 
     const indexNames = schema.tables
       .map((t) => (t.indexes ? t.indexes.map((i) => i.name).join(" ") : undefined))

@@ -92,6 +92,10 @@ export interface DataSchema {
         onDelete: "no action" | "restrict" | "set null" | "set default" | "cascade"
       }[]
     }[]
+    stats?: {
+      /** Number of rows in this table */
+      rows?: number
+    }
   }[]
 
   /** Triggers in the schema */

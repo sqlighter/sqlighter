@@ -100,9 +100,9 @@ export class SqliteDataConnection extends DataConnection {
       }
 
       // create database from memory buffer, verify that it's working
-      this._database = buffer ? new engine.Database(buffer) : (new engine.Database())
+      this._database = buffer ? new engine.Database(buffer) : new engine.Database()
       await this.getResult("select 1")
-      
+
       // TODO fix for empty database
       // await this.getResult("select * from sqlite_schema")
 
@@ -147,13 +147,23 @@ export class SqliteDataConnection extends DataConnection {
     return columnSchema
   }
 
-  private _getTableSchema(entities, tableEntity) {
+  private async _getTableSchema(entities, tableEntity) {
     const tableAst = tableEntity.ast
     const tableName = tableAst.name.name
 
     const tableSchema: any = {
       name: tableName,
       sql: tableEntity.sql,
+    }
+
+    try {
+      // number of rows in table
+      const result = await this.getResult(`select count(*) 'rows' from main.'${tableName}'`)
+      tableSchema.stats = {
+        rows: result.values[0][0], // first and only result
+      }
+    } catch (exception) {
+      console.error(`SqliteDataConnection._getTableSchema - error while calculating number of rows`, exception)
     }
 
     const columns = tableAst.definition
@@ -295,10 +305,13 @@ export class SqliteDataConnection extends DataConnection {
       }
 
       // convert entities abstract syntax tree to simplified schema structure
-      const tables = entities
-        .filter((entity) => entity.type == "table")
-        .map((tableEntity) => this._getTableSchema(entities, tableEntity))
-        .sort((a, b) => (a.name < b.name ? -1 : 1))
+      const tables = []
+      for (const tableEntity of entities) {
+        if (tableEntity.type === "table") {
+          tables.push(await this._getTableSchema(entities, tableEntity))
+        }
+      }
+      tables.sort((a, b) => (a.name < b.name ? -1 : 1))
 
       const views = entities
         .filter((entity) => entity.type == "view")
