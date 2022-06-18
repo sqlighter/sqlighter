@@ -23,7 +23,7 @@ import { Panel, PanelElement, PanelProps } from "../navigation/panel"
 import { TablePanel } from "../panels/tablepanel"
 import { QueryPanel } from "../panels/querypanel"
 import { TabsLayout } from "../navigation/tabslayout"
-import { useSqljs } from "../hooks/usedb"
+import { useSqljs } from "../hooks/usedb2"
 
 export interface MainProps extends PanelProps {
   /** User currently signedin (if any) */
