@@ -5,6 +5,9 @@
 import { CommandEvent } from "../../lib/commands"
 
 export interface PanelProps {
+  /** Classname that should be added to this panel's root element (optional) */
+  className?: string
+
   /** Id used for tabs, selections, paths, etc (optional) */
   id?: string
 
