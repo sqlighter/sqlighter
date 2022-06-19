@@ -18274,7 +18274,6 @@ __metadata:
     showdown: ^2.1.0
     sql-formatter: ^7.0.1
     sql.js: ^1.6.2
-    sqlite-parser: "https://github.com/gionatamettifogo/sqlite-parser.git"
     storybook-addon-next-router: ^4.0.0
     superagent: ^7.1.3
     supertest: ^6.2.3
@@ -18291,15 +18290,6 @@ __metadata:
     yaml: ^2.1.1
   languageName: unknown
   linkType: soft
-
-"sqlite-parser@https://github.com/gionatamettifogo/sqlite-parser.git":
-  version: 1.0.2
-  resolution: "sqlite-parser@https://github.com/gionatamettifogo/sqlite-parser.git#commit=0f7ce9a4adf4c7018e320c4c528336b31835f046"
-  bin:
-    sqlite-parser: bin/sqlite-parser
-  checksum: 32890b864c7a8d486f86d1ea1ccb5f40103da8293d219e9902e391f9841f64a8c0b6607a1e05c9414d740983528b4a13bb05f2d957d2743edef236f81400756b
-  languageName: node
-  linkType: hard
 
 "sqlstring@npm:^2.3.2":
   version: 2.3.3

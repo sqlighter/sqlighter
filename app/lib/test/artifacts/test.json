@@ -1,0 +1,650 @@
+{
+  "database": "main",
+  "tables": [
+    {
+      "name": "albums",
+      "sql": "CREATE TABLE \"albums\"\r\n(\r\n    [AlbumId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\r\n    [Title] NVARCHAR(160)  NOT NULL,\r\n    [ArtistId] INTEGER  NOT NULL,\r\n    FOREIGN KEY ([ArtistId]) REFERENCES \"artists\" ([ArtistId]) \r\n\t\tON DELETE NO ACTION ON UPDATE NO ACTION\r\n)",
+      "columns": [
+        {
+          "name": "AlbumId",
+          "datatype": "INTEGER",
+          "primaryKey": true,
+          "notNull": true
+        },
+        {
+          "name": "Title",
+          "datatype": "NVARCHAR(160)",
+          "notNull": true
+        },
+        {
+          "name": "ArtistId",
+          "datatype": "INTEGER",
+          "notNull": true
+        }
+      ],
+      "foreignKeys": [
+        {
+          "table": "artists",
+          "fromColumn": "ArtistId",
+          "toColumn": "ArtistId",
+          "onUpdate": "no action",
+          "onDelete": "no action"
+        }
+      ],
+      "stats": {
+        "rows": 347
+      }
+    },
+    {
+      "name": "artists",
+      "sql": "CREATE TABLE \"artists\"\r\n(\r\n    [ArtistId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\r\n    [Name] NVARCHAR(120)\r\n)",
+      "columns": [
+        {
+          "name": "ArtistId",
+          "datatype": "INTEGER",
+          "primaryKey": true,
+          "notNull": true
+        },
+        {
+          "name": "Name",
+          "datatype": "NVARCHAR(120)"
+        }
+      ],
+      "stats": {
+        "rows": 275
+      }
+    },
+    {
+      "name": "customers",
+      "sql": "CREATE TABLE \"customers\"\r\n(\r\n    [CustomerId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\r\n    [FirstName] NVARCHAR(40)  NOT NULL,\r\n    [LastName] NVARCHAR(20)  NOT NULL,\r\n    [Company] NVARCHAR(80),\r\n    [Address] NVARCHAR(70),\r\n    [City] NVARCHAR(40),\r\n    [State] NVARCHAR(40),\r\n    [Country] NVARCHAR(40),\r\n    [PostalCode] NVARCHAR(10),\r\n    [Phone] NVARCHAR(24),\r\n    [Fax] NVARCHAR(24),\r\n    [Email] NVARCHAR(60)  NOT NULL,\r\n    [SupportRepId] INTEGER,\r\n    FOREIGN KEY ([SupportRepId]) REFERENCES \"employees\" ([EmployeeId]) \r\n\t\tON DELETE NO ACTION ON UPDATE NO ACTION\r\n)",
+      "columns": [
+        {
+          "name": "CustomerId",
+          "datatype": "INTEGER",
+          "primaryKey": true,
+          "notNull": true
+        },
+        {
+          "name": "FirstName",
+          "datatype": "NVARCHAR(40)",
+          "notNull": true
+        },
+        {
+          "name": "LastName",
+          "datatype": "NVARCHAR(20)",
+          "notNull": true
+        },
+        {
+          "name": "Company",
+          "datatype": "NVARCHAR(80)"
+        },
+        {
+          "name": "Address",
+          "datatype": "NVARCHAR(70)"
+        },
+        {
+          "name": "City",
+          "datatype": "NVARCHAR(40)"
+        },
+        {
+          "name": "State",
+          "datatype": "NVARCHAR(40)"
+        },
+        {
+          "name": "Country",
+          "datatype": "NVARCHAR(40)"
+        },
+        {
+          "name": "PostalCode",
+          "datatype": "NVARCHAR(10)"
+        },
+        {
+          "name": "Phone",
+          "datatype": "NVARCHAR(24)"
+        },
+        {
+          "name": "Fax",
+          "datatype": "NVARCHAR(24)"
+        },
+        {
+          "name": "Email",
+          "datatype": "NVARCHAR(60)",
+          "notNull": true
+        },
+        {
+          "name": "SupportRepId",
+          "datatype": "INTEGER"
+        }
+      ],
+      "foreignKeys": [
+        {
+          "table": "employees",
+          "fromColumn": "SupportRepId",
+          "toColumn": "EmployeeId",
+          "onUpdate": "no action",
+          "onDelete": "no action"
+        }
+      ],
+      "stats": {
+        "rows": 60
+      }
+    },
+    {
+      "name": "employees",
+      "sql": "CREATE TABLE \"employees\"\r\n(\r\n    [EmployeeId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\r\n    [LastName] NVARCHAR(20)  NOT NULL,\r\n    [FirstName] NVARCHAR(20)  NOT NULL,\r\n    [Title] NVARCHAR(30),\r\n    [ReportsTo] INTEGER,\r\n    [BirthDate] DATETIME,\r\n    [HireDate] DATETIME,\r\n    [Address] NVARCHAR(70),\r\n    [City] NVARCHAR(40),\r\n    [State] NVARCHAR(40),\r\n    [Country] NVARCHAR(40),\r\n    [PostalCode] NVARCHAR(10),\r\n    [Phone] NVARCHAR(24),\r\n    [Fax] NVARCHAR(24),\r\n    [Email] NVARCHAR(60),\r\n    FOREIGN KEY ([ReportsTo]) REFERENCES \"employees\" ([EmployeeId]) \r\n\t\tON DELETE NO ACTION ON UPDATE NO ACTION\r\n)",
+      "columns": [
+        {
+          "name": "EmployeeId",
+          "datatype": "INTEGER",
+          "primaryKey": true,
+          "notNull": true
+        },
+        {
+          "name": "LastName",
+          "datatype": "NVARCHAR(20)",
+          "notNull": true
+        },
+        {
+          "name": "FirstName",
+          "datatype": "NVARCHAR(20)",
+          "notNull": true
+        },
+        {
+          "name": "Title",
+          "datatype": "NVARCHAR(30)"
+        },
+        {
+          "name": "ReportsTo",
+          "datatype": "INTEGER"
+        },
+        {
+          "name": "BirthDate",
+          "datatype": "DATETIME"
+        },
+        {
+          "name": "HireDate",
+          "datatype": "DATETIME"
+        },
+        {
+          "name": "Address",
+          "datatype": "NVARCHAR(70)"
+        },
+        {
+          "name": "City",
+          "datatype": "NVARCHAR(40)"
+        },
+        {
+          "name": "State",
+          "datatype": "NVARCHAR(40)"
+        },
+        {
+          "name": "Country",
+          "datatype": "NVARCHAR(40)"
+        },
+        {
+          "name": "PostalCode",
+          "datatype": "NVARCHAR(10)"
+        },
+        {
+          "name": "Phone",
+          "datatype": "NVARCHAR(24)"
+        },
+        {
+          "name": "Fax",
+          "datatype": "NVARCHAR(24)"
+        },
+        {
+          "name": "Email",
+          "datatype": "NVARCHAR(60)"
+        }
+      ],
+      "foreignKeys": [
+        {
+          "table": "employees",
+          "fromColumn": "ReportsTo",
+          "toColumn": "EmployeeId",
+          "onUpdate": "no action",
+          "onDelete": "no action"
+        }
+      ],
+      "stats": {
+        "rows": 8
+      }
+    },
+    {
+      "name": "genres",
+      "sql": "CREATE TABLE \"genres\"\r\n(\r\n    [GenreId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\r\n    [Name] NVARCHAR(120)\r\n)",
+      "columns": [
+        {
+          "name": "GenreId",
+          "datatype": "INTEGER",
+          "primaryKey": true,
+          "notNull": true
+        },
+        {
+          "name": "Name",
+          "datatype": "NVARCHAR(120)"
+        }
+      ],
+      "stats": {
+        "rows": 25
+      }
+    },
+    {
+      "name": "invoice_items",
+      "sql": "CREATE TABLE \"invoice_items\"\r\n(\r\n    [InvoiceLineId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\r\n    [InvoiceId] INTEGER  NOT NULL,\r\n    [TrackId] INTEGER  NOT NULL,\r\n    [UnitPrice] NUMERIC(10,2)  NOT NULL,\r\n    [Quantity] INTEGER  NOT NULL,\r\n    FOREIGN KEY ([InvoiceId]) REFERENCES \"invoices\" ([InvoiceId]) \r\n\t\tON DELETE NO ACTION ON UPDATE NO ACTION,\r\n    FOREIGN KEY ([TrackId]) REFERENCES \"tracks\" ([TrackId]) \r\n\t\tON DELETE NO ACTION ON UPDATE NO ACTION\r\n)",
+      "columns": [
+        {
+          "name": "InvoiceLineId",
+          "datatype": "INTEGER",
+          "primaryKey": true,
+          "notNull": true
+        },
+        {
+          "name": "InvoiceId",
+          "datatype": "INTEGER",
+          "notNull": true
+        },
+        {
+          "name": "TrackId",
+          "datatype": "INTEGER",
+          "notNull": true
+        },
+        {
+          "name": "UnitPrice",
+          "datatype": "NUMERIC(10,2)",
+          "notNull": true
+        },
+        {
+          "name": "Quantity",
+          "datatype": "INTEGER",
+          "notNull": true
+        }
+      ],
+      "foreignKeys": [
+        {
+          "table": "tracks",
+          "fromColumn": "TrackId",
+          "toColumn": "TrackId",
+          "onUpdate": "no action",
+          "onDelete": "no action"
+        },
+        {
+          "table": "invoices",
+          "fromColumn": "InvoiceId",
+          "toColumn": "InvoiceId",
+          "onUpdate": "no action",
+          "onDelete": "no action"
+        }
+      ],
+      "stats": {
+        "rows": 2240
+      }
+    },
+    {
+      "name": "invoices",
+      "sql": "CREATE TABLE \"invoices\"\r\n(\r\n    [InvoiceId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\r\n    [CustomerId] INTEGER  NOT NULL,\r\n    [InvoiceDate] DATETIME  NOT NULL,\r\n    [BillingAddress] NVARCHAR(70),\r\n    [BillingCity] NVARCHAR(40),\r\n    [BillingState] NVARCHAR(40),\r\n    [BillingCountry] NVARCHAR(40),\r\n    [BillingPostalCode] NVARCHAR(10),\r\n    [Total] NUMERIC(10,2)  NOT NULL,\r\n    FOREIGN KEY ([CustomerId]) REFERENCES \"customers\" ([CustomerId]) \r\n\t\tON DELETE NO ACTION ON UPDATE NO ACTION\r\n)",
+      "columns": [
+        {
+          "name": "InvoiceId",
+          "datatype": "INTEGER",
+          "primaryKey": true,
+          "notNull": true
+        },
+        {
+          "name": "CustomerId",
+          "datatype": "INTEGER",
+          "notNull": true
+        },
+        {
+          "name": "InvoiceDate",
+          "datatype": "DATETIME",
+          "notNull": true
+        },
+        {
+          "name": "BillingAddress",
+          "datatype": "NVARCHAR(70)"
+        },
+        {
+          "name": "BillingCity",
+          "datatype": "NVARCHAR(40)"
+        },
+        {
+          "name": "BillingState",
+          "datatype": "NVARCHAR(40)"
+        },
+        {
+          "name": "BillingCountry",
+          "datatype": "NVARCHAR(40)"
+        },
+        {
+          "name": "BillingPostalCode",
+          "datatype": "NVARCHAR(10)"
+        },
+        {
+          "name": "Total",
+          "datatype": "NUMERIC(10,2)",
+          "notNull": true
+        }
+      ],
+      "foreignKeys": [
+        {
+          "table": "customers",
+          "fromColumn": "CustomerId",
+          "toColumn": "CustomerId",
+          "onUpdate": "no action",
+          "onDelete": "no action"
+        }
+      ],
+      "stats": {
+        "rows": 412
+      }
+    },
+    {
+      "name": "media_types",
+      "sql": "CREATE TABLE \"media_types\"\r\n(\r\n    [MediaTypeId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\r\n    [Name] NVARCHAR(120)\r\n)",
+      "columns": [
+        {
+          "name": "MediaTypeId",
+          "datatype": "INTEGER",
+          "primaryKey": true,
+          "notNull": true
+        },
+        {
+          "name": "Name",
+          "datatype": "NVARCHAR(120)"
+        }
+      ],
+      "stats": {
+        "rows": 5
+      }
+    },
+    {
+      "name": "playlist_track",
+      "sql": "CREATE TABLE \"playlist_track\"\r\n(\r\n    [PlaylistId] INTEGER  NOT NULL,\r\n    [TrackId] INTEGER  NOT NULL,\r\n    CONSTRAINT [PK_PlaylistTrack] PRIMARY KEY  ([PlaylistId], [TrackId]),\r\n    FOREIGN KEY ([PlaylistId]) REFERENCES \"playlists\" ([PlaylistId]) \r\n\t\tON DELETE NO ACTION ON UPDATE NO ACTION,\r\n    FOREIGN KEY ([TrackId]) REFERENCES \"tracks\" ([TrackId]) \r\n\t\tON DELETE NO ACTION ON UPDATE NO ACTION\r\n)",
+      "columns": [
+        {
+          "name": "PlaylistId",
+          "datatype": "INTEGER",
+          "primaryKey": true,
+          "notNull": true
+        },
+        {
+          "name": "TrackId",
+          "datatype": "INTEGER",
+          "primaryKey": true,
+          "notNull": true
+        }
+      ],
+      "foreignKeys": [
+        {
+          "table": "tracks",
+          "fromColumn": "TrackId",
+          "toColumn": "TrackId",
+          "onUpdate": "no action",
+          "onDelete": "no action"
+        },
+        {
+          "table": "playlists",
+          "fromColumn": "PlaylistId",
+          "toColumn": "PlaylistId",
+          "onUpdate": "no action",
+          "onDelete": "no action"
+        }
+      ],
+      "stats": {
+        "rows": 8715
+      }
+    },
+    {
+      "name": "playlists",
+      "sql": "CREATE TABLE \"playlists\"\r\n(\r\n    [PlaylistId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\r\n    [Name] NVARCHAR(120)\r\n)",
+      "columns": [
+        {
+          "name": "PlaylistId",
+          "datatype": "INTEGER",
+          "primaryKey": true,
+          "notNull": true
+        },
+        {
+          "name": "Name",
+          "datatype": "NVARCHAR(120)"
+        }
+      ],
+      "stats": {
+        "rows": 18
+      }
+    },
+    {
+      "name": "tracks",
+      "sql": "CREATE TABLE \"tracks\"\r\n(\r\n    [TrackId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\r\n    [Name] NVARCHAR(200)  NOT NULL,\r\n    [AlbumId] INTEGER,\r\n    [MediaTypeId] INTEGER  NOT NULL,\r\n    [GenreId] INTEGER,\r\n    [Composer] NVARCHAR(220),\r\n    [Milliseconds] INTEGER  NOT NULL,\r\n    [Bytes] INTEGER,\r\n    [UnitPrice] NUMERIC(10,2)  NOT NULL,\r\n    FOREIGN KEY ([AlbumId]) REFERENCES \"albums\" ([AlbumId]) \r\n\t\tON DELETE NO ACTION ON UPDATE NO ACTION,\r\n    FOREIGN KEY ([GenreId]) REFERENCES \"genres\" ([GenreId]) \r\n\t\tON DELETE NO ACTION ON UPDATE NO ACTION,\r\n    FOREIGN KEY ([MediaTypeId]) REFERENCES \"media_types\" ([MediaTypeId]) \r\n\t\tON DELETE NO ACTION ON UPDATE NO ACTION\r\n)",
+      "columns": [
+        {
+          "name": "TrackId",
+          "datatype": "INTEGER",
+          "primaryKey": true,
+          "notNull": true
+        },
+        {
+          "name": "Name",
+          "datatype": "NVARCHAR(200)",
+          "notNull": true
+        },
+        {
+          "name": "AlbumId",
+          "datatype": "INTEGER"
+        },
+        {
+          "name": "MediaTypeId",
+          "datatype": "INTEGER",
+          "notNull": true
+        },
+        {
+          "name": "GenreId",
+          "datatype": "INTEGER"
+        },
+        {
+          "name": "Composer",
+          "datatype": "NVARCHAR(220)"
+        },
+        {
+          "name": "Milliseconds",
+          "datatype": "INTEGER",
+          "notNull": true
+        },
+        {
+          "name": "Bytes",
+          "datatype": "INTEGER"
+        },
+        {
+          "name": "UnitPrice",
+          "datatype": "NUMERIC(10,2)",
+          "notNull": true
+        }
+      ],
+      "foreignKeys": [
+        {
+          "table": "media_types",
+          "fromColumn": "MediaTypeId",
+          "toColumn": "MediaTypeId",
+          "onUpdate": "no action",
+          "onDelete": "no action"
+        },
+        {
+          "table": "genres",
+          "fromColumn": "GenreId",
+          "toColumn": "GenreId",
+          "onUpdate": "no action",
+          "onDelete": "no action"
+        },
+        {
+          "table": "albums",
+          "fromColumn": "AlbumId",
+          "toColumn": "AlbumId",
+          "onUpdate": "no action",
+          "onDelete": "no action"
+        }
+      ],
+      "stats": {
+        "rows": 3503
+      }
+    }
+  ],
+  "views": [
+    {
+      "name": "CustomerNames",
+      "sql": "CREATE VIEW CustomerNames as\nselect FirstName, LastName, Company from Customers",
+      "columns": [
+        {
+          "name": "FirstName",
+          "datatype": "NVARCHAR(40)"
+        },
+        {
+          "name": "LastName",
+          "datatype": "NVARCHAR(20)"
+        },
+        {
+          "name": "Company",
+          "datatype": "NVARCHAR(80)"
+        }
+      ],
+      "stats": {
+        "rows": 60
+      }
+    },
+    {
+      "name": "DoubleSales",
+      "sql": "CREATE VIEW DoubleSales as select InvoiceId, (Total * 2) as \"DoubleTotal\" from Invoices",
+      "columns": [
+        {
+          "name": "InvoiceId",
+          "datatype": "INTEGER"
+        },
+        {
+          "name": "DoubleTotal"
+        }
+      ],
+      "stats": {
+        "rows": 412
+      }
+    },
+    {
+      "name": "InvoiceTotals",
+      "sql": "CREATE VIEW InvoiceTotals as\nselect InvoiceId, Total from Invoices",
+      "columns": [
+        {
+          "name": "InvoiceId",
+          "datatype": "INTEGER"
+        },
+        {
+          "name": "Total",
+          "datatype": "NUMERIC(10,2)"
+        }
+      ],
+      "stats": {
+        "rows": 412
+      }
+    }
+  ],
+  "indexes": [
+    {
+      "name": "IFK_AlbumArtistId",
+      "sql": "CREATE INDEX [IFK_AlbumArtistId] ON \"albums\" ([ArtistId])",
+      "table": "albums",
+      "columns": [
+        "ArtistId"
+      ]
+    },
+    {
+      "name": "IFK_CustomerSupportRepId",
+      "sql": "CREATE INDEX [IFK_CustomerSupportRepId] ON \"customers\" ([SupportRepId])",
+      "table": "customers",
+      "columns": [
+        "SupportRepId"
+      ]
+    },
+    {
+      "name": "IFK_EmployeeReportsTo",
+      "sql": "CREATE INDEX [IFK_EmployeeReportsTo] ON \"employees\" ([ReportsTo])",
+      "table": "employees",
+      "columns": [
+        "ReportsTo"
+      ]
+    },
+    {
+      "name": "IFK_InvoiceCustomerId",
+      "sql": "CREATE INDEX [IFK_InvoiceCustomerId] ON \"invoices\" ([CustomerId])",
+      "table": "invoices",
+      "columns": [
+        "CustomerId"
+      ]
+    },
+    {
+      "name": "IFK_InvoiceLineInvoiceId",
+      "sql": "CREATE INDEX [IFK_InvoiceLineInvoiceId] ON \"invoice_items\" ([InvoiceId])",
+      "table": "invoice_items",
+      "columns": [
+        "InvoiceId"
+      ]
+    },
+    {
+      "name": "IFK_InvoiceLineTrackId",
+      "sql": "CREATE INDEX [IFK_InvoiceLineTrackId] ON \"invoice_items\" ([TrackId])",
+      "table": "invoice_items",
+      "columns": [
+        "TrackId"
+      ]
+    },
+    {
+      "name": "IFK_PlaylistTrackTrackId",
+      "sql": "CREATE INDEX [IFK_PlaylistTrackTrackId] ON \"playlist_track\" ([TrackId])",
+      "table": "playlist_track",
+      "columns": [
+        "TrackId"
+      ]
+    },
+    {
+      "name": "IFK_TrackAlbumId",
+      "sql": "CREATE INDEX [IFK_TrackAlbumId] ON \"tracks\" ([AlbumId])",
+      "table": "tracks",
+      "columns": [
+        "AlbumId"
+      ]
+    },
+    {
+      "name": "IFK_TrackGenreId",
+      "sql": "CREATE INDEX [IFK_TrackGenreId] ON \"tracks\" ([GenreId])",
+      "table": "tracks",
+      "columns": [
+        "GenreId"
+      ]
+    },
+    {
+      "name": "IFK_TrackMediaTypeId",
+      "sql": "CREATE INDEX [IFK_TrackMediaTypeId] ON \"tracks\" ([MediaTypeId])",
+      "table": "tracks",
+      "columns": [
+        "MediaTypeId"
+      ]
+    },
+    {
+      "name": "sqlite_autoindex_playlist_track_1",
+      "table": "playlist_track",
+      "columns": [
+        "PlaylistId",
+        "TrackId"
+      ]
+    }
+  ],
+  "triggers": [
+    {
+      "name": "validate_email_before_insert_customers",
+      "sql": "CREATE TRIGGER validate_email_before_insert_customers\n   BEFORE INSERT ON customers\nBEGIN\n   SELECT\n      CASE\n\tWHEN NEW.email NOT LIKE '%_@__%.__%' THEN\n   \t  RAISE (ABORT,'Invalid email address')\n       END;\nEND",
+      "table": "customers"
+    }
+  ],
+  "stats": {
+    "version": "40",
+    "size": 886784
+  }
+}

@@ -2,7 +2,6 @@
 // sqlite.test.ts
 //
 
-import fs from "fs"
 import { getChinookConnection, getTestConnection, getNorthwindConnection, writeJson } from "../../test/utilities"
 
 // Interpreting schema
@@ -60,30 +59,6 @@ describe("sqlite.ts (node env)", () => {
     expect(result1.values[0][0]).toBe(20)
   })
 
-  test("getEntities (chinook.db)", async () => {
-    const connection = await getChinookConnection()
-    const entities = await connection._getEntities()
-    expect(entities).toBeTruthy()
-    expect(entities.length).toBe(21)
-    writeJson("./lib/test/artifacts/chinook.entities.json", entities)
-  })
-
-  test("getEntities (test.db)", async () => {
-    const connection = await getTestConnection()
-    const entities = await connection._getEntities()
-    expect(entities).toBeTruthy()
-    expect(entities.length).toBe(25)
-    writeJson("./lib/test/artifacts/test.entities.json", entities)
-  })
-
-  test("getEntities (nortwind.db)", async () => {
-    const connection = await getNorthwindConnection()
-    const entities = await connection._getEntities()
-    expect(entities).toBeTruthy()
-    expect(entities.length).toBe(29)
-    writeJson("./lib/test/artifacts/northwind.entities.json", entities)
-  })
-
   test("getSchema (chinook.db)", async () => {
     const connection = await getChinookConnection()
     const schemas = await connection.getSchemas(false)
@@ -91,46 +66,37 @@ describe("sqlite.ts (node env)", () => {
     expect(schemas.length).toBe(1)
 
     const schema = schemas[0]
-    // TODO SqliteDataConnection.getSchema - index: playlist_track doesn't have a SQL schema
+    expect(schema.database).toBe("main")
 
     // save schema for verification
-    writeJson("./lib/test/artifacts/chinook.schema.json", schema)
-
-    // save sql for verification
-    const sql = []
-    for (const tbl of schema.tables) {
-      sql.push(tbl.sql)
-      if (tbl.indexes) {
-        for (const idx of tbl.indexes) {
-          sql.push(idx.sql)
-        }
-      }
-    }
-    const sqlJoin = sql.join(";\n\n")
-    fs.writeFileSync("./lib/test/artifacts/chinook.sql", sqlJoin)
+    writeJson("./lib/test/artifacts/chinook.json", schema)
 
     // list of tables, sorted alphabetically
-    const tableNames = schema.tables.map((t) => t.name).join(", ")
+    const tableNames = schema.tables.map((t) => `'${t.name}'`).join(", ")
     expect(tableNames).toBe(
-      "albums, artists, customers, employees, genres, invoice_items, invoices, media_types, playlist_track, playlists, tracks"
+      "'albums', 'artists', 'customers', 'employees', 'genres', 'invoice_items', 'invoices', 'media_types', 'playlist_track', 'playlists', 'tracks'"
     )
-
     // number of columns in each table
     const tableColumns = schema.tables.map((t) => t.columns?.length).join(", ")
     expect(tableColumns).toBe("3, 2, 13, 15, 2, 5, 9, 2, 2, 2, 9")
-
     // number of rows in each table
     const tableRowsStats = schema.tables.map((t) => t.stats.rows).join(", ")
     expect(tableRowsStats).toBe("347, 275, 59, 8, 25, 2240, 412, 5, 8715, 18, 3503")
 
-    const indexNames = schema.tables
-      .map((t) => (t.indexes ? t.indexes.map((i) => i.name).join(" ") : undefined))
-      .join(" ")
-    expect(indexNames).toBe(
-      "IFK_AlbumArtistId  IFK_CustomerSupportRepId IFK_EmployeeReportsTo  IFK_InvoiceLineInvoiceId IFK_InvoiceLineTrackId IFK_InvoiceCustomerId  IFK_PlaylistTrackTrackId  IFK_TrackAlbumId IFK_TrackGenreId IFK_TrackMediaTypeId"
+    // no views
+    expect(schema.views).toBeUndefined()
+
+    // list of indexes, sorted alphabetically
+    const indexesNames = schema.indexes.map((i) => `'${i.name}'`).join(", ")
+    expect(indexesNames).toBe(
+      "'IFK_AlbumArtistId', 'IFK_CustomerSupportRepId', 'IFK_EmployeeReportsTo', 'IFK_InvoiceCustomerId', 'IFK_InvoiceLineInvoiceId', 'IFK_InvoiceLineTrackId', 'IFK_PlaylistTrackTrackId', 'IFK_TrackAlbumId', 'IFK_TrackGenreId', 'IFK_TrackMediaTypeId', 'sqlite_autoindex_playlist_track_1'"
     )
 
-    // total database size
+    // no triggers
+    expect(schema.triggers).toBeUndefined()
+
+    // stats info
+    expect(schema.stats?.version).toBe("34")
     expect(schema.stats?.size).toBe(884736)
   })
 
@@ -141,36 +107,54 @@ describe("sqlite.ts (node env)", () => {
     expect(schemas.length).toBe(1)
 
     const schema = schemas[0]
-    // TODO SqliteDataConnection.getSchema - index: playlist_track doesn't have a SQL schema
+    expect(schema.database).toBe("main")
 
     // save schema for verification
-    writeJson("./lib/test/artifacts/test.schema.json", schema)
+    writeJson("./lib/test/artifacts/test.json", schema)
 
-    // save sql for verification
-    const sql = []
-    for (const tbl of schema.tables) {
-      sql.push(tbl.sql)
-      if (tbl.indexes) {
-        for (const idx of tbl.indexes) {
-          sql.push(idx.sql)
-        }
-      }
-    }
-    for (const trg of schema.triggers) {
-      sql.push(trg.sql)
-    }
-    for (const view of schema.views) {
-      sql.push(view.sql)
-    }
-    const sqlJoin = sql.join(";\n\n")
-    fs.writeFileSync("./lib/test/artifacts/test.sql", sqlJoin)
+    const tablesNames = schema.tables.map((t) => `'${t.name}'`).join(", ")
+    expect(tablesNames).toBe("'albums', 'artists', 'customers', 'employees', 'genres', 'invoice_items', 'invoices', 'media_types', 'playlist_track', 'playlists', 'tracks'")
 
-    const triggersNames = schema.triggers.map((t) => t.name).join(", ")
-    expect(triggersNames).toBe("validate_email_before_insert_customers")
+    const viewsNames = schema.views.map((v) => `'${v.name}'`).join(", ")
+    expect(viewsNames).toBe("'CustomerNames', 'DoubleSales', 'InvoiceTotals'")
 
-    const viewsNames = schema.views.map((v) => v.name).join(" ")
-    expect(viewsNames).toBe("customernames doublesales invoicetotals")
+    const triggersNames = schema.triggers.map((t) => `'${t.name}'`).join(", ")
+    expect(triggersNames).toBe("'validate_email_before_insert_customers'")
+
+    // stats info
+    expect(schema.stats?.version).toBe("40")
+    expect(schema.stats?.size).toBe(886784)
   })
+
+  test("getSchema (sakila.db)", async () => {
+    const connection = await getTestConnection("sakila.db")
+    const schemas = await connection.getSchemas(false)
+    expect(schemas).toBeTruthy()
+    expect(schemas.length).toBe(1)
+
+    const schema = schemas[0]
+    expect(schema.database).toBe("main")
+
+    // save schema for verification
+    writeJson("./lib/test/artifacts/sakila.json", schema)
+
+    const tablesNames = schema.tables.map((t) => `'${t.name}'`).join(", ")
+    expect(tablesNames).toBe("'actor', 'address', 'category', 'city', 'country', 'customer', 'film', 'film_actor', 'film_category', 'film_text', 'inventory', 'language', 'payment', 'rental', 'staff', 'store'")
+
+    const viewsNames = schema.views.map((v) => `'${v.name}'`).join(", ")
+    expect(viewsNames).toBe("'customer_list', 'film_list', 'sales_by_film_category', 'sales_by_store', 'staff_list'")
+
+    const indexesNames = schema.indexes.map((v) => `'${v.name}'`).join(", ")
+    expect(indexesNames).toBe("'idx_actor_last_name', 'idx_customer_fk_address_id', 'idx_customer_fk_store_id', 'idx_customer_last_name', 'idx_fk_city_id', 'idx_fk_country_id', 'idx_fk_customer_id', 'idx_fk_film_actor_actor', 'idx_fk_film_actor_film', 'idx_fk_film_category_category', 'idx_fk_film_category_film', 'idx_fk_film_id', 'idx_fk_film_id_store_id', 'idx_fk_language_id', 'idx_fk_original_language_id', 'idx_fk_staff_address_id', 'idx_fk_staff_id', 'idx_fk_staff_store_id', 'idx_fk_store_address', 'idx_rental_fk_customer_id', 'idx_rental_fk_inventory_id', 'idx_rental_fk_staff_id', 'idx_rental_uq', 'idx_store_fk_manager_staff_id', 'sqlite_autoindex_actor_1', 'sqlite_autoindex_address_1', 'sqlite_autoindex_category_1', 'sqlite_autoindex_city_1', 'sqlite_autoindex_country_1', 'sqlite_autoindex_customer_1', 'sqlite_autoindex_film_1', 'sqlite_autoindex_film_actor_1', 'sqlite_autoindex_film_category_1', 'sqlite_autoindex_film_text_1', 'sqlite_autoindex_inventory_1', 'sqlite_autoindex_language_1', 'sqlite_autoindex_payment_1', 'sqlite_autoindex_rental_1', 'sqlite_autoindex_staff_1', 'sqlite_autoindex_store_1'")
+
+    const triggersNames = schema.triggers.map((t) => `'${t.name}'`).join(", ")
+    expect(triggersNames).toBe("'actor_trigger_ai', 'actor_trigger_au', 'address_trigger_ai', 'address_trigger_au', 'category_trigger_ai', 'category_trigger_au', 'city_trigger_ai', 'city_trigger_au', 'country_trigger_ai', 'country_trigger_au', 'customer_trigger_ai', 'customer_trigger_au', 'film_actor_trigger_ai', 'film_actor_trigger_au', 'film_category_trigger_ai', 'film_category_trigger_au', 'film_trigger_ai', 'film_trigger_au', 'inventory_trigger_ai', 'inventory_trigger_au', 'language_trigger_ai', 'language_trigger_au', 'payment_trigger_ai', 'payment_trigger_au', 'rental_trigger_ai', 'rental_trigger_au', 'staff_trigger_ai', 'staff_trigger_au', 'store_trigger_ai', 'store_trigger_au'")
+
+    // stats info
+    expect(schema.stats?.version).toBe("75")
+    expect(schema.stats?.size).toBe(5828608)
+  })
+
 
   test("getSchema (northwind.db)", async () => {
     const connection = await getNorthwindConnection()
@@ -180,22 +164,26 @@ describe("sqlite.ts (node env)", () => {
 
     // save schema for verification
     const schema = schemas[0]
-    writeJson("./lib/test/artifacts/northwind.schema.json", schema)
+    writeJson("./lib/test/artifacts/northwind.json", schema)
 
     expect(schema.tables).toHaveLength(13)
     const tablesNames = schema.tables.map((t) => `'${t.name}'`).join(", ")
     expect(tablesNames).toBe(
-      "'Categories', 'CustomerCustomerDemo', 'CustomerDemographics', 'Customers', 'EmployeeTerritories', 'Employees', 'Order Details', 'Orders', 'Products', 'Regions', 'Shippers', 'Suppliers', 'Territories'"
+      "'Categories', 'CustomerCustomerDemo', 'CustomerDemographics', 'Customers', 'Employees', 'EmployeeTerritories', 'Order Details', 'Orders', 'Products', 'Regions', 'Shippers', 'Suppliers', 'Territories'"
     )
     
     expect(schema.views).toHaveLength(16)
     const viewsNames = schema.views.map((v) => `'${v.name}'`).join(", ")
     expect(viewsNames).toBe(
-      "'Alphabetical list of products', 'Category Sales for 1997', 'Current Product List', 'Customer and Suppliers by City', 'Invoices', 'Order Details Extended', 'Order Subtotals', 'Orders Qry', 'Product Sales for 1997', 'Products Above Average Price', 'Products by Category', 'Quarterly Orders', 'Sales Totals by Amount', 'Sales by Category', 'Summary of Sales by Quarter', 'Summary of Sales by Year'"
+      "'Alphabetical list of products', 'Category Sales for 1997', 'Current Product List', 'Customer and Suppliers by City', 'Invoices', 'Order Details Extended', 'Order Subtotals', 'Orders Qry', 'Product Sales for 1997', 'Products Above Average Price', 'Products by Category', 'Quarterly Orders', 'Sales by Category', 'Sales Totals by Amount', 'Summary of Sales by Quarter', 'Summary of Sales by Year'"
     )
 
     // no triggers
-    expect(schema.triggers).toHaveLength(0)
+    expect(schema.triggers).toBeUndefined()
+
+    // stats info
+    expect(schema.stats?.version).toBe("31")
+    expect(schema.stats?.size).toBe(561152)
   })
 
   test("canExport (chinook.db)", async () => {

@@ -61,60 +61,62 @@ export interface DataConfig {
   }
 }
 
+/** Schema information for a table or view */
+export interface DataTableSchema {
+  name: string
+  sql: string
+  columns: {
+    name: string
+    datatype: string
+    defaultValue?: string | number
+    primaryKey?: boolean
+    notNull?: boolean
+    tags?: string[]
+  }[]
+  /** Table's foreign keys (if any) */
+  foreignKeys?: {
+    table: string
+    fromColumn: string
+    toColumn: string
+    onUpdate: "no action" | "restrict" | "set null" | "set default" | "cascade"
+    onDelete: "no action" | "restrict" | "set null" | "set default" | "cascade"
+  }[]
+  stats?: {
+    /** Number of rows in this table */
+    rows?: number
+  }
+}
+
 /** Database schema */
 export interface DataSchema {
   /** Name of database for this schema, eg: 'main' */
   database?: string
 
   /** Tables in the schema */
-  tables?: {
+  tables?: DataTableSchema[]
+
+  /** Views in the schema */
+  views?: DataTableSchema[]
+
+  /** Indexes in the schema */
+  indexes: {
     name: string
-    sql: string
-    columns: {
-      name: string
-      datatype: string
-      constraints?: string[]
-    }[]
-    indexes: {
-      name: string
-      sql: string
-      columns: string[]
-    }[]
-    foreignKeys: {
-      columns: string[]
-      references: {
-        table: string
-        columns: string[]
-        onUpdate: "no action" | "restrict" | "set null" | "set default" | "cascade"
-        onDelete: "no action" | "restrict" | "set null" | "set default" | "cascade"
-      }[]
-    }[]
-    stats?: {
-      /** Number of rows in this table */
-      rows?: number
-    }
+    sql?: string
+    table: string
+    columns?: string[]
   }[]
 
   /** Triggers in the schema */
   triggers?: {
     name: string
     sql: string
-    on?: string
-  }[]
-
-  /** Views in the schema */
-  views?: {
-    name: string
-    sql: string
-    from?: string
-    stats?: {
-      /** Number of rows in this view */
-      rows?: number
-    }
+    table: string
   }[]
 
   /** Database level statistics */
   stats?: {
+    /** Schema version (where supported) */
+    version?: string
     /** Database size in bytes */
     size?: number
   }
@@ -243,14 +245,18 @@ export abstract class DataConnection {
     return false
   }
 
-  /** 
+  /**
    * Exports data in the given format
    * @param database Which specific database to export? Default null for entire database
    * @param table Specific table to be exported, default null for all contents
    * @param format Specific format to export in, default null for native format
    * @returns Exported data as byte array and data mime type
    */
-   public abstract export(database?: string, table?: string, format?: string): Promise<{data: Uint8Array, type: string}>
+  public abstract export(
+    database?: string,
+    table?: string,
+    format?: string
+  ): Promise<{ data: Uint8Array; type: string }>
 }
 
 //

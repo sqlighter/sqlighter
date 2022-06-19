@@ -120,7 +120,7 @@ export function TablesSchemaPanel(props: SchemaPanelProps) {
           title: `All ${tableName}`,
           connection: props.connection,
           database: props.schema?.database,
-          sql: `SELECT * FROM ${tableName}`,
+          sql: `SELECT * FROM '${tableName}'`,
         },
       },
     ]

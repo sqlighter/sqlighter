@@ -2,9 +2,8 @@
 // sqlite.ts - data connection client for SQLite
 //
 
-import { DataConnection, DataConfig, DataSchema, DataError } from "../connections"
+import { DataConnection, DataConfig, DataSchema, DataTableSchema, DataError } from "../connections"
 import { Database, QueryExecResult } from "sql.js"
-import sqliteParser from "sqlite-parser"
 
 export const SQLITE3_CLIENT_ID = "sqlite3"
 
@@ -117,197 +116,133 @@ export class SqliteDataConnection extends DataConnection {
   // schema
   //
 
-  private _getTableColumnSchema(columnAst) {
-    // add tag for data type like 'integer', 'nvarchar(30)', 'decimal(10, 2)'
-    let datatype = columnAst.datatype.variant
-    if (columnAst.datatype.args && columnAst.datatype.args.variant == "list") {
-      const args = columnAst.datatype.args.expression.map((expr) => expr.value).join(", ")
-      datatype += `(${args})`
-    }
-
-    const columnSchema: any = {
-      name: columnAst.name,
-      datatype,
-    }
-
-    // add tags for attributes like 'primary key', 'not null'
-    const constraints = []
-    for (const definition of columnAst.definition) {
-      // show primary key 🔑 emoji instead of plain text?
-      // column.tags.push(definition.variant == "primary key" ? "🔑" : definition.variant)
-      constraints.push(definition.variant)
-      if (definition.autoIncrement) {
-        constraints.push("auto increment")
+  /** Retrieve column information for a table or a view */
+  public async _getTableColumnsSchema(database: string, table: string) {
+    // https://www.sqlite.org/pragma.html#pragma_table_xinfo
+    const columnsResult = await this.getResult(`pragma '${database}'.table_xinfo('${table}')`)
+    const columns = []
+    for (const columnResult of columnsResult.values) {
+      const tags = []
+      if (columnResult[6]) {
+        // hidden
+        tags.push("hidden")
       }
+      columns.push({
+        name: columnResult[1], // name
+        datatype: columnResult[2] ? columnResult[2] : undefined, // type, eg. INTEGER
+        defaultValue: columnResult[4] != null ? columnResult[4] : undefined, // dflt_value
+        primaryKey: columnResult[5] ? true : undefined, // pk
+        notNull: columnResult[3] ? true : undefined, // notnull
+        tags: tags.length > 0 ? tags : undefined,
+      })
     }
-    if (constraints.length > 0) {
-      columnSchema.constraints = constraints
-    }
-
-    return columnSchema
+    return columns
   }
 
-  private async _getTableSchema(entities, tableEntity) {
-    const tableAst = tableEntity.ast
-    const tableName = tableAst.name.name
-
-    const tableSchema: any = {
-      name: tableName,
-      sql: tableEntity.sql,
-    }
-
+  /** Retrieve foreign key information for a table or a view */
+  public async _getTableForeignKeysSchema(database: string, table: string) {
+    // https://www.sqlite.org/pragma.html#pragma_foreign_key_list
     try {
-      // number of rows in table
-      const result = await this.getResult(`select count(*) 'rows' from main.'${tableName}'`)
-      tableSchema.stats = {
-        rows: result.values[0][0], // first and only result
+      // will throw if no results because of no foreign keys
+      const foreignKeysResult = await this.getResult(`pragma '${database}'.foreign_key_list('${table}')`)
+      const foreignKeys = []
+      for (const foreigKeyResult of foreignKeysResult.values) {
+        foreignKeys.push({
+          table: foreigKeyResult[2],
+          fromColumn: foreigKeyResult[3],
+          toColumn: foreigKeyResult[4],
+          onUpdate: foreigKeyResult[5] ? foreigKeyResult[5].toString().toLowerCase() : undefined,
+          onDelete: foreigKeyResult[6] ? foreigKeyResult[6].toString().toLowerCase() : undefined,
+        })
       }
+      return foreignKeys.length > 0 ? foreignKeys : undefined
     } catch (exception) {
-      console.error(`SqliteDataConnection._getTableSchema - error while calculating number of rows`, exception)
+      // console.warn(`SqliteDataConnection._getTableForeignKeysSchema - ${table}, no results`, exception)
+      return undefined
     }
-
-    const columns = tableAst.definition
-      .filter((definition) => definition.variant == "column")
-      .map((columnAst) => this._getTableColumnSchema(columnAst))
-    if (columns.length > 0) {
-      tableSchema.columns = columns
-    }
-
-    const indexes = entities
-      .filter((entity) => entity.type == "index" && entity.ast.on.name == tableName)
-      .map((indexEntity) => {
-        const indexAst = indexEntity.ast
-        return {
-          name: indexEntity.name,
-          sql: indexEntity.sql,
-          columns: indexAst.on.columns.map((columnAst) => columnAst.name),
-        }
-      })
-    if (indexes.length > 0) {
-      tableSchema.indexes = indexes
-    }
-
-    // TODO add table with multiple foreign keys and related schema test
-    const fk = tableAst.definition
-      .filter((definition) => definition.variant == "constraint" && definition.definition[0].variant == "foreign key")
-      .map((fkAst) => {
-        const onUpdate = fkAst.definition[0].action.filter((a) => a.variant == "on update").map((a) => a.action)
-        const onDelete = fkAst.definition[0].action.filter((a) => a.variant == "on delete").map((a) => a.action)
-
-        return {
-          columns: fkAst.columns.map((c) => c.name),
-          references: {
-            table: fkAst.definition[0].references.name,
-            columns: fkAst.definition[0].references.columns.map((c) => c.name),
-            onUpdate: onUpdate && onUpdate[0],
-            onDelete: onDelete && onDelete[0],
-          },
-        }
-      })
-    if (fk.length > 0) {
-      tableSchema.foreignKeys = fk
-    }
-
-    return tableSchema
   }
 
-  private async _getViewSchema(entities, viewEntity) {
-    const viewAst = viewEntity.ast
-    const viewName = viewAst.target.name
-    const viewSchema = {
-      name: viewName,
-      sql: viewEntity.sql,
-      from: viewAst.result?.from?.name,
-      columns: null,
-      stats: null,
-    }
-
+  /** Generate schema for tables or views in given database */
+  private async _getTablesSchema(database: string, type: "table" | "view"): Promise<DataTableSchema[]> {
+    const tables: DataTableSchema[] = []
     try {
-      // number of rows in view
-      const statsResult = await this.getResult(`select count(*) 'rows' from main.'${viewSchema.name}'`)
-      viewSchema.stats = {
-        // count is first and only result
-        rows: statsResult.values[0][0],
-      }
+      const tablesResult = await this.getResult(
+        `select type, name, sql from '${database}'.sqlite_schema where (type == '${type}') and (name not like 'sqlite_%')`
+      )
+      for (const tableResult of tablesResult.values) {
+        const tableName = tableResult[1] as string // or view
 
-      // extract row names by running a simple select query for a single line
-      // we could extract columns from the ast but there are many variants like views
-      // from simple selects, views from joins, unions, calculations, etc...
-      const columnsResult = await this.getResult(`select * from main.'${viewSchema.name}' limit 1`)
-      viewSchema.columns = columnsResult.columns.map((column) => {
-        return { name: column }
-      })
+        let rows = undefined
+        try {
+          // number of rows in table
+          const rowsResult = await this.getResult(`select count(*) 'rows' from main.'${tableName}'`)
+          if (rowsResult) {
+            rows = rowsResult.values[0][0] // first and only result
+          }
+        } catch (exception) {
+          console.error(`SqliteDataConnection._getTableSchema - error while calculating number of rows`, exception)
+        }
+
+        tables.push({
+          name: tableName,
+          sql: tableResult[2] ? tableResult[2].toString() : undefined,
+          columns: await this._getTableColumnsSchema(database, tableName),
+          foreignKeys: await this._getTableForeignKeysSchema(database, tableName),
+          stats: { rows },
+        })
+      }
+      tables.sort((a, b) => a.name.localeCompare(b.name))
+      return tables
     } catch (exception) {
-      console.error(
-        `SqliteDataConnection._getViewSchema - view: '${viewName}', exception: ${exception}`,
-        viewSchema,
+      console.warn(
+        `SqliteDataConnection._getTablesSchema - database: ${database}, type: ${type}, exception:${exception}`,
         exception
       )
-    }
-
-    return viewSchema
-  }
-
-  private _getTriggerSchema(entities, triggerEntity) {
-    const triggerAst = triggerEntity.ast
-    const triggerName = triggerAst.target.name
-
-    // TODO parse view's columns, expressions, etc
-    return {
-      name: triggerName,
-      sql: triggerEntity.sql,
-      on: triggerEntity.ast.on?.name,
+      return undefined
     }
   }
 
-  /**
-   * This method will run a query on 'sqlite_schema' to retrieve the SQL create statements for all
-   * the tables, indexes, triggers and views in the database. It will then parse the SQL statements
-   * and create an abstract syntax tree (AST) for each entity. These ASTs will then be used to quickly
-   * retrieve information like table's column, indexes constraints and so on.
-   * @param refresh True if schema should be refreshed (default is using cached version if available)
-   * @returns An array with a single DataSchema extracted from this database
-   * @see https://www.sqlite.org/schematab.html
-   * @see https://www.npmjs.com/package/sqlite-parser
-   * @internal
-   */
-  public async _getEntities() {
+  /** Generates schema for indexes */
+  private async _getIndexesSchema(database: string) {
+    const indexes = []
+    const indexesResult = await this.getResult(
+      `select name, tbl_name, sql from '${database}'.sqlite_schema where type == 'index'`
+    )
+    for (const indexResult of indexesResult.values) {
+      const indexName = indexResult[0] as string // or view
+      const columnsResult = await this.getResult(`pragma '${database}'.index_info('${indexName}')`)
+      const columns = columnsResult.values.map((v) => v[2])
+      indexes.push({
+        name: indexName,
+        sql: indexResult[2]?.toString(),
+        table: indexResult[1]?.toString(),
+        columns,
+      })
+    }
+    indexes.sort((a, b) => a.name.localeCompare(b.name))
+    return indexes
+  }
+
+  /** Generates schema for triggers */
+  private async _getTriggersSchema(database: string) {
     try {
-      // retrieve create statements for all tables, indexes, trigger and views from which we'll parse the schema
-      const query = "select type, tbl_name, sql from sqlite_schema where tbl_name not like 'sqlite_%'"
-      const result = await this.getResult(query)
-
-      // parse sql into abstract syntax tree for each database entity
-      const entities: any[] = []
-      for (const value of result.values) {
-        const entity = value[0] as string,
-          name = value[1] as string,
-          sql = value[2] as string
-        if (sql) {
-          try {
-            let ast = sqliteParser(sql)
-            ast = ast.statement[0] // remove statement list wrapper
-            const name = ast.name?.name || ast.target?.name
-
-            // return type of entity, its name, sql create statement and its abstract syntax tree
-            entities.push({ type: ast.format, name, sql, ast })
-          } catch (exception) {
-            console.error(
-              `SqliteDataConnection.getEntities - ${entity}: ${name}, exception: ${exception}`,
-              sql,
-              exception
-            )
-            throw exception
-          }
-        } else {
-          console.warn(`SqliteDataConnection.getEntities - ${entity}: ${name} doesn't have a SQL schema`)
-        }
+      const triggers = []
+      const triggersResult = await this.getResult(
+        `select name, tbl_name, sql from '${database}'.sqlite_schema where type == 'trigger'`
+      )
+      for (const triggerResult of triggersResult.values) {
+        triggers.push({
+          name: triggerResult[0] as string,
+          sql: triggerResult[2]?.toString(),
+          table: triggerResult[1]?.toString(),
+        })
       }
-      return entities
+      triggers.sort((a, b) => a.name.localeCompare(b.name))
+      return triggers.length > 0 ? triggers : undefined
     } catch (exception) {
-      console.error(`SqliteDataConnection.getEntities - exception: ${exception}`, exception)
-      throw exception
+      console.warn(`SqliteDataConnection._getTriggersSchema - ${database} has no triggers`, exception)
     }
+    return undefined
   }
 
   /** Returns database schema in simplified, ready to use format.
@@ -320,48 +255,25 @@ export class SqliteDataConnection extends DataConnection {
     }
 
     try {
-      // get list of database entities with name, type, sql create statement and abstract syntax tree (AST)
-      const entities = await this._getEntities()
-
       // database name to be used for schema
       let database = "main"
       if (this.configs.connection.database) {
         database = this.configs.connection.database
       }
 
-      // convert entities abstract syntax tree to simplified schema structure
-      const tables = []
-      for (const tableEntity of entities) {
-        if (tableEntity.type === "table") {
-          tables.push(await this._getTableSchema(entities, tableEntity))
-        }
-      }
-      tables.sort((a, b) => (a.name < b.name ? -1 : 1))
-
-      // convert entities abstract syntax tree to simplified schema structure
-      const views = []
-      for (const viewEntity of entities) {
-        if (viewEntity.type === "view") {
-          views.push(await this._getViewSchema(entities, viewEntity))
-        }
-      }
-      views.sort((a, b) => (a.name < b.name ? -1 : 1))
-
-      const triggers = entities
-        .filter((entity) => entity.type == "trigger")
-        .map((triggerEntity) => this._getTriggerSchema(entities, triggerEntity))
-        .sort((a, b) => (a.name < b.name ? -1 : 1))
-
       // calculate database size
+      const versionResult = await this.getResult(`pragma '${database}'.schema_version`)
       const sizeResults = await this.getResults("pragma page_size; pragma page_count;")
 
       return [
         {
           database,
-          tables,
-          triggers,
-          views,
+          tables: await this._getTablesSchema(database, "table"),
+          views: await this._getTablesSchema(database, "view"),
+          indexes: await this._getIndexesSchema(database),
+          triggers: await this._getTriggersSchema(database),
           stats: {
+            version: versionResult.values[0][0].toString(),
             size: (sizeResults[0].values[0][0] as number) * (sizeResults[1].values[0][0] as number),
           },
         },

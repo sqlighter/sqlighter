@@ -1,0 +1,1421 @@
+{
+  "database": "main",
+  "tables": [
+    {
+      "name": "actor",
+      "sql": "CREATE TABLE actor (\n  actor_id numeric NOT NULL ,\n  first_name VARCHAR(45) NOT NULL,\n  last_name VARCHAR(45) NOT NULL,\n  last_update TIMESTAMP NOT NULL,\n  PRIMARY KEY  (actor_id)\n  )",
+      "columns": [
+        {
+          "name": "actor_id",
+          "datatype": "numeric",
+          "primaryKey": true,
+          "notNull": true
+        },
+        {
+          "name": "first_name",
+          "datatype": "VARCHAR(45)",
+          "notNull": true
+        },
+        {
+          "name": "last_name",
+          "datatype": "VARCHAR(45)",
+          "notNull": true
+        },
+        {
+          "name": "last_update",
+          "datatype": "TIMESTAMP",
+          "notNull": true
+        }
+      ],
+      "stats": {
+        "rows": 200
+      }
+    },
+    {
+      "name": "address",
+      "sql": "CREATE TABLE address (\n  address_id int NOT NULL,\n  address VARCHAR(50) NOT NULL,\n  address2 VARCHAR(50) DEFAULT NULL,\n  district VARCHAR(20) NOT NULL,\n  city_id INT  NOT NULL,\n  postal_code VARCHAR(10) DEFAULT NULL,\n  phone VARCHAR(20) NOT NULL,\n  last_update TIMESTAMP NOT NULL,\n  PRIMARY KEY  (address_id),\n  CONSTRAINT fk_address_city FOREIGN KEY (city_id) REFERENCES city (city_id) ON DELETE NO ACTION ON UPDATE CASCADE\n)",
+      "columns": [
+        {
+          "name": "address_id",
+          "datatype": "INT",
+          "primaryKey": true,
+          "notNull": true
+        },
+        {
+          "name": "address",
+          "datatype": "VARCHAR(50)",
+          "notNull": true
+        },
+        {
+          "name": "address2",
+          "datatype": "VARCHAR(50)",
+          "defaultValue": "NULL"
+        },
+        {
+          "name": "district",
+          "datatype": "VARCHAR(20)",
+          "notNull": true
+        },
+        {
+          "name": "city_id",
+          "datatype": "INT",
+          "notNull": true
+        },
+        {
+          "name": "postal_code",
+          "datatype": "VARCHAR(10)",
+          "defaultValue": "NULL"
+        },
+        {
+          "name": "phone",
+          "datatype": "VARCHAR(20)",
+          "notNull": true
+        },
+        {
+          "name": "last_update",
+          "datatype": "TIMESTAMP",
+          "notNull": true
+        }
+      ],
+      "foreignKeys": [
+        {
+          "table": "city",
+          "fromColumn": "city_id",
+          "toColumn": "city_id",
+          "onUpdate": "cascade",
+          "onDelete": "no action"
+        }
+      ],
+      "stats": {
+        "rows": 603
+      }
+    },
+    {
+      "name": "category",
+      "sql": "CREATE TABLE category (\n  category_id SMALLINT NOT NULL,\n  name VARCHAR(25) NOT NULL,\n  last_update TIMESTAMP NOT NULL,\n  PRIMARY KEY  (category_id)\n)",
+      "columns": [
+        {
+          "name": "category_id",
+          "datatype": "SMALLINT",
+          "primaryKey": true,
+          "notNull": true
+        },
+        {
+          "name": "name",
+          "datatype": "VARCHAR(25)",
+          "notNull": true
+        },
+        {
+          "name": "last_update",
+          "datatype": "TIMESTAMP",
+          "notNull": true
+        }
+      ],
+      "stats": {
+        "rows": 16
+      }
+    },
+    {
+      "name": "city",
+      "sql": "CREATE TABLE city (\n  city_id int NOT NULL,\n  city VARCHAR(50) NOT NULL,\n  country_id SMALLINT NOT NULL,\n  last_update TIMESTAMP NOT NULL,\n  PRIMARY KEY  (city_id),\n  CONSTRAINT fk_city_country FOREIGN KEY (country_id) REFERENCES country (country_id) ON DELETE NO ACTION ON UPDATE CASCADE\n)",
+      "columns": [
+        {
+          "name": "city_id",
+          "datatype": "INT",
+          "primaryKey": true,
+          "notNull": true
+        },
+        {
+          "name": "city",
+          "datatype": "VARCHAR(50)",
+          "notNull": true
+        },
+        {
+          "name": "country_id",
+          "datatype": "SMALLINT",
+          "notNull": true
+        },
+        {
+          "name": "last_update",
+          "datatype": "TIMESTAMP",
+          "notNull": true
+        }
+      ],
+      "foreignKeys": [
+        {
+          "table": "country",
+          "fromColumn": "country_id",
+          "toColumn": "country_id",
+          "onUpdate": "cascade",
+          "onDelete": "no action"
+        }
+      ],
+      "stats": {
+        "rows": 600
+      }
+    },
+    {
+      "name": "country",
+      "sql": "CREATE TABLE country (\n  country_id SMALLINT NOT NULL,\n  country VARCHAR(50) NOT NULL,\n  last_update TIMESTAMP,\n  PRIMARY KEY  (country_id)\n)",
+      "columns": [
+        {
+          "name": "country_id",
+          "datatype": "SMALLINT",
+          "primaryKey": true,
+          "notNull": true
+        },
+        {
+          "name": "country",
+          "datatype": "VARCHAR(50)",
+          "notNull": true
+        },
+        {
+          "name": "last_update",
+          "datatype": "TIMESTAMP"
+        }
+      ],
+      "stats": {
+        "rows": 109
+      }
+    },
+    {
+      "name": "customer",
+      "sql": "CREATE TABLE customer (\n  customer_id INT NOT NULL,\n  store_id INT NOT NULL,\n  first_name VARCHAR(45) NOT NULL,\n  last_name VARCHAR(45) NOT NULL,\n  email VARCHAR(50) DEFAULT NULL,\n  address_id INT NOT NULL,\n  active CHAR(1) DEFAULT 'Y' NOT NULL,\n  create_date TIMESTAMP NOT NULL,\n  last_update TIMESTAMP NOT NULL,\n  PRIMARY KEY  (customer_id),\n  CONSTRAINT fk_customer_store FOREIGN KEY (store_id) REFERENCES store (store_id) ON DELETE NO ACTION ON UPDATE CASCADE,\n  CONSTRAINT fk_customer_address FOREIGN KEY (address_id) REFERENCES address (address_id) ON DELETE NO ACTION ON UPDATE CASCADE\n)",
+      "columns": [
+        {
+          "name": "customer_id",
+          "datatype": "INT",
+          "primaryKey": true,
+          "notNull": true
+        },
+        {
+          "name": "store_id",
+          "datatype": "INT",
+          "notNull": true
+        },
+        {
+          "name": "first_name",
+          "datatype": "VARCHAR(45)",
+          "notNull": true
+        },
+        {
+          "name": "last_name",
+          "datatype": "VARCHAR(45)",
+          "notNull": true
+        },
+        {
+          "name": "email",
+          "datatype": "VARCHAR(50)",
+          "defaultValue": "NULL"
+        },
+        {
+          "name": "address_id",
+          "datatype": "INT",
+          "notNull": true
+        },
+        {
+          "name": "active",
+          "datatype": "CHAR(1)",
+          "defaultValue": "'Y'",
+          "notNull": true
+        },
+        {
+          "name": "create_date",
+          "datatype": "TIMESTAMP",
+          "notNull": true
+        },
+        {
+          "name": "last_update",
+          "datatype": "TIMESTAMP",
+          "notNull": true
+        }
+      ],
+      "foreignKeys": [
+        {
+          "table": "address",
+          "fromColumn": "address_id",
+          "toColumn": "address_id",
+          "onUpdate": "cascade",
+          "onDelete": "no action"
+        },
+        {
+          "table": "store",
+          "fromColumn": "store_id",
+          "toColumn": "store_id",
+          "onUpdate": "cascade",
+          "onDelete": "no action"
+        }
+      ],
+      "stats": {
+        "rows": 599
+      }
+    },
+    {
+      "name": "film",
+      "sql": "CREATE TABLE film (\n  film_id int NOT NULL,\n  title VARCHAR(255) NOT NULL,\n  description BLOB SUB_TYPE TEXT DEFAULT NULL,\n  release_year VARCHAR(4) DEFAULT NULL,\n  language_id SMALLINT NOT NULL,\n  original_language_id SMALLINT DEFAULT NULL,\n  rental_duration SMALLINT  DEFAULT 3 NOT NULL,\n  rental_rate DECIMAL(4,2) DEFAULT 4.99 NOT NULL,\n  length SMALLINT DEFAULT NULL,\n  replacement_cost DECIMAL(5,2) DEFAULT 19.99 NOT NULL,\n  rating VARCHAR(10) DEFAULT 'G',\n  special_features VARCHAR(100) DEFAULT NULL,\n  last_update TIMESTAMP NOT NULL,\n  PRIMARY KEY  (film_id),\n  CONSTRAINT CHECK_special_features CHECK(special_features is null or\n                                                           special_features like '%Trailers%' or\n                                                           special_features like '%Commentaries%' or\n                                                           special_features like '%Deleted Scenes%' or\n                                                           special_features like '%Behind the Scenes%'),\n  CONSTRAINT CHECK_special_rating CHECK(rating in ('G','PG','PG-13','R','NC-17')),\n  CONSTRAINT fk_film_language FOREIGN KEY (language_id) REFERENCES language (language_id) ,\n  CONSTRAINT fk_film_language_original FOREIGN KEY (original_language_id) REFERENCES language (language_id)\n)",
+      "columns": [
+        {
+          "name": "film_id",
+          "datatype": "INT",
+          "primaryKey": true,
+          "notNull": true
+        },
+        {
+          "name": "title",
+          "datatype": "VARCHAR(255)",
+          "notNull": true
+        },
+        {
+          "name": "description",
+          "datatype": "BLOB SUB_TYPE TEXT",
+          "defaultValue": "NULL"
+        },
+        {
+          "name": "release_year",
+          "datatype": "VARCHAR(4)",
+          "defaultValue": "NULL"
+        },
+        {
+          "name": "language_id",
+          "datatype": "SMALLINT",
+          "notNull": true
+        },
+        {
+          "name": "original_language_id",
+          "datatype": "SMALLINT",
+          "defaultValue": "NULL"
+        },
+        {
+          "name": "rental_duration",
+          "datatype": "SMALLINT",
+          "defaultValue": "3",
+          "notNull": true
+        },
+        {
+          "name": "rental_rate",
+          "datatype": "DECIMAL(4,2)",
+          "defaultValue": "4.99",
+          "notNull": true
+        },
+        {
+          "name": "length",
+          "datatype": "SMALLINT",
+          "defaultValue": "NULL"
+        },
+        {
+          "name": "replacement_cost",
+          "datatype": "DECIMAL(5,2)",
+          "defaultValue": "19.99",
+          "notNull": true
+        },
+        {
+          "name": "rating",
+          "datatype": "VARCHAR(10)",
+          "defaultValue": "'G'"
+        },
+        {
+          "name": "special_features",
+          "datatype": "VARCHAR(100)",
+          "defaultValue": "NULL"
+        },
+        {
+          "name": "last_update",
+          "datatype": "TIMESTAMP",
+          "notNull": true
+        }
+      ],
+      "foreignKeys": [
+        {
+          "table": "language",
+          "fromColumn": "original_language_id",
+          "toColumn": "language_id",
+          "onUpdate": "no action",
+          "onDelete": "no action"
+        },
+        {
+          "table": "language",
+          "fromColumn": "language_id",
+          "toColumn": "language_id",
+          "onUpdate": "no action",
+          "onDelete": "no action"
+        }
+      ],
+      "stats": {
+        "rows": 1000
+      }
+    },
+    {
+      "name": "film_actor",
+      "sql": "CREATE TABLE film_actor (\n  actor_id INT NOT NULL,\n  film_id  INT NOT NULL,\n  last_update TIMESTAMP NOT NULL,\n  PRIMARY KEY  (actor_id,film_id),\n  CONSTRAINT fk_film_actor_actor FOREIGN KEY (actor_id) REFERENCES actor (actor_id) ON DELETE NO ACTION ON UPDATE CASCADE,\n  CONSTRAINT fk_film_actor_film FOREIGN KEY (film_id) REFERENCES film (film_id) ON DELETE NO ACTION ON UPDATE CASCADE\n)",
+      "columns": [
+        {
+          "name": "actor_id",
+          "datatype": "INT",
+          "primaryKey": true,
+          "notNull": true
+        },
+        {
+          "name": "film_id",
+          "datatype": "INT",
+          "primaryKey": true,
+          "notNull": true
+        },
+        {
+          "name": "last_update",
+          "datatype": "TIMESTAMP",
+          "notNull": true
+        }
+      ],
+      "foreignKeys": [
+        {
+          "table": "film",
+          "fromColumn": "film_id",
+          "toColumn": "film_id",
+          "onUpdate": "cascade",
+          "onDelete": "no action"
+        },
+        {
+          "table": "actor",
+          "fromColumn": "actor_id",
+          "toColumn": "actor_id",
+          "onUpdate": "cascade",
+          "onDelete": "no action"
+        }
+      ],
+      "stats": {
+        "rows": 5462
+      }
+    },
+    {
+      "name": "film_category",
+      "sql": "CREATE TABLE film_category (\n  film_id INT NOT NULL,\n  category_id SMALLINT  NOT NULL,\n  last_update TIMESTAMP NOT NULL,\n  PRIMARY KEY (film_id, category_id),\n  CONSTRAINT fk_film_category_film FOREIGN KEY (film_id) REFERENCES film (film_id) ON DELETE NO ACTION ON UPDATE CASCADE,\n  CONSTRAINT fk_film_category_category FOREIGN KEY (category_id) REFERENCES category (category_id) ON DELETE NO ACTION ON UPDATE CASCADE\n)",
+      "columns": [
+        {
+          "name": "film_id",
+          "datatype": "INT",
+          "primaryKey": true,
+          "notNull": true
+        },
+        {
+          "name": "category_id",
+          "datatype": "SMALLINT",
+          "primaryKey": true,
+          "notNull": true
+        },
+        {
+          "name": "last_update",
+          "datatype": "TIMESTAMP",
+          "notNull": true
+        }
+      ],
+      "foreignKeys": [
+        {
+          "table": "category",
+          "fromColumn": "category_id",
+          "toColumn": "category_id",
+          "onUpdate": "cascade",
+          "onDelete": "no action"
+        },
+        {
+          "table": "film",
+          "fromColumn": "film_id",
+          "toColumn": "film_id",
+          "onUpdate": "cascade",
+          "onDelete": "no action"
+        }
+      ],
+      "stats": {
+        "rows": 1000
+      }
+    },
+    {
+      "name": "film_text",
+      "sql": "CREATE TABLE film_text (\n  film_id SMALLINT NOT NULL,\n  title VARCHAR(255) NOT NULL,\n  description BLOB SUB_TYPE TEXT,\n  PRIMARY KEY  (film_id)\n)",
+      "columns": [
+        {
+          "name": "film_id",
+          "datatype": "SMALLINT",
+          "primaryKey": true,
+          "notNull": true
+        },
+        {
+          "name": "title",
+          "datatype": "VARCHAR(255)",
+          "notNull": true
+        },
+        {
+          "name": "description",
+          "datatype": "BLOB SUB_TYPE TEXT"
+        }
+      ],
+      "stats": {
+        "rows": 0
+      }
+    },
+    {
+      "name": "inventory",
+      "sql": "CREATE TABLE inventory (\n  inventory_id INT NOT NULL,\n  film_id INT NOT NULL,\n  store_id INT NOT NULL,\n  last_update TIMESTAMP NOT NULL,\n  PRIMARY KEY  (inventory_id),\n  CONSTRAINT fk_inventory_store FOREIGN KEY (store_id) REFERENCES store (store_id) ON DELETE NO ACTION ON UPDATE CASCADE,\n  CONSTRAINT fk_inventory_film FOREIGN KEY (film_id) REFERENCES film (film_id) ON DELETE NO ACTION ON UPDATE CASCADE\n)",
+      "columns": [
+        {
+          "name": "inventory_id",
+          "datatype": "INT",
+          "primaryKey": true,
+          "notNull": true
+        },
+        {
+          "name": "film_id",
+          "datatype": "INT",
+          "notNull": true
+        },
+        {
+          "name": "store_id",
+          "datatype": "INT",
+          "notNull": true
+        },
+        {
+          "name": "last_update",
+          "datatype": "TIMESTAMP",
+          "notNull": true
+        }
+      ],
+      "foreignKeys": [
+        {
+          "table": "film",
+          "fromColumn": "film_id",
+          "toColumn": "film_id",
+          "onUpdate": "cascade",
+          "onDelete": "no action"
+        },
+        {
+          "table": "store",
+          "fromColumn": "store_id",
+          "toColumn": "store_id",
+          "onUpdate": "cascade",
+          "onDelete": "no action"
+        }
+      ],
+      "stats": {
+        "rows": 4581
+      }
+    },
+    {
+      "name": "language",
+      "sql": "CREATE TABLE language (\n  language_id SMALLINT NOT NULL ,\n  name CHAR(20) NOT NULL,\n  last_update TIMESTAMP NOT NULL,\n  PRIMARY KEY (language_id)\n)",
+      "columns": [
+        {
+          "name": "language_id",
+          "datatype": "SMALLINT",
+          "primaryKey": true,
+          "notNull": true
+        },
+        {
+          "name": "name",
+          "datatype": "CHAR(20)",
+          "notNull": true
+        },
+        {
+          "name": "last_update",
+          "datatype": "TIMESTAMP",
+          "notNull": true
+        }
+      ],
+      "stats": {
+        "rows": 6
+      }
+    },
+    {
+      "name": "payment",
+      "sql": "CREATE TABLE payment (\n  payment_id int NOT NULL,\n  customer_id INT  NOT NULL,\n  staff_id SMALLINT NOT NULL,\n  rental_id INT DEFAULT NULL,\n  amount DECIMAL(5,2) NOT NULL,\n  payment_date TIMESTAMP NOT NULL,\n  last_update TIMESTAMP NOT NULL,\n  PRIMARY KEY  (payment_id),\n  CONSTRAINT fk_payment_rental FOREIGN KEY (rental_id) REFERENCES rental (rental_id) ON DELETE SET NULL ON UPDATE CASCADE,\n  CONSTRAINT fk_payment_customer FOREIGN KEY (customer_id) REFERENCES customer (customer_id) ,\n  CONSTRAINT fk_payment_staff FOREIGN KEY (staff_id) REFERENCES staff (staff_id)\n)",
+      "columns": [
+        {
+          "name": "payment_id",
+          "datatype": "INT",
+          "primaryKey": true,
+          "notNull": true
+        },
+        {
+          "name": "customer_id",
+          "datatype": "INT",
+          "notNull": true
+        },
+        {
+          "name": "staff_id",
+          "datatype": "SMALLINT",
+          "notNull": true
+        },
+        {
+          "name": "rental_id",
+          "datatype": "INT",
+          "defaultValue": "NULL"
+        },
+        {
+          "name": "amount",
+          "datatype": "DECIMAL(5,2)",
+          "notNull": true
+        },
+        {
+          "name": "payment_date",
+          "datatype": "TIMESTAMP",
+          "notNull": true
+        },
+        {
+          "name": "last_update",
+          "datatype": "TIMESTAMP",
+          "notNull": true
+        }
+      ],
+      "foreignKeys": [
+        {
+          "table": "staff",
+          "fromColumn": "staff_id",
+          "toColumn": "staff_id",
+          "onUpdate": "no action",
+          "onDelete": "no action"
+        },
+        {
+          "table": "customer",
+          "fromColumn": "customer_id",
+          "toColumn": "customer_id",
+          "onUpdate": "no action",
+          "onDelete": "no action"
+        },
+        {
+          "table": "rental",
+          "fromColumn": "rental_id",
+          "toColumn": "rental_id",
+          "onUpdate": "cascade",
+          "onDelete": "set null"
+        }
+      ],
+      "stats": {
+        "rows": 16049
+      }
+    },
+    {
+      "name": "rental",
+      "sql": "CREATE TABLE rental (\n  rental_id INT NOT NULL,\n  rental_date TIMESTAMP NOT NULL,\n  inventory_id INT  NOT NULL,\n  customer_id INT  NOT NULL,\n  return_date TIMESTAMP DEFAULT NULL,\n  staff_id SMALLINT  NOT NULL,\n  last_update TIMESTAMP NOT NULL,\n  PRIMARY KEY (rental_id),\n  CONSTRAINT fk_rental_staff FOREIGN KEY (staff_id) REFERENCES staff (staff_id) ,\n  CONSTRAINT fk_rental_inventory FOREIGN KEY (inventory_id) REFERENCES inventory (inventory_id) ,\n  CONSTRAINT fk_rental_customer FOREIGN KEY (customer_id) REFERENCES customer (customer_id)\n)",
+      "columns": [
+        {
+          "name": "rental_id",
+          "datatype": "INT",
+          "primaryKey": true,
+          "notNull": true
+        },
+        {
+          "name": "rental_date",
+          "datatype": "TIMESTAMP",
+          "notNull": true
+        },
+        {
+          "name": "inventory_id",
+          "datatype": "INT",
+          "notNull": true
+        },
+        {
+          "name": "customer_id",
+          "datatype": "INT",
+          "notNull": true
+        },
+        {
+          "name": "return_date",
+          "datatype": "TIMESTAMP",
+          "defaultValue": "NULL"
+        },
+        {
+          "name": "staff_id",
+          "datatype": "SMALLINT",
+          "notNull": true
+        },
+        {
+          "name": "last_update",
+          "datatype": "TIMESTAMP",
+          "notNull": true
+        }
+      ],
+      "foreignKeys": [
+        {
+          "table": "customer",
+          "fromColumn": "customer_id",
+          "toColumn": "customer_id",
+          "onUpdate": "no action",
+          "onDelete": "no action"
+        },
+        {
+          "table": "inventory",
+          "fromColumn": "inventory_id",
+          "toColumn": "inventory_id",
+          "onUpdate": "no action",
+          "onDelete": "no action"
+        },
+        {
+          "table": "staff",
+          "fromColumn": "staff_id",
+          "toColumn": "staff_id",
+          "onUpdate": "no action",
+          "onDelete": "no action"
+        }
+      ],
+      "stats": {
+        "rows": 16044
+      }
+    },
+    {
+      "name": "staff",
+      "sql": "CREATE TABLE staff (\n  staff_id SMALLINT NOT NULL,\n  first_name VARCHAR(45) NOT NULL,\n  last_name VARCHAR(45) NOT NULL,\n  address_id INT NOT NULL,\n  picture BLOB DEFAULT NULL,\n  email VARCHAR(50) DEFAULT NULL,\n  store_id INT NOT NULL,\n  active SMALLINT DEFAULT 1 NOT NULL,\n  username VARCHAR(16) NOT NULL,\n  password VARCHAR(40) DEFAULT NULL,\n  last_update TIMESTAMP NOT NULL,\n  PRIMARY KEY  (staff_id),\n  CONSTRAINT fk_staff_store FOREIGN KEY (store_id) REFERENCES store (store_id) ON DELETE NO ACTION ON UPDATE CASCADE,\n  CONSTRAINT fk_staff_address FOREIGN KEY (address_id) REFERENCES address (address_id) ON DELETE NO ACTION ON UPDATE CASCADE\n)",
+      "columns": [
+        {
+          "name": "staff_id",
+          "datatype": "SMALLINT",
+          "primaryKey": true,
+          "notNull": true
+        },
+        {
+          "name": "first_name",
+          "datatype": "VARCHAR(45)",
+          "notNull": true
+        },
+        {
+          "name": "last_name",
+          "datatype": "VARCHAR(45)",
+          "notNull": true
+        },
+        {
+          "name": "address_id",
+          "datatype": "INT",
+          "notNull": true
+        },
+        {
+          "name": "picture",
+          "datatype": "BLOB",
+          "defaultValue": "NULL"
+        },
+        {
+          "name": "email",
+          "datatype": "VARCHAR(50)",
+          "defaultValue": "NULL"
+        },
+        {
+          "name": "store_id",
+          "datatype": "INT",
+          "notNull": true
+        },
+        {
+          "name": "active",
+          "datatype": "SMALLINT",
+          "defaultValue": "1",
+          "notNull": true
+        },
+        {
+          "name": "username",
+          "datatype": "VARCHAR(16)",
+          "notNull": true
+        },
+        {
+          "name": "password",
+          "datatype": "VARCHAR(40)",
+          "defaultValue": "NULL"
+        },
+        {
+          "name": "last_update",
+          "datatype": "TIMESTAMP",
+          "notNull": true
+        }
+      ],
+      "foreignKeys": [
+        {
+          "table": "address",
+          "fromColumn": "address_id",
+          "toColumn": "address_id",
+          "onUpdate": "cascade",
+          "onDelete": "no action"
+        },
+        {
+          "table": "store",
+          "fromColumn": "store_id",
+          "toColumn": "store_id",
+          "onUpdate": "cascade",
+          "onDelete": "no action"
+        }
+      ],
+      "stats": {
+        "rows": 2
+      }
+    },
+    {
+      "name": "store",
+      "sql": "CREATE TABLE store (\n  store_id INT NOT NULL,\n  manager_staff_id SMALLINT NOT NULL,\n  address_id INT NOT NULL,\n  last_update TIMESTAMP NOT NULL,\n  PRIMARY KEY  (store_id),\n  CONSTRAINT fk_store_staff FOREIGN KEY (manager_staff_id) REFERENCES staff (staff_id) ,\n  CONSTRAINT fk_store_address FOREIGN KEY (address_id) REFERENCES address (address_id)\n)",
+      "columns": [
+        {
+          "name": "store_id",
+          "datatype": "INT",
+          "primaryKey": true,
+          "notNull": true
+        },
+        {
+          "name": "manager_staff_id",
+          "datatype": "SMALLINT",
+          "notNull": true
+        },
+        {
+          "name": "address_id",
+          "datatype": "INT",
+          "notNull": true
+        },
+        {
+          "name": "last_update",
+          "datatype": "TIMESTAMP",
+          "notNull": true
+        }
+      ],
+      "foreignKeys": [
+        {
+          "table": "address",
+          "fromColumn": "address_id",
+          "toColumn": "address_id",
+          "onUpdate": "no action",
+          "onDelete": "no action"
+        },
+        {
+          "table": "staff",
+          "fromColumn": "manager_staff_id",
+          "toColumn": "staff_id",
+          "onUpdate": "no action",
+          "onDelete": "no action"
+        }
+      ],
+      "stats": {
+        "rows": 2
+      }
+    }
+  ],
+  "views": [
+    {
+      "name": "customer_list",
+      "sql": "CREATE VIEW customer_list\nAS\nSELECT cu.customer_id AS ID,\n       cu.first_name||' '||cu.last_name AS name,\n       a.address AS address,\n       a.postal_code AS zip_code,\n       a.phone AS phone,\n       city.city AS city,\n       country.country AS country,\n       case when cu.active=1 then 'active' else '' end AS notes,\n       cu.store_id AS SID\nFROM customer AS cu JOIN address AS a ON cu.address_id = a.address_id JOIN city ON a.city_id = city.city_id\n    JOIN country ON city.country_id = country.country_id",
+      "columns": [
+        {
+          "name": "ID",
+          "datatype": "INT"
+        },
+        {
+          "name": "name"
+        },
+        {
+          "name": "address",
+          "datatype": "VARCHAR(50)"
+        },
+        {
+          "name": "zip_code",
+          "datatype": "VARCHAR(10)"
+        },
+        {
+          "name": "phone",
+          "datatype": "VARCHAR(20)"
+        },
+        {
+          "name": "city",
+          "datatype": "VARCHAR(50)"
+        },
+        {
+          "name": "country",
+          "datatype": "VARCHAR(50)"
+        },
+        {
+          "name": "notes"
+        },
+        {
+          "name": "SID",
+          "datatype": "INT"
+        }
+      ],
+      "stats": {
+        "rows": 599
+      }
+    },
+    {
+      "name": "film_list",
+      "sql": "CREATE VIEW film_list\nAS\nSELECT film.film_id AS FID,\n       film.title AS title,\n       film.description AS description,\n       category.name AS category,\n       film.rental_rate AS price,\n       film.length AS length,\n       film.rating AS rating,\n       actor.first_name||' '||actor.last_name AS actors\nFROM category LEFT JOIN film_category ON category.category_id = film_category.category_id LEFT JOIN film ON film_category.film_id = film.film_id\n        JOIN film_actor ON film.film_id = film_actor.film_id\n    JOIN actor ON film_actor.actor_id = actor.actor_id",
+      "columns": [
+        {
+          "name": "FID",
+          "datatype": "INT"
+        },
+        {
+          "name": "title",
+          "datatype": "VARCHAR(255)"
+        },
+        {
+          "name": "description",
+          "datatype": "BLOB SUB_TYPE TEXT"
+        },
+        {
+          "name": "category",
+          "datatype": "VARCHAR(25)"
+        },
+        {
+          "name": "price",
+          "datatype": "DECIMAL(4,2)"
+        },
+        {
+          "name": "length",
+          "datatype": "SMALLINT"
+        },
+        {
+          "name": "rating",
+          "datatype": "VARCHAR(10)"
+        },
+        {
+          "name": "actors"
+        }
+      ],
+      "stats": {
+        "rows": 5462
+      }
+    },
+    {
+      "name": "sales_by_film_category",
+      "sql": "CREATE VIEW sales_by_film_category\nAS\nSELECT\nc.name AS category\n, SUM(p.amount) AS total_sales\nFROM payment AS p\nINNER JOIN rental AS r ON p.rental_id = r.rental_id\nINNER JOIN inventory AS i ON r.inventory_id = i.inventory_id\nINNER JOIN film AS f ON i.film_id = f.film_id\nINNER JOIN film_category AS fc ON f.film_id = fc.film_id\nINNER JOIN category AS c ON fc.category_id = c.category_id\nGROUP BY c.name",
+      "columns": [
+        {
+          "name": "category",
+          "datatype": "VARCHAR(25)"
+        },
+        {
+          "name": "total_sales"
+        }
+      ],
+      "stats": {
+        "rows": 16
+      }
+    },
+    {
+      "name": "sales_by_store",
+      "sql": "CREATE VIEW sales_by_store\nAS\nSELECT\n  s.store_id\n ,c.city||','||cy.country AS store\n ,m.first_name||' '||m.last_name AS manager\n ,SUM(p.amount) AS total_sales\nFROM payment AS p\nINNER JOIN rental AS r ON p.rental_id = r.rental_id\nINNER JOIN inventory AS i ON r.inventory_id = i.inventory_id\nINNER JOIN store AS s ON i.store_id = s.store_id\nINNER JOIN address AS a ON s.address_id = a.address_id\nINNER JOIN city AS c ON a.city_id = c.city_id\nINNER JOIN country AS cy ON c.country_id = cy.country_id\nINNER JOIN staff AS m ON s.manager_staff_id = m.staff_id\nGROUP BY  \n  s.store_id\n, c.city||','||cy.country\n, m.first_name||' '||m.last_name",
+      "columns": [
+        {
+          "name": "store_id",
+          "datatype": "INT"
+        },
+        {
+          "name": "store"
+        },
+        {
+          "name": "manager"
+        },
+        {
+          "name": "total_sales"
+        }
+      ],
+      "stats": {
+        "rows": 2
+      }
+    },
+    {
+      "name": "staff_list",
+      "sql": "CREATE VIEW staff_list\nAS\nSELECT s.staff_id AS ID,\n       s.first_name||' '||s.last_name AS name,\n       a.address AS address,\n       a.postal_code AS zip_code,\n       a.phone AS phone,\n       city.city AS city,\n       country.country AS country,\n       s.store_id AS SID\nFROM staff AS s JOIN address AS a ON s.address_id = a.address_id JOIN city ON a.city_id = city.city_id\n    JOIN country ON city.country_id = country.country_id",
+      "columns": [
+        {
+          "name": "ID",
+          "datatype": "SMALLINT"
+        },
+        {
+          "name": "name"
+        },
+        {
+          "name": "address",
+          "datatype": "VARCHAR(50)"
+        },
+        {
+          "name": "zip_code",
+          "datatype": "VARCHAR(10)"
+        },
+        {
+          "name": "phone",
+          "datatype": "VARCHAR(20)"
+        },
+        {
+          "name": "city",
+          "datatype": "VARCHAR(50)"
+        },
+        {
+          "name": "country",
+          "datatype": "VARCHAR(50)"
+        },
+        {
+          "name": "SID",
+          "datatype": "INT"
+        }
+      ],
+      "stats": {
+        "rows": 2
+      }
+    }
+  ],
+  "indexes": [
+    {
+      "name": "idx_actor_last_name",
+      "sql": "CREATE INDEX idx_actor_last_name ON actor(last_name)\n",
+      "table": "actor",
+      "columns": [
+        "last_name"
+      ]
+    },
+    {
+      "name": "idx_customer_fk_address_id",
+      "sql": "CREATE INDEX idx_customer_fk_address_id ON customer(address_id)\n",
+      "table": "customer",
+      "columns": [
+        "address_id"
+      ]
+    },
+    {
+      "name": "idx_customer_fk_store_id",
+      "sql": "CREATE INDEX idx_customer_fk_store_id ON customer(store_id)\n",
+      "table": "customer",
+      "columns": [
+        "store_id"
+      ]
+    },
+    {
+      "name": "idx_customer_last_name",
+      "sql": "CREATE INDEX idx_customer_last_name ON customer(last_name)\n",
+      "table": "customer",
+      "columns": [
+        "last_name"
+      ]
+    },
+    {
+      "name": "idx_fk_city_id",
+      "sql": "CREATE INDEX idx_fk_city_id ON address(city_id)\n",
+      "table": "address",
+      "columns": [
+        "city_id"
+      ]
+    },
+    {
+      "name": "idx_fk_country_id",
+      "sql": "CREATE INDEX idx_fk_country_id ON city(country_id)\n",
+      "table": "city",
+      "columns": [
+        "country_id"
+      ]
+    },
+    {
+      "name": "idx_fk_customer_id",
+      "sql": "CREATE INDEX idx_fk_customer_id ON payment(customer_id)\n",
+      "table": "payment",
+      "columns": [
+        "customer_id"
+      ]
+    },
+    {
+      "name": "idx_fk_film_actor_actor",
+      "sql": "CREATE INDEX idx_fk_film_actor_actor ON film_actor(actor_id) \n",
+      "table": "film_actor",
+      "columns": [
+        "actor_id"
+      ]
+    },
+    {
+      "name": "idx_fk_film_actor_film",
+      "sql": "CREATE INDEX idx_fk_film_actor_film ON film_actor(film_id)\n",
+      "table": "film_actor",
+      "columns": [
+        "film_id"
+      ]
+    },
+    {
+      "name": "idx_fk_film_category_category",
+      "sql": "CREATE INDEX idx_fk_film_category_category ON film_category(category_id)\n",
+      "table": "film_category",
+      "columns": [
+        "category_id"
+      ]
+    },
+    {
+      "name": "idx_fk_film_category_film",
+      "sql": "CREATE INDEX idx_fk_film_category_film ON film_category(film_id)\n",
+      "table": "film_category",
+      "columns": [
+        "film_id"
+      ]
+    },
+    {
+      "name": "idx_fk_film_id",
+      "sql": "CREATE INDEX idx_fk_film_id ON inventory(film_id)\n",
+      "table": "inventory",
+      "columns": [
+        "film_id"
+      ]
+    },
+    {
+      "name": "idx_fk_film_id_store_id",
+      "sql": "CREATE INDEX idx_fk_film_id_store_id ON inventory(store_id,film_id)\n",
+      "table": "inventory",
+      "columns": [
+        "store_id",
+        "film_id"
+      ]
+    },
+    {
+      "name": "idx_fk_language_id",
+      "sql": "CREATE INDEX idx_fk_language_id ON film(language_id)\n",
+      "table": "film",
+      "columns": [
+        "language_id"
+      ]
+    },
+    {
+      "name": "idx_fk_original_language_id",
+      "sql": "CREATE INDEX idx_fk_original_language_id ON film(original_language_id)\n",
+      "table": "film",
+      "columns": [
+        "original_language_id"
+      ]
+    },
+    {
+      "name": "idx_fk_staff_address_id",
+      "sql": "CREATE INDEX idx_fk_staff_address_id ON staff(address_id)\n",
+      "table": "staff",
+      "columns": [
+        "address_id"
+      ]
+    },
+    {
+      "name": "idx_fk_staff_id",
+      "sql": "CREATE INDEX idx_fk_staff_id ON payment(staff_id)\n",
+      "table": "payment",
+      "columns": [
+        "staff_id"
+      ]
+    },
+    {
+      "name": "idx_fk_staff_store_id",
+      "sql": "CREATE INDEX idx_fk_staff_store_id ON staff(store_id)\n",
+      "table": "staff",
+      "columns": [
+        "store_id"
+      ]
+    },
+    {
+      "name": "idx_fk_store_address",
+      "sql": "CREATE INDEX idx_fk_store_address ON store(address_id)\n",
+      "table": "store",
+      "columns": [
+        "address_id"
+      ]
+    },
+    {
+      "name": "idx_rental_fk_customer_id",
+      "sql": "CREATE INDEX idx_rental_fk_customer_id ON rental(customer_id)\n",
+      "table": "rental",
+      "columns": [
+        "customer_id"
+      ]
+    },
+    {
+      "name": "idx_rental_fk_inventory_id",
+      "sql": "CREATE INDEX idx_rental_fk_inventory_id ON rental(inventory_id)\n",
+      "table": "rental",
+      "columns": [
+        "inventory_id"
+      ]
+    },
+    {
+      "name": "idx_rental_fk_staff_id",
+      "sql": "CREATE INDEX idx_rental_fk_staff_id ON rental(staff_id)\n",
+      "table": "rental",
+      "columns": [
+        "staff_id"
+      ]
+    },
+    {
+      "name": "idx_rental_uq",
+      "sql": "CREATE UNIQUE INDEX idx_rental_uq  ON rental (rental_date,inventory_id,customer_id)\n",
+      "table": "rental",
+      "columns": [
+        "rental_date",
+        "inventory_id",
+        "customer_id"
+      ]
+    },
+    {
+      "name": "idx_store_fk_manager_staff_id",
+      "sql": "CREATE INDEX idx_store_fk_manager_staff_id ON store(manager_staff_id)\n",
+      "table": "store",
+      "columns": [
+        "manager_staff_id"
+      ]
+    },
+    {
+      "name": "sqlite_autoindex_actor_1",
+      "table": "actor",
+      "columns": [
+        "actor_id"
+      ]
+    },
+    {
+      "name": "sqlite_autoindex_address_1",
+      "table": "address",
+      "columns": [
+        "address_id"
+      ]
+    },
+    {
+      "name": "sqlite_autoindex_category_1",
+      "table": "category",
+      "columns": [
+        "category_id"
+      ]
+    },
+    {
+      "name": "sqlite_autoindex_city_1",
+      "table": "city",
+      "columns": [
+        "city_id"
+      ]
+    },
+    {
+      "name": "sqlite_autoindex_country_1",
+      "table": "country",
+      "columns": [
+        "country_id"
+      ]
+    },
+    {
+      "name": "sqlite_autoindex_customer_1",
+      "table": "customer",
+      "columns": [
+        "customer_id"
+      ]
+    },
+    {
+      "name": "sqlite_autoindex_film_1",
+      "table": "film",
+      "columns": [
+        "film_id"
+      ]
+    },
+    {
+      "name": "sqlite_autoindex_film_actor_1",
+      "table": "film_actor",
+      "columns": [
+        "actor_id",
+        "film_id"
+      ]
+    },
+    {
+      "name": "sqlite_autoindex_film_category_1",
+      "table": "film_category",
+      "columns": [
+        "film_id",
+        "category_id"
+      ]
+    },
+    {
+      "name": "sqlite_autoindex_film_text_1",
+      "table": "film_text",
+      "columns": [
+        "film_id"
+      ]
+    },
+    {
+      "name": "sqlite_autoindex_inventory_1",
+      "table": "inventory",
+      "columns": [
+        "inventory_id"
+      ]
+    },
+    {
+      "name": "sqlite_autoindex_language_1",
+      "table": "language",
+      "columns": [
+        "language_id"
+      ]
+    },
+    {
+      "name": "sqlite_autoindex_payment_1",
+      "table": "payment",
+      "columns": [
+        "payment_id"
+      ]
+    },
+    {
+      "name": "sqlite_autoindex_rental_1",
+      "table": "rental",
+      "columns": [
+        "rental_id"
+      ]
+    },
+    {
+      "name": "sqlite_autoindex_staff_1",
+      "table": "staff",
+      "columns": [
+        "staff_id"
+      ]
+    },
+    {
+      "name": "sqlite_autoindex_store_1",
+      "table": "store",
+      "columns": [
+        "store_id"
+      ]
+    }
+  ],
+  "triggers": [
+    {
+      "name": "actor_trigger_ai",
+      "sql": "CREATE TRIGGER actor_trigger_ai AFTER INSERT ON actor\n BEGIN\n  UPDATE actor SET last_update = DATETIME('NOW')  WHERE rowid = new.rowid;\n END",
+      "table": "actor"
+    },
+    {
+      "name": "actor_trigger_au",
+      "sql": "CREATE TRIGGER actor_trigger_au AFTER UPDATE ON actor\n BEGIN\n  UPDATE actor SET last_update = DATETIME('NOW')  WHERE rowid = new.rowid;\n END",
+      "table": "actor"
+    },
+    {
+      "name": "address_trigger_ai",
+      "sql": "CREATE TRIGGER address_trigger_ai AFTER INSERT ON address\n BEGIN\n  UPDATE address SET last_update = DATETIME('NOW')  WHERE rowid = new.rowid;\n END",
+      "table": "address"
+    },
+    {
+      "name": "address_trigger_au",
+      "sql": "CREATE TRIGGER address_trigger_au AFTER UPDATE ON address\n BEGIN\n  UPDATE address SET last_update = DATETIME('NOW')  WHERE rowid = new.rowid;\n END",
+      "table": "address"
+    },
+    {
+      "name": "category_trigger_ai",
+      "sql": "CREATE TRIGGER category_trigger_ai AFTER INSERT ON category\n BEGIN\n  UPDATE category SET last_update = DATETIME('NOW')  WHERE rowid = new.rowid;\n END",
+      "table": "category"
+    },
+    {
+      "name": "category_trigger_au",
+      "sql": "CREATE TRIGGER category_trigger_au AFTER UPDATE ON category\n BEGIN\n  UPDATE category SET last_update = DATETIME('NOW')  WHERE rowid = new.rowid;\n END",
+      "table": "category"
+    },
+    {
+      "name": "city_trigger_ai",
+      "sql": "CREATE TRIGGER city_trigger_ai AFTER INSERT ON city\n BEGIN\n  UPDATE city SET last_update = DATETIME('NOW')  WHERE rowid = new.rowid;\n END",
+      "table": "city"
+    },
+    {
+      "name": "city_trigger_au",
+      "sql": "CREATE TRIGGER city_trigger_au AFTER UPDATE ON city\n BEGIN\n  UPDATE city SET last_update = DATETIME('NOW')  WHERE rowid = new.rowid;\n END",
+      "table": "city"
+    },
+    {
+      "name": "country_trigger_ai",
+      "sql": "CREATE TRIGGER country_trigger_ai AFTER INSERT ON country\n BEGIN\n  UPDATE country SET last_update = DATETIME('NOW')  WHERE rowid = new.rowid;\n END",
+      "table": "country"
+    },
+    {
+      "name": "country_trigger_au",
+      "sql": "CREATE TRIGGER country_trigger_au AFTER UPDATE ON country\n BEGIN\n  UPDATE country SET last_update = DATETIME('NOW')  WHERE rowid = new.rowid;\n END",
+      "table": "country"
+    },
+    {
+      "name": "customer_trigger_ai",
+      "sql": "CREATE TRIGGER customer_trigger_ai AFTER INSERT ON customer\n BEGIN\n  UPDATE customer SET last_update = DATETIME('NOW')  WHERE rowid = new.rowid;\n END",
+      "table": "customer"
+    },
+    {
+      "name": "customer_trigger_au",
+      "sql": "CREATE TRIGGER customer_trigger_au AFTER UPDATE ON customer\n BEGIN\n  UPDATE customer SET last_update = DATETIME('NOW')  WHERE rowid = new.rowid;\n END",
+      "table": "customer"
+    },
+    {
+      "name": "film_actor_trigger_ai",
+      "sql": "CREATE TRIGGER film_actor_trigger_ai AFTER INSERT ON film_actor\n BEGIN\n  UPDATE film_actor SET last_update = DATETIME('NOW')  WHERE rowid = new.rowid;\n END",
+      "table": "film_actor"
+    },
+    {
+      "name": "film_actor_trigger_au",
+      "sql": "CREATE TRIGGER film_actor_trigger_au AFTER UPDATE ON film_actor\n BEGIN\n  UPDATE film_actor SET last_update = DATETIME('NOW')  WHERE rowid = new.rowid;\n END",
+      "table": "film_actor"
+    },
+    {
+      "name": "film_category_trigger_ai",
+      "sql": "CREATE TRIGGER film_category_trigger_ai AFTER INSERT ON film_category\n BEGIN\n  UPDATE film_category SET last_update = DATETIME('NOW')  WHERE rowid = new.rowid;\n END",
+      "table": "film_category"
+    },
+    {
+      "name": "film_category_trigger_au",
+      "sql": "CREATE TRIGGER film_category_trigger_au AFTER UPDATE ON film_category\n BEGIN\n  UPDATE film_category SET last_update = DATETIME('NOW')  WHERE rowid = new.rowid;\n END",
+      "table": "film_category"
+    },
+    {
+      "name": "film_trigger_ai",
+      "sql": "CREATE TRIGGER film_trigger_ai AFTER INSERT ON film\n BEGIN\n  UPDATE film SET last_update = DATETIME('NOW')  WHERE rowid = new.rowid;\n END",
+      "table": "film"
+    },
+    {
+      "name": "film_trigger_au",
+      "sql": "CREATE TRIGGER film_trigger_au AFTER UPDATE ON film\n BEGIN\n  UPDATE film SET last_update = DATETIME('NOW')  WHERE rowid = new.rowid;\n END",
+      "table": "film"
+    },
+    {
+      "name": "inventory_trigger_ai",
+      "sql": "CREATE TRIGGER inventory_trigger_ai AFTER INSERT ON inventory\n BEGIN\n  UPDATE inventory SET last_update = DATETIME('NOW')  WHERE rowid = new.rowid;\n END",
+      "table": "inventory"
+    },
+    {
+      "name": "inventory_trigger_au",
+      "sql": "CREATE TRIGGER inventory_trigger_au AFTER UPDATE ON inventory\n BEGIN\n  UPDATE inventory SET last_update = DATETIME('NOW')  WHERE rowid = new.rowid;\n END",
+      "table": "inventory"
+    },
+    {
+      "name": "language_trigger_ai",
+      "sql": "CREATE TRIGGER language_trigger_ai AFTER INSERT ON language\n BEGIN\n  UPDATE language SET last_update = DATETIME('NOW')  WHERE rowid = new.rowid;\n END",
+      "table": "language"
+    },
+    {
+      "name": "language_trigger_au",
+      "sql": "CREATE TRIGGER language_trigger_au AFTER UPDATE ON language\n BEGIN\n  UPDATE language SET last_update = DATETIME('NOW')  WHERE rowid = new.rowid;\n END",
+      "table": "language"
+    },
+    {
+      "name": "payment_trigger_ai",
+      "sql": "CREATE TRIGGER payment_trigger_ai AFTER INSERT ON payment\n BEGIN\n  UPDATE payment SET last_update = DATETIME('NOW')  WHERE rowid = new.rowid;\n END",
+      "table": "payment"
+    },
+    {
+      "name": "payment_trigger_au",
+      "sql": "CREATE TRIGGER payment_trigger_au AFTER UPDATE ON payment\n BEGIN\n  UPDATE payment SET last_update = DATETIME('NOW')  WHERE rowid = new.rowid;\n END",
+      "table": "payment"
+    },
+    {
+      "name": "rental_trigger_ai",
+      "sql": "CREATE TRIGGER rental_trigger_ai AFTER INSERT ON rental\n BEGIN\n  UPDATE rental SET last_update = DATETIME('NOW')  WHERE rowid = new.rowid;\n END",
+      "table": "rental"
+    },
+    {
+      "name": "rental_trigger_au",
+      "sql": "CREATE TRIGGER rental_trigger_au AFTER UPDATE ON rental\n BEGIN\n  UPDATE rental SET last_update = DATETIME('NOW')  WHERE rowid = new.rowid;\n END",
+      "table": "rental"
+    },
+    {
+      "name": "staff_trigger_ai",
+      "sql": "CREATE TRIGGER staff_trigger_ai AFTER INSERT ON staff\n BEGIN\n  UPDATE staff SET last_update = DATETIME('NOW')  WHERE rowid = new.rowid;\n END",
+      "table": "staff"
+    },
+    {
+      "name": "staff_trigger_au",
+      "sql": "CREATE TRIGGER staff_trigger_au AFTER UPDATE ON staff\n BEGIN\n  UPDATE staff SET last_update = DATETIME('NOW')  WHERE rowid = new.rowid;\n END",
+      "table": "staff"
+    },
+    {
+      "name": "store_trigger_ai",
+      "sql": "CREATE TRIGGER store_trigger_ai AFTER INSERT ON store\n BEGIN\n  UPDATE store SET last_update = DATETIME('NOW')  WHERE rowid = new.rowid;\n END",
+      "table": "store"
+    },
+    {
+      "name": "store_trigger_au",
+      "sql": "CREATE TRIGGER store_trigger_au AFTER UPDATE ON store\n BEGIN\n  UPDATE store SET last_update = DATETIME('NOW')  WHERE rowid = new.rowid;\n END",
+      "table": "store"
+    }
+  ],
+  "stats": {
+    "version": "75",
+    "size": 5828608
+  }
+}

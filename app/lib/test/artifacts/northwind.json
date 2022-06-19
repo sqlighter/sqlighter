@@ -1,0 +1,1221 @@
+{
+  "database": "main",
+  "tables": [
+    {
+      "name": "Categories",
+      "sql": "CREATE TABLE [Categories]\n(      [CategoryID] INTEGER PRIMARY KEY AUTOINCREMENT,\n       [CategoryName] TEXT,\n       [Description] TEXT,\n       [Picture] BLOB\n)",
+      "columns": [
+        {
+          "name": "CategoryID",
+          "datatype": "INTEGER",
+          "primaryKey": true
+        },
+        {
+          "name": "CategoryName",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "Description",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "Picture",
+          "datatype": "BLOB"
+        }
+      ],
+      "stats": {
+        "rows": 8
+      }
+    },
+    {
+      "name": "CustomerCustomerDemo",
+      "sql": "CREATE TABLE [CustomerCustomerDemo](\n   [CustomerID]TEXT NOT NULL,\n   [CustomerTypeID]TEXT NOT NULL,\n   PRIMARY KEY (\"CustomerID\",\"CustomerTypeID\"),\n   FOREIGN KEY ([CustomerID]) REFERENCES [Customers] ([CustomerID]) \n\t\tON DELETE NO ACTION ON UPDATE NO ACTION,\n\tFOREIGN KEY ([CustomerTypeID]) REFERENCES [CustomerDemographics] ([CustomerTypeID]) \n\t\tON DELETE NO ACTION ON UPDATE NO ACTION\n)",
+      "columns": [
+        {
+          "name": "CustomerID",
+          "datatype": "TEXT",
+          "primaryKey": true,
+          "notNull": true
+        },
+        {
+          "name": "CustomerTypeID",
+          "datatype": "TEXT",
+          "primaryKey": true,
+          "notNull": true
+        }
+      ],
+      "foreignKeys": [
+        {
+          "table": "CustomerDemographics",
+          "fromColumn": "CustomerTypeID",
+          "toColumn": "CustomerTypeID",
+          "onUpdate": "no action",
+          "onDelete": "no action"
+        },
+        {
+          "table": "Customers",
+          "fromColumn": "CustomerID",
+          "toColumn": "CustomerID",
+          "onUpdate": "no action",
+          "onDelete": "no action"
+        }
+      ],
+      "stats": {
+        "rows": 0
+      }
+    },
+    {
+      "name": "CustomerDemographics",
+      "sql": "CREATE TABLE [CustomerDemographics](\n   [CustomerTypeID]TEXT NOT NULL,\n   [CustomerDesc]TEXT,\n    PRIMARY KEY (\"CustomerTypeID\")\n)",
+      "columns": [
+        {
+          "name": "CustomerTypeID",
+          "datatype": "TEXT",
+          "primaryKey": true,
+          "notNull": true
+        },
+        {
+          "name": "CustomerDesc",
+          "datatype": "TEXT"
+        }
+      ],
+      "stats": {
+        "rows": 0
+      }
+    },
+    {
+      "name": "Customers",
+      "sql": "CREATE TABLE [Customers]\n(      [CustomerID] TEXT,\n       [CompanyName] TEXT,\n       [ContactName] TEXT,\n       [ContactTitle] TEXT,\n       [Address] TEXT,\n       [City] TEXT,\n       [Region] TEXT,\n       [PostalCode] TEXT,\n       [Country] TEXT,\n       [Phone] TEXT,\n       [Fax] TEXT,\n       PRIMARY KEY (`CustomerID`)\n)",
+      "columns": [
+        {
+          "name": "CustomerID",
+          "datatype": "TEXT",
+          "primaryKey": true
+        },
+        {
+          "name": "CompanyName",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "ContactName",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "ContactTitle",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "Address",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "City",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "Region",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "PostalCode",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "Country",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "Phone",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "Fax",
+          "datatype": "TEXT"
+        }
+      ],
+      "stats": {
+        "rows": 93
+      }
+    },
+    {
+      "name": "Employees",
+      "sql": "CREATE TABLE [Employees]\n(      [EmployeeID] INTEGER PRIMARY KEY AUTOINCREMENT,\n       [LastName] TEXT,\n       [FirstName] TEXT,\n       [Title] TEXT,\n       [TitleOfCourtesy] TEXT,\n       [BirthDate] DATE,\n       [HireDate] DATE,\n       [Address] TEXT,\n       [City] TEXT,\n       [Region] TEXT,\n       [PostalCode] TEXT,\n       [Country] TEXT,\n       [HomePhone] TEXT,\n       [Extension] TEXT,\n       [Photo] BLOB,\n       [Notes] TEXT,\n       [ReportsTo] INTEGER,\n       [PhotoPath] TEXT,\n\t   FOREIGN KEY ([ReportsTo]) REFERENCES [Employees] ([EmployeeID]) \n\t\tON DELETE NO ACTION ON UPDATE NO ACTION\n)",
+      "columns": [
+        {
+          "name": "EmployeeID",
+          "datatype": "INTEGER",
+          "primaryKey": true
+        },
+        {
+          "name": "LastName",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "FirstName",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "Title",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "TitleOfCourtesy",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "BirthDate",
+          "datatype": "DATE"
+        },
+        {
+          "name": "HireDate",
+          "datatype": "DATE"
+        },
+        {
+          "name": "Address",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "City",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "Region",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "PostalCode",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "Country",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "HomePhone",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "Extension",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "Photo",
+          "datatype": "BLOB"
+        },
+        {
+          "name": "Notes",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "ReportsTo",
+          "datatype": "INTEGER"
+        },
+        {
+          "name": "PhotoPath",
+          "datatype": "TEXT"
+        }
+      ],
+      "foreignKeys": [
+        {
+          "table": "Employees",
+          "fromColumn": "ReportsTo",
+          "toColumn": "EmployeeID",
+          "onUpdate": "no action",
+          "onDelete": "no action"
+        }
+      ],
+      "stats": {
+        "rows": 9
+      }
+    },
+    {
+      "name": "EmployeeTerritories",
+      "sql": "CREATE TABLE [EmployeeTerritories](\n   [EmployeeID]INTEGER NOT NULL,\n   [TerritoryID]TEXT NOT NULL,\n    PRIMARY KEY (\"EmployeeID\",\"TerritoryID\"),\n\tFOREIGN KEY ([EmployeeID]) REFERENCES [Employees] ([EmployeeID]) \n\t\tON DELETE NO ACTION ON UPDATE NO ACTION,\n\tFOREIGN KEY ([TerritoryID]) REFERENCES [Territories] ([TerritoryID]) \n\t\tON DELETE NO ACTION ON UPDATE NO ACTION\n)",
+      "columns": [
+        {
+          "name": "EmployeeID",
+          "datatype": "INTEGER",
+          "primaryKey": true,
+          "notNull": true
+        },
+        {
+          "name": "TerritoryID",
+          "datatype": "TEXT",
+          "primaryKey": true,
+          "notNull": true
+        }
+      ],
+      "foreignKeys": [
+        {
+          "table": "Territories",
+          "fromColumn": "TerritoryID",
+          "toColumn": "TerritoryID",
+          "onUpdate": "no action",
+          "onDelete": "no action"
+        },
+        {
+          "table": "Employees",
+          "fromColumn": "EmployeeID",
+          "toColumn": "EmployeeID",
+          "onUpdate": "no action",
+          "onDelete": "no action"
+        }
+      ],
+      "stats": {
+        "rows": 49
+      }
+    },
+    {
+      "name": "Order Details",
+      "sql": "CREATE TABLE [Order Details](\n   [OrderID]INTEGER NOT NULL,\n   [ProductID]INTEGER NOT NULL,\n   [UnitPrice]NUMERIC NOT NULL DEFAULT 0,\n   [Quantity]INTEGER NOT NULL DEFAULT 1,\n   [Discount]REAL NOT NULL DEFAULT 0,\n    PRIMARY KEY (\"OrderID\",\"ProductID\"),\n    CHECK ([Discount]>=(0) AND [Discount]<=(1)),\n    CHECK ([Quantity]>(0)),\n    CHECK ([UnitPrice]>=(0)),\n\tFOREIGN KEY ([OrderID]) REFERENCES [Orders] ([OrderID]) \n\t\tON DELETE NO ACTION ON UPDATE NO ACTION,\n\tFOREIGN KEY ([ProductID]) REFERENCES [Products] ([ProductID]) \n\t\tON DELETE NO ACTION ON UPDATE NO ACTION\n)",
+      "columns": [
+        {
+          "name": "OrderID",
+          "datatype": "INTEGER",
+          "primaryKey": true,
+          "notNull": true
+        },
+        {
+          "name": "ProductID",
+          "datatype": "INTEGER",
+          "primaryKey": true,
+          "notNull": true
+        },
+        {
+          "name": "UnitPrice",
+          "datatype": "NUMERIC",
+          "defaultValue": "0",
+          "notNull": true
+        },
+        {
+          "name": "Quantity",
+          "datatype": "INTEGER",
+          "defaultValue": "1",
+          "notNull": true
+        },
+        {
+          "name": "Discount",
+          "datatype": "REAL",
+          "defaultValue": "0",
+          "notNull": true
+        }
+      ],
+      "foreignKeys": [
+        {
+          "table": "Products",
+          "fromColumn": "ProductID",
+          "toColumn": "ProductID",
+          "onUpdate": "no action",
+          "onDelete": "no action"
+        },
+        {
+          "table": "Orders",
+          "fromColumn": "OrderID",
+          "toColumn": "OrderID",
+          "onUpdate": "no action",
+          "onDelete": "no action"
+        }
+      ],
+      "stats": {
+        "rows": 2155
+      }
+    },
+    {
+      "name": "Orders",
+      "sql": "CREATE TABLE [Orders](\n   [OrderID]INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n   [CustomerID]TEXT,\n   [EmployeeID]INTEGER,\n   [OrderDate]DATETIME,\n   [RequiredDate]DATETIME,\n   [ShippedDate]DATETIME,\n   [ShipVia]INTEGER,\n   [Freight]NUMERIC DEFAULT 0,\n   [ShipName]TEXT,\n   [ShipAddress]TEXT,\n   [ShipCity]TEXT,\n   [ShipRegion]TEXT,\n   [ShipPostalCode]TEXT,\n   [ShipCountry]TEXT,\n   FOREIGN KEY ([EmployeeID]) REFERENCES [Employees] ([EmployeeID]) \n\t\tON DELETE NO ACTION ON UPDATE NO ACTION,\n\tFOREIGN KEY ([CustomerID]) REFERENCES [Customers] ([CustomerID]) \n\t\tON DELETE NO ACTION ON UPDATE NO ACTION,\n\tFOREIGN KEY ([ShipVia]) REFERENCES [Shippers] ([ShipperID]) \n\t\tON DELETE NO ACTION ON UPDATE NO ACTION\n)",
+      "columns": [
+        {
+          "name": "OrderID",
+          "datatype": "INTEGER",
+          "primaryKey": true,
+          "notNull": true
+        },
+        {
+          "name": "CustomerID",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "EmployeeID",
+          "datatype": "INTEGER"
+        },
+        {
+          "name": "OrderDate",
+          "datatype": "DATETIME"
+        },
+        {
+          "name": "RequiredDate",
+          "datatype": "DATETIME"
+        },
+        {
+          "name": "ShippedDate",
+          "datatype": "DATETIME"
+        },
+        {
+          "name": "ShipVia",
+          "datatype": "INTEGER"
+        },
+        {
+          "name": "Freight",
+          "datatype": "NUMERIC",
+          "defaultValue": "0"
+        },
+        {
+          "name": "ShipName",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "ShipAddress",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "ShipCity",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "ShipRegion",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "ShipPostalCode",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "ShipCountry",
+          "datatype": "TEXT"
+        }
+      ],
+      "foreignKeys": [
+        {
+          "table": "Shippers",
+          "fromColumn": "ShipVia",
+          "toColumn": "ShipperID",
+          "onUpdate": "no action",
+          "onDelete": "no action"
+        },
+        {
+          "table": "Customers",
+          "fromColumn": "CustomerID",
+          "toColumn": "CustomerID",
+          "onUpdate": "no action",
+          "onDelete": "no action"
+        },
+        {
+          "table": "Employees",
+          "fromColumn": "EmployeeID",
+          "toColumn": "EmployeeID",
+          "onUpdate": "no action",
+          "onDelete": "no action"
+        }
+      ],
+      "stats": {
+        "rows": 830
+      }
+    },
+    {
+      "name": "Products",
+      "sql": "CREATE TABLE [Products](\n   [ProductID]INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n   [ProductName]TEXT NOT NULL,\n   [SupplierID]INTEGER,\n   [CategoryID]INTEGER,\n   [QuantityPerUnit]TEXT,\n   [UnitPrice]NUMERIC DEFAULT 0,\n   [UnitsInStock]INTEGER DEFAULT 0,\n   [UnitsOnOrder]INTEGER DEFAULT 0,\n   [ReorderLevel]INTEGER DEFAULT 0,\n   [Discontinued]TEXT NOT NULL DEFAULT '0',\n    CHECK ([UnitPrice]>=(0)),\n    CHECK ([ReorderLevel]>=(0)),\n    CHECK ([UnitsInStock]>=(0)),\n    CHECK ([UnitsOnOrder]>=(0)),\n\tFOREIGN KEY ([ProductID]) REFERENCES [Categories] ([CategoryID]) \n\t\tON DELETE NO ACTION ON UPDATE NO ACTION,\n\tFOREIGN KEY ([SupplierID]) REFERENCES [Suppliers] ([SupplierID]) \n\t\tON DELETE NO ACTION ON UPDATE NO ACTION\n)",
+      "columns": [
+        {
+          "name": "ProductID",
+          "datatype": "INTEGER",
+          "primaryKey": true,
+          "notNull": true
+        },
+        {
+          "name": "ProductName",
+          "datatype": "TEXT",
+          "notNull": true
+        },
+        {
+          "name": "SupplierID",
+          "datatype": "INTEGER"
+        },
+        {
+          "name": "CategoryID",
+          "datatype": "INTEGER"
+        },
+        {
+          "name": "QuantityPerUnit",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "UnitPrice",
+          "datatype": "NUMERIC",
+          "defaultValue": "0"
+        },
+        {
+          "name": "UnitsInStock",
+          "datatype": "INTEGER",
+          "defaultValue": "0"
+        },
+        {
+          "name": "UnitsOnOrder",
+          "datatype": "INTEGER",
+          "defaultValue": "0"
+        },
+        {
+          "name": "ReorderLevel",
+          "datatype": "INTEGER",
+          "defaultValue": "0"
+        },
+        {
+          "name": "Discontinued",
+          "datatype": "TEXT",
+          "defaultValue": "'0'",
+          "notNull": true
+        }
+      ],
+      "foreignKeys": [
+        {
+          "table": "Suppliers",
+          "fromColumn": "SupplierID",
+          "toColumn": "SupplierID",
+          "onUpdate": "no action",
+          "onDelete": "no action"
+        },
+        {
+          "table": "Categories",
+          "fromColumn": "ProductID",
+          "toColumn": "CategoryID",
+          "onUpdate": "no action",
+          "onDelete": "no action"
+        }
+      ],
+      "stats": {
+        "rows": 77
+      }
+    },
+    {
+      "name": "Regions",
+      "sql": "CREATE TABLE [Regions](\n   [RegionID]INTEGER NOT NULL PRIMARY KEY,\n   [RegionDescription]TEXT NOT NULL\n)",
+      "columns": [
+        {
+          "name": "RegionID",
+          "datatype": "INTEGER",
+          "primaryKey": true,
+          "notNull": true
+        },
+        {
+          "name": "RegionDescription",
+          "datatype": "TEXT",
+          "notNull": true
+        }
+      ],
+      "stats": {
+        "rows": 4
+      }
+    },
+    {
+      "name": "Shippers",
+      "sql": "CREATE TABLE [Shippers](\n   [ShipperID]INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n   [CompanyName]TEXT NOT NULL,\n   [Phone]TEXT\n)",
+      "columns": [
+        {
+          "name": "ShipperID",
+          "datatype": "INTEGER",
+          "primaryKey": true,
+          "notNull": true
+        },
+        {
+          "name": "CompanyName",
+          "datatype": "TEXT",
+          "notNull": true
+        },
+        {
+          "name": "Phone",
+          "datatype": "TEXT"
+        }
+      ],
+      "stats": {
+        "rows": 3
+      }
+    },
+    {
+      "name": "Suppliers",
+      "sql": "CREATE TABLE [Suppliers](\n   [SupplierID]INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n   [CompanyName]TEXT NOT NULL,\n   [ContactName]TEXT,\n   [ContactTitle]TEXT,\n   [Address]TEXT,\n   [City]TEXT,\n   [Region]TEXT,\n   [PostalCode]TEXT,\n   [Country]TEXT,\n   [Phone]TEXT,\n   [Fax]TEXT,\n   [HomePage]TEXT\n)",
+      "columns": [
+        {
+          "name": "SupplierID",
+          "datatype": "INTEGER",
+          "primaryKey": true,
+          "notNull": true
+        },
+        {
+          "name": "CompanyName",
+          "datatype": "TEXT",
+          "notNull": true
+        },
+        {
+          "name": "ContactName",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "ContactTitle",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "Address",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "City",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "Region",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "PostalCode",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "Country",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "Phone",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "Fax",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "HomePage",
+          "datatype": "TEXT"
+        }
+      ],
+      "stats": {
+        "rows": 29
+      }
+    },
+    {
+      "name": "Territories",
+      "sql": "CREATE TABLE [Territories](\n   [TerritoryID]TEXT NOT NULL,\n   [TerritoryDescription]TEXT NOT NULL,\n   [RegionID]INTEGER NOT NULL,\n    PRIMARY KEY (\"TerritoryID\"),\n\tFOREIGN KEY ([RegionID]) REFERENCES [Regions] ([RegionID]) \n\t\tON DELETE NO ACTION ON UPDATE NO ACTION\n)",
+      "columns": [
+        {
+          "name": "TerritoryID",
+          "datatype": "TEXT",
+          "primaryKey": true,
+          "notNull": true
+        },
+        {
+          "name": "TerritoryDescription",
+          "datatype": "TEXT",
+          "notNull": true
+        },
+        {
+          "name": "RegionID",
+          "datatype": "INTEGER",
+          "notNull": true
+        }
+      ],
+      "foreignKeys": [
+        {
+          "table": "Regions",
+          "fromColumn": "RegionID",
+          "toColumn": "RegionID",
+          "onUpdate": "no action",
+          "onDelete": "no action"
+        }
+      ],
+      "stats": {
+        "rows": 53
+      }
+    }
+  ],
+  "views": [
+    {
+      "name": "Alphabetical list of products",
+      "sql": "CREATE VIEW [Alphabetical list of products] \nAS\nSELECT Products.*, \n       Categories.CategoryName\nFROM Categories \n   INNER JOIN Products ON Categories.CategoryID = Products.CategoryID\nWHERE (((Products.Discontinued)=0))",
+      "columns": [
+        {
+          "name": "ProductID",
+          "datatype": "INTEGER"
+        },
+        {
+          "name": "ProductName",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "SupplierID",
+          "datatype": "INTEGER"
+        },
+        {
+          "name": "CategoryID",
+          "datatype": "INTEGER"
+        },
+        {
+          "name": "QuantityPerUnit",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "UnitPrice",
+          "datatype": "NUMERIC"
+        },
+        {
+          "name": "UnitsInStock",
+          "datatype": "INTEGER"
+        },
+        {
+          "name": "UnitsOnOrder",
+          "datatype": "INTEGER"
+        },
+        {
+          "name": "ReorderLevel",
+          "datatype": "INTEGER"
+        },
+        {
+          "name": "Discontinued",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "CategoryName",
+          "datatype": "TEXT"
+        }
+      ],
+      "stats": {
+        "rows": 69
+      }
+    },
+    {
+      "name": "Category Sales for 1997",
+      "sql": "CREATE VIEW [Category Sales for 1997] AS\nSELECT     [Product Sales for 1997].CategoryName, \n       Sum([Product Sales for 1997].ProductSales) AS CategorySales\nFROM [Product Sales for 1997]\nGROUP BY [Product Sales for 1997].CategoryName",
+      "columns": [
+        {
+          "name": "CategoryName",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "CategorySales"
+        }
+      ],
+      "stats": {
+        "rows": 8
+      }
+    },
+    {
+      "name": "Current Product List",
+      "sql": "CREATE VIEW [Current Product List] \nAS\nSELECT ProductID,\n       ProductName \nFROM Products \nWHERE Discontinued=0",
+      "columns": [
+        {
+          "name": "ProductID",
+          "datatype": "INTEGER"
+        },
+        {
+          "name": "ProductName",
+          "datatype": "TEXT"
+        }
+      ],
+      "stats": {
+        "rows": 69
+      }
+    },
+    {
+      "name": "Customer and Suppliers by City",
+      "sql": "CREATE VIEW [Customer and Suppliers by City] \nAS\nSELECT City, \n       CompanyName, \n       ContactName, \n       'Customers' AS Relationship \nFROM Customers\nUNION \nSELECT City, \n       CompanyName, \n       ContactName, \n       'Suppliers'\nFROM Suppliers \nORDER BY City, CompanyName",
+      "columns": [
+        {
+          "name": "City",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "CompanyName",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "ContactName",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "Relationship"
+        }
+      ],
+      "stats": {
+        "rows": 122
+      }
+    },
+    {
+      "name": "Invoices",
+      "sql": "CREATE VIEW [Invoices] \nAS\nSELECT Orders.ShipName,\n       Orders.ShipAddress,\n       Orders.ShipCity,\n       Orders.ShipRegion, \n       Orders.ShipPostalCode,\n       Orders.ShipCountry,\n       Orders.CustomerID,\n       Customers.CompanyName AS CustomerName, \n       Customers.Address,\n       Customers.City,\n       Customers.Region,\n       Customers.PostalCode,\n       Customers.Country,\n       (Employees.FirstName + ' ' + Employees.LastName) AS Salesperson, \n       Orders.OrderID,\n       Orders.OrderDate,\n       Orders.RequiredDate,\n       Orders.ShippedDate, \n       Shippers.CompanyName As ShipperName,\n       [Order Details].ProductID,\n       Products.ProductName, \n       [Order Details].UnitPrice,\n       [Order Details].Quantity,\n       [Order Details].Discount, \n       ((([Order Details].UnitPrice*Quantity*(1-Discount))/100)*100) AS ExtendedPrice,\n       Orders.Freight \nFROM Customers \n  JOIN Orders ON Customers.CustomerID = Orders.CustomerID  \n    JOIN Employees ON Employees.EmployeeID = Orders.EmployeeID    \n     JOIN [Order Details] ON Orders.OrderID = [Order Details].OrderID     \n      JOIN Products ON Products.ProductID = [Order Details].ProductID      \n       JOIN Shippers ON Shippers.ShipperID = Orders.ShipVia",
+      "columns": [
+        {
+          "name": "ShipName",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "ShipAddress",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "ShipCity",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "ShipRegion",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "ShipPostalCode",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "ShipCountry",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "CustomerID",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "CustomerName",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "Address",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "City",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "Region",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "PostalCode",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "Country",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "Salesperson"
+        },
+        {
+          "name": "OrderID",
+          "datatype": "INTEGER"
+        },
+        {
+          "name": "OrderDate",
+          "datatype": "DATETIME"
+        },
+        {
+          "name": "RequiredDate",
+          "datatype": "DATETIME"
+        },
+        {
+          "name": "ShippedDate",
+          "datatype": "DATETIME"
+        },
+        {
+          "name": "ShipperName",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "ProductID",
+          "datatype": "INTEGER"
+        },
+        {
+          "name": "ProductName",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "UnitPrice",
+          "datatype": "NUMERIC"
+        },
+        {
+          "name": "Quantity",
+          "datatype": "INTEGER"
+        },
+        {
+          "name": "Discount",
+          "datatype": "REAL"
+        },
+        {
+          "name": "ExtendedPrice"
+        },
+        {
+          "name": "Freight",
+          "datatype": "NUMERIC"
+        }
+      ],
+      "stats": {
+        "rows": 2155
+      }
+    },
+    {
+      "name": "Order Details Extended",
+      "sql": "CREATE VIEW [Order Details Extended] AS\nSELECT [Order Details].OrderID, \n       [Order Details].ProductID, \n       Products.ProductName, \n\t   [Order Details].UnitPrice, \n       [Order Details].Quantity, \n       [Order Details].Discount, \n      ([Order Details].UnitPrice*Quantity*(1-Discount)/100)*100 AS ExtendedPrice\nFROM Products \n     JOIN [Order Details] ON Products.ProductID = [Order Details].ProductID",
+      "columns": [
+        {
+          "name": "OrderID",
+          "datatype": "INTEGER"
+        },
+        {
+          "name": "ProductID",
+          "datatype": "INTEGER"
+        },
+        {
+          "name": "ProductName",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "UnitPrice",
+          "datatype": "NUMERIC"
+        },
+        {
+          "name": "Quantity",
+          "datatype": "INTEGER"
+        },
+        {
+          "name": "Discount",
+          "datatype": "REAL"
+        },
+        {
+          "name": "ExtendedPrice"
+        }
+      ],
+      "stats": {
+        "rows": 2155
+      }
+    },
+    {
+      "name": "Order Subtotals",
+      "sql": "CREATE VIEW [Order Subtotals] AS\nSELECT [Order Details].OrderID, \nSum(([Order Details].UnitPrice*Quantity*(1-Discount)/100)*100) AS Subtotal\nFROM [Order Details]\nGROUP BY [Order Details].OrderID",
+      "columns": [
+        {
+          "name": "OrderID",
+          "datatype": "INTEGER"
+        },
+        {
+          "name": "Subtotal"
+        }
+      ],
+      "stats": {
+        "rows": 830
+      }
+    },
+    {
+      "name": "Orders Qry",
+      "sql": "CREATE VIEW [Orders Qry] AS\nSELECT Orders.OrderID,\n       Orders.CustomerID,\n       Orders.EmployeeID, \n       Orders.OrderDate, \n       Orders.RequiredDate,\n       Orders.ShippedDate, \n       Orders.ShipVia, \n       Orders.Freight,\n       Orders.ShipName, \n       Orders.ShipAddress, \n       Orders.ShipCity,\n       Orders.ShipRegion,\n       Orders.ShipPostalCode,\n       Orders.ShipCountry,\n       Customers.CompanyName,\n       Customers.Address,\n       Customers.City,\n       Customers.Region,\n       Customers.PostalCode, \n       Customers.Country\nFROM Customers \n     JOIN Orders ON Customers.CustomerID = Orders.CustomerID",
+      "columns": [
+        {
+          "name": "OrderID",
+          "datatype": "INTEGER"
+        },
+        {
+          "name": "CustomerID",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "EmployeeID",
+          "datatype": "INTEGER"
+        },
+        {
+          "name": "OrderDate",
+          "datatype": "DATETIME"
+        },
+        {
+          "name": "RequiredDate",
+          "datatype": "DATETIME"
+        },
+        {
+          "name": "ShippedDate",
+          "datatype": "DATETIME"
+        },
+        {
+          "name": "ShipVia",
+          "datatype": "INTEGER"
+        },
+        {
+          "name": "Freight",
+          "datatype": "NUMERIC"
+        },
+        {
+          "name": "ShipName",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "ShipAddress",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "ShipCity",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "ShipRegion",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "ShipPostalCode",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "ShipCountry",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "CompanyName",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "Address",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "City",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "Region",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "PostalCode",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "Country",
+          "datatype": "TEXT"
+        }
+      ],
+      "stats": {
+        "rows": 830
+      }
+    },
+    {
+      "name": "Product Sales for 1997",
+      "sql": "CREATE VIEW [Product Sales for 1997] AS\nSELECT Categories.CategoryName, \n       Products.ProductName, \n       Sum(([Order Details].UnitPrice*Quantity*(1-Discount)/100)*100) AS ProductSales\nFROM Categories\n JOIN    Products On Categories.CategoryID = Products.CategoryID\n    JOIN  [Order Details] on Products.ProductID = [Order Details].ProductID     \n     JOIN  [Orders] on Orders.OrderID = [Order Details].OrderID \nWHERE Orders.ShippedDate Between DATETIME('1997-01-01') And DATETIME('1997-12-31')\nGROUP BY Categories.CategoryName, Products.ProductName",
+      "columns": [
+        {
+          "name": "CategoryName",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "ProductName",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "ProductSales"
+        }
+      ],
+      "stats": {
+        "rows": 77
+      }
+    },
+    {
+      "name": "Products Above Average Price",
+      "sql": "CREATE VIEW [Products Above Average Price] AS\nSELECT Products.ProductName, \n       Products.UnitPrice\nFROM Products\nWHERE Products.UnitPrice>(SELECT AVG(UnitPrice) From Products)",
+      "columns": [
+        {
+          "name": "ProductName",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "UnitPrice",
+          "datatype": "NUMERIC"
+        }
+      ],
+      "stats": {
+        "rows": 25
+      }
+    },
+    {
+      "name": "Products by Category",
+      "sql": "CREATE VIEW [Products by Category] AS\nSELECT Categories.CategoryName, \n       Products.ProductName, \n       Products.QuantityPerUnit, \n       Products.UnitsInStock, \n       Products.Discontinued\nFROM Categories \n     INNER JOIN Products ON Categories.CategoryID = Products.CategoryID\nWHERE Products.Discontinued <> 1",
+      "columns": [
+        {
+          "name": "CategoryName",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "ProductName",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "QuantityPerUnit",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "UnitsInStock",
+          "datatype": "INTEGER"
+        },
+        {
+          "name": "Discontinued",
+          "datatype": "TEXT"
+        }
+      ],
+      "stats": {
+        "rows": 69
+      }
+    },
+    {
+      "name": "Quarterly Orders",
+      "sql": "CREATE VIEW [Quarterly Orders] AS\nSELECT DISTINCT Customers.CustomerID, \n                Customers.CompanyName, \n                Customers.City, \n                Customers.Country\nFROM Customers \n     JOIN Orders ON Customers.CustomerID = Orders.CustomerID\nWHERE Orders.OrderDate BETWEEN DATETIME('1997-01-01') And DATETIME('1997-12-31')",
+      "columns": [
+        {
+          "name": "CustomerID",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "CompanyName",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "City",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "Country",
+          "datatype": "TEXT"
+        }
+      ],
+      "stats": {
+        "rows": 86
+      }
+    },
+    {
+      "name": "Sales by Category",
+      "sql": "CREATE VIEW [Sales by Category] AS\nSELECT Categories.CategoryID, \n       Categories.CategoryName, \n         Products.ProductName, \n\tSum([Order Details Extended].ExtendedPrice) AS ProductSales\nFROM  Categories \n    JOIN Products \n      ON Categories.CategoryID = Products.CategoryID\n       JOIN [Order Details Extended] \n         ON Products.ProductID = [Order Details Extended].ProductID                \n           JOIN Orders \n             ON Orders.OrderID = [Order Details Extended].OrderID \nWHERE Orders.OrderDate BETWEEN DATETIME('1997-01-01') And DATETIME('1997-12-31')\nGROUP BY Categories.CategoryID, Categories.CategoryName, Products.ProductName",
+      "columns": [
+        {
+          "name": "CategoryID",
+          "datatype": "INTEGER"
+        },
+        {
+          "name": "CategoryName",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "ProductName",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "ProductSales"
+        }
+      ],
+      "stats": {
+        "rows": 77
+      }
+    },
+    {
+      "name": "Sales Totals by Amount",
+      "sql": "CREATE VIEW [Sales Totals by Amount] AS\nSELECT [Order Subtotals].Subtotal AS SaleAmount, \n                  Orders.OrderID, \n               Customers.CompanyName, \n                  Orders.ShippedDate\nFROM Customers \n JOIN Orders ON Customers.CustomerID = Orders.CustomerID\n    JOIN [Order Subtotals] ON Orders.OrderID = [Order Subtotals].OrderID \nWHERE ([Order Subtotals].Subtotal >2500) \nAND (Orders.ShippedDate BETWEEN DATETIME('1997-01-01') And DATETIME('1997-12-31'))",
+      "columns": [
+        {
+          "name": "SaleAmount"
+        },
+        {
+          "name": "OrderID",
+          "datatype": "INTEGER"
+        },
+        {
+          "name": "CompanyName",
+          "datatype": "TEXT"
+        },
+        {
+          "name": "ShippedDate",
+          "datatype": "DATETIME"
+        }
+      ],
+      "stats": {
+        "rows": 64
+      }
+    },
+    {
+      "name": "Summary of Sales by Quarter",
+      "sql": "CREATE VIEW [Summary of Sales by Quarter] AS\nSELECT Orders.ShippedDate, \n       Orders.OrderID, \n       [Order Subtotals].Subtotal\nFROM Orders \n     INNER JOIN [Order Subtotals] ON Orders.OrderID = [Order Subtotals].OrderID\nWHERE Orders.ShippedDate IS NOT NULL",
+      "columns": [
+        {
+          "name": "ShippedDate",
+          "datatype": "DATETIME"
+        },
+        {
+          "name": "OrderID",
+          "datatype": "INTEGER"
+        },
+        {
+          "name": "Subtotal"
+        }
+      ],
+      "stats": {
+        "rows": 809
+      }
+    },
+    {
+      "name": "Summary of Sales by Year",
+      "sql": "CREATE VIEW [Summary of Sales by Year] AS\nSELECT      Orders.ShippedDate, \n            Orders.OrderID, \n [Order Subtotals].Subtotal\nFROM Orders \n     INNER JOIN [Order Subtotals] ON Orders.OrderID = [Order Subtotals].OrderID\nWHERE Orders.ShippedDate IS NOT NULL",
+      "columns": [
+        {
+          "name": "ShippedDate",
+          "datatype": "DATETIME"
+        },
+        {
+          "name": "OrderID",
+          "datatype": "INTEGER"
+        },
+        {
+          "name": "Subtotal"
+        }
+      ],
+      "stats": {
+        "rows": 809
+      }
+    }
+  ],
+  "indexes": [
+    {
+      "name": "sqlite_autoindex_CustomerCustomerDemo_1",
+      "table": "CustomerCustomerDemo",
+      "columns": [
+        "CustomerID",
+        "CustomerTypeID"
+      ]
+    },
+    {
+      "name": "sqlite_autoindex_CustomerDemographics_1",
+      "table": "CustomerDemographics",
+      "columns": [
+        "CustomerTypeID"
+      ]
+    },
+    {
+      "name": "sqlite_autoindex_Customers_1",
+      "table": "Customers",
+      "columns": [
+        "CustomerID"
+      ]
+    },
+    {
+      "name": "sqlite_autoindex_EmployeeTerritories_1",
+      "table": "EmployeeTerritories",
+      "columns": [
+        "EmployeeID",
+        "TerritoryID"
+      ]
+    },
+    {
+      "name": "sqlite_autoindex_Order Details_1",
+      "table": "Order Details",
+      "columns": [
+        "OrderID",
+        "ProductID"
+      ]
+    },
+    {
+      "name": "sqlite_autoindex_Territories_1",
+      "table": "Territories",
+      "columns": [
+        "TerritoryID"
+      ]
+    }
+  ],
+  "stats": {
+    "version": "31",
+    "size": 561152
+  }
+}
