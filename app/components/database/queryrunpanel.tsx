@@ -6,7 +6,6 @@
 import React, { useState } from "react"
 import { Theme, SxProps } from "@mui/material"
 import Box from "@mui/material/Box"
-import { DataGridProps } from "@mui/x-data-grid"
 
 // model
 import { DataConnection } from "../../lib/data/connections"
