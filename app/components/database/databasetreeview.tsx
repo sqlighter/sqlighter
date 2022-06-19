@@ -149,7 +149,12 @@ function _getTableTree(
     command: "openQuery",
     title: "Query Data",
     icon: "query",
-    args: { title: `All ${table.name}`, sql: `SELECT * FROM ${table.name}` },
+    args: {
+      title: `All ${table.name}`,
+      connection,
+      database: schema.database,
+      sql: `SELECT * FROM '${schema.database}'.'${table.name}'`,
+    },
   })
   commands.push({
     command: "pin",
@@ -168,15 +173,15 @@ function _getTableTree(
         id: `${rootId}/tables/${table.name}/columns`,
         title: "Columns",
         type: "columns",
-        badge: (columns ? columns.length : 0).toString(),
-        children: columns,
+        badge: columns?.length > 0 ? columns.length.toString() : "0",
+        children: columns?.length > 0 ? columns : undefined,
       },
       {
         id: `${rootId}/tables/${table.name}/indexes`,
         title: "Indexes",
         type: "indexes",
-        badge: (indexes ? indexes.length : 0).toString(),
-        children: indexes,
+        badge: indexes?.length > 0 ? indexes.length.toString() : "0",
+        children: indexes?.length > 0 ? indexes : undefined,
       },
     ],
   }

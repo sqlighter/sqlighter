@@ -43,6 +43,7 @@ import InboxOutlinedIcon from "@mui/icons-material/InboxOutlined"
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined"
 import InsertChartOutlinedIcon from "@mui/icons-material/InsertChartOutlined"
 import KeyIcon from "@mui/icons-material/KeyOutlined"
+import MenuOpenOutlinedIcon from '@mui/icons-material/MenuOpenOutlined';
 import ModeCommentOutlinedIcon from "@mui/icons-material/ModeCommentOutlined"
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined"
 import PlayArrowOutlinedIcon from "@mui/icons-material/PlayArrowOutlined"
@@ -156,6 +157,8 @@ export function Icon(props: IconProps) {
         return <HistoryIcon {...props} />
       case "inbox":
         return <InboxOutlinedIcon {...props} />
+      case "index":
+        return <MenuOpenOutlinedIcon {...props} />
       case "info":
         return <InfoOutlinedIcon {...props} />
       case "key":
