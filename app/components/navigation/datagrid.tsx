@@ -40,7 +40,6 @@ export interface DataGridProps extends PanelProps {
 export function DataGrid(props: DataGridProps) {
   // grid's parent needs to have its height be > 0 or else the grid will scream so let's track it
   const { ref, width = 1, height = 1 } = useResizeObserver<HTMLDivElement>()
-  console.debug(`DataGrid - ${width}x${height}`)
 
   function handleCommand(event, command, args) {
     if (props.onCommand) {
@@ -55,7 +54,6 @@ export function DataGrid(props: DataGridProps) {
 
   // more than 100 rows? use paging
   const paging = props.rows && props.rows.length > 100
-
   const className = "DataGrid-root" + (props.className ? " " + props.className : "")
   return (
     <Box className={className} ref={ref} sx={DataGrid_SxProps}>
@@ -93,17 +91,14 @@ export function DataGrid(props: DataGridProps) {
 //
 
 export interface QueryResultDataGridProps extends PanelProps {
-  /** Resulting columns */
+  /** Query result columns names */
   columns?: string[]
-
-  /** Resulting data */
+  /** Query result data */
   values?: any[][]
 }
 
 /** DataGrid used to show query results */
 export function QueryResultDataGrid(props: QueryResultDataGridProps) {
-  console.log(`columns`, props.columns)
-  console.log(`values`, props.values)
   const columns = props.columns.map((column) => {
     return { field: column, headerName: column, minWidth: 150, editable: false }
   })
