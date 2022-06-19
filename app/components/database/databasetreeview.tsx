@@ -9,7 +9,6 @@ import { Command, CommandEvent } from "../../lib/commands"
 import { TreeView } from "../navigation/treeview"
 import { Tree } from "../../lib/tree"
 import { DataConnection, DataSchema } from "../../lib/data/connections"
-import { cp } from "fs"
 
 export interface DatabaseTreeViewProps {
   /** Database connection shown in tree view */

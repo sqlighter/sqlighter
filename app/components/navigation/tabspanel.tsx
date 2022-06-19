@@ -59,7 +59,7 @@ export function TabsPanel(props: TabsPanelProps) {
   //
 
   // currently selected tab
-  const [tabId, setTabId] = useState<string>("tab_schema")
+  const [tabId, setTabId] = useState<string>(props.tabId)
 
   //
   // handlers

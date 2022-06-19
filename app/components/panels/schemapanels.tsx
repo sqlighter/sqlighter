@@ -9,7 +9,7 @@ import Badge from "@mui/material/Badge"
 import Box from "@mui/material/Box"
 import Stack from "@mui/material/Stack"
 import Typography from "@mui/material/Typography"
-import { DataGrid, GridCellParams, GridRenderCellParams } from "@mui/x-data-grid"
+import { DataGrid, GridColumns, GridCellParams, GridRenderCellParams } from "@mui/x-data-grid"
 
 // model
 import { Command } from "../../lib/commands"
@@ -38,8 +38,8 @@ const SchemaPanel_SxProps: SxProps<Theme> = {
   },
 
   ".MuiDataGrid-columnHeaders": {
-    borderRadius: "0px"
-  }
+    borderRadius: "0px",
+  },
 }
 
 export interface SchemaPanelProps extends PanelProps {
@@ -53,8 +53,13 @@ export interface SchemaPanelProps extends PanelProps {
 // TablesSchemaPanel
 //
 
+export interface TablesSchemaPanelProps extends SchemaPanelProps {
+  /** Panel is used to show tables or views? */
+  variant: "tables" | "views"
+}
+
 /** Shows list of tables available in given database */
-export function TablesSchemaPanel(props: SchemaPanelProps) {
+export function TablesSchemaPanel(props: TablesSchemaPanelProps) {
   //
   // handlers
   //
@@ -101,8 +106,9 @@ export function TablesSchemaPanel(props: SchemaPanelProps) {
   /** Renders the same commands to view table structure or query its data as found in TreeViewItem */
   function renderRowCommands(params: GridRenderCellParams): ReactElement {
     const tableName = params.row.name
-    const commands: (Command | "spacing")[] = [
-      {
+    const commands: (Command | "spacing")[] = []
+    if (props.variant == "tables") {
+      commands.push({
         command: "openTable",
         icon: "info",
         title: "View Structure",
@@ -111,19 +117,19 @@ export function TablesSchemaPanel(props: SchemaPanelProps) {
           database: props.schema?.database,
           table: tableName,
         },
+      })
+    }
+    commands.push({
+      command: "openQuery",
+      title: "Query Data",
+      icon: "query",
+      args: {
+        title: `All ${tableName}`,
+        connection: props.connection,
+        database: props.schema?.database,
+        sql: `SELECT * FROM '${tableName}'`,
       },
-      {
-        command: "openQuery",
-        title: "Query Data",
-        icon: "query",
-        args: {
-          title: `All ${tableName}`,
-          connection: props.connection,
-          database: props.schema?.database,
-          sql: `SELECT * FROM '${tableName}'`,
-        },
-      },
-    ]
+    })
 
     return (
       <IconButtonGroup
@@ -136,11 +142,11 @@ export function TablesSchemaPanel(props: SchemaPanelProps) {
   }
 
   function renderTables() {
-    const columns = [
+    const columns: GridColumns<any> = [
       {
         field: "name",
         headerName: "Name",
-        description: "Table name",
+        description: `${props.variant == "tables" ? "Table" : "View"} name`,
         sortable: true,
         minWidth: 100,
         maxWidth: 240,
@@ -149,7 +155,7 @@ export function TablesSchemaPanel(props: SchemaPanelProps) {
       {
         field: "columns",
         headerName: "Columns",
-        description: "Number of columns in the table",
+        description: "Number of columns",
         type: "number",
         sortable: true,
         maxWidth: 100,
@@ -158,7 +164,7 @@ export function TablesSchemaPanel(props: SchemaPanelProps) {
       {
         field: "rows",
         headerName: "Rows",
-        description: "Number of rows in the table",
+        description: "Number of rows",
         type: "number",
         sortable: true,
         maxWidth: 100,
@@ -167,7 +173,7 @@ export function TablesSchemaPanel(props: SchemaPanelProps) {
       {
         field: "sql",
         headerName: "SQL",
-        description: "SQL create statement for this table",
+        description: "SQL create statement",
         sortable: true,
         minWidth: 100,
         flex: 3,
@@ -179,11 +185,12 @@ export function TablesSchemaPanel(props: SchemaPanelProps) {
         minWidth: 76, // 28px per IconButton
         maxWidth: 76,
         renderCell: renderRowCommands,
-        // align: "center",
+        align: "center",
       },
     ]
 
-    const rows = props.schema.tables.map((table, id) => {
+    const items = (props.variant == "tables" ? props.schema.tables : props.schema.views) || []
+    const rows = items.map((table, id) => {
       return {
         id,
         name: table.name,
@@ -196,9 +203,9 @@ export function TablesSchemaPanel(props: SchemaPanelProps) {
     return (
       <Stack sx={SchemaPanel_SxProps}>
         <Box>
-          <Badge badgeContent={props.schema?.tables?.length} color="primary">
+          <Badge badgeContent={items?.length} color="primary">
             <Typography className="SchemaPanel-title" variant="h6" sx={{ mr: 1 }}>
-              Tables
+              {props.variant == "tables" ? "Tables" : "Views"}
             </Typography>
           </Badge>
         </Box>

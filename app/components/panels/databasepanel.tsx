@@ -41,7 +41,7 @@ export function DatabasePanel(props: DatabasePanelProps) {
   const schema = schemas?.[0]
 
   // currently selected tab
-  const [tabId, setTabId] = useState<string>("tab_schema")
+  const [tabId, setTabId] = useState<string>("tab_tables")
 
   // can download entire database?
   const canDownload = props.connection.canExport()
@@ -58,7 +58,26 @@ export function DatabasePanel(props: DatabasePanelProps) {
     commands.push(downloadCommand)
   }
 
-  const tabs = [<TablesSchemaPanel id="tab_schema" title="Tables" icon="table" connection={props.connection} schema={schema} onCommand={handleCommand} />]
+  const tabs = [
+    <TablesSchemaPanel
+      id="tab_tables"
+      title="Tables"
+      icon="table"
+      connection={props.connection}
+      schema={schema}
+      onCommand={handleCommand}
+      variant="tables"
+    />,
+    <TablesSchemaPanel
+      id="tab_views"
+      title="Views"
+      icon="table"
+      connection={props.connection}
+      schema={schema}
+      onCommand={handleCommand}
+      variant="views"
+    />,
+  ]
 
   //
   //
@@ -102,7 +121,7 @@ export function DatabasePanel(props: DatabasePanelProps) {
   //
 
   /** Extract from schema something like: 11 tables, 15607 rows, 864 kB */
-  function renderDescription() {    
+  function renderDescription() {
     if (!schema) {
       return "Loading schema..."
     }
@@ -125,7 +144,7 @@ export function DatabasePanel(props: DatabasePanelProps) {
 
     // labels as plain text
     return labels.join(", ")
-/*
+    /*
     return (
       <Stack className="DatabasePanel-tags" direction="row" spacing={1} sx={{ marginTop: 1 }}>
         {labels.map((label) => (
