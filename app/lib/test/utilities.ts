@@ -9,7 +9,15 @@ import { SqliteDataConnection } from "../data/clients/sqlite"
 import initSqlJs from "sql.js"
 
 export function writeJson(filename, data) {
-  const json = JSON.stringify(data, null, "  ")
+  // do not serialize connections
+  function replacer(this: any, key: string, value: any) {
+    if (key == "connection" && value?.id) {
+      return value.id
+    }
+    return value
+  }
+
+  const json = JSON.stringify(data, replacer, "  ")
   fs.writeFileSync(filename, json)
 }
 

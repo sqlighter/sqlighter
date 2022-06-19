@@ -9,6 +9,7 @@ import { Command, CommandEvent } from "../../lib/commands"
 import { TreeView } from "../navigation/treeview"
 import { Tree } from "../../lib/tree"
 import { DataConnection, DataSchema } from "../../lib/data/connections"
+import { cp } from "fs"
 
 export interface DatabaseTreeViewProps {
   /** Database connection shown in tree view */
@@ -76,81 +77,102 @@ export function DatabaseTreeView(props: DatabaseTreeViewProps) {
 // adapters
 //
 
-function _getTableColumnTree(schema: DataSchema, table, column) {
+function _getTableColumnTree(rootId: string, schema: DataSchema, table, column) {
   const tree: Tree = {
-    id: `${schema.database}/tables/${table.name}/columns/${column.name}`,
+    id: `${rootId}/tables/${table.name}/columns/${column.name}`,
     title: column.name,
     type: "column",
-    tags: [],
+    tags: column.tags || [],
   }
 
-  if (column.constraints) {
-    // show primary key using 🔑 emoji instead of plain text?
-    tree.tags.push(
-      ...column.constraints.map((c) => {
-        switch (c) {
-          case "primary key":
-            return { title: "pk", tooltip: c }
-          case "auto increment":
-            return { title: "ai", tooltip: c }
-        }
-        return c
-      })
-    )
+  if (column.primaryKey) {
+    tree.tags.push({ title: "pk", tooltip: "primary key" })
   }
-  tree.tags.push(column.datatype)
+  if (column.autoIncrement) {
+    tree.tags.push({ title: "ai", tooltip: "auto increment" })
+  }
+  if (column.notNull) {
+    tree.tags.push({ title: "nn", tooltip: "not nullable" })
+  }
 
+  // is this column a foreign key?
+  if (table.foreignKeys) {
+    const fk = table.foreignKeys.find((fk) => fk.fromColumn == column.name)
+    if (fk) {
+      tree.tags.push({ title: "fk", tooltip: `foreign key to ${fk.table}.${fk.toColumn}` })
+    }
+  }
+
+  if (column.datatype) {
+    tree.tags.push(column.datatype.toLowerCase())
+  }
   return tree
 }
 
-function _getTableTree(connection: DataConnection, schema: DataSchema, table) {
-  const columns = table.columns && table.columns.map((column) => _getTableColumnTree(schema, table, column))
+function _getTableTree(
+  rootId: string,
+  connection: DataConnection,
+  schema: DataSchema,
+  table,
+  variant: "table" | "view"
+) {
+  const columns = table.columns && table.columns.map((column) => _getTableColumnTree(rootId, schema, table, column))
 
-  const indexes =
-    table.indexes &&
-    table.indexes.map((index) => {
-      return {
-        id: `${schema.database}/tables/${table.name}/indexes/${index.name}`,
-        title: index.name,
-        type: "index",
-        tags: [...index.columns],
-      }
+  let indexes =
+    schema.indexes &&
+    schema.indexes
+      .filter((idx) => idx.table == table.name)
+      .map((idx) => {
+        return {
+          id: `${rootId}/tables/${table.name}/indexes/${idx.name}`,
+          title: idx.name,
+          type: "index",
+          tags: [...idx.columns],
+        }
+      })
+
+  const commands = []
+  // for now we don't have a views panel
+  if (variant == "table") {
+    commands.push({
+      command: "openTable",
+      title: "View Structure",
+      icon: "info",
+      args: {
+        connection,
+        database: schema.database,
+        table: table.name,
+      },
     })
+  }
+  commands.push({
+    command: "openQuery",
+    title: "Query Data",
+    icon: "query",
+    args: { title: `All ${table.name}`, sql: `SELECT * FROM ${table.name}` },
+  })
+  commands.push({
+    command: "pin",
+    icon: "pin",
+    title: "Pin",
+  })
 
-  const tableId = `${schema.database}/tables/${table.name}`
+  const tableId = `${rootId}/tables/${table.name}`
   return {
     id: tableId,
     title: table.name,
     type: "table",
-    commands: [
-      {
-        command: "openTable",
-        title: "View Structure",
-        icon: "info",
-        args: {
-          connection,
-          database: schema.database,
-          table: table.name,
-        },
-      },
-      {
-        command: "openQuery",
-        title: "Query Data",
-        icon: "query",
-        args: { title: `All ${table.name}`, sql: `SELECT * FROM ${table.name}` },
-      },
-      { command: "pin", icon: "pin", title: "Pin" },
-    ],
+    commands,
     children: [
       {
-        id: `${schema.database}/tables/${table.name}/columns`,
+        id: `${rootId}/tables/${table.name}/columns`,
         title: "Columns",
         type: "columns",
         badge: (columns ? columns.length : 0).toString(),
         children: columns,
       },
       {
-        id: `${schema.database}/tables/${table.name}/indexes`,
+        id: `${rootId}/tables/${table.name}/indexes`,
         title: "Indexes",
         type: "indexes",
         badge: (indexes ? indexes.length : 0).toString(),
@@ -160,21 +182,29 @@ function _getTableTree(connection: DataConnection, schema: DataSchema, table) {
   }
 }
 
-function _getTriggerTree(schema: DataSchema, trigger) {
+function _getIndexTree(rootId: string, index) {
+  let tags = undefined
+  if (index.table && index.columns) {
+    tags = [{ title: index.table, tooltip: `Index on ${index.table}.${index.columns.join(", ")}` }]
+  }
   return {
-    id: `${schema.database}/triggers/${trigger.name}`,
-    title: trigger.name,
-    type: "trigger",
-    tags: trigger.on ? [trigger.on] : undefined,
+    id: `${rootId}/indexes/${index.name}`,
+    title: index.name,
+    type: "index",
+    tags,
   }
 }
 
-function _getViewTree(schema: DataSchema, view) {
+function _getTriggerTree(rootId: string, trigger) {
+  let tags = undefined
+  if (trigger.table) {
+    tags = [{ title: trigger.table, tooltip: `Trigger on ${trigger.table}` }]
+  }
   return {
-    id: `${schema.database}/views/${view.name}`,
-    title: view.name,
-    type: "view",
-    tags: view.from ? [view.from] : undefined,
+    id: `${rootId}/triggers/${trigger.name}`,
+    title: trigger.name,
+    type: "trigger",
+    tags,
   }
 }
 
@@ -187,12 +217,15 @@ export async function getTrees(connection: DataConnection, refresh: boolean = fa
   const trees: Tree[] = []
 
   for (const schema of schemas) {
-    const tables = schema.tables.map((table) => _getTableTree(connection, schema, table))
-    const triggers = schema.triggers.map((trigger) => _getTriggerTree(schema, trigger))
-    const views = schema.views.map((view) => _getViewTree(schema, view))
+    const rootId = `${connection.id}/${schema.database}`
+    const tables =
+      schema.tables && schema.tables.map((item) => _getTableTree(rootId, connection, schema, item, "table"))
+    const views = schema.views && schema.views.map((item) => _getTableTree(rootId, connection, schema, item, "view"))
+    const indexes = schema.indexes && schema.indexes.map((item) => _getIndexTree(rootId, item))
+    const triggers = schema.triggers && schema.triggers.map((item) => _getTriggerTree(rootId, item))
 
     const tree: Tree = {
-      id: schema.database,
+      id: rootId,
       title: schema.database,
       type: "database",
       icon: "database",
@@ -202,28 +235,36 @@ export async function getTrees(connection: DataConnection, refresh: boolean = fa
       ],
       children: [
         {
-          id: `${schema.database}/tables`,
+          id: `${rootId}/tables`,
           title: "Tables",
           type: "tables",
           icon: "table",
-          badge: tables.length.toString(),
-          children: tables,
+          badge: tables?.length > 0 ? tables.length.toString() : "0",
+          children: tables?.length > 0 && tables,
         },
         {
-          id: `${schema.database}/views`,
+          id: `${rootId}/views`,
           title: "Views",
           type: "views",
           icon: "view",
-          badge: views.length.toString(),
-          children: views,
+          badge: views?.length > 0 ? views.length.toString() : "0",
+          children: views?.length > 0 && views,
         },
         {
-          id: `${schema.database}/triggers`,
+          id: `${rootId}/indexes`,
+          title: "Indexes",
+          type: "indexes",
+          icon: "index",
+          badge: indexes?.length > 0 ? indexes.length.toString() : "0",
+          children: indexes?.length > 0 && indexes,
+        },
+        {
+          id: `${rootId}/triggers`,
           title: "Triggers",
           type: "triggers",
           icon: "trigger",
-          badge: triggers.length.toString(),
-          children: triggers,
+          badge: triggers?.length > 0 ? triggers.length.toString() : "0",
+          children: triggers?.length > 0 && triggers,
         },
       ],
     }

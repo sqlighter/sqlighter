@@ -101,13 +101,8 @@ export class SqliteDataConnection extends DataConnection {
       // create database from memory buffer, verify that it's working
       this._database = buffer ? new engine.Database(buffer) : new engine.Database()
       await this.getResult("select 1")
-
-      // TODO fix for empty database
-      // await this.getResult("select * from sqlite_schema")
-
-      console.debug(`SqliteDataConnection - created ${this.id}`, this)
     } catch (exception) {
-      console.error(`SqliteDataConnection - exception: ${exception}`, exception)
+      console.error(`SqliteDataConnection.connect - exception: ${exception}`, exception)
       throw new DataError("Couln't create connection", { cause: exception, configs: configs })
     }
   }
@@ -117,7 +112,7 @@ export class SqliteDataConnection extends DataConnection {
   //
 
   /** Retrieve column information for a table or a view */
-  public async _getTableColumnsSchema(database: string, table: string) {
+  private async _getTableColumnsSchema(database: string, table: string) {
     // https://www.sqlite.org/pragma.html#pragma_table_xinfo
     const columnsResult = await this.getResult(`pragma '${database}'.table_xinfo('${table}')`)
     const columns = []
@@ -127,11 +122,28 @@ export class SqliteDataConnection extends DataConnection {
         // hidden
         tags.push("hidden")
       }
+
+      let autoIncrement = undefined
+      const primaryKey = columnResult[5] ? true : undefined // pk
+      if (primaryKey) {
+        try {
+          const sequenceResult = await this.getResult(`select count(*) from '${database}'.sqlite_sequence where name = '${table}'`)
+          console.log(`autoIncrement results`, sequenceResult)
+          if (sequenceResult.values[0][0]) {
+            autoIncrement = true
+          }
+        }
+        catch {
+          // no results, ok!
+        }
+      }
+
       columns.push({
         name: columnResult[1], // name
         datatype: columnResult[2] ? columnResult[2] : undefined, // type, eg. INTEGER
         defaultValue: columnResult[4] != null ? columnResult[4] : undefined, // dflt_value
-        primaryKey: columnResult[5] ? true : undefined, // pk
+        primaryKey,
+        autoIncrement,
         notNull: columnResult[3] ? true : undefined, // notnull
         tags: tags.length > 0 ? tags : undefined,
       })
@@ -140,7 +152,7 @@ export class SqliteDataConnection extends DataConnection {
   }
 
   /** Retrieve foreign key information for a table or a view */
-  public async _getTableForeignKeysSchema(database: string, table: string) {
+  private async _getTableForeignKeysSchema(database: string, table: string) {
     // https://www.sqlite.org/pragma.html#pragma_foreign_key_list
     try {
       // will throw if no results because of no foreign keys
@@ -245,9 +257,11 @@ export class SqliteDataConnection extends DataConnection {
     return undefined
   }
 
-  /** Returns database schema in simplified, ready to use format.
+  /** 
+   * Returns database schema in simplified, ready to use format.
    * @param refresh True if schema should be refreshed (default is using cached version if available)
    * @returns An array with a single DataSchema extracted from this database
+   * @see https://www.sqlite.org/pragma.html
    */
   public async getSchemas(refresh: boolean = false): Promise<DataSchema[]> {
     if (this._schemas && !refresh) {

@@ -5,9 +5,7 @@
 import { getChinookConnection, getTestConnection, getNorthwindConnection, writeJson } from "../../test/utilities"
 
 // Interpreting schema
-// https://www.sqlite.org/schematab.html
-// AST tool
-// https://astexplorer.net/
+// https://www.sqlite.org/pragma.html
 // client side testing
 // https://jestjs.io/docs/configuration#testenvironment-string
 
@@ -69,7 +67,7 @@ describe("sqlite.ts (node env)", () => {
     expect(schema.database).toBe("main")
 
     // save schema for verification
-    writeJson("./lib/test/artifacts/chinook.json", schema)
+    writeJson("./lib/test/artifacts/chinook.schema.json", schema)
 
     // list of tables, sorted alphabetically
     const tableNames = schema.tables.map((t) => `'${t.name}'`).join(", ")
@@ -110,7 +108,7 @@ describe("sqlite.ts (node env)", () => {
     expect(schema.database).toBe("main")
 
     // save schema for verification
-    writeJson("./lib/test/artifacts/test.json", schema)
+    writeJson("./lib/test/artifacts/test.schema.json", schema)
 
     const tablesNames = schema.tables.map((t) => `'${t.name}'`).join(", ")
     expect(tablesNames).toBe("'albums', 'artists', 'customers', 'employees', 'genres', 'invoice_items', 'invoices', 'media_types', 'playlist_track', 'playlists', 'tracks'")
@@ -136,7 +134,7 @@ describe("sqlite.ts (node env)", () => {
     expect(schema.database).toBe("main")
 
     // save schema for verification
-    writeJson("./lib/test/artifacts/sakila.json", schema)
+    writeJson("./lib/test/artifacts/sakila.schema.json", schema)
 
     const tablesNames = schema.tables.map((t) => `'${t.name}'`).join(", ")
     expect(tablesNames).toBe("'actor', 'address', 'category', 'city', 'country', 'customer', 'film', 'film_actor', 'film_category', 'film_text', 'inventory', 'language', 'payment', 'rental', 'staff', 'store'")
@@ -164,7 +162,7 @@ describe("sqlite.ts (node env)", () => {
 
     // save schema for verification
     const schema = schemas[0]
-    writeJson("./lib/test/artifacts/northwind.json", schema)
+    writeJson("./lib/test/artifacts/northwind.schema.json", schema)
 
     expect(schema.tables).toHaveLength(13)
     const tablesNames = schema.tables.map((t) => `'${t.name}'`).join(", ")

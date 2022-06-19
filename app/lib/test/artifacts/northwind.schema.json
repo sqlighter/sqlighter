@@ -8,7 +8,8 @@
         {
           "name": "CategoryID",
           "datatype": "INTEGER",
-          "primaryKey": true
+          "primaryKey": true,
+          "autoIncrement": true
         },
         {
           "name": "CategoryName",
@@ -144,7 +145,8 @@
         {
           "name": "EmployeeID",
           "datatype": "INTEGER",
-          "primaryKey": true
+          "primaryKey": true,
+          "autoIncrement": true
         },
         {
           "name": "LastName",
@@ -328,6 +330,7 @@
           "name": "OrderID",
           "datatype": "INTEGER",
           "primaryKey": true,
+          "autoIncrement": true,
           "notNull": true
         },
         {
@@ -419,6 +422,7 @@
           "name": "ProductID",
           "datatype": "INTEGER",
           "primaryKey": true,
+          "autoIncrement": true,
           "notNull": true
         },
         {
@@ -513,6 +517,7 @@
           "name": "ShipperID",
           "datatype": "INTEGER",
           "primaryKey": true,
+          "autoIncrement": true,
           "notNull": true
         },
         {
@@ -537,6 +542,7 @@
           "name": "SupplierID",
           "datatype": "INTEGER",
           "primaryKey": true,
+          "autoIncrement": true,
           "notNull": true
         },
         {

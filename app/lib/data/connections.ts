@@ -70,6 +70,7 @@ export interface DataTableSchema {
     datatype: string
     defaultValue?: string | number
     primaryKey?: boolean
+    autoIncrement?: boolean
     notNull?: boolean
     tags?: string[]
   }[]

@@ -9,6 +9,7 @@
           "name": "AlbumId",
           "datatype": "INTEGER",
           "primaryKey": true,
+          "autoIncrement": true,
           "notNull": true
         },
         {
@@ -43,6 +44,7 @@
           "name": "ArtistId",
           "datatype": "INTEGER",
           "primaryKey": true,
+          "autoIncrement": true,
           "notNull": true
         },
         {
@@ -62,6 +64,7 @@
           "name": "CustomerId",
           "datatype": "INTEGER",
           "primaryKey": true,
+          "autoIncrement": true,
           "notNull": true
         },
         {
@@ -137,6 +140,7 @@
           "name": "EmployeeId",
           "datatype": "INTEGER",
           "primaryKey": true,
+          "autoIncrement": true,
           "notNull": true
         },
         {
@@ -219,6 +223,7 @@
           "name": "GenreId",
           "datatype": "INTEGER",
           "primaryKey": true,
+          "autoIncrement": true,
           "notNull": true
         },
         {
@@ -238,6 +243,7 @@
           "name": "InvoiceLineId",
           "datatype": "INTEGER",
           "primaryKey": true,
+          "autoIncrement": true,
           "notNull": true
         },
         {
@@ -289,6 +295,7 @@
           "name": "InvoiceId",
           "datatype": "INTEGER",
           "primaryKey": true,
+          "autoIncrement": true,
           "notNull": true
         },
         {
@@ -348,6 +355,7 @@
           "name": "MediaTypeId",
           "datatype": "INTEGER",
           "primaryKey": true,
+          "autoIncrement": true,
           "notNull": true
         },
         {
@@ -404,6 +412,7 @@
           "name": "PlaylistId",
           "datatype": "INTEGER",
           "primaryKey": true,
+          "autoIncrement": true,
           "notNull": true
         },
         {
@@ -423,6 +432,7 @@
           "name": "TrackId",
           "datatype": "INTEGER",
           "primaryKey": true,
+          "autoIncrement": true,
           "notNull": true
         },
         {
