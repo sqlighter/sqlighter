@@ -88,7 +88,7 @@ export function TablePanel(props: TablePanelProps) {
     switch (command.command) {
       case "changedTabs":
         setTabId(command.args.id)
-        break
+        return
 
       case "changedConnection":
         //notifyChanges()
@@ -170,7 +170,7 @@ export function TablePanel(props: TablePanelProps) {
 
   /** Panels to be rendered as tabs */
   function renderTabs() {
-    return [
+    const tabs = [
       <ColumnsSchemaPanel
         id="tab_columns"
         title="Columns"
@@ -181,15 +181,23 @@ export function TablePanel(props: TablePanelProps) {
         variant={props.variant}
         onCommand={handleCommand}
       />,
-      <IndexesSchemaPanel
-        id="tab_indexes"
-        title="Indexes"
-        icon="index"
-        connection={props.connection}
-        schema={schema}
-        table={props.table}
-        onCommand={handleCommand}
-      />,
+    ]
+
+    if (props.variant != "view") {
+      tabs.push(
+        <IndexesSchemaPanel
+          id="tab_indexes"
+          title="Indexes"
+          icon="index"
+          connection={props.connection}
+          schema={schema}
+          table={props.table}
+          onCommand={handleCommand}
+        />
+      )
+    }
+
+    tabs.push(
       <RelationsSchemaPanel
         id="tab_relations"
         title="Relations"
@@ -199,7 +207,9 @@ export function TablePanel(props: TablePanelProps) {
         table={props.table}
         variant={props.variant}
         onCommand={handleCommand}
-      />,
+      />
+    )
+    tabs.push(
       <TriggersSchemaPanel
         id="tab_triggers"
         title="Triggers"
@@ -208,8 +218,9 @@ export function TablePanel(props: TablePanelProps) {
         schema={schema}
         table={props.table}
         onCommand={handleCommand}
-      />,
-    ]
+      />
+    )
+    return tabs
   }
 
   return (

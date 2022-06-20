@@ -131,19 +131,17 @@ function _getTableTree(
       })
 
   const commands = []
-  // for now we don't have a views panel
-  if (variant == "table") {
-    commands.push({
-      command: "openTable",
-      title: "View Structure",
-      icon: "info",
-      args: {
-        connection,
-        database: schema.database,
-        table: table.name,
-      },
-    })
-  }
+  commands.push({
+    command: "openTable",
+    title: "View Structure",
+    icon: "info",
+    args: {
+      connection,
+      database: schema.database,
+      table: table.name,
+      variant,
+    },
+  })
   commands.push({
     command: "openQuery",
     title: "Query Data",

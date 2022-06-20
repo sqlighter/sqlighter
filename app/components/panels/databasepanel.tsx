@@ -94,7 +94,7 @@ export function DatabasePanel(props: DatabasePanelProps) {
 
       case "downloadDatabase":
         await downloadDatabase()
-        break
+        return
     }
 
     if (props.onCommand) {
