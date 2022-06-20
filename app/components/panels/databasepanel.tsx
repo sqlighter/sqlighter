@@ -5,8 +5,9 @@
 // libs
 import React from "react"
 import { useState, useEffect } from "react"
-// import Chip from "@mui/material/Chip"
-// import Stack from "@mui/material/Stack"
+import { Theme, SxProps } from "@mui/material"
+import Box from "@mui/material/Box"
+import Card from "@mui/material/Card"
 
 // model
 import { Command } from "../../lib/commands"
@@ -16,7 +17,24 @@ import { prettyBytes } from "../../lib/shared"
 // components
 import { PanelProps } from "../navigation/panel"
 import { TablesSchemaPanel, IndexesSchemaPanel, TriggersSchemaPanel } from "./schemapanels"
-import { TabsPanel } from "../navigation/tabspanel"
+import { Section } from "../ui/section"
+import { Tabs } from "../navigation/tabs"
+
+// styles applied to main and subcomponents
+const DatabasePanel_SxProps: SxProps<Theme> = {
+  width: 1,
+  minWidth: 360,
+  height: 1,
+  maxHeight: 1,
+  padding: 1,
+
+  ".DatabasePanel-section": {
+    height: 1,
+  },
+  ".DatabasePanel-card": {
+    height: 1,
+  },
+}
 
 export interface DatabasePanelProps extends PanelProps {
   /** Connection rendered by this panel */
@@ -43,60 +61,8 @@ export function DatabasePanel(props: DatabasePanelProps) {
   // currently selected tab
   const [tabId, setTabId] = useState<string>("tab_tables")
 
-  // can download entire database?
-  const canDownload = props.connection.canExport()
-  const downloadCommand: Command = {
-    command: "downloadDatabase",
-    title: "Download",
-    description: "Download Database",
-    icon: "download",
-  }
-
-  /** Commands shown below section title */
-  const commands: (Command | "spacing")[] = []
-  if (canDownload) {
-    commands.push(downloadCommand)
-  }
-
-  const tabs = [
-    <TablesSchemaPanel
-      id="tab_tables"
-      title="Tables"
-      icon="table"
-      connection={props.connection}
-      schema={schema}
-      onCommand={handleCommand}
-      variant="tables"
-    />,
-    <TablesSchemaPanel
-      id="tab_views"
-      title="Views"
-      icon="table"
-      connection={props.connection}
-      schema={schema}
-      onCommand={handleCommand}
-      variant="views"
-    />,
-    <IndexesSchemaPanel
-      id="tab_indexes"
-      title="Indexes"
-      icon="index"
-      connection={props.connection}
-      schema={schema}
-      onCommand={handleCommand}
-    />,
-    <TriggersSchemaPanel
-      id="tab_triggers"
-      title="Triggers"
-      icon="trigger"
-      connection={props.connection}
-      schema={schema}
-      onCommand={handleCommand}
-    />,
-  ]
-
   //
-  //
+  // handlers
   //
 
   /** Export entire SQLite database */
@@ -111,16 +77,12 @@ export function DatabasePanel(props: DatabasePanelProps) {
     }
   }
 
-  //
-  // handlers
-  //
-
   async function handleCommand(event: React.SyntheticEvent, command: Command) {
     console.debug(`DatabasePanel.handleCommand - ${command.command}`, command)
     switch (command.command) {
       case "changedTabs":
         setTabId(command.args.id)
-        break
+        return
 
       case "downloadDatabase":
         await downloadDatabase()
@@ -136,58 +98,139 @@ export function DatabasePanel(props: DatabasePanelProps) {
   // render
   //
 
-  /** Extract from schema something like: 11 tables, 15607 rows, 864 kB */
-  function renderDescription() {
-    if (!schema) {
-      return "Loading schema..."
-    }
+  /** Commands are used as actions but also to show metadata */
+  function renderCommands() {
+    // can download entire database?
+    const canDownload = props.connection.canExport()
+    const commands = []
 
-    const labels: string[] = []
+    if (schema) {
+      // database size
+      if (schema.stats?.size > 0) {
+        commands.push({
+          command: "openQuery",
+          title: prettyBytes(schema.stats.size),
+          icon: "database",
+          args: {
+            label: true,
+            connection: props.connection,
+            database: schema.database,
+            sql: "select * from sqlite_schema", // TODO show pragma query
+          },
+        })
+      }
 
-    if (schema.tables) {
-      labels.push(`${schema.tables.length} tables`)
+      if (schema.tables?.length > 0) {
+        commands.push({
+          command: "openQuery",
+          title: `${schema.tables?.length || 0} tables`,
+          icon: "table",
+          args: {
+            label: true,
+            connection: props.connection,
+            database: schema.database,
+            sql: "select * from sqlite_schema",
+          },
+        })
+      }
 
       // count total rows
       let rows = schema.tables.reduce((t1, t2) => t1 + t2.stats?.rows, 0)
       if (rows > 0) {
-        labels.push(`${rows} rows`)
+        commands.push({
+          command: "openQuery",
+          title: `${rows} rows`,
+          icon: "rows",
+          args: {
+            label: true,
+            connection: props.connection,
+            database: schema.database,
+            sql: "select * from sqlite_schema", // TODO show query
+          },
+        })
+      }
+
+      if (canDownload) {
+        commands.push("divider")
       }
     }
 
-    if (schema.stats?.size > 0) {
-      labels.push(prettyBytes(schema.stats.size))
+    if (canDownload) {
+      commands.push({
+        command: "downloadDatabase",
+        title: "Download",
+        description: "Download Database",
+        icon: "download",
+        args: {
+          label: true,
+          color: "primary"
+        },
+      })
     }
 
-    // labels as plain text
-    return labels.join(", ")
-    /*
-    return (
-      <Stack className="DatabasePanel-tags" direction="row" spacing={1} sx={{ marginTop: 1 }}>
-        {labels.map((label) => (
-          <Chip
-            className="DatabasePanel-tag"
-            label={label}
-            size="small"
-            component="span"
-            variant="outlined"
-            sx={{ color: "text.secondary" }}
-          />
-        ))}
-      </Stack>
-    )
-*/
+    return commands
+  }
+
+  /** Panels to be rendered as tabs */
+  function renderTabs() {
+    return [
+      <TablesSchemaPanel
+        id="tab_tables"
+        title="Tables"
+        icon="table"
+        connection={props.connection}
+        schema={schema}
+        onCommand={handleCommand}
+        variant="tables"
+      />,
+      <TablesSchemaPanel
+        id="tab_views"
+        title="Views"
+        icon="table"
+        connection={props.connection}
+        schema={schema}
+        onCommand={handleCommand}
+        variant="views"
+      />,
+      <IndexesSchemaPanel
+        id="tab_indexes"
+        title="Indexes"
+        icon="index"
+        connection={props.connection}
+        schema={schema}
+        onCommand={handleCommand}
+      />,
+      <TriggersSchemaPanel
+        id="tab_triggers"
+        title="Triggers"
+        icon="trigger"
+        connection={props.connection}
+        schema={schema}
+        onCommand={handleCommand}
+      />,
+    ]
   }
 
   return (
-    <TabsPanel
-      className="DatabasePanel-root"
-      title={props.connection.title}
-      description={renderDescription()}
-      commands={commands}
-      action={canDownload && downloadCommand}
-      tabId={tabId}
-      tabs={tabs}
-      onCommand={handleCommand}
-    />
+    <Box className="DatabasePanel-root" sx={DatabasePanel_SxProps}>
+      <Section
+        className="DatabasePanel-section"
+        title={props.connection.title}
+        description={`A ${props.connection.configs.client} database`}
+        commands={renderCommands()}
+        variant="large"
+        onCommand={props.onCommand}
+      >
+        <Card className="DatabasePanel-card" variant="outlined" square={true}>
+          <Tabs
+            className="DatabasePanel-tabs"
+            tabId={tabId}
+            tabs={renderTabs()}
+            onCommand={handleCommand}
+            variant="below"
+          />
+        </Card>
+      </Section>
+    </Box>
   )
 }

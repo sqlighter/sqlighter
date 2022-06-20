@@ -18,18 +18,17 @@ const IconButtonGroup_SxProps: SxProps<Theme> = {
   },
 }
 
+interface IconRendering {
+  /** True if label should be shown */
+  label?: boolean
+}
+
 export interface IconButtonGroupProps {
   /** Class to be applied to this component */
   className?: string
 
   /** Commands to be rendered by this button, add "divider" to space them out */
   commands: (Command | "divider" | "spacing")[]
-
-  /**
-   * True if button's title should be shown next to icon
-   * @default false
-   */
-  label?: boolean
 
   /**
    * If specified then the icon with the given command is selected and the group acts as a toggle group
@@ -78,7 +77,7 @@ export function IconButtonGroup(props: IconButtonGroupProps) {
               command={command}
               selected={props.selected == command.command}
               size={props.size || "medium"}
-              label={props.label}
+              label={command?.args?.label}
               onCommand={props.onCommand}
             />
           )

@@ -25,7 +25,7 @@ const Section_SxProps: SxProps<Theme> = {
 
   ".Section-commands": {
     paddingTop: 2,
-    marginLeft: -0.5,
+    marginLeft: -1,
   },
 
   ".Section-children": {

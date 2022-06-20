@@ -43,7 +43,7 @@ import InboxOutlinedIcon from "@mui/icons-material/InboxOutlined"
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined"
 import InsertChartOutlinedIcon from "@mui/icons-material/InsertChartOutlined"
 import KeyIcon from "@mui/icons-material/KeyOutlined"
-import MenuOpenOutlinedIcon from '@mui/icons-material/MenuOpenOutlined';
+import MenuOpenOutlinedIcon from "@mui/icons-material/MenuOpenOutlined"
 import ModeCommentOutlinedIcon from "@mui/icons-material/ModeCommentOutlined"
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined"
 import PlayArrowOutlinedIcon from "@mui/icons-material/PlayArrowOutlined"
@@ -54,7 +54,7 @@ import RefreshOutlinedIcon from "@mui/icons-material/RefreshOutlined"
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined"
 import SettingsOutlined from "@mui/icons-material/SettingsOutlined"
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined"
-import SwipeLeftOutlinedIcon from '@mui/icons-material/SwipeLeftOutlined';
+import SwipeLeftOutlinedIcon from "@mui/icons-material/SwipeLeftOutlined"
 import TableRowsOutlinedIcon from "@mui/icons-material/TableRowsOutlined"
 import TableIcon from "@mui/icons-material/TableChartOutlined"
 import WhatshotOutlinedIcon from "@mui/icons-material/WhatshotOutlined"
@@ -177,6 +177,8 @@ export function Icon(props: IconProps) {
         return <TableRowsOutlinedIcon {...props} />
       case "refresh":
         return <RefreshOutlinedIcon {...props} />
+      case "rows":
+        return <TableRowsOutlinedIcon {...props} />
       case "run":
         return <DirectionsRunOutlinedIcon {...props} />
       case "search":

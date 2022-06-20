@@ -61,11 +61,11 @@ export function IconButton(props: IconButtonProps) {
 
   let className = `IconButton-root ${props.selected ? " Mui-selected" : ""} ${props.className}`
   let button = (
-    <MuiIconButton className={className} onClick={handleClick} sx={IconButton_SxProps} {...buttonProps}>
+    <MuiIconButton className={className} onClick={handleClick} sx={IconButton_SxProps} color={command.args?.color} {...buttonProps}>
       <Icon className="IconButton-icon" fontSize="inherit">
         {command.icon}
       </Icon>
-      {props.label && (
+      {(props.label || command.args?.label) && (
         <Typography className="IconButton-label" variant="body2" sx={{ ml: 0.5 }}>
           {props.command.title}
         </Typography>

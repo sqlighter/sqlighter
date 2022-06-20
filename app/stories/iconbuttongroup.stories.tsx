@@ -50,7 +50,7 @@ export const Toggles = TemplateToggles.bind({})
 
 export const TogglesWithLabels = TemplateToggles.bind({})
 TogglesWithLabels.args = {
-  label: true
+  commands: [{ ...sqlCmd, args: {label: true}}, dataCmd, chartCmd, addonCmd],
 }
 
 export const TogglesWithGrouping = TemplateToggles.bind({})
