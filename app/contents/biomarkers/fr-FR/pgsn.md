@@ -1,4 +1,0 @@
----
-translation: automatic
-title: Progestérone
----
