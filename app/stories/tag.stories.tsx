@@ -7,7 +7,6 @@ import { ComponentStory, ComponentMeta } from "@storybook/react"
 import { StorybookDecorator } from "../components/storybook"
 import { Tag } from "../components/ui/tags"
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: "UI/Tag",
   component: Tag,
@@ -20,48 +19,45 @@ export default {
   ],
 } as ComponentMeta<typeof Tag>
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: ComponentStory<typeof Tag> = (args) => <Tag {...args} />
-
-// More on args: https://storybook.js.org/docs/react/writing-stories/args
 
 export const Primary = Template.bind({})
 Primary.args = {
-  label: "Glucose",
+  title: "Glucose",
   onClick: null,
   href: null,
 }
 
 export const WithHref = Template.bind({})
 WithHref.args = {
-  label: "Glucose",
-  href: "/glucose",
+  title: "Wikipedia",
+  href: "https://www.wikipedia.org",
 }
 
 export const WithoutHref = Template.bind({})
 WithoutHref.args = {
-  label: "Glucose",
+  title: "No clicking",
   href: null,
-  onClick: null,
+  onCommand: null,
 }
 
 export const WithSuccessDot = Template.bind({})
 WithSuccessDot.args = {
-  label: "Glucose",
+  title: "Glucose",
   href: "/glucose",
   dot: "success",
 }
 
 export const WithWarningDot = Template.bind({})
 WithWarningDot.args = {
-  label: "Glucose",
+  title: "Glucose",
   href: "/glucose",
   dot: "warning",
 }
 
 export const WithErrorDot = Template.bind({})
 WithErrorDot.args = {
-  label: "Glucose",
+  title: "Glucose",
   href: "/glucose",
   dot: "error",
 }

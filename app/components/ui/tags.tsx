@@ -1,62 +1,42 @@
 //
-// tags.tsx - tag chips for articles tags, biomarkers with colored risk dots, etc
+// tags.tsx - tag chips for articles tags, amounts, etc
 //
 
 import React from "react"
 import Link from "next/link"
-import { Theme } from "@mui/material/styles"
-import { SxProps } from "@mui/material"
+import { Theme, SxProps } from "@mui/material"
 import Box from "@mui/material/Box"
 import Badge from "@mui/material/Badge"
 import Chip from "@mui/material/Chip"
+import Stack from "@mui/material/Stack"
 
-/** Risk associated with a biomarker level or action */
-export type Risk = "normal" | "medium" | "high"
+import { Command, CommandEvent } from "../../lib/commands"
 
-//
-// RiskBadge - a little circular dot badge showing the item's risk
-//
-
-interface RiskBadgeProps {
-  /** Badge is shown in this risk's color or not shown at all if null */
-  risk?: Risk
-
-  /** Content tagged with this badge */
-  children: React.ReactNode
-}
-
-export function getRiskColor(risk: Risk): "success" | "warning" | "error" | null {
-  switch (risk) {
-    case "normal":
-      return "success"
-    case "medium":
-      return "warning"
-    case "high":
-      return "error"
-  }
-  return null
-}
-
-/** Shows a dot badge colored according to risk on an item */
-export function RiskBadge({ risk, children }: RiskBadgeProps) {
-  const color = getRiskColor(risk)
-  if (!color) {
-    return <>{children}</>
-  }
-  return (
-    <Badge color={color} variant="dot" overlap="circular" anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
-      {children}
-    </Badge>
-  )
+const Tag_SxProps: SxProps<Theme> = {
+  ".MuiBadge-anchorOriginTopRight": {
+    position: "relative",
+    top: "6px",
+    left: "-9px",
+  },
+  ".MuiChip-labelSmall": {
+    position: "relative",
+    top: "1px",
+  },
 }
 
 //
 // Tag - a clickable tag chip
 //
 
-interface TagProps {
-  /** Label shown in chip */
-  label: string
+export interface TagProps {
+  /** Classname to be applied to component */
+  className?: string
+
+  /** Tag generates this command when clicked */
+  command?: Command
+
+  /** Label shown in chip (if command not provided) */
+  title?: string
 
   /** Chip is clickable and takes to this page (optional) */
   href?: string
@@ -64,52 +44,94 @@ interface TagProps {
   /** Dot badge is shown in this color (optional) */
   dot?: "default" | "primary" | "secondary" | "error" | "info" | "success" | "warning"
 
-  /** Dot badge colored according to risk (optional) */
-  risk?: Risk
-
   /** Chip size (default is medium) */
   size?: "medium" | "small"
 
-  /** Callback for onClick */
-  onClick?: React.EventHandler<any>
-
-  /** Additional properties */
-  sx?: SxProps<Theme>
+  /** Callback for commands */
+  onCommand?: CommandEvent
 }
 
 /** A clickable tag possibly showing a colored dot badge on it */
-export function Tag({ label, dot, risk, href, onClick, size, sx }: TagProps) {
-  let tag = <Chip variant="outlined" onClick={onClick} label={label} size={size} sx={sx} />
+export function Tag(props: TagProps) {
+  //
+  // handlers
+  //
 
-  // wrap in clickable link?
-  if (href) {
-    tag = <Link href={href}>{tag}</Link>
+  function handleClick(event) {
+    const command = props.command || {
+      command: "clickTag",
+      args: { ...props },
+    }
+    props.onCommand(event, command)
   }
 
+  const title = props.command?.title || props.title
+  const clickable = !!(props.onCommand || props.href)
+  let tag = (
+    <Chip
+      className="Tag-chip"
+      variant="outlined"
+      onClick={props.onCommand && !props.href ? handleClick : undefined}
+      label={title}
+      clickable={clickable}
+      size={props.size}
+    />
+  )
+
   // wrap in dot badge?
-  if (dot || risk) {
-    if (risk) {
-      dot = getRiskColor(risk)
-    }
+  if (props.dot) {
     tag = (
-      <Badge color={dot} variant="dot" overlap="circular" anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
+      <Badge className="Tag-badge" color={props.dot} variant="dot">
         {tag}
       </Badge>
     )
   }
 
-  return tag
+  // wrap in clickable link?
+  if (props.href) {
+    tag = (
+      <Link className="Tag-link" href={props.href}>
+        {tag}
+      </Link>
+    )
+  }
+
+  const className = "Tag-root" + (props.className ? " " + props.className : "")
+  return (
+    <Box className={className} sx={Tag_SxProps}>
+      {tag}
+    </Box>
+  )
 }
 
-/** A list of clickable tags */
-export function TagsCloud({ items }) {
+//
+// Tags - a list of tags
+//
+
+export interface TagsProps {
+  /** Class name to be given to this component */
+  className?: string
+  /** Properties of <Tag> items in the list */
+  tags: TagProps[]
+  /** Chip size (default is medium or as specified in tag itself) */
+  size?: "medium" | "small"
+  /** Callback for commands */
+  onCommand?: CommandEvent
+}
+
+/** A list of tags */
+export function Tags(props: TagsProps) {
+  const className = "Tags-root" + (props.className ? " " + props.className : "")
   return (
-    <Box display="flex" flexWrap="wrap">
-      {items.map((item, index) => (
-        <Box key={`measurement${index}`} sx={{ marginRight: 1, marginBottom: 1 }}>
-          <Tag key={index} {...item} />
-        </Box>
+    <Stack className={className} direction="row" spacing={1}>
+      {props.tags && props.tags.map((tagProps, idx) => (
+        <Tag
+          {...tagProps}
+          key={idx}
+          onCommand={tagProps.onCommand || props.onCommand}
+          size={tagProps.size || props.size}
+        />
       ))}
-    </Box>
+    </Stack>
   )
 }
