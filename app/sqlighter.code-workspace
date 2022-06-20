@@ -6,5 +6,10 @@
         {
             "path": "../../sqlighter-private"
         }
-    ]
+    ],
+    "settings": {
+        "eslint.alwaysShowStatus": false,
+        "eslint.lintTask.enable": true,
+        "eslint.packageManager": "yarn"
+    },
 }
