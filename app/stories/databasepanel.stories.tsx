@@ -4,10 +4,9 @@
 
 import React from "react"
 import { ComponentStory, ComponentMeta } from "@storybook/react"
-import { Box } from "@mui/material"
-import { StorybookDecorator } from "../components/storybook"
+import { StorybookDecorator, Wrapper } from "../components/storybook"
 import { DatabasePanel } from "../components/panels/databasepanel"
-import { fake_connection1, getChinookConnection } from "./fakedata"
+import { getTestConnection, getBlankConnection } from "./fakedata"
 
 export default {
   title: "Database/DatabasePanel",
@@ -21,34 +20,24 @@ export default {
   ],
   args: {
     title: "Database",
-    connection: fake_connection1,
   },
   parameters: {
     grid: { cellSize: 8 },
   },
 } as ComponentMeta<typeof DatabasePanel>
 
-const Template: ComponentStory<typeof DatabasePanel> = (args) => {
+const Template: ComponentStory<typeof DatabasePanel> = (args, { loaded: { connection } }) => {
   return (
-    <Box sx={{ height: 800, width: 1 }}>
-      <DatabasePanel {...args} />
-    </Box>
-  )
-}
-
-export const Primary = Template.bind({})
-
-/* TODO figure out why this story doesn't run in github action */
-const ChinookTemplate: ComponentStory<typeof DatabasePanel> = (args, { loaded: { connection } }) => {
-  return (
-    <Box sx={{ height: 800, width: 1 }}>
+    <Wrapper>
       <DatabasePanel {...args} connection={connection} />
-    </Box>
+    </Wrapper>
   )
 }
-export const WithChinook = ChinookTemplate.bind({})
-WithChinook.loaders = [
-  async () => ({
-    connection: await getChinookConnection(),
-  }),
-]
+export const Primary = Template.bind({})
+Primary.loaders = [async () => await getTestConnection("Chinook.db")]
+export const WithBlank = Template.bind({})
+WithBlank.loaders = [async () => await getBlankConnection()]
+export const WithNorthwind = Template.bind({})
+WithNorthwind.loaders = [async () => await getTestConnection("Northwind.db")]
+export const WithSakila = Template.bind({})
+WithSakila.loaders = [async () => await getTestConnection("Sakila.db")]

@@ -52,6 +52,19 @@ export const fake_connection3 = new FakeConnection({
   connection: {},
 })
 
+/** This is an empty database */
+export const fake_emptyDatabase = new FakeConnection({
+  client: "sqlite3",
+  title: "fakenook.db",
+  connection: {},
+  metadata: {
+    description:
+      "Chinook is a sample database available for many database engines. It can be created by running a single SQL script. Chinook database is an alternative to the Northwind database, being ideal for demos and testing ORM tools targeting single and multiple database servers.",
+    image: "/databases/chinook.jpg",
+    url: "https://github.com/lerocha/chinook-database#:~:text=Chinook%20is%20a%20sample%20database,single%20and%20multiple%20database%20servers.",
+  },
+})
+
 // DataConnection[]
 export const fake_connections1: DataConnection[] = [fake_connection1, fake_connection2, fake_connection3]
 
@@ -134,20 +147,41 @@ export const settingsCmd: Command = {
 // actual chinook.db database loaded on the spot from the network
 //
 
-const initSqlJs = (window as any).initSqlJs;
-export async function getChinookConnection(): Promise<SqliteDataConnection> {
+const initSqlJs = (window as any).initSqlJs
+
+export async function getTestConnection(database = "Test.db"): Promise<{ connection: SqliteDataConnection; schemas: DataSchema[] }> {
   const engine = await initSqlJs({
-    locateFile: file => `/${file}`
-  });  
+    locateFile: (file) => `/${file}`,
+  })
   const configs: DataConfig = {
     id: "dbc_chinook",
     client: "sqlite3",
-    title: "chinook.db",
+    title: database,
     connection: {
-      url: "https://sqlighter.com/databases/chinook.db"
+      url: `https://sqlighter.com/databases/${database.toLowerCase()}`,
     },
   }
   const connection = DataConnectionFactory.create(configs) as SqliteDataConnection
   await connection.connect(engine)
-  return connection
+  const schemas = await connection.getSchemas()
+  return { connection, schemas }
+}
+
+/** This is a connection to an empty, but real, in memory sqlite3 database */
+export async function getBlankConnection(): Promise<{ connection: SqliteDataConnection; schemas: DataSchema[] }> {
+  const engine = await initSqlJs({
+    locateFile: (file) => `/${file}`,
+  })
+  const configs: DataConfig = {
+    id: "dbc_empty",
+    client: "sqlite3",
+    title: "Blank.db",
+    connection: {
+      filename: ":memory:",
+    },
+  }
+  const connection = DataConnectionFactory.create(configs) as SqliteDataConnection
+  await connection.connect(engine)
+  const schemas = await connection.getSchemas()
+  return { connection, schemas }
 }

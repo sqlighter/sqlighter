@@ -66,7 +66,7 @@ export interface SchemaPanelProps extends PanelProps {
 // SchemaPanelWithDataGrid - shared base component
 //
 
-interface SchemaPanelWithDataGridProps extends SchemaPanelProps {
+export interface SchemaPanelWithDataGridProps extends SchemaPanelProps {
   /** Message to be shown if there are no columns or no rows */
   empty?: string
   /** Columns for data grid */
@@ -75,7 +75,7 @@ interface SchemaPanelWithDataGridProps extends SchemaPanelProps {
   rows?: any[]
 }
 
-function SchemaPanelWithDataGrid(props: SchemaPanelWithDataGridProps) {
+export function SchemaPanelWithDataGrid(props: SchemaPanelWithDataGridProps) {
   //
   // handlers
   //

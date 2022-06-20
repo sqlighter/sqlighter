@@ -26,3 +26,8 @@ export function StorybookDecorator(props) {
     </CssBaseline>
   )
 }
+
+/** Simple wrapper with defined height required by some components */
+export function Wrapper(props) {
+  return <Box sx={{ height: 800, width: 1 }}>{props.children}</Box>
+}
