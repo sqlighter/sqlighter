@@ -134,7 +134,7 @@ export function DatabasePanel(props: DatabasePanelProps) {
           label: true,
           connection: props.connection,
           database: schema.database,
-          sql: "SELECT COUNT(*) AS 'Tables' FROM sqlite_schema WHERE type == 'table'",
+          sql: "SELECT COUNT(*) AS 'Tables' FROM sqlite_schema WHERE type == 'table' AND name NOT LIKE 'sqlite_%'",
         },
       })
 
@@ -149,7 +149,7 @@ export function DatabasePanel(props: DatabasePanelProps) {
           connection: props.connection,
           database: schema.database,
           // TODO DatabaseTable / sql query to calculate total number of rows in database #48
-          sql: "SELECT COUNT(*) AS 'Tables' FROM sqlite_schema WHERE type == 'table'",
+          sql: "SELECT COUNT(*) AS 'Tables' FROM sqlite_schema WHERE type == 'table' AND name NOT LIKE 'sqlite_%'",
         },
       })
 
