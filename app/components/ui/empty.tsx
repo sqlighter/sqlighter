@@ -66,7 +66,7 @@ export interface EmptyProps {
   /** Large image shown as round avatar, centered */
   image?: any
   /** Icon (optional, in alternative to image) */
-  icon?: string
+  icon?: React.ReactNode | string
   /** Empty state title, eg. No documents */
   title?: string
   /** Empty state description (optional) */

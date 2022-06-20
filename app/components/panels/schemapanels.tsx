@@ -5,19 +5,19 @@
 // libs
 import React, { ReactElement } from "react"
 import { Theme, SxProps } from "@mui/material"
-import Badge from "@mui/material/Badge"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 import { GridColumns, GridRenderCellParams } from "@mui/x-data-grid"
 
 // model
-import { Command, CommandEvent } from "../../lib/commands"
+import { Command } from "../../lib/commands"
 import { DataConnection, DataSchema } from "../../lib/data/connections"
 
 // components
+import { DataGrid } from "../navigation/datagrid"
+import { Empty } from "../ui/empty"
 import { IconButtonGroup } from "../ui/iconbuttongroup"
 import { PanelProps } from "../navigation/panel"
-import { DataGrid } from "../navigation/datagrid"
 
 // styles applied to main and subcomponents
 const SchemaPanel_SxProps: SxProps<Theme> = {
@@ -62,8 +62,12 @@ export interface SchemaPanelProps extends PanelProps {
 //
 
 interface BaseSchemaPanelProps extends PanelProps {
-  columns: GridColumns<any>
-  rows: any[]
+  /** Message to be shown if there are no columns or no rows */
+  empty?: string
+  /** Columns for data grid */
+  columns?: GridColumns<any>
+  /** Rows of data to be shown */
+  rows?: any[]
 }
 
 function BaseSchemaPanel(props: BaseSchemaPanelProps) {
@@ -72,12 +76,17 @@ function BaseSchemaPanel(props: BaseSchemaPanelProps) {
   //
 
   const className = "SchemaPanel-root" + (props.className ? " " + props.className : "")
+
+  if (!props.columns || props.rows?.length < 1) {
+    return <Empty title={props.title} description={props.empty || "No data"} icon={props.icon} />
+  }
+
   return (
     <Box className={className} sx={SchemaPanel_SxProps}>
       <Box className="SchemaPanel-header">
-          <Typography className="SchemaPanel-title" variant="h6" sx={{ mr: 1 }}>
-            {props.title}
-          </Typography>
+        <Typography className="SchemaPanel-title" variant="h6" sx={{ mr: 1 }}>
+          {props.title}
+        </Typography>
       </Box>
       <DataGrid
         className="SchemaPanel-dataGrid"
@@ -148,7 +157,9 @@ export function TablesSchemaPanel(props: TablesSchemaPanelProps) {
   //
 
   if (!props.schema) {
-    return <>Loading...</>
+    return (
+      <BaseSchemaPanel title={props.variant == "tables" ? "Tables" : "Views"} icon={props.icon} empty="Loading..." />
+    )
   }
 
   /** Renders the same commands to view table structure or query its data as found in TreeViewItem */
@@ -252,6 +263,8 @@ export function TablesSchemaPanel(props: TablesSchemaPanelProps) {
   return (
     <BaseSchemaPanel
       title={props.variant == "tables" ? "Tables" : "Views"}
+      icon={props.icon}
+      empty={`This database has no ${props.variant.toLowerCase()}`}
       rows={rows}
       columns={columns}
       onCommand={handleCommand}
