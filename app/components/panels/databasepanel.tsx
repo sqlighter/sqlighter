@@ -8,6 +8,7 @@ import { useState, useEffect } from "react"
 import { Theme, SxProps } from "@mui/material"
 import Box from "@mui/material/Box"
 import Card from "@mui/material/Card"
+import capitalize from "@mui/material/utils/capitalize"
 
 // model
 import { Command } from "../../lib/commands"
@@ -35,9 +36,9 @@ const DatabasePanel_SxProps: SxProps<Theme> = {
   ".DatabasePanel-section": {
     height: 1,
   },
+
   ".DatabasePanel-card": {
     height: 1,
-
     marginLeft: -2,
     marginRight: -2,
   },
@@ -162,6 +163,7 @@ export function DatabasePanel(props: DatabasePanelProps) {
       command: "refreshSchema",
       icon: "refresh",
       title: "Refresh Schema",
+      args: { connection: props.connection },
     })
 
     if (canDownload) {
@@ -225,7 +227,7 @@ export function DatabasePanel(props: DatabasePanelProps) {
     <Box className="DatabasePanel-root" sx={DatabasePanel_SxProps}>
       <Section
         className="DatabasePanel-section"
-        title={props.connection.title}
+        title={capitalize(props.connection.title)}
         description={`A ${props.connection.configs.client} database`}
         commands={renderCommands()}
         variant="large"

@@ -20,6 +20,7 @@ import BoltOutlinedIcon from "@mui/icons-material/BoltOutlined"
 import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlined"
 import BookmarksOutlinedIcon from "@mui/icons-material/BookmarksOutlined"
 // import BungalowOutlinedIcon from "@mui/icons-material/BungalowOutlined"
+import CalendarViewWeekOutlinedIcon from "@mui/icons-material/CalendarViewWeekOutlined"
 import CodeOutlinedIcon from "@mui/icons-material/CodeOutlined"
 import CheckOutlinedIcon from "@mui/icons-material/CheckOutlined"
 import ChildCareOutlinedIcon from "@mui/icons-material/ChildCareOutlined"
@@ -54,6 +55,7 @@ import RefreshOutlinedIcon from "@mui/icons-material/RefreshOutlined"
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined"
 import SettingsOutlined from "@mui/icons-material/SettingsOutlined"
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined"
+import SwapHorizOutlinedIcon from "@mui/icons-material/SwapHorizOutlined"
 import SwipeLeftOutlinedIcon from "@mui/icons-material/SwipeLeftOutlined"
 import TableRowsOutlinedIcon from "@mui/icons-material/TableRowsOutlined"
 import TableIcon from "@mui/icons-material/TableChartOutlined"
@@ -108,6 +110,8 @@ export function Icon(props: IconProps) {
         return <CloseOutlinedIcon {...props} />
       case "code":
         return <CodeOutlinedIcon {...props} />
+      case "columns":
+        return <CalendarViewWeekOutlinedIcon {...props} />
       case "comment":
         return <ModeCommentOutlinedIcon {...props} />
       case "chart":
@@ -177,6 +181,8 @@ export function Icon(props: IconProps) {
         return <TableRowsOutlinedIcon {...props} />
       case "refresh":
         return <RefreshOutlinedIcon {...props} />
+      case "relations":
+        return <SwapHorizOutlinedIcon {...props} />
       case "rows":
         return <TableRowsOutlinedIcon {...props} />
       case "run":

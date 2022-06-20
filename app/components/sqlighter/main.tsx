@@ -233,7 +233,7 @@ export default function Main(props: MainProps) {
         setActivityId(command.args.id)
         return
 
-      case "changeConnection":
+      case "changedConnection":
         setConnection(command.args.item)
         break
 

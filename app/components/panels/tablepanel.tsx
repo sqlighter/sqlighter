@@ -3,21 +3,20 @@
 //
 
 // libs
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { Theme, SxProps } from "@mui/material"
 import Box from "@mui/material/Box"
 import Card from "@mui/material/Card"
 
 // model
 import { Command } from "../../lib/commands"
-import { DataConnection } from "../../lib/data/connections"
+import { DataConnection, DataSchema } from "../../lib/data/connections"
 
 // components
 import { PanelProps } from "../navigation/panel"
 import { Section } from "../ui/section"
-import { TablesSchemaPanel, IndexesSchemaPanel, TriggersSchemaPanel } from "./schemapanels"
+import { ColumnsSchemaPanel, IndexesSchemaPanel, RelationsSchemaPanel, TriggersSchemaPanel } from "./schemapanels"
 import { Tabs } from "../navigation/tabs"
-import { useForceUpdate } from "../hooks/useforceupdate"
 
 // styles applied to main and subcomponents
 const TablePanel_SxProps: SxProps<Theme> = {
@@ -25,70 +24,60 @@ const TablePanel_SxProps: SxProps<Theme> = {
   minWidth: 360,
   height: 1,
   maxHeight: 1,
-  padding: 1,
+
+  paddingTop: 1,
+  paddingBottom: 1,
+  paddingLeft: 3,
+  paddingRight: 3,
 
   ".TablePanel-section": {
     height: 1,
   },
+
   ".TablePanel-card": {
     height: 1,
+    marginLeft: -2,
+    marginRight: -2,
   },
 }
 
 export interface TablePanelProps extends PanelProps {
   /** Connection rendered by this panel */
   connection: DataConnection
-
+  /** Database for which we're showing the table */
+  database: string
   /** Name of table to be shown */
   table: string
+  /** Showing a table or view, default: table */
+  variant?: "table" | "view"
 }
 
 /** Shows schema and data of a database table  */
 export function TablePanel(props: TablePanelProps) {
+  console.debug()
   //
   // state
   //
 
+  // schema are requested asynchronously from connection
+  const [schemas, setSchemas] = useState<DataSchema[]>(null)
+  useEffect(() => {
+    props.connection.getSchemas(false).then((schemas) => {
+      setSchemas(schemas)
+    })
+  }, [props.connection])
+
+  // select the schema for the required database
+  const schema = schemas?.find((schema) => schema.database == props.database)
+
+  /** Schema of the table (or view) being shown */
+  const table =
+    props.variant == "view"
+      ? schema?.views?.find((v) => v.name == props.table)
+      : schema?.tables?.find((t) => t.name == props.table)
+
   // currently selected tab
-  const [tabId, setTabId] = useState<string>("tab_schema")
-
-  // used to force a refresh when data model changes
-  const forceUpdate = useForceUpdate()
-  function notifyChanges() {
-    forceUpdate()
-    if (props.onCommand) {
-      props.onCommand(null, {
-        command: "changedConnection",
-        args: {
-          item: props.connection,
-        },
-      })
-    }
-  }
-
-  /** Commands shown below section title */
-  const commands: (Command | "spacing")[] = [
-    { command: "info", icon: "info", title: "Details" },
-    { command: "bookmark", icon: "bookmark", title: "Bookmark" },
-    { command: "history", icon: "history", title: "History" },
-    "spacing",
-    { command: "prettify", icon: "autofix", title: "Prettify" },
-    "spacing",
-    { command: "comment", icon: "comment", title: "Comments" },
-    { command: "share", icon: "share", title: "Share" },
-  ]
-
-  const actionCmd: Command = {
-    command: "print",
-    title: "Print",
-    description: "Print this document",
-    icon: "print",
-  }
-
-  const tabs = [
-    <TableSchemaPanel id="tab_schema" title="Schema" icon="table"  />,
-    <TableDataPanel id="tab_data" title="Data" icon="database" />,
-  ]
+  const [tabId, setTabId] = useState<string>("tab_columns")
 
   //
   // handlers
@@ -102,7 +91,7 @@ export function TablePanel(props: TablePanelProps) {
         break
 
       case "changedConnection":
-        notifyChanges()
+        //notifyChanges()
         return
     }
 
@@ -114,22 +103,127 @@ export function TablePanel(props: TablePanelProps) {
   // render
   //
 
-  function renderCommands() {return[]}
-  function renderTabs() {return[]}
+  /** Commands are used as actions but also to show metadata */
+  function renderCommands() {
+    const commands = []
+
+    if (table) {
+      const columns = table.columns?.length
+      commands.push({
+        command: "openQuery",
+        title: `${columns} columns`,
+        icon: "columns",
+        args: {
+          label: true,
+          connection: props.connection,
+          database: props.database,
+          sql: `pragma '${props.database}'.table_info('${props.table}')`,
+        },
+      })
+
+      // count total rows
+      let rows = table.stats?.rows
+      commands.push({
+        command: "openQuery",
+        title: `${rows} rows`,
+        icon: "rows",
+        args: {
+          label: true,
+          connection: props.connection,
+          database: props.database,
+          sql: `SELECT COUNT(*) 'NumberOfRows' FROM '${props.database}'.'${props.table}'`,
+        },
+      })
+
+      if (commands.length > 0) {
+        commands.push("divider")
+      }
+    }
+
+    commands.push({
+      command: "refreshSchema",
+      icon: "refresh",
+      title: "Refresh Schema",
+      args: { connection: props.connection },
+    })
+
+    commands.push("divider")
+    commands.push({
+      command: "openQuery",
+      title: "Query Data",
+      icon: "code",
+      args: {
+        // render button with label and color
+        label: true,
+        color: "primary",
+        // query panel specs
+        title: `All ${props.table}`,
+        connection: props.connection,
+        database: props.database,
+        sql: `SELECT * FROM '${props.database}'.'${props.table}'`,
+      },
+    })
+    // more commands...
+
+    return commands
+  }
+
+  /** Panels to be rendered as tabs */
+  function renderTabs() {
+    return [
+      <ColumnsSchemaPanel
+        id="tab_columns"
+        title="Columns"
+        icon="columns"
+        connection={props.connection}
+        schema={schema}
+        table={props.table}
+        variant={props.variant}
+        onCommand={handleCommand}
+      />,
+      <IndexesSchemaPanel
+        id="tab_indexes"
+        title="Indexes"
+        icon="index"
+        connection={props.connection}
+        schema={schema}
+        table={props.table}
+        onCommand={handleCommand}
+      />,
+      <RelationsSchemaPanel
+        id="tab_relations"
+        title="Relations"
+        icon="relations"
+        connection={props.connection}
+        schema={schema}
+        table={props.table}
+        variant={props.variant}
+        onCommand={handleCommand}
+      />,
+      <TriggersSchemaPanel
+        id="tab_triggers"
+        title="Triggers"
+        icon="trigger"
+        connection={props.connection}
+        schema={schema}
+        table={props.table}
+        onCommand={handleCommand}
+      />,
+    ]
+  }
 
   return (
-    <Box className="DatabasePanel-root" sx={TablePanel_SxProps}>
+    <Box className="TablePanel-root" sx={TablePanel_SxProps}>
       <Section
-        className="DatabasePanel-section"
-        title={props.connection.title}
-        description={`A ${props.connection.configs.client} database`}
+        className="TablePanel-section"
+        title={props.table}
+        description={`A ${props.connection.title?.toLowerCase()} ${props.variant || "table"}`}
         commands={renderCommands()}
-        variant="large"
         onCommand={props.onCommand}
       >
-        <Card className="DatabasePanel-card" variant="outlined" square={true}>
+        <Card className="TablePanel-card" variant="outlined" square={true}>
           <Tabs
-            className="DatabasePanel-tabs"
+            className="TablePanel-tabs"
             tabId={tabId}
             tabs={renderTabs()}
             onCommand={handleCommand}
@@ -139,28 +233,4 @@ export function TablePanel(props: TablePanelProps) {
       </Section>
     </Box>
   )
-  }
-
-//
-// TableSchemaPanel 
-//
-
-export interface TableSchemaPanelProps extends PanelProps {
-
 }
-
-export function TableSchemaPanel(props: TableSchemaPanelProps) {
-  return <>Table schema goes here</>
-} 
-
-//
-// TableDataPanel
-//
-
-export interface TableDataPanelProps extends PanelProps {
-
-}
-
-export function TableDataPanel(props: TableSchemaPanelProps) {
-  return <>Table data goes here</>
-} 
