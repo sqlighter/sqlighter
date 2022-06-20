@@ -26,13 +26,20 @@ const DatabasePanel_SxProps: SxProps<Theme> = {
   minWidth: 360,
   height: 1,
   maxHeight: 1,
-  padding: 1,
+
+  paddingTop: 2,
+  paddingBottom: 1,
+  paddingLeft: 3,
+  paddingRight: 3,
 
   ".DatabasePanel-section": {
     height: 1,
   },
   ".DatabasePanel-card": {
     height: 1,
+
+    marginLeft: -2,
+    marginRight: -2,
   },
 }
 
