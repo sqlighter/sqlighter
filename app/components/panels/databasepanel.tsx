@@ -115,7 +115,7 @@ export function DatabasePanel(props: DatabasePanelProps) {
             label: true,
             connection: props.connection,
             database: schema.database,
-            sql: "select * from sqlite_schema", // TODO show pragma query
+            sql: "SELECT page_count * page_size AS 'Size' FROM pragma_page_count(), pragma_page_size();",
           },
         })
       }
@@ -129,7 +129,7 @@ export function DatabasePanel(props: DatabasePanelProps) {
             label: true,
             connection: props.connection,
             database: schema.database,
-            sql: "select * from sqlite_schema",
+            sql: "SELECT COUNT(*) AS 'Tables' FROM sqlite_schema WHERE type == 'table'",
           },
         })
       }
@@ -145,7 +145,8 @@ export function DatabasePanel(props: DatabasePanelProps) {
             label: true,
             connection: props.connection,
             database: schema.database,
-            sql: "select * from sqlite_schema", // TODO show query
+            // TODO DatabaseTable / sql query to calculate total number of rows in database #48
+            sql: "SELECT COUNT(*) AS 'Tables' FROM sqlite_schema WHERE type == 'table'",
           },
         })
       }
@@ -163,7 +164,7 @@ export function DatabasePanel(props: DatabasePanelProps) {
         icon: "download",
         args: {
           label: true,
-          color: "primary"
+          color: "primary",
         },
       })
     }
