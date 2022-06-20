@@ -32,6 +32,14 @@ const HomePanel_SxProps: SxProps<Theme> = {
   paddingLeft: 1,
   paddingRight: 1,
   paddingBottom: 2,
+
+  ".HomePanel-actions": {
+    paddingTop: 4,
+  },
+
+  ".HomePanel-templates": {
+    paddingTop: 4,
+  },
 }
 
 export interface HomePanelProps extends PanelProps {
