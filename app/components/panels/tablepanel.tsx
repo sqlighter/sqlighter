@@ -4,7 +4,9 @@
 
 // libs
 import React, { useState } from "react"
-//import { Theme, SxProps } from "@mui/material"
+import { Theme, SxProps } from "@mui/material"
+import Box from "@mui/material/Box"
+import Card from "@mui/material/Card"
 
 // model
 import { Command } from "../../lib/commands"
@@ -12,22 +14,27 @@ import { DataConnection } from "../../lib/data/connections"
 
 // components
 import { PanelProps } from "../navigation/panel"
+import { Section } from "../ui/section"
+import { TablesSchemaPanel, IndexesSchemaPanel, TriggersSchemaPanel } from "./schemapanels"
+import { Tabs } from "../navigation/tabs"
 import { useForceUpdate } from "../hooks/useforceupdate"
-import { TabsPanel } from "../navigation/tabspanel"
-/*
+
 // styles applied to main and subcomponents
 const TablePanel_SxProps: SxProps<Theme> = {
   width: 1,
   minWidth: 360,
   height: 1,
   maxHeight: 1,
+  padding: 1,
 
-  paddingTop: 1.5,
-  paddingLeft: 1,
-  paddingRight: 1,
-  paddingBottom: 1,
+  ".TablePanel-section": {
+    height: 1,
+  },
+  ".TablePanel-card": {
+    height: 1,
+  },
 }
-*/
+
 export interface TablePanelProps extends PanelProps {
   /** Connection rendered by this panel */
   connection: DataConnection
@@ -107,19 +114,32 @@ export function TablePanel(props: TablePanelProps) {
   // render
   //
 
+  function renderCommands() {}
+  function renderTabs() {}
+
   return (
-    <TabsPanel
-      className="TablePanel-root"
-      title={props.title}
-      description="short description of panel like number of columns and rows"
-      commands={commands}
-      action={actionCmd}
-      tabId={tabId}
-      tabs={tabs}
-      onCommand={handleCommand}
-    />
+    <Box className="DatabasePanel-root" sx={TablePanel_SxProps}>
+      <Section
+        className="DatabasePanel-section"
+        title={props.connection.title}
+        description={`A ${props.connection.configs.client} database`}
+        commands={renderCommands()}
+        variant="large"
+        onCommand={props.onCommand}
+      >
+        <Card className="DatabasePanel-card" variant="outlined" square={true}>
+          <Tabs
+            className="DatabasePanel-tabs"
+            tabId={tabId}
+            tabs={renderTabs()}
+            onCommand={handleCommand}
+            variant="below"
+          />
+        </Card>
+      </Section>
+    </Box>
   )
-}
+  }
 
 //
 // TableSchemaPanel 
