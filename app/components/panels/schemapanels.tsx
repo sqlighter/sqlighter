@@ -527,3 +527,237 @@ export function TriggersSchemaPanel(props: IndexesSchemaPanelProps) {
     />
   )
 }
+
+//
+// ColumnsSchemaPanel - concrete use of SchemaPanelWithDataGrid
+//
+
+export interface ColumnsSchemaPanelProps extends SchemaPanelProps {
+  /** Show columns in this table */
+  table: string
+  /** Panel is used to show tables or views? */
+  variant: "table" | "view"
+}
+
+/** Shows list of columns in a table or view */
+export function ColumnsSchemaPanel(props: ColumnsSchemaPanelProps) {
+  //
+  // model
+  //
+
+  function getColumns(): GridColumns<any> {
+    /** Renders the same commands to view table structure or query its data as found in TreeViewItem */
+    function renderRowCommands(params: GridRenderCellParams): ReactElement {
+      const indexName = params.row.name
+      const commands: (Command | "spacing")[] = []
+      if (params.row.sql) {
+        commands.push({
+          command: "openQuery",
+          title: "View Sql",
+          icon: "query",
+          args: {
+            title: `Create ${indexName}`,
+            connection: props.connection,
+            database: props.schema?.database,
+            sql: params.row.sql,
+          },
+        })
+      }
+      return (
+        <IconButtonGroup
+          className="SchemaPanels-rowButtons"
+          commands={commands}
+          size="small"
+          onCommand={props.onCommand}
+        />
+      )
+    }
+
+    const columns: GridColumns<any> = [
+      {
+        field: "name",
+        headerName: "Name",
+        description: `Trigger name`,
+        sortable: true,
+        minWidth: COLUMN_WIDTH_MEDIUM,
+        maxWidth: COLUMN_WIDTH_LARGE,
+        flex: 3,
+      },
+      {
+        field: "table",
+        headerName: "Table",
+        description: "Table that this trigger works on",
+        sortable: true,
+        minWidth: COLUMN_WIDTH_SMALL,
+        maxWidth: COLUMN_WIDTH_MEDIUM,
+        flex: 1,
+      },
+      {
+        field: "sql",
+        headerName: "SQL",
+        description: "SQL create statement",
+        sortable: true,
+        minWidth: COLUMN_WIDTH_SMALL,
+        flex: 3,
+      },
+      {
+        field: "commands",
+        headerName: "",
+        sortable: false,
+        minWidth: COLUMN_WIDTH_PER_COMMAND,
+        maxWidth: COLUMN_WIDTH_PER_COMMAND,
+        renderCell: renderRowCommands,
+        align: "center",
+      },
+    ]
+    return columns
+  }
+
+  function getRows() {
+    let indexes = props.schema?.indexes || []
+    if (props.table) {
+      indexes = indexes.filter((idx) => idx.table == props.table)
+    }
+    return indexes.map((idx, id) => {
+      return {
+        id,
+        name: idx.name,
+        table: idx.table,
+        sql: idx.sql,
+      }
+    })
+  }
+
+  //
+  // render
+  //
+
+  const loaded = props.schema
+  const columns = loaded && getColumns()
+  const rows = loaded && getRows()
+  return (
+    <SchemaPanelWithDataGrid
+      {...props}
+      empty={loaded ? "This database has no triggers" : "Loading..."}
+      rows={rows}
+      columns={columns}
+    />
+  )
+}
+
+//
+// RelationsSchemaPanel - concrete use of SchemaPanelWithDataGrid
+//
+
+export interface RelationsSchemaPanelProps extends SchemaPanelProps {
+  /** Show foreign keys in this table */
+  table: string
+  /** Panel is used to show tables or views? */
+  variant: "table" | "view"
+}
+
+/** Shows list of foreign keys in a table or view */
+export function RelationsSchemaPanel(props: RelationsSchemaPanelProps) {
+  //
+  // model
+  //
+
+  function getColumns(): GridColumns<any> {
+    /** Renders the same commands to view table structure or query its data as found in TreeViewItem */
+    function renderRowCommands(params: GridRenderCellParams): ReactElement {
+      const indexName = params.row.name
+      const commands: (Command | "spacing")[] = []
+      if (params.row.sql) {
+        commands.push({
+          command: "openQuery",
+          title: "View Sql",
+          icon: "query",
+          args: {
+            title: `Create ${indexName}`,
+            connection: props.connection,
+            database: props.schema?.database,
+            sql: params.row.sql,
+          },
+        })
+      }
+      return (
+        <IconButtonGroup
+          className="SchemaPanels-rowButtons"
+          commands={commands}
+          size="small"
+          onCommand={props.onCommand}
+        />
+      )
+    }
+
+    const columns: GridColumns<any> = [
+      {
+        field: "name",
+        headerName: "Name",
+        description: `Trigger name`,
+        sortable: true,
+        minWidth: COLUMN_WIDTH_MEDIUM,
+        maxWidth: COLUMN_WIDTH_LARGE,
+        flex: 3,
+      },
+      {
+        field: "table",
+        headerName: "Table",
+        description: "Table that this trigger works on",
+        sortable: true,
+        minWidth: COLUMN_WIDTH_SMALL,
+        maxWidth: COLUMN_WIDTH_MEDIUM,
+        flex: 1,
+      },
+      {
+        field: "sql",
+        headerName: "SQL",
+        description: "SQL create statement",
+        sortable: true,
+        minWidth: COLUMN_WIDTH_SMALL,
+        flex: 3,
+      },
+      {
+        field: "commands",
+        headerName: "",
+        sortable: false,
+        minWidth: COLUMN_WIDTH_PER_COMMAND,
+        maxWidth: COLUMN_WIDTH_PER_COMMAND,
+        renderCell: renderRowCommands,
+        align: "center",
+      },
+    ]
+    return columns
+  }
+
+  function getRows() {
+    let indexes = props.schema?.indexes || []
+    if (props.table) {
+      indexes = indexes.filter((idx) => idx.table == props.table)
+    }
+    return indexes.map((idx, id) => {
+      return {
+        id,
+        name: idx.name,
+        table: idx.table,
+        sql: idx.sql,
+      }
+    })
+  }
+
+  //
+  // render
+  //
+
+  const loaded = props.schema
+  const columns = loaded && getColumns()
+  const rows = loaded && getRows()
+  return (
+    <SchemaPanelWithDataGrid
+      {...props}
+      empty={loaded ? "This database has no triggers" : "Loading..."}
+      rows={rows}
+      columns={columns}
+    />
+  )
+}
