@@ -153,12 +153,19 @@ export function DatabasePanel(props: DatabasePanelProps) {
         },
       })
 
-      if (commands.length > 0 && canDownload) {
+      if (commands.length > 0) {
         commands.push("divider")
       }
     }
 
+    commands.push({
+      command: "refreshSchema",
+      icon: "refresh",
+      title: "Refresh Schema",
+    })
+
     if (canDownload) {
+      commands.push("divider")
       commands.push({
         command: "downloadDatabase",
         title: "Download",
