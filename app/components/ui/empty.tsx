@@ -84,8 +84,9 @@ export function Empty(props: EmptyProps) {
   const variant = props.variant || "round"
 
   // NOTE image is "unoptimized" to avoid issues with next.js in storybook
+  const className = "Empty-root" + (props.className ? " " + props.className :  "")
   return (
-    <Stack className={`Empty-root ${props.className}`} sx={Empty_SxProps}>
+    <Stack className={className} sx={Empty_SxProps}>
       {props.image && (
         <Box className={`Empty-imageBox Empty-${variant}Box`}>
           <Image src={props.image} layout="fill" objectFit="cover" unoptimized />

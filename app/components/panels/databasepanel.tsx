@@ -15,7 +15,7 @@ import { prettyBytes } from "../../lib/shared"
 
 // components
 import { PanelProps } from "../navigation/panel"
-import { TablesSchemaPanel } from "./schemapanels"
+import { TablesSchemaPanel, IndexesSchemaPanel, TriggersSchemaPanel } from "./schemapanels"
 import { TabsPanel } from "../navigation/tabspanel"
 
 export interface DatabasePanelProps extends PanelProps {
@@ -76,6 +76,22 @@ export function DatabasePanel(props: DatabasePanelProps) {
       schema={schema}
       onCommand={handleCommand}
       variant="views"
+    />,
+    <IndexesSchemaPanel
+      id="tab_indexes"
+      title="Indexes"
+      icon="index"
+      connection={props.connection}
+      schema={schema}
+      onCommand={handleCommand}
+    />,
+    <TriggersSchemaPanel
+      id="tab_triggers"
+      title="Triggers"
+      icon="trigger"
+      connection={props.connection}
+      schema={schema}
+      onCommand={handleCommand}
     />,
   ]
 
