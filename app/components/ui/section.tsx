@@ -18,6 +18,12 @@ const Section_SxProps: SxProps<Theme> = {
   display: "flex",
   flexDirection: "column",
 
+  // optical aligment for larger title
+  ".Section-largeTitle": {
+    position: "relative",
+    left: "-2px",
+  },
+
   ".Section-action": {
     height: 40,
     minWidth: 80,
@@ -89,7 +95,7 @@ export function Section(props: SectionProps) {
         <Box sx={{ flexGrow: 1 }}>
           {props.title && (
             <Typography
-              className="Section-title"
+              className={props.variant === "large" ? "Section-title Section-largeTitle" : "Section-title"}
               variant={props.variant === "large" ? "h5" : "h6"}
               color="text.primary"
             >
