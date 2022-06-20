@@ -55,6 +55,6 @@ WithLinks.args = {
   tags: [
     { title: "Wikipedia", href: "https://www.wikipedia.org" },
     { title: "Weather", href: "https://weather.com" },
-    { title: "GitHub", dot: "https://github.com" },
+    { title: "GitHub", href: "https://github.com" },
   ],
 }

@@ -66,12 +66,12 @@ export function Tag(props: TagProps) {
   }
 
   const title = props.command?.title || props.title
-  const clickable = !!(props.onCommand || props.href)
+  const clickable = props.onCommand || props.href ? true : false
   let tag = (
     <Chip
       className="Tag-chip"
       variant="outlined"
-      onClick={props.onCommand && !props.href ? handleClick : undefined}
+      onClick={props.onCommand ? handleClick : undefined}
       label={title}
       clickable={clickable}
       size={props.size}
@@ -124,14 +124,15 @@ export function Tags(props: TagsProps) {
   const className = "Tags-root" + (props.className ? " " + props.className : "")
   return (
     <Stack className={className} direction="row" spacing={1}>
-      {props.tags && props.tags.map((tagProps, idx) => (
-        <Tag
-          {...tagProps}
-          key={idx}
-          onCommand={tagProps.onCommand || props.onCommand}
-          size={tagProps.size || props.size}
-        />
-      ))}
+      {props.tags &&
+        props.tags.map((tagProps, idx) => (
+          <Tag
+            {...tagProps}
+            key={idx}
+            onCommand={tagProps.onCommand || props.onCommand}
+            size={tagProps.size || props.size}
+          />
+        ))}
     </Stack>
   )
 }
