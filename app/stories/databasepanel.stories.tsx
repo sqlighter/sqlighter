@@ -7,7 +7,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react"
 import { Box } from "@mui/material"
 import { StorybookDecorator } from "../components/storybook"
 import { DatabasePanel } from "../components/panels/databasepanel"
-import { fake_connection1 /*, getChinookConnection */ } from "./fakedata"
+import { fake_connection1, getChinookConnection } from "./fakedata"
 
 export default {
   title: "Database/DatabasePanel",
@@ -38,7 +38,7 @@ const Template: ComponentStory<typeof DatabasePanel> = (args) => {
 
 export const Primary = Template.bind({})
 
-/* TODO figure out why this story doesn't run in github action
+/* TODO figure out why this story doesn't run in github action */
 const ChinookTemplate: ComponentStory<typeof DatabasePanel> = (args, { loaded: { connection } }) => {
   return (
     <Box sx={{ height: 800, width: 1 }}>
@@ -51,5 +51,4 @@ WithChinook.loaders = [
   async () => ({
     connection: await getChinookConnection(),
   }),
-];
-*/
+]
