@@ -308,18 +308,19 @@ export function IndexesSchemaPanel(props: IndexesSchemaPanelProps) {
     function renderRowCommands(params: GridRenderCellParams): ReactElement {
       const indexName = params.row.name
       const commands: (Command | "spacing")[] = []
-      commands.push({
-        command: "openQuery",
-        title: "View Sql",
-        icon: "query",
-        args: {
-          title: `Create ${indexName}`,
-          connection: props.connection,
-          database: props.schema?.database,
-          sql: params.row.sql,
-        },
-      })
-
+      if (params.row.sql) {
+        commands.push({
+          command: "openQuery",
+          title: "View Sql",
+          icon: "query",
+          args: {
+            title: `Create ${indexName}`,
+            connection: props.connection,
+            database: props.schema?.database,
+            sql: params.row.sql,
+          },
+        })
+      }
       return (
         <IconButtonGroup
           className="SchemaPanels-rowButtons"
@@ -432,18 +433,19 @@ export function TriggersSchemaPanel(props: IndexesSchemaPanelProps) {
     function renderRowCommands(params: GridRenderCellParams): ReactElement {
       const indexName = params.row.name
       const commands: (Command | "spacing")[] = []
-      commands.push({
-        command: "openQuery",
-        title: "View Sql",
-        icon: "query",
-        args: {
-          title: `Create ${indexName}`,
-          connection: props.connection,
-          database: props.schema?.database,
-          sql: params.row.sql,
-        },
-      })
-
+      if (params.row.sql) {
+        commands.push({
+          command: "openQuery",
+          title: "View Sql",
+          icon: "query",
+          args: {
+            title: `Create ${indexName}`,
+            connection: props.connection,
+            database: props.schema?.database,
+            sql: params.row.sql,
+          },
+        })
+      }
       return (
         <IconButtonGroup
           className="SchemaPanels-rowButtons"
