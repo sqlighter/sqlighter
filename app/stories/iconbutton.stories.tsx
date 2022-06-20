@@ -92,7 +92,7 @@ WithoutTooltip.args = {
 // Automatic tests
 // https://storybook.js.org/tutorials/ui-testing-handbook/
 // https://playwright.dev/
-
+/*
 export const Autotesting = Template.bind({})
 Autotesting.args = {
   withLabel: true,
@@ -145,3 +145,4 @@ Autotesting.play = async () => {
     userEvent.click(button)
   }
 }
+*/
