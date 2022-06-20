@@ -130,7 +130,6 @@ export class SqliteDataConnection extends DataConnection {
           const sequenceResult = await this.getResult(
             `select count(*) from '${database}'.sqlite_sequence where name = '${table}'`
           )
-          console.log(`autoIncrement results`, sequenceResult)
           if (sequenceResult.values[0][0]) {
             autoIncrement = true
           }
