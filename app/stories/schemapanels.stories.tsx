@@ -4,16 +4,15 @@
 
 import React from "react"
 import { ComponentStory, ComponentMeta } from "@storybook/react"
-import { Box } from "@mui/material"
 import { StorybookDecorator, Wrapper } from "../components/storybook"
 import { DatabasePanel } from "../components/panels/databasepanel"
+import { getTestConnection, getBlankConnection } from "./fakedata"
 import {
   SchemaPanelWithDataGrid,
   TablesSchemaPanel,
   IndexesSchemaPanel,
   TriggersSchemaPanel,
 } from "../components/panels/schemapanels"
-import { getTestConnection, getBlankConnection } from "./fakedata"
 
 export default {
   title: "Database/SchemaPanels",
