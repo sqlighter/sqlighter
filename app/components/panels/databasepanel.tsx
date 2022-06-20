@@ -105,53 +105,48 @@ export function DatabasePanel(props: DatabasePanelProps) {
     const commands = []
 
     if (schema) {
-      // database size
-      if (schema.stats?.size > 0) {
-        commands.push({
-          command: "openQuery",
-          title: prettyBytes(schema.stats.size),
-          icon: "database",
-          args: {
-            label: true,
-            connection: props.connection,
-            database: schema.database,
-            sql: "SELECT page_count * page_size AS 'Size' FROM pragma_page_count(), pragma_page_size();",
-          },
-        })
-      }
+      const size = schema.stats?.size | 0
+      commands.push({
+        command: "openQuery",
+        title: prettyBytes(size),
+        icon: "database",
+        args: {
+          label: true,
+          connection: props.connection,
+          database: schema.database,
+          sql: "SELECT page_count * page_size AS 'Size' FROM pragma_page_count(), pragma_page_size();",
+        },
+      })
 
-      if (schema.tables?.length > 0) {
-        commands.push({
-          command: "openQuery",
-          title: `${schema.tables?.length || 0} tables`,
-          icon: "table",
-          args: {
-            label: true,
-            connection: props.connection,
-            database: schema.database,
-            sql: "SELECT COUNT(*) AS 'Tables' FROM sqlite_schema WHERE type == 'table'",
-          },
-        })
-      }
+      const tables = schema.tables?.length | 0
+      commands.push({
+        command: "openQuery",
+        title: `${tables} tables`,
+        icon: "table",
+        args: {
+          label: true,
+          connection: props.connection,
+          database: schema.database,
+          sql: "SELECT COUNT(*) AS 'Tables' FROM sqlite_schema WHERE type == 'table'",
+        },
+      })
 
       // count total rows
-      let rows = schema.tables.reduce((t1, t2) => t1 + t2.stats?.rows, 0)
-      if (rows > 0) {
-        commands.push({
-          command: "openQuery",
-          title: `${rows} rows`,
-          icon: "rows",
-          args: {
-            label: true,
-            connection: props.connection,
-            database: schema.database,
-            // TODO DatabaseTable / sql query to calculate total number of rows in database #48
-            sql: "SELECT COUNT(*) AS 'Tables' FROM sqlite_schema WHERE type == 'table'",
-          },
-        })
-      }
+      let rows = schema.tables ? schema.tables.reduce((t1, t2) => t1 + t2.stats?.rows, 0) : 0
+      commands.push({
+        command: "openQuery",
+        title: `${rows} rows`,
+        icon: "rows",
+        args: {
+          label: true,
+          connection: props.connection,
+          database: schema.database,
+          // TODO DatabaseTable / sql query to calculate total number of rows in database #48
+          sql: "SELECT COUNT(*) AS 'Tables' FROM sqlite_schema WHERE type == 'table'",
+        },
+      })
 
-      if (canDownload) {
+      if (commands.length > 0 && canDownload) {
         commands.push("divider")
       }
     }

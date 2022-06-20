@@ -114,8 +114,8 @@ export function TablePanel(props: TablePanelProps) {
   // render
   //
 
-  function renderCommands() {}
-  function renderTabs() {}
+  function renderCommands() {return[]}
+  function renderTabs() {return[]}
 
   return (
     <Box className="DatabasePanel-root" sx={TablePanel_SxProps}>
