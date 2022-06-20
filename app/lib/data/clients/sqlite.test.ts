@@ -2,7 +2,7 @@
 // sqlite.test.ts
 //
 
-import { getChinookConnection, getTestConnection, getNorthwindConnection, writeJson } from "../../test/utilities"
+import { getChinookConnection, getTestConnection, getNorthwindConnection, getBlankConnection, writeJson } from "../../test/utilities"
 
 // Interpreting schema
 // https://www.sqlite.org/pragma.html
@@ -153,6 +153,26 @@ describe("sqlite.ts (node env)", () => {
     expect(schema.stats?.size).toBe(5828608)
   })
 
+  test("getSchema (blank.db)", async () => {
+    const connection = await getBlankConnection()
+    const schemas = await connection.getSchemas(false)
+    expect(schemas).toBeTruthy()
+    expect(schemas.length).toBe(1)
+    const schema = schemas[0]
+
+    // save schema for verification
+    writeJson("./lib/test/artifacts/blank.schema.json", schema)
+
+    expect(schema.database).toBe("main")
+    expect(schema.tables).toBeUndefined()
+    expect(schema.views).toBeUndefined()
+    expect(schema.indexes).toBeUndefined()
+    expect(schema.triggers).toBeUndefined()
+
+    // stats info
+    expect(schema.stats?.version).toBe("0")
+    expect(schema.stats?.size).toBe(0)
+  })
 
   test("getSchema (northwind.db)", async () => {
     const connection = await getNorthwindConnection()

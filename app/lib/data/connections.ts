@@ -253,11 +253,9 @@ export abstract class DataConnection {
    * @param format Specific format to export in, default null for native format
    * @returns Exported data as byte array and data mime type
    */
-  public abstract export(
-    database?: string,
-    table?: string,
-    format?: string
-  ): Promise<{ data: Uint8Array; type: string }>
+  public async export(database?: string, table?: string, format?: string): Promise<{ data: Uint8Array; type: string }> {
+    return null
+  }
 }
 
 //

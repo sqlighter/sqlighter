@@ -127,13 +127,14 @@ export class SqliteDataConnection extends DataConnection {
       const primaryKey = columnResult[5] ? true : undefined // pk
       if (primaryKey) {
         try {
-          const sequenceResult = await this.getResult(`select count(*) from '${database}'.sqlite_sequence where name = '${table}'`)
+          const sequenceResult = await this.getResult(
+            `select count(*) from '${database}'.sqlite_sequence where name = '${table}'`
+          )
           console.log(`autoIncrement results`, sequenceResult)
           if (sequenceResult.values[0][0]) {
             autoIncrement = true
           }
-        }
-        catch {
+        } catch {
           // no results, ok!
         }
       }
@@ -177,11 +178,11 @@ export class SqliteDataConnection extends DataConnection {
   /** Generate schema for tables or views in given database */
   private async _getTablesSchema(database: string, type: "table" | "view"): Promise<DataTableSchema[]> {
     const tables: DataTableSchema[] = []
-    try {
-      const tablesResult = await this.getResult(
-        `select type, name, sql from '${database}'.sqlite_schema where (type == '${type}') and (name not like 'sqlite_%')`
-      )
-      for (const tableResult of tablesResult.values) {
+    const tablesResults = await this.getResults(
+      `select type, name, sql from '${database}'.sqlite_schema where (type == '${type}') and (name not like 'sqlite_%')`
+    )
+    if (tablesResults?.length == 1) {
+      for (const tableResult of tablesResults[0].values) {
         const tableName = tableResult[1] as string // or view
 
         let rows = undefined
@@ -204,45 +205,41 @@ export class SqliteDataConnection extends DataConnection {
         })
       }
       tables.sort((a, b) => a.name.localeCompare(b.name))
-      return tables
-    } catch (exception) {
-      console.warn(
-        `SqliteDataConnection._getTablesSchema - database: ${database}, type: ${type}, exception:${exception}`,
-        exception
-      )
-      return undefined
     }
+    return tables?.length > 0 ? tables : undefined
   }
 
   /** Generates schema for indexes */
   private async _getIndexesSchema(database: string) {
     const indexes = []
-    const indexesResult = await this.getResult(
+    const indexesResults = await this.getResults(
       `select name, tbl_name, sql from '${database}'.sqlite_schema where type == 'index'`
     )
-    for (const indexResult of indexesResult.values) {
-      const indexName = indexResult[0] as string // or view
-      const columnsResult = await this.getResult(`pragma '${database}'.index_info('${indexName}')`)
-      const columns = columnsResult.values.map((v) => v[2])
-      indexes.push({
-        name: indexName,
-        sql: indexResult[2]?.toString(),
-        table: indexResult[1]?.toString(),
-        columns,
-      })
+    if (indexesResults?.length == 1) {
+      for (const indexResult of indexesResults[0].values) {
+        const indexName = indexResult[0] as string // or view
+        const columnsResult = await this.getResult(`pragma '${database}'.index_info('${indexName}')`)
+        const columns = columnsResult.values.map((v) => v[2])
+        indexes.push({
+          name: indexName,
+          sql: indexResult[2]?.toString(),
+          table: indexResult[1]?.toString(),
+          columns,
+        })
+      }
+      indexes.sort((a, b) => a.name.localeCompare(b.name))
     }
-    indexes.sort((a, b) => a.name.localeCompare(b.name))
-    return indexes
+    return indexes.length > 0 ? indexes : undefined
   }
 
   /** Generates schema for triggers */
   private async _getTriggersSchema(database: string) {
-    try {
-      const triggers = []
-      const triggersResult = await this.getResult(
-        `select name, tbl_name, sql from '${database}'.sqlite_schema where type == 'trigger'`
-      )
-      for (const triggerResult of triggersResult.values) {
+    const triggers = []
+    const triggersResults = await this.getResults(
+      `select name, tbl_name, sql from '${database}'.sqlite_schema where type == 'trigger'`
+    )
+    if (triggersResults?.length == 1) {
+      for (const triggerResult of triggersResults[0].values) {
         triggers.push({
           name: triggerResult[0] as string,
           sql: triggerResult[2]?.toString(),
@@ -250,14 +247,11 @@ export class SqliteDataConnection extends DataConnection {
         })
       }
       triggers.sort((a, b) => a.name.localeCompare(b.name))
-      return triggers.length > 0 ? triggers : undefined
-    } catch (exception) {
-      console.warn(`SqliteDataConnection._getTriggersSchema - ${database} has no triggers`, exception)
     }
-    return undefined
+    return triggers.length > 0 ? triggers : undefined
   }
 
-  /** 
+  /**
    * Returns database schema in simplified, ready to use format.
    * @param refresh True if schema should be refreshed (default is using cached version if available)
    * @returns An array with a single DataSchema extracted from this database

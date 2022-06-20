@@ -42,3 +42,18 @@ export async function getChinookConnection(): Promise<SqliteDataConnection> {
 export async function getNorthwindConnection(): Promise<SqliteDataConnection> {
   return getTestConnection("northwind.db")
 }
+
+/** Returns a blank in memory database */
+export async function getBlankConnection(): Promise<SqliteDataConnection> {
+  const engine = await initSqlJs()
+  const configs: DataConfig = {
+    client: "sqlite3",
+    title: "Blank.db",
+    connection: {
+      filename: ":memory:"
+    },
+  }
+  const connection = DataConnectionFactory.create(configs) as SqliteDataConnection
+  await connection.connect(engine)
+  return connection
+}
