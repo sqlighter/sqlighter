@@ -7,7 +7,7 @@ import React, { useState, useEffect } from "react"
 import { Theme, SxProps } from "@mui/material"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
-import { GridColumns, GridRenderCellParams } from "@mui/x-data-grid"
+import { GridColumns } from "@mui/x-data-grid"
 
 // model
 import { Command } from "../../lib/commands"
@@ -16,7 +16,7 @@ import { DataConnection, DataSchema, DataTableSchema } from "../../lib/data/conn
 // components
 import { DataGrid } from "../navigation/datagrid"
 import { PanelProps } from "../navigation/panel"
-import { COLUMN_WIDTH_MEDIUM } from "./schemapanels"
+import { COLUMN_FLEX_LARGEST, COLUMN_FLEX_LARGE, COLUMN_WIDTH_MEDIUM, COLUMN_WIDTH_SMALL } from "./schemapanels"
 
 // styles shared between all components used to render schema elements
 export const TableDataPanel_SxProps: SxProps<Theme> = {
@@ -96,16 +96,31 @@ export function TableDataPanel(props: TableDataPanelProps) {
 
   /** Columns to be shown in DataGrid */
   function getColumns(): GridColumns<any> {
+    /** Returns true if given column is numeric */
+    function getColumnType(columnName): "number" | undefined {
+      const datatype = tableSchema?.columns?.find((c) => c.name == columnName)?.datatype?.toLowerCase()
+      if (datatype) {
+        if (datatype.indexOf("integer") != -1 || datatype.indexOf("numeric") != -1 || datatype.indexOf("real") != -1) {
+          return "number"
+        }
+      }
+      return undefined
+    }
+
     if (tableSchema) {
       return tableSchema.columns?.map((column, columnIndex) => {
+        const columnType = getColumnType(column.name)
         return {
           field: column.name,
           headerName: column.name,
+          headerAlign: "left",
           sortable: true,
-          width: COLUMN_WIDTH_MEDIUM,
-          flex: 1
+          type: columnType,
+          minWidth: COLUMN_WIDTH_SMALL,
+          width: columnType == "number" ? COLUMN_WIDTH_SMALL : COLUMN_WIDTH_MEDIUM,
+          flex: columnType == "number" ? COLUMN_FLEX_LARGE : COLUMN_FLEX_LARGEST,
         }
-      })      
+      })
     }
     return []
   }
@@ -129,9 +144,7 @@ export function TableDataPanel(props: TableDataPanelProps) {
   //
 
   function handleCommand(event, command: Command) {
-    console.debug(`TableDataPanel.handleCommand - ${command.command}`, command)
-    switch (command.command) {
-    }
+    // console.debug(`TableDataPanel.handleCommand - ${command.command}`, command)
     if (props.onCommand) {
       props.onCommand(event, command)
     }
@@ -147,9 +160,9 @@ export function TableDataPanel(props: TableDataPanelProps) {
     <Box className="TableDataPanel-root" sx={TableDataPanel_SxProps}>
       <Box className="TableDataPanel-header">
         <Typography className="TableDataPanel-title" variant="h6" sx={{ mr: 1 }}>
-          {tableSchema?.stats?.rows
+          {tableSchema?.stats?.rows > 1
             ? `${tableSchema.stats.rows} rows x ${tableSchema.columns?.length} columns`
-            : props.table}
+            : props.title}
         </Typography>
       </Box>
       {columns && (
@@ -160,6 +173,9 @@ export function TableDataPanel(props: TableDataPanelProps) {
           onCommand={handleCommand}
           dataGridProps={{
             autoHeight: false,
+            disableColumnMenu: false,
+            disableColumnFilter: false,
+            disableColumnSelector: false,
           }}
         />
       )}
