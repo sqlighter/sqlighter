@@ -223,7 +223,7 @@ export function TablesSchemaPanel(props: TablesSchemaPanelProps) {
         sortable: true,
         minWidth: COLUMN_WIDTH_MEDIUM,
         maxWidth: COLUMN_WIDTH_LARGE,
-        flex: 3,
+        flex: COLUMN_FLEX_LARGEST,
       },
       {
         field: "columns",
@@ -232,7 +232,7 @@ export function TablesSchemaPanel(props: TablesSchemaPanelProps) {
         type: "number",
         sortable: true,
         maxWidth: COLUMN_WIDTH_SMALL,
-        flex: 1,
+        flex: COLUMN_FLEX_LARGE,
       },
       {
         field: "rows",
@@ -241,7 +241,7 @@ export function TablesSchemaPanel(props: TablesSchemaPanelProps) {
         type: "number",
         sortable: true,
         maxWidth: COLUMN_WIDTH_SMALL,
-        flex: 1,
+        flex: COLUMN_FLEX_LARGE,
       },
       {
         field: "sql",
@@ -249,7 +249,7 @@ export function TablesSchemaPanel(props: TablesSchemaPanelProps) {
         description: "SQL create statement",
         sortable: true,
         minWidth: COLUMN_WIDTH_MEDIUM,
-        flex: 3,
+        flex: COLUMN_FLEX_LARGEST,
       },
       {
         field: "commands",
@@ -347,7 +347,7 @@ export function IndexesSchemaPanel(props: IndexesSchemaPanelProps) {
         sortable: true,
         minWidth: COLUMN_WIDTH_MEDIUM,
         maxWidth: COLUMN_WIDTH_LARGE,
-        flex: 3,
+        flex: COLUMN_FLEX_LARGEST,
       },
       {
         field: "table",
@@ -356,7 +356,7 @@ export function IndexesSchemaPanel(props: IndexesSchemaPanelProps) {
         sortable: true,
         minWidth: COLUMN_WIDTH_SMALL,
         maxWidth: COLUMN_WIDTH_MEDIUM,
-        flex: 1,
+        flex: COLUMN_FLEX_LARGE,
       },
       {
         field: "columns",
@@ -365,7 +365,7 @@ export function IndexesSchemaPanel(props: IndexesSchemaPanelProps) {
         sortable: true,
         minWidth: COLUMN_WIDTH_MEDIUM,
         maxWidth: COLUMN_WIDTH_LARGE,
-        flex: 1,
+        flex: COLUMN_FLEX_LARGE,
       },
       {
         field: "sql",
@@ -373,7 +373,7 @@ export function IndexesSchemaPanel(props: IndexesSchemaPanelProps) {
         description: "SQL create statement",
         sortable: true,
         minWidth: COLUMN_WIDTH_SMALL,
-        flex: 3,
+        flex: COLUMN_FLEX_LARGEST,
       },
       {
         field: "commands",
@@ -474,7 +474,7 @@ export function TriggersSchemaPanel(props: IndexesSchemaPanelProps) {
         sortable: true,
         minWidth: COLUMN_WIDTH_MEDIUM,
         maxWidth: COLUMN_WIDTH_LARGE,
-        flex: 3,
+        flex: COLUMN_FLEX_LARGEST,
       },
       {
         field: "table",
@@ -483,7 +483,7 @@ export function TriggersSchemaPanel(props: IndexesSchemaPanelProps) {
         sortable: true,
         minWidth: COLUMN_WIDTH_SMALL,
         maxWidth: COLUMN_WIDTH_MEDIUM,
-        flex: 1,
+        flex: COLUMN_FLEX_LARGE,
       },
       {
         field: "sql",
@@ -491,7 +491,7 @@ export function TriggersSchemaPanel(props: IndexesSchemaPanelProps) {
         description: "SQL create statement",
         sortable: true,
         minWidth: COLUMN_WIDTH_SMALL,
-        flex: 3,
+        flex: COLUMN_FLEX_LARGEST,
       },
       {
         field: "commands",
@@ -603,7 +603,7 @@ export function ColumnsSchemaPanel(props: ColumnsSchemaPanelProps) {
         maxWidth: COLUMN_WIDTH_SMALL,
         align: "left",
         renderCell: (params: GridRenderCellParams) => {
-          return params.row.primaryKey ? <Icon>key</Icon> : <></>
+          return params.row.primaryKey ? <Icon color="action">key</Icon> : <></>
         },
       },
       {
@@ -634,7 +634,7 @@ export function ColumnsSchemaPanel(props: ColumnsSchemaPanelProps) {
         headerAlign: "center",
         align: "center",
         renderCell: (params: GridRenderCellParams) => {
-          return params.row.notNull ? <></> : <Icon>check</Icon>
+          return params.row.notNull ? <></> : <Icon color="action">check</Icon>
         },
       },
       {
@@ -705,27 +705,37 @@ export interface RelationsSchemaPanelProps extends SchemaPanelProps {
 /** Shows list of foreign keys in a table or view */
 export function RelationsSchemaPanel(props: RelationsSchemaPanelProps) {
   //
+  // state
+  //
+
+  let tableSchema
+  if (props.schema) {
+    tableSchema =
+      props.variant == "view"
+        ? props.schema.views?.find((v) => v.name.toLowerCase() == props.table.toLowerCase())
+        : props.schema.tables.find((t) => t.name.toLowerCase() == props.table.toLowerCase())
+  }
+
+  //
   // model
   //
 
   function getColumns(): GridColumns<any> {
     /** Renders the same commands to view table structure or query its data as found in TreeViewItem */
     function renderRowCommands(params: GridRenderCellParams): ReactElement {
-      const indexName = params.row.name
-      const commands: (Command | "spacing")[] = []
-      if (params.row.sql) {
-        commands.push({
+      const commands: (Command | "spacing")[] = [
+        {
           command: "openQuery",
           title: "View Sql",
           icon: "query",
           args: {
-            title: `Create ${indexName}`,
+            title: `Foreign key on ${params.row.fromColumn}`,
             connection: props.connection,
             database: props.schema?.database,
-            sql: params.row.sql,
+            sql: `SELECT * FROM pragma_foreign_key_list("${props.table}") WHERE "from" = "${params.row.fromColumn}"`,
           },
-        })
-      }
+        },
+      ]
       return (
         <IconButtonGroup
           className="SchemaPanels-rowButtons"
@@ -738,30 +748,60 @@ export function RelationsSchemaPanel(props: RelationsSchemaPanelProps) {
 
     const columns: GridColumns<any> = [
       {
+        // just a static key icon for visuals only
         field: "name",
-        headerName: "Name",
-        description: `Trigger name`,
+        headerName: "Fk",
+        description: "Foreign Key",
+        minWidth: COLUMN_WIDTH_PER_COMMAND,
+        maxWidth: COLUMN_WIDTH_PER_COMMAND,
+        sortable: false,
+        align: "left",
+        renderCell: () => <Icon color="action">foreignKey</Icon>,
+      },
+      {
+        field: "fromColumn",
+        headerName: "From Column",
+        description: `Column in this ${props.variant} that has a foreign key reference`,
         sortable: true,
         minWidth: COLUMN_WIDTH_MEDIUM,
         maxWidth: COLUMN_WIDTH_LARGE,
-        flex: 3,
+        flex: COLUMN_FLEX_LARGE,
+      },
+      {
+        field: "toColumn",
+        headerName: "To Column",
+        description: "Column referenced by foreign key",
+        sortable: true,
+        minWidth: COLUMN_WIDTH_MEDIUM,
+        maxWidth: COLUMN_WIDTH_LARGE,
+        flex: COLUMN_FLEX_LARGE,
       },
       {
         field: "table",
-        headerName: "Table",
-        description: "Table that this trigger works on",
+        headerName: "On Table",
+        description: "Table referenced by foreign key",
         sortable: true,
-        minWidth: COLUMN_WIDTH_SMALL,
-        maxWidth: COLUMN_WIDTH_MEDIUM,
-        flex: 1,
+        minWidth: COLUMN_WIDTH_MEDIUM,
+        maxWidth: COLUMN_WIDTH_LARGE,
+        flex: COLUMN_FLEX_LARGE,
       },
       {
-        field: "sql",
-        headerName: "SQL",
-        description: "SQL create statement",
+        field: "onUpdate",
+        headerName: "On Update",
+        description: "Effect when referenced key is updated",
         sortable: true,
-        minWidth: COLUMN_WIDTH_SMALL,
-        flex: 3,
+        minWidth: COLUMN_WIDTH_MEDIUM,
+        maxWidth: COLUMN_WIDTH_LARGE,
+        flex: COLUMN_FLEX_LARGE,
+      },
+      {
+        field: "onDelete",
+        headerName: "On Delete",
+        description: "Effect when referenced key is deleted",
+        sortable: true,
+        minWidth: COLUMN_WIDTH_MEDIUM,
+        maxWidth: COLUMN_WIDTH_LARGE,
+        flex: COLUMN_FLEX_LARGE,
       },
       {
         field: "commands",
@@ -777,17 +817,9 @@ export function RelationsSchemaPanel(props: RelationsSchemaPanelProps) {
   }
 
   function getRows() {
-    let indexes = props.schema?.indexes || []
-    if (props.table) {
-      indexes = indexes.filter((idx) => idx.table == props.table)
-    }
-    return indexes.map((idx, id) => {
-      return {
-        id,
-        name: idx.name,
-        table: idx.table,
-        sql: idx.sql,
-      }
+    const foreignKeys = tableSchema?.foreignKeys || []
+    return foreignKeys.map((fk, id) => {
+      return { id, ...fk }
     })
   }
 
@@ -801,7 +833,7 @@ export function RelationsSchemaPanel(props: RelationsSchemaPanelProps) {
   return (
     <SchemaPanelWithDataGrid
       {...props}
-      empty={loaded ? "This database has no triggers" : "Loading..."}
+      empty={loaded ? `This ${props.variant} has no foreign keys` : "Loading..."}
       rows={rows}
       columns={columns}
     />

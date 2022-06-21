@@ -43,7 +43,7 @@ import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined"
 import InboxOutlinedIcon from "@mui/icons-material/InboxOutlined"
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined"
 import InsertChartOutlinedIcon from "@mui/icons-material/InsertChartOutlined"
-import KeyOutlinedIcon from "@mui/icons-material/KeyOutlined"
+// import KeyOutlinedIcon from "@mui/icons-material/KeyOutlined"
 import MenuOpenOutlinedIcon from "@mui/icons-material/MenuOpenOutlined"
 import ModeCommentOutlinedIcon from "@mui/icons-material/ModeCommentOutlined"
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined"
@@ -66,6 +66,8 @@ import WhatshotOutlinedIcon from "@mui/icons-material/WhatshotOutlined"
 // https://github.com/TeamWertarbyte/mdi-material-ui
 // https://pictogrammers.github.io/@mdi/font/6.5.95/
 import { DatabaseOutline } from "mdi-material-ui"
+import { Key } from "mdi-material-ui"
+import { KeyLink } from "mdi-material-ui"
 // import { DatabaseExportOutline } from "mdi-material-ui"
 import { ArrowExpand } from "mdi-material-ui"
 import { ImageText } from "mdi-material-ui"
@@ -151,6 +153,8 @@ export function Icon(props: IconProps) {
         return <FolderIcon {...props} />
       case "format":
         return <AlignHorizontalLeftOutlinedIcon {...props} />
+      case "foreignKey":
+        return <KeyLink {...props} />
       case "fullscreen":
         // return <FullscreenOutlinedIcon {...props} />
         return <ArrowExpand {...props} />
@@ -166,7 +170,7 @@ export function Icon(props: IconProps) {
       case "info":
         return <InfoOutlinedIcon {...props} />
       case "key":
-        return <KeyOutlinedIcon {...props} />
+        return <Key {...props} />
       case "more":
         return <MoreHorizOutlinedIcon {...props} />
       case "pin":
