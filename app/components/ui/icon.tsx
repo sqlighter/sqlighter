@@ -43,7 +43,7 @@ import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined"
 import InboxOutlinedIcon from "@mui/icons-material/InboxOutlined"
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined"
 import InsertChartOutlinedIcon from "@mui/icons-material/InsertChartOutlined"
-import KeyIcon from "@mui/icons-material/KeyOutlined"
+import KeyOutlinedIcon from "@mui/icons-material/KeyOutlined"
 import MenuOpenOutlinedIcon from "@mui/icons-material/MenuOpenOutlined"
 import ModeCommentOutlinedIcon from "@mui/icons-material/ModeCommentOutlined"
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined"
@@ -166,7 +166,7 @@ export function Icon(props: IconProps) {
       case "info":
         return <InfoOutlinedIcon {...props} />
       case "key":
-        return <KeyIcon {...props} />
+        return <KeyOutlinedIcon {...props} />
       case "more":
         return <MoreHorizOutlinedIcon {...props} />
       case "pin":

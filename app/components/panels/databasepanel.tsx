@@ -210,6 +210,7 @@ export function DatabasePanel(props: DatabasePanelProps) {
         icon="index"
         connection={props.connection}
         schema={schema}
+        variant="database"
         onCommand={handleCommand}
       />,
       <TriggersSchemaPanel
@@ -218,6 +219,7 @@ export function DatabasePanel(props: DatabasePanelProps) {
         icon="trigger"
         connection={props.connection}
         schema={schema}
+        variant="database"
         onCommand={handleCommand}
       />,
     ]

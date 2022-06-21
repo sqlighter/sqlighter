@@ -16,13 +16,19 @@ import { DataConnection, DataSchema } from "../../lib/data/connections"
 // components
 import { DataGrid } from "../navigation/datagrid"
 import { Empty } from "../ui/empty"
+import { Icon } from "../ui/icon"
 import { IconButtonGroup } from "../ui/iconbuttongroup"
 import { PanelProps } from "../navigation/panel"
 
-export const COLUMN_WIDTH_LARGE = 240
-export const COLUMN_WIDTH_MEDIUM = 160
+// standardize column widths on few sizes
 export const COLUMN_WIDTH_SMALL = 100
+export const COLUMN_WIDTH_MEDIUM = 160
+export const COLUMN_WIDTH_LARGE = 240
+export const COLUMN_WIDTH_XXL = 400
 export const COLUMN_WIDTH_PER_COMMAND = 40 // a command icon is 28px
+
+export const COLUMN_FLEX_LARGE = 2
+export const COLUMN_FLEX_LARGEST = 3
 
 // styles shared between all components used to render schema elements
 const SchemaPanel_SxProps: SxProps<Theme> = {
@@ -295,6 +301,8 @@ export function TablesSchemaPanel(props: TablesSchemaPanelProps) {
 export interface IndexesSchemaPanelProps extends SchemaPanelProps {
   /** Show only indexes in specific table? */
   table?: string
+  /** Panel is used to show indexes in a database, table or view? */
+  variant: "database" | "table" | "view"
 }
 
 /** Shows list of indexes in given database or table */
@@ -406,7 +414,7 @@ export function IndexesSchemaPanel(props: IndexesSchemaPanelProps) {
   return (
     <SchemaPanelWithDataGrid
       {...props}
-      empty={loaded ? "This database has no indexes" : "Loading..."}
+      empty={loaded ? `This ${props.variant} has no indexes` : "Loading..."}
       rows={rows}
       columns={columns}
     />
@@ -420,6 +428,8 @@ export function IndexesSchemaPanel(props: IndexesSchemaPanelProps) {
 export interface TriggersSchemaPanelProps extends SchemaPanelProps {
   /** Show only triggers in specific table? */
   table?: string
+  /** Panel is used to show triggers in a database, table or view? */
+  variant: "database" | "table" | "view"
 }
 
 /** Shows list of indexes in given database or table */
@@ -521,7 +531,7 @@ export function TriggersSchemaPanel(props: IndexesSchemaPanelProps) {
   return (
     <SchemaPanelWithDataGrid
       {...props}
-      empty={loaded ? "This database has no triggers" : "Loading..."}
+      empty={loaded ? `This ${props.variant} has no triggers` : "Loading..."}
       rows={rows}
       columns={columns}
     />
@@ -541,12 +551,16 @@ export interface ColumnsSchemaPanelProps extends SchemaPanelProps {
 
 /** Shows list of columns in a table or view */
 export function ColumnsSchemaPanel(props: ColumnsSchemaPanelProps) {
+  //
+  // state
+  //
+
   let tableSchema
   if (props.schema) {
     tableSchema =
       props.variant == "view"
-        ? props.schema.views?.find((v) => v.name == props.table)
-        : props.schema.tables.find((t) => t.name == props.table)
+        ? props.schema.views?.find((v) => v.name.toLowerCase() == props.table.toLowerCase())
+        : props.schema.tables.find((t) => t.name.toLowerCase() == props.table.toLowerCase())
   }
 
   //
@@ -556,21 +570,19 @@ export function ColumnsSchemaPanel(props: ColumnsSchemaPanelProps) {
   function getColumns(): GridColumns<any> {
     /** Renders the same commands to view table structure or query its data as found in TreeViewItem */
     function renderRowCommands(params: GridRenderCellParams): ReactElement {
-      const indexName = params.row.name
-      const commands: (Command | "spacing")[] = []
-      if (params.row.sql) {
-        commands.push({
+      const commands: (Command | "spacing")[] = [
+        {
           command: "openQuery",
           title: "View Sql",
           icon: "query",
           args: {
-            title: `Create ${indexName}`,
+            title: `Column ${params.row.name}`,
             connection: props.connection,
             database: props.schema?.database,
-            sql: params.row.sql,
+            sql: `SELECT * FROM pragma_table_info('${props.table}') WHERE name = '${params.row.name}'`,
           },
-        })
-      }
+        },
+      ]
       return (
         <IconButtonGroup
           className="SchemaPanels-rowButtons"
@@ -583,12 +595,16 @@ export function ColumnsSchemaPanel(props: ColumnsSchemaPanelProps) {
 
     const columns: GridColumns<any> = [
       {
-        field: "pk",
+        field: "primaryKey",
         headerName: "Primary",
         description: `Primary Key`,
         sortable: true,
         minWidth: COLUMN_WIDTH_SMALL,
         maxWidth: COLUMN_WIDTH_SMALL,
+        align: "left",
+        renderCell: (params: GridRenderCellParams) => {
+          return params.row.primaryKey ? <Icon>key</Icon> : <></>
+        },
       },
       {
         field: "name",
@@ -596,25 +612,30 @@ export function ColumnsSchemaPanel(props: ColumnsSchemaPanelProps) {
         description: `Column name`,
         sortable: true,
         minWidth: COLUMN_WIDTH_MEDIUM,
-        maxWidth: COLUMN_WIDTH_LARGE,
-        flex: 3,
+        maxWidth: COLUMN_WIDTH_XXL,
+        flex: COLUMN_FLEX_LARGEST,
       },
       {
         field: "datatype",
         headerName: "Type",
         description: "Data type",
         sortable: true,
-        minWidth: COLUMN_WIDTH_SMALL,
-        maxWidth: COLUMN_WIDTH_MEDIUM,
-        flex: 1,
+        minWidth: COLUMN_WIDTH_MEDIUM,
+        maxWidth: COLUMN_WIDTH_XXL,
+        flex: COLUMN_FLEX_LARGE,
       },
       {
-        field: "nullable",
+        field: "notNull",
         headerName: "Nullable",
         description: "Column can be null?",
         sortable: true,
         minWidth: COLUMN_WIDTH_SMALL,
         maxWidth: COLUMN_WIDTH_SMALL,
+        headerAlign: "center",
+        align: "center",
+        renderCell: (params: GridRenderCellParams) => {
+          return params.row.notNull ? <></> : <Icon>check</Icon>
+        },
       },
       {
         field: "default",
@@ -622,8 +643,14 @@ export function ColumnsSchemaPanel(props: ColumnsSchemaPanelProps) {
         description: "Default value",
         sortable: true,
         minWidth: COLUMN_WIDTH_MEDIUM,
-        maxWidth: COLUMN_WIDTH_LARGE,
-        flex: 3,
+        maxWidth: COLUMN_WIDTH_XXL,
+        flex: COLUMN_FLEX_LARGE,
+        renderCell: (params: GridRenderCellParams) => {
+          if (params.row.default) {
+            return params.row.default
+          }
+          return params.row.notNull ? <></> : <Typography color="text.secondary">(null)</Typography>
+        },
       },
       {
         field: "commands",
@@ -641,15 +668,8 @@ export function ColumnsSchemaPanel(props: ColumnsSchemaPanelProps) {
   function getRows() {
     return (
       tableSchema?.columns &&
-      tableSchema.columns.map((col, id) => {
-        return {
-          id: col.name,
-          pk: col.primaryKey,
-          name: col.name,
-          datatype: col.datatype,
-          nullable: col.notNull ? false : true,
-          default: col.default,
-        }
+      tableSchema.columns.map((col) => {
+        return { id: col.name, ...col }
       })
     )
   }
@@ -664,7 +684,7 @@ export function ColumnsSchemaPanel(props: ColumnsSchemaPanelProps) {
   return (
     <SchemaPanelWithDataGrid
       {...props}
-      empty={loaded ? "This database has no triggers" : "Loading..."}
+      empty={loaded ? `This ${props.variant} has no columns` : "Loading..."}
       rows={rows}
       columns={columns}
     />

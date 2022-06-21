@@ -192,6 +192,7 @@ export function TablePanel(props: TablePanelProps) {
           connection={props.connection}
           schema={schema}
           table={props.table}
+          variant={props.variant}
           onCommand={handleCommand}
         />
       )
@@ -217,6 +218,7 @@ export function TablePanel(props: TablePanelProps) {
         connection={props.connection}
         schema={schema}
         table={props.table}
+        variant={props.variant}
         onCommand={handleCommand}
       />
     )
