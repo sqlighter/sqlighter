@@ -17,6 +17,7 @@ import { PanelProps } from "../navigation/panel"
 import { Section } from "../ui/section"
 import { ColumnsSchemaPanel, IndexesSchemaPanel, RelationsSchemaPanel, TriggersSchemaPanel } from "./schemapanels"
 import { Tabs } from "../navigation/tabs"
+import { TableDataPanel } from "./tabledatapanel"
 
 // styles applied to main and subcomponents
 const TablePanel_SxProps: SxProps<Theme> = {
@@ -77,7 +78,7 @@ export function TablePanel(props: TablePanelProps) {
       : schema?.tables?.find((t) => t.name == props.table)
 
   // currently selected tab
-  const [tabId, setTabId] = useState<string>("tab_columns")
+  const [tabId, setTabId] = useState<string>("tab_data")
 
   //
   // handlers
@@ -109,18 +110,6 @@ export function TablePanel(props: TablePanelProps) {
 
     if (table) {
       const columns = table.columns?.length
-      commands.push({
-        command: "openQuery",
-        title: `${columns} columns`,
-        icon: "columns",
-        args: {
-          label: true,
-          connection: props.connection,
-          database: props.database,
-          sql: `pragma '${props.database}'.table_info('${props.table}')`,
-        },
-      })
-
       // count total rows
       let rows = table.stats?.rows
       commands.push({
@@ -132,6 +121,18 @@ export function TablePanel(props: TablePanelProps) {
           connection: props.connection,
           database: props.database,
           sql: `SELECT COUNT(*) 'NumberOfRows' FROM '${props.database}'.'${props.table}'`,
+        },
+      })
+      // count total columns
+      commands.push({
+        command: "openQuery",
+        title: `${columns} columns`,
+        icon: "columns",
+        args: {
+          label: true,
+          connection: props.connection,
+          database: props.database,
+          sql: `pragma '${props.database}'.table_info('${props.table}')`,
         },
       })
 
@@ -171,6 +172,16 @@ export function TablePanel(props: TablePanelProps) {
   /** Panels to be rendered as tabs */
   function renderTabs() {
     const tabs = [
+      <TableDataPanel
+        id="tab_data"
+        title="Data"
+        icon="table"
+        connection={props.connection}
+        schema={schema}
+        table={props.table}
+        variant={props.variant}
+        onCommand={handleCommand}
+      />,
       <ColumnsSchemaPanel
         id="tab_columns"
         title="Columns"

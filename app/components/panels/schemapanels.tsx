@@ -44,6 +44,10 @@ const SchemaPanel_SxProps: SxProps<Theme> = {
     paddingLeft: 1,
   },
 
+  ".SchemaPanel-title": {
+    marginRight: 1
+  },
+
   ".SchemaPanel-dataGrid": {
     flexGrow: 1,
     width: 1,
@@ -144,7 +148,7 @@ export function SchemaPanelWithDataGrid(props: SchemaPanelWithDataGridProps) {
   return (
     <Box className={className} sx={SchemaPanel_SxProps}>
       <Box className="SchemaPanel-header">
-        <Typography className="SchemaPanel-title" variant="h6" sx={{ mr: 1 }}>
+        <Typography className="SchemaPanel-title" variant="h6">
           {props.title}
         </Typography>
       </Box>
