@@ -541,6 +541,14 @@ export interface ColumnsSchemaPanelProps extends SchemaPanelProps {
 
 /** Shows list of columns in a table or view */
 export function ColumnsSchemaPanel(props: ColumnsSchemaPanelProps) {
+  let tableSchema
+  if (props.schema) {
+    tableSchema =
+      props.variant == "view"
+        ? props.schema.views?.find((v) => v.name == props.table)
+        : props.schema.tables.find((t) => t.name == props.table)
+  }
+
   //
   // model
   //
@@ -575,29 +583,46 @@ export function ColumnsSchemaPanel(props: ColumnsSchemaPanelProps) {
 
     const columns: GridColumns<any> = [
       {
+        field: "pk",
+        headerName: "Primary",
+        description: `Primary Key`,
+        sortable: true,
+        minWidth: COLUMN_WIDTH_SMALL,
+        maxWidth: COLUMN_WIDTH_SMALL,
+      },
+      {
         field: "name",
         headerName: "Name",
-        description: `Trigger name`,
+        description: `Column name`,
         sortable: true,
         minWidth: COLUMN_WIDTH_MEDIUM,
         maxWidth: COLUMN_WIDTH_LARGE,
         flex: 3,
       },
       {
-        field: "table",
-        headerName: "Table",
-        description: "Table that this trigger works on",
+        field: "datatype",
+        headerName: "Type",
+        description: "Data type",
         sortable: true,
         minWidth: COLUMN_WIDTH_SMALL,
         maxWidth: COLUMN_WIDTH_MEDIUM,
         flex: 1,
       },
       {
-        field: "sql",
-        headerName: "SQL",
-        description: "SQL create statement",
+        field: "nullable",
+        headerName: "Nullable",
+        description: "Column can be null?",
         sortable: true,
         minWidth: COLUMN_WIDTH_SMALL,
+        maxWidth: COLUMN_WIDTH_SMALL,
+      },
+      {
+        field: "default",
+        headerName: "Default",
+        description: "Default value",
+        sortable: true,
+        minWidth: COLUMN_WIDTH_MEDIUM,
+        maxWidth: COLUMN_WIDTH_LARGE,
         flex: 3,
       },
       {
@@ -614,18 +639,19 @@ export function ColumnsSchemaPanel(props: ColumnsSchemaPanelProps) {
   }
 
   function getRows() {
-    let indexes = props.schema?.indexes || []
-    if (props.table) {
-      indexes = indexes.filter((idx) => idx.table == props.table)
-    }
-    return indexes.map((idx, id) => {
-      return {
-        id,
-        name: idx.name,
-        table: idx.table,
-        sql: idx.sql,
-      }
-    })
+    return (
+      tableSchema?.columns &&
+      tableSchema.columns.map((col, id) => {
+        return {
+          id: col.name,
+          pk: col.primaryKey,
+          name: col.name,
+          datatype: col.datatype,
+          nullable: col.notNull ? false : true,
+          default: col.default,
+        }
+      })
+    )
   }
 
   //

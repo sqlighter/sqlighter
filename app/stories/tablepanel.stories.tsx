@@ -30,7 +30,7 @@ export default {
 const Template: ComponentStory<typeof TablePanel> = (args, { loaded: { connection, schemas } }) => {
   return (
     <Wrapper>
-      <TablePanel {...args} connection={connection} schema={schemas[0]} />
+      <TablePanel {...args} connection={connection} database={schemas[0].database} />
     </Wrapper>
   )
 }
@@ -43,7 +43,7 @@ Primary.args = {
 export const WithNorthwind = Template.bind({})
 WithNorthwind.loaders = [async () => await getTestConnection("Northwind.db")]
 WithNorthwind.args = {
-  table: "employees",
+  table: "Customers",
 }
 
 export const WithNorthwindView = Template.bind({})
