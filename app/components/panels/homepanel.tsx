@@ -162,7 +162,7 @@ export function HomePanel(props: HomePanelProps) {
   return (
     <Box className="HomePanel-root" sx={HomePanel_SxProps}>
       <FilesBackdrop open={showingDragnDrop} onMouseUp={(e) => setTimeout(() => setShowingDragnDrop(false), 200)} />
-      <Section title="SQLighter" description="Lighter, easier, faster. Pick any three." variant="large">
+      <Section title="SQLighter (under development, alpha code)" description="Lighter, easier, faster. Pick any three." variant="large">
         <Box sx={{ mt: 4 }}>
           {props.connections && renderConnections()}
           {renderActions()}
