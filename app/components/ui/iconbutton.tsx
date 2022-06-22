@@ -24,9 +24,6 @@ const IconButton_SxProps: SxProps<Theme> = {
 
 /** Shows command as an icon button raising an onCommand event when clicked */
 export interface IconButtonProps extends MuiIconButtonProps {
-  /** Class name to be applied to this component */
-  className?: string
-
   /** Command to be rendered by this button */
   command: Command
 
@@ -42,7 +39,7 @@ export interface IconButtonProps extends MuiIconButtonProps {
 
 /** A customized icon button that raises onCommand events */
 export function IconButton(props: IconButtonProps) {
-  const { command, onCommand, ...buttonProps } = props
+  const { className, command, label, selected, onCommand, ...buttonProps } = props
   if (!command.icon) {
     console.error(`IconButton - command.icon missing`, command)
   }
@@ -59,9 +56,14 @@ export function IconButton(props: IconButtonProps) {
   // render
   //
 
-  let className = `IconButton-root ${props.selected ? " Mui-selected" : ""} ${props.className}`
   let button = (
-    <MuiIconButton className={className} onClick={handleClick} sx={IconButton_SxProps} color={command.args?.color} {...buttonProps}>
+    <MuiIconButton
+      className={`IconButton-root ${props.selected ? " Mui-selected" : ""} ${className}`}
+      onClick={handleClick}
+      sx={IconButton_SxProps}
+      color={command.args?.color}
+      {...buttonProps}
+    >
       <Icon className="IconButton-icon" fontSize="inherit">
         {command.icon}
       </Icon>
