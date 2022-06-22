@@ -42,6 +42,32 @@ export function DatabaseTreeView(props: DatabaseTreeViewProps) {
   // handlers
   //
 
+  /** When a database tree item is clicked we open the database or table panels and select the corresponding item */
+  function handleClickTreeItem(event, command) {
+    // id: "dbc_sqlite3_northwind/main/tables/Invoices/columns/ShipName"
+    const itemId = command.args.item.id
+    console.debug(`DatabaseTreeView.handleClickTreeItem - ${command.args.item.id}`)
+    console.assert(itemId.startsWith(props.connection.id), "Clicked item must be from this connection")
+
+    const parts = itemId.split("/")
+    const database = parts[1]
+    const component = parts[2] // eg. tables, views, indexes, etc...
+
+    if (component === "tables" || component === "views") {
+      const command: Command = {
+        command: "openTable",
+        args: {
+          connection: props.connection,
+          database: database,
+          // view: or table: ...
+          selection: itemId.substring(parts[0].length + parts[1].length + parts[2].length + parts[3].length + 4),
+        },
+      }
+      command.args[component.substring(0, component.length - 1)] = parts[3]
+      props.onCommand(event, command)
+    }
+  }
+
   /**
    * Callback used when TreeView generates a command like opening
    * a SQL query tab, etc. Some commands are handled directly at this
@@ -57,6 +83,12 @@ export function DatabaseTreeView(props: DatabaseTreeViewProps) {
           setTrees(trees)
         }
         break
+
+      case "clickTreeItem":
+        if (props.onCommand) {
+          handleClickTreeItem(event, command)
+        }
+        return
 
       default:
         if (props.onCommand) {
@@ -76,9 +108,9 @@ export function DatabaseTreeView(props: DatabaseTreeViewProps) {
 // adapters
 //
 
-function _getTableColumnTree(rootId: string, schema: DataSchema, table, column) {
+function _getTableColumnTree(rootId: string, schema: DataSchema, table, column, variant) {
   const tree: Tree = {
-    id: `${rootId}/tables/${table.name}/columns/${column.name}`,
+    id: `${rootId}/${variant}s/${table.name}/columns/${column.name}`,
     title: column.name,
     type: "column",
     tags: column.tags || [],
@@ -115,7 +147,7 @@ function _getTableTree(
   table,
   variant: "table" | "view"
 ) {
-  const columns = table.columns && table.columns.map((column) => _getTableColumnTree(rootId, schema, table, column))
+  const columns = table.columns && table.columns.map((column) => _getTableColumnTree(rootId, schema, table, column, variant))
 
   let indexes =
     schema.indexes &&
@@ -123,7 +155,7 @@ function _getTableTree(
       .filter((idx) => idx.table == table.name)
       .map((idx) => {
         return {
-          id: `${rootId}/tables/${table.name}/indexes/${idx.name}`,
+          id: `${rootId}/${variant}s/${table.name}/indexes/${idx.name}`,
           title: idx.name,
           type: "index",
           tags: [...idx.columns],
@@ -131,17 +163,18 @@ function _getTableTree(
       })
 
   const commands = []
-  commands.push({
+  const openCommand = {
     command: "openTable",
     title: "View Structure",
     icon: "info",
     args: {
       connection,
       database: schema.database,
-      table: table.name,
-      variant,
     },
-  })
+  }
+  openCommand.args[variant] = table.name // eg. args.table = "Customers" or args.view =
+  commands.push(openCommand)
+
   commands.push({
     command: "openQuery",
     title: "Query Data",
@@ -167,14 +200,14 @@ function _getTableTree(
     commands,
     children: [
       {
-        id: `${rootId}/tables/${table.name}/columns`,
+        id: `${rootId}/${variant}s/${table.name}/columns`,
         title: "Columns",
         type: "columns",
         badge: columns?.length > 0 ? columns.length.toString() : "0",
         children: columns?.length > 0 ? columns : undefined,
       },
       {
-        id: `${rootId}/tables/${table.name}/indexes`,
+        id: `${rootId}/${variant}s/${table.name}/indexes`,
         title: "Indexes",
         type: "indexes",
         badge: indexes?.length > 0 ? indexes.length.toString() : "0",

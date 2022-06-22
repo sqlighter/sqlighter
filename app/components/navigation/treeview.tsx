@@ -175,10 +175,10 @@ export function TreeView(props: TreeViewProps) {
   function handleCommand(event: React.SyntheticEvent, command: Command, item, renderingPins) {
     const pinnedId = renderingPins ? `pins/${item.id}` : item.id
     switch (command.command) {
-      case "sqlighter.collapseItem":
+      case "collapseTreeItem":
         setExpanded(expanded.filter((expandedId) => pinnedId !== expandedId))
         break
-      case "sqlighter.expandItem":
+      case "expandTreeItem":
         if (!isExpanded(pinnedId)) {
           setExpanded([...expanded, pinnedId])
         }

@@ -58,10 +58,11 @@ export function TreeItem({ item, ...props }: TreeItemProps) {
   // handlers
   //
 
-  function handleItemClick(e) {
-    if (isCollapsible()) {
-      props.onCommand(e, {
-        command: props.expanded ? "sqlighter.collapseItem" : "sqlighter.expandItem",
+  /** Open or close items that are collapsible or just propagate click command */
+  function handleItemClick(event) {
+    if (props.onCommand) {
+      props.onCommand(event, {
+        command: isCollapsible() ? (props.expanded ? "collapseTreeItem" : "expandTreeItem") : "clickTreeItem",
         args: { item },
       })
     }

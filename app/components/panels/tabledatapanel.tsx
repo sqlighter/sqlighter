@@ -96,7 +96,7 @@ export function TableDataPanel(props: TableDataPanelProps) {
   //
 
   let title = props.title
-  if (rowCount > 1) {
+  if (rowCount > 1 && result?.columns) {
     title = `${rowCount} rows x ${result.columns.length} columns`
   }
 

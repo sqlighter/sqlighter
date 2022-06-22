@@ -2,11 +2,11 @@
 // datagrid.tsx - convenience wrappers around mui datagrid
 //
 
-import React from "react"
+import React, { useEffect } from "react"
 import useResizeObserver from "use-resize-observer"
 import { Theme, SxProps } from "@mui/material/styles"
 import Box from "@mui/material/Box"
-import { DataGrid as MuiDataGrid, DataGridProps as MuiDataGridProps, GridColumns } from "@mui/x-data-grid"
+import { DataGrid as MuiDataGrid, DataGridProps as MuiDataGridProps, GridColumns, GridInputSelectionModel } from "@mui/x-data-grid"
 import { PanelProps } from "./panel"
 
 // standardize column widths on few sizes
@@ -48,12 +48,40 @@ export interface DataGridProps extends PanelProps {
   /** Data to be displayed in table rows */
   rows?: any[]
 
+  /** Rows that should be selected initially (optional) */
+  selection?: GridInputSelectionModel
+
   /** Additional properties to be passed straight to the datagrid (optional) */
   dataGridProps?: Omit<MuiDataGridProps, "columns" | "rows">
 }
 
 /** Convience wrapper around Mui DataGrid */
 export function DataGrid(props: DataGridProps) {
+  console.debug(`DataGrid - selection: ${props.selection}`, props)
+
+  //
+  // state
+  //
+
+  // rows that are currently selected
+  const [selectionModel, setSelectionModel] = React.useState<GridInputSelectionModel>(props.selection || [])
+  function handleSelectionModelChange(newSelectionModel: GridInputSelectionModel) {
+    console.debug(`handleSelectionModelChange`, newSelectionModel)
+    setSelectionModel(newSelectionModel)
+    // dispatch as command?
+  }
+  useEffect(() => {
+    if (props.selection) {
+    console.debug(`DataGrid.useEffect - set selection: ${props.selection}`, props.selection)
+    setSelectionModel(props.selection)
+    }
+    else {
+      console.debug(`DataGrid.useEffect - reset selection to empty`, props.selection)
+      setSelectionModel([])
+  
+    }
+  }, [props.selection])
+
   // grid's parent needs to have its height be > 0 or else the grid will scream so let's track it
   const { ref, width = 1, height = 1 } = useResizeObserver<HTMLDivElement>()
 
@@ -80,14 +108,17 @@ export function DataGrid(props: DataGridProps) {
             columns={props.columns}
             // paging and size
             pageSize={paging ? 100 : undefined}
-            rowsPerPageOptions={paging ? [200] : undefined}
+            rowsPerPageOptions={paging ? [100] : undefined}
             hideFooter={!paging}
             // simple readonly configuration
             disableColumnMenu
             disableColumnFilter
             disableColumnSelector
             disableDensitySelector
-            disableSelectionOnClick
+            // selection
+            disableSelectionOnClick={false}//{props.selection ? false : true}
+            selectionModel={selectionModel}
+            onSelectionModelChange={handleSelectionModelChange}
             // clicks passed to parent as commands
             onCellClick={(args, event) => handleCommand(event, "dataGridCellClick", args)}
             onCellDoubleClick={(args, event) => handleCommand(event, "dataGridCellDoubleClick", args)}

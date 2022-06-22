@@ -3,12 +3,18 @@
 //
 
 import React from "react"
-import { GridColumns } from "@mui/x-data-grid"
+import { GridColumns, DataGridProps as MuiDataGridProps } from "@mui/x-data-grid"
 
 import { DataTableSchema } from "../../lib/data/connections"
 import { DataGrid } from "../navigation/datagrid"
 import { PanelProps } from "../navigation/panel"
-import { COLUMN_FLEX_LARGEST, COLUMN_FLEX_LARGE, COLUMN_WIDTH_XXL, COLUMN_WIDTH_MEDIUM, COLUMN_WIDTH_SMALL } from "../navigation/datagrid"
+import {
+  COLUMN_FLEX_LARGEST,
+  COLUMN_FLEX_LARGE,
+  COLUMN_WIDTH_XXL,
+  COLUMN_WIDTH_MEDIUM,
+  COLUMN_WIDTH_SMALL,
+} from "../navigation/datagrid"
 
 // Columns in one of these types are formatted as "number"
 const SQL_NUMBER_TYPES = [
@@ -38,6 +44,8 @@ export interface QueryResultDataGridProps extends PanelProps {
   tableSchema?: DataTableSchema
   /** Query results, list of column names and rows of values */
   result?: { columns: string[]; values: any[][] }
+  /** Additional properties to be passed straight to the datagrid (optional) */
+  dataGridProps?: Omit<MuiDataGridProps, "columns" | "rows">
 }
 
 /** DataGrid used to show query results */
@@ -109,6 +117,7 @@ export function QueryResultDataGrid(props: QueryResultDataGridProps) {
         disableColumnMenu: false,
         disableColumnFilter: false,
         disableColumnSelector: false,
+        ...props.dataGridProps,
       }}
     />
   )

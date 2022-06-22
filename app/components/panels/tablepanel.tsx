@@ -51,11 +51,12 @@ export interface TablePanelProps extends PanelProps {
   table: string
   /** Showing a table or view, default: table */
   variant?: "table" | "view"
+  /** Given item should be selected, eg. columns/title (optional) */
+  selection?: string
 }
 
 /** Shows schema and data of a database table  */
 export function TablePanel(props: TablePanelProps) {
-  console.debug()
   //
   // state
   //
@@ -77,8 +78,18 @@ export function TablePanel(props: TablePanelProps) {
       ? schema?.views?.find((v) => v.name == props.table)
       : schema?.tables?.find((t) => t.name == props.table)
 
-  // currently selected tab
+  // currently selected tab, use data initially unless a selection has been specified
   const [tabId, setTabId] = useState<string>("tab_data")
+  const [tabSelection, setTabSelection] = useState<string>()
+  useEffect(() => {
+    if (props.selection) {
+      const [panel, item] = props.selection.split("/")
+      setTabId("tab_" + panel)
+      setTabSelection(item)
+    } else {
+      setTabSelection(undefined)
+    }
+  }, [props.selection])
 
   //
   // handlers
@@ -89,6 +100,7 @@ export function TablePanel(props: TablePanelProps) {
     switch (command.command) {
       case "changedTabs":
         setTabId(command.args.id)
+        setTabSelection(undefined)
         return
 
       case "changedConnection":
@@ -169,6 +181,13 @@ export function TablePanel(props: TablePanelProps) {
     return commands
   }
 
+  /** Eg: returns "customers" from "tables/customers" if prefix is "tables" */
+  function selectionIf(prefix) {
+    if (props.selection && props.selection.startsWith(prefix)) {
+      return props.selection.substring(prefix.length + 1)
+    }
+  }
+
   /** Panels to be rendered as tabs */
   function renderTabs() {
     const tabs = [
@@ -189,6 +208,7 @@ export function TablePanel(props: TablePanelProps) {
         connection={props.connection}
         schema={schema}
         table={props.table}
+        selection={tabSelection}
         variant={props.variant}
         onCommand={handleCommand}
       />,
@@ -203,6 +223,7 @@ export function TablePanel(props: TablePanelProps) {
           connection={props.connection}
           schema={schema}
           table={props.table}
+          selection={tabSelection}
           variant={props.variant}
           onCommand={handleCommand}
         />
@@ -217,6 +238,7 @@ export function TablePanel(props: TablePanelProps) {
         connection={props.connection}
         schema={schema}
         table={props.table}
+        selection={tabSelection}
         variant={props.variant}
         onCommand={handleCommand}
       />
@@ -229,6 +251,7 @@ export function TablePanel(props: TablePanelProps) {
         connection={props.connection}
         schema={schema}
         table={props.table}
+        selection={tabSelection}
         variant={props.variant}
         onCommand={handleCommand}
       />

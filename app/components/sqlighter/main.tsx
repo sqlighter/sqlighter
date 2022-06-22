@@ -24,6 +24,7 @@ import { TablePanel } from "../panels/tablepanel"
 import { QueryPanel } from "../panels/querypanel"
 import { TabsLayout } from "../navigation/tabslayout"
 import { useSqljs } from "../hooks/usedb"
+import { KeyboardCommandKeySharp } from "@mui/icons-material"
 
 export interface MainProps extends PanelProps {
   /** User currently signedin (if any) */
@@ -61,7 +62,7 @@ export default function Main(props: MainProps) {
       console.log("DatabasePanel - has sqljs")
     }
   }, [sqljs])
-/*
+  /*
   async function getDatabaseConnection(url, title) {
     if (sqljs) {
       const connection = DataConnectionFactory.create({ client: "sqlite3", title, connection: { url } })
@@ -71,6 +72,11 @@ export default function Main(props: MainProps) {
     }
   }
 */
+
+  //
+  // actions
+  //
+
   /**
    * Open a file based database connection from a provided File or FileSystemFileHandle
    * that points to a SQLite database file. If the file parameter is not provided, prompt
@@ -115,34 +121,16 @@ export default function Main(props: MainProps) {
 
   /** Will open a connection, if needed, then make it the current connection */
   async function openConnection(connection: DataConnection) {
-    if (!connection.isConnected) {
-      const db = new sqljs.Database()
-      // NOTE: You can also use new SQL.Database(data) where
-      // data is an Uint8Array representing an SQLite database file
-
-      // TODO remove these checks
-
-      // Execute a single SQL string that contains multiple statements
-      let sqlstr =
-        "CREATE TABLE hello (a int, b char); \
-      INSERT INTO hello VALUES (0, 'hello'); \
-      INSERT INTO hello VALUES (1, 'world');"
-      db.run(sqlstr) // Run the query without returning anything
-
-      // Prepare an sql statement
-      const stmt = db.prepare("SELECT * FROM hello WHERE a=:aval AND b=:bval")
-
-      // Bind values to the parameters and fetch the results of the query
-      const result = stmt.getAsObject({ ":aval": 1, ":bval": "world" })
-      console.log(result) // Will print {a:1, b:'world'}
-
-      await connection.connect(sqljs)
+    if (connection) {
+      if (!connection.isConnected) {
+        await connection.connect(sqljs)
+      }
+      const hasConnection = connections && connections.find((conn) => conn.id == connection.id)
+      if (!hasConnection) {
+        setConnections([connection, ...(connections || [])])
+      }
+      setConnection(connection)
     }
-    const hasConnection = connections && connections.find((conn) => conn.id == connection.id)
-    if (!hasConnection) {
-      setConnections([connection, ...(connections || [])])
-    }
-    setConnection(connection)
   }
 
   /** Opens a database tab to show this database structure or selects it if already open */
@@ -157,18 +145,28 @@ export default function Main(props: MainProps) {
 
   /** Add <TablePanel> tab for the table indicated in the command, or selects existing panel if already open. */
   function openTable(command: Command) {
-    const tabId = `pnl_table_${connection.id}_${command.args.database}_${command.args.table}`
-    console.debug(`openTable - ${tabId}`)
-    if (!tabs.find((tab) => tab.id === tabId)) {
-      const tableTab = { id: tabId, component: "TablePanel", props: { ...command.args, title: command.args.table } }
+    // console.debug(`Main.openTable`, command)
+    const args = {...command.args}
+    if (args.view) {
+      args.table = args.view
+      args.variant = "view"
+      delete args.view
+    }
+
+    const tabId = `pnl_table_${connection.id}_${args.database}_${args.table}`
+    const tab = tabs.find((tab) => tab.id === tabId)
+    if (tab) {
+      // existing tabs? refresh properties including selection
+      tab.props = { title: tab.props.title, ...args}
+      setTabs([...tabs])
+    } else {
+      // new tab
+      const tableTab = { id: tabId, component: "TablePanel", props: { ...args, title: command.args.table || command.args.view } }
       setTabs([tableTab, ...tabs])
     }
+    // select tab if needed
     setTabId(tabId)
   }
-
-  //
-  // activities
-  //
 
   //
   // handlers
