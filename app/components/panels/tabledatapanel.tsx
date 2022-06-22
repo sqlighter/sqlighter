@@ -1,5 +1,5 @@
 //
-// TableDataPanel.tsx - data tab in table panel
+// TableDataPanel.tsx - data tab in table panel used to display data in a grid
 //
 
 // libs
@@ -28,10 +28,6 @@ export const TableDataPanel_SxProps: SxProps<Theme> = {
 
   ".TableDataPanel-header": {
     paddingLeft: 1,
-  },
-
-  ".TableDataPanel-title": {
-    marginRight: 1,
   },
 
   ".TableDataPanel-dataGrid": {
@@ -67,19 +63,22 @@ export function TableDataPanel(props: TableDataPanelProps) {
         : props.schema.tables.find((t) => t.name.toLowerCase() == props.table.toLowerCase())
   }
 
+  const [rowCount, setRowCount] = useState<number>()
   const [result, setResult] = useState<any>()
-
   useEffect(() => {
     if (tableSchema) {
       const fetchData = async () => {
-        // TODO instead of forcing a limit on the query we should paginate results
+        // row count is calculate separately so it's not capped by LIMIT clause below
+        const countResult = await props.connection.getResult(`select count(*) from "${props.table}"`)
+        setRowCount(countResult.values[0][0] as number)
+
+        // TODO TableDataPanel / table data should be fetched in batches #49
         const result = await props.connection.getResult(`select * from "${props.table}" limit 1000`)
         setResult(result)
-        console.debug("TableDataPanel: fetched data", result)
       }
       fetchData().catch(console.error)
     }
-  }, [tableSchema])
+  }, [props.connection, props.schema, props.table])
 
   //
   // handlers
@@ -96,13 +95,16 @@ export function TableDataPanel(props: TableDataPanelProps) {
   // render
   //
 
+  let title = props.title
+  if (rowCount > 1) {
+    title = `${rowCount} rows x ${result.columns.length} columns`
+  }
+
   return (
     <Box className="TableDataPanel-root" sx={TableDataPanel_SxProps}>
       <Box className="TableDataPanel-header">
-        <Typography className="TableDataPanel-title" variant="h6" sx={{ mr: 1 }}>
-          {result?.values?.lenght > 1
-            ? `${result.values.length} rows x ${result.column.length} columns`
-            : props.title}
+        <Typography className="TableDataPanel-title" variant="h6">
+          {title}
         </Typography>
       </Box>
       {result && (
