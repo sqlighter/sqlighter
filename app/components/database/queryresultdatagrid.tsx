@@ -8,7 +8,7 @@ import { GridColumns } from "@mui/x-data-grid"
 import { DataTableSchema } from "../../lib/data/connections"
 import { DataGrid } from "../navigation/datagrid"
 import { PanelProps } from "../navigation/panel"
-import { COLUMN_FLEX_LARGEST, COLUMN_FLEX_LARGE, COLUMN_WIDTH_MEDIUM, COLUMN_WIDTH_SMALL } from "../navigation/datagrid"
+import { COLUMN_FLEX_LARGEST, COLUMN_FLEX_LARGE, COLUMN_WIDTH_XXL, COLUMN_WIDTH_MEDIUM, COLUMN_WIDTH_SMALL } from "../navigation/datagrid"
 
 // Columns in one of these types are formatted as "number"
 const SQL_NUMBER_TYPES = [
@@ -71,7 +71,7 @@ export function QueryResultDataGrid(props: QueryResultDataGridProps) {
           sortable: true,
           type: columnType,
           minWidth: COLUMN_WIDTH_SMALL,
-          maxWidth: columnType == "number" ? COLUMN_WIDTH_MEDIUM : undefined,
+          maxWidth: columnType == "number" ? COLUMN_WIDTH_MEDIUM : COLUMN_WIDTH_XXL,
           width: columnType == "number" ? COLUMN_WIDTH_SMALL : COLUMN_WIDTH_MEDIUM,
           flex: columnType == "number" ? COLUMN_FLEX_LARGE : COLUMN_FLEX_LARGEST,
         }
