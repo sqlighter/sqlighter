@@ -19,8 +19,7 @@ function TableLoadingWrapper(props) {
     }
     const getResults = async () => {
       // retrieve data from actual database
-      const result = await props.connection.getResult(`select * from "${props.table}"`)
-      setResult(result)
+      setResult(await props.connection.getResult(`select * from "${props.table}"`))
       // table schema?
       const tableSchema = props.useTableSchema && props.schemas?.[0]?.tables?.find((s) => s.name == props.table)
       setTableSchema(tableSchema)

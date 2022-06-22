@@ -134,13 +134,25 @@ export default function Main(props: MainProps) {
   }
 
   /** Opens a database tab to show this database structure or selects it if already open */
-  function openDatabase(connection: DataConnection) {
-    const databaseTabId = `pnl_database_${connection.id}`
-    if (!tabs.find((tab) => tab.id === databaseTabId)) {
-      const databaseTab = { id: databaseTabId, component: "DatabasePanel", props: { connection } }
+  function openDatabase(command: Command) {
+    console.assert(command.args.connection)
+    const args = {...command.args}
+    const tabId = `pnl_database_${connection.id}`
+    const tab = tabs.find((tab) => tab.id == tabId)
+
+    if (tab) {
+      // existing tabs? refresh properties including selection
+      tab.props = { title: tab.props.title, ...args}
+      setTabs([...tabs])
+    }
+    else {
+      const databaseTab = { id: tabId, component: "DatabasePanel", props: args }
       setTabs([databaseTab, ...tabs])
     }
-    setTabId(databaseTabId)
+
+    if (!tabs.find((tab) => tab.id === tabId)) {
+    }
+    setTabId(tabId)
   }
 
   /** Add <TablePanel> tab for the table indicated in the command, or selects existing panel if already open. */
@@ -195,9 +207,7 @@ export default function Main(props: MainProps) {
         return
 
       case "openDatabase":
-        if (command.args?.connection) {
-          openDatabase(command.args.connection)
-        }
+        openDatabase(command)
         return
 
       case "openTable":
@@ -285,7 +295,6 @@ export default function Main(props: MainProps) {
 
   function renderTabs() {
     return tabs.map((tab) => {
-      console.debug(`renderTabs - tab`, tab)
       switch (tab.component) {
         case "HomePanel":
           return (
@@ -307,6 +316,7 @@ export default function Main(props: MainProps) {
               title={tab.props.connection.title}
               icon="database"
               connection={tab.props.connection}
+              selection={tab.props.selection}
               onCommand={handleCommand}
             />
           )

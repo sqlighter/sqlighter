@@ -66,6 +66,18 @@ export function DatabaseTreeView(props: DatabaseTreeViewProps) {
       command.args[component.substring(0, component.length - 1)] = parts[3]
       props.onCommand(event, command)
     }
+
+    if (component === "indexes" || component === "triggers") {
+      const command: Command = {
+        command: "openDatabase",
+        args: {
+          connection: props.connection,
+          database: database,
+          selection: itemId.substring(parts[0].length + parts[1].length + 2),
+        },
+      }
+      props.onCommand(event, command)
+    }
   }
 
   /**

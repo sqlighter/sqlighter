@@ -1,5 +1,5 @@
 //
-// tablepanel.tsx - shows schema and data for a database table
+// TablePanel.tsx - shows data, columns, indexes, relations and triggers for tables or views
 //
 
 // libs
@@ -95,21 +95,18 @@ export function TablePanel(props: TablePanelProps) {
   // handlers
   //
 
-  async function handleCommand(e: React.SyntheticEvent, command: Command) {
-    console.debug(`TablePanel.handleCommand - ${command.command}`, command)
+  function handleCommand(event: React.SyntheticEvent, command: Command) {
     switch (command.command) {
       case "changedTabs":
         setTabId(command.args.id)
         setTabSelection(undefined)
         return
-
-      case "changedConnection":
-        //notifyChanges()
-        return
     }
 
     // propagate commands
-    props.onCommand(e, command)
+    if (props.onCommand) {
+      props.onCommand(event, command)
+    }
   }
 
   //
@@ -179,13 +176,6 @@ export function TablePanel(props: TablePanelProps) {
     // more commands...
 
     return commands
-  }
-
-  /** Eg: returns "customers" from "tables/customers" if prefix is "tables" */
-  function selectionIf(prefix) {
-    if (props.selection && props.selection.startsWith(prefix)) {
-      return props.selection.substring(prefix.length + 1)
-    }
   }
 
   /** Panels to be rendered as tabs */

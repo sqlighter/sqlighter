@@ -47,6 +47,10 @@ const DatabasePanel_SxProps: SxProps<Theme> = {
 export interface DatabasePanelProps extends PanelProps {
   /** Connection rendered by this panel */
   connection: DataConnection
+  /** Database to which we connect, or main if not specified */
+  database?: string
+  /** Optional selection string like indexes/indexname */
+  selection?: string
 }
 
 /** Panel used to edit and run database queries, show results  */
@@ -64,10 +68,23 @@ export function DatabasePanel(props: DatabasePanelProps) {
   }, [props.connection])
 
   // TODO consider multiple schemas for non SQLite scenarios (or attached SQLite databases other than 'main')
-  const schema = schemas?.[0]
+  let schema = undefined
+  if (schemas) {
+    schema = props.database ? schemas.find((s) => s.database == props.database) : schemas[0]
+  }
 
-  // currently selected tab
+  // currently selected tab, use data initially unless a selection has been specified
   const [tabId, setTabId] = useState<string>("tab_tables")
+  const [tabSelection, setTabSelection] = useState<string>()
+  useEffect(() => {
+    if (props.selection) {
+      const [panel, item] = props.selection.split("/")
+      setTabId("tab_" + panel)
+      setTabSelection(item)
+    } else {
+      setTabSelection(undefined)
+    }
+  }, [props.selection])
 
   //
   // handlers
@@ -192,6 +209,7 @@ export function DatabasePanel(props: DatabasePanelProps) {
         icon="table"
         connection={props.connection}
         schema={schema}
+        selection={tabSelection}
         onCommand={handleCommand}
         variant="tables"
       />,
@@ -201,6 +219,7 @@ export function DatabasePanel(props: DatabasePanelProps) {
         icon="table"
         connection={props.connection}
         schema={schema}
+        selection={tabSelection}
         onCommand={handleCommand}
         variant="views"
       />,
@@ -210,6 +229,7 @@ export function DatabasePanel(props: DatabasePanelProps) {
         icon="index"
         connection={props.connection}
         schema={schema}
+        selection={tabSelection}
         variant="database"
         onCommand={handleCommand}
       />,
@@ -219,6 +239,7 @@ export function DatabasePanel(props: DatabasePanelProps) {
         icon="trigger"
         connection={props.connection}
         schema={schema}
+        selection={tabSelection}
         variant="database"
         onCommand={handleCommand}
       />,

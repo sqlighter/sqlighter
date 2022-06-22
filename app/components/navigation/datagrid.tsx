@@ -6,7 +6,12 @@ import React, { useEffect } from "react"
 import useResizeObserver from "use-resize-observer"
 import { Theme, SxProps } from "@mui/material/styles"
 import Box from "@mui/material/Box"
-import { DataGrid as MuiDataGrid, DataGridProps as MuiDataGridProps, GridColumns, GridInputSelectionModel } from "@mui/x-data-grid"
+import {
+  DataGrid as MuiDataGrid,
+  DataGridProps as MuiDataGridProps,
+  GridColumns,
+  GridInputSelectionModel,
+} from "@mui/x-data-grid"
 import { PanelProps } from "./panel"
 
 // standardize column widths on few sizes
@@ -57,8 +62,6 @@ export interface DataGridProps extends PanelProps {
 
 /** Convience wrapper around Mui DataGrid */
 export function DataGrid(props: DataGridProps) {
-  console.debug(`DataGrid - selection: ${props.selection}`, props)
-
   //
   // state
   //
@@ -71,15 +74,7 @@ export function DataGrid(props: DataGridProps) {
     // dispatch as command?
   }
   useEffect(() => {
-    if (props.selection) {
-    console.debug(`DataGrid.useEffect - set selection: ${props.selection}`, props.selection)
-    setSelectionModel(props.selection)
-    }
-    else {
-      console.debug(`DataGrid.useEffect - reset selection to empty`, props.selection)
-      setSelectionModel([])
-  
-    }
+    setSelectionModel(props.selection ? props.selection : [])
   }, [props.selection])
 
   // grid's parent needs to have its height be > 0 or else the grid will scream so let's track it
@@ -116,7 +111,7 @@ export function DataGrid(props: DataGridProps) {
             disableColumnSelector
             disableDensitySelector
             // selection
-            disableSelectionOnClick={false}//{props.selection ? false : true}
+            disableSelectionOnClick={false} //{props.selection ? false : true}
             selectionModel={selectionModel}
             onSelectionModelChange={handleSelectionModelChange}
             // clicks passed to parent as commands
