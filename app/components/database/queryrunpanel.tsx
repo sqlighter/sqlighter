@@ -13,7 +13,7 @@ import { QueryRun } from "../../lib/items/query"
 
 // view
 import { Command } from "../../lib/commands"
-import { QueryResultDataGrid } from "../navigation/datagrid"
+import { QueryResultDataGrid } from "./queryresultdatagrid"
 import { IconButtonGroup } from "../ui/iconbuttongroup"
 import { PanelProps } from "../navigation/panel"
 import { QueryStatus } from "./querystatus"
@@ -167,7 +167,8 @@ export function QueryRunPanel(props: QueryRunPanelProps) {
     if (!run.values) {
       return <Empty title="No data" description="This query didn't return any results" icon="code" />
     }
-    return <QueryResultDataGrid columns={run.columns} values={run.values} onCommand={handleCommand} />
+    const result = { columns: run.columns, values: run.values }
+    return <QueryResultDataGrid result={result} onCommand={handleCommand} />
   }
 
   function renderContents() {

@@ -80,10 +80,10 @@ export class QueryRun extends Item {
   rowsModified?: number
 
   /** Resulting columns */
-  columns?: any
+  columns?: string[]
 
   /** Resulting data */
-  values?: any
+  values?: any[][]
 
   // TODO coud have a function here returning the data rather than the data itself (to support large sets and paging)
 }

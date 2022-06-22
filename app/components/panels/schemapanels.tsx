@@ -14,21 +14,20 @@ import { Command } from "../../lib/commands"
 import { DataConnection, DataSchema } from "../../lib/data/connections"
 
 // components
-import { DataGrid } from "../navigation/datagrid"
 import { Empty } from "../ui/empty"
 import { Icon } from "../ui/icon"
 import { IconButtonGroup } from "../ui/iconbuttongroup"
 import { PanelProps } from "../navigation/panel"
-
-// standardize column widths on few sizes
-export const COLUMN_WIDTH_SMALL = 100
-export const COLUMN_WIDTH_MEDIUM = 160
-export const COLUMN_WIDTH_LARGE = 240
-export const COLUMN_WIDTH_XXL = 400
-export const COLUMN_WIDTH_PER_COMMAND = 40 // a command icon is 28px
-
-export const COLUMN_FLEX_LARGE = 2
-export const COLUMN_FLEX_LARGEST = 3
+import {
+  DataGrid,
+  COLUMN_WIDTH_SMALL,
+  COLUMN_WIDTH_MEDIUM,
+  COLUMN_WIDTH_LARGE,
+  COLUMN_WIDTH_XXL,
+  COLUMN_WIDTH_PER_COMMAND,
+  COLUMN_FLEX_LARGE,
+  COLUMN_FLEX_LARGEST,
+} from "../navigation/datagrid"
 
 // styles shared between all components used to render schema elements
 const SchemaPanel_SxProps: SxProps<Theme> = {
@@ -45,7 +44,7 @@ const SchemaPanel_SxProps: SxProps<Theme> = {
   },
 
   ".SchemaPanel-title": {
-    marginRight: 1
+    marginRight: 1,
   },
 
   ".SchemaPanel-dataGrid": {
@@ -53,15 +52,6 @@ const SchemaPanel_SxProps: SxProps<Theme> = {
     width: 1,
     height: 1,
     overflow: "hidden",
-  },
-
-  ".MuiDataGrid-root": {
-    border: "none",
-    borderRadius: "0px",
-  },
-
-  ".MuiDataGrid-columnHeaders": {
-    borderRadius: "0px",
   },
 }
 

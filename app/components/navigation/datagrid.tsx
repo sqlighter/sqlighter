@@ -9,6 +9,17 @@ import Box from "@mui/material/Box"
 import { DataGrid as MuiDataGrid, DataGridProps as MuiDataGridProps, GridColumns } from "@mui/x-data-grid"
 import { PanelProps } from "./panel"
 
+// standardize column widths on few sizes
+export const COLUMN_WIDTH_SMALL = 100
+export const COLUMN_WIDTH_MEDIUM = 160
+export const COLUMN_WIDTH_LARGE = 240
+export const COLUMN_WIDTH_XXL = 400
+export const COLUMN_WIDTH_PER_COMMAND = 40 // a command icon is 28px
+
+// standardize column flexes on few relative sizes
+export const COLUMN_FLEX_LARGE = 2
+export const COLUMN_FLEX_LARGEST = 3
+
 //
 // DataGrid - display generic data in tabular form
 //
@@ -19,6 +30,11 @@ const DataGrid_SxProps: SxProps<Theme> = {
 
   ".MuiDataGrid-root": {
     border: "none",
+    borderRadius: "0px",
+  },
+
+  ".MuiDataGrid-columnHeaders": {
+    borderRadius: "0px",
   },
 }
 
@@ -83,46 +99,5 @@ export function DataGrid(props: DataGridProps) {
         </Box>
       )}
     </Box>
-  )
-}
-
-//
-// QueryResultDataGrid
-//
-
-export interface QueryResultDataGridProps extends PanelProps {
-  /** Query result columns names */
-  columns?: string[]
-  /** Query result data */
-  values?: any[][]
-}
-
-/** DataGrid used to show query results */
-export function QueryResultDataGrid(props: QueryResultDataGridProps) {
-  const columns = props.columns.map((column) => {
-    return { field: column, headerName: column, minWidth: 150, editable: false }
-  })
-
-  const rows = props.values.map((value, rowIndex) => {
-    const valueDict = {}
-    columns.forEach((element, columnIndex) => {
-      valueDict["id"] = rowIndex
-      valueDict[element.field] = value[columnIndex]
-    })
-    return valueDict
-  })
-
-  return (
-    <DataGrid
-      columns={columns}
-      rows={rows}
-      onCommand={props.onCommand}
-      dataGridProps={{
-        autoHeight: false,
-        disableColumnMenu: false,
-        disableColumnFilter: false,
-        disableColumnSelector: false,
-      }}
-    />
   )
 }
