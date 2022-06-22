@@ -1,5 +1,5 @@
 {
-  "id": "dbc_9jr65kxq40eqkye5z1mo/main",
+  "id": "dbc_testdb/main",
   "title": "main",
   "type": "database",
   "icon": "database",
@@ -9,7 +9,7 @@
       "icon": "info",
       "title": "View Structure",
       "args": {
-        "connection": "dbc_9jr65kxq40eqkye5z1mo"
+        "connection": "dbc_testdb"
       }
     },
     {
@@ -20,14 +20,14 @@
   ],
   "children": [
     {
-      "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables",
+      "id": "dbc_testdb/main/tables",
       "title": "Tables",
       "type": "tables",
       "icon": "table",
       "badge": "11",
       "children": [
         {
-          "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/albums",
+          "id": "dbc_testdb/main/tables/albums",
           "title": "albums",
           "type": "table",
           "commands": [
@@ -36,7 +36,7 @@
               "title": "View Structure",
               "icon": "info",
               "args": {
-                "connection": "dbc_9jr65kxq40eqkye5z1mo",
+                "connection": "dbc_testdb",
                 "database": "main",
                 "table": "albums"
               }
@@ -47,7 +47,7 @@
               "icon": "query",
               "args": {
                 "title": "All albums",
-                "connection": "dbc_9jr65kxq40eqkye5z1mo",
+                "connection": "dbc_testdb",
                 "database": "main",
                 "sql": "SELECT * FROM 'main'.'albums'"
               }
@@ -60,13 +60,13 @@
           ],
           "children": [
             {
-              "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/albums/columns",
+              "id": "dbc_testdb/main/tables/albums/columns",
               "title": "Columns",
               "type": "columns",
               "badge": "3",
               "children": [
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/albums/columns/AlbumId",
+                  "id": "dbc_testdb/main/tables/albums/columns/AlbumId",
                   "title": "AlbumId",
                   "type": "column",
                   "tags": [
@@ -86,7 +86,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/albums/columns/Title",
+                  "id": "dbc_testdb/main/tables/albums/columns/Title",
                   "title": "Title",
                   "type": "column",
                   "tags": [
@@ -98,7 +98,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/albums/columns/ArtistId",
+                  "id": "dbc_testdb/main/tables/albums/columns/ArtistId",
                   "title": "ArtistId",
                   "type": "column",
                   "tags": [
@@ -116,13 +116,13 @@
               ]
             },
             {
-              "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/albums/indexes",
+              "id": "dbc_testdb/main/tables/albums/indexes",
               "title": "Indexes",
               "type": "indexes",
               "badge": "1",
               "children": [
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/albums/indexes/IFK_AlbumArtistId",
+                  "id": "dbc_testdb/main/tables/albums/indexes/IFK_AlbumArtistId",
                   "title": "IFK_AlbumArtistId",
                   "type": "index",
                   "tags": [
@@ -134,7 +134,7 @@
           ]
         },
         {
-          "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/artists",
+          "id": "dbc_testdb/main/tables/artists",
           "title": "artists",
           "type": "table",
           "commands": [
@@ -143,7 +143,7 @@
               "title": "View Structure",
               "icon": "info",
               "args": {
-                "connection": "dbc_9jr65kxq40eqkye5z1mo",
+                "connection": "dbc_testdb",
                 "database": "main",
                 "table": "artists"
               }
@@ -154,7 +154,7 @@
               "icon": "query",
               "args": {
                 "title": "All artists",
-                "connection": "dbc_9jr65kxq40eqkye5z1mo",
+                "connection": "dbc_testdb",
                 "database": "main",
                 "sql": "SELECT * FROM 'main'.'artists'"
               }
@@ -167,13 +167,13 @@
           ],
           "children": [
             {
-              "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/artists/columns",
+              "id": "dbc_testdb/main/tables/artists/columns",
               "title": "Columns",
               "type": "columns",
               "badge": "2",
               "children": [
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/artists/columns/ArtistId",
+                  "id": "dbc_testdb/main/tables/artists/columns/ArtistId",
                   "title": "ArtistId",
                   "type": "column",
                   "tags": [
@@ -193,7 +193,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/artists/columns/Name",
+                  "id": "dbc_testdb/main/tables/artists/columns/Name",
                   "title": "Name",
                   "type": "column",
                   "tags": [
@@ -203,7 +203,7 @@
               ]
             },
             {
-              "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/artists/indexes",
+              "id": "dbc_testdb/main/tables/artists/indexes",
               "title": "Indexes",
               "type": "indexes",
               "badge": "0"
@@ -211,7 +211,7 @@
           ]
         },
         {
-          "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/customers",
+          "id": "dbc_testdb/main/tables/customers",
           "title": "customers",
           "type": "table",
           "commands": [
@@ -220,7 +220,7 @@
               "title": "View Structure",
               "icon": "info",
               "args": {
-                "connection": "dbc_9jr65kxq40eqkye5z1mo",
+                "connection": "dbc_testdb",
                 "database": "main",
                 "table": "customers"
               }
@@ -231,7 +231,7 @@
               "icon": "query",
               "args": {
                 "title": "All customers",
-                "connection": "dbc_9jr65kxq40eqkye5z1mo",
+                "connection": "dbc_testdb",
                 "database": "main",
                 "sql": "SELECT * FROM 'main'.'customers'"
               }
@@ -244,13 +244,13 @@
           ],
           "children": [
             {
-              "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/customers/columns",
+              "id": "dbc_testdb/main/tables/customers/columns",
               "title": "Columns",
               "type": "columns",
               "badge": "13",
               "children": [
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/customers/columns/CustomerId",
+                  "id": "dbc_testdb/main/tables/customers/columns/CustomerId",
                   "title": "CustomerId",
                   "type": "column",
                   "tags": [
@@ -270,7 +270,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/customers/columns/FirstName",
+                  "id": "dbc_testdb/main/tables/customers/columns/FirstName",
                   "title": "FirstName",
                   "type": "column",
                   "tags": [
@@ -282,7 +282,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/customers/columns/LastName",
+                  "id": "dbc_testdb/main/tables/customers/columns/LastName",
                   "title": "LastName",
                   "type": "column",
                   "tags": [
@@ -294,7 +294,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/customers/columns/Company",
+                  "id": "dbc_testdb/main/tables/customers/columns/Company",
                   "title": "Company",
                   "type": "column",
                   "tags": [
@@ -302,7 +302,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/customers/columns/Address",
+                  "id": "dbc_testdb/main/tables/customers/columns/Address",
                   "title": "Address",
                   "type": "column",
                   "tags": [
@@ -310,7 +310,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/customers/columns/City",
+                  "id": "dbc_testdb/main/tables/customers/columns/City",
                   "title": "City",
                   "type": "column",
                   "tags": [
@@ -318,7 +318,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/customers/columns/State",
+                  "id": "dbc_testdb/main/tables/customers/columns/State",
                   "title": "State",
                   "type": "column",
                   "tags": [
@@ -326,7 +326,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/customers/columns/Country",
+                  "id": "dbc_testdb/main/tables/customers/columns/Country",
                   "title": "Country",
                   "type": "column",
                   "tags": [
@@ -334,7 +334,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/customers/columns/PostalCode",
+                  "id": "dbc_testdb/main/tables/customers/columns/PostalCode",
                   "title": "PostalCode",
                   "type": "column",
                   "tags": [
@@ -342,7 +342,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/customers/columns/Phone",
+                  "id": "dbc_testdb/main/tables/customers/columns/Phone",
                   "title": "Phone",
                   "type": "column",
                   "tags": [
@@ -350,7 +350,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/customers/columns/Fax",
+                  "id": "dbc_testdb/main/tables/customers/columns/Fax",
                   "title": "Fax",
                   "type": "column",
                   "tags": [
@@ -358,7 +358,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/customers/columns/Email",
+                  "id": "dbc_testdb/main/tables/customers/columns/Email",
                   "title": "Email",
                   "type": "column",
                   "tags": [
@@ -370,7 +370,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/customers/columns/SupportRepId",
+                  "id": "dbc_testdb/main/tables/customers/columns/SupportRepId",
                   "title": "SupportRepId",
                   "type": "column",
                   "tags": [
@@ -384,13 +384,13 @@
               ]
             },
             {
-              "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/customers/indexes",
+              "id": "dbc_testdb/main/tables/customers/indexes",
               "title": "Indexes",
               "type": "indexes",
               "badge": "1",
               "children": [
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/customers/indexes/IFK_CustomerSupportRepId",
+                  "id": "dbc_testdb/main/tables/customers/indexes/IFK_CustomerSupportRepId",
                   "title": "IFK_CustomerSupportRepId",
                   "type": "index",
                   "tags": [
@@ -402,7 +402,7 @@
           ]
         },
         {
-          "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/employees",
+          "id": "dbc_testdb/main/tables/employees",
           "title": "employees",
           "type": "table",
           "commands": [
@@ -411,7 +411,7 @@
               "title": "View Structure",
               "icon": "info",
               "args": {
-                "connection": "dbc_9jr65kxq40eqkye5z1mo",
+                "connection": "dbc_testdb",
                 "database": "main",
                 "table": "employees"
               }
@@ -422,7 +422,7 @@
               "icon": "query",
               "args": {
                 "title": "All employees",
-                "connection": "dbc_9jr65kxq40eqkye5z1mo",
+                "connection": "dbc_testdb",
                 "database": "main",
                 "sql": "SELECT * FROM 'main'.'employees'"
               }
@@ -435,13 +435,13 @@
           ],
           "children": [
             {
-              "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/employees/columns",
+              "id": "dbc_testdb/main/tables/employees/columns",
               "title": "Columns",
               "type": "columns",
               "badge": "15",
               "children": [
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/employees/columns/EmployeeId",
+                  "id": "dbc_testdb/main/tables/employees/columns/EmployeeId",
                   "title": "EmployeeId",
                   "type": "column",
                   "tags": [
@@ -461,7 +461,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/employees/columns/LastName",
+                  "id": "dbc_testdb/main/tables/employees/columns/LastName",
                   "title": "LastName",
                   "type": "column",
                   "tags": [
@@ -473,7 +473,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/employees/columns/FirstName",
+                  "id": "dbc_testdb/main/tables/employees/columns/FirstName",
                   "title": "FirstName",
                   "type": "column",
                   "tags": [
@@ -485,7 +485,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/employees/columns/Title",
+                  "id": "dbc_testdb/main/tables/employees/columns/Title",
                   "title": "Title",
                   "type": "column",
                   "tags": [
@@ -493,7 +493,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/employees/columns/ReportsTo",
+                  "id": "dbc_testdb/main/tables/employees/columns/ReportsTo",
                   "title": "ReportsTo",
                   "type": "column",
                   "tags": [
@@ -505,7 +505,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/employees/columns/BirthDate",
+                  "id": "dbc_testdb/main/tables/employees/columns/BirthDate",
                   "title": "BirthDate",
                   "type": "column",
                   "tags": [
@@ -513,7 +513,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/employees/columns/HireDate",
+                  "id": "dbc_testdb/main/tables/employees/columns/HireDate",
                   "title": "HireDate",
                   "type": "column",
                   "tags": [
@@ -521,7 +521,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/employees/columns/Address",
+                  "id": "dbc_testdb/main/tables/employees/columns/Address",
                   "title": "Address",
                   "type": "column",
                   "tags": [
@@ -529,7 +529,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/employees/columns/City",
+                  "id": "dbc_testdb/main/tables/employees/columns/City",
                   "title": "City",
                   "type": "column",
                   "tags": [
@@ -537,7 +537,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/employees/columns/State",
+                  "id": "dbc_testdb/main/tables/employees/columns/State",
                   "title": "State",
                   "type": "column",
                   "tags": [
@@ -545,7 +545,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/employees/columns/Country",
+                  "id": "dbc_testdb/main/tables/employees/columns/Country",
                   "title": "Country",
                   "type": "column",
                   "tags": [
@@ -553,7 +553,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/employees/columns/PostalCode",
+                  "id": "dbc_testdb/main/tables/employees/columns/PostalCode",
                   "title": "PostalCode",
                   "type": "column",
                   "tags": [
@@ -561,7 +561,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/employees/columns/Phone",
+                  "id": "dbc_testdb/main/tables/employees/columns/Phone",
                   "title": "Phone",
                   "type": "column",
                   "tags": [
@@ -569,7 +569,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/employees/columns/Fax",
+                  "id": "dbc_testdb/main/tables/employees/columns/Fax",
                   "title": "Fax",
                   "type": "column",
                   "tags": [
@@ -577,7 +577,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/employees/columns/Email",
+                  "id": "dbc_testdb/main/tables/employees/columns/Email",
                   "title": "Email",
                   "type": "column",
                   "tags": [
@@ -587,13 +587,13 @@
               ]
             },
             {
-              "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/employees/indexes",
+              "id": "dbc_testdb/main/tables/employees/indexes",
               "title": "Indexes",
               "type": "indexes",
               "badge": "1",
               "children": [
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/employees/indexes/IFK_EmployeeReportsTo",
+                  "id": "dbc_testdb/main/tables/employees/indexes/IFK_EmployeeReportsTo",
                   "title": "IFK_EmployeeReportsTo",
                   "type": "index",
                   "tags": [
@@ -605,7 +605,7 @@
           ]
         },
         {
-          "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/genres",
+          "id": "dbc_testdb/main/tables/genres",
           "title": "genres",
           "type": "table",
           "commands": [
@@ -614,7 +614,7 @@
               "title": "View Structure",
               "icon": "info",
               "args": {
-                "connection": "dbc_9jr65kxq40eqkye5z1mo",
+                "connection": "dbc_testdb",
                 "database": "main",
                 "table": "genres"
               }
@@ -625,7 +625,7 @@
               "icon": "query",
               "args": {
                 "title": "All genres",
-                "connection": "dbc_9jr65kxq40eqkye5z1mo",
+                "connection": "dbc_testdb",
                 "database": "main",
                 "sql": "SELECT * FROM 'main'.'genres'"
               }
@@ -638,13 +638,13 @@
           ],
           "children": [
             {
-              "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/genres/columns",
+              "id": "dbc_testdb/main/tables/genres/columns",
               "title": "Columns",
               "type": "columns",
               "badge": "2",
               "children": [
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/genres/columns/GenreId",
+                  "id": "dbc_testdb/main/tables/genres/columns/GenreId",
                   "title": "GenreId",
                   "type": "column",
                   "tags": [
@@ -664,7 +664,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/genres/columns/Name",
+                  "id": "dbc_testdb/main/tables/genres/columns/Name",
                   "title": "Name",
                   "type": "column",
                   "tags": [
@@ -674,7 +674,7 @@
               ]
             },
             {
-              "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/genres/indexes",
+              "id": "dbc_testdb/main/tables/genres/indexes",
               "title": "Indexes",
               "type": "indexes",
               "badge": "0"
@@ -682,7 +682,7 @@
           ]
         },
         {
-          "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/invoice_items",
+          "id": "dbc_testdb/main/tables/invoice_items",
           "title": "invoice_items",
           "type": "table",
           "commands": [
@@ -691,7 +691,7 @@
               "title": "View Structure",
               "icon": "info",
               "args": {
-                "connection": "dbc_9jr65kxq40eqkye5z1mo",
+                "connection": "dbc_testdb",
                 "database": "main",
                 "table": "invoice_items"
               }
@@ -702,7 +702,7 @@
               "icon": "query",
               "args": {
                 "title": "All invoice_items",
-                "connection": "dbc_9jr65kxq40eqkye5z1mo",
+                "connection": "dbc_testdb",
                 "database": "main",
                 "sql": "SELECT * FROM 'main'.'invoice_items'"
               }
@@ -715,13 +715,13 @@
           ],
           "children": [
             {
-              "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/invoice_items/columns",
+              "id": "dbc_testdb/main/tables/invoice_items/columns",
               "title": "Columns",
               "type": "columns",
               "badge": "5",
               "children": [
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/invoice_items/columns/InvoiceLineId",
+                  "id": "dbc_testdb/main/tables/invoice_items/columns/InvoiceLineId",
                   "title": "InvoiceLineId",
                   "type": "column",
                   "tags": [
@@ -741,7 +741,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/invoice_items/columns/InvoiceId",
+                  "id": "dbc_testdb/main/tables/invoice_items/columns/InvoiceId",
                   "title": "InvoiceId",
                   "type": "column",
                   "tags": [
@@ -757,7 +757,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/invoice_items/columns/TrackId",
+                  "id": "dbc_testdb/main/tables/invoice_items/columns/TrackId",
                   "title": "TrackId",
                   "type": "column",
                   "tags": [
@@ -773,7 +773,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/invoice_items/columns/UnitPrice",
+                  "id": "dbc_testdb/main/tables/invoice_items/columns/UnitPrice",
                   "title": "UnitPrice",
                   "type": "column",
                   "tags": [
@@ -785,7 +785,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/invoice_items/columns/Quantity",
+                  "id": "dbc_testdb/main/tables/invoice_items/columns/Quantity",
                   "title": "Quantity",
                   "type": "column",
                   "tags": [
@@ -799,13 +799,13 @@
               ]
             },
             {
-              "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/invoice_items/indexes",
+              "id": "dbc_testdb/main/tables/invoice_items/indexes",
               "title": "Indexes",
               "type": "indexes",
               "badge": "2",
               "children": [
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/invoice_items/indexes/IFK_InvoiceLineInvoiceId",
+                  "id": "dbc_testdb/main/tables/invoice_items/indexes/IFK_InvoiceLineInvoiceId",
                   "title": "IFK_InvoiceLineInvoiceId",
                   "type": "index",
                   "tags": [
@@ -813,7 +813,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/invoice_items/indexes/IFK_InvoiceLineTrackId",
+                  "id": "dbc_testdb/main/tables/invoice_items/indexes/IFK_InvoiceLineTrackId",
                   "title": "IFK_InvoiceLineTrackId",
                   "type": "index",
                   "tags": [
@@ -825,7 +825,7 @@
           ]
         },
         {
-          "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/invoices",
+          "id": "dbc_testdb/main/tables/invoices",
           "title": "invoices",
           "type": "table",
           "commands": [
@@ -834,7 +834,7 @@
               "title": "View Structure",
               "icon": "info",
               "args": {
-                "connection": "dbc_9jr65kxq40eqkye5z1mo",
+                "connection": "dbc_testdb",
                 "database": "main",
                 "table": "invoices"
               }
@@ -845,7 +845,7 @@
               "icon": "query",
               "args": {
                 "title": "All invoices",
-                "connection": "dbc_9jr65kxq40eqkye5z1mo",
+                "connection": "dbc_testdb",
                 "database": "main",
                 "sql": "SELECT * FROM 'main'.'invoices'"
               }
@@ -858,13 +858,13 @@
           ],
           "children": [
             {
-              "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/invoices/columns",
+              "id": "dbc_testdb/main/tables/invoices/columns",
               "title": "Columns",
               "type": "columns",
               "badge": "9",
               "children": [
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/invoices/columns/InvoiceId",
+                  "id": "dbc_testdb/main/tables/invoices/columns/InvoiceId",
                   "title": "InvoiceId",
                   "type": "column",
                   "tags": [
@@ -884,7 +884,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/invoices/columns/CustomerId",
+                  "id": "dbc_testdb/main/tables/invoices/columns/CustomerId",
                   "title": "CustomerId",
                   "type": "column",
                   "tags": [
@@ -900,7 +900,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/invoices/columns/InvoiceDate",
+                  "id": "dbc_testdb/main/tables/invoices/columns/InvoiceDate",
                   "title": "InvoiceDate",
                   "type": "column",
                   "tags": [
@@ -912,7 +912,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/invoices/columns/BillingAddress",
+                  "id": "dbc_testdb/main/tables/invoices/columns/BillingAddress",
                   "title": "BillingAddress",
                   "type": "column",
                   "tags": [
@@ -920,7 +920,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/invoices/columns/BillingCity",
+                  "id": "dbc_testdb/main/tables/invoices/columns/BillingCity",
                   "title": "BillingCity",
                   "type": "column",
                   "tags": [
@@ -928,7 +928,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/invoices/columns/BillingState",
+                  "id": "dbc_testdb/main/tables/invoices/columns/BillingState",
                   "title": "BillingState",
                   "type": "column",
                   "tags": [
@@ -936,7 +936,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/invoices/columns/BillingCountry",
+                  "id": "dbc_testdb/main/tables/invoices/columns/BillingCountry",
                   "title": "BillingCountry",
                   "type": "column",
                   "tags": [
@@ -944,7 +944,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/invoices/columns/BillingPostalCode",
+                  "id": "dbc_testdb/main/tables/invoices/columns/BillingPostalCode",
                   "title": "BillingPostalCode",
                   "type": "column",
                   "tags": [
@@ -952,7 +952,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/invoices/columns/Total",
+                  "id": "dbc_testdb/main/tables/invoices/columns/Total",
                   "title": "Total",
                   "type": "column",
                   "tags": [
@@ -966,13 +966,13 @@
               ]
             },
             {
-              "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/invoices/indexes",
+              "id": "dbc_testdb/main/tables/invoices/indexes",
               "title": "Indexes",
               "type": "indexes",
               "badge": "1",
               "children": [
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/invoices/indexes/IFK_InvoiceCustomerId",
+                  "id": "dbc_testdb/main/tables/invoices/indexes/IFK_InvoiceCustomerId",
                   "title": "IFK_InvoiceCustomerId",
                   "type": "index",
                   "tags": [
@@ -984,7 +984,7 @@
           ]
         },
         {
-          "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/media_types",
+          "id": "dbc_testdb/main/tables/media_types",
           "title": "media_types",
           "type": "table",
           "commands": [
@@ -993,7 +993,7 @@
               "title": "View Structure",
               "icon": "info",
               "args": {
-                "connection": "dbc_9jr65kxq40eqkye5z1mo",
+                "connection": "dbc_testdb",
                 "database": "main",
                 "table": "media_types"
               }
@@ -1004,7 +1004,7 @@
               "icon": "query",
               "args": {
                 "title": "All media_types",
-                "connection": "dbc_9jr65kxq40eqkye5z1mo",
+                "connection": "dbc_testdb",
                 "database": "main",
                 "sql": "SELECT * FROM 'main'.'media_types'"
               }
@@ -1017,13 +1017,13 @@
           ],
           "children": [
             {
-              "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/media_types/columns",
+              "id": "dbc_testdb/main/tables/media_types/columns",
               "title": "Columns",
               "type": "columns",
               "badge": "2",
               "children": [
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/media_types/columns/MediaTypeId",
+                  "id": "dbc_testdb/main/tables/media_types/columns/MediaTypeId",
                   "title": "MediaTypeId",
                   "type": "column",
                   "tags": [
@@ -1043,7 +1043,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/media_types/columns/Name",
+                  "id": "dbc_testdb/main/tables/media_types/columns/Name",
                   "title": "Name",
                   "type": "column",
                   "tags": [
@@ -1053,7 +1053,7 @@
               ]
             },
             {
-              "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/media_types/indexes",
+              "id": "dbc_testdb/main/tables/media_types/indexes",
               "title": "Indexes",
               "type": "indexes",
               "badge": "0"
@@ -1061,7 +1061,7 @@
           ]
         },
         {
-          "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/playlist_track",
+          "id": "dbc_testdb/main/tables/playlist_track",
           "title": "playlist_track",
           "type": "table",
           "commands": [
@@ -1070,7 +1070,7 @@
               "title": "View Structure",
               "icon": "info",
               "args": {
-                "connection": "dbc_9jr65kxq40eqkye5z1mo",
+                "connection": "dbc_testdb",
                 "database": "main",
                 "table": "playlist_track"
               }
@@ -1081,7 +1081,7 @@
               "icon": "query",
               "args": {
                 "title": "All playlist_track",
-                "connection": "dbc_9jr65kxq40eqkye5z1mo",
+                "connection": "dbc_testdb",
                 "database": "main",
                 "sql": "SELECT * FROM 'main'.'playlist_track'"
               }
@@ -1094,13 +1094,13 @@
           ],
           "children": [
             {
-              "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/playlist_track/columns",
+              "id": "dbc_testdb/main/tables/playlist_track/columns",
               "title": "Columns",
               "type": "columns",
               "badge": "2",
               "children": [
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/playlist_track/columns/PlaylistId",
+                  "id": "dbc_testdb/main/tables/playlist_track/columns/PlaylistId",
                   "title": "PlaylistId",
                   "type": "column",
                   "tags": [
@@ -1120,7 +1120,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/playlist_track/columns/TrackId",
+                  "id": "dbc_testdb/main/tables/playlist_track/columns/TrackId",
                   "title": "TrackId",
                   "type": "column",
                   "tags": [
@@ -1142,13 +1142,13 @@
               ]
             },
             {
-              "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/playlist_track/indexes",
+              "id": "dbc_testdb/main/tables/playlist_track/indexes",
               "title": "Indexes",
               "type": "indexes",
               "badge": "2",
               "children": [
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/playlist_track/indexes/IFK_PlaylistTrackTrackId",
+                  "id": "dbc_testdb/main/tables/playlist_track/indexes/IFK_PlaylistTrackTrackId",
                   "title": "IFK_PlaylistTrackTrackId",
                   "type": "index",
                   "tags": [
@@ -1156,7 +1156,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/playlist_track/indexes/sqlite_autoindex_playlist_track_1",
+                  "id": "dbc_testdb/main/tables/playlist_track/indexes/sqlite_autoindex_playlist_track_1",
                   "title": "sqlite_autoindex_playlist_track_1",
                   "type": "index",
                   "tags": [
@@ -1169,7 +1169,7 @@
           ]
         },
         {
-          "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/playlists",
+          "id": "dbc_testdb/main/tables/playlists",
           "title": "playlists",
           "type": "table",
           "commands": [
@@ -1178,7 +1178,7 @@
               "title": "View Structure",
               "icon": "info",
               "args": {
-                "connection": "dbc_9jr65kxq40eqkye5z1mo",
+                "connection": "dbc_testdb",
                 "database": "main",
                 "table": "playlists"
               }
@@ -1189,7 +1189,7 @@
               "icon": "query",
               "args": {
                 "title": "All playlists",
-                "connection": "dbc_9jr65kxq40eqkye5z1mo",
+                "connection": "dbc_testdb",
                 "database": "main",
                 "sql": "SELECT * FROM 'main'.'playlists'"
               }
@@ -1202,13 +1202,13 @@
           ],
           "children": [
             {
-              "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/playlists/columns",
+              "id": "dbc_testdb/main/tables/playlists/columns",
               "title": "Columns",
               "type": "columns",
               "badge": "2",
               "children": [
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/playlists/columns/PlaylistId",
+                  "id": "dbc_testdb/main/tables/playlists/columns/PlaylistId",
                   "title": "PlaylistId",
                   "type": "column",
                   "tags": [
@@ -1228,7 +1228,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/playlists/columns/Name",
+                  "id": "dbc_testdb/main/tables/playlists/columns/Name",
                   "title": "Name",
                   "type": "column",
                   "tags": [
@@ -1238,7 +1238,7 @@
               ]
             },
             {
-              "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/playlists/indexes",
+              "id": "dbc_testdb/main/tables/playlists/indexes",
               "title": "Indexes",
               "type": "indexes",
               "badge": "0"
@@ -1246,7 +1246,7 @@
           ]
         },
         {
-          "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/tracks",
+          "id": "dbc_testdb/main/tables/tracks",
           "title": "tracks",
           "type": "table",
           "commands": [
@@ -1255,7 +1255,7 @@
               "title": "View Structure",
               "icon": "info",
               "args": {
-                "connection": "dbc_9jr65kxq40eqkye5z1mo",
+                "connection": "dbc_testdb",
                 "database": "main",
                 "table": "tracks"
               }
@@ -1266,7 +1266,7 @@
               "icon": "query",
               "args": {
                 "title": "All tracks",
-                "connection": "dbc_9jr65kxq40eqkye5z1mo",
+                "connection": "dbc_testdb",
                 "database": "main",
                 "sql": "SELECT * FROM 'main'.'tracks'"
               }
@@ -1279,13 +1279,13 @@
           ],
           "children": [
             {
-              "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/tracks/columns",
+              "id": "dbc_testdb/main/tables/tracks/columns",
               "title": "Columns",
               "type": "columns",
               "badge": "9",
               "children": [
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/tracks/columns/TrackId",
+                  "id": "dbc_testdb/main/tables/tracks/columns/TrackId",
                   "title": "TrackId",
                   "type": "column",
                   "tags": [
@@ -1305,7 +1305,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/tracks/columns/Name",
+                  "id": "dbc_testdb/main/tables/tracks/columns/Name",
                   "title": "Name",
                   "type": "column",
                   "tags": [
@@ -1317,7 +1317,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/tracks/columns/AlbumId",
+                  "id": "dbc_testdb/main/tables/tracks/columns/AlbumId",
                   "title": "AlbumId",
                   "type": "column",
                   "tags": [
@@ -1329,7 +1329,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/tracks/columns/MediaTypeId",
+                  "id": "dbc_testdb/main/tables/tracks/columns/MediaTypeId",
                   "title": "MediaTypeId",
                   "type": "column",
                   "tags": [
@@ -1345,7 +1345,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/tracks/columns/GenreId",
+                  "id": "dbc_testdb/main/tables/tracks/columns/GenreId",
                   "title": "GenreId",
                   "type": "column",
                   "tags": [
@@ -1357,7 +1357,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/tracks/columns/Composer",
+                  "id": "dbc_testdb/main/tables/tracks/columns/Composer",
                   "title": "Composer",
                   "type": "column",
                   "tags": [
@@ -1365,7 +1365,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/tracks/columns/Milliseconds",
+                  "id": "dbc_testdb/main/tables/tracks/columns/Milliseconds",
                   "title": "Milliseconds",
                   "type": "column",
                   "tags": [
@@ -1377,7 +1377,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/tracks/columns/Bytes",
+                  "id": "dbc_testdb/main/tables/tracks/columns/Bytes",
                   "title": "Bytes",
                   "type": "column",
                   "tags": [
@@ -1385,7 +1385,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/tracks/columns/UnitPrice",
+                  "id": "dbc_testdb/main/tables/tracks/columns/UnitPrice",
                   "title": "UnitPrice",
                   "type": "column",
                   "tags": [
@@ -1399,13 +1399,13 @@
               ]
             },
             {
-              "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/tracks/indexes",
+              "id": "dbc_testdb/main/tables/tracks/indexes",
               "title": "Indexes",
               "type": "indexes",
               "badge": "3",
               "children": [
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/tracks/indexes/IFK_TrackAlbumId",
+                  "id": "dbc_testdb/main/tables/tracks/indexes/IFK_TrackAlbumId",
                   "title": "IFK_TrackAlbumId",
                   "type": "index",
                   "tags": [
@@ -1413,7 +1413,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/tracks/indexes/IFK_TrackGenreId",
+                  "id": "dbc_testdb/main/tables/tracks/indexes/IFK_TrackGenreId",
                   "title": "IFK_TrackGenreId",
                   "type": "index",
                   "tags": [
@@ -1421,7 +1421,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/tracks/indexes/IFK_TrackMediaTypeId",
+                  "id": "dbc_testdb/main/tables/tracks/indexes/IFK_TrackMediaTypeId",
                   "title": "IFK_TrackMediaTypeId",
                   "type": "index",
                   "tags": [
@@ -1435,24 +1435,34 @@
       ]
     },
     {
-      "id": "dbc_9jr65kxq40eqkye5z1mo/main/views",
+      "id": "dbc_testdb/main/views",
       "title": "Views",
       "type": "views",
       "icon": "view",
       "badge": "3",
       "children": [
         {
-          "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/CustomerNames",
+          "id": "dbc_testdb/main/tables/CustomerNames",
           "title": "CustomerNames",
           "type": "table",
           "commands": [
+            {
+              "command": "openTable",
+              "title": "View Structure",
+              "icon": "info",
+              "args": {
+                "connection": "dbc_testdb",
+                "database": "main",
+                "view": "CustomerNames"
+              }
+            },
             {
               "command": "openQuery",
               "title": "Query Data",
               "icon": "query",
               "args": {
                 "title": "All CustomerNames",
-                "connection": "dbc_9jr65kxq40eqkye5z1mo",
+                "connection": "dbc_testdb",
                 "database": "main",
                 "sql": "SELECT * FROM 'main'.'CustomerNames'"
               }
@@ -1465,13 +1475,13 @@
           ],
           "children": [
             {
-              "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/CustomerNames/columns",
+              "id": "dbc_testdb/main/views/CustomerNames/columns",
               "title": "Columns",
               "type": "columns",
               "badge": "3",
               "children": [
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/CustomerNames/columns/FirstName",
+                  "id": "dbc_testdb/main/views/CustomerNames/columns/FirstName",
                   "title": "FirstName",
                   "type": "column",
                   "tags": [
@@ -1479,7 +1489,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/CustomerNames/columns/LastName",
+                  "id": "dbc_testdb/main/views/CustomerNames/columns/LastName",
                   "title": "LastName",
                   "type": "column",
                   "tags": [
@@ -1487,7 +1497,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/CustomerNames/columns/Company",
+                  "id": "dbc_testdb/main/views/CustomerNames/columns/Company",
                   "title": "Company",
                   "type": "column",
                   "tags": [
@@ -1497,7 +1507,7 @@
               ]
             },
             {
-              "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/CustomerNames/indexes",
+              "id": "dbc_testdb/main/views/CustomerNames/indexes",
               "title": "Indexes",
               "type": "indexes",
               "badge": "0"
@@ -1505,17 +1515,27 @@
           ]
         },
         {
-          "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/DoubleSales",
+          "id": "dbc_testdb/main/tables/DoubleSales",
           "title": "DoubleSales",
           "type": "table",
           "commands": [
+            {
+              "command": "openTable",
+              "title": "View Structure",
+              "icon": "info",
+              "args": {
+                "connection": "dbc_testdb",
+                "database": "main",
+                "view": "DoubleSales"
+              }
+            },
             {
               "command": "openQuery",
               "title": "Query Data",
               "icon": "query",
               "args": {
                 "title": "All DoubleSales",
-                "connection": "dbc_9jr65kxq40eqkye5z1mo",
+                "connection": "dbc_testdb",
                 "database": "main",
                 "sql": "SELECT * FROM 'main'.'DoubleSales'"
               }
@@ -1528,13 +1548,13 @@
           ],
           "children": [
             {
-              "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/DoubleSales/columns",
+              "id": "dbc_testdb/main/views/DoubleSales/columns",
               "title": "Columns",
               "type": "columns",
               "badge": "2",
               "children": [
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/DoubleSales/columns/InvoiceId",
+                  "id": "dbc_testdb/main/views/DoubleSales/columns/InvoiceId",
                   "title": "InvoiceId",
                   "type": "column",
                   "tags": [
@@ -1542,7 +1562,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/DoubleSales/columns/DoubleTotal",
+                  "id": "dbc_testdb/main/views/DoubleSales/columns/DoubleTotal",
                   "title": "DoubleTotal",
                   "type": "column",
                   "tags": []
@@ -1550,7 +1570,7 @@
               ]
             },
             {
-              "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/DoubleSales/indexes",
+              "id": "dbc_testdb/main/views/DoubleSales/indexes",
               "title": "Indexes",
               "type": "indexes",
               "badge": "0"
@@ -1558,17 +1578,27 @@
           ]
         },
         {
-          "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/InvoiceTotals",
+          "id": "dbc_testdb/main/tables/InvoiceTotals",
           "title": "InvoiceTotals",
           "type": "table",
           "commands": [
+            {
+              "command": "openTable",
+              "title": "View Structure",
+              "icon": "info",
+              "args": {
+                "connection": "dbc_testdb",
+                "database": "main",
+                "view": "InvoiceTotals"
+              }
+            },
             {
               "command": "openQuery",
               "title": "Query Data",
               "icon": "query",
               "args": {
                 "title": "All InvoiceTotals",
-                "connection": "dbc_9jr65kxq40eqkye5z1mo",
+                "connection": "dbc_testdb",
                 "database": "main",
                 "sql": "SELECT * FROM 'main'.'InvoiceTotals'"
               }
@@ -1581,13 +1611,13 @@
           ],
           "children": [
             {
-              "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/InvoiceTotals/columns",
+              "id": "dbc_testdb/main/views/InvoiceTotals/columns",
               "title": "Columns",
               "type": "columns",
               "badge": "2",
               "children": [
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/InvoiceTotals/columns/InvoiceId",
+                  "id": "dbc_testdb/main/views/InvoiceTotals/columns/InvoiceId",
                   "title": "InvoiceId",
                   "type": "column",
                   "tags": [
@@ -1595,7 +1625,7 @@
                   ]
                 },
                 {
-                  "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/InvoiceTotals/columns/Total",
+                  "id": "dbc_testdb/main/views/InvoiceTotals/columns/Total",
                   "title": "Total",
                   "type": "column",
                   "tags": [
@@ -1605,7 +1635,7 @@
               ]
             },
             {
-              "id": "dbc_9jr65kxq40eqkye5z1mo/main/tables/InvoiceTotals/indexes",
+              "id": "dbc_testdb/main/views/InvoiceTotals/indexes",
               "title": "Indexes",
               "type": "indexes",
               "badge": "0"
@@ -1615,14 +1645,14 @@
       ]
     },
     {
-      "id": "dbc_9jr65kxq40eqkye5z1mo/main/indexes",
+      "id": "dbc_testdb/main/indexes",
       "title": "Indexes",
       "type": "indexes",
       "icon": "index",
       "badge": "11",
       "children": [
         {
-          "id": "dbc_9jr65kxq40eqkye5z1mo/main/indexes/IFK_AlbumArtistId",
+          "id": "dbc_testdb/main/indexes/IFK_AlbumArtistId",
           "title": "IFK_AlbumArtistId",
           "type": "index",
           "tags": [
@@ -1633,7 +1663,7 @@
           ]
         },
         {
-          "id": "dbc_9jr65kxq40eqkye5z1mo/main/indexes/IFK_CustomerSupportRepId",
+          "id": "dbc_testdb/main/indexes/IFK_CustomerSupportRepId",
           "title": "IFK_CustomerSupportRepId",
           "type": "index",
           "tags": [
@@ -1644,7 +1674,7 @@
           ]
         },
         {
-          "id": "dbc_9jr65kxq40eqkye5z1mo/main/indexes/IFK_EmployeeReportsTo",
+          "id": "dbc_testdb/main/indexes/IFK_EmployeeReportsTo",
           "title": "IFK_EmployeeReportsTo",
           "type": "index",
           "tags": [
@@ -1655,7 +1685,7 @@
           ]
         },
         {
-          "id": "dbc_9jr65kxq40eqkye5z1mo/main/indexes/IFK_InvoiceCustomerId",
+          "id": "dbc_testdb/main/indexes/IFK_InvoiceCustomerId",
           "title": "IFK_InvoiceCustomerId",
           "type": "index",
           "tags": [
@@ -1666,7 +1696,7 @@
           ]
         },
         {
-          "id": "dbc_9jr65kxq40eqkye5z1mo/main/indexes/IFK_InvoiceLineInvoiceId",
+          "id": "dbc_testdb/main/indexes/IFK_InvoiceLineInvoiceId",
           "title": "IFK_InvoiceLineInvoiceId",
           "type": "index",
           "tags": [
@@ -1677,7 +1707,7 @@
           ]
         },
         {
-          "id": "dbc_9jr65kxq40eqkye5z1mo/main/indexes/IFK_InvoiceLineTrackId",
+          "id": "dbc_testdb/main/indexes/IFK_InvoiceLineTrackId",
           "title": "IFK_InvoiceLineTrackId",
           "type": "index",
           "tags": [
@@ -1688,7 +1718,7 @@
           ]
         },
         {
-          "id": "dbc_9jr65kxq40eqkye5z1mo/main/indexes/IFK_PlaylistTrackTrackId",
+          "id": "dbc_testdb/main/indexes/IFK_PlaylistTrackTrackId",
           "title": "IFK_PlaylistTrackTrackId",
           "type": "index",
           "tags": [
@@ -1699,7 +1729,7 @@
           ]
         },
         {
-          "id": "dbc_9jr65kxq40eqkye5z1mo/main/indexes/IFK_TrackAlbumId",
+          "id": "dbc_testdb/main/indexes/IFK_TrackAlbumId",
           "title": "IFK_TrackAlbumId",
           "type": "index",
           "tags": [
@@ -1710,7 +1740,7 @@
           ]
         },
         {
-          "id": "dbc_9jr65kxq40eqkye5z1mo/main/indexes/IFK_TrackGenreId",
+          "id": "dbc_testdb/main/indexes/IFK_TrackGenreId",
           "title": "IFK_TrackGenreId",
           "type": "index",
           "tags": [
@@ -1721,7 +1751,7 @@
           ]
         },
         {
-          "id": "dbc_9jr65kxq40eqkye5z1mo/main/indexes/IFK_TrackMediaTypeId",
+          "id": "dbc_testdb/main/indexes/IFK_TrackMediaTypeId",
           "title": "IFK_TrackMediaTypeId",
           "type": "index",
           "tags": [
@@ -1732,7 +1762,7 @@
           ]
         },
         {
-          "id": "dbc_9jr65kxq40eqkye5z1mo/main/indexes/sqlite_autoindex_playlist_track_1",
+          "id": "dbc_testdb/main/indexes/sqlite_autoindex_playlist_track_1",
           "title": "sqlite_autoindex_playlist_track_1",
           "type": "index",
           "tags": [
@@ -1745,14 +1775,14 @@
       ]
     },
     {
-      "id": "dbc_9jr65kxq40eqkye5z1mo/main/triggers",
+      "id": "dbc_testdb/main/triggers",
       "title": "Triggers",
       "type": "triggers",
       "icon": "trigger",
       "badge": "1",
       "children": [
         {
-          "id": "dbc_9jr65kxq40eqkye5z1mo/main/triggers/validate_email_before_insert_customers",
+          "id": "dbc_testdb/main/triggers/validate_email_before_insert_customers",
           "title": "validate_email_before_insert_customers",
           "type": "trigger",
           "tags": [

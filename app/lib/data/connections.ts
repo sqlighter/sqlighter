@@ -227,8 +227,14 @@ export abstract class DataConnection {
   /** Run a SQL query and return zero o more results from it */
   public abstract getResults(sql: string): Promise<QueryExecResult[]>
 
-  /** Run a SQL query that generates a single result set */
-  public abstract getResult(sql: string): Promise<QueryExecResult>
+  /** Run a SQL query that generates a single result set or null if no results */
+  public async getResult(sql: string): Promise<QueryExecResult> {
+    const results = await this.getResults(sql)
+    if (results.length > 1) {
+      throw new DataError(`DataConnection.getResult - expected single result, got ${results.length}, sql: ${sql}`)
+    }
+    return results?.length ? results[0] : null
+  }
 
   /**
    * Returns the number of changed rows (modified, inserted or deleted) by the latest

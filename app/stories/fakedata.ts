@@ -22,9 +22,6 @@ class FakeConnection extends DataConnection {
   public async getResults(sql: string): Promise<QueryExecResult[]> {
     return [fakeCustomers]
   }
-  public async getResult(sql: string): Promise<QueryExecResult> {
-    return fakeCustomers
-  }
   public async getRowsModified(): Promise<number> {
     return 0
   }

@@ -24,6 +24,7 @@ export function writeJson(filename, data) {
 export async function getTestConnection(databaseName = "test.db"): Promise<SqliteDataConnection> {
   const engine = await initSqlJs()
   const configs: DataConfig = {
+    id: `dbc_${databaseName.replace(".", "")}`,
     client: "sqlite3",
     title: databaseName,
     connection: {

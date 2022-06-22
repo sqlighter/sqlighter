@@ -13,7 +13,6 @@ describe("sqlite.ts (node env)", () => {
   test("getResult (single select)", async () => {
     const connection = await getChinookConnection()
     const result = await connection.getResult("select 10 'Colonna'")
-    console.log(result)
 
     expect(result.columns.length).toBe(1)
     expect(result.columns[0]).toBe("Colonna")
@@ -26,7 +25,6 @@ describe("sqlite.ts (node env)", () => {
   test("getResult (sqlite_version)", async () => {
     const connection = await getChinookConnection()
     const result = await connection.getResult("select sqlite_version()")
-    console.log(result)
 
     expect(result.columns.length).toBe(1)
     expect(result.columns[0]).toBe("sqlite_version()")

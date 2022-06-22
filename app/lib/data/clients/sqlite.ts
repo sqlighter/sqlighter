@@ -116,6 +116,14 @@ export class SqliteDataConnection extends DataConnection {
     // https://www.sqlite.org/pragma.html#pragma_table_xinfo
     const columnsResult = await this.getResult(`pragma '${database}'.table_xinfo('${table}')`)
     const columns = []
+
+    // the database will only have a sqlite_sequence table if one or more
+    // primary keys are defined as autoincrement. if the table is not there
+    // we know that primary keys art NOT autoincrement
+    const hasSqliteSequence = (await this.getResult(`pragma '${database}'.table_xinfo('sqlite_sequence')`))
+      ? true
+      : false
+
     for (const columnResult of columnsResult.values) {
       const tags = []
       if (columnResult[6]) {
@@ -125,16 +133,10 @@ export class SqliteDataConnection extends DataConnection {
 
       let autoIncrement = undefined
       const primaryKey = columnResult[5] ? true : undefined // pk
-      if (primaryKey) {
-        try {
-          const sequenceResult = await this.getResult(
-            `select count(*) from '${database}'.sqlite_sequence where name = '${table}'`
-          )
-          if (sequenceResult.values[0][0]) {
-            autoIncrement = true
-          }
-        } catch {
-          // no results, ok!
+      if (primaryKey && hasSqliteSequence) {
+        const result = await this.getResult(`SELECT COUNT(*) FROM "${database}".sqlite_sequence WHERE name = "${table}"`)
+        if (result?.values[0][0] === 1) {
+          autoIncrement = true
         }
       }
 
@@ -154,10 +156,9 @@ export class SqliteDataConnection extends DataConnection {
   /** Retrieve foreign key information for a table or a view */
   private async _getTableForeignKeysSchema(database: string, table: string) {
     // https://www.sqlite.org/pragma.html#pragma_foreign_key_list
-    try {
-      // will throw if no results because of no foreign keys
-      const foreignKeysResult = await this.getResult(`pragma '${database}'.foreign_key_list('${table}')`)
-      const foreignKeys = []
+    const foreignKeys = []
+    const foreignKeysResult = await this.getResult(`pragma '${database}'.foreign_key_list('${table}')`)
+    if (foreignKeysResult) {
       for (const foreigKeyResult of foreignKeysResult.values) {
         foreignKeys.push({
           table: foreigKeyResult[2],
@@ -167,11 +168,8 @@ export class SqliteDataConnection extends DataConnection {
           onDelete: foreigKeyResult[6] ? foreigKeyResult[6].toString().toLowerCase() : undefined,
         })
       }
-      return foreignKeys.length > 0 ? foreignKeys : undefined
-    } catch (exception) {
-      // console.warn(`SqliteDataConnection._getTableForeignKeysSchema - ${table}, no results`, exception)
-      return undefined
     }
+    return foreignKeys.length > 0 ? foreignKeys : undefined
   }
 
   /** Generate schema for tables or views in given database */
@@ -303,15 +301,6 @@ export class SqliteDataConnection extends DataConnection {
       console.error(`SqliteDataConnection.getResults - sql: ${sql}, exception: ${exception}`, exception)
       throw exception
     }
-  }
-
-  /** Run a SQL query that generates a single result set */
-  public async getResult(sql: string): Promise<QueryExecResult> {
-    const results = await this.getResults(sql)
-    if (results.length != 1) {
-      throw new Error(`SqliteDataConnection.getResult - sql: '${sql}' returned ${results.length} results`)
-    }
-    return results[0]
   }
 
   /**
