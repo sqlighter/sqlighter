@@ -24,7 +24,6 @@ import { TablePanel } from "../panels/tablepanel"
 import { QueryPanel } from "../panels/querypanel"
 import { TabsLayout } from "../navigation/tabslayout"
 import { useSqljs } from "../hooks/usedb"
-import { KeyboardCommandKeySharp } from "@mui/icons-material"
 
 export interface MainProps extends PanelProps {
   /** User currently signedin (if any) */
