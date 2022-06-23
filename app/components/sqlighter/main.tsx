@@ -199,24 +199,26 @@ export default function Main(props: MainProps) {
       // refresh tab titles if needed
       setTabs([...tabs])
 
-      // see if it's worth adding to history or not
+      // add to history then see if there's an older version we can get rid of
       const lastRun = query.runs?.[0]
       if (lastRun?.status == "completed") {
+        // keep only last run, do not retain actual results
+        const { values, columns, ...runClone } = query.runs[0]
+        const queryClone = { ...query } // duplicate query
+        queryClone.runs = [runClone] // keep only last run
+        let updatedHistory = [queryClone, ...history]
+
         const prevQuery = history.find((q) => q.id == query.id)
         if (prevQuery) {
           const prevRun = prevQuery.runs?.[0]
           if (lastRun.sql == prevRun?.sql) {
-            // same sql, so no need to track this in history
-            return
+            // same sql, remove to avoid too many duplicates
+            updatedHistory = updatedHistory.filter((q) => q != prevQuery)
           }
         }
 
-        // keep only last run, do not retain actual results
-        const { values, columns, ...run } = query.runs[0]
-        query.runs = [{ ...run }]
-
-        // track query+run in history
-        setHistory([{ ...query }, ...history])
+        // track query + run in history
+        setHistory(updatedHistory)
       }
     }
   }
