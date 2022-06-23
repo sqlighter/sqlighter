@@ -2,7 +2,7 @@
 // fakedata.ts
 //
 
-import { DataConnection, DataConfig, DataSchema } from "../lib/data/connections"
+import { DataConnection, DataConfig, DataSchema, CONNECTION_PREFIX } from "../lib/data/connections"
 import { Query, QueryRun } from "../lib/items/query"
 import { parseISO } from "date-fns"
 import { Command } from "../lib/commands"
@@ -146,12 +146,15 @@ export const settingsCmd: Command = {
 
 const initSqlJs = (window as any).initSqlJs
 
-export async function getTestConnection(database = "Test.db"): Promise<{ connection: SqliteDataConnection; schemas: DataSchema[] }> {
+export async function getTestConnection(
+  database = "Test.db"
+): Promise<{ connection: SqliteDataConnection; schemas: DataSchema[] }> {
+  console.assert(database.endsWith(".db"))
   const engine = await initSqlJs({
     locateFile: (file) => `/${file}`,
   })
   const configs: DataConfig = {
-    id: "dbc_chinook",
+    id: CONNECTION_PREFIX + database.toLocaleLowerCase().substring(0, database.length - 3),
     client: "sqlite3",
     title: database,
     connection: {
