@@ -41,9 +41,15 @@ export function ActivityBarWrapper(props) {
           />
         </Allotment.Pane>
         <Allotment.Pane minSize={200} preferredSize={200} visible={sidebarVisible} snap>
-          {props.activities?.map((activity) => {
-            return <Box key={activity.props.id} sx={{ display: activity.props.id == activityId ? "block" : "none" }}>{activity}</Box>
-          })}
+          <Box sx={{ width: 1, height: 1, flexGrow: 1, overflow: "scroll" }}>
+            {props.activities?.map((activity) => {
+              return (
+                <Box key={activity.props.id} sx={{ display: activity.props.id == activityId ? "block" : "none" }}>
+                  {activity}
+                </Box>
+              )
+            })}
+          </Box>
         </Allotment.Pane>
         <Allotment.Pane>
           <Box sx={{ width: 1, height: 1, padding: 1, backgroundColor: "white" }}>Contents</Box>
