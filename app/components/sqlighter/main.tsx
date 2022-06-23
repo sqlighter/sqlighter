@@ -16,6 +16,7 @@ import { Query } from "../../lib/items/query"
 
 // components
 import { DatabaseActivity } from "../database/databaseactivity"
+import { HistoryActivity } from "../database/historyactivity"
 import { DatabasePanel } from "../panels/databasepanel"
 import { Empty } from "../ui/empty"
 import { HomePanel, HOME_PANEL_ID } from "../panels/homepanel"
@@ -50,6 +51,9 @@ export default function Main(props: MainProps) {
   const [connection, setConnection] = useState<DataConnection>(null)
   // all connections
   const [connections, setConnections] = useState<DataConnection[]>(null)
+
+  // history of query runs
+  const [history, setHistory] = useState<Query[]>([])
 
   //
   // temporary code while we work out the connection setup panels, etc
@@ -135,16 +139,15 @@ export default function Main(props: MainProps) {
   /** Opens a database tab to show this database structure or selects it if already open */
   function openDatabase(command: Command) {
     console.assert(command.args.connection)
-    const args = {...command.args}
+    const args = { ...command.args }
     const tabId = `pnl_database_${connection.id}`
     const tab = tabs.find((tab) => tab.id == tabId)
 
     if (tab) {
       // existing tabs? refresh properties including selection
-      tab.props = { title: tab.props.title, ...args}
+      tab.props = { title: tab.props.title, ...args }
       setTabs([...tabs])
-    }
-    else {
+    } else {
       const databaseTab = { id: tabId, component: "DatabasePanel", props: args }
       setTabs([databaseTab, ...tabs])
     }
@@ -157,7 +160,7 @@ export default function Main(props: MainProps) {
   /** Add <TablePanel> tab for the table indicated in the command, or selects existing panel if already open. */
   function openTable(command: Command) {
     // console.debug(`Main.openTable`, command)
-    const args = {...command.args}
+    const args = { ...command.args }
     if (args.view) {
       args.table = args.view
       args.variant = "view"
@@ -170,11 +173,15 @@ export default function Main(props: MainProps) {
     const tab = tabs.find((tab) => tab.id === tabId)
     if (tab) {
       // existing tabs? refresh properties including selection
-      tab.props = { title: tab.props.title, ...args}
+      tab.props = { title: tab.props.title, ...args }
       setTabs([...tabs])
     } else {
       // new tab
-      const tableTab = { id: tabId, component: "TablePanel", props: { ...args, title: command.args.table || command.args.view } }
+      const tableTab = {
+        id: tabId,
+        component: "TablePanel",
+        props: { ...args, title: command.args.table || command.args.view },
+      }
       setTabs([tableTab, ...tabs])
     }
     // select tab if needed
@@ -184,6 +191,16 @@ export default function Main(props: MainProps) {
   //
   // handlers
   //
+
+  function handleChangedQuery(command: Command<{item:Query}>) {
+    const query = command.args.item
+
+    // track query(todo, filter out stuff)
+    setHistory([{...query}, ...history])
+
+    // refresh tabs where needed
+    setTabs([...tabs])
+  }
 
   async function handleCommand(event: React.SyntheticEvent, command: Command) {
     console.debug(`Main.handleCommand - ${command.command}`, command)
@@ -246,9 +263,9 @@ export default function Main(props: MainProps) {
         setConnection(command.args.item)
         break
 
-      // data model for query has changed, force tabs redraw
-      case "changeQuery":
-        setTabs([...tabs])
+      // data model for query has changed, update history, force tabs redraw
+      case "changedQuery":
+        handleChangedQuery(command)
         return
 
       // receive files from drag and drop
@@ -286,11 +303,7 @@ export default function Main(props: MainProps) {
           <Typography variant="overline">Bookmarks (tbd)</Typography>
         </Box>
       </Panel>,
-      <Panel id="act_history" title="History" icon="history">
-        <Box p={1}>
-          <Typography variant="overline">History (tbd)</Typography>
-        </Box>
-      </Panel>,
+      <HistoryActivity id="act_history" title="History" icon="history" queries={history} onCommand={handleCommand} />,
     ]
   }
 

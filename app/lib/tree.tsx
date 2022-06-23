@@ -13,7 +13,7 @@ import * as React from "react"
 import { Command } from "./commands"
 
 /** Data model for hierarchial data rendered with TreeView */
-export interface Tree {
+export interface Tree<T = { [key: string]: any }> {
   /**
    * Optional id for the tree item that has to be unique across tree.
    * The id is used to preserve the selection and expansion state of the tree item.
@@ -59,5 +59,8 @@ export interface Tree {
   commands?: Command[]
 
   /** Item's children (expand icon will be shown if array provided but empty) */
-  children?: Tree[]
+  children?: Tree<T>[]
+
+  /** Additional arguments used for example to link tree item back to original object (optional) */
+  args?: T
 }

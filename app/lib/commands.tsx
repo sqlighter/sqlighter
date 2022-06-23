@@ -37,7 +37,7 @@ export type CommandType =
 
   /** Received files or other items from drag and drop @param files List of files to be opened @param items List of other items */
   | "dropItems"
-  
+
   /** Modify a connection settings @param item The connection to modify */
   | "configureConnection"
 
@@ -48,12 +48,10 @@ export type CommandType =
   | "pin"
   /** Unpin item from tree view */
   | "unpin"
-
   | string
 
-
 /** A single command shown for example as an icon, in a contextual menu, etc. */
-export interface Command {
+export interface Command<T = { [key: string]: any }> {
   /** A unique string for this command, eg: sqlighter.expandAll (prefix.command) */
   command: CommandType
 
@@ -67,7 +65,7 @@ export interface Command {
   description?: string
 
   /** Arguments passed to this command (optional and command-specific) */
-  args?: { [key: string]: any }
+  args?: T
 }
 
 /** Callback used to propagate commands within the application */

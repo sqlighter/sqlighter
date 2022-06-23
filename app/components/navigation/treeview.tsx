@@ -13,6 +13,7 @@ import { useSettings } from "../hooks/usesettings"
 import { Tree } from "../../lib/tree"
 import { TreeItem, DEPTH_PADDING_PX } from "./treeitem"
 
+
 /** Custom styles applied to TreeView and TreeItem components */
 const TreeView_SxProps: SxProps<Theme> = {
   width: 1,

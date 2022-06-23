@@ -150,7 +150,7 @@ export function QueryPanel(props: QueryPanelProps) {
     forceUpdate()
     if (props.onCommand) {
       props.onCommand(null, {
-        command: "changeQuery",
+        command: "changedQuery",
         args: {
           item: query,
         },
