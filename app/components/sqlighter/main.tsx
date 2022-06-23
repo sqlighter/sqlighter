@@ -196,12 +196,28 @@ export default function Main(props: MainProps) {
   function handleChangedQuery(command: Command) {
     const query = command.args?.query as Query
     if (query) {
-      // TODO add to history only if it's a completed execution
-      // TODO when saving query remove extra heavy data from query like run results
-      setHistory([{ ...query }, ...history])
-
       // refresh tab titles if needed
       setTabs([...tabs])
+
+      // see if it's worth adding to history or not
+      const lastRun = query.runs?.[0]
+      if (lastRun?.status == "completed") {
+        const prevQuery = history.find((q) => q.id == query.id)
+        if (prevQuery) {
+          const prevRun = prevQuery.runs?.[0]
+          if (lastRun.sql == prevRun?.sql) {
+            // same sql, so no need to track this in history
+            return
+          }
+        }
+
+        // keep only last run, do not retain actual results
+        const { values, columns, ...run } = query.runs[0]
+        query.runs = [{ ...run }]
+
+        // track query+run in history
+        setHistory([{ ...query }, ...history])
+      }
     }
   }
 
