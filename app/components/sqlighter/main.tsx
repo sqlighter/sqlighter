@@ -162,6 +162,8 @@ export default function Main(props: MainProps) {
       args.table = args.view
       args.variant = "view"
       delete args.view
+    } else {
+      args.variant = "table"
     }
 
     const tabId = `pnl_table_${connection.id}_${args.database}_${args.table}`

@@ -50,7 +50,7 @@ export interface TablePanelProps extends PanelProps {
   /** Name of table to be shown */
   table: string
   /** Showing a table or view, default: table */
-  variant?: "table" | "view"
+  variant: "table" | "view"
   /** Given item should be selected, eg. columns/title (optional) */
   selection?: string
 }

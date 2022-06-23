@@ -38,7 +38,6 @@ describe("sqlite.ts (node env)", () => {
     const connection = await getChinookConnection()
     const results = await connection.getResults("select 10 'Colonna1'; select 20 'Colonna2';")
     expect(results.length).toBe(2)
-    console.log(results)
 
     const result0 = results[0]
     expect(result0.columns.length).toBe(1)
