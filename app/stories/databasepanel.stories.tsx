@@ -6,7 +6,7 @@ import React from "react"
 import { ComponentStory, ComponentMeta } from "@storybook/react"
 import { StorybookDecorator, Wrapper } from "../components/storybook"
 import { DatabasePanel } from "../components/panels/databasepanel"
-import { getTestConnection, getBlankConnection } from "../lib/test/fake_data"
+import { getTestConnection, getBlankConnection } from "./test/fakedata"
 
 export default {
   title: "Tabs/DatabasePanel",

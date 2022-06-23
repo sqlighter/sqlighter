@@ -5,9 +5,9 @@
 import React from "react"
 import { ComponentStory, ComponentMeta } from "@storybook/react"
 import Box from "@mui/material/Box"
-import { ActivityBarWrapper } from "../lib/test/wrappers"
+import { ActivityBarWrapper } from "./test/wrappers"
 import { HistoryActivity } from "../components/database/historyactivity"
-import { fake_user_mickey, fake_history } from "../lib/test/fake_data"
+import { fake_user_mickey, fake_history } from "./test/fakedata"
 import { StorybookDecorator } from "../components/storybook"
 import { Panel } from "../components/navigation/panel"
 
@@ -39,7 +39,7 @@ const Template: ComponentStory<typeof HistoryActivity> = (args) => {
     <Panel id="act_bookmarks" title="Bookmarks" icon="bookmark">
       <Box sx={{ padding: 1 }}>Bookmarks activity</Box>
     </Panel>,
-    <HistoryActivity id="act_history" title="History" icon="history" queries={args.queries} />,
+    <HistoryActivity id="act_history" title="History" icon="history" queries={args.queries} onCommand={args.onCommand} />,
   ]
   return <ActivityBarWrapper {...args} activities={activities} onCommand={args.onCommand} />
 }

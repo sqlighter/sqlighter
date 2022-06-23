@@ -7,7 +7,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react"
 import Grid from "@mui/material/Grid"
 import { StorybookDecorator } from "../components/storybook"
 import { Card } from "../components/ui/card"
-import { databaseCmd, queryCmd, printCmd, settingsCmd } from "../lib/test/fake_data"
+import { databaseCmd, queryCmd, printCmd, settingsCmd } from "./test/fakedata"
 
 export default {
   title: "UI/Card",

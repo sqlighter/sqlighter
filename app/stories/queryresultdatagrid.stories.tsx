@@ -7,7 +7,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react"
 import Box from "@mui/material/Box"
 
 import { StorybookDecorator } from "../components/storybook"
-import { getTestConnection } from "../lib/test/fake_data"
+import { getTestConnection } from "./test/fakedata"
 import { QueryResultDataGrid } from "../components/database/queryresultdatagrid"
 
 function TableLoadingWrapper(props) {

@@ -6,7 +6,7 @@ import React from "react"
 import { ComponentStory, ComponentMeta } from "@storybook/react"
 import { StorybookDecorator } from "../components/storybook"
 import { QueryStatus } from "../components/database/querystatus"
-import { fake_connection1, fake_queryCompletedLarge, fake_queryRunning1, fake_queryError1 } from "../lib/test/fake_data"
+import { fake_connection1, fake_queryCompletedLarge, fake_queryRunning1, fake_queryError1 } from "./test/fakedata"
 
 export default {
   title: "Database/QueryStatus",

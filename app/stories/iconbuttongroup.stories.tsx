@@ -6,7 +6,7 @@ import React, { useState } from "react"
 import { ComponentStory, ComponentMeta } from "@storybook/react"
 import { StorybookDecorator } from "../components/storybook"
 import { IconButtonGroup } from "../components/ui/iconbuttongroup"
-import { sqlCmd, dataCmd, chartCmd, addonCmd } from "../lib/test/fake_data"
+import { sqlCmd, dataCmd, chartCmd, addonCmd } from "./test/fakedata"
 
 function Tester(props) {
   const [mode, setMode] = useState(props.selected || props.commands[0].command)
