@@ -15,6 +15,7 @@ import AddOutlinedIcon from "@mui/icons-material/AddOutlined"
 import AlignHorizontalLeftOutlinedIcon from "@mui/icons-material/AlignHorizontalLeftOutlined"
 import AutoFixHighOutlinedIcon from "@mui/icons-material/AutoFixHighOutlined"
 // import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined"
+import BedtimeOutlinedIcon from '@mui/icons-material/BedtimeOutlined';
 import BentoOutlinedIcon from "@mui/icons-material/BentoOutlined"
 import BoltOutlinedIcon from "@mui/icons-material/BoltOutlined"
 import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlined"
@@ -25,6 +26,7 @@ import CodeOutlinedIcon from "@mui/icons-material/CodeOutlined"
 import CheckOutlinedIcon from "@mui/icons-material/CheckOutlined"
 import ChildCareOutlinedIcon from "@mui/icons-material/ChildCareOutlined"
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined"
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import CloudDownloadOutlinedIcon from "@mui/icons-material/CloudDownloadOutlined"
 import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined"
 import DirectionsRunOutlinedIcon from "@mui/icons-material/DirectionsRunOutlined"
@@ -104,6 +106,8 @@ export function Icon(props: IconProps) {
         return <AutoFixHighOutlinedIcon {...props} />
       case "add":
         return <AddOutlinedIcon {...props} />
+      case "bedtime":
+        return <BedtimeOutlinedIcon {...props} />
       case "bookmark":
         return <BookmarkBorderOutlinedIcon {...props} />
       case "bookmarks":
@@ -123,6 +127,8 @@ export function Icon(props: IconProps) {
         return <CheckOutlinedIcon {...props} />
       case "database":
         return <DatabaseOutline {...props} />
+      case "delete":
+        return <DeleteOutlineOutlinedIcon {...props} />
       case "description":
         return <ImageText {...props} />
       case "download":
@@ -163,6 +169,8 @@ export function Icon(props: IconProps) {
         return <HomeOutlinedIcon {...props} />
       case "history":
         return <HistoryIcon {...props} />
+      case "olderHistory":
+        return <HistoryIcon {...props} sx={{ transform: "rotate(45deg)" }} />
       case "inbox":
         return <InboxOutlinedIcon {...props} />
       case "index":
@@ -182,7 +190,8 @@ export function Icon(props: IconProps) {
       case "print":
         return <PrintOutlinedIcon {...props} />
       case "query":
-        return <TableRowsOutlinedIcon {...props} />
+        // return <TableRowsOutlinedIcon {...props} />
+        return <CodeOutlinedIcon {...props} />
       case "refresh":
         return <RefreshOutlinedIcon {...props} />
       case "relations":
