@@ -27,8 +27,11 @@ export interface Tree<T = { [key: string]: any }> {
    */
   icon?: string | React.ReactNode
 
-  /** A human-readable string describing this item. */
+  /** A short human-readable string describing this item. */
   title: string
+
+  /** A description that may be used as a subtitle in the tree item (optional) */
+  description?: string
 
   /** Node type, eg. database, table, column, etc... */
   type?: string

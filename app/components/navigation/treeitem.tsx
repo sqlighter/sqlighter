@@ -142,14 +142,28 @@ export function TreeItem({ item, ...props }: TreeItemProps) {
     )
   }
 
+  function renderTitle(item) {
+    if (item.description) {
+      return (
+        <Box className="TreeItem-withDescription" sx={{ display: "flex", flexDirection: "column" }}>
+          <Box className="TreeItem-title">{item.title}</Box>
+          <Typography className="TreeItem-description" variant="caption">{item.description}</Typography>
+        </Box>
+      )
+    }
+    return item.title
+  }
+
+  // specific field for tooltip is preferred if specified
+  const tooltip = item.tooltip || item.title
   return (
     <ButtonBase className={itemClass} onClick={handleItemClick}>
       <Box className="TreeItem-depthPadding" sx={{ minWidth: depthPadding, width: depthPadding }} />
       {getCollapsibleIcon()}
       {item.icon && getIcon()}
-      <Tooltip className="TreeItem-labelTooltip" title={item.title}>
+      <Tooltip className="TreeItem-labelTooltip" title={tooltip}>
         <Typography className="TreeItem-label" variant="body2" color="inherit" noWrap>
-          {item.title}
+          {renderTitle(item)}
           {item.badge !== null && item.badge !== undefined && (
             <Chip className="TreeItem-badge" label={item.badge} size="small" component="span" />
           )}

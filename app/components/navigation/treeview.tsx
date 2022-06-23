@@ -13,7 +13,6 @@ import { useSettings } from "../hooks/usesettings"
 import { Tree } from "../../lib/tree"
 import { TreeItem, DEPTH_PADDING_PX } from "./treeitem"
 
-
 /** Custom styles applied to TreeView and TreeItem components */
 const TreeView_SxProps: SxProps<Theme> = {
   width: 1,
@@ -72,11 +71,23 @@ const TreeView_SxProps: SxProps<Theme> = {
       marginRight: 0.5,
     },
 
+    ".TreeItem-withDescription": {
+      ".TreeItem-title": {
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+        position: "relative",
+        top: "2px",
+      },
+      ".TreeItem-description": {
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+        fontSize: "9px",
+      },
+    },
+
+    // label includes title + optional description
     ".TreeItem-label": {
       minWidth: 80,
-      overflow: "hidden",
-      textOverflow: "ellipsis",
-
       fontWeight: "inherit",
       paddingRight: 0.5,
     },
