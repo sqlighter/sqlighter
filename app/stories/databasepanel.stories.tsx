@@ -9,7 +9,7 @@ import { DatabasePanel } from "../components/panels/databasepanel"
 import { getTestConnection, getBlankConnection } from "./fakedata"
 
 export default {
-  title: "Panels/DatabasePanel",
+  title: "Tabs/DatabasePanel",
   component: DatabasePanel,
   decorators: [
     (Story) => (

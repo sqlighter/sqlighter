@@ -140,6 +140,40 @@ export const settingsCmd: Command = {
   icon: "settings",
 }
 
+// fake user with google passport login
+export const fake_user_mickey = {
+  id: "mickey.mouse@gmail.com",
+  parentId: null,
+  type: "user",
+  createdAt: "2022-05-09T10:52:45.486Z",
+  updatedAt: "2022-05-26T14:59:30.403Z",
+  passport: {
+    id: "105223593685623481361",
+    name: {
+      givenName: "Mickey",
+      familyName: "Mouse",
+    },
+    emails: [
+      {
+        value: "mickey.mouse@gmail.com",
+      },
+    ],
+    photos: [
+      {
+        value: "/test/mickey.jpeg",
+      },
+    ],
+    provider: "google-one-tap",
+    displayName: "Mickey Mouse",
+  },
+  profile: {
+    gender: "cartoon",
+    height: "69",
+    weight: "10",
+    birthdate: "1901-12-01",
+  },
+}
+
 //
 // actual chinook.db database loaded on the spot from the network
 //

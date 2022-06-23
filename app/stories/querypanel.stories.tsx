@@ -11,7 +11,7 @@ import { fake_connections1, fake_query1 } from "./fakedata"
 import { getTestConnection } from "./fakedata"
 
 export default {
-  title: "Panels/QueryPanel",
+  title: "Tabs/QueryPanel",
   component: QueryPanel,
   decorators: [
     (Story) => (
