@@ -1,5 +1,5 @@
 //
-// connectionicon.tsx
+// ConnectionIcon.tsx
 //
 
 import { DataConnection } from "../../lib/data/connections"
@@ -14,17 +14,17 @@ export interface ConnectionIconProps {
   dotColor?: DotColor
 }
 
-/** An icon showing the type of database and a little green dot if connected */
+/** An icon showing the type of database with a little green badge if connected */
 export function ConnectionIcon(props: ConnectionIconProps) {
   if (props.connection) {
-    let dotColor = props.dotColor    
-    if (!dotColor) {
-      dotColor = (props.connection && props.connection.isConnected) ? "success" : undefined
+    let dotColor = props.dotColor
+    if (!dotColor && props.connection.isConnected) {
+      dotColor = "success"
     }
-    console.debug(`ConnectionIcon - isConnected: ${props.connection?.isConnected}, dotColor: ${dotColor}`, props.connection)
 
+    const className = "ConnectionIcon-icon" + (props.className ? " " + props.className : "")
     return (
-      <Icon className={`ConnectionPicker-icon ${props.className}`} dotColor={dotColor}>
+      <Icon className={className} dotColor={dotColor}>
         {props.connection.configs.client}
       </Icon>
     )
