@@ -2,14 +2,14 @@
 // fakedata.ts
 //
 
-import { DataConnection, DataConfig, DataSchema, CONNECTION_PREFIX } from "../lib/data/connections"
-import { Query, QueryRun } from "../lib/items/query"
-import { parseISO, add, parse, set } from "date-fns"
-import { Command } from "../lib/commands"
-import fakeCustomers from "./data/customers"
+import { DataConnection, DataConfig, DataSchema, CONNECTION_PREFIX } from "../data/connections"
+import { Query, QueryRun } from "../items/query"
+import { parseISO, add, set } from "date-fns"
+import { Command } from "../commands"
+import fakeCustomers from "./artifacts/customers"
 import { QueryExecResult } from "sql.js"
-import { DataConnectionFactory } from "../lib/data/factory"
-import { SqliteDataConnection } from "../lib/data/clients/sqlite"
+import { DataConnectionFactory } from "../data/factory"
+import { SqliteDataConnection } from "../data/clients/sqlite"
 
 // DataConnection (fake)
 class FakeConnection extends DataConnection {

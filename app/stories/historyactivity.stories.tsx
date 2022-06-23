@@ -5,9 +5,9 @@
 import React from "react"
 import { ComponentStory, ComponentMeta } from "@storybook/react"
 import Box from "@mui/material/Box"
-import { ActivityBarWrapper } from "./wrappers"
+import { ActivityBarWrapper } from "../lib/test/wrappers"
 import { HistoryActivity } from "../components/database/historyactivity"
-import { fake_user_mickey, fake_history } from "./fakedata"
+import { fake_user_mickey, fake_history } from "../lib/test/fake_data"
 import { StorybookDecorator } from "../components/storybook"
 import { Panel } from "../components/navigation/panel"
 

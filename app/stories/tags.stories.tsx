@@ -5,7 +5,7 @@
 import React from "react"
 import { ComponentStory, ComponentMeta } from "@storybook/react"
 import { StorybookDecorator } from "../components/storybook"
-import { queryCmd, databaseCmd, printCmd } from "./fakedata"
+import { queryCmd, databaseCmd, printCmd } from "../lib/test/fake_data"
 import { Tags } from "../components/ui/tags"
 
 export default {

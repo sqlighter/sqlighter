@@ -5,7 +5,7 @@
 import React, { useState } from "react"
 import { Allotment } from "allotment"
 import Box from "@mui/material/Box"
-import { ActivityBar, ACTIVITYBAR_WIDTH } from "../components/navigation/activitybar"
+import { ActivityBar, ACTIVITYBAR_WIDTH } from "../../components/navigation/activitybar"
 
 //
 // ActivityWrapper

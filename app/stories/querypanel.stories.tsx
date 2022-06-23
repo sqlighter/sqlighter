@@ -7,8 +7,8 @@ import { ComponentStory, ComponentMeta } from "@storybook/react"
 import { Box } from "@mui/material"
 import { StorybookDecorator } from "../components/storybook"
 import { QueryPanel } from "../components/panels/querypanel"
-import { fake_connections1, fake_query1 } from "./fakedata"
-import { getTestConnection } from "./fakedata"
+import { fake_connections1, fake_query1 } from "../lib/test/fake_data"
+import { getTestConnection } from "../lib/test/fake_data"
 
 export default {
   title: "Tabs/QueryPanel",

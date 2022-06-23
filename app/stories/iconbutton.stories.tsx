@@ -5,7 +5,7 @@ import { expect } from "@storybook/jest"
 import { Stack } from "@mui/material"
 import { StorybookDecorator } from "../components/storybook"
 import { IconButton } from "../components/ui/iconbutton"
-import { chartCmd, databaseCmd, queryCmd } from "./fakedata"
+import { chartCmd, databaseCmd, queryCmd } from "../lib/test/fake_data"
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {

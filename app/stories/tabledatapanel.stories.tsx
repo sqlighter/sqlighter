@@ -5,7 +5,7 @@
 import React from "react"
 import { ComponentStory, ComponentMeta } from "@storybook/react"
 import { StorybookDecorator, Wrapper } from "../components/storybook"
-import { getTestConnection } from "./fakedata"
+import { getTestConnection } from "../lib/test/fake_data"
 import { TableDataPanel } from "../components/panels/tabledatapanel"
 
 export default {

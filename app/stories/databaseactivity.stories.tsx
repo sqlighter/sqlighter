@@ -7,7 +7,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react"
 import Box from "@mui/material/Box"
 import { ActivityBarWrapper } from "./wrappers"
 import { DatabaseActivity } from "../components/database/databaseactivity"
-import { fake_user_mickey, getTestConnection } from "./fakedata"
+import { fake_user_mickey, getTestConnection } from "../lib/test/fake_data"
 import { StorybookDecorator } from "../components/storybook"
 import { Panel } from "../components/navigation/panel"
 

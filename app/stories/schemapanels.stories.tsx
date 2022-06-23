@@ -5,7 +5,7 @@
 import React from "react"
 import { ComponentStory, ComponentMeta } from "@storybook/react"
 import { StorybookDecorator, Wrapper } from "../components/storybook"
-import { getTestConnection, getBlankConnection } from "./fakedata"
+import { getTestConnection, getBlankConnection } from "../lib/test/fake_data"
 import {
   SchemaPanelWithDataGrid,
   ColumnsSchemaPanel,

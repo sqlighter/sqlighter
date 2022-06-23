@@ -13,7 +13,7 @@ import {
   fake_queryCompletedLarge,
   fake_queryRunning1,
   fake_queryError1,
-} from "./fakedata"
+} from "../lib/test/fake_data"
 
 export default {
   title: "Database/QueryRunPanel",

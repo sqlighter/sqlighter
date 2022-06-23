@@ -6,7 +6,7 @@ import React, { useState } from "react"
 import { ComponentStory, ComponentMeta } from "@storybook/react"
 import { StorybookDecorator } from "../components/storybook"
 import { NavigationBar } from "../components/navigation/navigationbar"
-import { chartCmd, databaseCmd, queryCmd } from "./fakedata"
+import { chartCmd, databaseCmd, queryCmd } from "../lib/test/fake_data"
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
