@@ -4,7 +4,7 @@
 
 import { DataConnection, DataConfig, DataSchema, CONNECTION_PREFIX } from "../lib/data/connections"
 import { Query, QueryRun } from "../lib/items/query"
-import { parseISO } from "date-fns"
+import { parseISO, add, parse, set } from "date-fns"
 import { Command } from "../lib/commands"
 import fakeCustomers from "./data/customers"
 import { QueryExecResult } from "sql.js"
@@ -129,7 +129,7 @@ export const printCmd: Command = {
   icon: "print",
 }
 
-export const sqlCmd: Command = { command: "viewSql", title: "SQL", icon: "code" }
+export const sqlCmd: Command = { command: "viewSql", title: "SQL", icon: "query" }
 export const dataCmd: Command = { command: "viewData", title: "Data", icon: "table" }
 export const chartCmd: Command = { command: "viewChart", title: "Charts", icon: "chart" }
 export const addonCmd: Command = { command: "viewAddon", title: "More", icon: "extension" }
@@ -218,4 +218,31 @@ export async function getBlankConnection(): Promise<{ connection: SqliteDataConn
   await connection.connect(engine)
   const schemas = await connection.getSchemas()
   return { connection, schemas }
+}
+
+//
+// query history
+//
+
+export const fake_today = set(new Date(), { hours: 16, minutes: 30, seconds: 0, milliseconds: 0 })
+export const fake_tables = [
+  "Orders",
+  "customers",
+  "Product Qlty",
+  "invoices",
+  "localAddresses",
+  "support_tickets",
+  "sales",
+]
+export const fake_history: Query[] = []
+for (let i = 0; i < 100; i++) {
+  fake_history.push({
+    id: `sql_8ocd5ku1rk16c5ksb${i % 8}`,
+    title: `Query ${i} with a ${["slightly", "quite", "really"][i % 3]} long title that overflows`,
+    connection: fake_connection1,
+    database: "main",
+    sql: `select * from ${fake_tables[i % fake_tables.length]}`,
+    createdAt: add(fake_today, { hours: -1 * i }),
+    updatedAt: add(fake_today, { hours: -1 * i }),
+  })
 }
