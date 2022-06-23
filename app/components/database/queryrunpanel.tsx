@@ -78,7 +78,7 @@ export interface QueryRunPanelProps extends PanelProps {
 }
 
 // commands used for view modes navigation bar
-export const sqlCmd: Command = { command: "viewSql", title: "SQL", icon: "code" }
+export const sqlCmd: Command = { command: "viewSql", title: "SQL", icon: "query" }
 export const dataCmd: Command = { command: "viewData", title: "Data", icon: "table" }
 export const chartCmd: Command = { command: "viewChart", title: "Charts", icon: "chart" }
 export const addonCmd: Command = { command: "viewAddon", title: "More", icon: "extension" }

@@ -192,14 +192,23 @@ export default function Main(props: MainProps) {
   // handlers
   //
 
-  function handleChangedQuery(command: Command<{item:Query}>) {
-    const query = command.args.item
+  /** A query was executed or somehow modified. Update history, potentially refresh tab names, bookmarks, etc */
+  function handleChangedQuery(command: Command) {
+    const query = command.args?.query as Query
+    if (query) {
+      // TODO add to history only if it's a completed execution
+      // TODO when saving query remove extra heavy data from query like run results
+      setHistory([{ ...query }, ...history])
 
-    // track query(todo, filter out stuff)
-    setHistory([{...query}, ...history])
+      // refresh tab titles if needed
+      setTabs([...tabs])
+    }
+  }
 
-    // refresh tabs where needed
-    setTabs([...tabs])
+  /** Delete queries from history */
+  function handleDeleteQueries(queries: Query[]) {
+    // delete the very same object as a query with the same id may appear multiple times in history
+    setHistory(history.filter((query) => !queries.find((q) => q === query)))
   }
 
   async function handleCommand(event: React.SyntheticEvent, command: Command) {
@@ -266,6 +275,14 @@ export default function Main(props: MainProps) {
       // data model for query has changed, update history, force tabs redraw
       case "changedQuery":
         handleChangedQuery(command)
+        return
+
+      case "deleteQuery":
+        handleDeleteQueries([command.args as Query])
+        return
+
+      case "deleteQueries":
+        handleDeleteQueries(command.args as Query[])
         return
 
       // receive files from drag and drop

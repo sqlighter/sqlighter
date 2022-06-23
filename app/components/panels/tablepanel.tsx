@@ -161,7 +161,7 @@ export function TablePanel(props: TablePanelProps) {
     commands.push({
       command: "openQuery",
       title: "Query Data",
-      icon: "code",
+      icon: "query",
       args: {
         // render button with label and color
         label: true,

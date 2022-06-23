@@ -9,7 +9,6 @@ import { ActivityBarWrapper } from "./wrappers"
 import { DatabaseActivity } from "../components/database/databaseactivity"
 import { fake_user_mickey, getTestConnection } from "./fakedata"
 import { StorybookDecorator } from "../components/storybook"
-import { TablePanel } from "../components/panels/tablepanel"
 import { Panel } from "../components/navigation/panel"
 
 export default {

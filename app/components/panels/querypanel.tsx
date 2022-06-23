@@ -147,12 +147,13 @@ export function QueryPanel(props: QueryPanelProps) {
   // used to force a refresh when data model changes
   const forceUpdate = useForceUpdate()
   function notifyChanges() {
+    query.updatedAt = new Date()
     forceUpdate()
     if (props.onCommand) {
       props.onCommand(null, {
         command: "changedQuery",
         args: {
-          item: query,
+          query,
         },
       })
     }

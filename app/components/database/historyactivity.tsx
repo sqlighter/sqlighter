@@ -28,24 +28,17 @@ export interface HistoryActivityProps extends PanelProps {
 
 /** A sidebar panel used to display the query history */
 export function HistoryActivity(props: HistoryActivityProps) {
-  // create history tree with items, commands, etc
-  const historyTrees = getHistoryTrees(props.queries)
-
   //
   // handlers
   //
 
   function handleCommand(event, command: Command) {
-    console.debug(`HistoryActivity.handleCommand: ${command.command}`, command)
     switch (command.command) {
+      // open query when item is clicked
       case "clickTreeItem":
-        // open a query panel when an item is clicked
         const query = command?.args?.item?.args?.query as Query
         if (query) {
-          props.onCommand(event, {
-            command: "openQuery",
-            args: query,
-          })
+          props.onCommand(event, { command: "openQuery", args: query })
         }
         return
     }
@@ -54,6 +47,9 @@ export function HistoryActivity(props: HistoryActivityProps) {
       props.onCommand(event, command)
     }
   }
+
+  // create history tree with items, commands, etc
+  const historyTrees = getHistoryTrees(props.queries)
 
   return (
     <Box className="HistoryActivity-root" sx={HistoryActivity_SxProps}>
@@ -66,50 +62,64 @@ export function HistoryActivity(props: HistoryActivityProps) {
 }
 
 //
-//
+// utility methods
 //
 
-function _getHistoryItems(queries: Query[]): Tree[] {
-  const items: Tree[] = []
-
+function _getHistoryItems(queries: Query[], rootId: string): Tree[] {
   return queries?.map((query, index) => {
     return {
-      id: `${index}/tables`,
-      title: query.sql,
+      id: `${rootId}/${index}`,
+      title: query.title,
+      description: query.sql,
+      tooltip: query.sql,
       type: "query",
-      icon: "code",
-      // badge: tables?.length > 0 ? tables.length.toString() : "0",
-      // children: tables?.length > 0 && tables,
+      icon: "query",
+      commands: [
+        { command: "openQuery", icon: "query", title: "Open Query", args: query },
+        { command: "deleteQuery", icon: "delete", title: "Delete", args: query },
+      ],
       args: { query },
     }
   })
 }
 
 /** Convers a list of queries into a Tree of items that can be shown by TreeView */
-export function getHistoryTrees(queries: Query[], filter?: string): Tree[] {
-  const today: Tree = {
-    id: "history/today",
-    title: "Today",
-    type: "history",
-    icon: "history",
-    commands: [
-      { command: "openDatabase", icon: "info", title: "View Structure", args: {} },
-      { command: "refreshSchema", icon: "refresh", title: "Refresh Schema" },
-    ],
-    children: _getHistoryItems(queries),
+export function getHistoryTrees(queries?: Query[]): Tree[] {
+  const today = new Date().toISOString().split("T")[0] // eg. 2022-06-23 from 2022-06-23T16:11:23.000Z
+  const todayQueries = queries?.filter((query) => {
+    return (query.updatedAt || query.createdAt)?.toISOString().split("T")[0] >= today
+  })
+
+  const tree: Tree[] = [
+    {
+      id: "history/today",
+      title: "Today",
+      type: "history",
+      icon: "olderHistory",
+      commands: [
+        todayQueries?.length > 0 && { command: "deleteQueries", icon: "delete", title: "Delete", args: todayQueries },
+      ],
+      badge: todayQueries?.length > 0 ? todayQueries.length.toString() : "0",
+      // pass empty array even if there are no queries so we get the "No results" label
+      children: todayQueries ? _getHistoryItems(todayQueries, "history/today") : [],
+    },
+  ]
+
+  // older queries?
+  const earlierQueries = queries?.filter((query) => {
+    return (query.updatedAt || query.createdAt)?.toISOString().split("T")[0] < today
+  })
+  if (earlierQueries?.length > 0) {
+    tree.push({
+      id: "history/earlier",
+      title: "Earlier",
+      type: "history",
+      icon: "bedtime",
+      commands: [{ command: "deleteQueries", icon: "delete", title: "Delete", args: earlierQueries }],
+      badge: earlierQueries?.length > 0 ? earlierQueries.length.toString() : "0",
+      children: _getHistoryItems(earlierQueries, "history/earlier"),
+    })
   }
 
-  const earlier: Tree = {
-    id: "history/earlier",
-    title: "Earlier",
-    type: "history",
-    icon: "history",
-    commands: [
-      { command: "openDatabase", icon: "info", title: "View Structure", args: {} },
-      { command: "refreshSchema", icon: "refresh", title: "Refresh Schema" },
-    ],
-    children: _getHistoryItems(queries),
-  }
-
-  return [today, earlier]
+  return tree
 }
