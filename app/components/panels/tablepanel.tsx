@@ -79,7 +79,7 @@ export function TablePanel(props: TablePanelProps) {
       : schema?.tables?.find((t) => t.name == props.table)
 
   // currently selected tab, use data initially unless a selection has been specified
-  const [tabId, setTabId] = useState<string>("tab_data")
+  const [tabId, setTabId] = useState<string>("tab_rows")
   const [tabSelection, setTabSelection] = useState<string>()
   useEffect(() => {
     if (props.selection) {
@@ -182,9 +182,9 @@ export function TablePanel(props: TablePanelProps) {
   function renderTabs() {
     const tabs = [
       <TableDataPanel
-        id="tab_data"
-        title="Data"
-        icon="table"
+        id="tab_rows"
+        title="Rows"
+        icon="rows"
         connection={props.connection}
         schema={schema}
         table={props.table}
