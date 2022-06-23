@@ -9,7 +9,7 @@ import { TablePanel } from "../components/panels/tablepanel"
 import { getTestConnection } from "./fakedata"
 
 export default {
-  title: "Database/TablePanel",
+  title: "Panels/TablePanel",
   component: TablePanel,
   decorators: [
     (Story) => (

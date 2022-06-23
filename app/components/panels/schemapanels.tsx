@@ -175,8 +175,6 @@ export interface TablesSchemaPanelProps extends SchemaPanelProps {
 
 /** Shows list of tables (or views) available in given database */
 export function TablesSchemaPanel(props: TablesSchemaPanelProps) {
-  const { connection, schema, selection, variant, ...panelProps } = props
-
   //
   // model
   //
@@ -200,13 +198,13 @@ export function TablesSchemaPanel(props: TablesSchemaPanelProps) {
       }
       commands.push({
         command: "openQuery",
-        title: "Query Data",
+        title: "Create Query",
         icon: "query",
         args: {
-          title: `All ${tableName}`,
+          title: `Create ${tableName}`,
           connection: props.connection,
           database: props.schema?.database,
-          sql: `SELECT * FROM '${tableName}'`,
+          sql: params.row.sql,
         },
       })
 
@@ -291,9 +289,11 @@ export function TablesSchemaPanel(props: TablesSchemaPanelProps) {
   const rows = loaded && getRows()
   return (
     <SchemaPanelWithDataGrid
-      {...panelProps}
-      connection={connection}
-      schema={schema}
+      className="TablesSchemaPanel-root"
+      title={props.title}
+      icon={props.icon}
+      connection={props.connection}
+      schema={props.schema}
       empty={loaded ? `This database has no ${props.variant.toLowerCase()}` : "Loading..."}
       rows={rows}
       columns={columns}
@@ -315,8 +315,6 @@ export interface IndexesSchemaPanelProps extends SchemaPanelProps {
 
 /** Shows list of indexes in given database or table */
 export function IndexesSchemaPanel(props: IndexesSchemaPanelProps) {
-  const { connection, schema, selection, table, variant, ...panelProps } = props
-
   //
   // model
   //
@@ -423,9 +421,11 @@ export function IndexesSchemaPanel(props: IndexesSchemaPanelProps) {
   const rows = loaded && getRows()
   return (
     <SchemaPanelWithDataGrid
-      {...panelProps}
-      connection={connection}
-      schema={schema}
+      className="IndexesSchemaPanel-root"
+      title={props.title}
+      icon={props.icon}
+      connection={props.connection}
+      schema={props.schema}
       empty={loaded ? `This ${props.variant} has no indexes` : "Loading..."}
       rows={rows}
       columns={columns}
@@ -447,8 +447,6 @@ export interface TriggersSchemaPanelProps extends SchemaPanelProps {
 
 /** Shows list of indexes in given database or table */
 export function TriggersSchemaPanel(props: IndexesSchemaPanelProps) {
-  const { connection, schema, selection, table, variant, ...panelProps } = props
-
   //
   // model
   //
@@ -545,9 +543,11 @@ export function TriggersSchemaPanel(props: IndexesSchemaPanelProps) {
   const rows = loaded && getRows()
   return (
     <SchemaPanelWithDataGrid
-      {...panelProps}
-      connection={connection}
-      schema={schema}
+      className="TriggersSchemaPanel-root"
+      title={props.title}
+      icon={props.icon}
+      connection={props.connection}
+      schema={props.schema}
       empty={loaded ? `This ${props.variant} has no triggers` : "Loading..."}
       rows={rows}
       columns={columns}
@@ -569,9 +569,6 @@ export interface ColumnsSchemaPanelProps extends SchemaPanelProps {
 
 /** Shows list of columns in a table or view */
 export function ColumnsSchemaPanel(props: ColumnsSchemaPanelProps) {
-  // console.debug(`ColumnsSchemaPanel - selection: ${props.selection}`, props)
-  const { connection, schema, selection, table, variant, ...panelProps } = props
-
   //
   // state
   //
@@ -704,9 +701,11 @@ export function ColumnsSchemaPanel(props: ColumnsSchemaPanelProps) {
   const rows = loaded && getRows()
   return (
     <SchemaPanelWithDataGrid
-      {...panelProps}
-      connection={connection}
-      schema={schema}
+      className="ColumnsSchemaPanel-root"
+      title={props.title}
+      icon={props.icon}
+      connection={props.connection}
+      schema={props.schema}
       empty={loaded ? `This ${props.variant} has no columns` : "Loading..."}
       rows={rows}
       columns={columns}
@@ -728,8 +727,6 @@ export interface RelationsSchemaPanelProps extends SchemaPanelProps {
 
 /** Shows list of foreign keys in a table or view */
 export function RelationsSchemaPanel(props: RelationsSchemaPanelProps) {
-  const { connection, schema, selection, table, variant, ...panelProps } = props
-
   //
   // state
   //
@@ -858,9 +855,11 @@ export function RelationsSchemaPanel(props: RelationsSchemaPanelProps) {
   const rows = loaded && getRows()
   return (
     <SchemaPanelWithDataGrid
-      {...panelProps}
-      connection={connection}
-      schema={schema}
+      className="RelationsSchemaPanel-root"
+      title={props.title}
+      icon={props.icon}
+      connection={props.connection}
+      schema={props.schema}
       empty={loaded ? `This ${props.variant} has no foreign keys` : "Loading..."}
       rows={rows}
       columns={columns}

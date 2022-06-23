@@ -1,14 +1,14 @@
 //
-// schemapanels.stories.tsx
+// SchemaPanels.stories.tsx
 //
 
 import React from "react"
 import { ComponentStory, ComponentMeta } from "@storybook/react"
 import { StorybookDecorator, Wrapper } from "../components/storybook"
-import { DatabasePanel } from "../components/panels/databasepanel"
 import { getTestConnection, getBlankConnection } from "./fakedata"
 import {
   SchemaPanelWithDataGrid,
+  ColumnsSchemaPanel,
   TablesSchemaPanel,
   IndexesSchemaPanel,
   TriggersSchemaPanel,
@@ -28,6 +28,7 @@ export default {
     title: "Tables",
     icon: "table",
     table: null,
+    variant: "table",
   },
   parameters: {
     grid: { cellSize: 8 },
@@ -39,7 +40,7 @@ const chinookLoaders = [async () => await getTestConnection("Chinook.db")]
 const northwindLoaders = [async () => await getTestConnection("Northwind.db")]
 const blankLoaders = [async () => await getBlankConnection()]
 
-const TablesTemplate: ComponentStory<typeof DatabasePanel> = (args, { loaded: { connection, schemas } }) => {
+const TablesTemplate: ComponentStory<typeof TablesSchemaPanel> = (args, { loaded: { connection, schemas } }) => {
   return (
     <Wrapper>
       <TablesSchemaPanel {...args} connection={connection} schema={schemas[0]} variant="tables" />
@@ -51,7 +52,7 @@ TablesChinook.loaders = chinookLoaders
 export const TablesBlank = TablesTemplate.bind({})
 TablesBlank.loaders = blankLoaders
 
-const ViewsTemplate: ComponentStory<typeof DatabasePanel> = (args, { loaded: { connection, schemas } }) => {
+const ViewsTemplate: ComponentStory<typeof TablesSchemaPanel> = (args, { loaded: { connection, schemas } }) => {
   return (
     <Wrapper>
       <TablesSchemaPanel
@@ -70,7 +71,7 @@ ViewsNorthwind.loaders = northwindLoaders
 export const ViewsBlank = ViewsTemplate.bind({})
 ViewsBlank.loaders = blankLoaders
 
-const IndexesTemplate: ComponentStory<typeof DatabasePanel> = (args, { loaded: { connection, schemas } }) => {
+const IndexesTemplate: ComponentStory<typeof IndexesSchemaPanel> = (args, { loaded: { connection, schemas } }) => {
   return (
     <Wrapper>
       <IndexesSchemaPanel {...args} title="Indexes" icon="index" connection={connection} schema={schemas[0]} />
@@ -84,11 +85,12 @@ IndexesChinookFiltered.loaders = chinookLoaders
 IndexesChinookFiltered.args = {
   // only indexes to specific table
   table: "invoice_items",
+  variant: "table",
 }
 export const IndexesBlank = IndexesTemplate.bind({})
 IndexesBlank.loaders = blankLoaders
 
-const TriggersTemplate: ComponentStory<typeof DatabasePanel> = (args, { loaded: { connection, schemas } }) => {
+const TriggersTemplate: ComponentStory<typeof TriggersSchemaPanel> = (args, { loaded: { connection, schemas } }) => {
   return (
     <Wrapper>
       <TriggersSchemaPanel {...args} title="Triggers" icon="trigger" connection={connection} schema={schemas[0]} />
@@ -105,3 +107,16 @@ TriggersChinookFiltered.args = {
 }
 export const TriggersBlank = TriggersTemplate.bind({})
 TriggersBlank.loaders = blankLoaders
+
+const ColumnsTemplate: ComponentStory<typeof ColumnsSchemaPanel> = (args, { loaded: { connection, schemas } }) => {
+  return (
+    <Wrapper>
+      <ColumnsSchemaPanel {...args} title="Columns" icon="columns" connection={connection} schema={schemas[0]} />
+    </Wrapper>
+  )
+}
+export const ColumnsChinook = ColumnsTemplate.bind({})
+ColumnsChinook.loaders = chinookLoaders
+ColumnsChinook.args = {
+  table: "invoice_items",
+}

@@ -64,6 +64,8 @@ export const ActivityBar_SxProps: SxProps<Theme> = {
     },
     "&:hover": {
       backgroundColor: "action.hover",
+      borderRadius: 0,
+      borderRight: "none",
     },
   },
 
