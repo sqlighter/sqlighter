@@ -71,25 +71,17 @@ const TreeView_SxProps: SxProps<Theme> = {
       marginRight: 0.5,
     },
 
-    ".TreeItem-withDescription": {
-      ".TreeItem-title": {
-        overflow: "hidden",
-        textOverflow: "ellipsis",
-        position: "relative",
-        top: "2px",
-      },
-      ".TreeItem-description": {
-        overflow: "hidden",
-        textOverflow: "ellipsis",
-        fontSize: "9px",
-      },
-    },
-
     // label includes title + optional description
     ".TreeItem-label": {
       minWidth: 80,
       fontWeight: "inherit",
       paddingRight: 0.5,
+    },
+
+    ".TreeItem-description": {
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      fontSize: "9px",
     },
 
     ".TreeItem-badge": {
@@ -121,6 +113,25 @@ const TreeView_SxProps: SxProps<Theme> = {
     },
   },
 
+  // applied at the same level as TreeItem-root
+  ".TreeItem-withDescription": {
+    //alignItems: "start",
+    minHeight: 40,
+    maxHeight: 40,
+
+    "&:hover": {
+      borderStartEndRadius: 20,
+      borderEndEndRadius: 20,
+    },
+
+    ".TreeItem-title": {
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      position: "relative",
+      top: "2px",
+    },
+  },
+
   ".TreeItem-primary": {
     color: "text.primary",
   },
@@ -134,7 +145,13 @@ const TreeView_SxProps: SxProps<Theme> = {
     maxHeight: 24,
     lineHeight: "24px",
     color: "text.secondary",
+    cursor: "default"
   },
+
+  ".MuiTooltip-tooltipPlacementRight": {
+    position: "relative",
+    right: "400px",
+  }
 }
 
 export interface TreeViewProps {

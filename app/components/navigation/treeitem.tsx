@@ -49,6 +49,13 @@ export interface TreeItemProps {
 
 /** A component showing a tree item and its children (used by TreeView) */
 export function TreeItem({ item, ...props }: TreeItemProps) {
+  //
+  // state
+  //
+
+  // tooltip is shared between main item button, tags and command icons
+  const [tooltip, setTooltip] = React.useState<string>()
+
   /** An item is collapsible if it has an array of children (even if empty for now) */
   function isCollapsible(): boolean {
     return Array.isArray(item.children)
@@ -77,6 +84,9 @@ export function TreeItem({ item, ...props }: TreeItemProps) {
   if (props.depth == 0) {
     itemClass += " TreeItem-primary"
   }
+  if (item.description) {
+    itemClass += " TreeItem-withDescription"
+  }
 
   function getCollapsibleIcon() {
     if (isCollapsible()) {
@@ -103,26 +113,20 @@ export function TreeItem({ item, ...props }: TreeItemProps) {
 
     // NOTE the <Box> inside Tooltip is necessary since Icon is a passive element that doesn't fire events (unlike IconButton)
     return (
-      <Tooltip
-        key={command.command}
-        className="TreeItem-commandIconTooltip"
-        title={command.title}
-        placement="top"
-        enterDelay={TOOLTIP_ENTER_DELAY_MS}
-      >
-        <Box>
-          <Icon
-            className="TreeItem-commandIcon"
-            onClick={(e) => {
-              //              props.onCommand(e, command.command, { item, command })
-              props.onCommand(e, command)
-              e.stopPropagation()
-            }}
-          >
-            {command.icon}
-          </Icon>
-        </Box>
-      </Tooltip>
+      <Box>
+        <Icon
+          key={command.command}
+          className="TreeItem-commandIcon"
+          onClick={(e) => {
+            props.onCommand(e, command)
+            e.stopPropagation()
+          }}
+          onMouseEnter={() => setTooltip(command.title as string)}
+          onMouseLeave={() => setTooltip(undefined)} // back to item's tooltip
+        >
+          {command.icon}
+        </Icon>
+      </Box>
     )
   }
 
@@ -130,24 +134,38 @@ export function TreeItem({ item, ...props }: TreeItemProps) {
   function getTag(tag, index) {
     if (typeof tag === "string") {
       return (
-        <Tooltip key={index} title={tag}>
-          <Chip className="TreeItem-tag" label={tag} size="small" component="span" />
-        </Tooltip>
+        <Chip
+          key={index}
+          className="TreeItem-tag"
+          label={tag}
+          size="small"
+          component="span"
+          onMouseEnter={() => setTooltip(tag)}
+          onMouseLeave={() => setTooltip(undefined)}
+        />
       )
     }
     return (
-      <Tooltip key={index} title={tag.tooltip}>
-        <Chip className="TreeItem-tag" label={tag.title} size="small" component="span" />
-      </Tooltip>
+      <Chip
+        key={index}
+        className="TreeItem-tag"
+        label={tag.title}
+        size="small"
+        component="span"
+        onMouseEnter={() => setTooltip(tag.tooltip)}
+        onMouseLeave={() => setTooltip(undefined)}
+      />
     )
   }
 
   function renderTitle(item) {
     if (item.description) {
       return (
-        <Box className="TreeItem-withDescription" sx={{ display: "flex", flexDirection: "column" }}>
+        <Box sx={{ display: "flex", flexDirection: "column" }}>
           <Box className="TreeItem-title">{item.title}</Box>
-          <Typography className="TreeItem-description" variant="caption">{item.description}</Typography>
+          <Typography className="TreeItem-description" variant="caption">
+            {item.description}
+          </Typography>
         </Box>
       )
     }
@@ -155,31 +173,33 @@ export function TreeItem({ item, ...props }: TreeItemProps) {
   }
 
   // specific field for tooltip is preferred if specified
-  const tooltip = item.tooltip || item.title
+  // a single tooltip placed out of the way on the right
+  // is shared between the item, its tags and its commands
+  // so that the tooltip doesn't keep opening/closing
   return (
-    <ButtonBase className={itemClass} onClick={handleItemClick}>
-      <Box className="TreeItem-depthPadding" sx={{ minWidth: depthPadding, width: depthPadding }} />
-      {getCollapsibleIcon()}
-      {item.icon && getIcon()}
-      <Tooltip className="TreeItem-labelTooltip" title={tooltip}>
+    <Tooltip className="TreeItem-labelTooltip" title={tooltip || item.tooltip || item.title} placement="right">
+      <ButtonBase className={itemClass} onClick={handleItemClick}>
+        <Box className="TreeItem-depthPadding" sx={{ minWidth: depthPadding, width: depthPadding }} />
+        {getCollapsibleIcon()}
+        {item.icon && getIcon()}
         <Typography className="TreeItem-label" variant="body2" color="inherit" noWrap>
           {renderTitle(item)}
           {item.badge !== null && item.badge !== undefined && (
             <Chip className="TreeItem-badge" label={item.badge} size="small" component="span" />
           )}
         </Typography>
-      </Tooltip>
-      <Box sx={{ flexGrow: 1 }} />
-      {item.tags && (
-        <Stack className="TreeItem-tags" direction="row" spacing={0.5}>
-          {item.tags.map((tag, index) => getTag(tag, index))}
-        </Stack>
-      )}
-      {item.commands && (
-        <Stack className="TreeItem-commands" direction="row" spacing={0.5}>
-          {item.commands.map((command) => getCommandIcon(command))}
-        </Stack>
-      )}
-    </ButtonBase>
+        <Box sx={{ flexGrow: 1 }} />
+        {item.tags && (
+          <Stack className="TreeItem-tags" direction="row" spacing={0.5}>
+            {item.tags.map((tag, index) => getTag(tag, index))}
+          </Stack>
+        )}
+        {item.commands && (
+          <Stack className="TreeItem-commands" direction="row" spacing={0.5}>
+            {item.commands.map((command) => getCommandIcon(command))}
+          </Stack>
+        )}
+      </ButtonBase>
+    </Tooltip>
   )
 }

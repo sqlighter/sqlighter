@@ -241,7 +241,7 @@ for (let i = 0; i < 100; i++) {
     title: `Query ${i} with a ${["slightly", "quite", "really"][i % 3]} long title that overflows`,
     connection: fake_connection1,
     database: "main",
-    sql: `select * from ${fake_tables[i % fake_tables.length]}`,
+    sql: `select\n  *\nfrom\n  ${fake_tables[i % fake_tables.length]}`,
     createdAt: add(fake_today, { hours: -1 * i }),
     updatedAt: add(fake_today, { hours: -1 * i }),
   })
