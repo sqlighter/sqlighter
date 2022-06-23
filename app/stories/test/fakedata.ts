@@ -4,7 +4,7 @@
 
 import { DataConnection, DataConfig, DataSchema, CONNECTION_PREFIX } from "../../lib/data/connections"
 import { Query, QueryRun } from "../../lib/items/query"
-import { parseISO, add, parse, set } from "date-fns"
+import { parseISO, add, set } from "date-fns"
 import { Command } from "../../lib/commands"
 import fakeCustomers from "./customers"
 import { QueryExecResult } from "sql.js"
