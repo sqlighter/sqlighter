@@ -2,7 +2,7 @@
 // HistoryActivity.stories.tsx
 //
 
-import React from "react"
+import React, { useState } from "react"
 import { ComponentStory, ComponentMeta } from "@storybook/react"
 import Box from "@mui/material/Box"
 import { ActivityBarWrapper } from "./test/wrappers"
@@ -32,6 +32,23 @@ export default {
 } as ComponentMeta<typeof HistoryActivity>
 
 const Template: ComponentStory<typeof HistoryActivity> = (args) => {
+  const [history, setHistory] = useState(args.queries)
+  function handleCommand(event, command) {
+    switch (command.command) {
+      case "deleteQuery":
+        const query = command.args
+        setHistory(history.filter((q) => q !== query))
+        return
+      case "deleteQueries":
+        const queries = command.args
+        setHistory(history.filter((query) => !queries.find((q) => q === query)))
+        return
+    }
+    if (args.onCommand) {
+      args.onCommand(event, command)
+    }
+  }
+
   const activities = [
     <Panel id="act_database" title="Database" icon="database">
       <Box sx={{ padding: 1 }}>Database activity</Box>
@@ -39,7 +56,7 @@ const Template: ComponentStory<typeof HistoryActivity> = (args) => {
     <Panel id="act_bookmarks" title="Bookmarks" icon="bookmark">
       <Box sx={{ padding: 1 }}>Bookmarks activity</Box>
     </Panel>,
-    <HistoryActivity id="act_history" title="History" icon="history" queries={args.queries} onCommand={args.onCommand} />,
+    <HistoryActivity id="act_history" title="History" icon="history" queries={history} onCommand={handleCommand} />,
   ]
   return <ActivityBarWrapper {...args} activities={activities} onCommand={args.onCommand} />
 }
