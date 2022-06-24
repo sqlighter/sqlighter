@@ -10,6 +10,7 @@ import fakeCustomers from "./customers"
 import { QueryExecResult } from "sql.js"
 import { DataConnectionFactory } from "../../lib/data/factory"
 import { SqliteDataConnection } from "../../lib/data/clients/sqlite"
+import { BOOKMARKS_FOLDER } from "../../components/activities/bookmarksactivity"
 
 // DataConnection (fake)
 class FakeConnection extends DataConnection {
@@ -245,4 +246,22 @@ for (let i = 0; i < 100; i++) {
     createdAt: add(fake_today, { hours: -1 * i }),
     updatedAt: add(fake_today, { hours: -1 * i }),
   })
+}
+
+// fake queries in bookmark folders
+export const fake_folders = [BOOKMARKS_FOLDER, "Joins, etc.", "Folder 2", "Shared Queries"]
+export const fake_bookmarks = fake_history.map((q, index) => {
+  return { ...q, folder: fake_folders[index % fake_folders.length] }
+})
+
+// a single, very fake, query/bookmark
+export const fake_bookmark: Query = {
+  id: `sql_xxxx`,
+  title: `A custom query with a really long title that overflows`,
+  connection: fake_connection1,
+  database: "main",
+  folder: BOOKMARKS_FOLDER,
+  sql: `select\n  *\nfrom\n CustomersOrders`,
+  createdAt: fake_today,
+  updatedAt: fake_today,
 }

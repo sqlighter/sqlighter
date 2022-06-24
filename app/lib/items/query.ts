@@ -35,6 +35,9 @@ export class Query extends Item {
   /** SQL query */
   sql?: string
 
+  /** The name of the folder in which this query was saved as a bookmark, eg. "Bookmarks" or "My Queries/Customers" (optional)  */
+  folder?: string
+
   /** Shared access rights, eg: participants, rights, viewing modes */
   sharing?: {
     // TDB
