@@ -58,6 +58,14 @@ const Empty_SxProps: SxProps<Theme> = {
   ".Empty-fancyBox": {
     borderRadius: FANCY_RADIUS,
   },
+
+  ".Empty-title": {
+    textAlign: "center",
+  },
+
+  ".Empty-description": {
+    textAlign: "center",
+  }
 }
 
 export interface EmptyProps {
