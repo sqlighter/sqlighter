@@ -5,7 +5,6 @@
 import * as React from "react"
 import { useState, useEffect } from "react"
 
-import { Query } from "../../lib/items/query"
 import { Command, CommandEvent } from "../../lib/commands"
 import { TreeView } from "../navigation/treeview"
 import { Tree } from "../../lib/tree"
