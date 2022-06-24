@@ -108,21 +108,19 @@ export function TreeItem({ item, ...props }: TreeItemProps) {
       command.icon = "unpin"
     }
 
-    // NOTE the <Box> inside Tooltip is necessary since Icon is a passive element that doesn't fire events (unlike IconButton)
     return (
-      <Box key={command.command}>
-        <Icon
-          className="TreeItem-commandIcon"
-          onClick={(e) => {
-            props.onCommand(e, command)
-            e.stopPropagation()
-          }}
-          onMouseEnter={() => setTooltip(command.title as string)}
-          onMouseLeave={() => setTooltip(undefined)} // back to item's tooltip
-        >
-          {command.icon}
-        </Icon>
-      </Box>
+      <Icon
+        key={command.command}
+        className="TreeItem-commandIcon"
+        onClick={(e) => {
+          props.onCommand(e, command)
+          e.stopPropagation()
+        }}
+        onMouseEnter={() => setTooltip(command.title as string)}
+        onMouseLeave={() => setTooltip(undefined)} // back to item's tooltip
+      >
+        {command.icon}
+      </Icon>
     )
   }
 
@@ -174,11 +172,11 @@ export function TreeItem({ item, ...props }: TreeItemProps) {
   // so that the tooltip doesn't keep opening/closing
   return (
     <Tooltip className="TreeItem-labelTooltip" title={tooltip || item.tooltip || item.title} placement="right">
-      <ButtonBase className={itemClass} onClick={handleItemClick}>
+      <ButtonBase className={itemClass} onClick={handleItemClick} >
         <Box className="TreeItem-depthPadding" sx={{ minWidth: depthPadding, width: depthPadding }} />
         {getCollapsibleIcon()}
         {item.icon && getIcon()}
-        <Typography className="TreeItem-label" variant="body2" color="inherit" noWrap>
+        <Typography className="TreeItem-label" variant="body2" color="inherit" noWrap component="div">
           {renderTitle(item)}
           {item.badge !== null && item.badge !== undefined && (
             <Chip className="TreeItem-badge" label={item.badge} size="small" component="span" />
