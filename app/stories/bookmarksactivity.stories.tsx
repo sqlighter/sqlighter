@@ -70,11 +70,11 @@ WithFewBoookmarks.args = {
 
 export const WithEmpty = Template.bind({})
 WithEmpty.args = {
-  queries: undefined,
+  queries: [] // show zero bookmarks list
 }
 
 export const WithEmptyAndNoUser = Template.bind({})
 WithEmptyAndNoUser.args = {
-  queries: undefined,
+  queries: undefined, // show, please signin to view bookmarks
   user: undefined,
 }

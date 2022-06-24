@@ -9,6 +9,7 @@ import Typography from "@mui/material/Typography"
 import { Command } from "../../lib/commands"
 import { Query } from "../../lib/items/query"
 
+import { Empty } from "../ui/empty"
 import { PanelProps } from "../navigation/panel"
 import { Tree } from "../../lib/tree"
 import { TreeView } from "../navigation/treeview"
@@ -48,15 +49,31 @@ export function HistoryActivity(props: HistoryActivityProps) {
     }
   }
 
-  // create history tree with items, commands, etc
-  const historyTrees = getHistoryTrees(props.queries)
+  //
+  // render
+  //
+
+  /** Returns an empty state or your query history as a TreeView */
+  function renderItems() {
+    if (!props.queries || props.queries.length < 1) {
+      return (
+        <Empty
+          title="No queries yet"
+          description="Your history will appear once you run your first query"
+          icon="history"
+        />
+      )
+    }
+    const historyTrees = getHistoryTrees(props.queries)
+    return <TreeView items={historyTrees || []} onCommand={handleCommand} />
+  }
 
   return (
     <Box className="HistoryActivity-root" sx={HistoryActivity_SxProps}>
       <Box className="HistoryActivity-header">
         <Typography variant="overline">{props.title}</Typography>
       </Box>
-      <TreeView items={historyTrees} onCommand={handleCommand} />
+      {renderItems()}
     </Box>
   )
 }

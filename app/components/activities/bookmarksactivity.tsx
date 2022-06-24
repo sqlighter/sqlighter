@@ -9,6 +9,7 @@ import Typography from "@mui/material/Typography"
 import { Command } from "../../lib/commands"
 import { Query } from "../../lib/items/query"
 
+import { Empty } from "../ui/empty"
 import { PanelProps } from "../navigation/panel"
 import { Tree } from "../../lib/tree"
 import { TreeView } from "../navigation/treeview"
@@ -25,7 +26,7 @@ export const BookmarksActivity_SxProps: SxProps<Theme> = {
 }
 
 export interface BookmarksActivityProps extends PanelProps {
-  /** List of bookmarked queries shown in activity panel */
+  /** List of bookmarked queries shown in activity panel, if empty array shows empty list, if undefined show <Empty> component */
   queries: Query[]
 }
 
@@ -51,15 +52,25 @@ export function BookmarksActivity(props: BookmarksActivityProps) {
     }
   }
 
-  // create tree of bookmarks with folders, items, etc
-  const historyTrees = getBookmarksTrees(props.queries)
+  //
+  // render
+  //
+
+  /** Returns an empty state or your bookmarks as a TreeView */
+  function renderItems() {
+    if (!props.queries) {
+      return <Empty title="No bookmarks yet" description="Sign in for your cloud bookmarks" icon="bookmark" />
+    }
+    const bookmarksTrees = getBookmarksTrees(props.queries)
+    return <TreeView items={bookmarksTrees || []} onCommand={handleCommand} />
+  }
 
   return (
     <Box className="BookmarksActivity-root" sx={BookmarksActivity_SxProps}>
       <Box className="BookmarksActivity-header">
         <Typography variant="overline">{props.title}</Typography>
       </Box>
-      <TreeView items={historyTrees || []} onCommand={handleCommand} />
+      {renderItems()}
     </Box>
   )
 }
