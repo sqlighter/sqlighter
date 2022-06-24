@@ -2815,21 +2815,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/x-data-grid@npm:^5.11.1":
-  version: 5.12.2
-  resolution: "@mui/x-data-grid@npm:5.12.2"
+"@mui/x-data-grid@npm:^5.12.3":
+  version: 5.12.3
+  resolution: "@mui/x-data-grid@npm:5.12.3"
   dependencies:
     "@babel/runtime": ^7.17.2
     "@mui/utils": ^5.4.1
     clsx: ^1.1.1
     prop-types: ^15.8.1
-    reselect: ^4.1.5
+    reselect: ^4.1.6
   peerDependencies:
     "@mui/material": ^5.4.1
     "@mui/system": ^5.4.1
     react: ^17.0.2 || ^18.0.0
     react-dom: ^17.0.2 || ^18.0.0
-  checksum: e23a45cc64c85996f30bbfb9885ca3a3364b40895eab64d77178b84b07f1c1941df93414896932496eb95e1d0d539c1666e2d729547c45c4c6f80cfbb6294a33
+  checksum: afe320b06aaf70fa8935f7e16f99a664e949d1f9d131d5dbee26fcb2ecc6f1c754cec8445fec7a53925ca9f1242949c70b7786b3f5c79128dac9993ae7aaa9b9
   languageName: node
   linkType: hard
 
@@ -17275,7 +17275,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"reselect@npm:^4.1.5":
+"reselect@npm:^4.1.6":
   version: 4.1.6
   resolution: "reselect@npm:4.1.6"
   checksum: 3ea1058422904063ec93c8f4693fe33dcb2178bbf417ace8db5b2c797a5875cf357d9308d11ed3942ee22507dd34ecfbf1f3a21340a4f31c206cab1d36ceef31
@@ -18174,14 +18174,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sql-formatter@npm:^7.0.1":
-  version: 7.0.1
-  resolution: "sql-formatter@npm:7.0.1"
+"sql-formatter@npm:^7.0.2":
+  version: 7.0.2
+  resolution: "sql-formatter@npm:7.0.2"
   dependencies:
     argparse: ^2.0.1
   bin:
     sql-formatter: bin/sql-formatter-cli.js
-  checksum: 937f73bbcafaeaf7964be73462dd3245c5197da68404f7cc1928502457e98b8d356b9a8df1f2cd5aa5a07ae9882f96b47798dd168ebe2644e5e6661841bce0fa
+  checksum: 3bf6e5fd9bfdac5bd9f8dfa6582b072d020a4b111c34c7b9daf1c5c1ffd79c8745582efd5b7f5d69b6e73f1b0fd3b83e8f54c81bffaaf7627e5aa087e8aff9b3
   languageName: node
   linkType: hard
 
@@ -18210,7 +18210,7 @@ __metadata:
     "@mui/icons-material": ^5.8.4
     "@mui/lab": ^5.0.0-alpha.83
     "@mui/material": ^5.8.1
-    "@mui/x-data-grid": ^5.11.1
+    "@mui/x-data-grid": ^5.12.3
     "@storybook/addon-actions": ^6.5.6
     "@storybook/addon-docs": ^6.5.9
     "@storybook/addon-essentials": ^6.5.9
@@ -18272,17 +18272,17 @@ __metadata:
     set-clustering: ^1.1.0
     sharp: ^0.30.5
     showdown: ^2.1.0
-    sql-formatter: ^7.0.1
+    sql-formatter: ^7.0.2
     sql.js: ^1.6.2
     storybook-addon-next-router: ^4.0.0
-    superagent: ^7.1.3
+    superagent: ^8.0.0
     supertest: ^6.2.3
     swr: ^1.3.0
     tempy: ^3.0.0
     tokenizr: ^1.6.6
     ts-jest: ^28.0.5
     ts-node: ^10.8.0
-    typescript: ^4.7.2
+    typescript: ^4.7.4
     use-persisted-state: ^0.3.3
     use-resize-observer: ^9.0.0
     uuid: ^8.3.2
@@ -18751,6 +18751,25 @@ __metadata:
     readable-stream: ^3.6.0
     semver: ^7.3.7
   checksum: b73316836003219f1a4886a6d77dd28551a6784c30e871009fb7bad699fae772b20370d39d2ccb5a543c9335ce12b43a76b959a3ca983f1d6365cb4b5682c08f
+  languageName: node
+  linkType: hard
+
+"superagent@npm:^8.0.0":
+  version: 8.0.0
+  resolution: "superagent@npm:8.0.0"
+  dependencies:
+    component-emitter: ^1.3.0
+    cookiejar: ^2.1.3
+    debug: ^4.3.4
+    fast-safe-stringify: ^2.1.1
+    form-data: ^4.0.0
+    formidable: ^2.0.1
+    methods: ^1.1.2
+    mime: 2.6.0
+    qs: ^6.10.3
+    readable-stream: ^3.6.0
+    semver: ^7.3.7
+  checksum: 14343e59327eafd85fa230acb876017079d5efcecc72a56566abc0f965220bb460af2e070dddecd9e2856410b2d2b318d81d9cc1d342aa5922da93c29a295dd7
   languageName: node
   linkType: hard
 
@@ -19498,23 +19517,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^4.7.2":
-  version: 4.7.3
-  resolution: "typescript@npm:4.7.3"
+"typescript@npm:^4.7.4":
+  version: 4.7.4
+  resolution: "typescript@npm:4.7.4"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: fd13a1ce53790a36bb8350e1f5e5e384b5f6cb9b0635114a6d01d49cb99916abdcfbc13c7521cdae2f2d3f6d8bc4a8ae7625edf645a04ee940588cd5e7597b2f
+  checksum: 5750181b1cd7e6482c4195825547e70f944114fb47e58e4aa7553e62f11b3f3173766aef9c281783edfd881f7b8299cf35e3ca8caebe73d8464528c907a164df
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^4.7.2#~builtin<compat/typescript>":
-  version: 4.7.3
-  resolution: "typescript@patch:typescript@npm%3A4.7.3#~builtin<compat/typescript>::version=4.7.3&hash=bda367"
+"typescript@patch:typescript@^4.7.4#~builtin<compat/typescript>":
+  version: 4.7.4
+  resolution: "typescript@patch:typescript@npm%3A4.7.4#~builtin<compat/typescript>::version=4.7.4&hash=bda367"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 8257ce7ecbbf9416da60045a76a99d473698ca9e973fa0ddab7137cacb1587255431176cbbcc801a650938c4dc8109ab88355774829a714fabe56a53a2fe4524
+  checksum: 96d3030cb01143570567cb4f3a616b10df65f658f0e74e853e77a089a6a954e35c800be7db8b9bfe9a1ae05d9c2897e281359f65e4caa1caf266368e1c4febd3
   languageName: node
   linkType: hard
 
