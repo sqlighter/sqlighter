@@ -15,8 +15,9 @@ import { DataConnectionFactory } from "../../lib/data/factory"
 import { Query } from "../../lib/items/query"
 
 // components
-import { DatabaseActivity } from "../database/databaseactivity"
-import { HistoryActivity } from "../database/historyactivity"
+import { DatabaseActivity } from "../activities/databaseactivity"
+import { HistoryActivity } from "../activities/historyactivity"
+import { BookmarksActivity } from "../activities/bookmarksactivity"
 import { DatabasePanel } from "../panels/databasepanel"
 import { Empty } from "../ui/empty"
 import { HomePanel, HOME_PANEL_ID } from "../panels/homepanel"
@@ -333,11 +334,13 @@ export default function Main(props: MainProps) {
         connections={connections}
         onCommand={handleCommand}
       />,
-      <Panel id="act_bookmarks" title="Bookmarks" icon="bookmark">
-        <Box p={1}>
-          <Typography variant="overline">Bookmarks (tbd)</Typography>
-        </Box>
-      </Panel>,
+      <BookmarksActivity
+        id="act_bookmarks"
+        title="Bookmarks"
+        icon="bookmark"
+        queries={history}
+        onCommand={handleCommand}
+      />,
       <HistoryActivity id="act_history" title="History" icon="history" queries={history} onCommand={handleCommand} />,
     ]
   }

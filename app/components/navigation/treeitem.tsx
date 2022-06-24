@@ -17,9 +17,6 @@ import { Command, CommandEvent } from "../../lib/commands"
 import { Tree } from "../../lib/tree"
 import { Icon } from "../ui/icon"
 
-// delay before showing tooltips
-const TOOLTIP_ENTER_DELAY_MS = 1000
-
 // pixels of indentation for each hierarchical level
 export const DEPTH_PADDING_PX = 12
 
@@ -113,9 +110,8 @@ export function TreeItem({ item, ...props }: TreeItemProps) {
 
     // NOTE the <Box> inside Tooltip is necessary since Icon is a passive element that doesn't fire events (unlike IconButton)
     return (
-      <Box>
+      <Box key={command.command}>
         <Icon
-          key={command.command}
           className="TreeItem-commandIcon"
           onClick={(e) => {
             props.onCommand(e, command)

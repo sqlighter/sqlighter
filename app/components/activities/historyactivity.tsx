@@ -62,13 +62,13 @@ export function HistoryActivity(props: HistoryActivityProps) {
 }
 
 //
-// utility methods
+// Utilities
 //
 
-function _getHistoryItems(queries: Query[], rootId: string): Tree[] {
+function getQueriesAsTreeItems(rootId: string, queries: Query[]): Tree[] {
   return queries?.map((query, index) => {
     return {
-      id: `${rootId}/${index}`,
+      id: `${rootId}/${query.id}_${index}`,
       title: query.title,
       description: query.sql,
       tooltip: query.sql,
@@ -101,7 +101,7 @@ export function getHistoryTrees(queries?: Query[]): Tree[] {
       ],
       badge: todayQueries?.length > 0 ? todayQueries.length.toString() : "0",
       // pass empty array even if there are no queries so we get the "No results" label
-      children: todayQueries ? _getHistoryItems(todayQueries, "history/today") : [],
+      children: todayQueries ? getQueriesAsTreeItems("history/today", todayQueries) : [],
     },
   ]
 
@@ -117,7 +117,7 @@ export function getHistoryTrees(queries?: Query[]): Tree[] {
       icon: "bedtime",
       commands: [{ command: "deleteQueries", icon: "delete", title: "Delete", args: earlierQueries }],
       badge: earlierQueries?.length > 0 ? earlierQueries.length.toString() : "0",
-      children: _getHistoryItems(earlierQueries, "history/earlier"),
+      children: getQueriesAsTreeItems("history/earlier", earlierQueries),
     })
   }
 

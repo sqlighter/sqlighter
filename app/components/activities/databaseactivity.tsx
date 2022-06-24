@@ -9,8 +9,8 @@ import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 
 import { DataConnection } from "../../lib/data/connections"
-import { DatabaseTreeView } from "./databasetreeview"
-import { ConnectionPicker } from "./connectionpicker"
+import { DatabaseTreeView } from "../database/databasetreeview"
+import { ConnectionPicker } from "../database/connectionpicker"
 import { PanelProps } from "../navigation/panel"
 
 // Styles applied to component and subcomponents

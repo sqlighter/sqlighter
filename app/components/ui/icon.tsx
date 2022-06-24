@@ -15,10 +15,13 @@ import AddOutlinedIcon from "@mui/icons-material/AddOutlined"
 import AlignHorizontalLeftOutlinedIcon from "@mui/icons-material/AlignHorizontalLeftOutlined"
 import AutoFixHighOutlinedIcon from "@mui/icons-material/AutoFixHighOutlined"
 // import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined"
-import BedtimeOutlinedIcon from '@mui/icons-material/BedtimeOutlined';
+import BedtimeOutlinedIcon from "@mui/icons-material/BedtimeOutlined"
 import BentoOutlinedIcon from "@mui/icons-material/BentoOutlined"
 import BoltOutlinedIcon from "@mui/icons-material/BoltOutlined"
 import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlined"
+import BookmarkAddOutlinedIcon from "@mui/icons-material/BookmarkAddOutlined"
+import BookmarkAddedOutlinedIcon from "@mui/icons-material/BookmarkAddedOutlined"
+import BookmarkRemoveOutlinedIcon from "@mui/icons-material/BookmarkRemoveOutlined"
 import BookmarksOutlinedIcon from "@mui/icons-material/BookmarksOutlined"
 // import BungalowOutlinedIcon from "@mui/icons-material/BungalowOutlined"
 import CalendarViewWeekOutlinedIcon from "@mui/icons-material/CalendarViewWeekOutlined"
@@ -26,7 +29,7 @@ import CodeOutlinedIcon from "@mui/icons-material/CodeOutlined"
 import CheckOutlinedIcon from "@mui/icons-material/CheckOutlined"
 import ChildCareOutlinedIcon from "@mui/icons-material/ChildCareOutlined"
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined"
-import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined"
 import CloudDownloadOutlinedIcon from "@mui/icons-material/CloudDownloadOutlined"
 import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined"
 import DirectionsRunOutlinedIcon from "@mui/icons-material/DirectionsRunOutlined"
@@ -110,6 +113,12 @@ export function Icon(props: IconProps) {
         return <BedtimeOutlinedIcon {...props} />
       case "bookmark":
         return <BookmarkBorderOutlinedIcon {...props} />
+      case "bookmarkAdd":
+        return <BookmarkAddOutlinedIcon {...props} />
+      case "bookmarkAdded":
+        return <BookmarkAddedOutlinedIcon {...props} />
+      case "bookmarkRemove":
+        return <BookmarkRemoveOutlinedIcon {...props} />
       case "bookmarks":
         return <BookmarksOutlinedIcon {...props} />
       case "close":

@@ -5,6 +5,7 @@
 import * as React from "react"
 import { useState, useEffect } from "react"
 
+import { Query } from "../../lib/items/query"
 import { Command, CommandEvent } from "../../lib/commands"
 import { TreeView } from "../navigation/treeview"
 import { Tree } from "../../lib/tree"
@@ -159,7 +160,8 @@ function _getTableTree(
   table,
   variant: "table" | "view"
 ) {
-  const columns = table.columns && table.columns.map((column) => _getTableColumnTree(rootId, schema, table, column, variant))
+  const columns =
+    table.columns && table.columns.map((column) => _getTableColumnTree(rootId, schema, table, column, variant))
 
   let indexes =
     schema.indexes &&
