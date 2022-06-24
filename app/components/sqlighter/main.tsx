@@ -336,7 +336,7 @@ export default function Main(props: MainProps) {
         id="act_bookmarks"
         title="Bookmarks"
         icon="bookmark"
-        queries={props.user && history}
+        queries={props.user && history.filter(q => q.folder)}
         onCommand={handleCommand}
       />,
       <HistoryActivity id="act_history" title="History" icon="history" queries={history} onCommand={handleCommand} />,

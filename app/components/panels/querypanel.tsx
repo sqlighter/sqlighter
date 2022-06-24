@@ -30,6 +30,7 @@ import { QueryRunPanel } from "../database/queryrunpanel"
 import { useForceUpdate } from "../hooks/useforceupdate"
 import { TitleField } from "../ui/titlefield"
 import { Empty } from "../ui/empty"
+import { BOOKMARKS_FOLDER } from "../activities/bookmarksactivity"
 
 const delay = (ms) => new Promise((res) => setTimeout(res, ms))
 
@@ -256,6 +257,16 @@ export function QueryPanel(props: QueryPanelProps) {
         setVariant(variant == "bottom" ? "right" : "bottom")
         return
 
+      // bookmark or remove bookmark from current query
+      case "bookmark":
+        if (query.folder) {
+          delete query.folder
+        } else {
+          query.folder = BOOKMARKS_FOLDER
+        }
+        notifyChanges()
+        return
+
       case "changedConnection":
         query.connectionId = command.args?.item?.id
         notifyChanges()
@@ -309,7 +320,11 @@ export function QueryPanel(props: QueryPanelProps) {
   function renderCommands() {
     const commands: (Command | "spacing")[] = [
       { command: "info", icon: "info", title: "Details" },
-      { command: "bookmark", icon: "bookmark", title: "Bookmark" },
+      {
+        command: "bookmark",
+        icon: query.folder ? "bookmarkRemove" : "bookmarkAdd",
+        title: query.folder ? "Remove Bookmark" : "Bookmark",
+      },
       { command: "history", icon: "history", title: "History" },
       "spacing",
       { command: "prettify", icon: "autofix", title: "Prettify" },
