@@ -114,7 +114,7 @@ describe("bookmarksactivity.tsx", () => {
     itemCommand = handleCommand.mock.calls[2][1]
     expect(itemCommand.command).toBe("openQuery")
 
-    // click deleteQuery
+    // click deleteBookmark
     fireEvent.click(itemCommands[1])
     expect(handleCommand).toHaveBeenCalledTimes(4)
     itemCommand = handleCommand.mock.calls[3][1]

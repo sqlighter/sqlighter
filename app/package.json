@@ -15,7 +15,7 @@
     "build": "next build",
     "start": "next start",
     "format": "prettier --write \"**/*.{js,ts,tsx,vue,md,yaml,json,scss,css}\"",
-    "test": "jest --runInBand",
+    "test": "jest --runInBand --detectOpenHandles",
     "storybook": "start-storybook -p 6006",
     "test-storybook": "test-storybook"
   },
@@ -106,7 +106,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "jest": "27.5.1",
     "jest-environment-jsdom": "27.5.1",
-    "jest-html-reporter": "^3.5.0",
+    "jest-html-reporters": "^3.0.9",
     "prettier": "^2.7.1",
     "storybook-addon-next-router": "^4.0.0",
     "superagent": "^8.0.0",
@@ -132,15 +132,6 @@
       "^.+\\.(t|j)sx?$": [
         "@swc-node/jest"
       ]
-    },
-    "reporters": [
-      "default",
-      [
-        "./node_modules/jest-html-reporter",
-        {
-          "pageTitle": "SQLighter Test Report"
-        }
-      ]
-    ]
+    }
   }
 }
