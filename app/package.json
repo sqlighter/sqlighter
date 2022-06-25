@@ -16,8 +16,7 @@
     "start": "next start",
     "format": "prettier --write \"**/*.{js,ts,tsx,vue,md,yaml,json,scss,css}\"",
     "test": "jest --runInBand",
-    "storybook": "start-storybook -p 6006 -s ./public",
-    "build-storybook": "rm -r -f ./storybook-static && build-storybook && cp -r ./public/* ./storybook-static",
+    "storybook": "start-storybook -p 6006",
     "test-storybook": "test-storybook"
   },
   "dependencies": {
