@@ -16033,6 +16033,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"pluralize@npm:^8.0.0":
+  version: 8.0.0
+  resolution: "pluralize@npm:8.0.0"
+  checksum: 08931d4a6a4a5561a7f94f67a31c17e6632cb21e459ab3ff4f6f629d9a822984cf8afef2311d2005fbea5d7ef26016ebb090db008e2d8bce39d0a9a9d218736e
+  languageName: node
+  linkType: hard
+
 "pnp-webpack-plugin@npm:1.6.4":
   version: 1.6.4
   resolution: "pnp-webpack-plugin@npm:1.6.4"
@@ -18338,6 +18345,7 @@ __metadata:
     passport-google-one-tap: ^1.0.0
     passport-local: ^1.0.0
     path: ^0.12.7
+    pluralize: ^8.0.0
     prettier: ^2.7.1
     react: ^18.1.0
     react-dnd: ^16.0.1

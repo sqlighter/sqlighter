@@ -8,6 +8,7 @@ import auth from "../../lib/auth/middleware"
 import { ItemsTable, unpackItems } from "../../lib/database"
 import { Item } from "../../lib/items/items"
 import { getBucket } from "../../lib/storage"
+import pluralize from "pluralize"
 
 const handler = nextConnect<NextApiRequest, NextApiResponse>({ attachParams: true })
 
@@ -16,14 +17,14 @@ handler
 
   /** Returns a specific record owned by the authenticated user */
   .get("/api/:itemTypes/:recordId", async (req: any, res) => {
-    const itemType = req.params.itemTypes.slice(0, -1)
+    const itemType = pluralize.singular(req.params.itemTypes)
     const itemId = req.params.recordId
     await getItem(req, res, itemType, itemId)
   })
 
   /** Returns a list of records of a given type owned by the user */
   .get("/api/:itemTypes", async (req: any, res) => {
-    const itemType = req.params.itemTypes.slice(0, -1)
+    const itemType = pluralize.singular(req.params.itemTypes)
     await getItems(req, res, itemType)
   })
 
@@ -36,7 +37,7 @@ handler
    * the client will call /upload/complete below to update the item.
    */
   .put("/api/:itemTypes/:itemId/files/upload/sign", async (req: any, res) => {
-    const itemType = req.params.itemTypes.slice(0, -1)
+    const itemType = pluralize.singular(req.params.itemTypes)
     const itemId = req.params.itemId
 
     // user must be authenticated and if the item already exists it must be owned by the user
@@ -71,7 +72,7 @@ handler
 
   /** Called once a signed url upload has completed to update the item in database with the new file information */
   .put("/api/:itemTypes/:itemId/files/upload/complete", async (req: any, res) => {
-    const itemType = req.params.itemTypes.slice(0, -1)
+    const itemType = pluralize.singular(req.params.itemTypes)
     const itemId = req.params.itemId
 
     // user must be authenticated and if the item already exists it must be owned by the user
@@ -147,6 +148,21 @@ handler
     res.json({ data: item })
   })
 
+  /** Updates given item as long as the caller is the rightful owner */
+  .put("/api/:itemTypes/:itemId", async (req: any, res) => {
+    const itemType = pluralize.singular(req.params.itemTypes)
+    const itemId = req.params.itemId
+    const item = req.body
+    await updateItem(req, res, itemType, itemId, item)
+  })
+
+  /** Deletes an item as long as the caller is the owner */
+  .delete("/api/:itemTypes/:itemId", async (req: any, res) => {
+    const itemType = pluralize.singular(req.params.itemTypes)
+    const itemId = req.params.itemId
+    await deleteItem(req, res, itemType, itemId)
+  })
+
 // export router
 export default handler
 
@@ -193,4 +209,67 @@ async function getItems(req: NextApiRequest, res: NextApiResponse, itemType: str
     })
     .orderBy("createdAt", "desc")
   res.json({ data: unpackItems(items) })
+}
+
+/** Updates a single item as long as its found and ownership is confirmed or creates as new and assigns owner */
+async function updateItem(req: NextApiRequest, res: NextApiResponse, itemType: string, itemId: string, item) {
+  console.debug(`${req.url} - updating ${item.id}`, item)
+
+  const user = req.user
+  if (!user) {
+    res.status(403).send("Unauthenticated")
+    return
+  }
+
+  // item exists?
+  const existingItem = await itemsTable.selectItem(itemId)
+  if (existingItem) {
+    // update item as long as user owns it
+    if (existingItem.type != itemType) {
+      res.status(404).send(`Item ${itemId} was not found`)
+      return
+    }
+    const user = req.user
+    if (!user || (existingItem.id != user.id && existingItem.parentId != user.id)) {
+      res.status(403).send("Unauthorized")
+      return
+    }
+    await itemsTable.updateItem(item)
+  }
+  // item is new?
+  else {
+    // set user as owner, insert new item
+    item.parentId = user.id
+    item.type = itemType
+    await itemsTable.insertItem(item)
+  }
+
+  // return updated item as result
+  const updatedItem = await itemsTable.selectItem(itemId)
+  res.json({ data: updatedItem })
+  console.debug(`${req.url} - updated ${item.id}`, updatedItem)
+}
+
+/** Deletes a single item as long as its found and ownership is confirmed */
+async function deleteItem(req: NextApiRequest, res: NextApiResponse, itemType: string, itemId: string) {
+  console.debug(`${req.url} - deleting ${itemId}`)
+
+  // item exists?
+  const item = await itemsTable.selectItem(itemId)
+  if (!item || item.type != itemType) {
+    res.status(404).send(`Item ${itemId} was not found`)
+    return
+  }
+
+  // user owns this item?
+  const user = req.user
+  if (!user || (item.id != user.id && item.parentId != user.id)) {
+    res.status(403).send("Unauthorized")
+    return
+  }
+
+  await itemsTable.deleteItem(itemId)
+  res.status(204) // no content
+  res.end()
+  console.debug(`${req.url} - deleted ${itemId}`)
 }

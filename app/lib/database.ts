@@ -7,11 +7,18 @@ import "dotenv/config"
 import { assert } from "console"
 import { knex } from "knex"
 import { Item } from "./items/items"
+import { parseISO } from "date-fns"
 
 /** Takes all object fields beyond id, parentId, type, createdAt, updatedAt and moves them to 'attributes' so they can be stored in items table in the database */
 export function packItem(obj) {
   assert(obj.id, "packItem - item doesn't have an id")
-  const { id, parentId, type, createdAt, updatedAt, ...attributes } = obj
+  let { id, parentId, type, createdAt, updatedAt, ...attributes } = obj
+  if (createdAt && typeof createdAt === "string") {
+    createdAt = parseISO(createdAt)
+  }
+  if (updatedAt && typeof updatedAt === "string") {
+    updatedAt = parseISO(updatedAt)
+  }
   return { id, parentId, type, createdAt, updatedAt, attributes }
 }
 
@@ -159,9 +166,23 @@ export class ItemsTable {
     try {
       const packedItem = packItem(item)
       assert(packedItem.id && packedItem.attributes)
+      packedItem.updatedAt = new Date()
+      if (!packedItem.createdAt) {
+        packedItem.createdAt = packedItem.updatedAt
+      }
       return await this.table.update("attributes", JSON.stringify(packedItem.attributes)).where("id", packedItem.id)
     } catch (exception) {
       console.debug(`ItemsTable.updateItem - ${item} returned ${exception}`, exception)
+      throw exception
+    }
+  }
+
+  /** Deletes given item */
+  async deleteItem(itemId: string) {
+    try {
+      return await this.table.delete().where("id", itemId)
+    } catch (exception) {
+      console.debug(`ItemsTable.deleteItem - ${itemId} returned ${exception}`, exception)
       throw exception
     }
   }

@@ -12,6 +12,10 @@ import { DataConnection } from "../../lib/data/connections"
 import { DataConnectionFactory } from "../../lib/data/factory"
 import { Query } from "../../lib/items/query"
 
+// hooks
+import { useSqljs } from "../hooks/usedb"
+import { useBookmarks } from "../hooks/usebookmarks"
+
 // components
 import { DatabaseActivity } from "../activities/databaseactivity"
 import { HistoryActivity } from "../activities/historyactivity"
@@ -23,7 +27,6 @@ import { PanelElement, PanelProps } from "../navigation/panel"
 import { TablePanel } from "../panels/tablepanel"
 import { QueryPanel } from "../panels/querypanel"
 import { TabsLayout } from "../navigation/tabslayout"
-import { useSqljs } from "../hooks/usedb"
 
 export interface MainProps extends PanelProps {
   /** User currently signedin (if any) */
@@ -53,6 +56,10 @@ export default function Main(props: MainProps) {
 
   // history of query runs
   const [history, setHistory] = useState<Query[]>([])
+
+  // cloud stored bookmarks
+  const { bookmarks, setBookmarks } = useBookmarks()
+  console.debug(`Main: bookmarks: ${JSON.stringify(bookmarks)}`)
 
   //
   // temporary code while we work out the connection setup panels, etc
@@ -219,6 +226,24 @@ export default function Main(props: MainProps) {
         // track query + run in history
         setHistory(updatedHistory)
       }
+
+      // add to bookmarks if needed
+      let updatedBookmarks = bookmarks
+      const queryBookmark = bookmarks && bookmarks.find((b) => b.id == query.id)
+      if (queryBookmark) {
+        // if this is an existing bookmarked query that has changed we remove
+        // and it will be replaced by the updated version of itself. if this is
+        // a query that used to be a bookmark but is no longer, we remove it.
+        updatedBookmarks = bookmarks.filter((b) => b.id != query.id)
+      }
+      if (query.folder) {
+        // we don't save query runs, just the query itself
+        const { runs, ...bookmark } = query
+        updatedBookmarks = updatedBookmarks ? [bookmark, ...updatedBookmarks] : [bookmark]
+      }
+      if (bookmarks != updatedBookmarks) {
+        setBookmarks(updatedBookmarks)
+      }
     }
   }
 
@@ -294,6 +319,23 @@ export default function Main(props: MainProps) {
         handleChangedQuery(command)
         return
 
+      // remove queries from bookmarks
+      case "deleteBookmarks":
+        if (bookmarks) {
+          const deleteBookmarks = command.args as Query[]
+          const updatedBookmarks = bookmarks.filter((b1) => !deleteBookmarks.find((b2) => b1.id == b2.id))
+          await setBookmarks(updatedBookmarks)
+        }
+        return
+
+      // remove query from list of bookmarks, sync on server
+      case "deleteBookmark":
+        if (bookmarks) {
+          const bookmark = command.args as Query
+          await setBookmarks(bookmarks.filter((b) => b.id != bookmark.id))
+        }
+        return
+
       case "deleteQuery":
         handleDeleteQueries([command.args as Query])
         return
@@ -336,7 +378,7 @@ export default function Main(props: MainProps) {
         id="act_bookmarks"
         title="Bookmarks"
         icon="bookmark"
-        queries={props.user && history.filter(q => q.folder)}
+        queries={props.user ? bookmarks || [] : undefined} // empty state only for non-logged in users
         onCommand={handleCommand}
       />,
       <HistoryActivity id="act_history" title="History" icon="history" queries={history} onCommand={handleCommand} />,

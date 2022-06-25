@@ -16,12 +16,27 @@ export const fetcher = async (input: RequestInfo, init: RequestInit, ...args: an
 }
 
 /**
+ * Returns a json on given url
+ * @param url The url of the API, eg. /api/user
+ * @returns The response data
+ */
+export async function getJson(url): Promise<any> {
+  const response = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+  return response.json()
+}
+
+/**
  * Perform a json PUT on given url
  * @param url The url of the API, eg. /api/user
  * @param data The object to put (will be converted to json)
  * @returns The response data
  */
-export async function putJson(url, data) {
+export async function putJson(url, data): Promise<any> {
   const response = await fetch(url, {
     method: "PUT",
     headers: {
@@ -30,6 +45,25 @@ export async function putJson(url, data) {
     body: JSON.stringify(data),
   })
   return response.json()
+}
+
+/**
+ * Perform a json DELETE on given url
+ * @param url The url of the API, eg. /api/user
+ * @param data The optional object to sent (will be converted to json)
+ * @returns The response data
+ */
+export async function deleteJson(url, data?): Promise<void> {
+  const response = await fetch(url, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: data && JSON.stringify(data),
+  })
+  if (!response.ok) {
+    throw new Error(`deleteJson - url: ${url}, ${response.status}: ${response.statusText}`)
+  }
 }
 
 /** Retrieve data and metadata from relative url pointing to our APIs */
