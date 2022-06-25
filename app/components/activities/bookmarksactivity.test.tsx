@@ -95,19 +95,29 @@ describe("bookmarksactivity.tsx", () => {
     // extract to command buttons, open and delete
     treeItems = await container.getElementsByClassName("TreeItem-root")
     expect(treeItems).toHaveLength(2)
-    let commands = await treeItems[1].getElementsByClassName("TreeItem-commandIcon")
-    expect(commands).toHaveLength(2)
 
-    // click openQuery
-    fireEvent.click(commands[0])
+    // click deleteBookmarks on folder
+    let folderCommands = await treeItems[0].getElementsByClassName("TreeItem-commandIcon")
+    expect(folderCommands).toHaveLength(1)
+    fireEvent.click(folderCommands[0])
     expect(handleCommand).toHaveBeenCalledTimes(2)
     itemCommand = handleCommand.mock.calls[1][1]
+    expect(itemCommand.command).toBe("deleteBookmarks")
+
+    // commands on bookmark item
+    let itemCommands = await treeItems[1].getElementsByClassName("TreeItem-commandIcon")
+    expect(itemCommands).toHaveLength(2)
+
+    // click openQuery
+    fireEvent.click(itemCommands[0])
+    expect(handleCommand).toHaveBeenCalledTimes(3)
+    itemCommand = handleCommand.mock.calls[2][1]
     expect(itemCommand.command).toBe("openQuery")
 
     // click deleteQuery
-    fireEvent.click(commands[1])
-    expect(handleCommand).toHaveBeenCalledTimes(3)
-    itemCommand = handleCommand.mock.calls[2][1]
-    expect(itemCommand.command).toBe("deleteQuery")
+    fireEvent.click(itemCommands[1])
+    expect(handleCommand).toHaveBeenCalledTimes(4)
+    itemCommand = handleCommand.mock.calls[3][1]
+    expect(itemCommand.command).toBe("deleteBookmark")
   })
 })

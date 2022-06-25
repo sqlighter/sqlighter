@@ -124,6 +124,9 @@
     "tabWidth": 2
   },
   "jest": {
+    "setupFilesAfterEnv": [
+      "<rootDir>/jest.setup.js"
+    ],
     "testTimeout": 6000,
     "transform": {
       "^.+\\.(t|j)sx?$": [

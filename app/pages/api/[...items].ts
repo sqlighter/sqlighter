@@ -3,12 +3,13 @@
 //
 
 import nextConnect from "next-connect"
+import pluralize from "pluralize"
 import { NextApiRequest, NextApiResponse } from "next"
+
 import auth from "../../lib/auth/middleware"
 import { ItemsTable, unpackItems } from "../../lib/database"
 import { Item } from "../../lib/items/items"
 import { getBucket } from "../../lib/storage"
-import pluralize from "pluralize"
 
 const handler = nextConnect<NextApiRequest, NextApiResponse>({ attachParams: true })
 
@@ -208,12 +209,14 @@ async function getItems(req: NextApiRequest, res: NextApiResponse, itemType: str
       this.where("id", user.id).orWhere("parentId", user.id)
     })
     .orderBy("createdAt", "desc")
+
   res.json({ data: unpackItems(items) })
+  res.end()
 }
 
 /** Updates a single item as long as its found and ownership is confirmed or creates as new and assigns owner */
 async function updateItem(req: NextApiRequest, res: NextApiResponse, itemType: string, itemId: string, item) {
-  console.debug(`${req.url} - updating ${item.id}`, item)
+  // console.debug(`${req.url} - updating ${item.id}`, item)
 
   const user = req.user
   if (!user) {
@@ -247,12 +250,12 @@ async function updateItem(req: NextApiRequest, res: NextApiResponse, itemType: s
   // return updated item as result
   const updatedItem = await itemsTable.selectItem(itemId)
   res.json({ data: updatedItem })
-  console.debug(`${req.url} - updated ${item.id}`, updatedItem)
+  res.end()
 }
 
 /** Deletes a single item as long as its found and ownership is confirmed */
 async function deleteItem(req: NextApiRequest, res: NextApiResponse, itemType: string, itemId: string) {
-  console.debug(`${req.url} - deleting ${itemId}`)
+  // console.debug(`${req.url} - deleting ${itemId}`)
 
   // item exists?
   const item = await itemsTable.selectItem(itemId)
@@ -271,5 +274,4 @@ async function deleteItem(req: NextApiRequest, res: NextApiResponse, itemType: s
   await itemsTable.deleteItem(itemId)
   res.status(204) // no content
   res.end()
-  console.debug(`${req.url} - deleted ${itemId}`)
 }
