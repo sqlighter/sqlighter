@@ -21,6 +21,7 @@ jobs:
       run: yarn test
     - name: Archive test report
       uses: actions/upload-artifact@v3
+      if: always()
       with:
         name: test-report
         path: |
