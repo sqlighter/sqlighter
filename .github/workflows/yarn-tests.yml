@@ -23,5 +23,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: test-report
-        path: app/test-report.html
+        path: |
+          app/jest-html-reporters-attach/**
+          app/test-report.html
         retention-days: 7
