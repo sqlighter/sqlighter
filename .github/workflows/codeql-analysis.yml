@@ -4,8 +4,8 @@ on:
   push:
     branches: ["main"]
     paths-ignore:
-      - app/jest-html-reporters-attach/**
-      - app/test-report.html
+      - '**/test-report.html'
+      - '**/jest-html-reporters-attach/**'
   pull_request:
     # The branches below must be a subset of the branches above
     branches: ["main"]
