@@ -19,12 +19,3 @@ jobs:
         DATABASE_URL: ${{ secrets.TEST_DATABASE_URL }}
         TEST_DATABASE_URL: ${{ secrets.TEST_DATABASE_URL }}
       run: yarn test
-    - name: Archive test report
-      uses: actions/upload-artifact@v3
-      if: always()
-      with:
-        name: test-report
-        path: |
-          app/jest-html-reporters-attach/**
-          app/test-report.html
-        retention-days: 7
