@@ -11,6 +11,11 @@ export const parameters = {
     },
   },
   grid: { cellSize: 8 },
+  options: {
+    storySort: {
+      order: ['Activities', 'Tabs', "Database", "Navigation", "UI"],
+    },
+  },
 }
 
 // TODO figure out why using decorator in preview.jsx locks storybook into an infinite spinner
