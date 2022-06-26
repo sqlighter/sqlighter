@@ -5,9 +5,9 @@
 import React from "react"
 import { ComponentStory, ComponentMeta } from "@storybook/react"
 import Grid from "@mui/material/Grid"
-import { StorybookDecorator } from "../components/storybook"
+import { StorybookDecorator } from "./helpers/storybook"
 import { ConnectionCard } from "../components/database/connectioncard"
-import { fake_connection1, fake_connection2, fake_connection3 } from "./test/fakedata"
+import { fake_connection1, fake_connection2, fake_connection3 } from "./helpers/fakedata"
 
 export default {
   title: "Database/ConnectionCard",

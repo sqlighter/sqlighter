@@ -6,7 +6,7 @@ import React from "react"
 import { ComponentStory, ComponentMeta } from "@storybook/react"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
-import { StorybookDecorator } from "../components/storybook"
+import { StorybookDecorator } from "./helpers/storybook"
 import { FilesBackdrop } from "../components/ui/filesbackdrop"
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export

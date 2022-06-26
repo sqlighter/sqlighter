@@ -7,10 +7,10 @@ import { ComponentStory, ComponentMeta } from "@storybook/react"
 import Button from "@mui/material/Button"
 import Stack from "@mui/material/Stack"
 
-import { StorybookDecorator } from "../components/storybook"
+import { StorybookDecorator } from "./helpers/storybook"
 import { ConnectionPicker } from "../components/database/connectionpicker"
 import { Icon } from "../components/ui/icon"
-import { fake_connections1, fake_connection1, fake_connection2, fake_connection3 } from "./test/fakedata"
+import { fake_connections1, fake_connection1, fake_connection2, fake_connection3 } from "./helpers/fakedata"
 
 export default {
   title: "Database/ConnectionPicker",

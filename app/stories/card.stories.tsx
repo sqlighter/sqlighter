@@ -5,9 +5,9 @@
 import React from "react"
 import { ComponentStory, ComponentMeta } from "@storybook/react"
 import Grid from "@mui/material/Grid"
-import { StorybookDecorator } from "../components/storybook"
+import { StorybookDecorator } from "./helpers/storybook"
 import { Card } from "../components/ui/card"
-import { databaseCmd, queryCmd, printCmd, settingsCmd } from "./test/fakedata"
+import { databaseCmd, queryCmd, printCmd, settingsCmd } from "./helpers/fakedata"
 
 export default {
   title: "UI/Card",

@@ -5,7 +5,7 @@
 import React from "react"
 import { ComponentStory, ComponentMeta } from "@storybook/react"
 import { Box } from "@mui/material"
-import { StorybookDecorator } from "../components/storybook"
+import { StorybookDecorator } from "./helpers/storybook"
 import { QueryRunPanel } from "../components/database/queryrunpanel"
 import {
   fake_connection1,
@@ -13,7 +13,7 @@ import {
   fake_queryCompletedLarge,
   fake_queryRunning1,
   fake_queryError1,
-} from "./test/fakedata"
+} from "./helpers/fakedata"
 
 export default {
   title: "Database/QueryRunPanel",

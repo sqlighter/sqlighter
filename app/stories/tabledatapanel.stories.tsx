@@ -4,8 +4,8 @@
 
 import React from "react"
 import { ComponentStory, ComponentMeta } from "@storybook/react"
-import { StorybookDecorator, Wrapper } from "../components/storybook"
-import { getTestConnection } from "./test/fakedata"
+import { StorybookDecorator, Wrapper } from "./helpers/storybook"
+import { getTestConnection } from "./helpers/fakedata"
 import { TableDataPanel } from "../components/panels/tabledatapanel"
 
 export default {

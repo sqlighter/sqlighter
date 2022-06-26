@@ -4,7 +4,7 @@
 
 import React from "react"
 import { ComponentStory, ComponentMeta } from "@storybook/react"
-import { StorybookDecorator } from "../components/storybook"
+import { StorybookDecorator } from "./helpers/storybook"
 import { Empty, MissingFeature } from "../components/ui/empty"
 
 export default {

@@ -4,8 +4,8 @@
 
 import React from "react"
 import { ComponentStory, ComponentMeta } from "@storybook/react"
-import { StorybookDecorator, Wrapper } from "../components/storybook"
-import { getTestConnection, getBlankConnection } from "./test/fakedata"
+import { StorybookDecorator, Wrapper } from "./helpers/storybook"
+import { getTestConnection, getBlankConnection } from "./helpers/fakedata"
 import {
   SchemaPanelWithDataGrid,
   ColumnsSchemaPanel,

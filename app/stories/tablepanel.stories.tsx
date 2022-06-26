@@ -4,9 +4,9 @@
 
 import React from "react"
 import { ComponentStory, ComponentMeta } from "@storybook/react"
-import { StorybookDecorator, Wrapper } from "../components/storybook"
+import { StorybookDecorator, Wrapper } from "./helpers/storybook"
 import { TablePanel } from "../components/panels/tablepanel"
-import { getTestConnection } from "./test/fakedata"
+import { getTestConnection } from "./helpers/fakedata"
 
 export default {
   title: "Tabs/TablePanel",

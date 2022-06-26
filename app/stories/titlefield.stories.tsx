@@ -5,7 +5,7 @@
 import React, { useState } from "react"
 import Typography from "@mui/material/Typography"
 import { ComponentStory, ComponentMeta } from "@storybook/react"
-import { StorybookDecorator } from "../components/storybook"
+import { StorybookDecorator } from "./helpers/storybook"
 import { TitleField } from "../components/ui/titlefield"
 
 function Tester(props) {

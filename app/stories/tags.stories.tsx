@@ -4,8 +4,8 @@
 
 import React from "react"
 import { ComponentStory, ComponentMeta } from "@storybook/react"
-import { StorybookDecorator } from "../components/storybook"
-import { queryCmd, databaseCmd, printCmd } from "./test/fakedata"
+import { StorybookDecorator } from "./helpers/storybook"
+import { queryCmd, databaseCmd, printCmd } from "./helpers/fakedata"
 import { Tags } from "../components/ui/tags"
 
 export default {

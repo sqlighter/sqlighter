@@ -6,8 +6,8 @@ import React, { useState, useEffect } from "react"
 import { ComponentStory, ComponentMeta } from "@storybook/react"
 import Box from "@mui/material/Box"
 
-import { StorybookDecorator } from "../components/storybook"
-import { getTestConnection } from "./test/fakedata"
+import { StorybookDecorator } from "./helpers/storybook"
+import { getTestConnection } from "./helpers/fakedata"
 import { QueryResultDataGrid } from "../components/database/queryresultdatagrid"
 
 function TableLoadingWrapper(props) {

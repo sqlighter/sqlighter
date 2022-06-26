@@ -7,7 +7,7 @@ import React from "react"
 import "@testing-library/jest-dom"
 import { render, fireEvent, screen } from "@testing-library/react"
 import { writeJson } from "../../lib/test/utilities"
-import { fake_bookmarks, fake_bookmark } from "../../stories/test/fakedata"
+import { fake_bookmarks, fake_bookmark } from "../../stories/helpers/fakedata"
 import { BookmarksActivity, getBookmarksTrees, BOOKMARKS_FOLDER, BOOKMARKS_TITLE } from "./bookmarksactivity"
 
 describe("bookmarksactivity.tsx", () => {

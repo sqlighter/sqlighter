@@ -5,8 +5,8 @@
 import React from "react"
 import { ComponentStory, ComponentMeta } from "@storybook/react"
 import { Section } from "../components/ui/section"
-import { StorybookDecorator } from "../components/storybook"
-import { sqlCmd, dataCmd, chartCmd, printCmd } from "./test/fakedata"
+import { StorybookDecorator } from "./helpers/storybook"
+import { sqlCmd, dataCmd, chartCmd, printCmd } from "./helpers/fakedata"
 
 export default {
   title: "UI/Section",

@@ -5,10 +5,10 @@
 import React, { useState } from "react"
 import { ComponentStory, ComponentMeta } from "@storybook/react"
 import Box from "@mui/material/Box"
-import { ActivityBarWrapper } from "./test/wrappers"
+import { ActivityBarWrapper } from "./helpers/storybook"
 import { HistoryActivity } from "../components/activities/historyactivity"
-import { fake_user_mickey, fake_history } from "./test/fakedata"
-import { StorybookDecorator } from "../components/storybook"
+import { fake_user_mickey, fake_history } from "./helpers/fakedata"
+import { StorybookDecorator } from "./helpers/storybook"
 import { Panel } from "../components/navigation/panel"
 
 export default {

@@ -1,11 +1,46 @@
 //
-// Wrappers.tsx - single use components used to give context to components tested in stories
+// storybook.tsx - a decorator used to provide basic themed context to components in storybook
 //
+
+import { DndProvider } from "react-dnd"
+import { HTML5Backend } from "react-dnd-html5-backend"
 
 import React, { useState } from "react"
 import { Allotment } from "allotment"
-import Box from "@mui/material/Box"
 import { ActivityBar, ACTIVITYBAR_WIDTH } from "../../components/navigation/activitybar"
+import { customTheme } from "../../components/theme"
+import CssBaseline from "@mui/material/CssBaseline"
+import { ThemeProvider } from "@mui/material/styles"
+import Box from "@mui/material/Box"
+
+// allotment styles + global overrides
+import "allotment/dist/style.css"
+import "../../public/styles.css"
+
+//
+// StorybookDecorator
+//
+
+export function StorybookDecorator(props) {
+  return (
+    <CssBaseline>
+      <ThemeProvider theme={customTheme()}>
+        <DndProvider backend={HTML5Backend}>
+          <Box className="StorybookDecorator-root">{props.children}</Box>
+        </DndProvider>
+      </ThemeProvider>
+    </CssBaseline>
+  )
+}
+
+//
+// Wrapper
+//
+
+/** Simple wrapper with defined height required by some components */
+export function Wrapper(props) {
+  return <Box sx={{ height: 800, width: 1 }}>{props.children}</Box>
+}
 
 //
 // ActivityWrapper

@@ -3,9 +3,9 @@ import { ComponentStory, ComponentMeta } from "@storybook/react"
 import { screen, userEvent, waitFor } from "@storybook/testing-library"
 import { expect } from "@storybook/jest"
 import { Stack } from "@mui/material"
-import { StorybookDecorator } from "../components/storybook"
+import { StorybookDecorator } from "./helpers/storybook"
 import { IconButton } from "../components/ui/iconbutton"
-import { chartCmd, databaseCmd, queryCmd } from "./test/fakedata"
+import { chartCmd, databaseCmd, queryCmd } from "./helpers/fakedata"
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {

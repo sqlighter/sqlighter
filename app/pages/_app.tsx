@@ -8,7 +8,7 @@ import { useRouter } from "next/router"
 
 // allotment styles + global overrides
 import "allotment/dist/style.css"
-import "../styles/global.css"
+import "../public/styles.css"
 
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
