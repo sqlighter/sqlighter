@@ -10,8 +10,8 @@ import { useRouter } from "next/router"
 import "allotment/dist/style.css"
 import "../public/styles.css"
 
-import { DndProvider } from 'react-dnd'
-import { HTML5Backend } from 'react-dnd-html5-backend'
+import { DndProvider } from "react-dnd"
+import { HTML5Backend } from "react-dnd-html5-backend"
 
 import { useState } from "react"
 import CssBaseline from "@mui/material/CssBaseline"
@@ -131,29 +131,34 @@ export default function App({ Component, pageProps }: { Component: any; pageProp
       <CssBaseline>
         <ThemeProvider theme={customTheme()}>
           <Context.Provider value={context}>
-          <DndProvider backend={HTML5Backend}>
-            <Head>
-              <meta name="viewport" content="initial-scale=1, width=device-width" />
-              <meta name="user" content={user?.id} />
-              <meta name="theme-color" content={PRIMARY_LIGHTEST} />
-              <meta name="google_id" content={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID} />
-              <link rel="preconnect" href="https://fonts.googleapis.com" />
-              <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-            </Head>
-            <Component {...pageProps} user={user} onCommand={handleCommand} />
-            <Script
-              key="google-signin"
-              src="https://accounts.google.com/gsi/client"
-              strategy="lazyOnload"
-              onLoad={onGoogleSigninLoaded}
-            />
-            {/* Global Site Tag (gtag.js) - Google Analytics */}
-            <Script
-              src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
-              strategy="afterInteractive"
-            />
-            <Script id="google-analytics" strategy="afterInteractive">
-              {`
+            <DndProvider backend={HTML5Backend}>
+              <Head>
+                <meta name="viewport" content="initial-scale=1, width=device-width" />
+                <meta name="user" content={user?.id} />
+                <meta name="theme-color" content={PRIMARY_LIGHTEST} />
+                <meta name="google_id" content={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID} />
+                <link rel="preconnect" href="https://fonts.googleapis.com" />
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+                <link
+                  href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,300;8..144,400;8..144,500&display=swap"
+                  rel="stylesheet"
+                  as="style"
+                />
+              </Head>
+              <Component {...pageProps} user={user} onCommand={handleCommand} />
+              <Script
+                key="google-signin"
+                src="https://accounts.google.com/gsi/client"
+                strategy="lazyOnload"
+                onLoad={onGoogleSigninLoaded}
+              />
+              {/* Global Site Tag (gtag.js) - Google Analytics */}
+              <Script
+                src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
+                strategy="afterInteractive"
+              />
+              <Script id="google-analytics" strategy="afterInteractive">
+                {`
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){window.dataLayer.push(arguments);}
                 gtag('js', new Date());
@@ -161,7 +166,7 @@ export default function App({ Component, pageProps }: { Component: any; pageProp
                   page_path: window.location.pathname,
                 });
               `}
-            </Script>
+              </Script>
             </DndProvider>
           </Context.Provider>
         </ThemeProvider>
