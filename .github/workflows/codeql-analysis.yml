@@ -3,15 +3,9 @@ name: "CodeQL Security"
 on:
   push:
     branches: ["main"]
-    paths-ignore:
-      - '**/test-report.html'
-      - '**/jest-html-reporters-attach/**'
   pull_request:
     # The branches below must be a subset of the branches above
     branches: ["main"]
-    paths-ignore:
-      - '**/test-report.html'
-      - '**/jest-html-reporters-attach/**'
   schedule:
     - cron: "21 10 * * 6"
 
@@ -23,6 +17,10 @@ jobs:
       actions: read
       contents: read
       security-events: write
+
+    paths-ignore:
+      - '**/test-report.html'
+      - '**/jest-html-reporters-attach/**'
 
     strategy:
       fail-fast: false
