@@ -12814,16 +12814,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest-html-reporters@npm:^3.0.9":
-  version: 3.0.9
-  resolution: "jest-html-reporters@npm:3.0.9"
-  dependencies:
-    fs-extra: ^9.0.1
-    open: ^8.0.3
-  checksum: de5977d5f88ef02d48dc4cf707dc02b839446e56eec1b0a29101f130dd32ea05632b9cba7f5e52df9959f731e2ff0a990e39524849d24f042018b6d50b1589f9
-  languageName: node
-  linkType: hard
-
 "jest-jasmine2@npm:^27.5.1":
   version: 27.5.1
   resolution: "jest-jasmine2@npm:27.5.1"
@@ -15230,7 +15220,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"open@npm:^8.0.3, open@npm:^8.4.0":
+"open@npm:^8.4.0":
   version: 8.4.0
   resolution: "open@npm:8.4.0"
   dependencies:
@@ -18148,7 +18138,6 @@ __metadata:
     image-size: ^1.0.1
     jest: 27.5.1
     jest-environment-jsdom: 27.5.1
-    jest-html-reporters: ^3.0.9
     jwt-decode: ^3.1.2
     knex: ^2.1.0
     mdi-material-ui: ^7.3.0

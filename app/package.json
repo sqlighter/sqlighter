@@ -106,7 +106,6 @@
     "eslint-plugin-prettier": "^4.0.0",
     "jest": "27.5.1",
     "jest-environment-jsdom": "27.5.1",
-    "jest-html-reporters": "^3.0.9",
     "prettier": "^2.7.1",
     "storybook-addon-next-router": "^4.0.0",
     "superagent": "^8.0.0",
@@ -126,6 +125,10 @@
   "jest": {
     "setupFilesAfterEnv": [
       "<rootDir>/jest.setup.js"
+    ],
+    "reporters": [
+      "default",
+      "github-actions"
     ],
     "testTimeout": 6000,
     "transform": {
