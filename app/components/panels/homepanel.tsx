@@ -10,6 +10,7 @@ import Box from "@mui/material/Box"
 import Grid from "@mui/material/Grid"
 
 // model
+import Image from "next/image"
 import { DataConnection, DataConfig } from "../../lib/data/connections"
 import { DataConnectionFactory } from "../../lib/data/factory"
 import { useApi } from "../../lib/api"
@@ -32,6 +33,10 @@ const HomePanel_SxProps: SxProps<Theme> = {
   paddingLeft: 1,
   paddingRight: 1,
   paddingBottom: 2,
+
+  ".HomePanel-connections": {
+    paddingTop: 4,
+  },
 
   ".HomePanel-actions": {
     paddingTop: 4,
@@ -162,13 +167,10 @@ export function HomePanel(props: HomePanelProps) {
   return (
     <Box className="HomePanel-root" sx={HomePanel_SxProps}>
       <FilesBackdrop open={showingDragnDrop} onMouseUp={(e) => setTimeout(() => setShowingDragnDrop(false), 200)} />
-      <Section title="SQLighter (under development, alpha code)" description="Lighter, easier, faster. Pick any three." variant="large">
-        <Box sx={{ mt: 4 }}>
-          {props.connections && renderConnections()}
-          {renderActions()}
-          {templates && renderTemplates()}
-        </Box>
-      </Section>
+      <img src="/logo-with-tagline.svg" height="60" />
+      {props.connections && renderConnections()}
+      {renderActions()}
+      {templates && renderTemplates()}
     </Box>
   )
 }
