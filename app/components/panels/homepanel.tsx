@@ -170,8 +170,8 @@ export function HomePanel(props: HomePanelProps) {
   return (
     <Box className="HomePanel-root" sx={HomePanel_SxProps}>
       <FilesBackdrop open={showingDragnDrop} onMouseUp={(e) => setTimeout(() => setShowingDragnDrop(false), 200)} />
-      <img src="/logo-with-tagline.svg" height="60" />
-      <Typography variant="caption" color="text.secondary">Under development, alpha code</Typography>
+      <Typography variant="h3" color="text.primary">sqlighter</Typography>
+      <Typography variant="caption" color="text.secondary">under development, alpha version</Typography>
       {props.connections && renderConnections()}
       {renderActions()}
       {templates && renderTemplates()}
