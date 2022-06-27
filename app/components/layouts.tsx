@@ -216,7 +216,7 @@ export function SiteLayout({ children, title }: LayoutProps) {
       <Head>
         <title>{pageTitle}</title>
         <link rel="icon" href="/favicon.png" />
-        <meta name="description" content="SQLighter" />
+        <meta name="description" content="sqlighter" />
       </Head>
       <Container maxWidth="sm">{children}</Container>
     </>

@@ -7,12 +7,12 @@ import Stack from "@mui/material/Stack"
 
 import { SiteLayout } from "../components/layouts"
 import { Empty } from "../components/ui/empty"
-import homeImage from "../public/images/empty2.jpg"
+import homeImage from "../branding/banner-square.svg"
 
 export default function Home({ props }) {
   return (
-    <SiteLayout description="Lighter, mightier.">
-      <Empty title="SQLighter" description="Lighter, mightier" image={homeImage} variant="fancy" />
+    <SiteLayout description="lighter, faster">
+      <Empty title="sqlighter" description="lighter, faster" image={homeImage} variant="fancy" />
       <Stack alignItems="center" justifyContent="center" mt={4}>
         <Link
           variant="subtitle2"
