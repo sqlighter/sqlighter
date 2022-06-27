@@ -144,7 +144,7 @@ export function TabsLayout(props: TabsLayoutProps) {
     <>
       <Head>
         <title>{props.title}</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.png" />
         <meta name="description" content={props.description} />
         <meta property="og:image" content="/og-image.png" />
         <meta name="og:title" content={props.title} />

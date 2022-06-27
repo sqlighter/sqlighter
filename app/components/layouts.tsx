@@ -169,7 +169,7 @@ export function AppLayout({ children, title, description: subtitle, showBack, ac
     <>
       <Head>
         <title>{pageTitle}</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.png" />
         <meta name="description" content="Biomarkers" />
         <meta
           property="og:image"
@@ -215,7 +215,7 @@ export function SiteLayout({ children, title }: LayoutProps) {
     <>
       <Head>
         <title>{pageTitle}</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.png" />
         <meta name="description" content="SQLighter" />
       </Head>
       <Container maxWidth="sm">{children}</Container>

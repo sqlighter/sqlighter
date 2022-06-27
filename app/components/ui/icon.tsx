@@ -80,6 +80,7 @@ import { ImageText } from "mdi-material-ui"
 // Custom svg icon files in /icons
 import { SqliteIcon } from "./icons/sqliteicon"
 import { FireIcon } from "./icons/fireicon"
+import { SqlighterIcon } from "./icons/sqlightericon"
 
 // Font Awesome
 // https://fontawesome.com/icons/server?s=regular
@@ -218,6 +219,8 @@ export function Icon(props: IconProps) {
       case "sqlite":
       case "sqlite3":
         return <SqliteIcon {...svgProps} />
+      case "sqlighter":
+        return <SqlighterIcon {...svgProps} />
       case "tabsRight":
         return <BentoOutlinedIcon {...props} />
       case "tabsBottom":
