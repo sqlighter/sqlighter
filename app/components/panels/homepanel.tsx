@@ -5,12 +5,11 @@
 // libs
 import React from "react"
 import { useState } from "react"
-import { Theme, SxProps } from "@mui/material"
+import { Theme, SxProps, Typography } from "@mui/material"
 import Box from "@mui/material/Box"
 import Grid from "@mui/material/Grid"
 
 // model
-import Image from "next/image"
 import { DataConnection, DataConfig } from "../../lib/data/connections"
 import { DataConnectionFactory } from "../../lib/data/factory"
 import { useApi } from "../../lib/api"
@@ -33,6 +32,10 @@ const HomePanel_SxProps: SxProps<Theme> = {
   paddingLeft: 1,
   paddingRight: 1,
   paddingBottom: 2,
+
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "start",
 
   ".HomePanel-connections": {
     paddingTop: 4,
@@ -168,6 +171,7 @@ export function HomePanel(props: HomePanelProps) {
     <Box className="HomePanel-root" sx={HomePanel_SxProps}>
       <FilesBackdrop open={showingDragnDrop} onMouseUp={(e) => setTimeout(() => setShowingDragnDrop(false), 200)} />
       <img src="/logo-with-tagline.svg" height="60" />
+      <Typography variant="caption" color="text.secondary">Under development, alpha code</Typography>
       {props.connections && renderConnections()}
       {renderActions()}
       {templates && renderTemplates()}
