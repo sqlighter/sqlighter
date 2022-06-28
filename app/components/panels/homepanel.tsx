@@ -112,7 +112,7 @@ export function HomePanel(props: HomePanelProps) {
                 icon: "add",
                 args: { connection: memoryDatabase },
               }}
-              image="/images/empty5.jpg"
+              image="/avatars/blank.png"
               onCommand={props.onCommand}
             />
           </Grid>
@@ -124,7 +124,7 @@ export function HomePanel(props: HomePanelProps) {
                 description: "View existing SQLite or CSV files",
                 icon: "fileOpen",
               }}
-              image="/images/empty6.jpg"
+              image="/avatars/openfile.png"
               onCommand={props.onCommand}
             />
           </Grid>
@@ -136,7 +136,7 @@ export function HomePanel(props: HomePanelProps) {
                 description: "Drop anywhere to open",
                 icon: "dragAndDrop",
               }}
-              image="/images/empty7.jpg"
+              image="/avatars/draganddrop.png"
               onMouseDown={(e) => setShowingDragnDrop(true)}
               onMouseUp={(e) => {
                 setTimeout(() => setShowingDragnDrop(false), 150)
