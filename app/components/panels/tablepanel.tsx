@@ -97,8 +97,8 @@ export function TablePanel(props: TablePanelProps) {
 
   function handleCommand(event: React.SyntheticEvent, command: Command) {
     switch (command.command) {
-      case "changedTabs":
-        setTabId(command.args.id)
+      case "changeTabs":
+        setTabId(command.args.tabId)
         setTabSelection(undefined)
         return
     }

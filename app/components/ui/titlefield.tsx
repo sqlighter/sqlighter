@@ -67,7 +67,7 @@ export function TitleField(props: TitleFieldProps) {
   function handleChange(event) {
     console.debug(`TitleField.handleChange - ${event.target.value}`)
     if (props.onCommand) {
-      props.onCommand(event, { command: "changeTitle", args: { item: event.target.value } })
+      props.onCommand(event, { command: "changeTitle", args: { title: event.target.value } })
     }
   }
 

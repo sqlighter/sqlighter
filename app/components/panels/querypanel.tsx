@@ -30,9 +30,6 @@ import { QueryRunPanel } from "../database/queryrunpanel"
 import { useForceUpdate } from "../hooks/useforceupdate"
 import { TitleField } from "../ui/titlefield"
 import { Empty } from "../ui/empty"
-import { BOOKMARKS_FOLDER } from "../activities/bookmarksactivity"
-
-const delay = (ms) => new Promise((res) => setTimeout(res, ms))
 
 // styles applied to main and subcomponents
 const QueryPanel_SxProps: SxProps<Theme> = {
@@ -136,98 +133,11 @@ export function QueryPanel(props: QueryPanelProps) {
   // layout changes on medium and large screens
   const isMediumScreen = useMediaQuery((theme: Theme) => theme.breakpoints.up("md"))
 
-  // currently selected run
-  const [runId, setRunId] = useState<string>(query?.runs?.[0]?.id)
-
   // results shown below sql or to the right?
   const [variant, setVariant] = useState<"bottom" | "right">("bottom")
 
   /** Monaco editor used for SQL */
   const monacoRef = useRef(null)
-
-  // used to force a refresh when data model changes
-  const forceUpdate = useForceUpdate()
-  function notifyChanges() {
-    query.updatedAt = new Date()
-    forceUpdate()
-    if (props.onCommand) {
-      props.onCommand(null, {
-        command: "changedQuery",
-        args: {
-          query,
-        },
-      })
-    }
-  }
-
-  //
-  // running query
-  //
-
-  async function runQuery(e: React.SyntheticEvent) {
-    if (!connection) {
-      // TODO ask user to pick a connection from connection picker
-      return
-    }
-
-    // create a tab that is shown while the query is being executed to display progress, etc.
-    const running = new QueryRun()
-    running.parentId = query.id
-    running.query = query
-    running.status = "running"
-    running.sql = query.sql
-
-    // add run, update query watchers
-    query.runs = query.runs ? [running, ...query.runs] : [running]
-    setRunId(running.id)
-    notifyChanges()
-
-    try {
-      // TODO split sql into separate statements and run each query separately in sequence to provide correct stats
-      // see https://sql.js.org/documentation/Database.html#%5B%22iterateStatements%22%5D
-      const queryResults = await connection.getResults(query.sql)
-
-      // TODO remove artificial delay used only to develop "in progress" updates
-      await delay(200)
-
-      // first query completed normally
-      running.status = "completed"
-      running.updatedAt = new Date()
-      running.rowsModified = await connection.getRowsModified()
-      running.columns = queryResults?.[0]?.columns
-      running.values = queryResults?.[0]?.values
-      // console.debug(`QueryPanel.runQuery - completed`, running)
-
-      if (queryResults.length > 1) {
-        const baseTitle = running.title
-        running.title += " (1)"
-
-        for (let i = 1; i < queryResults.length; i++) {
-          const additionalRun = new QueryRun()
-          additionalRun.parentId = query.id
-          additionalRun.query = running.query
-          additionalRun.title = `${baseTitle} (${i + 1})`
-          additionalRun.createdAt = running.createdAt
-          additionalRun.updatedAt = new Date()
-          additionalRun.status = "completed"
-          additionalRun.sql = running.sql
-          additionalRun.columns = queryResults[i].columns
-          additionalRun.values = queryResults[i].values
-
-          // add tab to runs
-          query.runs.splice(i, 0, additionalRun)
-        }
-      }
-    } catch (exception) {
-      // an error was thrown during query execution
-      running.status = "error"
-      running.error = exception.toString()
-    }
-
-    // update first tab with first result of current query
-    // refresh entire list also adding any new additional tabs
-    notifyChanges()
-  }
 
   //
   // handlers
@@ -238,7 +148,7 @@ export function QueryPanel(props: QueryPanelProps) {
     monacoRef.current = editor
   }
 
-  async function handleCommand(e: React.SyntheticEvent, command: Command) {
+  async function handleCommand(event: React.SyntheticEvent, command: Command) {
     console.debug(`QueryPanel.handleCommand - ${command.command}`, command)
     switch (command.command) {
       case "editor.changeValue":
@@ -247,44 +157,52 @@ export function QueryPanel(props: QueryPanelProps) {
         break
 
       // extract data models from views, update query, notify viewers
-      case "changedTabs":
-        query.runs = command.args.tabs.map((tab) => tab.props.run)
-        setRunId(command.args.id)
-        notifyChanges()
-        break
+      case "changeTabs":
+        props.onCommand(event, {
+          command: "changeQuery",
+          args: {
+            query: {
+              ...query,
+              runId: command.args.tabId,
+              runs: command.args.tabs.map((tab) => tab.props.run),
+            },
+          },
+        })
+        return
 
       case "toggleResults":
         setVariant(variant == "bottom" ? "right" : "bottom")
         return
 
-      // bookmark or remove bookmark from current query
-      case "bookmark":
-        if (query.folder) {
-          delete query.folder
-        } else {
-          query.folder = BOOKMARKS_FOLDER
-        }
-        notifyChanges()
-        return
-
-      case "changedConnection":
-        query.connectionId = command.args?.item?.id
-        notifyChanges()
+      case "changeConnection":
+        props.onCommand(event, {
+          command: "changeQuery",
+          args: { query: { ...query, connectionId: command.args?.item?.id } },
+        })
         return
 
       case "changeTitle":
-        query.title = command.args?.item
-        notifyChanges()
+        props.onCommand(event, {
+          command: "changeQuery",
+          args: { query: { ...query, title: command.args.title } },
+        })
         return
 
       case "prettify":
+        // format and update data model
         if (monacoRef.current && props.query.sql) {
-          // format and update data model
-          props.query.sql = format(props.query.sql, { language: "sqlite", keywordCase: "upper" })
-          monacoRef.current.getModel()?.setValue(props.query.sql)
-          notifyChanges()
+          const formatted = format(props.query.sql, { language: "sqlite", keywordCase: "upper" })
+          props.onCommand(event, {
+            command: "changeQuery",
+            args: { query: { ...query, sql: formatted } },
+          })
+          monacoRef.current.getModel()?.setValue(formatted)
         }
         return
+    }
+
+    if (props.onCommand) {
+      props.onCommand(event, command)
     }
   }
 
@@ -306,7 +224,11 @@ export function QueryPanel(props: QueryPanelProps) {
             // buttonVariant="outlined"
             buttonProps={{ sx: { width: 60 } }}
           >
-            <Button className="QueryPanel-run" onClick={runQuery} startIcon={<Icon>play</Icon>}>
+            <Button
+              className="QueryPanel-run"
+              startIcon={<Icon>play</Icon>}
+              onClick={(event) => props.onCommand(event, { command: "runQuery", args: { query, connection } })}
+            >
               Run
             </Button>
           </ConnectionPicker>
@@ -320,11 +242,7 @@ export function QueryPanel(props: QueryPanelProps) {
   function renderCommands() {
     const commands: (Command | "spacing")[] = [
       { command: "info", icon: "info", title: "Details" },
-      {
-        command: "bookmark",
-        icon: query.folder ? "bookmarkRemove" : "bookmarkAdd",
-        title: query.folder ? "Remove Bookmark" : "Bookmark",
-      },
+      { command: "bookmarkQuery", icon: "bookmark", title: "Bookmark", args: { query } },
       { command: "history", icon: "history", title: "History" },
       "spacing",
       { command: "prettify", icon: "autofix", title: "Prettify" },
@@ -366,7 +284,7 @@ export function QueryPanel(props: QueryPanelProps) {
       })
       return (
         <Tabs
-          tabId={runId}
+          tabId={query.runId}
           tabs={tabs}
           tabsCommands={isMediumScreen && [toggleResults]}
           onCommand={handleCommand}

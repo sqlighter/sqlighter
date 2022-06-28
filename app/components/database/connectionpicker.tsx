@@ -166,9 +166,9 @@ export function ConnectionPicker(props: ConnectionPickerProps) {
     handleCloseMenu(event)
     if (props.onCommand) {
       props.onCommand(event, {
-        command: "changedConnection",
+        command: "changeConnection",
         args: {
-          item: connection,
+          connection,
         },
       })
     }

@@ -102,7 +102,7 @@ export function ActivityBar(props: ActivityBarProps) {
 
   function handleActivityClick(event: React.SyntheticEvent, clickedActivityId: string) {
     props.onCommand(event, {
-      command: "changedActivity",
+      command: "changeActivity",
       args: { id: clickedActivityId },
     })
   }

@@ -105,8 +105,8 @@ export function DatabasePanel(props: DatabasePanelProps) {
   async function handleCommand(event: React.SyntheticEvent, command: Command) {
     console.debug(`DatabasePanel.handleCommand - ${command.command}`, command)
     switch (command.command) {
-      case "changedTabs":
-        setTabId(command.args.id)
+      case "changeTabs":
+        setTabId(command.args.tabId)
         return
 
       case "downloadDatabase":

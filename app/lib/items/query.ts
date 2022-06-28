@@ -49,6 +49,9 @@ export class Query extends Item {
     [toolId: string]: any // TBD
   }
 
+  /** Currently selected run */
+  runId?: string
+
   /** Query executions (usually these are not persisted but client only) */
   runs?: QueryRun[]
 }

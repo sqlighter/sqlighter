@@ -93,7 +93,7 @@ function getQueriesAsTreeItems(rootId: string, queries: Query[]): Tree[] {
       icon: "query",
       commands: [
         { command: "openQuery", icon: "query", title: "Open Query", args: query },
-        { command: "deleteQuery", icon: "delete", title: "Delete", args: query },
+        { command: "deleteHistory", icon: "delete", title: "Delete", args: [query] },
       ],
       args: { query },
     }
@@ -114,7 +114,7 @@ export function getHistoryTrees(queries?: Query[]): Tree[] {
       type: "history",
       icon: "olderHistory",
       commands: [
-        todayQueries?.length > 0 && { command: "deleteQueries", icon: "delete", title: "Delete", args: todayQueries },
+        todayQueries?.length > 0 && { command: "deleteHistory", icon: "delete", title: "Delete", args: todayQueries },
       ],
       badge: todayQueries?.length > 0 ? todayQueries.length.toString() : "0",
       // pass empty array even if there are no queries so we get the "No results" label
@@ -132,7 +132,7 @@ export function getHistoryTrees(queries?: Query[]): Tree[] {
       title: "Earlier",
       type: "history",
       icon: "bedtime",
-      commands: [{ command: "deleteQueries", icon: "delete", title: "Delete", args: earlierQueries }],
+      commands: [{ command: "deleteHistory", icon: "delete", title: "Delete", args: earlierQueries }],
       badge: earlierQueries?.length > 0 ? earlierQueries.length.toString() : "0",
       children: getQueriesAsTreeItems("history/earlier", earlierQueries),
     })

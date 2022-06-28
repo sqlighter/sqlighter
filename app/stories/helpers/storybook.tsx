@@ -51,7 +51,7 @@ export function ActivityBarWrapper(props) {
   const [activityId, setActivityId] = useState(props.activityId || props.activities[0].props.id)
   function handleCommand(event, command) {
     switch (command.command) {
-      case "changedActivity":
+      case "changeActivity":
         if (activityId == command.args.id) {
           setSidebarVisible(!sidebarVisible)
         } else {

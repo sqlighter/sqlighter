@@ -155,9 +155,9 @@ export function Tabs(props: TabsProps) {
   function handleTabsChange(event: SyntheticEvent<Element, Event>, tabId: string) {
     if (props.onCommand) {
       props.onCommand(event, {
-        command: "changedTabs",
+        command: "changeTabs",
         args: {
-          id: tabId, // newly selected tab
+          tabId: tabId, // newly selected tab
           tabs: props.tabs, // same list of tabs/children as before
         },
       })
@@ -166,7 +166,7 @@ export function Tabs(props: TabsProps) {
 
   /** When a tab is closed we remove it from the list of tabs (and select a new one if needed) */
   function handleCloseTab(event: React.SyntheticEvent, command: Command) {
-    const closedTabId = command.args.id
+    const closedTabId = command.args.tabId
     console.debug(`Tabs.handleCloseTab - closedTabId: ${closedTabId}`)
     event.stopPropagation()
 
@@ -180,9 +180,9 @@ export function Tabs(props: TabsProps) {
       const updatedId =
         props.tabId == closedTabId ? (updatedTabs.length > 0 ? updatedTabs[0].props.id : null) : props.tabId
       props.onCommand(event, {
-        command: "changedTabs",
+        command: "changeTabs",
         args: {
-          id: updatedId,
+          tabId: updatedId,
           tabs: updatedTabs,
         },
       })
@@ -251,9 +251,9 @@ export function Tabs(props: TabsProps) {
       console.debug(`Tabs.handleTabDrop - moving ${draggedTabId}, fromIndex: ${fromIndex}, toIndex: ${toIndex}`)
       if (props.onCommand) {
         props.onCommand(event, {
-          command: "changedTabs",
+          command: "changeTabs",
           args: {
-            id: draggedTabId,
+            tabId: draggedTabId,
             tabs: updatedTabs,
           },
         })
@@ -272,7 +272,7 @@ export function Tabs(props: TabsProps) {
       icon: "close",
       title: "Close Tab",
       args: {
-        id: tabProps.id,
+        tabId: tabProps.id,
       },
     }
 

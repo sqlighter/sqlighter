@@ -90,7 +90,7 @@ function getQueriesAsTreeItems(rootId: string, queries: Query[]): Tree[] {
       icon: "query",
       commands: [
         { command: "openQuery", icon: "query", title: "Open Query", args: query },
-        { command: "deleteBookmark", icon: "delete", title: "Delete", args: query },
+        { command: "deleteBookmarks", icon: "delete", title: "Delete", args: [query] },
       ],
       args: { query },
     }

@@ -118,6 +118,6 @@ describe("bookmarksactivity.tsx", () => {
     fireEvent.click(itemCommands[1])
     expect(handleCommand).toHaveBeenCalledTimes(4)
     itemCommand = handleCommand.mock.calls[3][1]
-    expect(itemCommand.command).toBe("deleteBookmark")
+    expect(itemCommand.command).toBe("deleteBookmarks")
   })
 })

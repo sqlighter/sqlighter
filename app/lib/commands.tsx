@@ -6,6 +6,22 @@ import { ReactElement, SyntheticEvent } from "react"
 
 /** Available commands */
 export type CommandType =
+  /** Change selected activity @param id Activity unique id */
+  | "changeActivity"
+  /** Select data connection @param connection selected connection */
+  | "changeConnection"
+  /** Tabs have been opened, closed, rearranged, etc @param tabId Currently selected tab @param tabs List of tabs */
+  | "changeTabs"
+  /** Title has changed, @param title The new title */
+  | "changeTitle"
+  /** A tab was closed @param tabId Id of tab that was closed  */
+  | "closeTab"
+  /** Modify a connection settings @param item The connection to modify */
+  | "configureConnection"
+  /** Download data from connection @param format The format for the download */
+  | "downloadData"
+  /** Received files or other items from drag and drop @param files List of files to be opened @param items List of other items */
+  | "dropItems"
   /** Show home page (used to manage connections) */
   | "openHome"
   /** Opens given file or shows file picker @param file The file to be opened or undefined to show file picker */
@@ -24,30 +40,11 @@ export type CommandType =
   | "openTable"
   /** Open a query panel @param connection The database connection @sql The sql statement to run */
   | "openQuery"
-
-  /** Change selected activity @param id Activity unique id */
-  | "changedActivity"
-  /** Select data connection @param item selected connection */
-  | "changedConnection"
-  /** Tabs have been opened, closed, rearranged, etc @param id Currently selected tab @param tabs List of tabs */
-  | "changedTabs"
-
-  /** A tab was closed @param id Id of tab that was closed  */
-  | "closeTab"
-
-  /** Received files or other items from drag and drop @param files List of files to be opened @param items List of other items */
-  | "dropItems"
-
-  /** Modify a connection settings @param item The connection to modify */
-  | "configureConnection"
-
-  /** Download data from connection @param format The format for the download */
-  | "downloadData"
-
   /** Pin item in tree view */
   | "pin"
   /** Unpin item from tree view */
   | "unpin"
+
   | string
 
 /** A single command shown for example as an icon, in a contextual menu, etc. */
