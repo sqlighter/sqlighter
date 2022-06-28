@@ -125,7 +125,8 @@ export default function App({ Component, pageProps }: { Component: any; pageProp
         signout()
         return
     }
-    console.warn(`App.handleCommand - unknown command: ${command.command}`)
+    
+    console.warn(`App.handleCommand - unused command: ${command.command}`)
   }
 
   //

@@ -27,7 +27,6 @@ import { Tabs } from "../navigation/tabs"
 import { ConnectionPicker } from "../database/connectionpicker"
 import { SqlEditor } from "../editor/sqleditor"
 import { QueryRunPanel } from "../database/queryrunpanel"
-import { useForceUpdate } from "../hooks/useforceupdate"
 import { TitleField } from "../ui/titlefield"
 import { Empty } from "../ui/empty"
 

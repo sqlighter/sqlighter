@@ -2,8 +2,6 @@
 // api.ts - utilities to access APIs
 //
 
-import useSWR from "swr"
-
 // fetcher is polyfilled by next.js and works on client and server alike
 export const fetcher = async (input: RequestInfo, init: RequestInit, ...args: any[]) => {
   const res = await fetch(input, init)

@@ -173,6 +173,7 @@ export function Tabs(props: TabsProps) {
     // create new list of tabs without the tab that was just closed
     if (props.onCommand) {
       // notify parent that tab is being closed
+      // in case it needs to release resources, etc
       props.onCommand(event, command)
 
       // filter closed tab out of children list and notify parent with new list of tabs/children
