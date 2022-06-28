@@ -11,6 +11,7 @@ import { fake_history } from "../../stories/helpers/fakedata"
 import { HistoryActivity, getHistoryTrees, HISTORY_TITLE, HISTORY_TODAY, HISTORY_EARLIER } from "./historyactivity"
 
 describe("historyactivity.tsx", () => {
+
   test("getHistoryTrees", () => {
     const trees = getHistoryTrees(fake_history)
 
@@ -26,7 +27,7 @@ describe("historyactivity.tsx", () => {
     expect(todayTree.title).toBe(HISTORY_TODAY)
     expect(todayTree.type).toBe("history")
     expect(todayTree.icon).toBe("history")
-    expect(todayTree.children.length).toBe(15)
+    expect(todayTree.children.length).toBe(17)
 
     const todayFirst = todayTree.children[0]
     expect(todayFirst.id).toMatch(/history\/today\/sql_/)
@@ -40,7 +41,7 @@ describe("historyactivity.tsx", () => {
     expect(earlierTree.title).toBe(HISTORY_EARLIER)
     expect(earlierTree.type).toBe("history")
     expect(earlierTree.icon).toBe("bedtime")
-    expect(earlierTree.children.length).toBe(85)
+    expect(earlierTree.children.length).toBe(83)
   })
 
   test("getHistoryTrees (empty)", () => {

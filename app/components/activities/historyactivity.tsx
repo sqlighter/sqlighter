@@ -2,6 +2,7 @@
 // HistoryActivity.tsx - sidebar activity with queries history
 //
 
+import { isSameDay } from "date-fns"
 import { Theme, SxProps } from "@mui/material/styles"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
@@ -106,9 +107,9 @@ function getQueriesAsTreeItems(rootId: string, queries: Query[]): Tree[] {
 
 /** Convers a list of queries into a Tree of items that can be shown by TreeView */
 export function getHistoryTrees(queries?: Query[]): Tree[] {
-  const today = new Date().toISOString().split("T")[0] // eg. 2022-06-23 from 2022-06-23T16:11:23.000Z
+  const today =  new Date() // local timezone
   const todayQueries = queries?.filter((query) => {
-    return (query.updatedAt || query.createdAt)?.toISOString().split("T")[0] >= today
+    return isSameDay(query.updatedAt || query.createdAt, today)
   })
 
   const tree: Tree[] = [
@@ -133,7 +134,7 @@ export function getHistoryTrees(queries?: Query[]): Tree[] {
 
   // older queries?
   const earlierQueries = queries?.filter((query) => {
-    return (query.updatedAt || query.createdAt)?.toISOString().split("T")[0] < today
+    return !isSameDay(query.updatedAt || query.createdAt, today)
   })
   if (earlierQueries?.length > 0) {
     tree.push({
