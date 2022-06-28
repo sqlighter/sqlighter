@@ -151,7 +151,7 @@ export function QueryPanel(props: QueryPanelProps) {
   async function handleCommand(event: React.SyntheticEvent, command: Command) {
     console.debug(`QueryPanel.handleCommand - ${command.command}`, command)
     switch (command.command) {
-      case "editor.changeValue":
+      case "changeValue":
         query.sql = command.args.value
         // does NOT need a forceUpdate since the editor's model is not controlled
         break

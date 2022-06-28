@@ -22,14 +22,13 @@ export function round(value: number, digits: number = 2) {
  * @param start Start date
  * @param end End date, will use now if not specified
  */
- export function formatSeconds(start: Date, end?: Date): string {
+export function formatSeconds(start: Date, end?: Date): string {
   if (!end) {
     end = new Date()
   }
   const elapsedMs = differenceInMilliseconds(end, start)
   return (elapsedMs / 1000).toLocaleString() + " s"
 }
-
 
 /**
  * Returns human readable distance between dates, eg. a week ago
@@ -46,7 +45,7 @@ export function formatDuration(start: Date, end?: Date, showMs?: boolean): strin
     const elapsedMs = differenceInMilliseconds(end, start)
     if (elapsedMs < 120 * 1000) {
       return (elapsedMs / 1000).toLocaleString() + " s"
-    } 
+    }
   }
   return formatDistance(start, end, { includeSeconds: true })
 }

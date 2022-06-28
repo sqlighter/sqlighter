@@ -1,3 +1,7 @@
+//
+// api.ts - utilities to access APIs
+//
+
 import useSWR from "swr"
 
 // fetcher is polyfilled by next.js and works on client and server alike
@@ -63,25 +67,5 @@ export async function deleteJson(url, data?): Promise<void> {
   })
   if (!response.ok) {
     throw new Error(`deleteJson - url: ${url}, ${response.status}: ${response.statusText}`)
-  }
-}
-
-/** Retrieve data and metadata from relative url pointing to our APIs */
-export function useApi<T = any>(url?: string) {
-  if (!url) {
-    return {
-      data: null,
-      metadata: null,
-      isLoading: false,
-      isError: false,
-    }
-  }
-
-  const { data, error } = useSWR(url, fetcher)
-  return {
-    data: data?.data as T,
-    metadata: data?.metadata,
-    isLoading: !error && !data,
-    isError: error,
   }
 }

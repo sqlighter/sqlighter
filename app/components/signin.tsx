@@ -24,7 +24,7 @@ export function promptSignin() {
       }
     })
   } else {
-    console.debug("promptSignin was called but Google Signin is not initialized yet")
+    console.error("promptSignin - Google Signin is not initialized yet")
   }
 }
 

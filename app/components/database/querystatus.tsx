@@ -10,7 +10,7 @@ import capitalize from "@mui/material/utils/capitalize"
 
 import { DataConnection } from "../../lib/data/connections"
 import { QueryRun } from "../../lib/items/query"
-import { formatSeconds } from "../client"
+import { formatSeconds } from "../../lib/client"
 import { ConnectionIcon } from "./connectionicon"
 import { DotColor } from "../ui/icon"
 

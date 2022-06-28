@@ -119,7 +119,7 @@ export function ActivityBar(props: ActivityBarProps) {
           className="ActivityBar-button"
           onCommand={props.onCommand}
           command={{
-            command: "openSignin",
+            command: "signin",
             icon: "account",
             title: "Sign in",
           }}

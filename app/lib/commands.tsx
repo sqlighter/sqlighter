@@ -44,8 +44,6 @@ export type CommandType =
   | "openProfile"
   /** Open a query panel @param connection The database connection @sql The sql statement to run */
   | "openQuery"
-  /** Open signing page or prompt user for signin */
-  | "openSignin"
   /** Show settings page */
   | "openSettings"
   /** Open database table panel @param connection The database connection, @param table The table to be shown */
@@ -54,6 +52,10 @@ export type CommandType =
   | "runQuery"
   /** Pin item in tree view */
   | "pin"
+  /** Open signing page or prompt user for signin */
+  | "signin"
+  /** Sign out from user session @params redirectUrl Optional url where to go when signed out */
+  | "signout"
   /** Unpin item from tree view */
   | "unpin"
   // generic open-ended type

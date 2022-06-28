@@ -388,9 +388,15 @@ export default function Sqlighter(props: SqlighterProps) {
 
   async function handleCommand(event: React.SyntheticEvent, command: Command) {
     console.debug(`Sqlighter.handleCommand - ${command.command}`, command)
+    console.assert(props.onCommand)
+
     switch (command.command) {
       case "bookmarkQuery":
-        bookmarkQuery(command.args.query)
+        if (props.user) {
+          bookmarkQuery(command.args.query)
+        } else {
+          props.onCommand(event, { command: "signin" })
+        }
         return
 
       case "changeActivity":
@@ -449,6 +455,11 @@ export default function Sqlighter(props: SqlighterProps) {
         openHome()
         break
 
+      case "openProfile":
+        // for now just signout, later will show profile page
+        props.onCommand(event, { command: "signout" })
+        return
+
       case "openTable":
         openTable(command)
         return
@@ -462,10 +473,8 @@ export default function Sqlighter(props: SqlighterProps) {
         return
     }
 
-    // pass to parent?
-    if (props.onCommand) {
-      props.onCommand(event, command)
-    }
+    // pass to parent
+    props.onCommand(event, command)
   }
 
   //

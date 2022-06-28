@@ -12,7 +12,7 @@ import Grid from "@mui/material/Grid"
 // model
 import { DataConnection, DataConfig } from "../../lib/data/connections"
 import { DataConnectionFactory } from "../../lib/data/factory"
-import { useApi } from "../../lib/api"
+import { useApi } from "../hooks/useapi"
 
 // components
 import { PanelProps } from "../navigation/panel"
@@ -170,8 +170,12 @@ export function HomePanel(props: HomePanelProps) {
   return (
     <Box className="HomePanel-root" sx={HomePanel_SxProps}>
       <FilesBackdrop open={showingDragnDrop} onMouseUp={(e) => setTimeout(() => setShowingDragnDrop(false), 200)} />
-      <Typography variant="h3" color="text.primary">sqlighter</Typography>
-      <Typography variant="caption" color="text.secondary">under development, alpha version</Typography>
+      <Typography variant="h3" color="text.primary">
+        sqlighter
+      </Typography>
+      <Typography variant="caption" color="text.secondary">
+        under development, alpha version
+      </Typography>
       {props.connections && renderConnections()}
       {renderActions()}
       {templates && renderTemplates()}

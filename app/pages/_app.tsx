@@ -62,7 +62,7 @@ export default function App({ Component, pageProps }: { Component: any; pageProp
     }).then((res) => {
       res.json().then((json) => {
         const user = json.data
-        // console.log("onSignIn", user)
+        console.debug("App.onSignIn", user)
         mutateUser({ data: user }, false)
       })
     })
@@ -113,13 +113,19 @@ export default function App({ Component, pageProps }: { Component: any; pageProp
   // handlers
   //
 
+  /** Handle basic commands shared by all app components */
   function handleCommand(event: React.SyntheticEvent, command: Command) {
     // console.debug(`App.handleCommand - command: ${command.command}`, command)
     switch (command.command) {
-      case "openSignin":
+      case "signin":
         promptSignin()
-        break
+        return
+
+      case "signout":
+        signout()
+        return
     }
+    console.warn(`App.handleCommand - unknown command: ${command.command}`)
   }
 
   //
