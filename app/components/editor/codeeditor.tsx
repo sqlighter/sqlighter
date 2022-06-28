@@ -43,12 +43,7 @@ export function CodeEditor(props: CodeEditorProps) {
   /** Called when text is edited will repackage as command and dispatch to parent */
   function handleChange(value, event) {
     if (props.onCommand) {
-      props.onCommand(event, {
-        command: "editor.changeValue",
-        args: {
-          value,
-        },
-      })
+      props.onCommand(event, { command: "changeValue", args: { value } })
     }
   }
 
@@ -67,7 +62,7 @@ export function CodeEditor(props: CodeEditorProps) {
       language={props.language || "javascript"}
       theme={props.theme || "light"}
       value={props.value}
-      defaultValue="// some comment"
+      defaultValue='SELECT 1 AS "FirstColumn"'
       options={options}
       onMount={props.onMount}
       onChange={handleChange}
