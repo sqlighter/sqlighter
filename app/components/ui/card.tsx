@@ -77,30 +77,30 @@ export function Card(props: CommandCardProps) {
   const className = "Card-root" + (props.className ? " " + props.className : "")
 
   return (
-    <MuiCard
-      className={className}
-      variant="outlined"
-      square
-      onClick={(event) => onCommand(event, command)}
-      sx={Card_SxProps}
-      {...cardProps}
-    >
-      <MuiCardActionArea>
-        {image && <MuiCardMedia className="Card-media" image={image} />}
-        {!image && (
-          <MuiCardMedia className="Card-media Card-icon">
-            <Icon>{icon || command.icon}</Icon>
-          </MuiCardMedia>
-        )}
-        <Tooltip title={command.description}>
+    <Tooltip title={command.description}>
+      <MuiCard
+        className={className}
+        variant="outlined"
+        square
+        onClick={(event) => onCommand(event, command)}
+        sx={Card_SxProps}
+        {...cardProps}
+      >
+        <MuiCardActionArea>
+          {image && <MuiCardMedia className="Card-media" image={image} />}
+          {!image && (
+            <MuiCardMedia className="Card-media Card-icon">
+              <Icon>{icon || command.icon}</Icon>
+            </MuiCardMedia>
+          )}
           <MuiCardHeader
             avatar={<Icon>{command.icon}</Icon>}
             action={secondaryCommand && <IconButton command={secondaryCommand} onCommand={onCommand} />}
             title={command.title}
             subheader={command.description}
           />
-        </Tooltip>
-      </MuiCardActionArea>
-    </MuiCard>
+        </MuiCardActionArea>
+      </MuiCard>
+    </Tooltip>
   )
 }
