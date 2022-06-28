@@ -6,45 +6,57 @@ import { ReactElement, SyntheticEvent } from "react"
 
 /** Available commands */
 export type CommandType =
+  /** Add query to bookmarks or remove from bookmarks @param query The query to modify */
+  | "bookmarkQuery"
   /** Change selected activity @param id Activity unique id */
   | "changeActivity"
   /** Select data connection @param connection selected connection */
   | "changeConnection"
   /** Tabs have been opened, closed, rearranged, etc @param tabId Currently selected tab @param tabs List of tabs */
   | "changeTabs"
+  /** A query identified by id should be modified as indicated @param query The updated query */
+  | "changeQuery"
   /** Title has changed, @param title The new title */
   | "changeTitle"
+  /** Change given value, eg. from input @param value Updated value */
+  | "changeValue"
   /** A tab was closed @param tabId Id of tab that was closed  */
   | "closeTab"
   /** Modify a connection settings @param item The connection to modify */
   | "configureConnection"
+  /** Remove the given list of queries from the bookmarks @param queries The queries to be removed */
+  | "deleteBookmarks"
+  /** Remove the given list of queries from history @param queries The queries to be removed */
+  | "deleteHistory"
   /** Download data from connection @param format The format for the download */
   | "downloadData"
   /** Received files or other items from drag and drop @param files List of files to be opened @param items List of other items */
   | "dropItems"
-  /** Show home page (used to manage connections) */
-  | "openHome"
-  /** Opens given file or shows file picker @param file The file to be opened or undefined to show file picker */
-  | "openFile"
-  /** Show user profile page */
-  | "openProfile"
-  /** Open signing page or prompt user for signin */
-  | "openSignin"
-  /** Show settings page */
-  | "openSettings"
   /** Open given connection @param item The connection to be opened */
   | "openConnection"
   /** Show database panel @param connection The database connection */
   | "openDatabase"
-  /** Open database table panel @param connection The database connection, @param table The table to be shown */
-  | "openTable"
+  /** Opens given file or shows file picker @param file The file to be opened or undefined to show file picker */
+  | "openFile"
+  /** Show home page (used to manage connections) */
+  | "openHome"
+  /** Show user profile page */
+  | "openProfile"
   /** Open a query panel @param connection The database connection @sql The sql statement to run */
   | "openQuery"
+  /** Open signing page or prompt user for signin */
+  | "openSignin"
+  /** Show settings page */
+  | "openSettings"
+  /** Open database table panel @param connection The database connection, @param table The table to be shown */
+  | "openTable"
+  /** Run the given query and produce a new QueryRun @param query The query to run */
+  | "runQuery"
   /** Pin item in tree view */
   | "pin"
   /** Unpin item from tree view */
   | "unpin"
-
+  // generic open-ended type
   | string
 
 /** A single command shown for example as an icon, in a contextual menu, etc. */
