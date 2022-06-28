@@ -225,7 +225,7 @@ export async function getBlankConnection(): Promise<{ connection: SqliteDataConn
 // query history
 //
 
-export const fake_today = set(new Date(), { hours: 16, minutes: 30, seconds: 0, milliseconds: 0 })
+export const fake_today = set(Date.now(), { hours: 16, minutes: 30, seconds: 0, milliseconds: 0 })
 export const fake_tables = [
   "Orders",
   "customers",
