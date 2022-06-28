@@ -131,7 +131,7 @@ export function HomePanel(props: HomePanelProps) {
           <Grid item xs={12} sm={6} md={4}>
             <Card
               command={{
-                command: "dragnDrop",
+                command: "dragAndDrop",
                 title: "Drag and drop",
                 description: "Drop anywhere to open",
                 icon: "dragAndDrop",
@@ -170,12 +170,10 @@ export function HomePanel(props: HomePanelProps) {
   return (
     <Box className="HomePanel-root" sx={HomePanel_SxProps}>
       <FilesBackdrop open={showingDragnDrop} onMouseUp={(e) => setTimeout(() => setShowingDragnDrop(false), 200)} />
-      <Typography variant="h3" color="text.primary">
-        sqlighter
-      </Typography>
-      <Typography variant="caption" color="text.secondary">
-        under development, alpha version
-      </Typography>
+      <Box sx={{ marginLeft: -0.5 }}>
+        <img src="/branding/logo@2x.png" alt="sqlighter" height="40" />
+      </Box>
+      <Typography variant="caption" color="text.secondary" sx={{ position: "relative", left: 120, top: -10 }}>alpha version</Typography>
       {props.connections && renderConnections()}
       {renderActions()}
       {templates && renderTemplates()}

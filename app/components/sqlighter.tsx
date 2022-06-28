@@ -89,23 +89,22 @@ export default function Sqlighter(props: SqlighterProps) {
         setConnections([connection, ...(connections || [])])
       }
       setConnection(connection)
+      openDatabase(connection)
     }
   }
 
   /** Opens a database tab to show this database structure or selects it if already open */
-  function openDatabase(command: Command) {
-    console.assert(command.args.connection)
-
-    const args = { ...command.args }
+  function openDatabase(connection: DataConnection, database?: string, selection?: string) {
+    console.assert(connection)
     const tabId = `pnl_database_${connection.id}`
     const tab = tabs.find((tab) => tab.id == tabId)
 
     if (tab) {
       // existing tabs? refresh properties including selection
-      tab.args = { title: tab.args.title, ...args }
+      tab.args = { title: tab.args.title, connection, database, selection }
       setTabs([...tabs])
     } else {
-      const databaseTab: TabModel = { id: tabId, component: "database", args }
+      const databaseTab: TabModel = { id: tabId, component: "database", args: { connection, database, selection } }
       setTabs([databaseTab, ...tabs])
     }
 
@@ -149,6 +148,8 @@ export default function Sqlighter(props: SqlighterProps) {
 
       setConnection(connection)
       setConnections([connection, ...(connections || [])])
+      openDatabase(connection)
+
       return connection
     } catch (exception) {
       // TODO show toast with error explanation
@@ -444,7 +445,7 @@ export default function Sqlighter(props: SqlighterProps) {
         return
 
       case "openDatabase":
-        openDatabase(command)
+        openDatabase(command.args.connection, command.args.database, command.args.selection)
         return
 
       case "openFile":
