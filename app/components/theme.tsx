@@ -175,9 +175,9 @@ export function customTheme(): Theme {
       MuiChip: {
         styleOverrides: {
           sizeSmall: {
-            fontSize: "9px"
-          }
-        }
+            fontSize: "9px",
+          },
+        },
       },
 
       MuiTooltip: {

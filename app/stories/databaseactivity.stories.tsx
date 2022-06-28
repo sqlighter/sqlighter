@@ -23,7 +23,7 @@ export default {
   ],
   args: {
     activityId: "act_database",
-    user: fake_user_mickey
+    user: fake_user_mickey,
   },
   parameters: {
     grid: { cellSize: 8 },

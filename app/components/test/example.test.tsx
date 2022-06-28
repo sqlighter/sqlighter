@@ -20,7 +20,7 @@ import { prettyBytes } from "../../lib/shared"
 
 describe("example.tsx", () => {
   // TODO figure out why @jest-environment-options is ignored
-/*
+  /*
   test("testLocation", () => {
     console.debug(window.location)
     expect(window.location.href).toBe("https://sqlighter.com/")

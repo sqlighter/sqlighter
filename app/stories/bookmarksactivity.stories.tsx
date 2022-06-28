@@ -50,7 +50,13 @@ const Template: ComponentStory<typeof BookmarksActivity> = (args) => {
     <Panel id="act_database" title="Database" icon="database">
       <Box sx={{ padding: 1 }}>Database activity</Box>
     </Panel>,
-    <BookmarksActivity id="act_bookmarks" title="Bookmarks" icon="bookmark" queries={history} onCommand={handleCommand} />,
+    <BookmarksActivity
+      id="act_bookmarks"
+      title="Bookmarks"
+      icon="bookmark"
+      queries={history}
+      onCommand={handleCommand}
+    />,
     <Panel id="act_historys" title="History" icon="history">
       <Box sx={{ padding: 1 }}>Bookmarks activity</Box>
     </Panel>,
@@ -67,7 +73,7 @@ WithFewBoookmarks.args = {
 
 export const WithEmpty = Template.bind({})
 WithEmpty.args = {
-  queries: [] // show zero bookmarks list
+  queries: [], // show zero bookmarks list
 }
 
 export const WithEmptyAndNoUser = Template.bind({})

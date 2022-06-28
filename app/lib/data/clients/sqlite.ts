@@ -134,7 +134,9 @@ export class SqliteDataConnection extends DataConnection {
       let autoIncrement = undefined
       const primaryKey = columnResult[5] ? true : undefined // pk
       if (primaryKey && hasSqliteSequence) {
-        const result = await this.getResult(`SELECT COUNT(*) FROM "${database}".sqlite_sequence WHERE name = "${table}"`)
+        const result = await this.getResult(
+          `SELECT COUNT(*) FROM "${database}".sqlite_sequence WHERE name = "${table}"`
+        )
         if (result?.values[0][0] === 1) {
           autoIncrement = true
         }

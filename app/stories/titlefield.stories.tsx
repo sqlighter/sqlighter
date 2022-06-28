@@ -50,5 +50,5 @@ export const Primary = Template.bind({})
 
 export const LongTitle = Template.bind({})
 LongTitle.args = {
-  title: "Notte d'estate con profilo greco, occhi a mandorla e odore di basilico"
+  title: "Notte d'estate con profilo greco, occhi a mandorla e odore di basilico",
 }

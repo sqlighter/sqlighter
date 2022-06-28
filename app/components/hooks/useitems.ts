@@ -17,11 +17,11 @@ interface UseItemsResults<T> {
   mutateItems: (items?: T[]) => void
 }
 
-/** 
+/**
  * A hook to retrieve or modify items that are on standardized routes
  * in our APIs like `/api/queryes`. The hook will GET the list of items
  * that belong to the user that is currently signed in. If setItems is
- * called with a list having fewer items, the removed ones will be 
+ * called with a list having fewer items, the removed ones will be
  * deleted on the server via DELETE calls. If new items are added or
  * existing items updated the changes will be applied server side as well.
  */

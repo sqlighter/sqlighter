@@ -117,7 +117,7 @@ export function TabsLayout(props: TabsLayoutProps) {
   const [{ isDragging }, drop] = useDrop(
     () => ({
       accept: [NativeTypes.FILE],
-      drop(item: { files: any[], items: any[] }) {
+      drop(item: { files: any[]; items: any[] }) {
         console.debug(`TabsLayout.drop - ${item.files?.length} files`, item.files)
         console.debug(`TabsLayout.drop - ${item.items?.length} items`, item.items)
         if (props.onCommand) {

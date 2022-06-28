@@ -52,7 +52,7 @@ export function IconButtonGroup(props: IconButtonGroupProps) {
   // render
   //
 
-  const className = "IconButtonGroup-root" + (props.className ? " " + props.className :  "")
+  const className = "IconButtonGroup-root" + (props.className ? " " + props.className : "")
   return (
     <Stack className={className} direction="row" sx={IconButtonGroup_SxProps}>
       {props.commands &&

@@ -145,13 +145,13 @@ const TreeView_SxProps: SxProps<Theme> = {
     maxHeight: 24,
     lineHeight: "24px",
     color: "text.secondary",
-    cursor: "default"
+    cursor: "default",
   },
 
   ".MuiTooltip-tooltipPlacementRight": {
     position: "relative",
     right: "400px",
-  }
+  },
 }
 
 export interface TreeViewProps {

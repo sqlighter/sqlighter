@@ -21,7 +21,7 @@ const FilesBackdrop_SxProps: SxProps<Theme> = {
 
 /** A simple backdrop shown while files are being dropped on the page */
 export function FilesBackdrop(props: BackdropProps) {
-  let { className, ...backdropProps } = props  
+  let { className, ...backdropProps } = props
   className = "FilesBackdrop-root" + (className ? " " + className : "")
   return (
     <Backdrop className={className} {...backdropProps} sx={FilesBackdrop_SxProps}>

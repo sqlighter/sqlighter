@@ -65,7 +65,7 @@ const Empty_SxProps: SxProps<Theme> = {
 
   ".Empty-description": {
     textAlign: "center",
-  }
+  },
 }
 
 export interface EmptyProps {
@@ -92,7 +92,7 @@ export function Empty(props: EmptyProps) {
   const variant = props.variant || "round"
 
   // NOTE image is "unoptimized" to avoid issues with next.js in storybook
-  const className = "Empty-root" + (props.className ? " " + props.className :  "")
+  const className = "Empty-root" + (props.className ? " " + props.className : "")
   return (
     <Stack className={className} sx={Empty_SxProps}>
       {props.image && (

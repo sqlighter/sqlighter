@@ -51,7 +51,7 @@ export async function getBlankConnection(): Promise<SqliteDataConnection> {
     client: "sqlite3",
     title: "Blank.db",
     connection: {
-      filename: ":memory:"
+      filename: ":memory:",
     },
   }
   const connection = DataConnectionFactory.create(configs) as SqliteDataConnection

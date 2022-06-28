@@ -172,7 +172,7 @@ export function TreeItem({ item, ...props }: TreeItemProps) {
   // so that the tooltip doesn't keep opening/closing
   return (
     <Tooltip className="TreeItem-labelTooltip" title={tooltip || item.tooltip || item.title} placement="right">
-      <ButtonBase className={itemClass} onClick={handleItemClick} >
+      <ButtonBase className={itemClass} onClick={handleItemClick}>
         <Box className="TreeItem-depthPadding" sx={{ minWidth: depthPadding, width: depthPadding }} />
         {getCollapsibleIcon()}
         {item.icon && getIcon()}

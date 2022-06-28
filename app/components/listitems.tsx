@@ -32,7 +32,11 @@ export function getImage(src: string, alt: string, width?, height?, objectFit?, 
   if (src) {
     if (src.startsWith("icon://")) {
       const icon = src.substring("icon://".length)
-      return <IconButton><Icon>{icon}</Icon></IconButton>
+      return (
+        <IconButton>
+          <Icon>{icon}</Icon>
+        </IconButton>
+      )
     }
 
     if (src.startsWith("/")) {

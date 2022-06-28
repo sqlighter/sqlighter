@@ -35,7 +35,7 @@ WithImage.args = {
   icon: undefined,
   variant: "fancy",
   title: "Is this art?",
-  description: "Drawing rectangles is where it's at"
+  description: "Drawing rectangles is where it's at",
 }
 
 const MissingFeatureTemplate: ComponentStory<typeof Empty> = (args) => <MissingFeature {...args} />

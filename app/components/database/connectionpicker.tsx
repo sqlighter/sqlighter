@@ -189,7 +189,6 @@ export function ConnectionPicker(props: ConnectionPickerProps) {
     }
   }
 
-
   //
   // render
   //

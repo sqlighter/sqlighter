@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react"
 
 // NOTE check https://usehooks.com/useScript/

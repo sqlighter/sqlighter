@@ -32,7 +32,7 @@ export const WithTitles = Template.bind({})
 WithTitles.args = {
   tags: [{ title: "This" }, { title: "That" }, { title: "Else" }],
   size: "medium",
-  onCommand: null
+  onCommand: null,
 }
 
 export const WithSmallTitles = Template.bind({})

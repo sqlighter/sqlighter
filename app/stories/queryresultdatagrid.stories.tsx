@@ -64,7 +64,14 @@ const northwindLoaders = [async () => await getTestConnection("Northwind.db")]
 const sakilaLoaders = [async () => await getTestConnection("Sakila.db")]
 
 const Template: ComponentStory<any> = (args, { loaded: { connection, schemas } }) => {
-  return <TableLoadingWrapper connection={connection} schemas={schemas} table={args.table} useTableSchema={args.useTableSchema} />
+  return (
+    <TableLoadingWrapper
+      connection={connection}
+      schemas={schemas}
+      table={args.table}
+      useTableSchema={args.useTableSchema}
+    />
+  )
 }
 export const Primary = Template.bind({})
 Primary.loaders = chinookLoaders
