@@ -179,8 +179,6 @@ export function Icon(props: IconProps) {
         return <HomeOutlinedIcon {...props} />
       case "history":
         return <HistoryIcon {...props} />
-      case "olderHistory":
-        return <HistoryIcon {...props} sx={{ transform: "rotate(45deg)" }} />
       case "inbox":
         return <InboxOutlinedIcon {...props} />
       case "index":

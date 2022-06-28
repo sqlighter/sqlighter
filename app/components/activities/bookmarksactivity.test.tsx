@@ -1,5 +1,5 @@
 /**
- * BookmarksActivity.test.ts
+ * bookmarksactivity.test.tsx
  * @jest-environment jsdom
  */
 
@@ -103,6 +103,7 @@ describe("bookmarksactivity.tsx", () => {
     expect(handleCommand).toHaveBeenCalledTimes(2)
     itemCommand = handleCommand.mock.calls[1][1]
     expect(itemCommand.command).toBe("deleteBookmarks")
+    expect(itemCommand.args.queries).toBeInstanceOf(Array)
 
     // commands on bookmark item
     let itemCommands = await treeItems[1].getElementsByClassName("TreeItem-commandIcon")
@@ -113,11 +114,13 @@ describe("bookmarksactivity.tsx", () => {
     expect(handleCommand).toHaveBeenCalledTimes(3)
     itemCommand = handleCommand.mock.calls[2][1]
     expect(itemCommand.command).toBe("openQuery")
+    expect(itemCommand.args.sql).toBeTruthy()
 
-    // click deleteBookmark
+    // click deleteBookmarks on single item
     fireEvent.click(itemCommands[1])
     expect(handleCommand).toHaveBeenCalledTimes(4)
     itemCommand = handleCommand.mock.calls[3][1]
     expect(itemCommand.command).toBe("deleteBookmarks")
+    expect(itemCommand.args.queries).toBeInstanceOf(Array)
   })
 })

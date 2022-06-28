@@ -421,11 +421,11 @@ export default function Sqlighter(props: SqlighterProps) {
         return
 
       case "deleteBookmarks":
-        await deleteBookmarks(command.args.query as Query[])
+        await deleteBookmarks(command.args.queries as Query[])
         return
 
       case "deleteHistory":
-        deleteHistory(command.args as Query[])
+        deleteHistory(command.args.queries as Query[])
         return
 
       case "dropItems":

@@ -14,6 +14,10 @@ import { PanelProps } from "../navigation/panel"
 import { Tree } from "../../lib/tree"
 import { TreeView } from "../navigation/treeview"
 
+export const HISTORY_TITLE = "History"
+export const HISTORY_TODAY = "Today"
+export const HISTORY_EARLIER = "Earlier"
+
 // Styles applied to component and subcomponents
 export const HistoryActivity_SxProps: SxProps<Theme> = {
   ".HistoryActivity-header": {
@@ -93,7 +97,7 @@ function getQueriesAsTreeItems(rootId: string, queries: Query[]): Tree[] {
       icon: "query",
       commands: [
         { command: "openQuery", icon: "query", title: "Open Query", args: query },
-        { command: "deleteHistory", icon: "delete", title: "Delete", args: [query] },
+        { command: "deleteHistory", icon: "delete", title: "Delete", args: { queries: [query] } },
       ],
       args: { query },
     }
@@ -110,11 +114,16 @@ export function getHistoryTrees(queries?: Query[]): Tree[] {
   const tree: Tree[] = [
     {
       id: "history/today",
-      title: "Today",
+      title: HISTORY_TODAY,
       type: "history",
-      icon: "olderHistory",
+      icon: "history",
       commands: [
-        todayQueries?.length > 0 && { command: "deleteHistory", icon: "delete", title: "Delete", args: todayQueries },
+        todayQueries?.length > 0 && {
+          command: "deleteHistory",
+          icon: "delete",
+          title: "Delete",
+          args: { queries: todayQueries },
+        },
       ],
       badge: todayQueries?.length > 0 ? todayQueries.length.toString() : "0",
       // pass empty array even if there are no queries so we get the "No results" label
@@ -129,10 +138,10 @@ export function getHistoryTrees(queries?: Query[]): Tree[] {
   if (earlierQueries?.length > 0) {
     tree.push({
       id: "history/earlier",
-      title: "Earlier",
+      title: HISTORY_EARLIER,
       type: "history",
       icon: "bedtime",
-      commands: [{ command: "deleteHistory", icon: "delete", title: "Delete", args: earlierQueries }],
+      commands: [{ command: "deleteHistory", icon: "delete", title: "Delete", args: { queries: earlierQueries } }],
       badge: earlierQueries?.length > 0 ? earlierQueries.length.toString() : "0",
       children: getQueriesAsTreeItems("history/earlier", earlierQueries),
     })

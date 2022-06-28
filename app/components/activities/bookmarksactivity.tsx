@@ -90,7 +90,7 @@ function getQueriesAsTreeItems(rootId: string, queries: Query[]): Tree[] {
       icon: "query",
       commands: [
         { command: "openQuery", icon: "query", title: "Open Query", args: query },
-        { command: "deleteBookmarks", icon: "delete", title: "Delete", args: [query] },
+        { command: "deleteBookmarks", icon: "delete", title: "Delete", args: { queries: [query] } },
       ],
       args: { query },
     }
@@ -129,7 +129,7 @@ export function getBookmarksTrees(queries?: Query[]): Tree[] {
           command: "deleteBookmarks",
           icon: "delete",
           title: "Delete",
-          args: folderQueries,
+          args: { queries: folderQueries},
         },
       ],
       badge: folderQueries?.length > 0 ? folderQueries.length.toString() : "0",

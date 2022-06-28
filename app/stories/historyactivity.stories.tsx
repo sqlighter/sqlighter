@@ -36,7 +36,7 @@ const Template: ComponentStory<typeof HistoryActivity> = (args) => {
   function handleCommand(event, command) {
     switch (command.command) {
       case "deleteHistory":
-        const queries = command.args
+        const queries = command.args.queries
         setHistory(history.filter((query) => !queries.find((q) => q === query)))
         return
     }
