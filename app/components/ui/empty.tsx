@@ -19,9 +19,9 @@ const Empty_SxProps: SxProps<Theme> = {
   marginTop: 4,
 
   ".Empty-imageBox": {
-    width: 160,
-    height: 160,
-    mb: 2,
+    width: 140,
+    height: 140,
+    marginBottom: 2,
     overflow: "hidden",
     position: "relative",
     borderRadius: "50%",
@@ -34,10 +34,10 @@ const Empty_SxProps: SxProps<Theme> = {
   },
 
   ".Empty-iconBox": {
-    width: 160,
-    height: 160,
-    mb: 2,
-
+    width: 140,
+    height: 140,
+    marginBottom: 2,
+ 
     borderRadius: "50%",
     // backgroundColor: (theme) => alpha(theme.palette.text.primary, 0.05),
     // light background with tint from the primary color in the theme
@@ -60,10 +60,12 @@ const Empty_SxProps: SxProps<Theme> = {
   },
 
   ".Empty-title": {
+    maxWidth: 180,
     textAlign: "center",
   },
 
   ".Empty-description": {
+    maxWidth: 180,
     textAlign: "center",
   },
 
@@ -96,7 +98,8 @@ export function Empty(props: EmptyProps) {
   const variant = props.variant || "round"
 
   // NOTE image is "unoptimized" to avoid issues with next.js in storybook
-  const className = "Empty-root" + (props.className ? " " + props.className : "")
+  let className = "Empty-root" + (props.className ? " " + props.className : "")
+
   return (
     <Stack className={className} sx={Empty_SxProps}>
       {props.image && (

@@ -12,6 +12,8 @@ import { DataConnection } from "../../lib/data/connections"
 import { DatabaseTreeView } from "../database/databasetreeview"
 import { ConnectionPicker } from "../database/connectionpicker"
 import { PanelProps } from "../navigation/panel"
+import { Empty } from "../ui/empty"
+import { IconButton } from "../ui/iconbutton"
 
 // Styles applied to component and subcomponents
 export const DatabaseActivity_SxProps: SxProps<Theme> = {
@@ -31,12 +33,39 @@ export interface DatabaseActivityProps extends PanelProps {
 
 /** A sidebar panel used to display the schema of connected databases */
 export function DatabaseActivity(props: DatabaseActivityProps) {
+  //
+  // render
+  //
+
+  function renderEmpty() {
+    return (
+      <Empty title="No database yet" icon="database">
+        <IconButton
+          {...props}
+          command={{
+            command: "openFile",
+            title: "Open",
+            description: "Open a database or .csv file",
+            icon: "fileOpen",
+            args: {
+              label: true,
+              color: "primary",
+            },
+          }}
+        />
+      </Empty>
+    )
+  }
+
   return (
     <Box className="DatabaseActivity-root" sx={DatabaseActivity_SxProps}>
       <Box className="DatabaseActivity-header">
         <Typography variant="overline">Database Explorer</Typography>
-        <ConnectionPicker connection={props.connection} connections={props.connections} onCommand={props.onCommand} />
       </Box>
+      {!props.connections && renderEmpty()}
+      {props.connections && (
+        <ConnectionPicker connection={props.connection} connections={props.connections} onCommand={props.onCommand} />
+      )}
       {props.connection && <DatabaseTreeView connection={props.connection} onCommand={props.onCommand} />}
     </Box>
   )

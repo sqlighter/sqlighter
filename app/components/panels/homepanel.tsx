@@ -115,7 +115,7 @@ export function HomePanel(props: HomePanelProps) {
     })
 
     return (
-      <Section className="HomePanel-actions" title="Let's get some data">
+      <Section className="HomePanel-actions" title="Let's get some data 👍🏼">
         <Grid container spacing={1}>
           <Grid item xs={12} sm={6} md={4}>
             <Card
