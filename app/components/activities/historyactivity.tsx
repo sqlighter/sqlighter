@@ -62,11 +62,7 @@ export function HistoryActivity(props: HistoryActivityProps) {
   function renderItems() {
     if (!props.queries || props.queries.length < 1) {
       return (
-        <Empty
-          title="No queries yet"
-          description="Your history will appear once you run your first query"
-          icon="history"
-        />
+        <Empty title="No queries yet" description="Your history will appear when you run your queries" icon="history" />
       )
     }
     const historyTrees = getHistoryTrees(props.queries)
@@ -107,7 +103,7 @@ function getQueriesAsTreeItems(rootId: string, queries: Query[]): Tree[] {
 
 /** Convers a list of queries into a Tree of items that can be shown by TreeView */
 export function getHistoryTrees(queries?: Query[]): Tree[] {
-  const today =  new Date() // local timezone
+  const today = new Date() // local timezone
   const todayQueries = queries?.filter((query) => {
     return isSameDay(query.updatedAt || query.createdAt, today)
   })
