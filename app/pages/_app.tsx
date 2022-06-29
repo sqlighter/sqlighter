@@ -21,7 +21,7 @@ import { useUser } from "../components/hooks/useuser"
 import { Command } from "../lib/commands"
 import { Context } from "../components/context"
 import { customTheme, PRIMARY_LIGHTEST } from "../components/theme"
-import { SigninDialog } from "../components/panels/signindialog"
+import { SigninDialog } from "../components/navigation/signindialog"
 
 // Google client id used for signin client is bound below at build time
 // https://nextjs.org/docs/basic-features/environment-variables#exposing-environment-variables-to-the-browser

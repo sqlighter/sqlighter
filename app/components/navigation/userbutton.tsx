@@ -98,6 +98,7 @@ export function UserButton(props: UserButtonProps) {
   //
 
   function renderMenu() {
+    // TODO sometimes avatar image doesn't load, could use referrerpolicy="no-referrer"?
     return (
       <Menu
         className="UserButtonMenu-root"
