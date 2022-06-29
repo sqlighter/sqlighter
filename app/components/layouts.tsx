@@ -26,7 +26,7 @@ import { Menu } from "./navigation/menu"
 import { Footer } from "./footer"
 import { SearchResults } from "./search"
 
-export const TITLE = "SQLighter"
+export const TITLE = "sqlighter"
 export const HEADER_SMALL_HEIGHT = 64
 export const HEADER_LARGE_HEIGHT = 128
 export const DRAWER_WIDTH = 280

@@ -209,6 +209,10 @@ export default function Sqlighter(props: SqlighterProps) {
     if (!query.connectionId) {
       query.connectionId = connection?.id
     }
+    if (!query.sql) {
+      // TODO we could find a query that is a little bit less stupid, for example select the first table in the schema
+      query.sql = "select 1"
+    }
 
     let tab = tabs.find((tab) => tab.id === query.id)
     if (tab) {

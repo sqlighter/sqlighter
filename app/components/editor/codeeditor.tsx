@@ -62,7 +62,6 @@ export function CodeEditor(props: CodeEditorProps) {
       language={props.language || "javascript"}
       theme={props.theme || "light"}
       value={props.value}
-      defaultValue='SELECT 1 AS "FirstColumn"'
       options={options}
       onMount={props.onMount}
       onChange={handleChange}
