@@ -8,6 +8,7 @@ import { useState } from "react"
 import { Theme, SxProps, Typography } from "@mui/material"
 import Box from "@mui/material/Box"
 import Grid from "@mui/material/Grid"
+import Container from "@mui/material/Container"
 
 // model
 import { DataConnection, DataConfig } from "../../lib/data/connections"
@@ -20,12 +21,14 @@ import { Card } from "../ui/card"
 import { ConnectionCard } from "../database/connectioncard"
 import { FilesBackdrop } from "../ui/filesbackdrop"
 import { Section } from "../ui/section"
+import { Icon } from "../ui/icon"
 
 // unique id for home panel in tabs
 export const HOME_PANEL_ID = "pnl_home"
 
 // styles applied to main and subcomponents
 const HomePanel_SxProps: SxProps<Theme> = {
+  minWidth: (theme) => theme.breakpoints.values.xs, // 600px
   maxWidth: (theme) => theme.breakpoints.values.md, // 900px
 
   paddingTop: 2,
@@ -36,6 +39,18 @@ const HomePanel_SxProps: SxProps<Theme> = {
   display: "flex",
   flexDirection: "column",
   alignItems: "start",
+
+  ".HomePanel-icon": {
+    height: 0,
+    width: 1,
+    display: "flex",
+    justifyContent: "flex-end",
+    ".MuiSvgIcon-root": {
+      fontSize: 120,
+      color: "white",
+      opacity: 0.8,
+    },
+  },
 
   ".HomePanel-connections": {
     paddingTop: 4,
@@ -170,10 +185,15 @@ export function HomePanel(props: HomePanelProps) {
   return (
     <Box className="HomePanel-root" sx={HomePanel_SxProps}>
       <FilesBackdrop open={showingDragnDrop} onMouseUp={(e) => setTimeout(() => setShowingDragnDrop(false), 200)} />
-      <Box sx={{ marginLeft: -0.5 }}>
-        <img src="/branding/logo@2x.png" alt="sqlighter" height="40" />
+      <Box className="HomePanel-icon">
+        <Icon>sqlighter</Icon>
       </Box>
-      <Typography variant="caption" color="text.secondary" sx={{ position: "relative", left: 120, top: -10 }}>alpha version</Typography>
+      <Typography variant="h3" color="text.primary" sx={{ position: "relative" }}>
+        sqlighter
+      </Typography>
+      <Typography variant="caption" color="text.secondary" sx={{ position: "relative" }}>
+        alpha version
+      </Typography>
       {props.connections && renderConnections()}
       {renderActions()}
       {templates && renderTemplates()}

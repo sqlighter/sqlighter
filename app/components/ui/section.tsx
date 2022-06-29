@@ -35,7 +35,7 @@ const Section_SxProps: SxProps<Theme> = {
   },
 
   ".Section-children": {
-    paddingTop: 2,
+    paddingTop: 1,
     flexGrow: 1,
   },
 }
