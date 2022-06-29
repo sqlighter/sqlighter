@@ -298,6 +298,7 @@ export function TablesSchemaPanel(props: TablesSchemaPanelProps) {
       rows={rows}
       columns={columns}
       selection={props.selection ? [props.selection] : undefined}
+      onCommand={props.onCommand}
     />
   )
 }
@@ -430,6 +431,7 @@ export function IndexesSchemaPanel(props: IndexesSchemaPanelProps) {
       rows={rows}
       columns={columns}
       selection={props.selection ? [props.selection] : undefined}
+      onCommand={props.onCommand}
     />
   )
 }
@@ -552,6 +554,7 @@ export function TriggersSchemaPanel(props: IndexesSchemaPanelProps) {
       rows={rows}
       columns={columns}
       selection={props.selection ? [props.selection] : undefined}
+      onCommand={props.onCommand}
     />
   )
 }
@@ -710,6 +713,7 @@ export function ColumnsSchemaPanel(props: ColumnsSchemaPanelProps) {
       rows={rows}
       columns={columns}
       selection={props.selection ? [props.selection] : undefined}
+      onCommand={props.onCommand}
     />
   )
 }
@@ -863,6 +867,7 @@ export function RelationsSchemaPanel(props: RelationsSchemaPanelProps) {
       empty={loaded ? `This ${props.variant} has no foreign keys` : "Loading..."}
       rows={rows}
       columns={columns}
+      onCommand={props.onCommand}
     />
   )
 }
