@@ -23,7 +23,7 @@ import ProfileIcon from "@mui/icons-material/PersonOutlineOutlined"
 import { Theme } from "@mui/material/styles"
 
 import { Context } from "../context"
-import { SigninButton } from "../signin"
+import { GoogleSigninButton } from "../signin"
 
 export function Menu({ width, onClose }) {
   const context = useContext(Context)
@@ -90,7 +90,7 @@ export function Menu({ width, onClose }) {
     if (!user) {
       return (
         <Box sx={USERBOX_SX} pl={3}>
-          <SigninButton />
+          <GoogleSigninButton />
         </Box>
       )
     }

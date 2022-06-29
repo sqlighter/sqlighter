@@ -10,7 +10,9 @@ import { Command } from "../../lib/commands"
 import { Query } from "../../lib/items/query"
 
 import { Empty } from "../ui/empty"
+import { IconButton } from "../ui/iconbutton"
 import { PanelProps } from "../navigation/panel"
+import { SigninIconButton, GoogleSigninButton } from "../signin"
 import { Tree } from "../../lib/tree"
 import { TreeView } from "../navigation/treeview"
 
@@ -58,8 +60,15 @@ export function BookmarksActivity(props: BookmarksActivityProps) {
 
   /** Returns an empty state or your bookmarks as a TreeView */
   function renderItems() {
+    //
+    //<GoogleSigninButton />
+
     if (!props.queries) {
-      return <Empty title="No bookmarks yet" description="Sign in for your cloud bookmarks" icon="bookmark" />
+      return (
+        <Empty title="No bookmarks yet" icon="bookmark">
+          <SigninIconButton onCommand={props.onCommand} />
+        </Empty>
+      )
     }
     const bookmarksTrees = getBookmarksTrees(props.queries)
     return <TreeView items={bookmarksTrees || []} onCommand={handleCommand} />
@@ -129,7 +138,7 @@ export function getBookmarksTrees(queries?: Query[]): Tree[] {
           command: "deleteBookmarks",
           icon: "delete",
           title: "Delete",
-          args: { queries: folderQueries},
+          args: { queries: folderQueries },
         },
       ],
       badge: folderQueries?.length > 0 ? folderQueries.length.toString() : "0",

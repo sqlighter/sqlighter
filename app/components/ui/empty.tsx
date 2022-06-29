@@ -66,6 +66,10 @@ const Empty_SxProps: SxProps<Theme> = {
   ".Empty-description": {
     textAlign: "center",
   },
+
+  ".Empty-children": {
+    //
+  }
 }
 
 export interface EmptyProps {

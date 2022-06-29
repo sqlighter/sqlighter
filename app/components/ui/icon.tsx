@@ -45,6 +45,8 @@ import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined"
 import FolderIcon from "@mui/icons-material/FolderOutlined"
 import HistoryIcon from "@mui/icons-material/HistoryOutlined"
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined"
+import LoginOutlinedIcon from "@mui/icons-material/LoginOutlined"
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import InboxOutlinedIcon from "@mui/icons-material/InboxOutlined"
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined"
 import InsertChartOutlinedIcon from "@mui/icons-material/InsertChartOutlined"
@@ -208,6 +210,10 @@ export function Icon(props: IconProps) {
         return <TableRowsOutlinedIcon {...props} />
       case "run":
         return <DirectionsRunOutlinedIcon {...props} />
+      case "signin":
+        return <LoginOutlinedIcon {...props} />
+      case "signout":
+        return <LogoutOutlinedIcon {...props} />
       case "search":
         return <SearchOutlinedIcon {...props} />
       case "settings":

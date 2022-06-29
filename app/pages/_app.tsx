@@ -20,8 +20,8 @@ import { ThemeProvider } from "@mui/material/styles"
 import { useUser } from "../components/hooks/useuser"
 import { Command } from "../lib/commands"
 import { Context } from "../components/context"
-import { getGoogleSigninClient, promptSignin } from "../components/signin"
 import { customTheme, PRIMARY_LIGHTEST } from "../components/theme"
+import { SigninDialog } from "../components/panels/signindialog"
 
 // Google client id used for signin client is bound below at build time
 // https://nextjs.org/docs/basic-features/environment-variables#exposing-environment-variables-to-the-browser
@@ -40,7 +40,45 @@ export default function App({ Component, pageProps }: { Component: any; pageProp
   const [user, { mutate: mutateUser }] = useUser()
 
   // true if google signin script has lazy loaded and has been initialized, i.e. is active
-  const [isGoogleSigninLoaded, setGoogleSigninLoaded] = useState(false)
+  const [googleSigninClient, setGoogleSigninClient] = useState<any>()
+
+  // true if we're showing the full page signin dialog
+  const [showingSigninDialog, setShowingSigninDialog] = useState(false)
+
+  //
+  // Context that is shared will all app components includes user, status, callbacks, etc.
+  //
+
+  const context = {
+    // undefined while user is loading or google signin script is loading
+    user: googleSigninClient && user,
+
+    /**
+     * Google Signin Client available once script is loaded and initialized
+     * @see https://developers.google.com/identity/gsi/web/reference/js-reference
+     */
+    googleSigninClient,
+
+    // signout + redirect callback
+    signout,
+  }
+
+  //
+  // authentication methods
+  //
+
+  /** Initialize Google Signin with client id credentials */
+  async function handleGoogleSigninScriptLoaded(params) {
+    // https://developers.google.com/identity/gsi/web/reference/js-reference#IdConfiguration
+    const gsi = (window as any)?.google?.accounts?.id
+    console.assert(gsi, "App.handleGoogleSigninScriptLoaded - script didn't load correctly")
+    gsi.initialize({
+      client_id: GOOGLE_ID,
+      callback: handleGoogleSignin,
+      auto_select: true,
+    })
+    setGoogleSigninClient(gsi)
+  }
 
   /**
    * Called by Google sign in when credentials check is completed.
@@ -49,7 +87,9 @@ export default function App({ Component, pageProps }: { Component: any; pageProp
    * will authenticate the token, create a local session cookie and
    * return the User object that was retrieve or created.
    */
-  function onSignin(response) {
+  function handleGoogleSignin(response) {
+    setShowingSigninDialog(false)
+
     // https://developers.google.com/identity/gsi/web/reference/js-reference#CredentialResponse
     // import jwt_decode from "jwt-decode"
     // const jwtToken = response.credential
@@ -62,17 +102,28 @@ export default function App({ Component, pageProps }: { Component: any; pageProp
     }).then((res) => {
       res.json().then((json) => {
         const user = json.data
-        console.debug("App.onSignIn", user)
+        console.debug(`App.handleGoogleSignin - ${user?.id}`, user)
         mutateUser({ data: user }, false)
       })
     })
   }
 
+  function signin() {
+    console.assert(googleSigninClient, "App.signin - googleSigninClient not initialized")
+    if (googleSigninClient) {
+      googleSigninClient.prompt((notification) => {
+        if (notification.isNotDisplayed()) {
+          console.debug(`App.signin - isNotDisplayed: ${notification.getNotDisplayedReason()}`, notification)
+          setShowingSigninDialog(true)
+        }
+      })
+    }
+  }
+
   /** Sign out of Google and local sessions, disable session cookie */
   function signout(redirectUrl?: string): void {
-    const gsi = getGoogleSigninClient()
-    if (gsi) {
-      gsi.disableAutoSelect()
+    if (googleSigninClient) {
+      googleSigninClient.disableAutoSelect()
     }
     fetch("/api/signout").then((res) => {
       mutateUser()
@@ -80,33 +131,6 @@ export default function App({ Component, pageProps }: { Component: any; pageProp
         router.push(redirectUrl)
       }
     })
-  }
-
-  /** Initialize Google Signin with client id credentials */
-  async function onGoogleSigninLoaded(params) {
-    // https://developers.google.com/identity/gsi/web/reference/js-reference#IdConfiguration
-    const gsi = getGoogleSigninClient()
-    gsi.initialize({
-      client_id: GOOGLE_ID,
-      callback: onSignin,
-      auto_select: true,
-    })
-    setGoogleSigninLoaded(true)
-  }
-
-  //
-  // Context that is shared will all app components includes user, status, callbacks, etc.
-  //
-
-  const context = {
-    // undefined while user is loading or google signin script is loading
-    user: isGoogleSigninLoaded && user,
-
-    // true once google signin has been initialized
-    isGoogleSigninLoaded,
-
-    // signout + redirect callback
-    signout,
   }
 
   //
@@ -118,15 +142,19 @@ export default function App({ Component, pageProps }: { Component: any; pageProp
     // console.debug(`App.handleCommand - command: ${command.command}`, command)
     switch (command.command) {
       case "signin":
-        promptSignin()
+        signin()
         return
 
       case "signout":
         signout()
         return
+
+      case "closeDialog":
+        setShowingSigninDialog(false)
+        return
     }
-    
-    console.warn(`App.handleCommand - unused command: ${command.command}`)
+
+    console.warn(`App.handleCommand - unused command: ${command.command}`, command)
   }
 
   //
@@ -152,11 +180,12 @@ export default function App({ Component, pageProps }: { Component: any; pageProp
               />
             </Head>
             <Component {...pageProps} user={user} onCommand={handleCommand} />
+            {showingSigninDialog && <SigninDialog onCommand={handleCommand} />}
             <Script
               key="google-signin"
               src="https://accounts.google.com/gsi/client"
               strategy="lazyOnload"
-              onLoad={onGoogleSigninLoaded}
+              onLoad={handleGoogleSigninScriptLoaded}
             />
             {/* Global Site Tag (gtag.js) - Google Analytics */}
             <Script

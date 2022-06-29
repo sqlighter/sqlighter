@@ -4,16 +4,24 @@
 
 import { createContext } from "react"
 
-/** Default context is an empty template, actual values filled by Context.Provider */
-export const Context = createContext({
+interface AppContextInterface {
   /** Currently signed in user */
-  user: null,
+  user?: object
 
+  /** Sign out of Google and local session */
+  signout: (redirectUrl?: string) => void
+
+  /**
+   * Google Signin Client available once script is loaded and initialized
+   * @see https://developers.google.com/identity/gsi/web/reference/js-reference
+   */
+  googleSigninClient?: any
+}
+
+/** Default context is an empty template, actual values filled by Context.Provider */
+export const Context = createContext<AppContextInterface>({
   /** Sign out of Google and local session */
   signout: (redirectUrl?: string): void => {
     throw new Error("Implemented in Context.Provider")
   },
-
-  /** True if Google Signin script has been loaded and initialized */
-  isGoogleSigninLoaded: null,
 })
