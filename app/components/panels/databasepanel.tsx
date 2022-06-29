@@ -254,7 +254,7 @@ export function DatabasePanel(props: DatabasePanelProps) {
         description={`A ${props.connection.configs.client} database`}
         commands={renderCommands()}
         variant="large"
-        onCommand={props.onCommand}
+        onCommand={handleCommand}
       >
         <Card className="DatabasePanel-card" variant="outlined" square={true}>
           <Tabs
