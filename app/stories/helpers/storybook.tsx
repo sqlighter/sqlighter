@@ -2,31 +2,94 @@
 // storybook.tsx - a decorator used to provide basic themed context to components in storybook
 //
 
+import Head from "next/head"
+import Script from "next/script"
+import React, { useState, useEffect } from "react"
 import { DndProvider } from "react-dnd"
 import { HTML5Backend } from "react-dnd-html5-backend"
-
-import React, { useState } from "react"
 import { Allotment } from "allotment"
+import Box from "@mui/material/Box"
+
 import { ActivityBar, ACTIVITYBAR_WIDTH } from "../../components/navigation/activitybar"
 import { customTheme } from "../../components/theme"
+import { Context } from "../../components/context"
 import CssBaseline from "@mui/material/CssBaseline"
 import { ThemeProvider } from "@mui/material/styles"
-import Box from "@mui/material/Box"
 
 // allotment styles + global overrides
 import "allotment/dist/style.css"
 import "../../public/styles.css"
+
+import { fake_user_mickey } from "./fakedata"
+
+// Google client id used for signin client is bound below at build time
+// https://nextjs.org/docs/basic-features/environment-variables#exposing-environment-variables-to-the-browser
+// const GOOGLE_ID = "xxxx.apps.googleusercontent.com" // workaround for google cloud build issues
+const GOOGLE_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID
+console.assert(GOOGLE_ID, "GOOGLE_ID is undefined")
 
 //
 // StorybookDecorator
 //
 
 export function StorybookDecorator(props) {
+  //
+  // state
+  //
+
+  // true if google signin script has lazy loaded and has been initialized, i.e. is active
+  const [googleSigninClient, setGoogleSigninClient] = useState<any>()
+  useEffect(() => {
+    const gsi = (window as any)?.google?.accounts?.id
+    gsi.initialize({
+      client_id: GOOGLE_ID,
+      callback: handleGoogleSignin,
+      auto_select: true,
+    })
+    setGoogleSigninClient(gsi)
+    console.debug(`StorybookDecorator - setGoogleSigninClient`, gsi)
+  }, [])
+
+  //
+  // Context that is shared will all app components includes user, status, callbacks, etc.
+  //
+
+  const context = {
+    // undefined while user is loading or google signin script is loading
+    user: fake_user_mickey,
+
+    /**
+     * Google Signin Client available once script is loaded and initialized
+     * @see https://developers.google.com/identity/gsi/web/reference/js-reference
+     */
+    googleSigninClient,
+
+    // signout + redirect callback
+    signout: () => console.debug(`Context.signout was called`),
+  }
+
+  /** Initialize Google Signin with client id credentials */
+  async function handleGoogleSigninScriptLoaded(params) {
+    const gsi = (window as any)?.google?.accounts?.id
+    gsi.initialize({
+      client_id: GOOGLE_ID,
+      callback: handleGoogleSignin,
+      auto_select: true,
+    })
+    setGoogleSigninClient(gsi)
+  }
+
+  function handleGoogleSignin(response) {
+    console.debug(`StorybookDecorator.handleGoogleSignin`, response)
+  }
+
   return (
     <CssBaseline>
       <ThemeProvider theme={customTheme()}>
         <DndProvider backend={HTML5Backend}>
-          <Box className="StorybookDecorator-root">{props.children}</Box>
+          <Context.Provider value={context}>
+            <Box className="StorybookDecorator-root">{props.children}</Box>
+          </Context.Provider>
         </DndProvider>
       </ThemeProvider>
     </CssBaseline>

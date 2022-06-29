@@ -55,11 +55,19 @@ export function SigninDialog(props: SigninDialogProps) {
     args: { panel: this },
   }
 
+  function handleCommand(event, command) {
+    // console.debug(`SigninDialog.handleCommand: ${command.command}`, command)
+    console.assert(props.onCommand, "SigninDialog.handleCommand: missing onCommand")
+    if (props.onCommand) {
+      props.onCommand(event, command)
+    }
+  }
+
   return (
     <Backdrop
       className="SigninDialog-root"
       open={true}
-      onClick={(event) => props.onCommand(event, closeCommand)}
+      onClick={(event) => handleCommand(event, closeCommand)}
       sx={SigninDialog_SxProps}
     >
       <Icon className="SigninDialog-icon">sqlighter</Icon>
@@ -72,7 +80,7 @@ export function SigninDialog(props: SigninDialogProps) {
       <Box className="SigninButton-buttonBox">
         <GoogleSigninButton size="large" shape="pill" />
       </Box>
-      <IconButton command={closeCommand} onCommand={props.onCommand} size="small" />
+      <IconButton command={closeCommand} onCommand={(e) => handleCommand(e, closeCommand)} size="small" />
     </Backdrop>
   )
 }

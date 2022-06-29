@@ -14,6 +14,7 @@ import { DataConnectionFactory } from "../../lib/data/factory"
 import { SqliteDataConnection } from "../../lib/data/clients/sqlite"
 import { BOOKMARKS_FOLDER } from "../../components/activities/bookmarksactivity"
 import { Panel } from "../../components/navigation/panel"
+import { User } from "../../lib/items/users"
 
 // DataConnection (fake)
 class FakeConnection extends DataConnection {
@@ -145,12 +146,12 @@ export const settingsCmd: Command = {
 }
 
 // fake user with google passport login
-export const fake_user_mickey = {
+export const fake_user_mickey: User = {
   id: "mickey.mouse@gmail.com",
   parentId: null,
   type: "user",
-  createdAt: "2022-05-09T10:52:45.486Z",
-  updatedAt: "2022-05-26T14:59:30.403Z",
+  createdAt: new Date("2022-05-09T10:52:45.486Z"),
+  updatedAt: new Date("2022-05-26T14:59:30.403Z"),
   passport: {
     id: "105223593685623481361",
     name: {
@@ -172,8 +173,8 @@ export const fake_user_mickey = {
   },
   profile: {
     gender: "cartoon",
-    height: "69",
-    weight: "10",
+    height: 69,
+    weight: 10,
     birthdate: "1901-12-01",
   },
 }
