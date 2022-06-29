@@ -2,6 +2,8 @@
 // fakedata.ts
 //
 
+import Box from "@mui/material/Box"
+
 import { DataConnection, DataConfig, DataSchema, CONNECTION_PREFIX } from "../../lib/data/connections"
 import { Query, QueryRun } from "../../lib/items/query"
 import { parseISO, add, set } from "date-fns"
@@ -11,6 +13,7 @@ import { QueryExecResult } from "sql.js"
 import { DataConnectionFactory } from "../../lib/data/factory"
 import { SqliteDataConnection } from "../../lib/data/clients/sqlite"
 import { BOOKMARKS_FOLDER } from "../../components/activities/bookmarksactivity"
+import { Panel } from "../../components/navigation/panel"
 
 // DataConnection (fake)
 class FakeConnection extends DataConnection {
@@ -207,8 +210,6 @@ export const fake_user_longname = {
   },
 }
 
-
-
 //
 // actual chinook.db database loaded on the spot from the network
 //
@@ -299,3 +300,15 @@ export const fake_bookmark: Query = {
   createdAt: fake_today,
   updatedAt: fake_today,
 }
+
+export const fake_activities = [
+  <Panel id="act_database" title="Database" icon="database">
+    <Box sx={{ padding: 1 }}>Database activity</Box>
+  </Panel>,
+  <Panel id="act_bookmarks" title="Bookmarks" icon="bookmark">
+    <Box sx={{ padding: 1 }}>Bookmarks activity</Box>
+  </Panel>,
+  <Panel id="act_history" title="History" icon="history">
+    <Box sx={{ padding: 1 }}>History activity</Box>
+  </Panel>,
+]

@@ -69,7 +69,7 @@ export const ActivityBar_SxProps: SxProps<Theme> = {
     },
   },
 
-  ".ActivityBar-logo": {
+  ".ActivityBar-home": {
     backgroundColor: "background.paper",
     borderBottom: 1,
     borderBottomColor: "divider",
@@ -107,53 +107,12 @@ export function ActivityBar(props: ActivityBarProps) {
   // render
   //
 
-  /** Profile avatar if user is logged in or signin command otherwise */
-  function renderProfile() {
-    if (!props.user) {
-      return (
-        <IconButton
-          className="ActivityBar-button"
-          onCommand={props.onCommand}
-          command={{
-            command: "signin",
-            icon: "account",
-            title: "Sign in",
-          }}
-        />
-      )
-    }
-
-    const avatar = <Avatar alt={displayName} src={profileImage} sx={{ width: 24, height: 24 }} />
-    const avatarTooltip =
-      displayName || email ? (
-        <div>
-          {displayName}
-          <br />
-          {email}
-        </div>
-      ) : (
-        "Profile"
-      )
-
-    return (
-      <IconButton
-        className="ActivityBar-button"
-        onCommand={props.onCommand}
-        command={{
-          command: "openProfile",
-          icon: avatar,
-          title: avatarTooltip,
-        }}
-      />
-    )
-  }
-
   return (
     <TabContext value={props.activityId}>
       <Box sx={ActivityBar_SxProps}>
         <Box className="ActivityBar-top">
           <IconButton
-            className="ActivityBar-button ActivityBar-logo"
+            className="ActivityBar-button ActivityBar-home"
             onCommand={props.onCommand}
             command={{
               command: "openHome",
@@ -184,7 +143,7 @@ export function ActivityBar(props: ActivityBarProps) {
               title: "Settings",
             }}
           />
-          <UserButton className="ActivityBar-button" user={props.user} onCommand={props.onCommand} />
+          <UserButton className="ActivityBar-button ActivityBar-user" user={props.user} onCommand={props.onCommand} />
         </Box>
       </Box>
     </TabContext>
