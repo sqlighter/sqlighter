@@ -12,6 +12,7 @@ import Menu from "@mui/material/Menu"
 import MenuItem from "@mui/material/MenuItem"
 import Typography from "@mui/material/Typography"
 
+import { User } from "../../lib/items/users"
 import { CommandEvent } from "../../lib/commands"
 import { IconButton } from "../ui/iconbutton"
 import { getDisplayName, getProfileImageUrl, getEmail } from "../signin"
@@ -61,7 +62,7 @@ export interface UserButtonProps {
   className?: string
 
   /** Currently logged in user */
-  user?: object
+  user?: User
 
   /** Callback used to dispatch commands back to parent component */
   onCommand?: CommandEvent

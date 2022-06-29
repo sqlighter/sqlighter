@@ -11,6 +11,7 @@ import Tab from "@mui/material/Tab"
 import TabContext from "@mui/lab/TabContext"
 import TabList from "@mui/lab/TabList"
 
+import { User } from "../../lib/items/users"
 import { CommandEvent } from "../../lib/commands"
 import { Icon } from "../ui/icon"
 import { IconButton } from "../ui/iconbutton"
@@ -83,7 +84,7 @@ export interface ActivityBarProps extends PanelProps {
   activities: PanelElement[]
 
   /** Signed in user (toggles behaviour of profile button) */
-  user?: object
+  user?: User
 
   /** Callback used by this panel to dispatch commands back to parent components (required) */
   onCommand: CommandEvent

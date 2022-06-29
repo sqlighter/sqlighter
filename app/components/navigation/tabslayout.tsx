@@ -12,6 +12,7 @@ import type { DropTargetMonitor } from "react-dnd"
 import { useDrop } from "react-dnd"
 import { NativeTypes } from "react-dnd-html5-backend"
 
+import { User } from "../../lib/items/users"
 import { Command } from "../../lib/commands"
 import { ActivityBar, ACTIVITYBAR_WIDTH } from "./activitybar"
 import { PanelElement, PanelProps } from "./panel"
@@ -65,7 +66,7 @@ interface TabsLayoutProps extends PanelProps {
   empty?: ReactElement
 
   /** Signed in user (or null) */
-  user?: object
+  user?: User
 }
 
 /** A shared layout for tab based applications pages, includes: menu drawer, header, footer, basic actions */

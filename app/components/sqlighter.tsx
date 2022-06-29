@@ -15,6 +15,7 @@ import { Query, QueryRun } from "../lib/items/query"
 // hooks
 import { useSqljs } from "./hooks/usedb"
 import { useBookmarks } from "./hooks/usebookmarks"
+import { User } from "../lib/items/users"
 
 // components
 import { DatabaseActivity } from "./activities/databaseactivity"
@@ -35,7 +36,7 @@ type TabModel = { id: string; component: "home" | "database" | "table" | "query"
 
 export interface SqlighterProps extends PanelProps {
   /** User currently signedin (if any) */
-  user?: object
+  user?: User
 }
 
 /** Main component for SQLighter app which includes activities, sidebar, tabs, etc... */

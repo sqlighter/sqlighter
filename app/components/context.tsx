@@ -3,10 +3,11 @@
 //
 
 import { createContext } from "react"
+import { User } from "../lib/items/users"
 
 interface AppContextInterface {
   /** Currently signed in user */
-  user?: object
+  user?: User
 
   /** Sign out of Google and local session */
   signout: (redirectUrl?: string) => void
