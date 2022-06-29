@@ -16,7 +16,7 @@ import { CommandEvent } from "../../lib/commands"
 import { Icon } from "../ui/icon"
 import { IconButton } from "../ui/iconbutton"
 import { PanelProps, PanelElement } from "./panel"
-import { getDisplayName, getProfileImageUrl, getEmail } from "../signin"
+import { UserButton } from "./userbutton"
 
 export const ACTIVITYBAR_WIDTH = 48
 
@@ -92,10 +92,6 @@ export interface ActivityBarProps extends PanelProps {
 
 /** An activity bar with clickable main navigation icons */
 export function ActivityBar(props: ActivityBarProps) {
-  const displayName = getDisplayName(props.user)
-  const profileImage = getProfileImageUrl(props.user)
-  const email = getEmail(props.user)
-
   //
   // handlers
   //
@@ -188,7 +184,7 @@ export function ActivityBar(props: ActivityBarProps) {
               title: "Settings",
             }}
           />
-          {renderProfile()}
+          <UserButton className="ActivityBar-button" user={props.user} onCommand={props.onCommand} />
         </Box>
       </Box>
     </TabContext>

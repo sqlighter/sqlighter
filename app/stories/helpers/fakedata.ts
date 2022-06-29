@@ -175,6 +175,40 @@ export const fake_user_mickey = {
   },
 }
 
+// fake user with very long name and google passport login
+export const fake_user_longname = {
+  id: "cayetana.fitzjamesstuartduchessadalba@gmail.com",
+  parentId: null,
+  type: "user",
+  createdAt: "2022-05-09T10:52:45.486Z",
+  updatedAt: "2022-05-26T14:59:30.403Z",
+  passport: {
+    id: "105223593685623481361",
+    name: {
+      givenName: "Cayetana",
+      familyName: "Fitz-James Stuart Duchessa d'Alba",
+    },
+    emails: [
+      {
+        value: "cayetana.fitzjamesstuartduchessadalba@gmail.com",
+      },
+    ],
+    photos: [
+      {
+        value: "/test/duchess.jpeg",
+      },
+    ],
+    provider: "google-one-tap",
+    displayName: "Cayetana Fitz-James Stuart Duchessa d'Alba",
+  },
+  profile: {
+    gender: "female",
+    birthdate: "1926-03-28",
+  },
+}
+
+
+
 //
 // actual chinook.db database loaded on the spot from the network
 //

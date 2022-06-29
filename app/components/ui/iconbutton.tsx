@@ -59,6 +59,7 @@ export function IconButton(props: IconButtonProps) {
   let button = (
     <MuiIconButton
       className={`IconButton-root ${props.selected ? " Mui-selected" : ""} ${className}`}
+      role="button"
       onClick={handleClick}
       sx={IconButton_SxProps}
       color={command.args?.color}

@@ -7,7 +7,6 @@ import Box from "@mui/material/Box"
 
 import { Context } from "./context"
 import { Empty } from "./ui/empty"
-import signinImage from "../public/images/empty3.jpg"
 
 export function getGoogleSigninClient() {
   return (window as any)?.google?.accounts?.id
@@ -74,7 +73,7 @@ export function SigninPanel() {
   }, [context.isGoogleSigninLoaded])
 
   return (
-    <Empty title="Welcome" description="Sign in securely to access your data" image={signinImage}>
+    <Empty title="Welcome" description="Sign in securely to access your data" icon="account">
       <SigninButton />
     </Empty>
   )
