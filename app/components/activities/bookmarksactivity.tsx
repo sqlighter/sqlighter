@@ -10,9 +10,8 @@ import { Command } from "../../lib/commands"
 import { Query } from "../../lib/items/query"
 
 import { Empty } from "../ui/empty"
-import { IconButton } from "../ui/iconbutton"
 import { PanelProps } from "../navigation/panel"
-import { SigninIconButton, GoogleSigninButton } from "../signin"
+import { SigninIconButton } from "../signin"
 import { Tree } from "../../lib/tree"
 import { TreeView } from "../navigation/treeview"
 

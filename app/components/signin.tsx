@@ -4,11 +4,8 @@
 
 import * as React from "react"
 import Box from "@mui/material/Box"
-
 import { Context } from "./context"
-import { Empty } from "./ui/empty"
 import { IconButton, IconButtonProps } from "./ui/iconbutton"
-
 
 export function getDisplayName(user) {
   return user?.passport?.displayName || ""
