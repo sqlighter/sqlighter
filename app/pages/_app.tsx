@@ -17,11 +17,12 @@ import { useState } from "react"
 import CssBaseline from "@mui/material/CssBaseline"
 import { ThemeProvider } from "@mui/material/styles"
 
+import { User } from "../lib/items/users"
 import { useUser } from "../components/hooks/useuser"
 import { Command } from "../lib/commands"
 import { Context } from "../components/context"
 import { customTheme, PRIMARY_LIGHTEST } from "../components/theme"
-import { SigninDialog } from "../components/navigation/signindialog"
+import { SigninDialog } from "../components/auth/signindialog"
 
 // Google client id used for signin client is bound below at build time
 // https://nextjs.org/docs/basic-features/environment-variables#exposing-environment-variables-to-the-browser
@@ -51,7 +52,7 @@ export default function App({ Component, pageProps }: { Component: any; pageProp
 
   const context = {
     // undefined while user is loading or google signin script is loading
-    user: googleSigninClient && user,
+    user: googleSigninClient ? user : undefined,
 
     /**
      * Google Signin Client available once script is loaded and initialized
@@ -101,7 +102,7 @@ export default function App({ Component, pageProps }: { Component: any; pageProp
       method: "post",
     }).then((res) => {
       res.json().then((json) => {
-        const user = json.data
+        const user = User.fromObject(json.data, User)
         console.debug(`App.handleGoogleSignin - ${user?.id}`, user)
         mutateUser({ data: user }, false)
       })

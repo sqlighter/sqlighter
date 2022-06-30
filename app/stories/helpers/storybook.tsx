@@ -2,17 +2,10 @@
 // storybook.tsx - a decorator used to provide basic themed context to components in storybook
 //
 
-import React, { useState, useEffect, ReactElement } from "react"
-import { DndProvider } from "react-dnd"
-import { HTML5Backend } from "react-dnd-html5-backend"
+import React, { useState } from "react"
 import { Allotment } from "allotment"
 import Box from "@mui/material/Box"
-
 import { ActivityBar, ACTIVITYBAR_WIDTH } from "../../components/navigation/activitybar"
-import { customTheme } from "../../components/theme"
-import { Context } from "../../components/context"
-import CssBaseline from "@mui/material/CssBaseline"
-import { ThemeProvider } from "@mui/material/styles"
 
 // allotment styles + global overrides
 import "allotment/dist/style.css"
@@ -20,14 +13,6 @@ import "../../public/styles.css"
 
 // sqlighter app container
 import App from "../../pages/_app"
-
-import { fake_user_mickey } from "./fakedata"
-
-// Google client id used for signin client is bound below at build time
-// https://nextjs.org/docs/basic-features/environment-variables#exposing-environment-variables-to-the-browser
-// const GOOGLE_ID = "xxxx.apps.googleusercontent.com" // workaround for google cloud build issues
-const GOOGLE_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID
-console.assert(GOOGLE_ID, "GOOGLE_ID is undefined")
 
 //
 // StorybookDecorator

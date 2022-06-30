@@ -1,15 +1,15 @@
 //
-// signindialog.stories.tsx
+// signinbutton.stories.tsx
 //
 
 import React from "react"
 import { ComponentStory, ComponentMeta } from "@storybook/react"
 import { StorybookDecorator } from "./helpers/storybook"
-import { SigninDialog } from "../components/auth/signindialog"
+import { SigninButton } from "../components/auth/signinbutton"
 
 export default {
-  title: "Auth/SigninDialog",
-  component: SigninDialog,
+  title: "Auth/SigninButton",
+  component: SigninButton,
   decorators: [
     (Story) => (
       <StorybookDecorator>
@@ -23,7 +23,7 @@ export default {
   parameters: {
     grid: { cellSize: 8 },
   },
-} as ComponentMeta<typeof SigninDialog>
+} as ComponentMeta<typeof SigninButton>
 
-const Template: ComponentStory<typeof SigninDialog> = (args) => <SigninDialog {...args} />
+const Template: ComponentStory<typeof SigninButton> = (args) => <SigninButton {...args} />
 export const Primary = Template.bind({})

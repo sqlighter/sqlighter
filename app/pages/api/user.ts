@@ -56,7 +56,8 @@ handler
     // TODO will archive user or delete cascading records
     // deleteUser(req)
     req.logOut()
-    res.status(204).end()
+    res.status(204)
+    res.end()
   })
 
 export default handler

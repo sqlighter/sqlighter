@@ -7,10 +7,10 @@ import { ComponentStory, ComponentMeta } from "@storybook/react"
 import { StorybookDecorator } from "./helpers/storybook"
 import { fake_user_mickey, fake_user_longname } from "./helpers/fakedata"
 import { TablePanel } from "../components/panels/tablepanel"
-import { UserButton } from "../components/navigation/userbutton"
+import { UserButton } from "../components/auth/userbutton"
 
 export default {
-  title: "Navigation/UserButton",
+  title: "Auth/UserButton",
   component: UserButton,
   decorators: [
     (Story) => (

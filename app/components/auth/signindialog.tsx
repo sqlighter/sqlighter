@@ -11,7 +11,7 @@ import Typography from "@mui/material/Typography"
 import { CommandEvent } from "../../lib/commands"
 import { Icon } from "../ui/icon"
 import { IconButton } from "../ui/iconbutton"
-import { GoogleSigninButton } from "../signin"
+import { GoogleSigninButton } from "./googlesigninbutton"
 
 const SigninDialog_SxProps: SxProps<Theme> = {
   display: "flex",
@@ -52,7 +52,9 @@ export function SigninDialog(props: SigninDialogProps) {
     command: "closeDialog",
     title: "Close",
     icon: "close",
-    args: { panel: this },
+    args: {
+      onCommand: undefined
+    },
   }
 
   function handleCommand(event, command) {

@@ -11,7 +11,7 @@ import { Query } from "../../lib/items/query"
 
 import { Empty } from "../ui/empty"
 import { PanelProps } from "../navigation/panel"
-import { SigninIconButton } from "../signin"
+import { SigninButton } from "../auth/signinbutton"
 import { Tree } from "../../lib/tree"
 import { TreeView } from "../navigation/treeview"
 
@@ -65,7 +65,7 @@ export function BookmarksActivity(props: BookmarksActivityProps) {
     if (!props.queries) {
       return (
         <Empty title="No bookmarks yet" icon="bookmark">
-          <SigninIconButton onCommand={props.onCommand} />
+          <SigninButton onCommand={props.onCommand} />
         </Empty>
       )
     }

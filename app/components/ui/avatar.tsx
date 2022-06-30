@@ -7,7 +7,6 @@ import * as React from "react"
 import IconButton from "@mui/material/IconButton"
 import MuiAvatar from "@mui/material/Avatar"
 import Tooltip from "@mui/material/Tooltip"
-import { getDisplayName, getProfileImageUrl } from "../signin"
 
 export function Avatar({ user }) {
   const router = useRouter()
@@ -17,9 +16,9 @@ export function Avatar({ user }) {
   }
 
   return (
-    <Tooltip title={getDisplayName(user)}>
+    <Tooltip title={user.getDisplayName()}>
       <IconButton onClick={handleClick} size="small">
-        <MuiAvatar alt={getDisplayName(user)} src={getProfileImageUrl(user)} />
+        <MuiAvatar alt={user.getDisplayName()} src={user.getProfileImageUrl()} />
       </IconButton>
     </Tooltip>
   )

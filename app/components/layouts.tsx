@@ -22,7 +22,6 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBackOutlined"
 import CloseIcon from "@mui/icons-material/CloseOutlined"
 import Typography from "@mui/material/Typography"
 
-import { Menu } from "./navigation/menu"
 import { Footer } from "./footer"
 import { SearchResults } from "./search"
 
@@ -194,7 +193,7 @@ export function AppLayout({ children, title, description: subtitle, showBack, ac
           onClose={(e) => setDrawer(false)}
           PaperProps={{ style: { borderRight: 0 } }}
         >
-          <Menu width={DRAWER_WIDTH} onClose={(e) => setDrawer(false)} />
+          menu goes here
         </Drawer>
       </header>
       <Container

@@ -62,7 +62,7 @@ export function HistoryActivity(props: HistoryActivityProps) {
   function renderItems() {
     if (!props.queries || props.queries.length < 1) {
       return (
-        <Empty title="No queries yet" description="Your history will appear when you run your queries" icon="history" />
+        <Empty title="No queries yet" description="History will appear when you run your queries" icon="history" />
       )
     }
     const historyTrees = getHistoryTrees(props.queries)

@@ -15,7 +15,6 @@ import Typography from "@mui/material/Typography"
 import { User } from "../../lib/items/users"
 import { CommandEvent } from "../../lib/commands"
 import { IconButton } from "../ui/iconbutton"
-import { getDisplayName, getProfileImageUrl, getEmail } from "../signin"
 
 const UserButton_Sx: SxProps<Theme> = {
   ".UserButton-avatar": {
@@ -74,9 +73,9 @@ export function UserButton(props: UserButtonProps) {
   // state
   //
 
-  const displayName = getDisplayName(props.user)
-  const profileImage = getProfileImageUrl(props.user)
-  const email = getEmail(props.user)
+  const displayName = props.user?.getDisplayName()
+  const profileImage = props.user?.getProfileImageUrl()
+  const email = props.user?.getEmail()
 
   // menu state
   const [anchorEl, setAnchorEl] = useState(null)

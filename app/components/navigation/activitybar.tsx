@@ -16,7 +16,7 @@ import { CommandEvent } from "../../lib/commands"
 import { Icon } from "../ui/icon"
 import { IconButton } from "../ui/iconbutton"
 import { PanelProps, PanelElement } from "./panel"
-import { UserButton } from "./userbutton"
+import { UserButton } from "../auth/userbutton"
 
 export const ACTIVITYBAR_WIDTH = 48
 

@@ -1,46 +1,10 @@
 //
-// signin.tsx - components and functions used to facilitate google signin
+// googlesigninbutton.tsx - components and functions used to facilitate google signin
 //
 
 import * as React from "react"
 import Box from "@mui/material/Box"
-import { Context } from "./context"
-import { IconButton, IconButtonProps } from "./ui/iconbutton"
-
-export function getDisplayName(user) {
-  return user?.passport?.displayName || ""
-}
-
-/** Returns user's email (if available) */
-export function getEmail(user) {
-  return user?.passport?.emails?.[0]?.value
-}
-
-export function getProfileImageUrl(user) {
-  return user?.passport?.photos?.[0]?.value
-}
-
-//
-// SigninIconButton - icon button that will raise a "signin" command
-//
-
-/** An IconButton that will raise a "signin" command when clicked */
-export function SigninIconButton(props: Omit<IconButtonProps, "command">) {
-  const signinCommand = {
-    command: "signin",
-    title: "Sign in",
-    icon: "signin",
-    args: {
-      label: true,
-      color: "primary",
-    },
-  }
-  return <IconButton {...props} command={signinCommand} />
-}
-
-//
-// GoogleSigninButton - 
-//
+import { Context } from "../context"
 
 export interface GoogleSigninButtonProps {
   /**
@@ -62,6 +26,7 @@ export interface GoogleSigninButtonProps {
   size?: "small" | "medium" | "large"
 }
 
+/** Google one tap signin button */
 export function GoogleSigninButton(props: GoogleSigninButtonProps) {
   const context = React.useContext(Context)
 

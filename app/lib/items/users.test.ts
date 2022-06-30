@@ -4,6 +4,7 @@
 
 import { ItemsTable } from "../database"
 import { User } from "./users"
+import { getUser, signinUser } from "../auth/passport"
 
 function sleep(ms) {
   return new Promise((resolve) => {
@@ -23,35 +24,35 @@ describe("users.ts", () => {
     // TODO a couple of tests fail if you remove this delay. probably issues with pooling or timing of deletes
     await sleep(500)
 
-    const u1 = await User.getUser(mockUserJon().id)
+    const u1 = await getUser(mockUserJon().id)
     expect(u1).toBeNull()
-    const u2 = await User.getUser(mockUserJane().id)
+    const u2 = await getUser(mockUserJane().id)
     expect(u2).toBeNull()
   })
 
   test("getUser with missing user", async () => {
-    const user = await User.getUser("missing@doe.com")
+    const user = await getUser("missing@doe.com")
     expect(user).toBeNull()
   })
 
   test("getUser with valid email", async () => {
-    let user = await User.getUser("johndoe@gmail.com")
+    let user = await getUser("johndoe@gmail.com")
     expect(user).toBeNull()
 
     itemsTable.insertItem(mockUserJon())
     itemsTable.insertItem(mockUserJane())
 
-    user = await User.getUser(mockUserJon().id)
+    user = await getUser(mockUserJon().id)
     expect(user.id).toStrictEqual(mockUserJon().id)
     expect(user.passport.displayName).toStrictEqual(mockUserJon().passport.displayName)
 
-    user = await User.getUser(mockUserJane().id)
+    user = await getUser(mockUserJane().id)
     expect(user.id).toStrictEqual(mockUserJane().id)
     expect(user.passport.displayName).toStrictEqual(mockUserJane().passport.displayName)
   })
 
   test("signinUser with new profile", async () => {
-    let user = await User.signinUser(mockUserJon().passport)
+    let user = await signinUser(mockUserJon().passport)
     expect(user).toBeTruthy()
     expect(user.id).toStrictEqual(mockUserJon().id)
     expect(user.passport.displayName).toStrictEqual(mockUserJon().passport.displayName)
@@ -60,15 +61,15 @@ describe("users.ts", () => {
   test("signinUser with existing profile", async () => {
     itemsTable.insertItem(mockUserJon())
     itemsTable.insertItem(mockUserJane())
-    if (await User.getUser(mockUserJon().id)) {
+    if (await getUser(mockUserJon().id)) {
       debugger
     }
-    expect(await User.getUser(mockUserJon().id)).toBeTruthy()
-    expect(await User.getUser(mockUserJane().id)).toBeTruthy()
+    expect(await getUser(mockUserJon().id)).toBeTruthy()
+    expect(await getUser(mockUserJane().id)).toBeTruthy()
 
     for (let i = 0; i < 5; i++) {
       // john already exists
-      let user = await User.signinUser(mockUserJon().passport)
+      let user = await signinUser(mockUserJon().passport)
       expect(user).toBeTruthy()
       expect(user.id).toStrictEqual(mockUserJon().id)
       expect(user.passport.displayName).toStrictEqual(mockUserJon().passport.displayName)
@@ -81,7 +82,7 @@ describe("users.ts", () => {
 
     let hasThrown = false
     try {
-      await User.signinUser(profile)
+      await signinUser(profile)
     } catch (exception) {
       hasThrown = true
     }
@@ -93,7 +94,7 @@ describe("users.ts", () => {
     itemsTable.insertItem(mockUserJane())
     await sleep(500)
 
-    const john1 = await User.getUser(mockUserJon().id)
+    const john1 = await getUser(mockUserJon().id)
     console.log(john1)
     expect(john1).toBeTruthy()
     const updated1 = john1.updatedAt.toISOString()
@@ -105,7 +106,7 @@ describe("users.ts", () => {
       // signin user with changed profile information
       let updatedProfile = mockUserJon().passport
       updatedProfile.displayName = `John v${v}.0`
-      const john2 = await User.signinUser(updatedProfile)
+      const john2 = await signinUser(updatedProfile)
 
       // user profile should have been updated
       expect(john2).toBeTruthy()
