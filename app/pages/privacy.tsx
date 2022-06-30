@@ -2,11 +2,11 @@
 // privacy.tsx - privacy policy page
 //
 
-import { AppLayout } from "../components/layouts"
+import { SiteLayout } from "../components/layouts"
 
 export default function PrivacyPolicyPage() {
   return (
-    <AppLayout title="Privacy Policy" description="We respect your privacy">
+    <SiteLayout title="Privacy Policy" description="We respect your privacy">
       <h4>Information We Collect</h4>
       <p>
         Your privacy is important to us. It is SQLighter&#39;s policy to respect your privacy and comply with any
@@ -32,6 +32,6 @@ export default function PrivacyPolicyPage() {
         For any questions or concerns regarding your privacy, you may contact us using the following details:
         <a href="mailto:privacy@sqlighter.com">privacy@sqlighter.com</a>.
       </p>
-    </AppLayout>
+    </SiteLayout>
   )
 }
