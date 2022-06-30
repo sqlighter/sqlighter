@@ -2,7 +2,7 @@
 // storybook.tsx - a decorator used to provide basic themed context to components in storybook
 //
 
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, ReactElement } from "react"
 import { DndProvider } from "react-dnd"
 import { HTML5Backend } from "react-dnd-html5-backend"
 import { Allotment } from "allotment"
@@ -19,7 +19,7 @@ import "allotment/dist/style.css"
 import "../../public/styles.css"
 
 // sqlighter app container
-// import App from "../../pages/_app"
+import App from "../../pages/_app"
 
 import { fake_user_mickey } from "./fakedata"
 
@@ -33,57 +33,12 @@ console.assert(GOOGLE_ID, "GOOGLE_ID is undefined")
 // StorybookDecorator
 //
 
+/** Add application context around component being tested in story */
 export function StorybookDecorator(props) {
-  //
-  // state
-  //
-
-  // true if google signin script has lazy loaded and has been initialized, i.e. is active
-  const [googleSigninClient, setGoogleSigninClient] = useState<any>()
-  useEffect(() => {
-    const gsi = (window as any)?.google?.accounts?.id
-    gsi.initialize({
-      client_id: GOOGLE_ID,
-      callback: handleGoogleSignin,
-      auto_select: true,
-    })
-    setGoogleSigninClient(gsi)
-    console.debug(`StorybookDecorator - setGoogleSigninClient`, gsi)
-  }, [])
-
-  //
-  // Context that is shared will all app components includes user, status, callbacks, etc.
-  //
-
-  const context = {
-    // undefined while user is loading or google signin script is loading
-    user: fake_user_mickey,
-
-    /**
-     * Google Signin Client available once script is loaded and initialized
-     * @see https://developers.google.com/identity/gsi/web/reference/js-reference
-     */
-    googleSigninClient,
-
-    // signout + redirect callback
-    signout: () => console.debug(`Context.signout was called`),
+  function Wrapo() {
+    return props.children
   }
-
-  function handleGoogleSignin(response) {
-    console.debug(`StorybookDecorator.handleGoogleSignin`, response)
-  }
-
-  return (
-    <CssBaseline>
-      <ThemeProvider theme={customTheme()}>
-        <DndProvider backend={HTML5Backend}>
-          <Context.Provider value={context}>
-            <Box className="StorybookDecorator-root">{props.children}</Box>
-          </Context.Provider>
-        </DndProvider>
-      </ThemeProvider>
-    </CssBaseline>
-  )
+  return <App Component={Wrapo} pageProps={{}} />
 }
 
 //
