@@ -146,7 +146,7 @@ export const settingsCmd: Command = {
 }
 
 // fake user with google passport login
-export const fake_user_mickey: User = {
+export const fake_user_mickey = User.fromObject({
   id: "mickey.mouse@gmail.com",
   parentId: null,
   type: "user",
@@ -177,10 +177,10 @@ export const fake_user_mickey: User = {
     weight: 10,
     birthdate: "1901-12-01",
   },
-}
+}, User)
 
 // fake user with very long name and google passport login
-export const fake_user_longname = {
+export const fake_user_longname = User.fromObject({
   id: "cayetana.fitzjamesstuartduchessadalba@gmail.com",
   parentId: null,
   type: "user",
@@ -209,7 +209,7 @@ export const fake_user_longname = {
     gender: "female",
     birthdate: "1926-03-28",
   },
-}
+}, User)
 
 //
 // actual chinook.db database loaded on the spot from the network
