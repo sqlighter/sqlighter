@@ -37,7 +37,7 @@ const Template: ComponentStory<typeof BookmarksActivity> = (args) => {
   function handleCommand(event, command) {
     switch (command.command) {
       case "deleteBookmarks":
-        const queries = command.args
+        const queries = command.args.queries
         setHistory(history.filter((query) => !queries.find((q) => q === query)))
         return
     }
