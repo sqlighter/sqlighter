@@ -1,10 +1,9 @@
 //
-// users.test.ts
+// passport.test.ts
 //
 
 import { ItemsTable } from "../database"
-import { User } from "./users"
-import { getUser, signinUser } from "../auth/passport"
+import { getUser, signinUser } from "./passport"
 
 function sleep(ms) {
   return new Promise((resolve) => {
@@ -12,7 +11,7 @@ function sleep(ms) {
   })
 }
 
-describe("users.ts", () => {
+describe("passport.ts", () => {
   // table used to test database
   let itemsTable: ItemsTable = null
 

@@ -23,15 +23,6 @@ export class User extends Item {
     /** Birtdate in YYYY-MM-DD format */
     birthdate?: string
 
-    /** User's biological gender, or closest hormonally, or undefined */
-    gender?: "male" | "female" | string
-
-    /** Height in cm */
-    height?: number
-
-    /** Weight in kg */
-    weight?: number
-
     /** Additional types, open ended */
     [key: string]: string | number | Date
   }
