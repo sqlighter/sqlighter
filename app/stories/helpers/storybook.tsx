@@ -2,8 +2,6 @@
 // storybook.tsx - a decorator used to provide basic themed context to components in storybook
 //
 
-import Head from "next/head"
-import Script from "next/script"
 import React, { useState, useEffect } from "react"
 import { DndProvider } from "react-dnd"
 import { HTML5Backend } from "react-dnd-html5-backend"
@@ -19,6 +17,9 @@ import { ThemeProvider } from "@mui/material/styles"
 // allotment styles + global overrides
 import "allotment/dist/style.css"
 import "../../public/styles.css"
+
+// sqlighter app container
+// import App from "../../pages/_app"
 
 import { fake_user_mickey } from "./fakedata"
 
@@ -66,17 +67,6 @@ export function StorybookDecorator(props) {
 
     // signout + redirect callback
     signout: () => console.debug(`Context.signout was called`),
-  }
-
-  /** Initialize Google Signin with client id credentials */
-  async function handleGoogleSigninScriptLoaded(params) {
-    const gsi = (window as any)?.google?.accounts?.id
-    gsi.initialize({
-      client_id: GOOGLE_ID,
-      callback: handleGoogleSignin,
-      auto_select: true,
-    })
-    setGoogleSigninClient(gsi)
   }
 
   function handleGoogleSignin(response) {
