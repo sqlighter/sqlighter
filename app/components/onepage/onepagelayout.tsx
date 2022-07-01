@@ -3,6 +3,7 @@
 //
 
 import Head from "next/head"
+import Link from "next/link"
 
 import { SxProps, Theme, alpha } from "@mui/material"
 import Container from "@mui/material/Container"
@@ -13,6 +14,8 @@ import Typography from "@mui/material/Typography"
 import Button from "@mui/material/Button"
 import IconButton from "@mui/material/IconButton"
 import MenuIcon from "@mui/icons-material/Menu"
+
+import { Area } from "./area"
 
 export const TITLE = "sqlighter"
 export const HEADER_HEIGHT = 64
@@ -48,14 +51,14 @@ interface OnePageLayoutProps {
   /** Brief description shown in page's header */
   description?: string
 
-  /** Layout contents */
-  children: React.ReactNode
-
   /** True if back icon should be shown */
   showBack?: boolean
 
   /** Additional actions to be placed on the right hand side of the toolbar */
   actions?: any
+
+  /** Layout contents */
+  children?: any
 }
 
 /** A shared one page layout for website pages with fixed header and added footer */
@@ -80,12 +83,20 @@ export function OnePageLayout(props: OnePageLayoutProps) {
           </Container>
         </AppBar>
         <Box className="OnePageLayout-contents" component="main">
-          <Container maxWidth="lg">
-            {props.children}
-            <Box className="OnePageLayout-footer" component="footer">
-              this is the footer
+          {props.children}
+          <Area>
+            <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+              <Box sx={{ flexGrow: 1 }}>
+                <Typography variant="body2" color="text.secondary">
+                  sqlighter | made remotely 🌏
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  <Link href="/privacy">Privacy Policy</Link> |<Link href="/terms">Terms of Service</Link>
+                </Typography>
+              </Box>
+              <Box>twitter | medium | somethingelse</Box>
             </Box>
-          </Container>
+          </Area>
         </Box>
       </Box>
     </>

@@ -10,10 +10,12 @@ export const parameters = {
       date: /Date$/,
     },
   },
-  grid: { cellSize: 8 },
+  backgrounds: {
+    grid: { cellSize: 8 },
+  },
   options: {
     storySort: {
-      order: ['Activities', 'Tabs', "Database", "Navigation", "UI"],
+      order: ["Activities", "Tabs", "Database", "Navigation", "UI", "Auth", "OnePage"],
     },
   },
 }
