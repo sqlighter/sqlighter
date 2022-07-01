@@ -6,7 +6,6 @@ import React from "react"
 import { ComponentStory, ComponentMeta } from "@storybook/react"
 import { StorybookDecorator } from "./helpers/storybook"
 import { TabSet } from "../components/onepage/tabset"
-import { Typography } from "@mui/material"
 
 export default {
   title: "OnePage/TabSet",

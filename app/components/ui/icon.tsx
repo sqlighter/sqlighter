@@ -30,6 +30,7 @@ import CheckOutlinedIcon from "@mui/icons-material/CheckOutlined"
 import ChildCareOutlinedIcon from "@mui/icons-material/ChildCareOutlined"
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined"
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined"
+import DevicesOutlinedIcon from '@mui/icons-material/DevicesOutlined';
 import CloudDownloadOutlinedIcon from "@mui/icons-material/CloudDownloadOutlined"
 import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined"
 import DirectionsRunOutlinedIcon from "@mui/icons-material/DirectionsRunOutlined"
@@ -66,6 +67,7 @@ import SwapHorizOutlinedIcon from "@mui/icons-material/SwapHorizOutlined"
 import SwipeLeftOutlinedIcon from "@mui/icons-material/SwipeLeftOutlined"
 import TableRowsOutlinedIcon from "@mui/icons-material/TableRowsOutlined"
 import TableIcon from "@mui/icons-material/TableChartOutlined"
+import WifiOffOutlinedIcon from '@mui/icons-material/WifiOffOutlined';
 import WhatshotOutlinedIcon from "@mui/icons-material/WhatshotOutlined"
 
 // Material Design Icons (open source)
@@ -143,6 +145,8 @@ export function Icon(props: IconProps) {
         return <DeleteOutlineOutlinedIcon {...props} />
       case "description":
         return <ImageText {...props} />
+      case "devices":
+        return <DevicesOutlinedIcon {...props} />
       case "download":
         return <CloudDownloadOutlinedIcon {...props} />
       case "dragHorizontal":
@@ -239,6 +243,8 @@ export function Icon(props: IconProps) {
         return <PushPinOutlinedIcon {...props} sx={{ transform: "rotate(45deg)" }} />
       case "upload":
         return <CloudUploadOutlinedIcon {...props} />
+      case "wifioff":
+        return <WifiOffOutlinedIcon {...props} />
       case "whatshot":
         return <WhatshotOutlinedIcon {...props} />
 

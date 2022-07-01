@@ -8,6 +8,7 @@ import Button from "@mui/material/Button"
 import { OnePageLayout } from "../components/onepage/onepagelayout"
 import { Area } from "../components/onepage/area"
 import { TabSet } from "../components/onepage/tabset"
+import { Touts } from "../components/onepage/touts"
 
 export function TryButton(props) {
   return <Button variant="contained">Try</Button>
@@ -80,11 +81,27 @@ export default function SitePage() {
         />
       </Area>
       <Area background="gray">
-        block 4 // icon features // 3 features
-        <br />
-        Hell of +1 mlkshk, celiac hammock helvetica single-origin coffee. Marfa humblebrag pok pok, poutine fixie
-        authentic scenester af gastropub yr mixtape health goth man braid jean shorts. Wayfarers snackwave polaroid
-        mustache adaptogen vegan. Chia readymade cred coloring book la croix copper mug.
+        <Touts
+          features={[
+            {
+              title: "Works with other tools",
+              description:
+                "Gmail works great with desktop clients like Microsoft Outlook, Apple Mail and Mozilla Thunderbird, including contact and event sync.",
+              icon: "check",
+            },
+            {
+              title: "Stay productive, even offline",
+              description:
+                "Gmail offline lets you read, reply, delete, and search your Gmail messages when you’re not connected to the internet.",
+              icon: "wifioff",
+            },
+            {
+              title: "Experience Gmail on any device",
+              description: "Enjoy the ease and simplicity of Gmail, wherever you are.",
+              icon: "devices",
+            },
+          ]}
+        />
       </Area>
       <Area>
         block 5 // open source icons &amp; karma // numbers
