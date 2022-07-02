@@ -10,6 +10,7 @@ import { Area } from "../components/onepage/area"
 import { TabSet } from "../components/onepage/tabset"
 import { Touts } from "../components/onepage/touts"
 import { Faq } from "../components/onepage/faq"
+import { Chapter } from "../components/onepage/chapter"
 
 export function TryButton(props) {
   return <Button variant="contained">Try</Button>
@@ -142,14 +143,19 @@ export default function SitePage() {
           ]}
         />
       </Area>
-      <Area>
-        block 7 // closing // show the world how it's done <br />
-        Fam helvetica man bun, authentic schlitz disrupt vegan cold-pressed tumblr coloring book. Sriracha lumbersexual
-        chicharrones, swag mlkshk palo santo tilde iceland typewriter marfa literally. Polaroid cornhole biodiesel 90's
-        waistcoat. Polaroid cornhole fashion axe mumblecore truffaut, health goth scenester you probably haven't heard
-        of them kale chips hell of viral. Twee pork belly mumblecore brooklyn poke, hoodie cloud bread wolf street art.
-        Mustache yuccie green juice wolf vinyl pitchfork cliche drinking vinegar scenester.
-      </Area>
+      <Chapter
+        icon="/branding/mark-primary.png"
+        title={
+          <>
+            Show the world
+            <br />
+            how it’s done
+          </>
+        }
+        description="Get started with a more powerful tool today"
+        image="/site/closing.webp"
+        variant="centered"
+      />
     </OnePageLayout>
   )
 }
