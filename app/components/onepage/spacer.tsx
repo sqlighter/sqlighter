@@ -17,5 +17,5 @@ export function Spacer(props: SpacerProps) {
   } else if (typeof props.height == "number") {
     height = props.height
   }
-  return <Box sx={{ height: 100 }} />
+  return <Box sx={{ height }} />
 }

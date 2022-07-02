@@ -7,7 +7,6 @@ import { ComponentStory, ComponentMeta } from "@storybook/react"
 import { StorybookDecorator } from "./helpers/storybook"
 import { Touts } from "../components/onepage/touts"
 import { Area } from "../components/onepage/area"
-import { Spacer } from "../components/onepage/spacer"
 
 export default {
   title: "OnePage/Touts",

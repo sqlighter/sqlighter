@@ -9,6 +9,7 @@ import { OnePageLayout } from "../components/onepage/onepagelayout"
 import { Area } from "../components/onepage/area"
 import { TabSet } from "../components/onepage/tabset"
 import { Touts } from "../components/onepage/touts"
+import { Faq } from "../components/onepage/faq"
 
 export function TryButton(props) {
   return <Button variant="contained">Try</Button>
@@ -113,11 +114,33 @@ export default function SitePage() {
         Mustache yuccie green juice wolf vinyl pitchfork cliche drinking vinegar scenester.
       </Area>
       <Area background="gray">
-        block 6 // FAQs
-        <br />
-        Hell of +1 mlkshk, celiac hammock helvetica single-origin coffee. Marfa humblebrag pok pok, poutine fixie
-        authentic scenester af gastropub yr mixtape health goth man braid jean shorts. Wayfarers snackwave polaroid
-        mustache adaptogen vegan. Chia readymade cred coloring book la croix copper mug.
+        <Faq
+          title="FAQs"
+          faqs={[
+            {
+              title: "How does Gmail keep my email communications secure and private?",
+              description:
+                "Gmail has always had strong security as a foundation. We work hard to protect you from spam, phishing, and malware, before they reach your inbox. Our AI-enhanced spam-filtering capabilities block nearly 10 million spam emails every minute.",
+            },
+            {
+              title: "Do you use my email for ads?",
+              description:
+                "No. While you may see ads in your no-cost Gmail account, your emails are private. Google does not scan or process Gmail content for advertising purposes.",
+            },
+            {
+              title: "How can I keep my emails even more safe and secure?",
+              description:
+                "While Gmail’s features are secure enough for most users, some accounts may require additional layers of safety. Google's Advanced Protection Program safeguards users with high visibility and sensitive information, who are at risk of targeted online attacks.",
+              link: "https://landing.google.com/advancedprotection/",
+            },
+            {
+              title: "What if I want to use Gmail for work or my business?",
+              description:
+                "Gmail is part of Google Workspace where you can choose from different plans. In addition to what you love about Gmail, you get a custom email address (@yourcompany.com), unlimited group email addresses, 99.9% guaranteed uptime, twice the storage of personal Gmail, zero ads, 24/7 support, Google Workspace Sync for Microsoft Outlook, and more.",
+              link: "https://workspace.google.com/?utm_source=gmailforwork&utm_medium=et&utm_campaign=body&utm_content=learnmore",
+            },
+          ]}
+        />
       </Area>
       <Area>
         block 7 // closing // show the world how it's done <br />
