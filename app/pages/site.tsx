@@ -4,6 +4,7 @@
 
 import Typography from "@mui/material/Typography"
 import Button from "@mui/material/Button"
+import Divider from "@mui/material/Divider"
 
 import { OnePageLayout } from "../components/onepage/onepagelayout"
 import { Area } from "../components/onepage/area"

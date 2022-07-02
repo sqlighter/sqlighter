@@ -3,6 +3,7 @@
  */
 
 import * as React from "react"
+import { useRouter } from "next/router"
 import { IconButtonProps as MuiIconButtonProps, SxProps, Theme } from "@mui/material"
 import MuiIconButton from "@mui/material/IconButton"
 import Tooltip from "@mui/material/Tooltip"
@@ -39,14 +40,32 @@ export interface IconButtonProps extends MuiIconButtonProps {
 
 /** A customized icon button that raises onCommand events */
 export function IconButton(props: IconButtonProps) {
+  //
+  // state
+  //
+
   const { className, command, label, selected, onCommand, ...buttonProps } = props
   if (!command.icon) {
     console.error(`IconButton - command.icon missing`, command)
   }
 
+  const router = useRouter()
+
+  //
+  // handlers
+  //
+
   function handleClick(event) {
     event.preventDefault()
     event.stopPropagation()
+
+    switch (command.command) {
+      case "openUrl":
+        console.debug(`IconButton.handleClick - link: ${command.args.href}`)
+        window.open(command.args.href, command.args.target || '_blank');
+        return
+    }
+
     if (onCommand) {
       onCommand(event, command)
     }

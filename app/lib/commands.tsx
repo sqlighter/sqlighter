@@ -32,7 +32,7 @@ export type CommandType =
   | "downloadData"
   /** Received files or other items from drag and drop @param files List of files to be opened @param items List of other items */
   | "dropItems"
-  /** Open given connection @param item The connection to be opened */
+  /** Open given connection @param item The connection to be opened */  
   | "openConnection"
   /** Show database panel @param connection The database connection */
   | "openDatabase"
@@ -48,6 +48,8 @@ export type CommandType =
   | "openSettings"
   /** Open database table panel @param connection The database connection, @param table The table to be shown */
   | "openTable"
+  /** Link to given url @param href Url to go to */
+  | "openUrl"
   /** Run the given query and produce a new QueryRun @param query The query to run */
   | "runQuery"
   /** Pin item in tree view */

@@ -30,7 +30,7 @@ import CheckOutlinedIcon from "@mui/icons-material/CheckOutlined"
 import ChildCareOutlinedIcon from "@mui/icons-material/ChildCareOutlined"
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined"
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined"
-import DevicesOutlinedIcon from '@mui/icons-material/DevicesOutlined';
+import DevicesOutlinedIcon from "@mui/icons-material/DevicesOutlined"
 import CloudDownloadOutlinedIcon from "@mui/icons-material/CloudDownloadOutlined"
 import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined"
 import DirectionsRunOutlinedIcon from "@mui/icons-material/DirectionsRunOutlined"
@@ -47,7 +47,7 @@ import FolderIcon from "@mui/icons-material/FolderOutlined"
 import HistoryIcon from "@mui/icons-material/HistoryOutlined"
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined"
 import LoginOutlinedIcon from "@mui/icons-material/LoginOutlined"
-import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined"
 import InboxOutlinedIcon from "@mui/icons-material/InboxOutlined"
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined"
 import InsertChartOutlinedIcon from "@mui/icons-material/InsertChartOutlined"
@@ -67,7 +67,7 @@ import SwapHorizOutlinedIcon from "@mui/icons-material/SwapHorizOutlined"
 import SwipeLeftOutlinedIcon from "@mui/icons-material/SwipeLeftOutlined"
 import TableRowsOutlinedIcon from "@mui/icons-material/TableRowsOutlined"
 import TableIcon from "@mui/icons-material/TableChartOutlined"
-import WifiOffOutlinedIcon from '@mui/icons-material/WifiOffOutlined';
+import WifiOffOutlinedIcon from "@mui/icons-material/WifiOffOutlined"
 import WhatshotOutlinedIcon from "@mui/icons-material/WhatshotOutlined"
 
 // Material Design Icons (open source)
@@ -75,6 +75,8 @@ import WhatshotOutlinedIcon from "@mui/icons-material/WhatshotOutlined"
 // https://github.com/TeamWertarbyte/mdi-material-ui
 // https://pictogrammers.github.io/@mdi/font/6.5.95/
 import { DatabaseOutline } from "mdi-material-ui"
+import { Github } from "mdi-material-ui"
+import { Twitter } from "mdi-material-ui"
 import { Key } from "mdi-material-ui"
 import { KeyLink } from "mdi-material-ui"
 // import { DatabaseExportOutline } from "mdi-material-ui"
@@ -85,6 +87,7 @@ import { ImageText } from "mdi-material-ui"
 import { SqliteIcon } from "./icons/sqliteicon"
 import { FireIcon } from "./icons/fireicon"
 import { SqlighterIcon } from "./icons/sqlightericon"
+import { MediumIcon } from "./icons/mediumicon"
 
 // Font Awesome
 // https://fontawesome.com/icons/server?s=regular
@@ -180,6 +183,8 @@ export function Icon(props: IconProps) {
       case "fullscreen":
         // return <FullscreenOutlinedIcon {...props} />
         return <ArrowExpand {...props} />
+      case "github":
+        return <Github {...props} />
       case "home":
         // return <BungalowOutlinedIcon {...props} />
         return <HomeOutlinedIcon {...props} />
@@ -195,6 +200,8 @@ export function Icon(props: IconProps) {
         return <Key {...props} />
       case "more":
         return <MoreHorizOutlinedIcon {...props} />
+      case "medium":
+        return <MediumIcon {...props} />
       case "pin":
         return <PushPinOutlinedIcon {...props} />
       case "play":
@@ -229,14 +236,16 @@ export function Icon(props: IconProps) {
         return <SqliteIcon {...svgProps} />
       case "sqlighter":
         return <SqlighterIcon {...svgProps} />
+      case "table":
+        return <TableIcon {...props} />
       case "tabsRight":
         return <BentoOutlinedIcon {...props} />
       case "tabsBottom":
         return <BentoOutlinedIcon {...props} sx={{ transform: "rotate(90deg)" }} />
       case "trigger":
         return <BoltOutlinedIcon {...props} />
-      case "table":
-        return <TableIcon {...props} />
+      case "twitter":
+        return <Twitter {...props} />
       case "view":
         return <TableIcon {...props} />
       case "unpin":

@@ -12,6 +12,7 @@ import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 
 import { Area } from "./area"
+import { Footer } from "./footer"
 
 export const TITLE = "sqlighter"
 export const HEADER_HEIGHT = 64
@@ -80,19 +81,7 @@ export function OnePageLayout(props: OnePageLayoutProps) {
         </AppBar>
         <Box className="OnePageLayout-contents" component="main">
           {props.children}
-          <Area>
-            <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-              <Box sx={{ flexGrow: 1 }}>
-                <Typography variant="body2" color="text.secondary">
-                  sqlighter | made remotely 🌏
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  <Link href="/privacy">Privacy Policy</Link> |<Link href="/terms">Terms of Service</Link>
-                </Typography>
-              </Box>
-              <Box>twitter | medium | somethingelse</Box>
-            </Box>
-          </Area>
+          <Footer />
         </Box>
       </Box>
     </>
