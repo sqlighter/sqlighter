@@ -36,7 +36,7 @@ interface FooterProps {
 /** Page footer with usual links */
 export function Footer(props: FooterProps) {
   return (
-    <Area className="Footer-root">
+    <Area className="Footer-root" background="gray">
       <Box sx={Footer_SxProps}>
         <Stack direction="row" spacing={1} alignItems="center" sx={{ color: "text.secondary", flexGrow: 1 }}>
           <IconButton

@@ -3,7 +3,6 @@
  */
 
 import * as React from "react"
-import { useRouter } from "next/router"
 import { IconButtonProps as MuiIconButtonProps, SxProps, Theme } from "@mui/material"
 import MuiIconButton from "@mui/material/IconButton"
 import Tooltip from "@mui/material/Tooltip"
@@ -48,8 +47,6 @@ export function IconButton(props: IconButtonProps) {
   if (!command.icon) {
     console.error(`IconButton - command.icon missing`, command)
   }
-
-  const router = useRouter()
 
   //
   // handlers

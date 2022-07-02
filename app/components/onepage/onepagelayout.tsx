@@ -3,15 +3,11 @@
 //
 
 import Head from "next/head"
-import Link from "next/link"
-
 import { SxProps, Theme, alpha } from "@mui/material"
 import Container from "@mui/material/Container"
 import AppBar from "@mui/material/AppBar"
 import Box from "@mui/material/Box"
-import Typography from "@mui/material/Typography"
 
-import { Area } from "./area"
 import { Footer } from "./footer"
 
 export const TITLE = "sqlighter"
@@ -62,7 +58,6 @@ interface OnePageLayoutProps {
 export function OnePageLayout(props: OnePageLayoutProps) {
   const title = props.title ? `${props.title} | ${TITLE}` : TITLE
   const description = props.description || TITLE
-
   return (
     <>
       <Head>
@@ -75,8 +70,11 @@ export function OnePageLayout(props: OnePageLayoutProps) {
       </Head>
       <Box className="OnePageLayout-root" sx={OnePageLayout_SxProps}>
         <AppBar className="OnePageLayout-appBar" position="fixed" color="transparent" elevation={0}>
-          <Container className="OnePageLayout-header" maxWidth="lg">
-            <img src="/branding/logo.png" alt="sqlighter" height={28} />
+          <Container className="OnePageLayout-header" maxWidth="lg" sx={{ display: "flex", alignItems: "center" }}>
+            <Box sx={{ flexGrow: 1 }}>
+              <img src="/branding/logo.png" alt="sqlighter" height={28} />
+            </Box>
+            {props.actions}
           </Container>
         </AppBar>
         <Box className="OnePageLayout-contents" component="main">

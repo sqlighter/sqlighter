@@ -23,8 +23,11 @@ const ChapterCentered_SxProps: SxProps<Theme> = {
   },
 
   ".Chapter-description": {
-    marginTop: 2,
     textAlign: "center",
+  },
+
+  ".Chapter-buttons": {
+    marginTop: 4,
   },
 
   ".Chapter-image": {
@@ -54,39 +57,49 @@ interface ChapterProps {
   /** Buttons */
   buttons?: any
   /** Layout variant, default "centered" */
-  variant?: "centered"
+  variant?: "centered" | "left"
+  /** Title size, use large for hero chapter */
+  size?: "default" | "large"
 }
 
 /** A block with an icon, title, description, action + image */
 export function Chapter(props: ChapterProps) {
-  const className = "Chapter-root" + (props.className ? " " + props.className : "")
+  //
+  // state
+  //
 
-  function renderCentered() {
-    return (
-      <Box className={className} sx={ChapterCentered_SxProps}>
-        <Spacer />
-        <Container className="Chapter-container" maxWidth="lg">
-          <Box className="Chapter-icon">
-            <img src={props.icon || "/branding/logo.png"} alt={props.title} />
-          </Box>
-          <Typography className="Chapter-title" variant="h4" color="text.primary">
-            {props.title}
-          </Typography>
-          <Typography className="Chapter-description" variant="h5" color="text.secondary">
-            {props.description}
-          </Typography>
-          {props.buttons && <Box className="Chapter-buttons">{props.buttons}</Box>}
-        </Container>
-        <Box className="Chapter-image">
-          <img src={props.image} alt={props.title} />
+  const variant = props.variant || "centered"
+  const size = props.size || "default"
+  let className = `Chapter-root Chapter-${variant}`
+  if (props.size === "large") {
+    className += " Chapter-large"
+  }
+  if (props.className) {
+    className += " " + props.className
+  }
+
+  //
+  // render
+  //
+
+  return (
+    <Box className={className} sx={ChapterCentered_SxProps}>
+      <Spacer />
+      <Container className="Chapter-container" maxWidth="lg">
+        <Box className="Chapter-icon">
+          <img src={props.icon || "/branding/logo.png"} alt={props.title} />
         </Box>
+        <Typography className="Chapter-title" variant="h4" color="text.primary">
+          {props.title}
+        </Typography>
+        <Typography className="Chapter-description" variant="h5" color="text.secondary">
+          {props.description}
+        </Typography>
+        {props.buttons && <Box className="Chapter-buttons">{props.buttons}</Box>}
+      </Container>
+      <Box className="Chapter-image">
+        <img src={props.image} alt={props.title} />
       </Box>
-    )
-  }
-
-  switch (props.variant) {
-    case "centered":
-    default:
-      return renderCentered()
-  }
+    </Box>
+  )
 }

@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography"
 import Button from "@mui/material/Button"
 import Divider from "@mui/material/Divider"
 
+import { Icon } from "../components/ui/icon"
 import { OnePageLayout } from "../components/onepage/onepagelayout"
 import { Area } from "../components/onepage/area"
 import { TabSet } from "../components/onepage/tabset"
@@ -14,20 +15,24 @@ import { Faq } from "../components/onepage/faq"
 import { Chapter } from "../components/onepage/chapter"
 
 export function TryButton(props) {
-  return <Button variant="contained">Try</Button>
+  return (
+    <Button variant="contained" href="/app" size="large" startIcon={<Icon>sqlighter</Icon>}>
+      Try Today
+    </Button>
+  )
 }
 
 export default function SitePage() {
   return (
-    <OnePageLayout description="lighter, faster">
-      <Area>
-        <Typography variant="h3">Secure, smart, and easy to use email</Typography>
-        <Typography variant="h6">
-          Get more done with Gmail. Now integrated with Google Chat, Google Meet, and more, all in one place.
-        </Typography>
-        <img src="/site/hero.webp" height={300} />
-        <TryButton />
-      </Area>
+    <OnePageLayout description="lighter, faster" actions={<TryButton />}>
+      <Chapter
+        title="Secure, smart, and easy to use email"
+        description="Get more done with Gmail. Now integrated with Google Chat, Google Meet, and more, all in one place."
+        buttons={<TryButton />}
+        image="/site/hero.webp"
+        variant="left"
+        size="large"
+      />
       <Area>
         <TabSet
           title="Email that's secure, private, and puts you in control"
@@ -146,15 +151,10 @@ export default function SitePage() {
       </Area>
       <Chapter
         icon="/branding/mark-primary.png"
-        title={
-          <>
-            Show the world
-            <br />
-            how it’s done
-          </>
-        }
-        description="Get started with a more powerful tool today"
+        title="Show the world how it’s done"
+        description="Get started today with a more powerful tool"
         image="/site/closing.webp"
+        buttons={<TryButton />}
         variant="centered"
       />
     </OnePageLayout>
