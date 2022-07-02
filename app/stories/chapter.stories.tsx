@@ -1,12 +1,10 @@
 //
-// oneage/faq.stories.tsx
+// oneage/chapter.stories.tsx
 //
 
 import React from "react"
 import { ComponentStory, ComponentMeta } from "@storybook/react"
-import Link from "@mui/material/Link"
 import { StorybookDecorator } from "./helpers/storybook"
-import { Area } from "../components/onepage/area"
 import { Chapter } from "../components/onepage/chapter"
 
 export default {

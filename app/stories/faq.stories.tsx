@@ -4,7 +4,6 @@
 
 import React from "react"
 import { ComponentStory, ComponentMeta } from "@storybook/react"
-import Link from "@mui/material/Link"
 import { StorybookDecorator } from "./helpers/storybook"
 import { Area } from "../components/onepage/area"
 import { Faq } from "../components/onepage/faq"
