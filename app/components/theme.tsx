@@ -34,10 +34,10 @@ export const PRIMARY_LIGHTEST = rgbToHex(lighten(PRIMARY_COLOR, LIGHTEST))
 
 export const BORDER_RADIUS_FANCY = "74% 26% 61% 39% / 35% 30% 70% 65%"
 
-// Roboto Flex weights
+// Lato weights
 export const LIGHT_WEIGHT = 300
 export const REGULAR_WEIGHT = 400
-export const MEDIUM_WEIGHT = 500
+export const MEDIUM_WEIGHT = 400 // same as regular
 export const BOLD_WEIGHT = 700
 
 export function customTheme(): Theme {
@@ -69,10 +69,10 @@ export function customTheme(): Theme {
 
     typography: {
       // https://mui.com/customization/typography/#self-hosted-fonts
-      fontFamily: "'Roboto Flex', Helvetica, Arial, sans-serif",
+      fontFamily: "'Lato', Helvetica, Arial, sans-serif",
       fontWeightLight: LIGHT_WEIGHT,
       fontWeightRegular: REGULAR_WEIGHT,
-      fontWeightMedium: MEDIUM_WEIGHT,
+      fontWeightMedium: MEDIUM_WEIGHT, // same as regular
       fontWeightBold: BOLD_WEIGHT,
     },
   })
@@ -94,13 +94,16 @@ export function customTheme(): Theme {
 
     typography: {
       h1: {
-        fontWeight: REGULAR_WEIGHT,
+        fontWeight: REGULAR_WEIGHT,     
+        lineHeight: 1,   
       },
       h2: {
         fontWeight: REGULAR_WEIGHT,
+        lineHeight: 1,   
       },
       h3: {
         fontWeight: REGULAR_WEIGHT,
+        lineHeight: 1,   
       },
       h4: {
         fontWeight: REGULAR_WEIGHT,
@@ -110,6 +113,7 @@ export function customTheme(): Theme {
       },
       h6: {
         fontWeight: REGULAR_WEIGHT,
+        lineHeight: 1.3,
       },
       body1: {
         fontWeight: MEDIUM_WEIGHT,
