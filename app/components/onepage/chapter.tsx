@@ -42,7 +42,6 @@ const Chapter_Center_SxProps = (props: ChapterProps): SxProps<Theme> => {
       height: 240,
       width: 1,
       maxWidth: 1,
-      marginTop: 2,
 
       backgroundImage: props.image ? `url("${props.image}")` : undefined,
       backgroundPosition: "center bottom",
@@ -80,17 +79,11 @@ const Chapter_Left_SxProps = (props: ChapterProps): SxProps<Theme> => {
       height: 480,
       maxHeight: 480,
       width: 1,
-      maxWidth: 1,
-      textAlign: "center",
 
-      img: {
-        height: "auto",
-        maxHeight: 480,
-        maxWidth: "120%",
-
-        marginLeft: "auto",
-        marginRight: "auto",
-      },
+      backgroundImage: props.image ? `url("${props.image}")` : undefined,
+      backgroundPosition: "center center",
+      backgroundRepeat: "no-repeat",
+      backgroundSize: "cover",
     },
   }
 }
@@ -198,9 +191,7 @@ export function Chapter(props: ChapterProps) {
               )}
               <Spacer />
             </Grid>
-            <Grid className="Chapter-image" item xs={12} md={6}>
-              <img src={props.image} alt={props.title} />
-            </Grid>
+            <Grid className="Chapter-image" item xs={12} md={6} />
           </Grid>
         </Container>
       </Box>
