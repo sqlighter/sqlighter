@@ -8,258 +8,260 @@
       "command": "deleteBookmarks",
       "icon": "delete",
       "title": "Delete",
-      "args": [
-        {
-          "id": "sql_8ocd5ku1rk16c5ksb2",
-          "title": "Query 10 with a quite long title that overflows",
-          "connection": "dbc_pnkis6gmw7chjf5tjaq2",
-          "database": "main",
-          "sql": "select\n  *\nfrom\n  invoices",
-          "createdAt": "2022-06-26T04:30:00.000Z",
-          "updatedAt": "2022-06-26T04:30:00.000Z",
-          "folder": "Folder 2"
-        },
-        {
-          "id": "sql_8ocd5ku1rk16c5ksb6",
-          "title": "Query 14 with a really long title that overflows",
-          "connection": "dbc_pnkis6gmw7chjf5tjaq2",
-          "database": "main",
-          "sql": "select\n  *\nfrom\n  Orders",
-          "createdAt": "2022-06-26T00:30:00.000Z",
-          "updatedAt": "2022-06-26T00:30:00.000Z",
-          "folder": "Folder 2"
-        },
-        {
-          "id": "sql_8ocd5ku1rk16c5ksb2",
-          "title": "Query 18 with a slightly long title that overflows",
-          "connection": "dbc_pnkis6gmw7chjf5tjaq2",
-          "database": "main",
-          "sql": "select\n  *\nfrom\n  localAddresses",
-          "createdAt": "2022-06-25T20:30:00.000Z",
-          "updatedAt": "2022-06-25T20:30:00.000Z",
-          "folder": "Folder 2"
-        },
-        {
-          "id": "sql_8ocd5ku1rk16c5ksb2",
-          "title": "Query 2 with a really long title that overflows",
-          "connection": "dbc_pnkis6gmw7chjf5tjaq2",
-          "database": "main",
-          "sql": "select\n  *\nfrom\n  Product Qlty",
-          "createdAt": "2022-06-26T12:30:00.000Z",
-          "updatedAt": "2022-06-26T12:30:00.000Z",
-          "folder": "Folder 2"
-        },
-        {
-          "id": "sql_8ocd5ku1rk16c5ksb6",
-          "title": "Query 22 with a quite long title that overflows",
-          "connection": "dbc_pnkis6gmw7chjf5tjaq2",
-          "database": "main",
-          "sql": "select\n  *\nfrom\n  customers",
-          "createdAt": "2022-06-25T16:30:00.000Z",
-          "updatedAt": "2022-06-25T16:30:00.000Z",
-          "folder": "Folder 2"
-        },
-        {
-          "id": "sql_8ocd5ku1rk16c5ksb2",
-          "title": "Query 26 with a really long title that overflows",
-          "connection": "dbc_pnkis6gmw7chjf5tjaq2",
-          "database": "main",
-          "sql": "select\n  *\nfrom\n  support_tickets",
-          "createdAt": "2022-06-25T12:30:00.000Z",
-          "updatedAt": "2022-06-25T12:30:00.000Z",
-          "folder": "Folder 2"
-        },
-        {
-          "id": "sql_8ocd5ku1rk16c5ksb6",
-          "title": "Query 30 with a slightly long title that overflows",
-          "connection": "dbc_pnkis6gmw7chjf5tjaq2",
-          "database": "main",
-          "sql": "select\n  *\nfrom\n  Product Qlty",
-          "createdAt": "2022-06-25T08:30:00.000Z",
-          "updatedAt": "2022-06-25T08:30:00.000Z",
-          "folder": "Folder 2"
-        },
-        {
-          "id": "sql_8ocd5ku1rk16c5ksb2",
-          "title": "Query 34 with a quite long title that overflows",
-          "connection": "dbc_pnkis6gmw7chjf5tjaq2",
-          "database": "main",
-          "sql": "select\n  *\nfrom\n  sales",
-          "createdAt": "2022-06-25T04:30:00.000Z",
-          "updatedAt": "2022-06-25T04:30:00.000Z",
-          "folder": "Folder 2"
-        },
-        {
-          "id": "sql_8ocd5ku1rk16c5ksb6",
-          "title": "Query 38 with a really long title that overflows",
-          "connection": "dbc_pnkis6gmw7chjf5tjaq2",
-          "database": "main",
-          "sql": "select\n  *\nfrom\n  invoices",
-          "createdAt": "2022-06-25T00:30:00.000Z",
-          "updatedAt": "2022-06-25T00:30:00.000Z",
-          "folder": "Folder 2"
-        },
-        {
-          "id": "sql_8ocd5ku1rk16c5ksb2",
-          "title": "Query 42 with a slightly long title that overflows",
-          "connection": "dbc_pnkis6gmw7chjf5tjaq2",
-          "database": "main",
-          "sql": "select\n  *\nfrom\n  Orders",
-          "createdAt": "2022-06-24T20:30:00.000Z",
-          "updatedAt": "2022-06-24T20:30:00.000Z",
-          "folder": "Folder 2"
-        },
-        {
-          "id": "sql_8ocd5ku1rk16c5ksb6",
-          "title": "Query 46 with a quite long title that overflows",
-          "connection": "dbc_pnkis6gmw7chjf5tjaq2",
-          "database": "main",
-          "sql": "select\n  *\nfrom\n  localAddresses",
-          "createdAt": "2022-06-24T16:30:00.000Z",
-          "updatedAt": "2022-06-24T16:30:00.000Z",
-          "folder": "Folder 2"
-        },
-        {
-          "id": "sql_8ocd5ku1rk16c5ksb2",
-          "title": "Query 50 with a really long title that overflows",
-          "connection": "dbc_pnkis6gmw7chjf5tjaq2",
-          "database": "main",
-          "sql": "select\n  *\nfrom\n  customers",
-          "createdAt": "2022-06-24T12:30:00.000Z",
-          "updatedAt": "2022-06-24T12:30:00.000Z",
-          "folder": "Folder 2"
-        },
-        {
-          "id": "sql_8ocd5ku1rk16c5ksb6",
-          "title": "Query 54 with a slightly long title that overflows",
-          "connection": "dbc_pnkis6gmw7chjf5tjaq2",
-          "database": "main",
-          "sql": "select\n  *\nfrom\n  support_tickets",
-          "createdAt": "2022-06-24T08:30:00.000Z",
-          "updatedAt": "2022-06-24T08:30:00.000Z",
-          "folder": "Folder 2"
-        },
-        {
-          "id": "sql_8ocd5ku1rk16c5ksb2",
-          "title": "Query 58 with a quite long title that overflows",
-          "connection": "dbc_pnkis6gmw7chjf5tjaq2",
-          "database": "main",
-          "sql": "select\n  *\nfrom\n  Product Qlty",
-          "createdAt": "2022-06-24T04:30:00.000Z",
-          "updatedAt": "2022-06-24T04:30:00.000Z",
-          "folder": "Folder 2"
-        },
-        {
-          "id": "sql_8ocd5ku1rk16c5ksb6",
-          "title": "Query 6 with a slightly long title that overflows",
-          "connection": "dbc_pnkis6gmw7chjf5tjaq2",
-          "database": "main",
-          "sql": "select\n  *\nfrom\n  sales",
-          "createdAt": "2022-06-26T08:30:00.000Z",
-          "updatedAt": "2022-06-26T08:30:00.000Z",
-          "folder": "Folder 2"
-        },
-        {
-          "id": "sql_8ocd5ku1rk16c5ksb6",
-          "title": "Query 62 with a really long title that overflows",
-          "connection": "dbc_pnkis6gmw7chjf5tjaq2",
-          "database": "main",
-          "sql": "select\n  *\nfrom\n  sales",
-          "createdAt": "2022-06-24T00:30:00.000Z",
-          "updatedAt": "2022-06-24T00:30:00.000Z",
-          "folder": "Folder 2"
-        },
-        {
-          "id": "sql_8ocd5ku1rk16c5ksb2",
-          "title": "Query 66 with a slightly long title that overflows",
-          "connection": "dbc_pnkis6gmw7chjf5tjaq2",
-          "database": "main",
-          "sql": "select\n  *\nfrom\n  invoices",
-          "createdAt": "2022-06-23T20:30:00.000Z",
-          "updatedAt": "2022-06-23T20:30:00.000Z",
-          "folder": "Folder 2"
-        },
-        {
-          "id": "sql_8ocd5ku1rk16c5ksb6",
-          "title": "Query 70 with a quite long title that overflows",
-          "connection": "dbc_pnkis6gmw7chjf5tjaq2",
-          "database": "main",
-          "sql": "select\n  *\nfrom\n  Orders",
-          "createdAt": "2022-06-23T16:30:00.000Z",
-          "updatedAt": "2022-06-23T16:30:00.000Z",
-          "folder": "Folder 2"
-        },
-        {
-          "id": "sql_8ocd5ku1rk16c5ksb2",
-          "title": "Query 74 with a really long title that overflows",
-          "connection": "dbc_pnkis6gmw7chjf5tjaq2",
-          "database": "main",
-          "sql": "select\n  *\nfrom\n  localAddresses",
-          "createdAt": "2022-06-23T12:30:00.000Z",
-          "updatedAt": "2022-06-23T12:30:00.000Z",
-          "folder": "Folder 2"
-        },
-        {
-          "id": "sql_8ocd5ku1rk16c5ksb6",
-          "title": "Query 78 with a slightly long title that overflows",
-          "connection": "dbc_pnkis6gmw7chjf5tjaq2",
-          "database": "main",
-          "sql": "select\n  *\nfrom\n  customers",
-          "createdAt": "2022-06-23T08:30:00.000Z",
-          "updatedAt": "2022-06-23T08:30:00.000Z",
-          "folder": "Folder 2"
-        },
-        {
-          "id": "sql_8ocd5ku1rk16c5ksb2",
-          "title": "Query 82 with a quite long title that overflows",
-          "connection": "dbc_pnkis6gmw7chjf5tjaq2",
-          "database": "main",
-          "sql": "select\n  *\nfrom\n  support_tickets",
-          "createdAt": "2022-06-23T04:30:00.000Z",
-          "updatedAt": "2022-06-23T04:30:00.000Z",
-          "folder": "Folder 2"
-        },
-        {
-          "id": "sql_8ocd5ku1rk16c5ksb6",
-          "title": "Query 86 with a really long title that overflows",
-          "connection": "dbc_pnkis6gmw7chjf5tjaq2",
-          "database": "main",
-          "sql": "select\n  *\nfrom\n  Product Qlty",
-          "createdAt": "2022-06-23T00:30:00.000Z",
-          "updatedAt": "2022-06-23T00:30:00.000Z",
-          "folder": "Folder 2"
-        },
-        {
-          "id": "sql_8ocd5ku1rk16c5ksb2",
-          "title": "Query 90 with a slightly long title that overflows",
-          "connection": "dbc_pnkis6gmw7chjf5tjaq2",
-          "database": "main",
-          "sql": "select\n  *\nfrom\n  sales",
-          "createdAt": "2022-06-22T20:30:00.000Z",
-          "updatedAt": "2022-06-22T20:30:00.000Z",
-          "folder": "Folder 2"
-        },
-        {
-          "id": "sql_8ocd5ku1rk16c5ksb6",
-          "title": "Query 94 with a quite long title that overflows",
-          "connection": "dbc_pnkis6gmw7chjf5tjaq2",
-          "database": "main",
-          "sql": "select\n  *\nfrom\n  invoices",
-          "createdAt": "2022-06-22T16:30:00.000Z",
-          "updatedAt": "2022-06-22T16:30:00.000Z",
-          "folder": "Folder 2"
-        },
-        {
-          "id": "sql_8ocd5ku1rk16c5ksb2",
-          "title": "Query 98 with a really long title that overflows",
-          "connection": "dbc_pnkis6gmw7chjf5tjaq2",
-          "database": "main",
-          "sql": "select\n  *\nfrom\n  Orders",
-          "createdAt": "2022-06-22T12:30:00.000Z",
-          "updatedAt": "2022-06-22T12:30:00.000Z",
-          "folder": "Folder 2"
-        }
-      ]
+      "args": {
+        "queries": [
+          {
+            "id": "sql_8ocd5ku1rk16c5ksb2",
+            "title": "Query 10 with a quite long title that overflows",
+            "connection": "dbc_b3oa36885qxmct588y4a",
+            "database": "main",
+            "sql": "select\n  *\nfrom\n  invoices",
+            "createdAt": "2022-07-03T04:30:00.000Z",
+            "updatedAt": "2022-07-03T04:30:00.000Z",
+            "folder": "Folder 2"
+          },
+          {
+            "id": "sql_8ocd5ku1rk16c5ksb6",
+            "title": "Query 14 with a really long title that overflows",
+            "connection": "dbc_b3oa36885qxmct588y4a",
+            "database": "main",
+            "sql": "select\n  *\nfrom\n  Orders",
+            "createdAt": "2022-07-03T00:30:00.000Z",
+            "updatedAt": "2022-07-03T00:30:00.000Z",
+            "folder": "Folder 2"
+          },
+          {
+            "id": "sql_8ocd5ku1rk16c5ksb2",
+            "title": "Query 18 with a slightly long title that overflows",
+            "connection": "dbc_b3oa36885qxmct588y4a",
+            "database": "main",
+            "sql": "select\n  *\nfrom\n  localAddresses",
+            "createdAt": "2022-07-02T20:30:00.000Z",
+            "updatedAt": "2022-07-02T20:30:00.000Z",
+            "folder": "Folder 2"
+          },
+          {
+            "id": "sql_8ocd5ku1rk16c5ksb2",
+            "title": "Query 2 with a really long title that overflows",
+            "connection": "dbc_b3oa36885qxmct588y4a",
+            "database": "main",
+            "sql": "select\n  *\nfrom\n  Product Qlty",
+            "createdAt": "2022-07-03T12:30:00.000Z",
+            "updatedAt": "2022-07-03T12:30:00.000Z",
+            "folder": "Folder 2"
+          },
+          {
+            "id": "sql_8ocd5ku1rk16c5ksb6",
+            "title": "Query 22 with a quite long title that overflows",
+            "connection": "dbc_b3oa36885qxmct588y4a",
+            "database": "main",
+            "sql": "select\n  *\nfrom\n  customers",
+            "createdAt": "2022-07-02T16:30:00.000Z",
+            "updatedAt": "2022-07-02T16:30:00.000Z",
+            "folder": "Folder 2"
+          },
+          {
+            "id": "sql_8ocd5ku1rk16c5ksb2",
+            "title": "Query 26 with a really long title that overflows",
+            "connection": "dbc_b3oa36885qxmct588y4a",
+            "database": "main",
+            "sql": "select\n  *\nfrom\n  support_tickets",
+            "createdAt": "2022-07-02T12:30:00.000Z",
+            "updatedAt": "2022-07-02T12:30:00.000Z",
+            "folder": "Folder 2"
+          },
+          {
+            "id": "sql_8ocd5ku1rk16c5ksb6",
+            "title": "Query 30 with a slightly long title that overflows",
+            "connection": "dbc_b3oa36885qxmct588y4a",
+            "database": "main",
+            "sql": "select\n  *\nfrom\n  Product Qlty",
+            "createdAt": "2022-07-02T08:30:00.000Z",
+            "updatedAt": "2022-07-02T08:30:00.000Z",
+            "folder": "Folder 2"
+          },
+          {
+            "id": "sql_8ocd5ku1rk16c5ksb2",
+            "title": "Query 34 with a quite long title that overflows",
+            "connection": "dbc_b3oa36885qxmct588y4a",
+            "database": "main",
+            "sql": "select\n  *\nfrom\n  sales",
+            "createdAt": "2022-07-02T04:30:00.000Z",
+            "updatedAt": "2022-07-02T04:30:00.000Z",
+            "folder": "Folder 2"
+          },
+          {
+            "id": "sql_8ocd5ku1rk16c5ksb6",
+            "title": "Query 38 with a really long title that overflows",
+            "connection": "dbc_b3oa36885qxmct588y4a",
+            "database": "main",
+            "sql": "select\n  *\nfrom\n  invoices",
+            "createdAt": "2022-07-02T00:30:00.000Z",
+            "updatedAt": "2022-07-02T00:30:00.000Z",
+            "folder": "Folder 2"
+          },
+          {
+            "id": "sql_8ocd5ku1rk16c5ksb2",
+            "title": "Query 42 with a slightly long title that overflows",
+            "connection": "dbc_b3oa36885qxmct588y4a",
+            "database": "main",
+            "sql": "select\n  *\nfrom\n  Orders",
+            "createdAt": "2022-07-01T20:30:00.000Z",
+            "updatedAt": "2022-07-01T20:30:00.000Z",
+            "folder": "Folder 2"
+          },
+          {
+            "id": "sql_8ocd5ku1rk16c5ksb6",
+            "title": "Query 46 with a quite long title that overflows",
+            "connection": "dbc_b3oa36885qxmct588y4a",
+            "database": "main",
+            "sql": "select\n  *\nfrom\n  localAddresses",
+            "createdAt": "2022-07-01T16:30:00.000Z",
+            "updatedAt": "2022-07-01T16:30:00.000Z",
+            "folder": "Folder 2"
+          },
+          {
+            "id": "sql_8ocd5ku1rk16c5ksb2",
+            "title": "Query 50 with a really long title that overflows",
+            "connection": "dbc_b3oa36885qxmct588y4a",
+            "database": "main",
+            "sql": "select\n  *\nfrom\n  customers",
+            "createdAt": "2022-07-01T12:30:00.000Z",
+            "updatedAt": "2022-07-01T12:30:00.000Z",
+            "folder": "Folder 2"
+          },
+          {
+            "id": "sql_8ocd5ku1rk16c5ksb6",
+            "title": "Query 54 with a slightly long title that overflows",
+            "connection": "dbc_b3oa36885qxmct588y4a",
+            "database": "main",
+            "sql": "select\n  *\nfrom\n  support_tickets",
+            "createdAt": "2022-07-01T08:30:00.000Z",
+            "updatedAt": "2022-07-01T08:30:00.000Z",
+            "folder": "Folder 2"
+          },
+          {
+            "id": "sql_8ocd5ku1rk16c5ksb2",
+            "title": "Query 58 with a quite long title that overflows",
+            "connection": "dbc_b3oa36885qxmct588y4a",
+            "database": "main",
+            "sql": "select\n  *\nfrom\n  Product Qlty",
+            "createdAt": "2022-07-01T04:30:00.000Z",
+            "updatedAt": "2022-07-01T04:30:00.000Z",
+            "folder": "Folder 2"
+          },
+          {
+            "id": "sql_8ocd5ku1rk16c5ksb6",
+            "title": "Query 6 with a slightly long title that overflows",
+            "connection": "dbc_b3oa36885qxmct588y4a",
+            "database": "main",
+            "sql": "select\n  *\nfrom\n  sales",
+            "createdAt": "2022-07-03T08:30:00.000Z",
+            "updatedAt": "2022-07-03T08:30:00.000Z",
+            "folder": "Folder 2"
+          },
+          {
+            "id": "sql_8ocd5ku1rk16c5ksb6",
+            "title": "Query 62 with a really long title that overflows",
+            "connection": "dbc_b3oa36885qxmct588y4a",
+            "database": "main",
+            "sql": "select\n  *\nfrom\n  sales",
+            "createdAt": "2022-07-01T00:30:00.000Z",
+            "updatedAt": "2022-07-01T00:30:00.000Z",
+            "folder": "Folder 2"
+          },
+          {
+            "id": "sql_8ocd5ku1rk16c5ksb2",
+            "title": "Query 66 with a slightly long title that overflows",
+            "connection": "dbc_b3oa36885qxmct588y4a",
+            "database": "main",
+            "sql": "select\n  *\nfrom\n  invoices",
+            "createdAt": "2022-06-30T20:30:00.000Z",
+            "updatedAt": "2022-06-30T20:30:00.000Z",
+            "folder": "Folder 2"
+          },
+          {
+            "id": "sql_8ocd5ku1rk16c5ksb6",
+            "title": "Query 70 with a quite long title that overflows",
+            "connection": "dbc_b3oa36885qxmct588y4a",
+            "database": "main",
+            "sql": "select\n  *\nfrom\n  Orders",
+            "createdAt": "2022-06-30T16:30:00.000Z",
+            "updatedAt": "2022-06-30T16:30:00.000Z",
+            "folder": "Folder 2"
+          },
+          {
+            "id": "sql_8ocd5ku1rk16c5ksb2",
+            "title": "Query 74 with a really long title that overflows",
+            "connection": "dbc_b3oa36885qxmct588y4a",
+            "database": "main",
+            "sql": "select\n  *\nfrom\n  localAddresses",
+            "createdAt": "2022-06-30T12:30:00.000Z",
+            "updatedAt": "2022-06-30T12:30:00.000Z",
+            "folder": "Folder 2"
+          },
+          {
+            "id": "sql_8ocd5ku1rk16c5ksb6",
+            "title": "Query 78 with a slightly long title that overflows",
+            "connection": "dbc_b3oa36885qxmct588y4a",
+            "database": "main",
+            "sql": "select\n  *\nfrom\n  customers",
+            "createdAt": "2022-06-30T08:30:00.000Z",
+            "updatedAt": "2022-06-30T08:30:00.000Z",
+            "folder": "Folder 2"
+          },
+          {
+            "id": "sql_8ocd5ku1rk16c5ksb2",
+            "title": "Query 82 with a quite long title that overflows",
+            "connection": "dbc_b3oa36885qxmct588y4a",
+            "database": "main",
+            "sql": "select\n  *\nfrom\n  support_tickets",
+            "createdAt": "2022-06-30T04:30:00.000Z",
+            "updatedAt": "2022-06-30T04:30:00.000Z",
+            "folder": "Folder 2"
+          },
+          {
+            "id": "sql_8ocd5ku1rk16c5ksb6",
+            "title": "Query 86 with a really long title that overflows",
+            "connection": "dbc_b3oa36885qxmct588y4a",
+            "database": "main",
+            "sql": "select\n  *\nfrom\n  Product Qlty",
+            "createdAt": "2022-06-30T00:30:00.000Z",
+            "updatedAt": "2022-06-30T00:30:00.000Z",
+            "folder": "Folder 2"
+          },
+          {
+            "id": "sql_8ocd5ku1rk16c5ksb2",
+            "title": "Query 90 with a slightly long title that overflows",
+            "connection": "dbc_b3oa36885qxmct588y4a",
+            "database": "main",
+            "sql": "select\n  *\nfrom\n  sales",
+            "createdAt": "2022-06-29T20:30:00.000Z",
+            "updatedAt": "2022-06-29T20:30:00.000Z",
+            "folder": "Folder 2"
+          },
+          {
+            "id": "sql_8ocd5ku1rk16c5ksb6",
+            "title": "Query 94 with a quite long title that overflows",
+            "connection": "dbc_b3oa36885qxmct588y4a",
+            "database": "main",
+            "sql": "select\n  *\nfrom\n  invoices",
+            "createdAt": "2022-06-29T16:30:00.000Z",
+            "updatedAt": "2022-06-29T16:30:00.000Z",
+            "folder": "Folder 2"
+          },
+          {
+            "id": "sql_8ocd5ku1rk16c5ksb2",
+            "title": "Query 98 with a really long title that overflows",
+            "connection": "dbc_b3oa36885qxmct588y4a",
+            "database": "main",
+            "sql": "select\n  *\nfrom\n  Orders",
+            "createdAt": "2022-06-29T12:30:00.000Z",
+            "updatedAt": "2022-06-29T12:30:00.000Z",
+            "folder": "Folder 2"
+          }
+        ]
+      }
     }
   ],
   "badge": "25",
@@ -279,27 +281,31 @@
           "args": {
             "id": "sql_8ocd5ku1rk16c5ksb2",
             "title": "Query 10 with a quite long title that overflows",
-            "connection": "dbc_pnkis6gmw7chjf5tjaq2",
+            "connection": "dbc_b3oa36885qxmct588y4a",
             "database": "main",
             "sql": "select\n  *\nfrom\n  invoices",
-            "createdAt": "2022-06-26T04:30:00.000Z",
-            "updatedAt": "2022-06-26T04:30:00.000Z",
+            "createdAt": "2022-07-03T04:30:00.000Z",
+            "updatedAt": "2022-07-03T04:30:00.000Z",
             "folder": "Folder 2"
           }
         },
         {
-          "command": "deleteBookmark",
+          "command": "deleteBookmarks",
           "icon": "delete",
           "title": "Delete",
           "args": {
-            "id": "sql_8ocd5ku1rk16c5ksb2",
-            "title": "Query 10 with a quite long title that overflows",
-            "connection": "dbc_pnkis6gmw7chjf5tjaq2",
-            "database": "main",
-            "sql": "select\n  *\nfrom\n  invoices",
-            "createdAt": "2022-06-26T04:30:00.000Z",
-            "updatedAt": "2022-06-26T04:30:00.000Z",
-            "folder": "Folder 2"
+            "queries": [
+              {
+                "id": "sql_8ocd5ku1rk16c5ksb2",
+                "title": "Query 10 with a quite long title that overflows",
+                "connection": "dbc_b3oa36885qxmct588y4a",
+                "database": "main",
+                "sql": "select\n  *\nfrom\n  invoices",
+                "createdAt": "2022-07-03T04:30:00.000Z",
+                "updatedAt": "2022-07-03T04:30:00.000Z",
+                "folder": "Folder 2"
+              }
+            ]
           }
         }
       ],
@@ -307,11 +313,11 @@
         "query": {
           "id": "sql_8ocd5ku1rk16c5ksb2",
           "title": "Query 10 with a quite long title that overflows",
-          "connection": "dbc_pnkis6gmw7chjf5tjaq2",
+          "connection": "dbc_b3oa36885qxmct588y4a",
           "database": "main",
           "sql": "select\n  *\nfrom\n  invoices",
-          "createdAt": "2022-06-26T04:30:00.000Z",
-          "updatedAt": "2022-06-26T04:30:00.000Z",
+          "createdAt": "2022-07-03T04:30:00.000Z",
+          "updatedAt": "2022-07-03T04:30:00.000Z",
           "folder": "Folder 2"
         }
       }
@@ -331,27 +337,31 @@
           "args": {
             "id": "sql_8ocd5ku1rk16c5ksb6",
             "title": "Query 14 with a really long title that overflows",
-            "connection": "dbc_pnkis6gmw7chjf5tjaq2",
+            "connection": "dbc_b3oa36885qxmct588y4a",
             "database": "main",
             "sql": "select\n  *\nfrom\n  Orders",
-            "createdAt": "2022-06-26T00:30:00.000Z",
-            "updatedAt": "2022-06-26T00:30:00.000Z",
+            "createdAt": "2022-07-03T00:30:00.000Z",
+            "updatedAt": "2022-07-03T00:30:00.000Z",
             "folder": "Folder 2"
           }
         },
         {
-          "command": "deleteBookmark",
+          "command": "deleteBookmarks",
           "icon": "delete",
           "title": "Delete",
           "args": {
-            "id": "sql_8ocd5ku1rk16c5ksb6",
-            "title": "Query 14 with a really long title that overflows",
-            "connection": "dbc_pnkis6gmw7chjf5tjaq2",
-            "database": "main",
-            "sql": "select\n  *\nfrom\n  Orders",
-            "createdAt": "2022-06-26T00:30:00.000Z",
-            "updatedAt": "2022-06-26T00:30:00.000Z",
-            "folder": "Folder 2"
+            "queries": [
+              {
+                "id": "sql_8ocd5ku1rk16c5ksb6",
+                "title": "Query 14 with a really long title that overflows",
+                "connection": "dbc_b3oa36885qxmct588y4a",
+                "database": "main",
+                "sql": "select\n  *\nfrom\n  Orders",
+                "createdAt": "2022-07-03T00:30:00.000Z",
+                "updatedAt": "2022-07-03T00:30:00.000Z",
+                "folder": "Folder 2"
+              }
+            ]
           }
         }
       ],
@@ -359,11 +369,11 @@
         "query": {
           "id": "sql_8ocd5ku1rk16c5ksb6",
           "title": "Query 14 with a really long title that overflows",
-          "connection": "dbc_pnkis6gmw7chjf5tjaq2",
+          "connection": "dbc_b3oa36885qxmct588y4a",
           "database": "main",
           "sql": "select\n  *\nfrom\n  Orders",
-          "createdAt": "2022-06-26T00:30:00.000Z",
-          "updatedAt": "2022-06-26T00:30:00.000Z",
+          "createdAt": "2022-07-03T00:30:00.000Z",
+          "updatedAt": "2022-07-03T00:30:00.000Z",
           "folder": "Folder 2"
         }
       }
@@ -383,27 +393,31 @@
           "args": {
             "id": "sql_8ocd5ku1rk16c5ksb2",
             "title": "Query 18 with a slightly long title that overflows",
-            "connection": "dbc_pnkis6gmw7chjf5tjaq2",
+            "connection": "dbc_b3oa36885qxmct588y4a",
             "database": "main",
             "sql": "select\n  *\nfrom\n  localAddresses",
-            "createdAt": "2022-06-25T20:30:00.000Z",
-            "updatedAt": "2022-06-25T20:30:00.000Z",
+            "createdAt": "2022-07-02T20:30:00.000Z",
+            "updatedAt": "2022-07-02T20:30:00.000Z",
             "folder": "Folder 2"
           }
         },
         {
-          "command": "deleteBookmark",
+          "command": "deleteBookmarks",
           "icon": "delete",
           "title": "Delete",
           "args": {
-            "id": "sql_8ocd5ku1rk16c5ksb2",
-            "title": "Query 18 with a slightly long title that overflows",
-            "connection": "dbc_pnkis6gmw7chjf5tjaq2",
-            "database": "main",
-            "sql": "select\n  *\nfrom\n  localAddresses",
-            "createdAt": "2022-06-25T20:30:00.000Z",
-            "updatedAt": "2022-06-25T20:30:00.000Z",
-            "folder": "Folder 2"
+            "queries": [
+              {
+                "id": "sql_8ocd5ku1rk16c5ksb2",
+                "title": "Query 18 with a slightly long title that overflows",
+                "connection": "dbc_b3oa36885qxmct588y4a",
+                "database": "main",
+                "sql": "select\n  *\nfrom\n  localAddresses",
+                "createdAt": "2022-07-02T20:30:00.000Z",
+                "updatedAt": "2022-07-02T20:30:00.000Z",
+                "folder": "Folder 2"
+              }
+            ]
           }
         }
       ],
@@ -411,11 +425,11 @@
         "query": {
           "id": "sql_8ocd5ku1rk16c5ksb2",
           "title": "Query 18 with a slightly long title that overflows",
-          "connection": "dbc_pnkis6gmw7chjf5tjaq2",
+          "connection": "dbc_b3oa36885qxmct588y4a",
           "database": "main",
           "sql": "select\n  *\nfrom\n  localAddresses",
-          "createdAt": "2022-06-25T20:30:00.000Z",
-          "updatedAt": "2022-06-25T20:30:00.000Z",
+          "createdAt": "2022-07-02T20:30:00.000Z",
+          "updatedAt": "2022-07-02T20:30:00.000Z",
           "folder": "Folder 2"
         }
       }
@@ -435,27 +449,31 @@
           "args": {
             "id": "sql_8ocd5ku1rk16c5ksb2",
             "title": "Query 2 with a really long title that overflows",
-            "connection": "dbc_pnkis6gmw7chjf5tjaq2",
+            "connection": "dbc_b3oa36885qxmct588y4a",
             "database": "main",
             "sql": "select\n  *\nfrom\n  Product Qlty",
-            "createdAt": "2022-06-26T12:30:00.000Z",
-            "updatedAt": "2022-06-26T12:30:00.000Z",
+            "createdAt": "2022-07-03T12:30:00.000Z",
+            "updatedAt": "2022-07-03T12:30:00.000Z",
             "folder": "Folder 2"
           }
         },
         {
-          "command": "deleteBookmark",
+          "command": "deleteBookmarks",
           "icon": "delete",
           "title": "Delete",
           "args": {
-            "id": "sql_8ocd5ku1rk16c5ksb2",
-            "title": "Query 2 with a really long title that overflows",
-            "connection": "dbc_pnkis6gmw7chjf5tjaq2",
-            "database": "main",
-            "sql": "select\n  *\nfrom\n  Product Qlty",
-            "createdAt": "2022-06-26T12:30:00.000Z",
-            "updatedAt": "2022-06-26T12:30:00.000Z",
-            "folder": "Folder 2"
+            "queries": [
+              {
+                "id": "sql_8ocd5ku1rk16c5ksb2",
+                "title": "Query 2 with a really long title that overflows",
+                "connection": "dbc_b3oa36885qxmct588y4a",
+                "database": "main",
+                "sql": "select\n  *\nfrom\n  Product Qlty",
+                "createdAt": "2022-07-03T12:30:00.000Z",
+                "updatedAt": "2022-07-03T12:30:00.000Z",
+                "folder": "Folder 2"
+              }
+            ]
           }
         }
       ],
@@ -463,11 +481,11 @@
         "query": {
           "id": "sql_8ocd5ku1rk16c5ksb2",
           "title": "Query 2 with a really long title that overflows",
-          "connection": "dbc_pnkis6gmw7chjf5tjaq2",
+          "connection": "dbc_b3oa36885qxmct588y4a",
           "database": "main",
           "sql": "select\n  *\nfrom\n  Product Qlty",
-          "createdAt": "2022-06-26T12:30:00.000Z",
-          "updatedAt": "2022-06-26T12:30:00.000Z",
+          "createdAt": "2022-07-03T12:30:00.000Z",
+          "updatedAt": "2022-07-03T12:30:00.000Z",
           "folder": "Folder 2"
         }
       }
@@ -487,27 +505,31 @@
           "args": {
             "id": "sql_8ocd5ku1rk16c5ksb6",
             "title": "Query 22 with a quite long title that overflows",
-            "connection": "dbc_pnkis6gmw7chjf5tjaq2",
+            "connection": "dbc_b3oa36885qxmct588y4a",
             "database": "main",
             "sql": "select\n  *\nfrom\n  customers",
-            "createdAt": "2022-06-25T16:30:00.000Z",
-            "updatedAt": "2022-06-25T16:30:00.000Z",
+            "createdAt": "2022-07-02T16:30:00.000Z",
+            "updatedAt": "2022-07-02T16:30:00.000Z",
             "folder": "Folder 2"
           }
         },
         {
-          "command": "deleteBookmark",
+          "command": "deleteBookmarks",
           "icon": "delete",
           "title": "Delete",
           "args": {
-            "id": "sql_8ocd5ku1rk16c5ksb6",
-            "title": "Query 22 with a quite long title that overflows",
-            "connection": "dbc_pnkis6gmw7chjf5tjaq2",
-            "database": "main",
-            "sql": "select\n  *\nfrom\n  customers",
-            "createdAt": "2022-06-25T16:30:00.000Z",
-            "updatedAt": "2022-06-25T16:30:00.000Z",
-            "folder": "Folder 2"
+            "queries": [
+              {
+                "id": "sql_8ocd5ku1rk16c5ksb6",
+                "title": "Query 22 with a quite long title that overflows",
+                "connection": "dbc_b3oa36885qxmct588y4a",
+                "database": "main",
+                "sql": "select\n  *\nfrom\n  customers",
+                "createdAt": "2022-07-02T16:30:00.000Z",
+                "updatedAt": "2022-07-02T16:30:00.000Z",
+                "folder": "Folder 2"
+              }
+            ]
           }
         }
       ],
@@ -515,11 +537,11 @@
         "query": {
           "id": "sql_8ocd5ku1rk16c5ksb6",
           "title": "Query 22 with a quite long title that overflows",
-          "connection": "dbc_pnkis6gmw7chjf5tjaq2",
+          "connection": "dbc_b3oa36885qxmct588y4a",
           "database": "main",
           "sql": "select\n  *\nfrom\n  customers",
-          "createdAt": "2022-06-25T16:30:00.000Z",
-          "updatedAt": "2022-06-25T16:30:00.000Z",
+          "createdAt": "2022-07-02T16:30:00.000Z",
+          "updatedAt": "2022-07-02T16:30:00.000Z",
           "folder": "Folder 2"
         }
       }
@@ -539,27 +561,31 @@
           "args": {
             "id": "sql_8ocd5ku1rk16c5ksb2",
             "title": "Query 26 with a really long title that overflows",
-            "connection": "dbc_pnkis6gmw7chjf5tjaq2",
+            "connection": "dbc_b3oa36885qxmct588y4a",
             "database": "main",
             "sql": "select\n  *\nfrom\n  support_tickets",
-            "createdAt": "2022-06-25T12:30:00.000Z",
-            "updatedAt": "2022-06-25T12:30:00.000Z",
+            "createdAt": "2022-07-02T12:30:00.000Z",
+            "updatedAt": "2022-07-02T12:30:00.000Z",
             "folder": "Folder 2"
           }
         },
         {
-          "command": "deleteBookmark",
+          "command": "deleteBookmarks",
           "icon": "delete",
           "title": "Delete",
           "args": {
-            "id": "sql_8ocd5ku1rk16c5ksb2",
-            "title": "Query 26 with a really long title that overflows",
-            "connection": "dbc_pnkis6gmw7chjf5tjaq2",
-            "database": "main",
-            "sql": "select\n  *\nfrom\n  support_tickets",
-            "createdAt": "2022-06-25T12:30:00.000Z",
-            "updatedAt": "2022-06-25T12:30:00.000Z",
-            "folder": "Folder 2"
+            "queries": [
+              {
+                "id": "sql_8ocd5ku1rk16c5ksb2",
+                "title": "Query 26 with a really long title that overflows",
+                "connection": "dbc_b3oa36885qxmct588y4a",
+                "database": "main",
+                "sql": "select\n  *\nfrom\n  support_tickets",
+                "createdAt": "2022-07-02T12:30:00.000Z",
+                "updatedAt": "2022-07-02T12:30:00.000Z",
+                "folder": "Folder 2"
+              }
+            ]
           }
         }
       ],
@@ -567,11 +593,11 @@
         "query": {
           "id": "sql_8ocd5ku1rk16c5ksb2",
           "title": "Query 26 with a really long title that overflows",
-          "connection": "dbc_pnkis6gmw7chjf5tjaq2",
+          "connection": "dbc_b3oa36885qxmct588y4a",
           "database": "main",
           "sql": "select\n  *\nfrom\n  support_tickets",
-          "createdAt": "2022-06-25T12:30:00.000Z",
-          "updatedAt": "2022-06-25T12:30:00.000Z",
+          "createdAt": "2022-07-02T12:30:00.000Z",
+          "updatedAt": "2022-07-02T12:30:00.000Z",
           "folder": "Folder 2"
         }
       }
@@ -591,27 +617,31 @@
           "args": {
             "id": "sql_8ocd5ku1rk16c5ksb6",
             "title": "Query 30 with a slightly long title that overflows",
-            "connection": "dbc_pnkis6gmw7chjf5tjaq2",
+            "connection": "dbc_b3oa36885qxmct588y4a",
             "database": "main",
             "sql": "select\n  *\nfrom\n  Product Qlty",
-            "createdAt": "2022-06-25T08:30:00.000Z",
-            "updatedAt": "2022-06-25T08:30:00.000Z",
+            "createdAt": "2022-07-02T08:30:00.000Z",
+            "updatedAt": "2022-07-02T08:30:00.000Z",
             "folder": "Folder 2"
           }
         },
         {
-          "command": "deleteBookmark",
+          "command": "deleteBookmarks",
           "icon": "delete",
           "title": "Delete",
           "args": {
-            "id": "sql_8ocd5ku1rk16c5ksb6",
-            "title": "Query 30 with a slightly long title that overflows",
-            "connection": "dbc_pnkis6gmw7chjf5tjaq2",
-            "database": "main",
-            "sql": "select\n  *\nfrom\n  Product Qlty",
-            "createdAt": "2022-06-25T08:30:00.000Z",
-            "updatedAt": "2022-06-25T08:30:00.000Z",
-            "folder": "Folder 2"
+            "queries": [
+              {
+                "id": "sql_8ocd5ku1rk16c5ksb6",
+                "title": "Query 30 with a slightly long title that overflows",
+                "connection": "dbc_b3oa36885qxmct588y4a",
+                "database": "main",
+                "sql": "select\n  *\nfrom\n  Product Qlty",
+                "createdAt": "2022-07-02T08:30:00.000Z",
+                "updatedAt": "2022-07-02T08:30:00.000Z",
+                "folder": "Folder 2"
+              }
+            ]
           }
         }
       ],
@@ -619,11 +649,11 @@
         "query": {
           "id": "sql_8ocd5ku1rk16c5ksb6",
           "title": "Query 30 with a slightly long title that overflows",
-          "connection": "dbc_pnkis6gmw7chjf5tjaq2",
+          "connection": "dbc_b3oa36885qxmct588y4a",
           "database": "main",
           "sql": "select\n  *\nfrom\n  Product Qlty",
-          "createdAt": "2022-06-25T08:30:00.000Z",
-          "updatedAt": "2022-06-25T08:30:00.000Z",
+          "createdAt": "2022-07-02T08:30:00.000Z",
+          "updatedAt": "2022-07-02T08:30:00.000Z",
           "folder": "Folder 2"
         }
       }
@@ -643,27 +673,31 @@
           "args": {
             "id": "sql_8ocd5ku1rk16c5ksb2",
             "title": "Query 34 with a quite long title that overflows",
-            "connection": "dbc_pnkis6gmw7chjf5tjaq2",
+            "connection": "dbc_b3oa36885qxmct588y4a",
             "database": "main",
             "sql": "select\n  *\nfrom\n  sales",
-            "createdAt": "2022-06-25T04:30:00.000Z",
-            "updatedAt": "2022-06-25T04:30:00.000Z",
+            "createdAt": "2022-07-02T04:30:00.000Z",
+            "updatedAt": "2022-07-02T04:30:00.000Z",
             "folder": "Folder 2"
           }
         },
         {
-          "command": "deleteBookmark",
+          "command": "deleteBookmarks",
           "icon": "delete",
           "title": "Delete",
           "args": {
-            "id": "sql_8ocd5ku1rk16c5ksb2",
-            "title": "Query 34 with a quite long title that overflows",
-            "connection": "dbc_pnkis6gmw7chjf5tjaq2",
-            "database": "main",
-            "sql": "select\n  *\nfrom\n  sales",
-            "createdAt": "2022-06-25T04:30:00.000Z",
-            "updatedAt": "2022-06-25T04:30:00.000Z",
-            "folder": "Folder 2"
+            "queries": [
+              {
+                "id": "sql_8ocd5ku1rk16c5ksb2",
+                "title": "Query 34 with a quite long title that overflows",
+                "connection": "dbc_b3oa36885qxmct588y4a",
+                "database": "main",
+                "sql": "select\n  *\nfrom\n  sales",
+                "createdAt": "2022-07-02T04:30:00.000Z",
+                "updatedAt": "2022-07-02T04:30:00.000Z",
+                "folder": "Folder 2"
+              }
+            ]
           }
         }
       ],
@@ -671,11 +705,11 @@
         "query": {
           "id": "sql_8ocd5ku1rk16c5ksb2",
           "title": "Query 34 with a quite long title that overflows",
-          "connection": "dbc_pnkis6gmw7chjf5tjaq2",
+          "connection": "dbc_b3oa36885qxmct588y4a",
           "database": "main",
           "sql": "select\n  *\nfrom\n  sales",
-          "createdAt": "2022-06-25T04:30:00.000Z",
-          "updatedAt": "2022-06-25T04:30:00.000Z",
+          "createdAt": "2022-07-02T04:30:00.000Z",
+          "updatedAt": "2022-07-02T04:30:00.000Z",
           "folder": "Folder 2"
         }
       }
@@ -695,27 +729,31 @@
           "args": {
             "id": "sql_8ocd5ku1rk16c5ksb6",
             "title": "Query 38 with a really long title that overflows",
-            "connection": "dbc_pnkis6gmw7chjf5tjaq2",
+            "connection": "dbc_b3oa36885qxmct588y4a",
             "database": "main",
             "sql": "select\n  *\nfrom\n  invoices",
-            "createdAt": "2022-06-25T00:30:00.000Z",
-            "updatedAt": "2022-06-25T00:30:00.000Z",
+            "createdAt": "2022-07-02T00:30:00.000Z",
+            "updatedAt": "2022-07-02T00:30:00.000Z",
             "folder": "Folder 2"
           }
         },
         {
-          "command": "deleteBookmark",
+          "command": "deleteBookmarks",
           "icon": "delete",
           "title": "Delete",
           "args": {
-            "id": "sql_8ocd5ku1rk16c5ksb6",
-            "title": "Query 38 with a really long title that overflows",
-            "connection": "dbc_pnkis6gmw7chjf5tjaq2",
-            "database": "main",
-            "sql": "select\n  *\nfrom\n  invoices",
-            "createdAt": "2022-06-25T00:30:00.000Z",
-            "updatedAt": "2022-06-25T00:30:00.000Z",
-            "folder": "Folder 2"
+            "queries": [
+              {
+                "id": "sql_8ocd5ku1rk16c5ksb6",
+                "title": "Query 38 with a really long title that overflows",
+                "connection": "dbc_b3oa36885qxmct588y4a",
+                "database": "main",
+                "sql": "select\n  *\nfrom\n  invoices",
+                "createdAt": "2022-07-02T00:30:00.000Z",
+                "updatedAt": "2022-07-02T00:30:00.000Z",
+                "folder": "Folder 2"
+              }
+            ]
           }
         }
       ],
@@ -723,11 +761,11 @@
         "query": {
           "id": "sql_8ocd5ku1rk16c5ksb6",
           "title": "Query 38 with a really long title that overflows",
-          "connection": "dbc_pnkis6gmw7chjf5tjaq2",
+          "connection": "dbc_b3oa36885qxmct588y4a",
           "database": "main",
           "sql": "select\n  *\nfrom\n  invoices",
-          "createdAt": "2022-06-25T00:30:00.000Z",
-          "updatedAt": "2022-06-25T00:30:00.000Z",
+          "createdAt": "2022-07-02T00:30:00.000Z",
+          "updatedAt": "2022-07-02T00:30:00.000Z",
           "folder": "Folder 2"
         }
       }
@@ -747,27 +785,31 @@
           "args": {
             "id": "sql_8ocd5ku1rk16c5ksb2",
             "title": "Query 42 with a slightly long title that overflows",
-            "connection": "dbc_pnkis6gmw7chjf5tjaq2",
+            "connection": "dbc_b3oa36885qxmct588y4a",
             "database": "main",
             "sql": "select\n  *\nfrom\n  Orders",
-            "createdAt": "2022-06-24T20:30:00.000Z",
-            "updatedAt": "2022-06-24T20:30:00.000Z",
+            "createdAt": "2022-07-01T20:30:00.000Z",
+            "updatedAt": "2022-07-01T20:30:00.000Z",
             "folder": "Folder 2"
           }
         },
         {
-          "command": "deleteBookmark",
+          "command": "deleteBookmarks",
           "icon": "delete",
           "title": "Delete",
           "args": {
-            "id": "sql_8ocd5ku1rk16c5ksb2",
-            "title": "Query 42 with a slightly long title that overflows",
-            "connection": "dbc_pnkis6gmw7chjf5tjaq2",
-            "database": "main",
-            "sql": "select\n  *\nfrom\n  Orders",
-            "createdAt": "2022-06-24T20:30:00.000Z",
-            "updatedAt": "2022-06-24T20:30:00.000Z",
-            "folder": "Folder 2"
+            "queries": [
+              {
+                "id": "sql_8ocd5ku1rk16c5ksb2",
+                "title": "Query 42 with a slightly long title that overflows",
+                "connection": "dbc_b3oa36885qxmct588y4a",
+                "database": "main",
+                "sql": "select\n  *\nfrom\n  Orders",
+                "createdAt": "2022-07-01T20:30:00.000Z",
+                "updatedAt": "2022-07-01T20:30:00.000Z",
+                "folder": "Folder 2"
+              }
+            ]
           }
         }
       ],
@@ -775,11 +817,11 @@
         "query": {
           "id": "sql_8ocd5ku1rk16c5ksb2",
           "title": "Query 42 with a slightly long title that overflows",
-          "connection": "dbc_pnkis6gmw7chjf5tjaq2",
+          "connection": "dbc_b3oa36885qxmct588y4a",
           "database": "main",
           "sql": "select\n  *\nfrom\n  Orders",
-          "createdAt": "2022-06-24T20:30:00.000Z",
-          "updatedAt": "2022-06-24T20:30:00.000Z",
+          "createdAt": "2022-07-01T20:30:00.000Z",
+          "updatedAt": "2022-07-01T20:30:00.000Z",
           "folder": "Folder 2"
         }
       }
@@ -799,27 +841,31 @@
           "args": {
             "id": "sql_8ocd5ku1rk16c5ksb6",
             "title": "Query 46 with a quite long title that overflows",
-            "connection": "dbc_pnkis6gmw7chjf5tjaq2",
+            "connection": "dbc_b3oa36885qxmct588y4a",
             "database": "main",
             "sql": "select\n  *\nfrom\n  localAddresses",
-            "createdAt": "2022-06-24T16:30:00.000Z",
-            "updatedAt": "2022-06-24T16:30:00.000Z",
+            "createdAt": "2022-07-01T16:30:00.000Z",
+            "updatedAt": "2022-07-01T16:30:00.000Z",
             "folder": "Folder 2"
           }
         },
         {
-          "command": "deleteBookmark",
+          "command": "deleteBookmarks",
           "icon": "delete",
           "title": "Delete",
           "args": {
-            "id": "sql_8ocd5ku1rk16c5ksb6",
-            "title": "Query 46 with a quite long title that overflows",
-            "connection": "dbc_pnkis6gmw7chjf5tjaq2",
-            "database": "main",
-            "sql": "select\n  *\nfrom\n  localAddresses",
-            "createdAt": "2022-06-24T16:30:00.000Z",
-            "updatedAt": "2022-06-24T16:30:00.000Z",
-            "folder": "Folder 2"
+            "queries": [
+              {
+                "id": "sql_8ocd5ku1rk16c5ksb6",
+                "title": "Query 46 with a quite long title that overflows",
+                "connection": "dbc_b3oa36885qxmct588y4a",
+                "database": "main",
+                "sql": "select\n  *\nfrom\n  localAddresses",
+                "createdAt": "2022-07-01T16:30:00.000Z",
+                "updatedAt": "2022-07-01T16:30:00.000Z",
+                "folder": "Folder 2"
+              }
+            ]
           }
         }
       ],
@@ -827,11 +873,11 @@
         "query": {
           "id": "sql_8ocd5ku1rk16c5ksb6",
           "title": "Query 46 with a quite long title that overflows",
-          "connection": "dbc_pnkis6gmw7chjf5tjaq2",
+          "connection": "dbc_b3oa36885qxmct588y4a",
           "database": "main",
           "sql": "select\n  *\nfrom\n  localAddresses",
-          "createdAt": "2022-06-24T16:30:00.000Z",
-          "updatedAt": "2022-06-24T16:30:00.000Z",
+          "createdAt": "2022-07-01T16:30:00.000Z",
+          "updatedAt": "2022-07-01T16:30:00.000Z",
           "folder": "Folder 2"
         }
       }
@@ -851,27 +897,31 @@
           "args": {
             "id": "sql_8ocd5ku1rk16c5ksb2",
             "title": "Query 50 with a really long title that overflows",
-            "connection": "dbc_pnkis6gmw7chjf5tjaq2",
+            "connection": "dbc_b3oa36885qxmct588y4a",
             "database": "main",
             "sql": "select\n  *\nfrom\n  customers",
-            "createdAt": "2022-06-24T12:30:00.000Z",
-            "updatedAt": "2022-06-24T12:30:00.000Z",
+            "createdAt": "2022-07-01T12:30:00.000Z",
+            "updatedAt": "2022-07-01T12:30:00.000Z",
             "folder": "Folder 2"
           }
         },
         {
-          "command": "deleteBookmark",
+          "command": "deleteBookmarks",
           "icon": "delete",
           "title": "Delete",
           "args": {
-            "id": "sql_8ocd5ku1rk16c5ksb2",
-            "title": "Query 50 with a really long title that overflows",
-            "connection": "dbc_pnkis6gmw7chjf5tjaq2",
-            "database": "main",
-            "sql": "select\n  *\nfrom\n  customers",
-            "createdAt": "2022-06-24T12:30:00.000Z",
-            "updatedAt": "2022-06-24T12:30:00.000Z",
-            "folder": "Folder 2"
+            "queries": [
+              {
+                "id": "sql_8ocd5ku1rk16c5ksb2",
+                "title": "Query 50 with a really long title that overflows",
+                "connection": "dbc_b3oa36885qxmct588y4a",
+                "database": "main",
+                "sql": "select\n  *\nfrom\n  customers",
+                "createdAt": "2022-07-01T12:30:00.000Z",
+                "updatedAt": "2022-07-01T12:30:00.000Z",
+                "folder": "Folder 2"
+              }
+            ]
           }
         }
       ],
@@ -879,11 +929,11 @@
         "query": {
           "id": "sql_8ocd5ku1rk16c5ksb2",
           "title": "Query 50 with a really long title that overflows",
-          "connection": "dbc_pnkis6gmw7chjf5tjaq2",
+          "connection": "dbc_b3oa36885qxmct588y4a",
           "database": "main",
           "sql": "select\n  *\nfrom\n  customers",
-          "createdAt": "2022-06-24T12:30:00.000Z",
-          "updatedAt": "2022-06-24T12:30:00.000Z",
+          "createdAt": "2022-07-01T12:30:00.000Z",
+          "updatedAt": "2022-07-01T12:30:00.000Z",
           "folder": "Folder 2"
         }
       }
@@ -903,27 +953,31 @@
           "args": {
             "id": "sql_8ocd5ku1rk16c5ksb6",
             "title": "Query 54 with a slightly long title that overflows",
-            "connection": "dbc_pnkis6gmw7chjf5tjaq2",
+            "connection": "dbc_b3oa36885qxmct588y4a",
             "database": "main",
             "sql": "select\n  *\nfrom\n  support_tickets",
-            "createdAt": "2022-06-24T08:30:00.000Z",
-            "updatedAt": "2022-06-24T08:30:00.000Z",
+            "createdAt": "2022-07-01T08:30:00.000Z",
+            "updatedAt": "2022-07-01T08:30:00.000Z",
             "folder": "Folder 2"
           }
         },
         {
-          "command": "deleteBookmark",
+          "command": "deleteBookmarks",
           "icon": "delete",
           "title": "Delete",
           "args": {
-            "id": "sql_8ocd5ku1rk16c5ksb6",
-            "title": "Query 54 with a slightly long title that overflows",
-            "connection": "dbc_pnkis6gmw7chjf5tjaq2",
-            "database": "main",
-            "sql": "select\n  *\nfrom\n  support_tickets",
-            "createdAt": "2022-06-24T08:30:00.000Z",
-            "updatedAt": "2022-06-24T08:30:00.000Z",
-            "folder": "Folder 2"
+            "queries": [
+              {
+                "id": "sql_8ocd5ku1rk16c5ksb6",
+                "title": "Query 54 with a slightly long title that overflows",
+                "connection": "dbc_b3oa36885qxmct588y4a",
+                "database": "main",
+                "sql": "select\n  *\nfrom\n  support_tickets",
+                "createdAt": "2022-07-01T08:30:00.000Z",
+                "updatedAt": "2022-07-01T08:30:00.000Z",
+                "folder": "Folder 2"
+              }
+            ]
           }
         }
       ],
@@ -931,11 +985,11 @@
         "query": {
           "id": "sql_8ocd5ku1rk16c5ksb6",
           "title": "Query 54 with a slightly long title that overflows",
-          "connection": "dbc_pnkis6gmw7chjf5tjaq2",
+          "connection": "dbc_b3oa36885qxmct588y4a",
           "database": "main",
           "sql": "select\n  *\nfrom\n  support_tickets",
-          "createdAt": "2022-06-24T08:30:00.000Z",
-          "updatedAt": "2022-06-24T08:30:00.000Z",
+          "createdAt": "2022-07-01T08:30:00.000Z",
+          "updatedAt": "2022-07-01T08:30:00.000Z",
           "folder": "Folder 2"
         }
       }
@@ -955,27 +1009,31 @@
           "args": {
             "id": "sql_8ocd5ku1rk16c5ksb2",
             "title": "Query 58 with a quite long title that overflows",
-            "connection": "dbc_pnkis6gmw7chjf5tjaq2",
+            "connection": "dbc_b3oa36885qxmct588y4a",
             "database": "main",
             "sql": "select\n  *\nfrom\n  Product Qlty",
-            "createdAt": "2022-06-24T04:30:00.000Z",
-            "updatedAt": "2022-06-24T04:30:00.000Z",
+            "createdAt": "2022-07-01T04:30:00.000Z",
+            "updatedAt": "2022-07-01T04:30:00.000Z",
             "folder": "Folder 2"
           }
         },
         {
-          "command": "deleteBookmark",
+          "command": "deleteBookmarks",
           "icon": "delete",
           "title": "Delete",
           "args": {
-            "id": "sql_8ocd5ku1rk16c5ksb2",
-            "title": "Query 58 with a quite long title that overflows",
-            "connection": "dbc_pnkis6gmw7chjf5tjaq2",
-            "database": "main",
-            "sql": "select\n  *\nfrom\n  Product Qlty",
-            "createdAt": "2022-06-24T04:30:00.000Z",
-            "updatedAt": "2022-06-24T04:30:00.000Z",
-            "folder": "Folder 2"
+            "queries": [
+              {
+                "id": "sql_8ocd5ku1rk16c5ksb2",
+                "title": "Query 58 with a quite long title that overflows",
+                "connection": "dbc_b3oa36885qxmct588y4a",
+                "database": "main",
+                "sql": "select\n  *\nfrom\n  Product Qlty",
+                "createdAt": "2022-07-01T04:30:00.000Z",
+                "updatedAt": "2022-07-01T04:30:00.000Z",
+                "folder": "Folder 2"
+              }
+            ]
           }
         }
       ],
@@ -983,11 +1041,11 @@
         "query": {
           "id": "sql_8ocd5ku1rk16c5ksb2",
           "title": "Query 58 with a quite long title that overflows",
-          "connection": "dbc_pnkis6gmw7chjf5tjaq2",
+          "connection": "dbc_b3oa36885qxmct588y4a",
           "database": "main",
           "sql": "select\n  *\nfrom\n  Product Qlty",
-          "createdAt": "2022-06-24T04:30:00.000Z",
-          "updatedAt": "2022-06-24T04:30:00.000Z",
+          "createdAt": "2022-07-01T04:30:00.000Z",
+          "updatedAt": "2022-07-01T04:30:00.000Z",
           "folder": "Folder 2"
         }
       }
@@ -1007,27 +1065,31 @@
           "args": {
             "id": "sql_8ocd5ku1rk16c5ksb6",
             "title": "Query 6 with a slightly long title that overflows",
-            "connection": "dbc_pnkis6gmw7chjf5tjaq2",
+            "connection": "dbc_b3oa36885qxmct588y4a",
             "database": "main",
             "sql": "select\n  *\nfrom\n  sales",
-            "createdAt": "2022-06-26T08:30:00.000Z",
-            "updatedAt": "2022-06-26T08:30:00.000Z",
+            "createdAt": "2022-07-03T08:30:00.000Z",
+            "updatedAt": "2022-07-03T08:30:00.000Z",
             "folder": "Folder 2"
           }
         },
         {
-          "command": "deleteBookmark",
+          "command": "deleteBookmarks",
           "icon": "delete",
           "title": "Delete",
           "args": {
-            "id": "sql_8ocd5ku1rk16c5ksb6",
-            "title": "Query 6 with a slightly long title that overflows",
-            "connection": "dbc_pnkis6gmw7chjf5tjaq2",
-            "database": "main",
-            "sql": "select\n  *\nfrom\n  sales",
-            "createdAt": "2022-06-26T08:30:00.000Z",
-            "updatedAt": "2022-06-26T08:30:00.000Z",
-            "folder": "Folder 2"
+            "queries": [
+              {
+                "id": "sql_8ocd5ku1rk16c5ksb6",
+                "title": "Query 6 with a slightly long title that overflows",
+                "connection": "dbc_b3oa36885qxmct588y4a",
+                "database": "main",
+                "sql": "select\n  *\nfrom\n  sales",
+                "createdAt": "2022-07-03T08:30:00.000Z",
+                "updatedAt": "2022-07-03T08:30:00.000Z",
+                "folder": "Folder 2"
+              }
+            ]
           }
         }
       ],
@@ -1035,11 +1097,11 @@
         "query": {
           "id": "sql_8ocd5ku1rk16c5ksb6",
           "title": "Query 6 with a slightly long title that overflows",
-          "connection": "dbc_pnkis6gmw7chjf5tjaq2",
+          "connection": "dbc_b3oa36885qxmct588y4a",
           "database": "main",
           "sql": "select\n  *\nfrom\n  sales",
-          "createdAt": "2022-06-26T08:30:00.000Z",
-          "updatedAt": "2022-06-26T08:30:00.000Z",
+          "createdAt": "2022-07-03T08:30:00.000Z",
+          "updatedAt": "2022-07-03T08:30:00.000Z",
           "folder": "Folder 2"
         }
       }
@@ -1059,27 +1121,31 @@
           "args": {
             "id": "sql_8ocd5ku1rk16c5ksb6",
             "title": "Query 62 with a really long title that overflows",
-            "connection": "dbc_pnkis6gmw7chjf5tjaq2",
+            "connection": "dbc_b3oa36885qxmct588y4a",
             "database": "main",
             "sql": "select\n  *\nfrom\n  sales",
-            "createdAt": "2022-06-24T00:30:00.000Z",
-            "updatedAt": "2022-06-24T00:30:00.000Z",
+            "createdAt": "2022-07-01T00:30:00.000Z",
+            "updatedAt": "2022-07-01T00:30:00.000Z",
             "folder": "Folder 2"
           }
         },
         {
-          "command": "deleteBookmark",
+          "command": "deleteBookmarks",
           "icon": "delete",
           "title": "Delete",
           "args": {
-            "id": "sql_8ocd5ku1rk16c5ksb6",
-            "title": "Query 62 with a really long title that overflows",
-            "connection": "dbc_pnkis6gmw7chjf5tjaq2",
-            "database": "main",
-            "sql": "select\n  *\nfrom\n  sales",
-            "createdAt": "2022-06-24T00:30:00.000Z",
-            "updatedAt": "2022-06-24T00:30:00.000Z",
-            "folder": "Folder 2"
+            "queries": [
+              {
+                "id": "sql_8ocd5ku1rk16c5ksb6",
+                "title": "Query 62 with a really long title that overflows",
+                "connection": "dbc_b3oa36885qxmct588y4a",
+                "database": "main",
+                "sql": "select\n  *\nfrom\n  sales",
+                "createdAt": "2022-07-01T00:30:00.000Z",
+                "updatedAt": "2022-07-01T00:30:00.000Z",
+                "folder": "Folder 2"
+              }
+            ]
           }
         }
       ],
@@ -1087,11 +1153,11 @@
         "query": {
           "id": "sql_8ocd5ku1rk16c5ksb6",
           "title": "Query 62 with a really long title that overflows",
-          "connection": "dbc_pnkis6gmw7chjf5tjaq2",
+          "connection": "dbc_b3oa36885qxmct588y4a",
           "database": "main",
           "sql": "select\n  *\nfrom\n  sales",
-          "createdAt": "2022-06-24T00:30:00.000Z",
-          "updatedAt": "2022-06-24T00:30:00.000Z",
+          "createdAt": "2022-07-01T00:30:00.000Z",
+          "updatedAt": "2022-07-01T00:30:00.000Z",
           "folder": "Folder 2"
         }
       }
@@ -1111,27 +1177,31 @@
           "args": {
             "id": "sql_8ocd5ku1rk16c5ksb2",
             "title": "Query 66 with a slightly long title that overflows",
-            "connection": "dbc_pnkis6gmw7chjf5tjaq2",
+            "connection": "dbc_b3oa36885qxmct588y4a",
             "database": "main",
             "sql": "select\n  *\nfrom\n  invoices",
-            "createdAt": "2022-06-23T20:30:00.000Z",
-            "updatedAt": "2022-06-23T20:30:00.000Z",
+            "createdAt": "2022-06-30T20:30:00.000Z",
+            "updatedAt": "2022-06-30T20:30:00.000Z",
             "folder": "Folder 2"
           }
         },
         {
-          "command": "deleteBookmark",
+          "command": "deleteBookmarks",
           "icon": "delete",
           "title": "Delete",
           "args": {
-            "id": "sql_8ocd5ku1rk16c5ksb2",
-            "title": "Query 66 with a slightly long title that overflows",
-            "connection": "dbc_pnkis6gmw7chjf5tjaq2",
-            "database": "main",
-            "sql": "select\n  *\nfrom\n  invoices",
-            "createdAt": "2022-06-23T20:30:00.000Z",
-            "updatedAt": "2022-06-23T20:30:00.000Z",
-            "folder": "Folder 2"
+            "queries": [
+              {
+                "id": "sql_8ocd5ku1rk16c5ksb2",
+                "title": "Query 66 with a slightly long title that overflows",
+                "connection": "dbc_b3oa36885qxmct588y4a",
+                "database": "main",
+                "sql": "select\n  *\nfrom\n  invoices",
+                "createdAt": "2022-06-30T20:30:00.000Z",
+                "updatedAt": "2022-06-30T20:30:00.000Z",
+                "folder": "Folder 2"
+              }
+            ]
           }
         }
       ],
@@ -1139,11 +1209,11 @@
         "query": {
           "id": "sql_8ocd5ku1rk16c5ksb2",
           "title": "Query 66 with a slightly long title that overflows",
-          "connection": "dbc_pnkis6gmw7chjf5tjaq2",
+          "connection": "dbc_b3oa36885qxmct588y4a",
           "database": "main",
           "sql": "select\n  *\nfrom\n  invoices",
-          "createdAt": "2022-06-23T20:30:00.000Z",
-          "updatedAt": "2022-06-23T20:30:00.000Z",
+          "createdAt": "2022-06-30T20:30:00.000Z",
+          "updatedAt": "2022-06-30T20:30:00.000Z",
           "folder": "Folder 2"
         }
       }
@@ -1163,27 +1233,31 @@
           "args": {
             "id": "sql_8ocd5ku1rk16c5ksb6",
             "title": "Query 70 with a quite long title that overflows",
-            "connection": "dbc_pnkis6gmw7chjf5tjaq2",
+            "connection": "dbc_b3oa36885qxmct588y4a",
             "database": "main",
             "sql": "select\n  *\nfrom\n  Orders",
-            "createdAt": "2022-06-23T16:30:00.000Z",
-            "updatedAt": "2022-06-23T16:30:00.000Z",
+            "createdAt": "2022-06-30T16:30:00.000Z",
+            "updatedAt": "2022-06-30T16:30:00.000Z",
             "folder": "Folder 2"
           }
         },
         {
-          "command": "deleteBookmark",
+          "command": "deleteBookmarks",
           "icon": "delete",
           "title": "Delete",
           "args": {
-            "id": "sql_8ocd5ku1rk16c5ksb6",
-            "title": "Query 70 with a quite long title that overflows",
-            "connection": "dbc_pnkis6gmw7chjf5tjaq2",
-            "database": "main",
-            "sql": "select\n  *\nfrom\n  Orders",
-            "createdAt": "2022-06-23T16:30:00.000Z",
-            "updatedAt": "2022-06-23T16:30:00.000Z",
-            "folder": "Folder 2"
+            "queries": [
+              {
+                "id": "sql_8ocd5ku1rk16c5ksb6",
+                "title": "Query 70 with a quite long title that overflows",
+                "connection": "dbc_b3oa36885qxmct588y4a",
+                "database": "main",
+                "sql": "select\n  *\nfrom\n  Orders",
+                "createdAt": "2022-06-30T16:30:00.000Z",
+                "updatedAt": "2022-06-30T16:30:00.000Z",
+                "folder": "Folder 2"
+              }
+            ]
           }
         }
       ],
@@ -1191,11 +1265,11 @@
         "query": {
           "id": "sql_8ocd5ku1rk16c5ksb6",
           "title": "Query 70 with a quite long title that overflows",
-          "connection": "dbc_pnkis6gmw7chjf5tjaq2",
+          "connection": "dbc_b3oa36885qxmct588y4a",
           "database": "main",
           "sql": "select\n  *\nfrom\n  Orders",
-          "createdAt": "2022-06-23T16:30:00.000Z",
-          "updatedAt": "2022-06-23T16:30:00.000Z",
+          "createdAt": "2022-06-30T16:30:00.000Z",
+          "updatedAt": "2022-06-30T16:30:00.000Z",
           "folder": "Folder 2"
         }
       }
@@ -1215,27 +1289,31 @@
           "args": {
             "id": "sql_8ocd5ku1rk16c5ksb2",
             "title": "Query 74 with a really long title that overflows",
-            "connection": "dbc_pnkis6gmw7chjf5tjaq2",
+            "connection": "dbc_b3oa36885qxmct588y4a",
             "database": "main",
             "sql": "select\n  *\nfrom\n  localAddresses",
-            "createdAt": "2022-06-23T12:30:00.000Z",
-            "updatedAt": "2022-06-23T12:30:00.000Z",
+            "createdAt": "2022-06-30T12:30:00.000Z",
+            "updatedAt": "2022-06-30T12:30:00.000Z",
             "folder": "Folder 2"
           }
         },
         {
-          "command": "deleteBookmark",
+          "command": "deleteBookmarks",
           "icon": "delete",
           "title": "Delete",
           "args": {
-            "id": "sql_8ocd5ku1rk16c5ksb2",
-            "title": "Query 74 with a really long title that overflows",
-            "connection": "dbc_pnkis6gmw7chjf5tjaq2",
-            "database": "main",
-            "sql": "select\n  *\nfrom\n  localAddresses",
-            "createdAt": "2022-06-23T12:30:00.000Z",
-            "updatedAt": "2022-06-23T12:30:00.000Z",
-            "folder": "Folder 2"
+            "queries": [
+              {
+                "id": "sql_8ocd5ku1rk16c5ksb2",
+                "title": "Query 74 with a really long title that overflows",
+                "connection": "dbc_b3oa36885qxmct588y4a",
+                "database": "main",
+                "sql": "select\n  *\nfrom\n  localAddresses",
+                "createdAt": "2022-06-30T12:30:00.000Z",
+                "updatedAt": "2022-06-30T12:30:00.000Z",
+                "folder": "Folder 2"
+              }
+            ]
           }
         }
       ],
@@ -1243,11 +1321,11 @@
         "query": {
           "id": "sql_8ocd5ku1rk16c5ksb2",
           "title": "Query 74 with a really long title that overflows",
-          "connection": "dbc_pnkis6gmw7chjf5tjaq2",
+          "connection": "dbc_b3oa36885qxmct588y4a",
           "database": "main",
           "sql": "select\n  *\nfrom\n  localAddresses",
-          "createdAt": "2022-06-23T12:30:00.000Z",
-          "updatedAt": "2022-06-23T12:30:00.000Z",
+          "createdAt": "2022-06-30T12:30:00.000Z",
+          "updatedAt": "2022-06-30T12:30:00.000Z",
           "folder": "Folder 2"
         }
       }
@@ -1267,27 +1345,31 @@
           "args": {
             "id": "sql_8ocd5ku1rk16c5ksb6",
             "title": "Query 78 with a slightly long title that overflows",
-            "connection": "dbc_pnkis6gmw7chjf5tjaq2",
+            "connection": "dbc_b3oa36885qxmct588y4a",
             "database": "main",
             "sql": "select\n  *\nfrom\n  customers",
-            "createdAt": "2022-06-23T08:30:00.000Z",
-            "updatedAt": "2022-06-23T08:30:00.000Z",
+            "createdAt": "2022-06-30T08:30:00.000Z",
+            "updatedAt": "2022-06-30T08:30:00.000Z",
             "folder": "Folder 2"
           }
         },
         {
-          "command": "deleteBookmark",
+          "command": "deleteBookmarks",
           "icon": "delete",
           "title": "Delete",
           "args": {
-            "id": "sql_8ocd5ku1rk16c5ksb6",
-            "title": "Query 78 with a slightly long title that overflows",
-            "connection": "dbc_pnkis6gmw7chjf5tjaq2",
-            "database": "main",
-            "sql": "select\n  *\nfrom\n  customers",
-            "createdAt": "2022-06-23T08:30:00.000Z",
-            "updatedAt": "2022-06-23T08:30:00.000Z",
-            "folder": "Folder 2"
+            "queries": [
+              {
+                "id": "sql_8ocd5ku1rk16c5ksb6",
+                "title": "Query 78 with a slightly long title that overflows",
+                "connection": "dbc_b3oa36885qxmct588y4a",
+                "database": "main",
+                "sql": "select\n  *\nfrom\n  customers",
+                "createdAt": "2022-06-30T08:30:00.000Z",
+                "updatedAt": "2022-06-30T08:30:00.000Z",
+                "folder": "Folder 2"
+              }
+            ]
           }
         }
       ],
@@ -1295,11 +1377,11 @@
         "query": {
           "id": "sql_8ocd5ku1rk16c5ksb6",
           "title": "Query 78 with a slightly long title that overflows",
-          "connection": "dbc_pnkis6gmw7chjf5tjaq2",
+          "connection": "dbc_b3oa36885qxmct588y4a",
           "database": "main",
           "sql": "select\n  *\nfrom\n  customers",
-          "createdAt": "2022-06-23T08:30:00.000Z",
-          "updatedAt": "2022-06-23T08:30:00.000Z",
+          "createdAt": "2022-06-30T08:30:00.000Z",
+          "updatedAt": "2022-06-30T08:30:00.000Z",
           "folder": "Folder 2"
         }
       }
@@ -1319,27 +1401,31 @@
           "args": {
             "id": "sql_8ocd5ku1rk16c5ksb2",
             "title": "Query 82 with a quite long title that overflows",
-            "connection": "dbc_pnkis6gmw7chjf5tjaq2",
+            "connection": "dbc_b3oa36885qxmct588y4a",
             "database": "main",
             "sql": "select\n  *\nfrom\n  support_tickets",
-            "createdAt": "2022-06-23T04:30:00.000Z",
-            "updatedAt": "2022-06-23T04:30:00.000Z",
+            "createdAt": "2022-06-30T04:30:00.000Z",
+            "updatedAt": "2022-06-30T04:30:00.000Z",
             "folder": "Folder 2"
           }
         },
         {
-          "command": "deleteBookmark",
+          "command": "deleteBookmarks",
           "icon": "delete",
           "title": "Delete",
           "args": {
-            "id": "sql_8ocd5ku1rk16c5ksb2",
-            "title": "Query 82 with a quite long title that overflows",
-            "connection": "dbc_pnkis6gmw7chjf5tjaq2",
-            "database": "main",
-            "sql": "select\n  *\nfrom\n  support_tickets",
-            "createdAt": "2022-06-23T04:30:00.000Z",
-            "updatedAt": "2022-06-23T04:30:00.000Z",
-            "folder": "Folder 2"
+            "queries": [
+              {
+                "id": "sql_8ocd5ku1rk16c5ksb2",
+                "title": "Query 82 with a quite long title that overflows",
+                "connection": "dbc_b3oa36885qxmct588y4a",
+                "database": "main",
+                "sql": "select\n  *\nfrom\n  support_tickets",
+                "createdAt": "2022-06-30T04:30:00.000Z",
+                "updatedAt": "2022-06-30T04:30:00.000Z",
+                "folder": "Folder 2"
+              }
+            ]
           }
         }
       ],
@@ -1347,11 +1433,11 @@
         "query": {
           "id": "sql_8ocd5ku1rk16c5ksb2",
           "title": "Query 82 with a quite long title that overflows",
-          "connection": "dbc_pnkis6gmw7chjf5tjaq2",
+          "connection": "dbc_b3oa36885qxmct588y4a",
           "database": "main",
           "sql": "select\n  *\nfrom\n  support_tickets",
-          "createdAt": "2022-06-23T04:30:00.000Z",
-          "updatedAt": "2022-06-23T04:30:00.000Z",
+          "createdAt": "2022-06-30T04:30:00.000Z",
+          "updatedAt": "2022-06-30T04:30:00.000Z",
           "folder": "Folder 2"
         }
       }
@@ -1371,27 +1457,31 @@
           "args": {
             "id": "sql_8ocd5ku1rk16c5ksb6",
             "title": "Query 86 with a really long title that overflows",
-            "connection": "dbc_pnkis6gmw7chjf5tjaq2",
+            "connection": "dbc_b3oa36885qxmct588y4a",
             "database": "main",
             "sql": "select\n  *\nfrom\n  Product Qlty",
-            "createdAt": "2022-06-23T00:30:00.000Z",
-            "updatedAt": "2022-06-23T00:30:00.000Z",
+            "createdAt": "2022-06-30T00:30:00.000Z",
+            "updatedAt": "2022-06-30T00:30:00.000Z",
             "folder": "Folder 2"
           }
         },
         {
-          "command": "deleteBookmark",
+          "command": "deleteBookmarks",
           "icon": "delete",
           "title": "Delete",
           "args": {
-            "id": "sql_8ocd5ku1rk16c5ksb6",
-            "title": "Query 86 with a really long title that overflows",
-            "connection": "dbc_pnkis6gmw7chjf5tjaq2",
-            "database": "main",
-            "sql": "select\n  *\nfrom\n  Product Qlty",
-            "createdAt": "2022-06-23T00:30:00.000Z",
-            "updatedAt": "2022-06-23T00:30:00.000Z",
-            "folder": "Folder 2"
+            "queries": [
+              {
+                "id": "sql_8ocd5ku1rk16c5ksb6",
+                "title": "Query 86 with a really long title that overflows",
+                "connection": "dbc_b3oa36885qxmct588y4a",
+                "database": "main",
+                "sql": "select\n  *\nfrom\n  Product Qlty",
+                "createdAt": "2022-06-30T00:30:00.000Z",
+                "updatedAt": "2022-06-30T00:30:00.000Z",
+                "folder": "Folder 2"
+              }
+            ]
           }
         }
       ],
@@ -1399,11 +1489,11 @@
         "query": {
           "id": "sql_8ocd5ku1rk16c5ksb6",
           "title": "Query 86 with a really long title that overflows",
-          "connection": "dbc_pnkis6gmw7chjf5tjaq2",
+          "connection": "dbc_b3oa36885qxmct588y4a",
           "database": "main",
           "sql": "select\n  *\nfrom\n  Product Qlty",
-          "createdAt": "2022-06-23T00:30:00.000Z",
-          "updatedAt": "2022-06-23T00:30:00.000Z",
+          "createdAt": "2022-06-30T00:30:00.000Z",
+          "updatedAt": "2022-06-30T00:30:00.000Z",
           "folder": "Folder 2"
         }
       }
@@ -1423,27 +1513,31 @@
           "args": {
             "id": "sql_8ocd5ku1rk16c5ksb2",
             "title": "Query 90 with a slightly long title that overflows",
-            "connection": "dbc_pnkis6gmw7chjf5tjaq2",
+            "connection": "dbc_b3oa36885qxmct588y4a",
             "database": "main",
             "sql": "select\n  *\nfrom\n  sales",
-            "createdAt": "2022-06-22T20:30:00.000Z",
-            "updatedAt": "2022-06-22T20:30:00.000Z",
+            "createdAt": "2022-06-29T20:30:00.000Z",
+            "updatedAt": "2022-06-29T20:30:00.000Z",
             "folder": "Folder 2"
           }
         },
         {
-          "command": "deleteBookmark",
+          "command": "deleteBookmarks",
           "icon": "delete",
           "title": "Delete",
           "args": {
-            "id": "sql_8ocd5ku1rk16c5ksb2",
-            "title": "Query 90 with a slightly long title that overflows",
-            "connection": "dbc_pnkis6gmw7chjf5tjaq2",
-            "database": "main",
-            "sql": "select\n  *\nfrom\n  sales",
-            "createdAt": "2022-06-22T20:30:00.000Z",
-            "updatedAt": "2022-06-22T20:30:00.000Z",
-            "folder": "Folder 2"
+            "queries": [
+              {
+                "id": "sql_8ocd5ku1rk16c5ksb2",
+                "title": "Query 90 with a slightly long title that overflows",
+                "connection": "dbc_b3oa36885qxmct588y4a",
+                "database": "main",
+                "sql": "select\n  *\nfrom\n  sales",
+                "createdAt": "2022-06-29T20:30:00.000Z",
+                "updatedAt": "2022-06-29T20:30:00.000Z",
+                "folder": "Folder 2"
+              }
+            ]
           }
         }
       ],
@@ -1451,11 +1545,11 @@
         "query": {
           "id": "sql_8ocd5ku1rk16c5ksb2",
           "title": "Query 90 with a slightly long title that overflows",
-          "connection": "dbc_pnkis6gmw7chjf5tjaq2",
+          "connection": "dbc_b3oa36885qxmct588y4a",
           "database": "main",
           "sql": "select\n  *\nfrom\n  sales",
-          "createdAt": "2022-06-22T20:30:00.000Z",
-          "updatedAt": "2022-06-22T20:30:00.000Z",
+          "createdAt": "2022-06-29T20:30:00.000Z",
+          "updatedAt": "2022-06-29T20:30:00.000Z",
           "folder": "Folder 2"
         }
       }
@@ -1475,27 +1569,31 @@
           "args": {
             "id": "sql_8ocd5ku1rk16c5ksb6",
             "title": "Query 94 with a quite long title that overflows",
-            "connection": "dbc_pnkis6gmw7chjf5tjaq2",
+            "connection": "dbc_b3oa36885qxmct588y4a",
             "database": "main",
             "sql": "select\n  *\nfrom\n  invoices",
-            "createdAt": "2022-06-22T16:30:00.000Z",
-            "updatedAt": "2022-06-22T16:30:00.000Z",
+            "createdAt": "2022-06-29T16:30:00.000Z",
+            "updatedAt": "2022-06-29T16:30:00.000Z",
             "folder": "Folder 2"
           }
         },
         {
-          "command": "deleteBookmark",
+          "command": "deleteBookmarks",
           "icon": "delete",
           "title": "Delete",
           "args": {
-            "id": "sql_8ocd5ku1rk16c5ksb6",
-            "title": "Query 94 with a quite long title that overflows",
-            "connection": "dbc_pnkis6gmw7chjf5tjaq2",
-            "database": "main",
-            "sql": "select\n  *\nfrom\n  invoices",
-            "createdAt": "2022-06-22T16:30:00.000Z",
-            "updatedAt": "2022-06-22T16:30:00.000Z",
-            "folder": "Folder 2"
+            "queries": [
+              {
+                "id": "sql_8ocd5ku1rk16c5ksb6",
+                "title": "Query 94 with a quite long title that overflows",
+                "connection": "dbc_b3oa36885qxmct588y4a",
+                "database": "main",
+                "sql": "select\n  *\nfrom\n  invoices",
+                "createdAt": "2022-06-29T16:30:00.000Z",
+                "updatedAt": "2022-06-29T16:30:00.000Z",
+                "folder": "Folder 2"
+              }
+            ]
           }
         }
       ],
@@ -1503,11 +1601,11 @@
         "query": {
           "id": "sql_8ocd5ku1rk16c5ksb6",
           "title": "Query 94 with a quite long title that overflows",
-          "connection": "dbc_pnkis6gmw7chjf5tjaq2",
+          "connection": "dbc_b3oa36885qxmct588y4a",
           "database": "main",
           "sql": "select\n  *\nfrom\n  invoices",
-          "createdAt": "2022-06-22T16:30:00.000Z",
-          "updatedAt": "2022-06-22T16:30:00.000Z",
+          "createdAt": "2022-06-29T16:30:00.000Z",
+          "updatedAt": "2022-06-29T16:30:00.000Z",
           "folder": "Folder 2"
         }
       }
@@ -1527,27 +1625,31 @@
           "args": {
             "id": "sql_8ocd5ku1rk16c5ksb2",
             "title": "Query 98 with a really long title that overflows",
-            "connection": "dbc_pnkis6gmw7chjf5tjaq2",
+            "connection": "dbc_b3oa36885qxmct588y4a",
             "database": "main",
             "sql": "select\n  *\nfrom\n  Orders",
-            "createdAt": "2022-06-22T12:30:00.000Z",
-            "updatedAt": "2022-06-22T12:30:00.000Z",
+            "createdAt": "2022-06-29T12:30:00.000Z",
+            "updatedAt": "2022-06-29T12:30:00.000Z",
             "folder": "Folder 2"
           }
         },
         {
-          "command": "deleteBookmark",
+          "command": "deleteBookmarks",
           "icon": "delete",
           "title": "Delete",
           "args": {
-            "id": "sql_8ocd5ku1rk16c5ksb2",
-            "title": "Query 98 with a really long title that overflows",
-            "connection": "dbc_pnkis6gmw7chjf5tjaq2",
-            "database": "main",
-            "sql": "select\n  *\nfrom\n  Orders",
-            "createdAt": "2022-06-22T12:30:00.000Z",
-            "updatedAt": "2022-06-22T12:30:00.000Z",
-            "folder": "Folder 2"
+            "queries": [
+              {
+                "id": "sql_8ocd5ku1rk16c5ksb2",
+                "title": "Query 98 with a really long title that overflows",
+                "connection": "dbc_b3oa36885qxmct588y4a",
+                "database": "main",
+                "sql": "select\n  *\nfrom\n  Orders",
+                "createdAt": "2022-06-29T12:30:00.000Z",
+                "updatedAt": "2022-06-29T12:30:00.000Z",
+                "folder": "Folder 2"
+              }
+            ]
           }
         }
       ],
@@ -1555,11 +1657,11 @@
         "query": {
           "id": "sql_8ocd5ku1rk16c5ksb2",
           "title": "Query 98 with a really long title that overflows",
-          "connection": "dbc_pnkis6gmw7chjf5tjaq2",
+          "connection": "dbc_b3oa36885qxmct588y4a",
           "database": "main",
           "sql": "select\n  *\nfrom\n  Orders",
-          "createdAt": "2022-06-22T12:30:00.000Z",
-          "updatedAt": "2022-06-22T12:30:00.000Z",
+          "createdAt": "2022-06-29T12:30:00.000Z",
+          "updatedAt": "2022-06-29T12:30:00.000Z",
           "folder": "Folder 2"
         }
       }
