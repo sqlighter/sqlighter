@@ -6,19 +6,20 @@ import { SxProps, Theme } from "@mui/material"
 import Box from "@mui/material/Box"
 import Grid from "@mui/material/Grid"
 import Typography from "@mui/material/Typography"
+
 import { Icon } from "../ui/icon"
 import { Spacer } from "./spacer" 
 
 const Touts_SxProps: SxProps<Theme> = {
   ".Touts-item": {
-    maxWidth: 300,
-    margin: "0 auto",
+    maxWidth: 320,
+    marginLeft: 0,
+    marginRight: "auto",
   },
 
   ".Touts-icon": {
     width: 48,
     height: 48,
-    marginBottom: 2,
 
     color: "white",
     backgroundColor: "primary.main",
@@ -30,9 +31,12 @@ const Touts_SxProps: SxProps<Theme> = {
   },
 
   ".Touts-title": {
-    marginBottom: 2,
-    fontWeight: 500,
+    marginTop: 2,
+    fontWeight: "bold",
   },
+  ".Touts-description": {
+    marginTop: 1
+  }
 }
 
 interface ToutsProps {
