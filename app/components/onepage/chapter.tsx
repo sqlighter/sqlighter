@@ -204,6 +204,7 @@ export function Chapter(props: ChapterProps) {
             <Grid className="Chapter-image" item xs={12} md={6} />
           </Grid>
         </Container>
+        {isWideScreen && <Spacer />}
       </Box>
     )
   }
