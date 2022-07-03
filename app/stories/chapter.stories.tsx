@@ -8,22 +8,8 @@ import Button from "@mui/material/Button"
 import { StorybookDecorator } from "./helpers/storybook"
 import { Chapter } from "../components/onepage/chapter"
 import { Icon } from "../components/ui/icon"
-
-function TryButton(props) {
-  return (
-    <Button variant="outlined" href="/app" size="large" startIcon={<Icon>sqlighter</Icon>}>
-      Try Today
-    </Button>
-  )
-}
-
-function ContributeButton(props) {
-  return (
-    <Button variant="text" href="https://github.com/sqlighter/sqlighter" size="large" startIcon={<Icon>github</Icon>}>
-      Contribute
-    </Button>
-  )
-}
+import { TryButton } from "../components/onepage/trybutton"
+import { ContributeButton } from "../components/onepage/contributebutton"
 
 export default {
   title: "OnePage/Chapter",

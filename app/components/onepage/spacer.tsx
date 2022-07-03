@@ -3,19 +3,23 @@
 //
 
 import Box from "@mui/material/Box"
+import { useWideScreen } from "../hooks/usewidescreen"
 
 interface SpacerProps {
   /** Amount of space, default is large */
   height?: "small" | "large" | number
 }
 
-/** Empty box that adds vertical space */
+/** Empty box that adds responsive vertical space */
 export function Spacer(props: SpacerProps) {
-  let height = 100
+  const [isWideScreen] = useWideScreen()
+  let height = isWideScreen ? 80 : 36
+
   if (props.height == "small") {
-    height = 40
+    height = isWideScreen ? 36 : 16
   } else if (typeof props.height == "number") {
     height = props.height
   }
+
   return <Box sx={{ height }} />
 }

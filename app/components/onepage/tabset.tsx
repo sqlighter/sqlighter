@@ -10,6 +10,7 @@ import Typography from "@mui/material/Typography"
 import Tab from "@mui/material/Tab"
 import Tabs from "@mui/material/Tabs"
 
+import { useWideScreen } from "../hooks/usewidescreen"
 import { Spacer } from "./spacer"
 
 export const TABSET_LOOPING_MS = 6000
@@ -84,6 +85,12 @@ interface TabSetProps {
 
 /** Show a set of product features in a tabbed section of a one page site */
 export function TabSet(props: TabSetProps) {
+  //
+  // state
+  //
+
+  const [isWideScreen] = useWideScreen()
+
   const className = "TabSet-root" + (props.className ? " " + props.className : "")
 
   // will rotate tabs automatically until user clicks on a tab and interrupts the loop
@@ -97,10 +104,18 @@ export function TabSet(props: TabSetProps) {
     }
   }, [value])
 
+  //
+  // handlers
+  //
+
   function handleChange(event, newValue: number) {
     setLooping(false)
     setValue(newValue)
   }
+
+  //
+  // render
+  //
 
   function renderTab(tab, index) {
     const label = (
@@ -119,7 +134,7 @@ export function TabSet(props: TabSetProps) {
   function renderContents() {
     return (
       <Grid item className="TabSet-contents" xs={12} md={6}>
-        <Typography className="TabSet-title" variant="h4">
+        <Typography className="TabSet-title" variant={isWideScreen ? "h4" : "h5"}>
           {props.title}
         </Typography>
         <Tabs orientation="vertical" variant="scrollable" value={value} onChange={handleChange}>

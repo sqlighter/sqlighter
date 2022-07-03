@@ -3,41 +3,26 @@
 //
 
 import { SxProps, Theme } from "@mui/material"
-import Typography from "@mui/material/Typography"
 import Box from "@mui/material/Box"
-import Button from "@mui/material/Button"
-import Divider from "@mui/material/Divider"
 
-import { Icon } from "../components/ui/icon"
 import { OnePageLayout } from "../components/onepage/onepagelayout"
 import { Area } from "../components/onepage/area"
 import { TabSet } from "../components/onepage/tabset"
 import { Touts } from "../components/onepage/touts"
 import { Faq } from "../components/onepage/faq"
 import { Chapter } from "../components/onepage/chapter"
+import { TryButton } from "../components/onepage/trybutton"
+import { ContributeButton } from "../components/onepage/contributebutton"
 
 const Site_SxProps: SxProps<Theme> = {
+  // theme color for background
+  // backgroundColor: (theme: any) => alpha(theme.palette.primary.lightest, 0.40),
+
   ".Site-hero": {
     ".Chapter-icon": {
       marginLeft: "-10px",
     },
   },
-}
-
-export function TryButton(props) {
-  return (
-    <Button variant="outlined" href="/app" size="large" startIcon={<Icon>sqlighter</Icon>}>
-      Try Today
-    </Button>
-  )
-}
-
-export function ContributeButton(props) {
-  return (
-    <Button variant="text" href="https://github.com/sqlighter/sqlighter" size="large" startIcon={<Icon>github</Icon>}>
-      Contribute
-    </Button>
-  )
 }
 
 export default function SitePage() {
@@ -49,12 +34,7 @@ export default function SitePage() {
           icon="/branding/mark-primary.png"
           title="Secure, smart, and easy to use email"
           description="Get more done with Gmail. Now integrated with Google Chat, Google Meet, and more, all in one place."
-          buttons={
-            <>
-              <TryButton />
-              <ContributeButton />
-            </>
-          }
+          buttons={<TryButton variant="contained" />}
           image="/site/hero.webp"
           variant="left"
           size="large"
@@ -177,7 +157,7 @@ export default function SitePage() {
         <Chapter
           icon="/branding/mark-primary.png"
           title="Show the world how it’s done"
-          description="Get started today with a more powerful tool"
+          description="Get started with a more powerful tool today"
           image="/site/closing.webp"
           buttons={<TryButton />}
           variant="center"

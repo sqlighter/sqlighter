@@ -8,6 +8,8 @@ import Container from "@mui/material/Container"
 import Grid from "@mui/material/Grid"
 import Stack from "@mui/material/Stack"
 import Typography from "@mui/material/Typography"
+
+import { useWideScreen } from "../hooks/usewidescreen"
 import { Spacer } from "./spacer"
 
 const Chapter_Center_SxProps = (props: ChapterProps): SxProps<Theme> => {
@@ -115,6 +117,8 @@ export function Chapter(props: ChapterProps) {
   // state
   //
 
+  const [isWideScreen] = useWideScreen()
+
   const variant = props.variant || "center"
   const size = props.size || "default"
   let className = `Chapter-root Chapter-${variant}`
@@ -123,6 +127,12 @@ export function Chapter(props: ChapterProps) {
   }
   if (props.className) {
     className += " " + props.className
+  }
+
+  // title fontSize based on "hero" and desktop/mobile
+  let titleVariant: "h2" | "h3" | "h4" | "h5" = size == "large" ? "h3" : "h5"
+  if (isWideScreen) {
+    titleVariant = size == "large" ? "h2" : "h4"
   }
 
   //
@@ -139,7 +149,7 @@ export function Chapter(props: ChapterProps) {
               <img src={props.icon} alt={props.title} />
             </Box>
           )}
-          <Typography className="Chapter-title" variant="h4" color="text.primary">
+          <Typography className="Chapter-title" variant={titleVariant} color="text.primary">
             {props.title}
           </Typography>
           <Typography className="Chapter-description" variant="h6" color="text.secondary">
@@ -173,7 +183,7 @@ export function Chapter(props: ChapterProps) {
                   <img src={props.icon || "/branding/logo.png"} alt={props.title} />
                 </Box>
               )}
-              <Typography className="Chapter-title" variant={size == "large" ? "h2" : "h3"} color="text.primary">
+              <Typography className="Chapter-title" variant={titleVariant} color="text.primary">
                 {props.title}
               </Typography>
               <Typography className="Chapter-description" variant="h6" color="text.secondary">
