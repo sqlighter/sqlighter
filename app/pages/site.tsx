@@ -39,7 +39,7 @@ export default function SitePage() {
           variant="left"
           size="large"
         />
-        <Area>
+        <Area background="gray">
           <TabSet
             title="Email that's secure, private, and puts you in control"
             tabs={[

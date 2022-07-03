@@ -4,10 +4,8 @@
 
 import React from "react"
 import { ComponentStory, ComponentMeta } from "@storybook/react"
-import Button from "@mui/material/Button"
 import { StorybookDecorator } from "./helpers/storybook"
 import { Chapter } from "../components/onepage/chapter"
-import { Icon } from "../components/ui/icon"
 import { TryButton } from "../components/onepage/trybutton"
 import { ContributeButton } from "../components/onepage/contributebutton"
 
