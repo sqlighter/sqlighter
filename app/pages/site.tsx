@@ -139,7 +139,7 @@ export default function SitePage() {
         </Area>
         <Chapter
           icon="/site/family.svg"
-          title="Gmail is now part of Google Workspace"
+          title="100% Open Source"
           description="Collaborate faster, from any device, anytime, all in one place."
           text="Google Workspace is a set of productivity and collaboration tools that helps individuals, teams, and businesses stay on top of everything. It is a flexible, innovative solution that includes all your favorite apps like Gmail, Calendar, Drive, Docs, Meet, and more."
           buttons={<ContributeButton />}

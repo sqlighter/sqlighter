@@ -15,7 +15,7 @@ import { Spacer } from "./spacer"
 
 const Faq_SxProps: SxProps<Theme> = {
   ".Faq-title": {
-    fontWeight: 500,
+    fontWeight: "bold",
     marginBottom: 3,
   },
   ".Faq-link": {
@@ -27,21 +27,26 @@ const Faq_SxProps: SxProps<Theme> = {
     opacity: 1,
     display: "block",
   },
+
   ".MuiPaper-root.MuiAccordion-root.Mui-expanded + .MuiPaper-root.MuiAccordion-root.Mui-expanded:before": {
     opacity: 1,
     display: "block",
   },
+
   ".MuiAccordion-root": {
     backgroundColor: "transparent",
     boxShadow: "none",
     border: "none",
   },
+
   ".MuiAccordionSummary-root": {
     paddingLeft: 0,
   },
+
   ".MuiAccordionSummary-expandIconWrapper": {
     color: "primary.main",
   },
+
   ".MuiAccordionDetails-root": {
     userSelect: "none",
     paddingLeft: 0,

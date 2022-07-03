@@ -10,62 +10,62 @@ import Typography from "@mui/material/Typography"
 import Tab from "@mui/material/Tab"
 import Tabs from "@mui/material/Tabs"
 
-export const TABSET_IMAGE_HEIGHT = 600
+import { Spacer } from "./spacer"
+
 export const TABSET_LOOPING_MS = 6000
 
 const TabSet_SxProps: SxProps<Theme> = {
+  ".TabSet-contents": {
+    maxWidth: 560,
+  },
+  
+  ".TabSet-title": {
+    fontWeight: "bold",
+    marginBottom: 4,
+  },
+
+  ".TabSet-tabTitle": {
+    fontWeight: "bold",
+  },
+
+  ".TabSet-tabDescription": {
+   marginTop: 1,
+  },
+  
+  ".TabSet-image": {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    img: {
+      flexShrink: 0,
+      maxWidth: 1,
+      maxHeight: 1,
+    },
+  },
+
   ".MuiTabs-root": {
     borderRight: "none",
   },
+  
   ".MuiTabs-indicator": {
     right: null,
     left: 0,
     width: 4,
   },
+  
   ".MuiButtonBase-root": {
     justifyContent: "start",
     textAlign: "left",
   },
+  
   ".MuiTab-root": {
     textTransform: "none",
     alignItems: "start",
     maxWidth: "none",
 
     paddingTop: 0,
-    paddingBottom: 1,
-    paddingLeft: 3,
-    marginBottom: 3,
-  },
-
-  ".TabSet-contents": {
-    maxWidth: 560,
-  },
-  ".TabSet-title": {
-    // fontSize: "42px",
-    fontWeight: 500,
-    lineHeight: 1.2,
-    marginBottom: 3,
-  },
-  ".TabSet-tabTitle": {
-    fontSize: "22px",
-    fontWeight: 500,
-    lineHeight: 1.2,
-    marginBottom: 1,
-  },
-  ".TabSet-tabDescription": {
-    lineHeight: 1.4,
-  },
-
-  ".TabSet-image": {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    // overflow: "hidden",
-    img: {
-      flexShrink: 0,
-      maxWidth: 1,
-      maxHeight: 1,
-    },
+    paddingLeft: 2,
+    marginBottom: 2,
   },
 }
 
@@ -131,17 +131,15 @@ export function TabSet(props: TabSetProps) {
 
   return (
     <Box className={className} sx={TabSet_SxProps}>
+      <Spacer />
       <Grid container spacing={2}>
         {props.variant !== "right" && renderContents()}
         <Grid className="TabSet-image" item xs={12} md={6}>
-          <img
-            src={props.tabs[value].image}
-            style={{ maxHeight: props.imageHeight || TABSET_IMAGE_HEIGHT }}
-            loading="lazy"
-          />
+          <img src={props.tabs[value].image} title={props.tabs[value].title} />
         </Grid>
         {props.variant === "right" && renderContents()}
       </Grid>
+      <Spacer />
     </Box>
   )
 }
