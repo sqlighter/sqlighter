@@ -5,42 +5,94 @@
 import { SxProps, Theme } from "@mui/material"
 import Box from "@mui/material/Box"
 import Container from "@mui/material/Container"
+import Grid from "@mui/material/Grid"
+import Stack from "@mui/material/Stack"
 import Typography from "@mui/material/Typography"
 import { Spacer } from "./spacer"
 
-const ChapterCentered_SxProps: SxProps<Theme> = {
-  ".Chapter-container": {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-
-  ".Chapter-title": {
-    marginTop: 2,
-    fontWeight: 500,
-    textAlign: "center",
-  },
-
-  ".Chapter-description": {
-    textAlign: "center",
-  },
-
-  ".Chapter-buttons": {
-    marginTop: 4,
-  },
-
-  ".Chapter-image": {
-    height: 240,
-    maxWidth: 1,
-    marginTop: 2,
-    img: {
-      height: 240,
-      position: "absolute",
-      left: "50%",
-      transform: "translateX(-50%)",
+const Chapter_Center_SxProps = (props: ChapterProps): SxProps<Theme> => {
+  return {
+    ".Chapter-container": {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
     },
-  },
+
+    ".Chapter-title": {
+      marginTop: 2,
+      fontWeight: "bold",
+      textAlign: "center",
+    },
+
+    ".Chapter-description": {
+      textAlign: "center",
+    },
+    ".Chapter-text": {
+      marginTop: 4,
+      textAlign: "center",
+      maxWidth: 720,
+    },
+
+    ".Chapter-buttons": {
+      marginTop: 4,
+    },
+
+    ".Chapter-image": {
+      height: 240,
+      width: 1,
+      maxWidth: 1,
+      marginTop: 2,
+
+      backgroundImage: props.image ? `url("${props.image}")` : undefined,
+      backgroundPosition: "center bottom",
+      backgroundRepeat: "no-repeat",
+      backgroundSize: "cover",
+    },
+  }
+}
+
+const Chapter_Left_SxProps = (props: ChapterProps): SxProps<Theme> => {
+  return {
+    ".Chapter-container": {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "left",
+      justifyContent: "middle",
+    },
+
+    ".Chapter-title": {
+      marginTop: 2,
+      fontWeight: "bold",
+    },
+    ".Chapter-description": {
+      marginTop: 2,
+    },
+    ".Chapter-text": {
+      marginTop: 4,
+    },
+
+    ".Chapter-buttons": {
+      marginTop: 4,
+    },
+
+    ".Chapter-image": {
+      height: 480,
+      maxHeight: 480,
+      width: 1,
+      maxWidth: 1,
+      textAlign: "center",
+
+      img: {
+        height: "auto",
+        maxHeight: 480,
+        maxWidth: "120%",
+
+        marginLeft: "auto",
+        marginRight: "auto",
+      },
+    },
+  }
 }
 
 interface ChapterProps {
@@ -52,12 +104,14 @@ interface ChapterProps {
   title: any
   /** Description for section */
   description: any
-  /** Image shown at bottom of panel, should develop horizontally */
-  image: string
+  /** Further descriptive text (optional) */
+  text?: string
+  /** Image shown at bottom of panel, should develop horizontally (optional) */
+  image?: string
   /** Buttons */
   buttons?: any
-  /** Layout variant, default "centered" */
-  variant?: "centered" | "left"
+  /** Layout variant, default "center" */
+  variant?: "center" | "left"
   /** Title size, use large for hero chapter */
   size?: "default" | "large"
 }
@@ -68,7 +122,7 @@ export function Chapter(props: ChapterProps) {
   // state
   //
 
-  const variant = props.variant || "centered"
+  const variant = props.variant || "center"
   const size = props.size || "default"
   let className = `Chapter-root Chapter-${variant}`
   if (props.size === "large") {
@@ -82,24 +136,76 @@ export function Chapter(props: ChapterProps) {
   // render
   //
 
-  return (
-    <Box className={className} sx={ChapterCentered_SxProps}>
-      <Spacer />
-      <Container className="Chapter-container" maxWidth="lg">
-        <Box className="Chapter-icon">
-          <img src={props.icon || "/branding/logo.png"} alt={props.title} />
-        </Box>
-        <Typography className="Chapter-title" variant="h4" color="text.primary">
-          {props.title}
-        </Typography>
-        <Typography className="Chapter-description" variant="h5" color="text.secondary">
-          {props.description}
-        </Typography>
-        {props.buttons && <Box className="Chapter-buttons">{props.buttons}</Box>}
-      </Container>
-      <Box className="Chapter-image">
-        <img src={props.image} alt={props.title} />
+  function renderCenter() {
+    return (
+      <Box className={className} sx={Chapter_Center_SxProps(props)}>
+        <Container className="Chapter-container" maxWidth="lg">
+          <Spacer />
+          {props.icon && (
+            <Box className="Chapter-icon">
+              <img src={props.icon} alt={props.title} />
+            </Box>
+          )}
+          <Typography className="Chapter-title" variant="h4" color="text.primary">
+            {props.title}
+          </Typography>
+          <Typography className="Chapter-description" variant="h6" color="text.secondary">
+            {props.description}
+          </Typography>
+          {props.text && (
+            <Typography className="Chapter-text" variant="body1" color="text.secondary">
+              {props.text}
+            </Typography>
+          )}
+          {props.buttons && (
+            <Stack className="Chapter-buttons" direction="row" spacing={2}>
+              {props.buttons}
+            </Stack>
+          )}
+        </Container>
+        {props.image ? <Box className="Chapter-image" /> : <Spacer />}
       </Box>
-    </Box>
-  )
+    )
+  }
+
+  function renderLeft() {
+    return (
+      <Box className={className} sx={Chapter_Left_SxProps(props)}>
+        <Container className="Chapter-container" maxWidth="lg">
+          <Grid container spacing={2} alignItems="center">
+            <Grid item xs={12} md={6}>
+              <Spacer />
+              {props.icon && (
+                <Box className="Chapter-icon">
+                  <img src={props.icon || "/branding/logo.png"} alt={props.title} />
+                </Box>
+              )}
+              <Typography className="Chapter-title" variant={size == "large" ? "h2" : "h3"} color="text.primary">
+                {props.title}
+              </Typography>
+              <Typography className="Chapter-description" variant="h6" color="text.secondary">
+                {props.description}
+              </Typography>
+              {props.text && (
+                <Typography className="Chapter-text" variant="body1" color="text.secondary">
+                  {props.text}
+                </Typography>
+              )}
+              {props.buttons && (
+                <Stack className="Chapter-buttons" direction={variant == "left" ? "row" : "column"} spacing={2}>
+                  {props.buttons}
+                </Stack>
+              )}
+              <Spacer />
+            </Grid>
+            <Grid className="Chapter-image" item xs={12} md={6}>
+              <img src={props.image} alt={props.title} />
+            </Grid>
+          </Grid>
+        </Container>
+      </Box>
+    )
+  }
+
+  return variant == "left" ? renderLeft() : renderCenter()
 }
