@@ -211,7 +211,6 @@ async function getItems(req: NextApiRequest, res: NextApiResponse, itemType: str
     .orderBy("createdAt", "desc")
 
   res.json({ data: unpackItems(items) })
-  res.end()
 }
 
 /** Updates a single item as long as its found and ownership is confirmed or creates as new and assigns owner */
@@ -250,7 +249,6 @@ async function updateItem(req: NextApiRequest, res: NextApiResponse, itemType: s
   // return updated item as result
   const updatedItem = await itemsTable.selectItem(itemId)
   res.json({ data: updatedItem })
-  res.end()
 }
 
 /** Deletes a single item as long as its found and ownership is confirmed */
