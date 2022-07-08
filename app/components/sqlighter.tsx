@@ -62,7 +62,7 @@ export default function Sqlighter(props: SqlighterProps) {
   const [history, setHistory] = useState<Query[]>([])
 
   // cloud stored bookmarks
-  const { bookmarks, setBookmarks } = useBookmarks()
+  const { bookmarks, setBookmarks } = useBookmarks(props.user)
 
   //
   // temporary code while we work out the connection setup panels, etc

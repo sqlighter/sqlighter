@@ -4,14 +4,15 @@
 
 import { useItems } from "./useitems"
 import { Query } from "../../lib/items/query"
+import { User } from "../../lib/items/users"
 
 /** A hook to retrieve and modify queries that have been bookmarked on the server */
-export function useBookmarks() {
-  const props = useItems<Query>("/api/queries")
+export function useBookmarks(user: User) {
+  const props = useItems<Query>(user && "/api/queries")
   return {
-    bookmarks: props.items,
-    setBookmarks: props.setItems,
-    loadingBookmarks: props.loadingItems,
-    mutateBookmarks: props.mutateItems,
+    bookmarks: props?.items,
+    setBookmarks: props?.setItems,
+    loadingBookmarks: props?.loadingItems,
+    mutateBookmarks: props?.mutateItems,
   }
 }
