@@ -9644,6 +9644,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"csv-parse@npm:^5.2.2":
+  version: 5.2.2
+  resolution: "csv-parse@npm:5.2.2"
+  checksum: ef84d0813daa775fab8d817123f5ea5d9689de528b5431c6cd5c45251186f1055af519aadb4280eab97e588b2536de5a1c78e2118b0698f98fb2449495c80fa9
+  languageName: node
+  linkType: hard
+
 "currently-unhandled@npm:^0.4.1":
   version: 0.4.1
   resolution: "currently-unhandled@npm:0.4.1"
@@ -19300,6 +19307,7 @@ __metadata:
     babel-jest: ^28.1.0
     babel-loader: ^8.2.5
     cookie: ^0.5.0
+    csv-parse: ^5.2.2
     date-fns: ^2.28.0
     dayjs: ^1.11.3
     dotenv: ^16.0.1

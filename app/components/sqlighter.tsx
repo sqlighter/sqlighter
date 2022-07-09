@@ -126,7 +126,7 @@ export default function Sqlighter(props: SqlighterProps) {
       if (!file) {
         // let user pick a database file to open
         const pickerOpts = {
-          types: [{ description: "SQLite", accept: { "application/*": [".db", ".sqlite"] } }],
+          types: [{ description: "SQLite", accept: { "application/*": [".db", ".sqlite", ".csv"] } }],
           excludeAcceptAllOption: true,
           multiple: false,
         }
@@ -141,11 +141,24 @@ export default function Sqlighter(props: SqlighterProps) {
         }
       }
 
-      // TODO will recognize .csv files and parse them separately maybe with special connection?
+      let connection = null
 
-      const config = { client: "sqlite3", connection: { file } }
-      const connection = DataConnectionFactory.create(config)
-      await connection.connect(sqljs)
+      if (file.name.toLowerCase().endsWith(".db") || file.name.toLowerCase().endsWith(".sqlite")) {
+        const config = { client: "sqlite3", connection: { file } }
+        connection = DataConnectionFactory.create(config)
+        await connection.connect(sqljs)
+      } else {
+        // see if we can import this file istead
+        const config = { client: "sqlite3", connection: { } }
+        connection = DataConnectionFactory.create(config)
+        await connection.connect(sqljs)
+
+        if (connection.canImport(file)) {
+          await connection.import(file)
+        } else {
+          throw new Error(`Sqlighter.openFile - file type not supported`)
+        }
+      }
 
       setConnection(connection)
       setConnections([connection, ...(connections || [])])
@@ -157,6 +170,11 @@ export default function Sqlighter(props: SqlighterProps) {
       console.error(`Sqlighter.openFile - ${exception}`, exception)
       throw exception
     }
+  }
+
+  function openCsv(file?: File | FileSystemFileHandle): Promise<DataConnection> {
+
+    return null
   }
 
   /** Add home panel if not opened yet, select tab */

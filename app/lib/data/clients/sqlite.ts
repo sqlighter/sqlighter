@@ -4,6 +4,7 @@
 
 import { DataConnection, DataConfig, DataSchema, DataTableSchema, DataError } from "../connections"
 import { Database, QueryExecResult } from "sql.js"
+import { parse } from "csv-parse"
 
 export const SQLITE3_CLIENT_ID = "sqlite3"
 
@@ -316,8 +317,85 @@ export class SqliteDataConnection extends DataConnection {
   }
 
   //
-  // export
+  // import/export
   //
+
+  /** True if data connection can import data from the given file */
+  public canImport(file: File | FileSystemFileHandle): boolean {
+    const canImport = Boolean(file?.name?.toLowerCase().endsWith(".csv"))
+    console.debug(`SqliteDataConnection.canImport('${file.name}') - ${canImport}`, file)
+    return canImport
+  }
+
+  /**
+   * Import data in the given format
+   * @param database Which specific database to import to? Default null for main
+   * @param table Specific table to be imported, default null for new table
+   * @returns The name of the database and imported table, number of columns, number of rows
+   */
+  public async import(
+    file: File | FileSystemFileHandle,
+    database?: string,
+    table?: string
+  ): Promise<{ database: string; table: string; columns: number; rows: number }> {
+    if (file?.name?.toLowerCase().endsWith(".csv")) {
+      if (file instanceof FileSystemFileHandle) {
+        file = await file.getFile()
+      }
+
+      if (!database) {
+        const schemas = await this.getSchemas()
+        database = schemas[0].database
+      }
+
+      let table = null
+      let columns = null
+
+      let numColumns = 0
+      let numRows = 0
+
+      const options = { relax_quotes: true, rtrim: true, ltrim: true }
+      const parser = parse(options)
+      parser.on("readable", async () => {
+        let record
+        while ((record = parser.read()) !== null) {
+          if (table) {
+            // insert record in table
+            const values = record.map((r) => `'${r}'`).join(",")
+            const sql = `insert into '${table}' (${columns}) values (${values});`
+            await this.getResult(sql)
+            numRows++
+          } else {
+            // create table where records will be inserted
+            table = "Data"
+            columns = record.map((r) => `'${r}'`).join(",")
+            numColumns = record.length
+            const sql = `create table '${table}' (${columns});`
+
+            const result = await this.getResult(sql)
+            console.debug(sql, result)
+          }
+        }
+      })
+      parser.on("end", function () {
+        //
+      })
+
+      // this can probably be condensed by piping
+      const stream: any = file.stream()
+      const reader = stream.getReader()
+      while (true) {
+        const { value, done } = await reader.read()
+        if (value) {
+          parser.write(value)
+        }
+        if (done) break
+      }
+      parser.end()
+
+      return { database, table, rows: numRows, columns: numColumns }
+    }
+  }
 
   /**
    * True if data connection can export data for the given database, table and format

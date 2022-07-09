@@ -34,6 +34,7 @@
     "allotment": "^1.14.1",
     "assert-strict": "^0.0.2",
     "cookie": "^0.5.0",
+    "csv-parse": "^5.2.2",
     "date-fns": "^2.28.0",
     "dayjs": "^1.11.3",
     "dotenv": "^16.0.1",

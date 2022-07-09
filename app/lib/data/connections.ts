@@ -244,8 +244,23 @@ export abstract class DataConnection {
   public abstract getRowsModified(): Promise<number>
 
   //
-  // export
+  // import/export
   //
+
+  /** True if data connection can import data from the given file */
+  public canImport(file: File | FileSystemFileHandle): boolean {
+    return false
+  }
+
+  /**
+   * Import data in the given format
+   * @param database Which specific database to import to? Default null for main
+   * @param table Specific table to be imported, default null for new table
+   * @returns The name of the database and imported table, number of columns, number of rows
+   */
+  public async import(file: File | FileSystemFileHandle, database?: string, table?: string): Promise<{ database: string, table: string, columns: number, rows: number }> {
+    return null
+  }
 
   /** True if data connection can export data for the given database, table and format */
   public canExport(database?: string, table?: string, format?: string): boolean {
