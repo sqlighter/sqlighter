@@ -28,7 +28,7 @@
     "@monaco-editor/react": "^4.4.5",
     "@mui/icons-material": "^5.8.4",
     "@mui/lab": "^5.0.0-alpha.88",
-    "@mui/material": "^5.8.1",
+    "@mui/material": "^5.8.7",
     "@mui/x-data-grid": "^5.12.3",
     "@types/sql.js": "^1.4.3",
     "allotment": "^1.14.1",
