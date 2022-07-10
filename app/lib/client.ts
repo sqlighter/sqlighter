@@ -14,6 +14,29 @@ export function round(value: number, digits: number = 2) {
 }
 
 //
+// I/O
+//
+
+/** Returns the readable stream associated with given file or handle */
+export async function getStream(file?: File | FileSystemFileHandle) {
+  try {
+    // reading FileSystemFileHandle? get the actual file
+    if (file instanceof FileSystemFileHandle) {
+      const actualFile = await file.getFile()
+      return actualFile.stream()
+    }
+  } catch (exception) {
+    // FileSystemFileHandle is not defined when running in node.js enviroment
+    if (!(exception instanceof ReferenceError)) {
+      throw exception
+    }
+  }
+  if (file instanceof File) {
+    return file.stream()
+  }
+}
+
+//
 // formatting
 //
 

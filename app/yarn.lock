@@ -9644,13 +9644,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"csv-parse@npm:^5.2.2":
-  version: 5.2.2
-  resolution: "csv-parse@npm:5.2.2"
-  checksum: ef84d0813daa775fab8d817123f5ea5d9689de528b5431c6cd5c45251186f1055af519aadb4280eab97e588b2536de5a1c78e2118b0698f98fb2449495c80fa9
-  languageName: node
-  linkType: hard
-
 "currently-unhandled@npm:^0.4.1":
   version: 0.4.1
   resolution: "currently-unhandled@npm:0.4.1"
@@ -16612,6 +16605,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"papaparse@npm:^5.3.2":
+  version: 5.3.2
+  resolution: "papaparse@npm:5.3.2"
+  checksum: a5950ef931a42f6759a8d3823a43dd30f375b37a0ddea6ea5448c0c5024cd226819231958c49c24fbcdeab297c63fd1d630130b3439876ea0fd17d8a267738ae
+  languageName: node
+  linkType: hard
+
 "parallel-transform@npm:^1.1.0":
   version: 1.2.0
   resolution: "parallel-transform@npm:1.2.0"
@@ -19307,7 +19307,6 @@ __metadata:
     babel-jest: ^28.1.0
     babel-loader: ^8.2.5
     cookie: ^0.5.0
-    csv-parse: ^5.2.2
     date-fns: ^2.28.0
     dayjs: ^1.11.3
     dotenv: ^16.0.1
@@ -19327,6 +19326,7 @@ __metadata:
     next: ^12.2.0
     next-connect: ^0.12.2
     node-html-parser: ^5.3.3
+    papaparse: ^5.3.2
     passport: 0.5.3
     passport-google-one-tap: ^1.0.0
     passport-local: ^1.0.0

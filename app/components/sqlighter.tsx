@@ -28,6 +28,7 @@ import { PanelElement, PanelProps } from "./navigation/panel"
 import { TablePanel } from "./panels/tablepanel"
 import { QueryPanel } from "./panels/querypanel"
 import { TabsLayout } from "./navigation/tabslayout"
+import { getStream } from "../lib/client"
 
 const delay = (ms) => new Promise((res) => setTimeout(res, ms))
 
@@ -149,12 +150,16 @@ export default function Sqlighter(props: SqlighterProps) {
         await connection.connect(sqljs)
       } else {
         // see if we can import this file istead
-        const config = { client: "sqlite3", connection: { } }
+        const config = { client: "sqlite3", title: file.name, connection: {} }
         connection = DataConnectionFactory.create(config)
         await connection.connect(sqljs)
 
-        if (connection.canImport(file)) {
-          await connection.import(file)
+        const fromFormat = file.name.split(".").pop().toLowerCase()
+        if (connection.canImport(fromFormat)) {
+          if (file instanceof FileSystemFileHandle) {
+            file = await file.getFile()
+          }
+          await connection.import(fromFormat, file)
         } else {
           throw new Error(`Sqlighter.openFile - file type not supported`)
         }
@@ -173,7 +178,6 @@ export default function Sqlighter(props: SqlighterProps) {
   }
 
   function openCsv(file?: File | FileSystemFileHandle): Promise<DataConnection> {
-
     return null
   }
 

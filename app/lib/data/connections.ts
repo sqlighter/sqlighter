@@ -4,12 +4,16 @@
 
 import { QueryExecResult } from "sql.js"
 import { generateId } from "../shared"
+import { importCsv } from "../csv"
 
 export const CONNECTION_TYPE = "connection"
 export const CONNECTION_PREFIX = "dbc_"
 
 /** Client used to connect to a database, @see http://knexjs.org/guide/#node-js */
 export type DataClient = "sqlite3" | "mysql" | "pg" | "oracledb" | "tedius" | string
+
+/** Data formats used to import or export data */
+export type DataFormat = "sqlite3" | "csv" | string
 
 /**
  * Configuration used to connect with data source
@@ -225,6 +229,11 @@ export abstract class DataConnection {
   //
 
   /** Run a SQL query and return zero o more results from it */
+  public getResultsSync(sql: string): QueryExecResult[] {
+    throw new Error(`Not supported`)
+  }
+
+  /** Run a SQL query and return zero o more results from it */
   public abstract getResults(sql: string): Promise<QueryExecResult[]>
 
   /** Run a SQL query that generates a single result set or null if no results */
@@ -248,18 +257,24 @@ export abstract class DataConnection {
   //
 
   /** True if data connection can import data from the given file */
-  public canImport(file: File | FileSystemFileHandle): boolean {
-    return false
+  public canImport(fromFormat: DataFormat): boolean {
+    return fromFormat.toLowerCase() === "csv"
   }
 
   /**
    * Import data in the given format
-   * @param database Which specific database to import to? Default null for main
-   * @param table Specific table to be imported, default null for new table
+   * @param fromFormat Format of data stream that we are importing
+   * @param fromStream Readable stream containing data to be imported
+   * @param toDatabase Which specific database to import to? Default null for main
+   * @param toTable Specific table to be imported, default null for new table
    * @returns The name of the database and imported table, number of columns, number of rows
    */
-  public async import(file: File | FileSystemFileHandle, database?: string, table?: string): Promise<{ database: string, table: string, columns: number, rows: number }> {
-    return null
+  public async import(fromFormat: DataFormat, fromFile, toDatabase?: string, toTable?: string): Promise<{ database: string, table: string, columns: string[], rows: number }> {
+    if (fromFormat.toLowerCase() === "csv") {
+      const results = await importCsv(fromFile, this, toDatabase, toTable)
+      await this.getSchemas(true) // refresh
+      return results
+    }
   }
 
   /** True if data connection can export data for the given database, table and format */
