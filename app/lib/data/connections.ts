@@ -229,11 +229,6 @@ export abstract class DataConnection {
   //
 
   /** Run a SQL query and return zero o more results from it */
-  public getResultsSync(sql: string): QueryExecResult[] {
-    throw new Error(`Not supported`)
-  }
-
-  /** Run a SQL query and return zero o more results from it */
   public abstract getResults(sql: string): Promise<QueryExecResult[]>
 
   /** Run a SQL query that generates a single result set or null if no results */
@@ -243,6 +238,11 @@ export abstract class DataConnection {
       throw new DataError(`DataConnection.getResult - expected single result, got ${results.length}, sql: ${sql}`)
     }
     return results?.length ? results[0] : null
+  }
+
+  /** Run a synchronous SQL query and return zero o more results from it */
+  public getResultsSync(sql: string): QueryExecResult[] {
+    throw new Error(`Not supported`)
   }
 
   /**
@@ -269,9 +269,9 @@ export abstract class DataConnection {
    * @param toTable Specific table to be imported, default null for new table
    * @returns The name of the database and imported table, number of columns, number of rows
    */
-  public async import(fromFormat: DataFormat, fromFile, toDatabase?: string, toTable?: string): Promise<{ database: string, table: string, columns: string[], rows: number }> {
+  public async import(fromFormat: DataFormat, fromSource: File | string, toDatabase?: string, toTable?: string): Promise<{ database: string, table: string, columns: string[], rows: number }> {
     if (fromFormat.toLowerCase() === "csv") {
-      const results = await importCsv(fromFile, this, toDatabase, toTable)
+      const results = await importCsv(fromSource, this, toDatabase, toTable)
       await this.getSchemas(true) // refresh
       return results
     }
