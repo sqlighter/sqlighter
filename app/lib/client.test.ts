@@ -2,7 +2,7 @@
 // client.test.ts
 //
 
-import { formatDuration, formatSeconds } from "../lib/client"
+import { formatDuration, formatSeconds } from "./client"
 import parseISO from "date-fns/parseISO"
 
 describe("client.ts", () => {
