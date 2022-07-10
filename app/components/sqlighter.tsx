@@ -28,7 +28,6 @@ import { PanelElement, PanelProps } from "./navigation/panel"
 import { TablePanel } from "./panels/tablepanel"
 import { QueryPanel } from "./panels/querypanel"
 import { TabsLayout } from "./navigation/tabslayout"
-import { getStream } from "../lib/client"
 
 const delay = (ms) => new Promise((res) => setTimeout(res, ms))
 
@@ -149,7 +148,7 @@ export default function Sqlighter(props: SqlighterProps) {
         connection = DataConnectionFactory.create(config)
         await connection.connect(sqljs)
       } else {
-        // see if we can import this file istead
+        // see if we can import this file instead
         const config = { client: "sqlite3", title: file.name, connection: {} }
         connection = DataConnectionFactory.create(config)
         await connection.connect(sqljs)
