@@ -177,10 +177,6 @@ export default function Sqlighter(props: SqlighterProps) {
     }
   }
 
-  function openCsv(file?: File | FileSystemFileHandle): Promise<DataConnection> {
-    return null
-  }
-
   /** Add home panel if not opened yet, select tab */
   function openHome() {
     if (!tabs.find((tab) => tab.id === HOME_PANEL_ID)) {

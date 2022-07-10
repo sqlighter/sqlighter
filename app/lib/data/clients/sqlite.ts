@@ -4,7 +4,6 @@
 
 import { DataConnection, DataConfig, DataSchema, DataTableSchema, DataError } from "../connections"
 import { Database, QueryExecResult } from "sql.js"
-import { importCsv } from "../../csv"
 
 export const SQLITE3_CLIENT_ID = "sqlite3"
 
