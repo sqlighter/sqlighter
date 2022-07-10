@@ -106,7 +106,7 @@
     "eslint-config-next": "^12.1.6",
     "eslint-plugin-prettier": "^4.0.0",
     "jest": "27.5.1",
-    "jest-environment-jsdom": "27.5.1",
+    "jest-environment-jsdom": "28.1.2",
     "prettier": "^2.7.1",
     "storybook-addon-next-router": "^4.0.0",
     "superagent": "^8.0.0",
