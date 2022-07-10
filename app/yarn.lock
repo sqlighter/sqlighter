@@ -19360,7 +19360,7 @@ __metadata:
     supertest: ^6.2.3
     swr: ^1.3.0
     tempy: ^3.0.0
-    tokenizr: ^1.6.6
+    tokenizr: ^1.6.7
     ts-jest: ^28.0.5
     ts-node: ^10.8.0
     typescript: ^4.7.4
@@ -20271,10 +20271,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tokenizr@npm:^1.6.6":
-  version: 1.6.6
-  resolution: "tokenizr@npm:1.6.6"
-  checksum: b2a7bc9d015da105a122652ac2bdb08c3ca1ab382ce3515e00f2649056c200455a5c60558c947bd43cc43778a8a84f23670b15eda9db069a72c82be834459ad9
+"tokenizr@npm:^1.6.7":
+  version: 1.6.7
+  resolution: "tokenizr@npm:1.6.7"
+  checksum: 4e015198cc4869f798097c9bc43c59a857c2a5eca44270c64bc7ffc6b48070ccd14cd67be0819a375fc4f79da55e3f32f9caad810146a5e33dd43515c93ed939
   languageName: node
   linkType: hard
 
