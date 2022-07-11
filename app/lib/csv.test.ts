@@ -201,13 +201,12 @@ describe("csv.ts (jsdom)", () => {
     expectJoined(sqlResult.values[2]).toBe("3,4")
   })
 
-
   /** Json in fields */
   test("processCsv (geojson.csv)", async () => {
     const { csvResult, sqlResult } = await processCsv("geojson.csv")
 
     expect(csvResult.columns).toHaveLength(4)
-    expect(csvResult.columns.join(",")).toBe("id,prop0,prop1,geojson")
+    expectJoined(csvResult.columns).toBe("id,prop0,prop1,geojson")
     expect(csvResult.rows).toBe(3)
 
     expect(sqlResult.columns).toHaveLength(4)
@@ -218,6 +217,38 @@ describe("csv.ts (jsdom)", () => {
     expectJoined(sqlResult.values[2]).toBe("NULL,value0,{u'this': u'that'},{\"type\": \"Polygon\", \"coordinates\": [[[100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0]]]}")
   })
 
+  /** Large-ish dataset */
+  test("processCsv (large-dataset.csv)", async () => {
+    const { csvResult, sqlResult } = await processCsv("large-dataset.csv", 10000)
+
+    expect(csvResult.columns).toHaveLength(15)
+    expectJoined(csvResult.columns).toBe("time,latitude,longitude,depth,mag,magType,nst,gap,dmin,rms,net,id,updated,place,type")
+    expect(csvResult.rows).toBe(7268)
+
+    expect(sqlResult.columns).toHaveLength(15)
+    expect(sqlResult.columns.join(",")).toBe("time,latitude,longitude,depth,mag,magType,nst,gap,dmin,rms,net,id,updated,place,type")
+    expect(sqlResult.values).toHaveLength(7268)
+    expectJoined(sqlResult.values[0]).toBe("2015-12-22T18:45:11.000Z,59.9988,-152.7191,100,3,ml,NULL,NULL,NULL,0.54,ak,ak12293661,2015-12-22T19:09:29.736Z,54km S of Redoubt Volcano, Alaska,earthquake")
+    expectJoined(sqlResult.values[1]).toBe("2015-12-22T18:38:34.000Z,62.9616,-148.7532,65.4,1.9,ml,NULL,NULL,NULL,0.51,ak,ak12293651,2015-12-22T18:47:23.287Z,48km SSE of Cantwell, Alaska,earthquake")
+    expectJoined(sqlResult.values[2]).toBe("2015-12-22T18:38:01.820Z,19.2129993,-155.4179993,33.79,2.56,ml,56,142,0.03113,0.21,hv,hv61132446,2015-12-22T18:44:13.729Z,6km E of Pahala, Hawaii,earthquake")
+  })
+
+  /** Mixed quotes and newlines */
+  test("processCsv (quotes+newlines.csv)", async () => {
+    const { csvResult, sqlResult } = await processCsv("quotes+newlines.csv")
+
+    expect(csvResult.columns).toHaveLength(2)
+    expectJoined(csvResult.columns).toBe("a,b")
+    expect(csvResult.rows).toBe(3)
+
+    expect(sqlResult.columns).toHaveLength(2)
+    expectJoined(sqlResult.columns).toBe("a,b")
+    expect(sqlResult.values).toHaveLength(3)
+    expect(sqlResult.values[0][0]).toBe('1')
+    expect(sqlResult.values[0][1]).toBe('ha \n"ha" \nha')
+    expectJoined(sqlResult.values[1]).toBe("2,NULL")
+    expectJoined(sqlResult.values[2]).toBe("3,4")
+  })
 })
 
 //

@@ -8,6 +8,8 @@ import Papa from "papaparse"
 
 import { DataConnection } from "./data/connections"
 
+const CSV_QUOTES = ['"', "'", "`"]
+
 /**
  * Import a csv file to a table in the given connection
  * @param fromSource Source is a .csv file that will be streamed or a string
@@ -41,7 +43,7 @@ export async function importCsv(
       if (columns) {
         if (record.length == columns.length) {
           // insert record in table using params to avoid sql injection issues
-          const values = record.map((r, index) => `:${index}`).join(",")
+          const values = record.map((_, index) => `:${index}`).join(",")
           const params = {}
           record.forEach((r, index) => {
             params[`:${index}`] = r
@@ -88,7 +90,7 @@ export function trimCsvValue(value) {
   if (value) {
     value = value.trim()
 
-    for (const quote of ['"', "'", "`"]) {
+    for (const quote of CSV_QUOTES) {
       if (value.startsWith(quote) && value.endsWith(quote)) {
         value = value.slice(1, -1)
         break
