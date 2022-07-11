@@ -6,7 +6,7 @@
 import "@testing-library/jest-dom"
 import * as fs from "node:fs"
 
-import { importCsv, validateColumnNames, trimCsvValue } from "./csv"
+import { importCsv, validateColumnNames } from "./csv"
 import { getBlankConnection } from "./test/utilities"
 
 // collection of csv test files, thanks @mafintosh
@@ -271,7 +271,7 @@ describe("csv.ts (jsdom)", () => {
 
   /** Utf-8 encoding */
   test("importCsv (ut8.csv)", async () => {
-    const { csvResult, sqlResult } = await processCsv("utf8.csv")
+    const { sqlResult } = await processCsv("utf8.csv")
     // did you know this? https://en.wikipedia.org/wiki/Voiced_postalveolar_affricate
     expectJoined(sqlResult.values[1]).toBe("4,5,ʤ")
   })
@@ -312,7 +312,7 @@ async function processCsv(filename, limit = 100) {
 function expectJoined(values: any[]) {
   const joined = values
     .map((v) => {
-      if (v == null || v == undefined) {
+      if (v === null || v === undefined) {
         return "NULL"
       }
       return v.toString()

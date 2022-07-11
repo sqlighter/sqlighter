@@ -71,6 +71,7 @@ export async function importCsv(
     },
   })
 
+  console.debug(`importCsv - papaResult`, papaResult)
   return { database: toDatabase, table: toTable, rows: rows, columns }
 }
 
