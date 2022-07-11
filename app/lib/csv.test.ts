@@ -268,6 +268,13 @@ describe("csv.ts (jsdom)", () => {
     expectJoined(sqlResult.values[1]).toBe("2,NULL")
     expectJoined(sqlResult.values[2]).toBe("3,4")
   })
+
+  /** Utf-8 encoding */
+  test("importCsv (ut8.csv)", async () => {
+    const { csvResult, sqlResult } = await processCsv("utf8.csv")
+    // did you know this? https://en.wikipedia.org/wiki/Voiced_postalveolar_affricate
+    expectJoined(sqlResult.values[1]).toBe("4,5,ʤ")
+  })
 })
 
 //
