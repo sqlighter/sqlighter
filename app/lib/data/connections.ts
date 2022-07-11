@@ -229,11 +229,11 @@ export abstract class DataConnection {
   //
 
   /** Run a SQL query and return zero o more results from it */
-  public abstract getResults(sql: string): Promise<QueryExecResult[]>
+  public abstract getResults(sql: string, params?: {[key: string]: any}): Promise<QueryExecResult[]>
 
   /** Run a SQL query that generates a single result set or null if no results */
-  public async getResult(sql: string): Promise<QueryExecResult> {
-    const results = await this.getResults(sql)
+  public async getResult(sql: string, params?: {[key: string]: any}): Promise<QueryExecResult> {
+    const results = await this.getResults(sql, params)
     if (results.length > 1) {
       throw new DataError(`DataConnection.getResult - expected single result, got ${results.length}, sql: ${sql}`)
     }
@@ -241,7 +241,7 @@ export abstract class DataConnection {
   }
 
   /** Run a synchronous SQL query and return zero o more results from it */
-  public getResultsSync(sql: string): QueryExecResult[] {
+  public getResultsSync(sql: string, params?: {[key: string]: any}): QueryExecResult[] {
     throw new Error(`Not supported`)
   }
 

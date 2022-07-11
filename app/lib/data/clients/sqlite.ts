@@ -296,24 +296,19 @@ export class SqliteDataConnection extends DataConnection {
   //
 
   /** Run a SQL query and return zero o more results from it */
-  public getResultsSync(sql: string): QueryExecResult[] {
+  public getResultsSync(sql: string, params?: { [key: string]: any }): QueryExecResult[] {
     try {
-      return this._database.exec(sql)
+      // console.debug("SqliteDataConnection.getResultsSync", sql, params)
+      return this._database.exec(sql, params)
     } catch (exception) {
       console.error(`SqliteDataConnection.getResults - sql: ${sql}, exception: ${exception}`, exception)
       throw exception
     }
   }
 
-
   /** Run a SQL query and return zero o more results from it */
-  public async getResults(sql: string): Promise<QueryExecResult[]> {
-    try {
-      return this._database.exec(sql)
-    } catch (exception) {
-      console.error(`SqliteDataConnection.getResults - sql: ${sql}, exception: ${exception}`, exception)
-      throw exception
-    }
+  public async getResults(sql: string, params?: { [key: string]: any }): Promise<QueryExecResult[]> {
+    return this.getResultsSync(sql, params)
   }
 
   /**
