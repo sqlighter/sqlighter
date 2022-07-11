@@ -8,7 +8,14 @@ import Papa from "papaparse"
 
 import { DataConnection } from "./data/connections"
 
-
+/**
+ * Import a csv file to a table in the given connection
+ * @param fromSource Source is a .csv file that will be streamed or a string
+ * @param toConnection Data connection we're writing to
+ * @param toDatabase Database to write to or main if not specified
+ * @param toTable Table name to be used, will use "Data" as default
+ * @returns Returns stats about imported rows, etc
+ */
 export async function importCsv(
   fromSource: File | string,
   toConnection: DataConnection,
@@ -22,52 +29,47 @@ export async function importCsv(
 
   // TODO table name from file name?
   toTable = toTable || "Data"
-  let columns = null
+  let columns: string[] = null
   let rows = 0
 
   const papaResult = await papaParseAsync(fromSource, {
-  //  worker: true,
-
-    transform: (value: string): string => {
-      let trimmed = value.trim()
-      if (trimmed.startsWith('"') && trimmed.endsWith('"')) {
-        return trimmed.slice(1, -1);
-      }
-      return trimmed
-    },
+    //  worker: true,
+    comments: "#",
+    transform: trimCsvValue,
     step: (results) => {
-      console.log("Row:", results.data)
       const record = results.data
       if (columns) {
         if (record.length == columns.length) {
-          // insert record in table
-          const values = record.map((r) => `'${r}'`).join(",")
+          // insert record in table using params to avoid sql injection issues
+          const values = record.map((r, index) => `:${index}`).join(",")
+          const params = {}
+          record.forEach((r, index) => {
+            params[`:${index}`] = r
+          })
           const sql = `insert into '${toTable}' values (${values});`
-          const results = toConnection.getResultsSync(sql)
-          console.debug("written row", results)
+          toConnection.getResultsSync(sql, params)
           rows++
         } else {
           console.warn("parse warning", results)
         }
       } else {
-        // TODO detect if columns header is missing and use Col1, Col2, Col3 instead
-        columns = record
+        // TODO Csv / should figure out when header is missing? how? #87
+        // detect if columns header is missing and use Col1, Col2, Col3 instead
+        columns = validateColumnNames(record)
 
         // create table where records will be inserted
-        const sql = `create table '${toTable}' (${record.map((col) => `'${col}'`).join(",")});`
+        const sql = `create table '${toTable}' (${columns.map((col) => `'${col}'`).join(",")});`
         const results = toConnection.getResultsSync(sql)
         console.debug(sql, results)
       }
     },
   })
 
-  console.debug("papa.parse", papaResult)
-
   return { database: toDatabase, table: toTable, rows: rows, columns }
 }
 
 /** Papa.parse as a promise */
-export async function papaParseAsync(source, options): Promise<Papa.ParseResult> {
+async function papaParseAsync(source, options): Promise<Papa.ParseResult> {
   return new Promise((resolve, reject) => {
     Papa.parse(source, {
       ...options,
@@ -79,4 +81,50 @@ export async function papaParseAsync(source, options): Promise<Papa.ParseResult>
       },
     })
   })
+}
+
+/** Remove whitespace around value, remove containing quotes */
+export function trimCsvValue(value) {
+  if (value) {
+    value = value.trim()
+
+    for (const quote of ['"', "'", "`"]) {
+      if (value.startsWith(quote) && value.endsWith(quote)) {
+        value = value.slice(1, -1)
+        break
+      }
+    }
+  }
+
+  return value?.length > 0 ? value : null
+}
+
+/** True if column appears more than once in columns before itself */
+function hasDuplicates(columns, columnIndex): Boolean {
+  for (let j = 0; j < columnIndex; j++) {
+    if (columns[j] == columns[columnIndex]) {
+      return true
+    }
+  }
+  return false
+}
+
+/** Fix any column names that are missing, duplicated or invalid for SQL */
+export function validateColumnNames(columns: string[]): string[] {
+  const validated = [...columns]
+
+  columns.forEach((column, index) => {
+    if (!column) {
+      validated[index] = `Col_${index + 1}`
+    }
+
+    // TODO should check if name is valid for SQL column
+
+    let counter = 1
+    while (hasDuplicates(validated, index)) {
+      validated[index] = `${column}_${counter++}`
+    }
+  })
+
+  return validated
 }
