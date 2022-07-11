@@ -38,6 +38,7 @@ export async function importCsv(
     //  worker: true,
     comments: "#",
     transform: trimCsvValue,
+    dynamicTyping: true,
     step: (results) => {
       const record = results.data
       if (columns) {
@@ -46,6 +47,9 @@ export async function importCsv(
           const values = record.map((_, index) => `:${index}`).join(",")
           const params = {}
           record.forEach((r, index) => {
+            if (r instanceof Date) {
+              r = r.toISOString()
+            } 
             params[`:${index}`] = r
           })
           const sql = `insert into '${toTable}' values (${values});`
@@ -85,11 +89,10 @@ async function papaParseAsync(source, options): Promise<Papa.ParseResult> {
   })
 }
 
-/** Remove whitespace around value, remove containing quotes */
+/** Trim whitespace around value, remove containing quotes */
 export function trimCsvValue(value) {
   if (value) {
     value = value.trim()
-
     for (const quote of CSV_QUOTES) {
       if (value.startsWith(quote) && value.endsWith(quote)) {
         value = value.slice(1, -1)
