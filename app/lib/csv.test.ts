@@ -276,23 +276,6 @@ describe("csv.ts (jsdom)", () => {
     expectJoined(sqlResult.values[1]).toBe("4,5,ʤ")
 
   })
-  
-  /** Reading a plain text file */
-  test("importCsv (error-nocsv.csv)", async () => {
-    const { csvResult, sqlResult } = await processCsv("error-nocsv.csv")
-
-    expect(csvResult.columns).toHaveLength(2)
-    expectJoined(csvResult.columns).toBe("a,b")
-    expect(csvResult.rows).toBe(3)
-
-    expect(sqlResult.columns).toHaveLength(2)
-    expectJoined(sqlResult.columns).toBe("a,b")
-    expect(sqlResult.values).toHaveLength(3)
-    expect(sqlResult.values[0][0]).toBe(1)
-    expect(sqlResult.values[0][1]).toBe('ha \n"ha" \nha')
-    expectJoined(sqlResult.values[1]).toBe("2,NULL")
-    expectJoined(sqlResult.values[2]).toBe("3,4")
-  })
 })
 
 //

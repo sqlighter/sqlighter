@@ -147,6 +147,10 @@ export default function Sqlighter(props: SqlighterProps) {
         const config = { client: "sqlite3", connection: { file } }
         connection = DataConnectionFactory.create(config)
         await connection.connect(sqljs)
+
+        setConnection(connection)
+        setConnections([connection, ...(connections || [])])
+        openDatabase(connection)
       } else {
         // see if we can import this file instead
         const config = { client: "sqlite3", title: file.name, connection: {} }
@@ -158,15 +162,22 @@ export default function Sqlighter(props: SqlighterProps) {
           if (file instanceof FileSystemFileHandle) {
             file = await file.getFile()
           }
-          await connection.import(fromFormat, file)
+          const importResult = await connection.import(fromFormat, file)
+
+          setConnection(connection)
+          setConnections([connection, ...(connections || [])])
+          openTable({
+            command: "openTable",
+            args: {
+              connection,
+              database: importResult.database,
+              table: importResult.table,
+            },
+          })
         } else {
           throw new Error(`Sqlighter.openFile - file type not supported`)
         }
       }
-
-      setConnection(connection)
-      setConnections([connection, ...(connections || [])])
-      openDatabase(connection)
 
       return connection
     } catch (exception) {
@@ -187,7 +198,7 @@ export default function Sqlighter(props: SqlighterProps) {
 
   /** Add <TablePanel> tab for the table indicated in the command, or selects existing panel if already open. */
   function openTable(command: Command) {
-    // console.debug(`Sqlighter.openTable`, command)
+    // console.debug(`Sqlighter.openTable`, command, connection)
     const args = { ...command.args }
     if (args.view) {
       args.table = args.view
@@ -197,7 +208,7 @@ export default function Sqlighter(props: SqlighterProps) {
       args.variant = "table"
     }
 
-    const tabId = `pnl_table_${connection.id}_${args.database}_${args.table}`
+    const tabId = `pnl_table_${args.connection.id}_${args.database}_${args.table}`
     const tab = tabs.find((tab) => tab.id === tabId)
     if (tab) {
       // existing tabs? refresh properties including selection
