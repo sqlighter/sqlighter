@@ -20,6 +20,7 @@ import { QueryStatus } from "./querystatus"
 import { SqlEditor } from "../editor/sqleditor"
 import { Body } from "../ui/typography"
 import { Empty, MissingFeature } from "../ui/empty"
+import { exportCsv } from "../../lib/csv"
 
 // styles applied to main and subcomponents
 const QueryRunPanel_SxProps: SxProps<Theme> = {
@@ -85,7 +86,7 @@ export const addonCmd: Command = { command: "viewAddon", title: "More", icon: "e
 
 // additional commands shown as icon buttons
 export const fullscreenCmd: Command = { command: "fullscreen", title: "Fullscreen", icon: "fullscreen" }
-export const exportCmd: Command = { command: "export", title: "Export", icon: "export" }
+export const exportCmd: Command = { command: "exportCsv", title: "Export CSV", icon: "export" }
 export const shareCmd: Command = { command: "share", title: "Share", icon: "share" }
 export const searchCmd: Command = { command: "search", title: "Search", icon: "search" }
 
@@ -104,7 +105,7 @@ export function QueryRunPanel(props: QueryRunPanelProps) {
   // handlers
   //
 
-  function handleCommand(event, command: Command) {
+  async function handleCommand(event, command: Command) {
     console.debug(`QueryRunPanel.handleCommand - command: ${command}`, command)
     switch (command.command) {
       case "viewSql":
@@ -113,7 +114,16 @@ export function QueryRunPanel(props: QueryRunPanelProps) {
       case "viewAddon":
         return setMode(command.command)
 
-      // TODO export, fullscreen, share, search...
+      case "exportCsv":
+        const blob = await exportCsv(run.columns, run.values)
+        console.debug(`QueryRunPanel.handleCommand - exportCsv`, blob)
+        var link = document.createElement("a")
+        link.href = window.URL.createObjectURL(blob)
+        link.download = props.connection.title
+        link.click()
+        return
+
+      // TODO fullscreen, share, search...
     }
 
     if (props.onCommand) {

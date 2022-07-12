@@ -187,8 +187,8 @@ export function HomePanel(props: HomePanelProps) {
       <Box className="HomePanel-icon">
         <Icon>sqlighter</Icon>
       </Box>
-      <img src="/branding/logo.png" alt="SQLite Browser" height="50" />
-      <Typography variant="caption" color="text.secondary" sx={{ position: "relative", left: "44px", top: "-4px" }}>
+      <img src="/branding/logo.png" alt="SQLite Browser" height="40" />
+      <Typography variant="caption" color="text.secondary" sx={{ position: "relative", left: "36px", top: "-6px" }}>
         alpha version
       </Typography>
       {props.connections && renderConnections()}

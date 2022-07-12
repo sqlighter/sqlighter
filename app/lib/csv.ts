@@ -61,7 +61,10 @@ export async function importCsv(
           toConnection.getResultsSync(sql, params)
           rows++
         } else {
-          console.warn(`importCsv - row ${rows+1} has ${record.length} values but there are ${columns.length} columns`, results)
+          console.warn(
+            `importCsv - row ${rows + 1} has ${record.length} values but there are ${columns.length} columns`,
+            results
+          )
         }
       } else {
         // TODO Csv / should figure out when header is missing? how? #87
@@ -93,6 +96,17 @@ async function papaParseAsync(source, options): Promise<Papa.ParseResult> {
       },
     })
   })
+}
+
+export async function exportCsv(columns: string[], values: any[][]): Promise<Blob> {
+  const csv = Papa.unparse({
+    fields: columns,
+    data: values,
+  })
+  console.debug(`exportCsv`, csv)
+
+  var blob = new Blob([csv], { type: "text/csv" })
+  return blob
 }
 
 /** Trim whitespace around value, remove containing quotes */
