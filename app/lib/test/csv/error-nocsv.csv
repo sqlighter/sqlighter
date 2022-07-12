@@ -1,0 +1,8 @@
+This is not a csv file but
+just some text. There's a comma here, but it's not a field
+just a separator.
+
+We have some newlines because we want to test that we can handle them.
+
+Just having text is not enough to trip up the parser. This could be a file with a couple
+columns after all, so let's have an unterminated quote. Here, " no end to this....

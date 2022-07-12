@@ -29,6 +29,11 @@ export async function importCsv(
     toDatabase = schemas[0].database
   }
 
+  // remove trailing whitespace
+  if (typeof fromSource === "string") {
+    fromSource = fromSource.trimEnd()
+  }
+
   // TODO table name from file name?
   toTable = toTable || "Data"
   let columns: string[] = null
@@ -49,14 +54,14 @@ export async function importCsv(
           record.forEach((r, index) => {
             if (r instanceof Date) {
               r = r.toISOString()
-            } 
+            }
             params[`:${index}`] = r
           })
           const sql = `insert into '${toTable}' values (${values});`
           toConnection.getResultsSync(sql, params)
           rows++
         } else {
-          console.warn("parse warning", results)
+          console.warn(`importCsv - row ${rows+1} has ${record.length} values but there are ${columns.length} columns`, results)
         }
       } else {
         // TODO Csv / should figure out when header is missing? how? #87
