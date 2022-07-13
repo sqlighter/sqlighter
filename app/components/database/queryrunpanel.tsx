@@ -101,6 +101,23 @@ export function QueryRunPanel(props: QueryRunPanelProps) {
   // which visualization panel is currently visible?
   const [mode, setMode] = useState<string>("viewData")
 
+  /** Export run data as csv */
+  function exportAsCsv() {
+    if (run.columns && run.values) {
+      // convert query results into a downloadable csv file blob
+      const csv = exportCsv(run.columns, run.values)
+      const title = (props.run?.query?.title || "data") + ".csv"
+      const blob = new File([csv], title, { type: "text/csv" })
+      // console.debug(`QueryRunPanel.exportCsv - ${title}`, blob)
+
+      // create downloadable link and click on it to initiate download
+      var link = document.createElement("a")
+      link.href = window.URL.createObjectURL(blob)
+      link.download = title
+      link.click()
+    }
+  }
+
   //
   // handlers
   //
@@ -115,12 +132,7 @@ export function QueryRunPanel(props: QueryRunPanelProps) {
         return setMode(command.command)
 
       case "exportCsv":
-        const blob = await exportCsv(run.columns, run.values)
-        console.debug(`QueryRunPanel.handleCommand - exportCsv`, blob)
-        var link = document.createElement("a")
-        link.href = window.URL.createObjectURL(blob)
-        link.download = props.connection.title
-        link.click()
+        exportAsCsv()
         return
 
       // TODO fullscreen, share, search...

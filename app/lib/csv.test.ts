@@ -6,7 +6,7 @@
 import "@testing-library/jest-dom"
 import * as fs from "node:fs"
 
-import { importCsv, validateColumnNames } from "./csv"
+import { importCsv, exportCsv, validateColumnNames } from "./csv"
 import { getBlankConnection } from "./test/utilities"
 
 // collection of csv test files, thanks @mafintosh
@@ -274,7 +274,28 @@ describe("csv.ts (jsdom)", () => {
     const { sqlResult } = await processCsv("utf8.csv")
     // did you know this? https://en.wikipedia.org/wiki/Voiced_postalveolar_affricate
     expectJoined(sqlResult.values[1]).toBe("4,5,ʤ")
+  })
 
+  test("exportCsv (basic)", async () => {
+    const csv = exportCsv(
+      ["first", "last"],
+      [
+        ["John", "Doe"],
+        ["Jane", "Smith"],
+      ]
+    )
+    expect(csv).toBe("first,last\r\nJohn,Doe\r\nJane,Smith")
+  })
+
+  test("exportCsv (quotes)", async () => {
+    const csv = exportCsv(
+      ["Single\"Quote", "Regular"],
+      [
+        ["John", "Doe"],
+        ["Jane", "Smith"],
+      ]
+    )
+    expect(csv).toBe('"Single""Quote",Regular\r\nJohn,Doe\r\nJane,Smith')
   })
 })
 

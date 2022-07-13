@@ -98,15 +98,17 @@ async function papaParseAsync(source, options): Promise<Papa.ParseResult> {
   })
 }
 
-export async function exportCsv(columns: string[], values: any[][]): Promise<Blob> {
-  const csv = Papa.unparse({
+/**
+ * Export given data to a streamable blob of text contaning csv file
+ * @param columns List of column names
+ * @param values Array of arrays of row values
+ * @returns A blob with .csv content
+ */
+export function exportCsv(columns: string[], values: any[][]): string {
+  return Papa.unparse({
     fields: columns,
     data: values,
   })
-  console.debug(`exportCsv`, csv)
-
-  var blob = new Blob([csv], { type: "text/csv" })
-  return blob
 }
 
 /** Trim whitespace around value, remove containing quotes */
