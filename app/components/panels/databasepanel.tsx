@@ -90,27 +90,11 @@ export function DatabasePanel(props: DatabasePanelProps) {
   // handlers
   //
 
-  /** Export entire SQLite database */
-  async function downloadDatabase() {
-    const exportData = await props.connection.export()
-    if (exportData) {
-      var blob = new Blob([exportData.data], { type: exportData.type })
-      var link = document.createElement("a")
-      link.href = window.URL.createObjectURL(blob)
-      link.download = props.connection.title
-      link.click()
-    }
-  }
-
   async function handleCommand(event: React.SyntheticEvent, command: Command) {
     console.debug(`DatabasePanel.handleCommand - ${command.command}`, command)
     switch (command.command) {
       case "changeTabs":
         setTabId(command.args.tabId)
-        return
-
-      case "downloadDatabase":
-        await downloadDatabase()
         return
     }
 
@@ -186,13 +170,16 @@ export function DatabasePanel(props: DatabasePanelProps) {
     if (canDownload) {
       commands.push("divider")
       commands.push({
-        command: "downloadDatabase",
+        command: "export",
         title: "Download",
         description: "Download Database",
         icon: "download",
         args: {
           label: true,
           color: "primary",
+          format: null, // native format
+          filename: props.connection.title,
+          connection: props.connection,
         },
       })
     }

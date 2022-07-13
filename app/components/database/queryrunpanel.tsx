@@ -86,7 +86,6 @@ export const addonCmd: Command = { command: "viewAddon", title: "More", icon: "e
 
 // additional commands shown as icon buttons
 export const fullscreenCmd: Command = { command: "fullscreen", title: "Fullscreen", icon: "fullscreen" }
-export const exportCmd: Command = { command: "exportCsv", title: "Export CSV", icon: "export" }
 export const shareCmd: Command = { command: "share", title: "Share", icon: "share" }
 export const searchCmd: Command = { command: "search", title: "Search", icon: "search" }
 
@@ -101,23 +100,6 @@ export function QueryRunPanel(props: QueryRunPanelProps) {
   // which visualization panel is currently visible?
   const [mode, setMode] = useState<string>("viewData")
 
-  /** Export run data as csv */
-  function exportAsCsv() {
-    if (run.columns && run.values) {
-      // convert query results into a downloadable csv file blob
-      const csv = exportCsv(run.columns, run.values)
-      const title = (props.run?.query?.title || "data") + ".csv"
-      const blob = new File([csv], title, { type: "text/csv" })
-      // console.debug(`QueryRunPanel.exportCsv - ${title}`, blob)
-
-      // create downloadable link and click on it to initiate download
-      var link = document.createElement("a")
-      link.href = window.URL.createObjectURL(blob)
-      link.download = title
-      link.click()
-    }
-  }
-
   //
   // handlers
   //
@@ -130,10 +112,6 @@ export function QueryRunPanel(props: QueryRunPanelProps) {
       case "viewChart":
       case "viewAddon":
         return setMode(command.command)
-
-      case "exportCsv":
-        exportAsCsv()
-        return
 
       // TODO fullscreen, share, search...
     }
@@ -163,6 +141,20 @@ export function QueryRunPanel(props: QueryRunPanelProps) {
   function renderCommands() {
     // <IconButton command={fullscreenCmd} onCommand={handleCommand} />
     // <IconButton command={searchCmd} onCommand={handleCommand} />
+
+    const exportCmd: Command = {
+      command: "export",
+      title: "Export CSV",
+      icon: "export",
+      args: {
+        format: "csv",
+        filename: `${props.run?.query?.title || "data"}.csv`,
+        connection: props.connection,
+        database: props.run.query.database,
+        sql: props.run.sql, // will rerun the query
+      },
+    }
+
     return (
       <IconButtonGroup
         className="QueryRunPanel-commands"

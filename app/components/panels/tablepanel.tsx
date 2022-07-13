@@ -158,6 +158,20 @@ export function TablePanel(props: TablePanelProps) {
     })
 
     commands.push("divider")
+
+    commands.push({
+      command: "export",
+      title: "Export CSV",
+      icon: "export",
+      args: {
+        filename: `${props.table}.csv`,
+        format: "csv",
+        connection: props.connection,
+        database: props.database,
+        table: props.table,
+      },
+    })
+
     commands.push({
       command: "openQuery",
       title: "Query Data",

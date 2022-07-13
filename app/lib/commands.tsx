@@ -32,7 +32,9 @@ export type CommandType =
   | "downloadData"
   /** Received files or other items from drag and drop @param files List of files to be opened @param items List of other items */
   | "dropItems"
-  /** Open given connection @param item The connection to be opened */  
+  /** Export a database, a table's contents or results of a query @param format @param filename @param connection @param database @param table @param sql */
+  | "export"
+  /** Open given connection @param item The connection to be opened */
   | "openConnection"
   /** Show database panel @param connection The database connection */
   | "openDatabase"

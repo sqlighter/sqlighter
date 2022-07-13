@@ -8,7 +8,7 @@ import Button from "@mui/material/Button"
 
 // model
 import { Command } from "../lib/commands"
-import { DataConnection } from "../lib/data/connections"
+import { DataConnection, DataFormat } from "../lib/data/connections"
 import { DataConnectionFactory } from "../lib/data/factory"
 import { Query, QueryRun } from "../lib/items/query"
 
@@ -416,6 +416,42 @@ export default function Sqlighter(props: SqlighterProps) {
     }
   }
 
+  /**
+   * Handles export of an entire database in native format, a specific table in a database
+   * or the results of a sql query on a given connection. Data is converted and then user is
+   * prompted to download as file.
+   * @param format Format to export to
+   * @param filename Filename (connection name will be used if not provided)
+   * @param connection Connection to export from
+   * @param database Database to export (if not provided, will export entire database)
+   * @param table Table to export
+   * @param sql Specific sql query to export (alternative to table)
+   */
+  async function exportData(
+    format: DataFormat,
+    filename: string,
+    connection: DataConnection,
+    database?: string,
+    table?: string,
+    sql?: string
+  ) {
+    if (connection.canExport(format, database, table, sql)) {
+      // convert export results into a downloadable file blob
+      filename = filename || connection.title
+      const results = await connection.export(format, database, table, sql)
+      const blob = new File([results.data], filename, { type: results.type })
+      console.debug(`Sqlighter.exportData - ${filename}`, blob)
+
+      // create downloadable link and click on it to initiate download
+      var link = document.createElement("a")
+      link.href = window.URL.createObjectURL(blob)
+      link.download = filename
+      link.click()
+    } else {
+      console.warn(`Sqlighter.exportData - ${format} not supported`)
+    }
+  }
+
   //
   // handlers
   //
@@ -424,6 +460,7 @@ export default function Sqlighter(props: SqlighterProps) {
     console.debug(`Sqlighter.handleCommand - ${command.command}`, command)
     console.assert(props.onCommand)
 
+    const args = command.args || {}
     switch (command.command) {
       case "bookmarkQuery":
         if (props.user) {
@@ -434,32 +471,30 @@ export default function Sqlighter(props: SqlighterProps) {
         return
 
       case "changeActivity":
-        setActivityId(command.args.id)
+        setActivityId(args.id)
         return
 
       case "changeConnection":
-        setConnection(command.args.item)
+        setConnection(args.item)
         break
 
       case "changeQuery":
-        changeQuery(command.args?.query)
+        changeQuery(args.query)
         return
 
       case "changeTabs":
         // tabs rearranged, opened, closed, etc
-        const changedTabs = command.args.tabs.map((tabElement: ReactElement) =>
-          tabs.find((tab) => tabElement.key == tab.id)
-        )
-        setTabId(command.args.tabId)
+        const changedTabs = args.tabs.map((tabElement: ReactElement) => tabs.find((tab) => tabElement.key == tab.id))
+        setTabId(args.tabId)
         setTabs(changedTabs)
         return
 
       case "deleteBookmarks":
-        await deleteBookmarks(command.args.queries as Query[])
+        await deleteBookmarks(args.queries as Query[])
         return
 
       case "deleteHistory":
-        deleteHistory(command.args.queries as Query[])
+        deleteHistory(args.queries as Query[])
         return
 
       case "dropItems":
@@ -471,18 +506,22 @@ export default function Sqlighter(props: SqlighterProps) {
         }
         return
 
+      case "export":
+        await exportData(args.format, args.filename, args.connection, args.database, args.table, args.sql)
+        return
+
       case "openConnection":
-        if (command.args?.connection) {
-          await openConnection(command.args.connection)
+        if (args.connection) {
+          await openConnection(args.connection)
         }
         return
 
       case "openDatabase":
-        openDatabase(command.args.connection, command.args.database, command.args.selection)
+        openDatabase(args.connection, args.database, args.selection)
         return
 
       case "openFile":
-        await openFile(command.args?.file)
+        await openFile(args.file)
         return
 
       case "openHome":
@@ -503,7 +542,7 @@ export default function Sqlighter(props: SqlighterProps) {
         return
 
       case "runQuery":
-        await runQuery(command.args?.query, command.args?.connection)
+        await runQuery(args.query, args.connection)
         return
     }
 

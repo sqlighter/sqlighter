@@ -204,7 +204,7 @@ describe("sqlite.ts (node env)", () => {
   test("canExport (chinook.db)", async () => {
     const connection = await getChinookConnection()
     expect(connection.canExport()).toBeTruthy()
-    expect(connection.canExport("main", "customers")).not.toBeTruthy()
+    expect(connection.canExport(null, "main", "customers")).not.toBeTruthy()
   })
 
   test("export (chinook.db)", async () => {

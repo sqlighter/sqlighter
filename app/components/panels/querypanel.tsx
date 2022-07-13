@@ -278,6 +278,7 @@ export function QueryPanel(props: QueryPanelProps) {
             icon="run"
             run={runClone}
             connection={runConnection}
+            onCommand={handleCommand}
           />
         )
       })
