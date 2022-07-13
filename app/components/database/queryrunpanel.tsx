@@ -20,7 +20,6 @@ import { QueryStatus } from "./querystatus"
 import { SqlEditor } from "../editor/sqleditor"
 import { Body } from "../ui/typography"
 import { Empty, MissingFeature } from "../ui/empty"
-import { exportCsv } from "../../lib/csv"
 
 // styles applied to main and subcomponents
 const QueryRunPanel_SxProps: SxProps<Theme> = {

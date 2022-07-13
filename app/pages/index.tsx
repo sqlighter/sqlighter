@@ -7,7 +7,7 @@ import Stack from "@mui/material/Stack"
 
 import { SiteLayout } from "../components/layouts"
 import { Empty } from "../components/ui/empty"
-import homeImage from "../branding/banner-square.svg"
+import homeImage from "../branding/banner-square.png"
 
 export default function Home({ props }) {
   return (
