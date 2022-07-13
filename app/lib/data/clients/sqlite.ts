@@ -2,7 +2,7 @@
 // sqlite.ts - data connection client for SQLite
 //
 
-import { DataConnection, DataConfig, DataSchema, DataTableSchema, DataError } from "../connections"
+import { DataConnection, DataConfig, DataSchema, DataTableSchema, DataError, DataFormat } from "../connections"
 import { Database, QueryExecResult } from "sql.js"
 
 export const SQLITE3_CLIENT_ID = "sqlite3"
@@ -327,32 +327,41 @@ export class SqliteDataConnection extends DataConnection {
 
   /**
    * True if data connection can export data for the given database, table and format
-   * @param database Which specific database to export? Default null for entire database
-   * @param table Specific table to be exported, default null for all contents
-   * @param format Specific format to export in, default null for native format
-   * @returns True if this connection can perform the requested data export
+   * @param toFormat Specific format to export in, default null for native format
+   * @param fromDatabase Which specific database to export? Default null for entire database
+   * @param fromTable Specific table to be exported, default null for all contents
+   * @param fromSql As an alternative to fromTable, export data resulting from this specific query
    */
-  public canExport(database?: string, table?: string, format?: string): boolean {
-    // can only export entire database in native format
-    if (!database && !table && !format) {
-      return true
-    }
-    return false
+  public canExport(toFormat?: DataFormat, fromDatabase?: string, fromTable?: string, fromSql?: string): boolean {
+    return (
+      // can only export entire database in native format
+      (!toFormat && !fromDatabase && !fromTable && !fromSql) ||
+      super.canExport(toFormat, fromDatabase, fromTable, fromSql)
+    )
   }
 
   /**
    * Exports data in the given format
-   * @param database Which specific database to export? Default null for entire database
-   * @param table Specific table to be exported, default null for all contents
-   * @param format Specific format to export in, default null for native format
+   * @param toFormat Specific format to export in, default null for native format
+   * @param fromDatabase Which specific database to export? Default null for entire database
+   * @param fromTable Specific table to be exported, default null for all contents
+   * @param fromSql As an alternative to fromTable, export data resulting from this specific query
    * @returns Exported data as byte array and data mime type
    */
-  public async export(database?: string, table?: string, format?: string): Promise<{ data: Uint8Array; type: string }> {
-    const data = this._database.export()
-    console.debug(
-      `SqliteDataConnection.export - database: ${database}, table: ${table}, format: ${format} > size: ${data?.length}`
-    )
-    return { data, type: "application/x-sqlite3" }
+  public async export(
+    toFormat?: DataFormat,
+    fromDatabase?: string,
+    fromTable?: string,
+    fromSql?: string
+  ): Promise<{ data: Uint8Array; type: string }> {
+    if (!toFormat && !fromDatabase && !fromTable && !fromSql) {
+      const data = this._database.export()
+      console.debug(`SqliteDataConnection.export - native export, size: ${data?.length}`)
+      return { data, type: "application/x-sqlite3" }
+    }
+
+    // base class can export?
+    return super.export(toFormat, fromDatabase, fromTable, fromSql)
   }
 }
 

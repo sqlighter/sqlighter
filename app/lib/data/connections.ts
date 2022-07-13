@@ -4,7 +4,7 @@
 
 import { QueryExecResult } from "sql.js"
 import { generateId } from "../shared"
-import { importCsv } from "../csv"
+import { importCsv, exportCsv } from "../csv"
 
 export const CONNECTION_TYPE = "connection"
 export const CONNECTION_PREFIX = "dbc_"
@@ -13,7 +13,7 @@ export const CONNECTION_PREFIX = "dbc_"
 export type DataClient = "sqlite3" | "mysql" | "pg" | "oracledb" | "tedius" | string
 
 /** Data formats used to import or export data */
-export type DataFormat = "sqlite3" | "csv" | string
+export type DataFormat = "csv" | string
 
 /**
  * Configuration used to connect with data source
@@ -229,10 +229,10 @@ export abstract class DataConnection {
   //
 
   /** Run a SQL query and return zero o more results from it */
-  public abstract getResults(sql: string, params?: {[key: string]: any}): Promise<QueryExecResult[]>
+  public abstract getResults(sql: string, params?: { [key: string]: any }): Promise<QueryExecResult[]>
 
   /** Run a SQL query that generates a single result set or null if no results */
-  public async getResult(sql: string, params?: {[key: string]: any}): Promise<QueryExecResult> {
+  public async getResult(sql: string, params?: { [key: string]: any }): Promise<QueryExecResult> {
     const results = await this.getResults(sql, params)
     if (results.length > 1) {
       throw new DataError(`DataConnection.getResult - expected single result, got ${results.length}, sql: ${sql}`)
@@ -241,7 +241,7 @@ export abstract class DataConnection {
   }
 
   /** Run a synchronous SQL query and return zero o more results from it */
-  public getResultsSync(sql: string, params?: {[key: string]: any}): QueryExecResult[] {
+  public getResultsSync(sql: string, params?: { [key: string]: any }): QueryExecResult[] {
     throw new Error(`Not supported`)
   }
 
@@ -269,7 +269,12 @@ export abstract class DataConnection {
    * @param toTable Specific table to be imported, default null for new table
    * @returns The name of the database and imported table, number of columns, number of rows
    */
-  public async import(fromFormat: DataFormat, fromSource: File | string, toDatabase?: string, toTable?: string): Promise<{ database: string, table: string, columns: string[], rows: number }> {
+  public async import(
+    fromFormat: DataFormat,
+    fromSource: File | string,
+    toDatabase?: string,
+    toTable?: string
+  ): Promise<{ database: string; table: string; columns: string[]; rows: number }> {
     if (fromFormat.toLowerCase() === "csv") {
       const results = await importCsv(fromSource, this, toDatabase, toTable)
       await this.getSchemas(true) // refresh
@@ -277,20 +282,41 @@ export abstract class DataConnection {
     }
   }
 
-  /** True if data connection can export data for the given database, table and format */
-  public canExport(database?: string, table?: string, format?: string): boolean {
-    return false
+  /**
+   * True if data connection can export data for the given database, table and format
+   * @param toFormat Specific format to export in, default null for native format
+   * @param fromDatabase Which specific database to export? Default null for entire database
+   * @param fromTable Specific table to be exported, default null for all contents
+   * @param fromSql As an alternative to fromTable, export data resulting from this specific query
+   */
+  public canExport(toFormat?: DataFormat, fromDatabase?: string, fromTable?: string, fromSql?: string): boolean {
+    return toFormat === "csv"
   }
 
   /**
    * Exports data in the given format
-   * @param database Which specific database to export? Default null for entire database
-   * @param table Specific table to be exported, default null for all contents
-   * @param format Specific format to export in, default null for native format
+   * @param toFormat Specific format to export in, default null for native format
+   * @param fromDatabase Which specific database to export? Default null for entire database
+   * @param fromTable Specific table to be exported, default null for all contents
+   * @param fromSql As an alternative to fromTable, export data resulting from this specific query
    * @returns Exported data as byte array and data mime type
    */
-  public async export(database?: string, table?: string, format?: string): Promise<{ data: Uint8Array; type: string }> {
-    return null
+  public async export(
+    toFormat?: DataFormat,
+    fromDatabase?: string,
+    fromTable?: string,
+    fromSql?: string
+  ): Promise<{ data: Uint8Array; type: string }> {
+    if (toFormat === "csv") {
+      if (!fromSql) {
+        fromSql = `SELECT * FROM '${fromDatabase}'.'${fromTable}'`
+      }
+      const result = await this.getResult(fromSql)
+      const csv = exportCsv(result.columns, result.values)
+      const encoder = new TextEncoder() // always utf-8
+      const data = encoder.encode(csv)
+      return { data, type: "text/csv" }
+    }
   }
 }
 
