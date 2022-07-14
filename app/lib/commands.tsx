@@ -42,6 +42,8 @@ export type CommandType =
   | "openFile"
   /** Show home page (used to manage connections) */
   | "openHome"
+  /** Show history activity @param query Filter history for given query */
+  | "openHistory"
   /** Show user profile page */
   | "openProfile"
   /** Open a query panel @param connection The database connection @sql The sql statement to run */

@@ -240,14 +240,17 @@ export function QueryPanel(props: QueryPanelProps) {
   /** Commands shown below query title */
   function renderCommands() {
     const commands: (Command | "spacing")[] = [
-      { command: "info", icon: "info", title: "Details" },
+      // TODO QueryPanel / info command #90
+      // { command: "info", icon: "info", title: "Details" },
       { command: "bookmarkQuery", icon: "bookmark", title: "Bookmark", args: { query } },
-      { command: "history", icon: "history", title: "History" },
+      { command: "openHistory", icon: "history", title: "Show history" },
       "spacing",
       { command: "prettify", icon: "autofix", title: "Prettify" },
-      "spacing",
-      { command: "comment", icon: "comment", title: "Comments" },
-      { command: "share", icon: "share", title: "Share" },
+      // "spacing",
+      // TODO QueryPanel / comments #91
+      // { command: "comment", icon: "comment", title: "Comments" },
+      // TODO QueryPanel / share button #92
+      // { command: "share", icon: "share", title: "Share" },
     ]
 
     // TODO show a user's avatar or list of users which share this query instead of plain info icon

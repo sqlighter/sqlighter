@@ -524,6 +524,10 @@ export default function Sqlighter(props: SqlighterProps) {
         await openFile(args.file)
         return
 
+      case "openHistory":
+        setActivityId("act_history")
+        return
+
       case "openHome":
         openHome()
         break
