@@ -3,7 +3,6 @@
 //
 
 import * as React from "react"
-import { useState } from "react"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 import { SxProps, Theme } from "@mui/material"
@@ -170,32 +169,91 @@ export function TreeView(props: TreeViewProps) {
   // state
   //
 
-  // list of ids of items that are selected
-  const [selected /*, setSelected */] = useState<string[]>([])
-  function isSelected(itemId: string): boolean {
-    return selected.indexOf(itemId) !== -1
+  /**
+   * User preferences which can be stored in local storage or in the user
+   * profile have a record for each itemId which tracks if the item is opened
+   * or closed, pinned, and/or selected.
+   */
+  const [attributes, setAttributes] = useSettings<string[]>("treeview", [])
+  
+  function hasAttribute(itemId: string, attribute: string): boolean | undefined {
+    const hasAttribute = attributes[itemId]?.[attribute]
+    console.debug(`TreeView.hasAttribute(${itemId}, ${attribute}) - ${hasAttribute}`)
+    return hasAttribute
   }
 
-  // list of ids of items that are expanded
-  const [expanded, setExpanded] = useState<string[]>([])
-  function isExpanded(itemId: string): boolean {
-    return expanded.indexOf(itemId) !== -1
-  }
-
-  // list of ids of pinned items
-  const [pins, setPins] = useSettings<string[]>("pins", [])
-  function isPinned(itemId: string): boolean {
-    return pins.indexOf(itemId) !== -1
-  }
-  function setPinned(itemId: string, pinned: boolean) {
-    if (isPinned(itemId) != pinned) {
-      if (pinned) {
-        setPins([...pins, itemId])
+  function setAttribute(itemId: string, attribute: string, value: boolean) {
+    if (hasAttribute(itemId, attribute) != value) {
+      const itemsAttrs = { ...attributes }
+      const itemAttrs = itemsAttrs[itemId]
+      if (typeof value == "boolean") {
+        // setting to true or false sets the attribute
+        if (!itemAttrs) {
+          itemsAttrs[itemId] = { [attribute]: value }
+        } else {
+          itemAttrs[attribute] = value
+        }
       } else {
-        setPins(pins.filter((p) => p != itemId))
+        // setting to null or undefined removes the attribute
+        if (itemAttrs) {
+          delete itemAttrs[attribute]
+          if (Object.keys(itemAttrs).length == 0) {
+            delete itemsAttrs[itemId]
+          }
+        }
       }
+      setAttributes(itemsAttrs)
     }
   }
+
+  /** Item is pinned? */
+  function isPinned(itemId: string): boolean {
+    return Boolean(hasAttribute(itemId, "pinned"))
+  }
+
+  /** Remember if item is pinned */
+  function setPinned(itemId: string, pinned: boolean) {
+    setAttribute(itemId, "pinned", pinned ? true : undefined)
+  }
+
+  /** Item is expanded? */
+  function isExpanded(itemId: string): boolean {
+    const isExpanded = hasAttribute(itemId, "expanded")
+    if (isExpanded === undefined) {
+      // for the first/second level items, if the user has not closed
+      // the item explicitly then we default to expanded so that the
+      // first time a user sees a new tree view at least the first level
+      // items are expanded by default
+      const level = itemId.split("/").length
+      return level < 3
+    }
+    return isExpanded
+  }
+
+  /** Remember if item is expanded */
+  function setExpanded(itemId: string, expanded: boolean) {
+    if (expanded) {
+      setAttribute(itemId, "expanded", Boolean(expanded))
+    } else {
+      // for the first/second level items, we keep track if the user has
+      // closed them explicitely so we can differentiate from the
+      // item never having been closed or opened. for other levels
+      // we just remove the attribute.
+      const level = itemId.split("/").length
+      setAttribute(itemId, "expanded", level < 3 ? false : undefined)
+    }
+  }
+
+  /** Item is selected? */
+  function isSelected(itemId: string): boolean {
+    return hasAttribute(itemId, "selected")
+  }
+  /** Remember if item is selected */
+/*  
+  function setSelected(itemId: string, expanded: boolean) {
+    setAttribute(itemId, "selected", expanded)
+  }
+*/
 
   //
   // handlers
@@ -205,22 +263,17 @@ export function TreeView(props: TreeViewProps) {
     const pinnedId = renderingPins ? `pins/${item.id}` : item.id
     switch (command.command) {
       case "collapseTreeItem":
-        setExpanded(expanded.filter((expandedId) => pinnedId !== expandedId))
-        break
+        setExpanded(pinnedId, false)
+        return
       case "expandTreeItem":
-        if (!isExpanded(pinnedId)) {
-          setExpanded([...expanded, pinnedId])
-        }
-        break
-
+        setExpanded(pinnedId, true)
+        return
       case "pin":
         setPinned(item.id, !isPinned(item.id))
-        break
-
-      default:
-        if (props.onCommand) {
-          props.onCommand(event, command)
-        }
+        return
+    }
+    if (props.onCommand) {
+      props.onCommand(event, command)
     }
   }
 
