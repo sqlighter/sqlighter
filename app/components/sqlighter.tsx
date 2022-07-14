@@ -108,10 +108,10 @@ export default function Sqlighter(props: SqlighterProps) {
       const databaseTab: TabModel = { id: tabId, component: "database", args: { connection, database, selection } }
       setTabs([databaseTab, ...tabs])
     }
-
-    if (!tabs.find((tab) => tab.id === tabId)) {
-    }
     setTabId(tabId)
+
+    // select database activity
+    setActivityId("act_database")
   }
 
   /**
@@ -406,6 +406,9 @@ export default function Sqlighter(props: SqlighterProps) {
       query.folder = BOOKMARKS_FOLDER
     }
     changeQuery(query)
+
+    // select bookmarks activity
+    setActivityId("act_bookmarks")
   }
 
   async function deleteBookmarks(queries: Query[]) {
@@ -413,6 +416,9 @@ export default function Sqlighter(props: SqlighterProps) {
     if (bookmarks) {
       const updatedBookmarks = bookmarks.filter((b1) => !queries.find((b2) => b1.id == b2.id))
       await setBookmarks(updatedBookmarks)
+
+      // select bookmarks activity
+      setActivityId("act_bookmarks")
     }
   }
 
