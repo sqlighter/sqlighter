@@ -157,7 +157,8 @@ export function QueryRunPanel(props: QueryRunPanelProps) {
     return (
       <IconButtonGroup
         className="QueryRunPanel-commands"
-        commands={[exportCmd, shareCmd]}
+        // TODO QueryPanel / share button #92
+        commands={[exportCmd /*, shareCmd */]}
         size="small"
         onCommand={handleCommand}
       />
