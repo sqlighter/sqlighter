@@ -86,6 +86,9 @@ export interface ActivityBarProps extends PanelProps {
   /** Signed in user (toggles behaviour of profile button) */
   user?: User
 
+  /** True if settings icon should be shown */
+  showSettings?: boolean
+
   /** Callback used by this panel to dispatch commands back to parent components (required) */
   onCommand: CommandEvent
 }
@@ -134,15 +137,17 @@ export function ActivityBar(props: ActivityBarProps) {
           </TabList>
         </Box>
         <Box className="ActivityBar-bottom">
-          <IconButton
-            className="ActivityBar-button"
-            onCommand={props.onCommand}
-            command={{
-              command: "openSettings",
-              icon: "settings",
-              title: "Settings",
-            }}
-          />
+          {props.showSettings && (
+            <IconButton
+              className="ActivityBar-button"
+              onCommand={props.onCommand}
+              command={{
+                command: "openSettings",
+                icon: "settings",
+                title: "Settings",
+              }}
+            />
+          )}
           <UserButton className="ActivityBar-button ActivityBar-user" user={props.user} onCommand={props.onCommand} />
         </Box>
       </Box>
