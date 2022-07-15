@@ -2,7 +2,6 @@
 // app.tsx - main component used to wrap all page components and keep basic user state, handle shared tasks, etc
 //
 
-import Head from "next/head"
 import Script from "next/script"
 import { useRouter } from "next/router"
 
@@ -21,7 +20,7 @@ import { User } from "../lib/items/users"
 import { useUser } from "../components/hooks/useuser"
 import { Command } from "../lib/commands"
 import { Context } from "../components/context"
-import { customTheme, PRIMARY_LIGHTEST } from "../components/theme"
+import { customTheme } from "../components/theme"
 import { SigninDialog } from "../components/auth/signindialog"
 
 // Google client id used for signin client is bound below at build time
@@ -167,19 +166,6 @@ export default function App({ Component, pageProps }: { Component: any; pageProp
       <ThemeProvider theme={customTheme()}>
         <Context.Provider value={context}>
           <DndProvider backend={HTML5Backend}>
-            <Head>
-              <meta name="viewport" content="initial-scale=1, width=device-width" />
-              <meta name="user" content={user?.id} />
-              <meta name="theme-color" content={PRIMARY_LIGHTEST} />
-              <meta name="google_id" content={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID} />
-              <link rel="preconnect" href="https://fonts.googleapis.com" />
-              <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-              <link
-                href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap"
-                rel="stylesheet"
-                as="style"
-              />
-            </Head>
             <Component {...pageProps} user={user} onCommand={handleCommand} />
             {showingSigninDialog && <SigninDialog onCommand={handleCommand} />}
             <Script
