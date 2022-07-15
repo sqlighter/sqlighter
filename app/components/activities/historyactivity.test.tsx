@@ -11,7 +11,6 @@ import { fake_history } from "../../stories/helpers/fakedata"
 import { HistoryActivity, getHistoryTrees, HISTORY_TITLE, HISTORY_TODAY, HISTORY_EARLIER } from "./historyactivity"
 
 describe("historyactivity.tsx", () => {
-
   test("getHistoryTrees", () => {
     const trees = getHistoryTrees(fake_history)
 
@@ -75,19 +74,10 @@ describe("historyactivity.tsx", () => {
     expect(getByText(HISTORY_TITLE)).toBeTruthy()
     expect(getByText(HISTORY_TODAY)).toBeTruthy()
 
-    // item should not be visible at first
+    // item should be visible at first
     let treeItems = await container.getElementsByClassName("TreeItem-root")
-    expect(treeItems).toHaveLength(1)
-    let item = screen.queryByText(fake_item.title)
-    expect(item).toBeFalsy()
-
-    // click on folder, open item
-    const folder = getByText(HISTORY_TODAY)
-    expect(folder).toBeInTheDocument()
-    fireEvent.click(folder)
-
-    // item should be visible
-    item = await screen.findByText(fake_item.title)
+    expect(treeItems).toHaveLength(2)
+    let item = await screen.findByText(fake_item.title)
     expect(item).toBeTruthy()
 
     // click on item, should raise an openQuery command
@@ -127,5 +117,14 @@ describe("historyactivity.tsx", () => {
     itemCommand = handleCommand.mock.calls[3][1]
     expect(itemCommand.command).toBe("deleteHistory")
     expect(itemCommand.args.queries).toBeInstanceOf(Array)
+
+    // click on folder, close item
+    const folder = getByText(HISTORY_TODAY)
+    expect(folder).toBeInTheDocument()
+    fireEvent.click(folder)
+
+    // item NOT should be visible
+    item = screen.queryByText(fake_item.title)
+    expect(item).toBeFalsy()
   })
 })

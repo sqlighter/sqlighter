@@ -70,19 +70,10 @@ describe("bookmarksactivity.tsx", () => {
     expect(getByText(BOOKMARKS_TITLE)).toBeTruthy()
     expect(getByText(BOOKMARKS_FOLDER)).toBeTruthy()
 
-    // item should not be visible at first
+    // item should be visible at first
     let treeItems = await container.getElementsByClassName("TreeItem-root")
-    expect(treeItems).toHaveLength(1)
-    let item = screen.queryByText(fake_bookmark.title)
-    expect(item).toBeFalsy()
-
-    // click on folder, open item
-    const folder = getByText(BOOKMARKS_FOLDER)
-    expect(folder).toBeInTheDocument()
-    fireEvent.click(folder)
-
-    // item should be visible
-    item = await screen.findByText(fake_bookmark.title)
+    expect(treeItems).toHaveLength(2)
+    let item = await screen.findByText(fake_bookmark.title)
     expect(item).toBeTruthy()
 
     // click on item, should raise an openQuery command
@@ -122,5 +113,14 @@ describe("bookmarksactivity.tsx", () => {
     itemCommand = handleCommand.mock.calls[3][1]
     expect(itemCommand.command).toBe("deleteBookmarks")
     expect(itemCommand.args.queries).toBeInstanceOf(Array)
+
+    // click on folder, close item
+    const folder = getByText(BOOKMARKS_FOLDER)
+    expect(folder).toBeInTheDocument()
+    fireEvent.click(folder)
+
+    // item should not be visible
+    item = await screen.queryByText(fake_bookmark.title)
+    expect(item).toBeFalsy()
   })
 })
