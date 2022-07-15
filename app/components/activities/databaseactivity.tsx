@@ -41,7 +41,7 @@ export function DatabaseActivity(props: DatabaseActivityProps) {
     return (
       <Empty title="No database yet" icon="database">
         <IconButton
-          {...props}
+          onCommand={props.onCommand}
           command={{
             command: "openFile",
             title: "Open",

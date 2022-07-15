@@ -175,11 +175,9 @@ export function TreeView(props: TreeViewProps) {
    * or closed, pinned, and/or selected.
    */
   const [attributes, setAttributes] = useSettings<string[]>("treeview", [])
-  
+
   function hasAttribute(itemId: string, attribute: string): boolean | undefined {
-    const hasAttribute = attributes[itemId]?.[attribute]
-    console.debug(`TreeView.hasAttribute(${itemId}, ${attribute}) - ${hasAttribute}`)
-    return hasAttribute
+    return attributes[itemId]?.[attribute]
   }
 
   function setAttribute(itemId: string, attribute: string, value: boolean) {
@@ -249,7 +247,7 @@ export function TreeView(props: TreeViewProps) {
     return hasAttribute(itemId, "selected")
   }
   /** Remember if item is selected */
-/*  
+  /*  
   function setSelected(itemId: string, expanded: boolean) {
     setAttribute(itemId, "selected", expanded)
   }
