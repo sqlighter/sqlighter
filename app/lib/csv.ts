@@ -39,7 +39,7 @@ export async function importCsv(
   let columns: string[] = null
   let rows = 0
 
-  const papaResult = await papaParseAsync(fromSource, {
+  await papaParseAsync(fromSource, {
     //  worker: true,
     comments: "#",
     transform: trimCsvValue,
@@ -73,13 +73,11 @@ export async function importCsv(
 
         // create table where records will be inserted
         const sql = `create table '${toTable}' (${columns.map((col) => `'${col}'`).join(",")});`
-        const results = toConnection.getResultsSync(sql)
-        console.debug(sql, results)
+        toConnection.getResultsSync(sql)
       }
     },
   })
 
-  console.debug(`importCsv - papaResult`, papaResult)
   return { database: toDatabase, table: toTable, rows: rows, columns }
 }
 
