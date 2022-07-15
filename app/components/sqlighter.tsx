@@ -655,8 +655,8 @@ export default function Sqlighter(props: SqlighterProps) {
 
   return (
     <TabsLayout
-      title="sqlighter"
-      description="lighter, faster"
+      title="SQLighter"
+      description="Lighter, faster"
       activityId={activityId}
       activities={renderActivities()}
       tabId={tabId}

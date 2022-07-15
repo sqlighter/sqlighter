@@ -12,7 +12,7 @@ import homeImage from "../branding/banner-square.png"
 export default function Home({ props }) {
   return (
     <SiteLayout description="lighter, faster">
-      <Empty title="sqlighter" description="lighter, faster" image={homeImage} variant="fancy" />
+      <Empty title="SQLighter" description="Lighter, faster" image={homeImage} variant="fancy" />
       <Stack alignItems="center" justifyContent="center" mt={4}>
         <Link
           variant="subtitle2"

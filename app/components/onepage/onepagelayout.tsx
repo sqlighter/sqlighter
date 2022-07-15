@@ -10,7 +10,7 @@ import Box from "@mui/material/Box"
 
 import { Footer } from "./footer"
 
-export const TITLE = "sqlighter"
+export const TITLE = "SQLighter"
 export const HEADER_HEIGHT = 64
 
 const OnePageLayout_SxProps: SxProps<Theme> = {

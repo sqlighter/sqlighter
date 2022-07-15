@@ -5,7 +5,7 @@
 import Head from "next/head"
 import Container from "@mui/material/Container"
 
-export const TITLE = "sqlighter"
+export const TITLE = "SQLighter"
 
 interface LayoutProps {
   /** Page title */

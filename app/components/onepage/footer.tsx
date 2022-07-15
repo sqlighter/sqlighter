@@ -44,7 +44,7 @@ export function Footer(props: FooterProps) {
             color="primary"
             command={{
               command: "openUrl",
-              title: "Sqlighter",
+              title: "SQLighter",
               icon: "sqlighter",
               args: { href: "/" },
             }}
