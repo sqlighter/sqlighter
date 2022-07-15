@@ -8,9 +8,7 @@ import React from "react"
 import { Theme, SxProps } from "@mui/material/styles"
 import Box from "@mui/material/Box"
 import Tab from "@mui/material/Tab"
-import TabContext from "@mui/lab/TabContext"
-import TabList from "@mui/lab/TabList"
-import TabPanel from "@mui/lab/TabPanel"
+import Tabs from "@mui/material/Tabs"
 
 import { User } from "../../lib/items/users"
 import { CommandEvent } from "../../lib/commands"
@@ -110,52 +108,46 @@ export function ActivityBar(props: ActivityBarProps) {
   //
   // render
   //
-
-  // NOTE we render some empty TabPanels only to silence warnings, actual content is rendered by Sidebar
   return (
-    <TabContext value={props.activityId}>
-      <Box sx={ActivityBar_SxProps}>
-        <Box className="ActivityBar-top">
-          <IconButton
-            className="ActivityBar-button ActivityBar-home"
-            onCommand={props.onCommand}
-            command={{
-              command: "openHome",
-              icon: "home",
-              title: "Home",
-            }}
-          />
-          <TabList scrollButtons="auto" orientation="vertical">
+    <Box sx={ActivityBar_SxProps}>
+      <Box className="ActivityBar-top">
+        <IconButton
+          className="ActivityBar-button ActivityBar-home"
+          onCommand={props.onCommand}
+          command={{
+            command: "openHome",
+            icon: "home",
+            title: "Home",
+          }}
+        />
+        {props.activityId && props.activities && (
+          <Tabs scrollButtons="auto" orientation="vertical" value={props.activities && props.activityId}>
             {props.activities.map((activity: PanelElement) => (
               <Tab
                 key={activity.props.id}
-                id={activity.props.id}
                 value={activity.props.id}
                 icon={<Icon>{activity.props.icon}</Icon>}
                 iconPosition="start"
                 onClick={(e) => handleActivityClick(e, activity.props.id)}
               />
             ))}
-          </TabList>
-          {props.activities.map((activity: PanelElement) => (
-            <TabPanel key={activity.props.id} value={activity.props.id} />
-          ))}
-        </Box>
-        <Box className="ActivityBar-bottom">
-          {props.showSettings && (
-            <IconButton
-              className="ActivityBar-button"
-              onCommand={props.onCommand}
-              command={{
-                command: "openSettings",
-                icon: "settings",
-                title: "Settings",
-              }}
-            />
-          )}
-          <UserButton className="ActivityBar-button ActivityBar-user" user={props.user} onCommand={props.onCommand} />
-        </Box>
+          </Tabs>
+        )}
       </Box>
-    </TabContext>
+      <Box className="ActivityBar-bottom">
+        {props.showSettings && (
+          <IconButton
+            className="ActivityBar-button"
+            onCommand={props.onCommand}
+            command={{
+              command: "openSettings",
+              icon: "settings",
+              title: "Settings",
+            }}
+          />
+        )}
+        <UserButton className="ActivityBar-button ActivityBar-user" user={props.user} onCommand={props.onCommand} />
+      </Box>
+    </Box>
   )
 }
