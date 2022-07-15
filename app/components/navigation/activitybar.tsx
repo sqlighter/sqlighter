@@ -10,6 +10,7 @@ import Box from "@mui/material/Box"
 import Tab from "@mui/material/Tab"
 import TabContext from "@mui/lab/TabContext"
 import TabList from "@mui/lab/TabList"
+import TabPanel from "@mui/lab/TabPanel"
 
 import { User } from "../../lib/items/users"
 import { CommandEvent } from "../../lib/commands"
@@ -110,6 +111,7 @@ export function ActivityBar(props: ActivityBarProps) {
   // render
   //
 
+  // NOTE we render some empty TabPanels only to silence warnings, actual content is rendered by Sidebar
   return (
     <TabContext value={props.activityId}>
       <Box sx={ActivityBar_SxProps}>
@@ -135,6 +137,9 @@ export function ActivityBar(props: ActivityBarProps) {
               />
             ))}
           </TabList>
+          {props.activities.map((activity: PanelElement) => (
+            <TabPanel key={activity.props.id} value={activity.props.id} />
+          ))}
         </Box>
         <Box className="ActivityBar-bottom">
           {props.showSettings && (
