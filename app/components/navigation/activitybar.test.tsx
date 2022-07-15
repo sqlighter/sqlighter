@@ -12,7 +12,7 @@ import { ActivityBar } from "./activitybar"
 function renderActivityBar(user?) {
   const handleCommand = jest.fn()
   const { container, getByText, queryByText } = render(
-    <ActivityBar activityId="act_database" activities={fake_activities} user={user} onCommand={handleCommand} />
+    <ActivityBar activityId="act_database" activities={fake_activities} user={user} onCommand={handleCommand} showSettings={true} />
   ) 
   return { container, getByText, queryByText, handleCommand}
 }
