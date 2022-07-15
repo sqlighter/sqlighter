@@ -101,7 +101,7 @@ export function TreeItem({ item, ...props }: TreeItemProps) {
     return <Icon className="TreeItem-labelIcon">{icon}</Icon>
   }
 
-  function getCommandIcon(command: Command) {
+  function getCommandIcon(command: Command, key) {
     // alter pin command for items that are already pinned
     if (props.pinned && command.command === "pin") {
       command.title = "Unpin"
@@ -110,7 +110,7 @@ export function TreeItem({ item, ...props }: TreeItemProps) {
 
     return (
       <Icon
-        key={command.command}
+        key={key}
         className="TreeItem-commandIcon"
         onClick={(e) => {
           props.onCommand(e, command)
@@ -125,11 +125,11 @@ export function TreeItem({ item, ...props }: TreeItemProps) {
   }
 
   /** A tag is rendered as a chip with an optional tooltip */
-  function getTag(tag, index) {
+  function getTag(tag, key) {
     if (typeof tag === "string") {
       return (
         <Chip
-          key={index}
+          key={key}
           className="TreeItem-tag"
           label={tag}
           size="small"
@@ -141,7 +141,7 @@ export function TreeItem({ item, ...props }: TreeItemProps) {
     }
     return (
       <Chip
-        key={index}
+        key={key}
         className="TreeItem-tag"
         label={tag.title}
         size="small"
@@ -190,7 +190,7 @@ export function TreeItem({ item, ...props }: TreeItemProps) {
         )}
         {item.commands && (
           <Stack className="TreeItem-commands" direction="row" spacing={0.5}>
-            {item.commands.map((command) => getCommandIcon(command))}
+            {item.commands.map((command, index) => getCommandIcon(command, index))}
           </Stack>
         )}
       </ButtonBase>
