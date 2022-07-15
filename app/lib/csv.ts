@@ -82,11 +82,11 @@ export async function importCsv(
 }
 
 /** Papa.parse as a promise */
-async function papaParseAsync(source, options): Promise<Papa.ParseResult> {
+async function papaParseAsync<T=any>(source, options): Promise<Papa.ParseResult<T>> {
   return new Promise((resolve, reject) => {
     Papa.parse(source, {
       ...options,
-      complete: (results: Papa.ParseResult) => {
+      complete: (results: Papa.ParseResult<T>) => {
         return resolve(results)
       },
       error: (error: Papa.ParseError) => {

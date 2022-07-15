@@ -21,6 +21,9 @@ declare module "@mui/material/styles" {
   }
 }
 
+// gem shaped radius
+export const FANCY_RADIUS = "74% 26% 61% 39% / 35% 30% 70% 65%"
+
 // coefficients used to make colors lighter
 const LIGHT = 0.92
 const LIGHTER = 0.95

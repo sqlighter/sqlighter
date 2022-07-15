@@ -10,8 +10,8 @@ import Typography from "@mui/material/Typography"
 import { alpha, SxProps } from "@mui/material"
 import { Theme } from "@mui/material/styles"
 
-import { FANCY_RADIUS } from "../listitems"
 import { Icon } from "./icon"
+import { FANCY_RADIUS } from "../theme"
 
 const Empty_SxProps: SxProps<Theme> = {
   alignItems: "center",
