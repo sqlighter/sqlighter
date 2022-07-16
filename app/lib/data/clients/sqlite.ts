@@ -103,7 +103,7 @@ export class SqliteDataConnection extends DataConnection {
       await this.getResult("select 1")
     } catch (exception) {
       console.error(`SqliteDataConnection.connect - exception: ${exception}`, exception)
-      throw new DataError("Couln't create connection", { cause: exception, configs: configs })
+      throw new DataError("Couln't create connection", { cause: exception, connection: this, configs: configs })
     }
   }
 
