@@ -32,7 +32,8 @@ const Footer_SxProps: SxProps<Theme> = {
 }
 
 interface FooterProps {
-  //
+   /** Maximum page width, defaults to 'lg' */
+  maxWidth?: "xs" | "sm" | "md" | "lg" | "xl"
 }
 
 /** Page footer with usual links */
@@ -40,7 +41,7 @@ export function Footer(props: FooterProps) {
   const [isWideScreen] = useWideScreen()
 
   return (
-    <Area className="Footer-root" background="gray">
+    <Area className="Footer-root" background="gray" maxWidth={props.maxWidth}>
       <Box className="Footer-box" sx={Footer_SxProps}>
         <Stack direction="row" spacing={1} alignItems="center" sx={{ color: "text.secondary", flexGrow: 1 }}>
           <IconButton
@@ -50,7 +51,7 @@ export function Footer(props: FooterProps) {
               command: "openUrl",
               title: "SQLighter",
               icon: "sqlighter",
-              args: { href: "/site" },
+              args: { href: "/" },
             }}
           />
           <Link href="/privacy" variant="body2" underline="none" color="inherit">
