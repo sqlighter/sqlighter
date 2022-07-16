@@ -318,9 +318,6 @@ export default function Sqlighter(props: SqlighterProps) {
       query = { ...query }
       const queryResults = await connection.getResults(query.sql)
 
-      // TODO remove artificial delay used only to develop "in progress" updates
-      // await delay(200)
-
       // first query completed normally
       // TODO replace running, do not modify object
       running.status = "completed"
