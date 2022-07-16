@@ -213,7 +213,7 @@ export abstract class DataConnection {
   }
 
   /** Disconnect this connection from remote server, release data from memory, etc */
-  public async disconnect(): Promise<void> {
+  public async close(): Promise<void> {
     // subclasses implement connection logic if needed
   }
 
