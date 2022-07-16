@@ -11,6 +11,8 @@ interface AreaProps {
   className?: string
   /** Light or darker background? Default is white */
   background?: "white" | "gray"
+  /** Maximum page width, defaults to 'lg' */
+  maxWidth?: "xs" | "sm" | "md" | "lg" | "xl"
   /** Area contents */
   children: any
 }
@@ -25,7 +27,7 @@ export function Area(props: AreaProps) {
   const className = "Area-root" + (props.className ? " " + props.className : "")
   return (
     <Box className={className} sx={Area_SxProps}>
-      <Container maxWidth="lg">{props.children}</Container>
+      <Container maxWidth={props.maxWidth || "lg"}>{props.children}</Container>
     </Box>
   )
 }

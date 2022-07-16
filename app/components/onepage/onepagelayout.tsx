@@ -16,6 +16,7 @@ export const HEADER_HEIGHT = 64
 const OnePageLayout_SxProps: SxProps<Theme> = {
   display: "flex",
   flexDirection: "column",
+  minHeight: 1,
 
   backgroundColor: "background.paper",
 
@@ -32,6 +33,12 @@ const OnePageLayout_SxProps: SxProps<Theme> = {
   },
 
   ".OnePageLayout-contents": {
+    flexGrow: 1,
+
+    display: "flex",
+    flexDirection: "column",
+    minHeight: 1,
+
     paddingTop: `${HEADER_HEIGHT}px`,
     backgroundColor: "background.paper",
   },
@@ -50,6 +57,9 @@ interface OnePageLayoutProps {
   /** Additional actions to be placed on the right hand side of the toolbar */
   actions?: any
 
+  /** Maximum page width, defaults to 'lg' */
+  maxWidth?: "xs" | "sm" | "md" | "lg" | "xl"
+
   /** Layout contents */
   children?: any
 }
@@ -62,15 +72,17 @@ export function OnePageLayout(props: OnePageLayoutProps) {
     <>
       <Head>
         <title>{title}</title>
-        <link rel="icon" href="/favicon.png" />
-        <meta property="og:image" content="/branding/banner.png" />
         <meta name="og:title" content={title} />
         <meta name="description" content={description} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
       <Box className="OnePageLayout-root" sx={OnePageLayout_SxProps}>
         <AppBar className="OnePageLayout-appBar" position="fixed" color="transparent" elevation={0}>
-          <Container className="OnePageLayout-header" maxWidth="lg" sx={{ display: "flex", alignItems: "center" }}>
+          <Container
+            className="OnePageLayout-header"
+            maxWidth={props.maxWidth || "lg"}
+            sx={{ display: "flex", alignItems: "center" }}
+          >
             <Box sx={{ flexGrow: 1 }}>
               <img src="/branding/logo.png" alt="sqlighter" height={28} />
             </Box>
@@ -79,7 +91,8 @@ export function OnePageLayout(props: OnePageLayoutProps) {
         </AppBar>
         <Box className="OnePageLayout-contents" component="main">
           {props.children}
-          <Footer />
+          <Box sx={{ flexGrow: 1 }} />
+          <Footer maxWidth={props.maxWidth} />
         </Box>
       </Box>
     </>
