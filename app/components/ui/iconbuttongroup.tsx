@@ -23,12 +23,15 @@ interface IconRendering {
   label?: boolean
 }
 
+/** A list of commands shown as icons with optional spacing and group dividers */
+export type IconButtonGroupCommands = (Command | "divider" | "spacing")[]
+
 export interface IconButtonGroupProps {
   /** Class to be applied to this component */
   className?: string
 
   /** Commands to be rendered by this button, add "divider" to space them out */
-  commands: (Command | "divider" | "spacing")[]
+  commands: IconButtonGroupCommands
 
   /**
    * If specified then the icon with the given command is selected and the group acts as a toggle group
