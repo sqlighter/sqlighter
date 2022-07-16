@@ -39,7 +39,7 @@ export const fake_connection1 = new FakeConnection({
   metadata: {
     description:
       "Chinook is a sample database available for many database engines. It can be created by running a single SQL script. Chinook database is an alternative to the Northwind database, being ideal for demos and testing ORM tools targeting single and multiple database servers.",
-    image: "/databases/chinook.jpg",
+    image: "/databases/chinook.jpeg",
     url: "https://github.com/lerocha/chinook-database#:~:text=Chinook%20is%20a%20sample%20database,single%20and%20multiple%20database%20servers.",
   },
 })
@@ -62,7 +62,7 @@ export const fake_emptyDatabase = new FakeConnection({
   metadata: {
     description:
       "Chinook is a sample database available for many database engines. It can be created by running a single SQL script. Chinook database is an alternative to the Northwind database, being ideal for demos and testing ORM tools targeting single and multiple database servers.",
-    image: "/databases/chinook.jpg",
+    image: "/databases/chinook.jpeg",
     url: "https://github.com/lerocha/chinook-database#:~:text=Chinook%20is%20a%20sample%20database,single%20and%20multiple%20database%20servers.",
   },
 })
