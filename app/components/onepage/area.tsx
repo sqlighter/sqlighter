@@ -18,6 +18,7 @@ interface AreaProps {
 /** A vertical section of a one page style site */
 export function Area(props: AreaProps) {
   const Area_SxProps: SxProps<Theme> = {
+    width: 1,
     backgroundColor: props.background == "gray" ? "background.default" : undefined,
   }
 

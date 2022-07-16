@@ -21,6 +21,7 @@ import { ConnectionCard } from "../database/connectioncard"
 import { FilesBackdrop } from "../ui/filesbackdrop"
 import { Section } from "../ui/section"
 import { Icon } from "../ui/icon"
+import { Footer } from "../onepage/footer"
 
 // unique id for home panel in tabs
 export const HOME_PANEL_ID = "pnl_home"
@@ -29,6 +30,7 @@ export const HOME_PANEL_ID = "pnl_home"
 const HomePanel_SxProps: SxProps<Theme> = {
   minWidth: (theme) => theme.breakpoints.values.xs, // 600px
   maxWidth: (theme) => theme.breakpoints.values.md, // 900px
+  minHeight: 1,
 
   paddingTop: 2,
   paddingLeft: 1,
@@ -61,6 +63,16 @@ const HomePanel_SxProps: SxProps<Theme> = {
 
   ".HomePanel-templates": {
     paddingTop: 4,
+  },
+
+  ".MuiContainer-root": {
+    paddingLeft: 0,
+    paddingRight: 0,
+  },
+
+  ".Footer-box": {
+    paddingTop: 2,
+    paddingBottom: 0,
   },
 }
 
@@ -96,7 +108,12 @@ export function HomePanel(props: HomePanelProps) {
               const canExport = connection.canExport()
               return (
                 <Grid item key={connection.id} xs={12} sm={6} md={4}>
-                  <ConnectionCard connection={connection} canExport={canExport} canClose={true} onCommand={props.onCommand} />
+                  <ConnectionCard
+                    connection={connection}
+                    canExport={canExport}
+                    canClose={true}
+                    onCommand={props.onCommand}
+                  />
                 </Grid>
               )
             })}
@@ -195,6 +212,8 @@ export function HomePanel(props: HomePanelProps) {
       {props.connections && renderConnections()}
       {renderActions()}
       {templates && renderTemplates()}
+      <Box sx={{ flexGrow: 1 }}></Box>
+      <Footer />
     </Box>
   )
 }
