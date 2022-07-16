@@ -9,6 +9,7 @@ import MuiCardHeader from "@mui/material/CardHeader"
 import MuiCardMedia from "@mui/material/CardMedia"
 import { CardProps as MuiCardProps } from "@mui/material"
 import Tooltip from "@mui/material/Tooltip"
+import Typography from "@mui/material/Typography"
 
 import { IconButton } from "./iconbutton"
 import { Command, CommandEvent } from "../../lib/commands"
@@ -76,31 +77,34 @@ export function Card(props: CommandCardProps) {
   let { image, icon, command, secondaryCommand, onCommand, ...cardProps } = props
   const className = "Card-root" + (props.className ? " " + props.className : "")
 
-  return (
+  const title = (
     <Tooltip title={command.description}>
-      <MuiCard
-        className={className}
-        variant="outlined"
-        square
-        onClick={(event) => onCommand(event, command)}
-        sx={Card_SxProps}
-        {...cardProps}
-      >
-        <MuiCardActionArea>
-          {image && <MuiCardMedia className="Card-media" image={image} />}
-          {!image && (
-            <MuiCardMedia className="Card-media Card-icon">
-              <Icon>{icon || command.icon}</Icon>
-            </MuiCardMedia>
-          )}
-          <MuiCardHeader
-            avatar={<Icon>{command.icon}</Icon>}
-            action={secondaryCommand && <IconButton command={secondaryCommand} onCommand={onCommand} />}
-            title={command.title}
-            subheader={command.description}
-          />
-        </MuiCardActionArea>
-      </MuiCard>
+      <Typography>{command.title}</Typography>
     </Tooltip>
+  )
+
+  return (
+    <MuiCard
+      className={className}
+      variant="outlined"
+      square
+      onClick={(event) => onCommand(event, command)}
+      sx={Card_SxProps}
+      {...cardProps}
+    >
+      <MuiCardActionArea>
+        {image && <MuiCardMedia className="Card-media" image={image} />}
+        {!image && (
+          <MuiCardMedia className="Card-media Card-icon">
+            <Icon>{icon || command.icon}</Icon>
+          </MuiCardMedia>
+        )}
+        <MuiCardHeader
+          avatar={<Icon>{command.icon}</Icon>}
+          action={secondaryCommand && <IconButton command={secondaryCommand} onCommand={onCommand} />}
+          title={title}
+        />
+      </MuiCardActionArea>
+    </MuiCard>
   )
 }
