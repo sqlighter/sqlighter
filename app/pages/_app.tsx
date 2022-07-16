@@ -15,6 +15,7 @@ import { HTML5Backend } from "react-dnd-html5-backend"
 import { useState } from "react"
 import CssBaseline from "@mui/material/CssBaseline"
 import { ThemeProvider } from "@mui/material/styles"
+import { trackEvent } from "../lib/analytics"
 
 import { User } from "../lib/items/users"
 import { useUser } from "../components/hooks/useuser"
@@ -89,6 +90,12 @@ export default function App({ Component, pageProps }: { Component: any; pageProp
    */
   function handleGoogleSignin(response) {
     setShowingSigninDialog(false)
+
+    // track only anonymous, non identifiable data
+    trackEvent("login", {
+      category: "engagement",
+      method: "google",
+    })
 
     // https://developers.google.com/identity/gsi/web/reference/js-reference#CredentialResponse
     // import jwt_decode from "jwt-decode"
