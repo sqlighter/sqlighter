@@ -1,35 +1,22 @@
 //
-// index.tsx - home page
+// app.tsx - sqlighter as a full page application
 //
 
-import Link from "@mui/material/Link"
-import Stack from "@mui/material/Stack"
+import * as React from "react"
+import Script from "next/script"
+import dynamic from "next/dynamic"
 
-import { SiteLayout } from "../components/layouts"
-import { Empty } from "../components/ui/empty"
-import homeImage from "../branding/banner-square.png"
+// import { Main  } from "../../components/sqlighter/main"
+// TODO load using <Suspense /> that shows a loading screen
+// https://nextjs.org/docs/advanced-features/dynamic-import
 
-export default function Home({ props }) {
+const MainComponentWithoutSSR = dynamic(() => import("../components/sqlighter"), { ssr: false })
+
+export default function AppPage(props) {
   return (
-    <SiteLayout description="lighter, faster">
-      <Empty title="SQLighter" description="Lighter, faster" image={homeImage} variant="fancy" />
-      <Stack alignItems="center" justifyContent="center" mt={4}>
-        <Link
-          variant="subtitle2"
-          href="mailto:info@sqlighter.com"
-          underline="hover"
-          sx={{
-            cursor: "pointer",
-            position: "absolute",
-            bottom: 32,
-            "@media (max-height: 480px)": {
-              visibility: "hidden",
-            },
-          }}
-        >
-          info@sqlighter.com
-        </Link>
-      </Stack>
-    </SiteLayout>
+    <>
+      <Script type="module" strategy="beforeInteractive" src="/sql-loader.js" />
+      <MainComponentWithoutSSR {...props} />
+    </>
   )
 }
