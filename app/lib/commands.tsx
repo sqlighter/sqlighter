@@ -20,6 +20,8 @@ export type CommandType =
   | "changeTitle"
   /** Change given value, eg. from input @param value Updated value */
   | "changeValue"
+  /** Close an existing connection @param connection The connection to be closed */
+  | "closeConnection"
   /** A tab was closed @param tabId Id of tab that was closed  */
   | "closeTab"
   /** Modify a connection settings @param item The connection to modify */
@@ -87,3 +89,4 @@ export interface Command<T = { [key: string]: any }> {
 
 /** Callback used to propagate commands within the application */
 export type CommandEvent<T = Command> = (event: SyntheticEvent, command: T) => void
+

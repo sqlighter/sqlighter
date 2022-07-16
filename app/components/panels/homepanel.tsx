@@ -89,13 +89,14 @@ export function HomePanel(props: HomePanelProps) {
 
   function renderConnections() {
     return (
-      props.connections && (
+      props.connections?.length > 0 && (
         <Section className="HomePanel-connections" title="Your connections">
-          <Grid container spacing={1}>
-            {props.connections.map((connection) => {
+          <Grid container spacing={2}>
+            {props.connections.map((connection: DataConnection) => {
+              const canExport = connection.canExport()
               return (
                 <Grid item key={connection.id} xs={12} sm={6} md={4}>
-                  <ConnectionCard connection={connection} canConfigure={true} onCommand={props.onCommand} />
+                  <ConnectionCard connection={connection} canExport={canExport} canClose={true} onCommand={props.onCommand} />
                 </Grid>
               )
             })}
@@ -116,7 +117,7 @@ export function HomePanel(props: HomePanelProps) {
 
     return (
       <Section className="HomePanel-actions" title="Let's get some data 👍🏼">
-        <Grid container spacing={1}>
+        <Grid container spacing={2}>
           <Grid item xs={12} sm={6} md={4}>
             <Card
               command={{
@@ -167,7 +168,7 @@ export function HomePanel(props: HomePanelProps) {
       const connections = templates.map((configs) => DataConnectionFactory.create(configs))
       return (
         <Section className="HomePanel-templates" title="Templates">
-          <Grid container spacing={1}>
+          <Grid container spacing={2}>
             {connections.map((connection) => {
               return (
                 <Grid item key={connection.id} xs={12} sm={6} md={4}>

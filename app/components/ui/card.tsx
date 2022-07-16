@@ -11,9 +11,9 @@ import { CardProps as MuiCardProps } from "@mui/material"
 import Tooltip from "@mui/material/Tooltip"
 import Typography from "@mui/material/Typography"
 
-import { IconButton } from "./iconbutton"
 import { Command, CommandEvent } from "../../lib/commands"
 import { Icon } from "./icon"
+import { IconButtonGroup, IconButtonGroupCommands } from "./iconbuttongroup"
 
 const Card_SxProps: SxProps<Theme> = {
   ".Card-media": {
@@ -30,6 +30,10 @@ const Card_SxProps: SxProps<Theme> = {
       fontSize: 128,
       color: "background.paper",
     },
+  },
+
+  ".Card-actions": {
+    paddingLeft: 1
   },
 
   ".MuiCardHeader-content": {
@@ -65,8 +69,8 @@ export interface CommandCardProps extends MuiCardProps {
 
   /** Command that will be emitted when clicked, will use title, description and icon from this command */
   command: Command
-  /** An optional secondary command shown on the right in the action area, like 'settings', etc (optional) */
-  secondaryCommand?: Command
+  /** Optional secondary commands shown on the right in the action area, like 'settings', etc (optional) */
+  actions?: IconButtonGroupCommands
 
   /** Event handler for primary or secondary command */
   onCommand?: CommandEvent
@@ -74,14 +78,16 @@ export interface CommandCardProps extends MuiCardProps {
 
 /** Display a card with media area, avatar, title, description and possibly a secondary command */
 export function Card(props: CommandCardProps) {
-  let { image, icon, command, secondaryCommand, onCommand, ...cardProps } = props
-  const className = "Card-root" + (props.className ? " " + props.className : "")
+  let { className, image, icon, command, actions, onCommand, ...cardProps } = props
+  className = "Card-root" + (className ? " " + className : "")
 
-  const title = (
-    <Tooltip title={command.description}>
-      <Typography>{command.title}</Typography>
-    </Tooltip>
-  )
+  let title = <Typography noWrap>{command.title}</Typography>
+  if (command.description) {
+    title = <Tooltip title={command.description}>{title}</Tooltip>
+  }
+
+  // one or more icon buttons to be shown in card action area
+  const action = actions && <IconButtonGroup className="Card-actions" commands={actions} onCommand={onCommand} size="small" />
 
   return (
     <MuiCard
@@ -99,11 +105,7 @@ export function Card(props: CommandCardProps) {
             <Icon>{icon || command.icon}</Icon>
           </MuiCardMedia>
         )}
-        <MuiCardHeader
-          avatar={<Icon>{command.icon}</Icon>}
-          action={secondaryCommand && <IconButton command={secondaryCommand} onCommand={onCommand} />}
-          title={title}
-        />
+        <MuiCardHeader avatar={<Icon>{command.icon}</Icon>} action={action} title={title} />
       </MuiCardActionArea>
     </MuiCard>
   )
