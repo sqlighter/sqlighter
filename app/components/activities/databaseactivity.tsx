@@ -57,16 +57,20 @@ export function DatabaseActivity(props: DatabaseActivityProps) {
     )
   }
 
+  const hasConnections = props.connections?.length > 0
   return (
     <Box className="DatabaseActivity-root" sx={DatabaseActivity_SxProps}>
       <Box className="DatabaseActivity-header">
         <Typography variant="overline">Database Explorer</Typography>
       </Box>
-      {!props.connections && renderEmpty()}
-      {props.connections && (
-        <ConnectionPicker connection={props.connection} connections={props.connections} onCommand={props.onCommand} />
+      {hasConnections ? (
+        <>
+          <ConnectionPicker connection={props.connection} connections={props.connections} onCommand={props.onCommand} />
+          <DatabaseTreeView connection={props.connection} onCommand={props.onCommand} />
+        </>
+      ) : (
+        renderEmpty()
       )}
-      {props.connection && <DatabaseTreeView connection={props.connection} onCommand={props.onCommand} />}
     </Box>
   )
 }
