@@ -227,6 +227,18 @@ export default function Sqlighter(props: SqlighterProps) {
     setTabId(tabId)
   }
 
+  /** Close given connection and related resources */
+  async function closeConnection(closingConnection: DataConnection) {
+    if (connections && connections.find((conn) => conn.id == closingConnection.id)) {
+      await closingConnection.close()
+      setConnections(connections.filter((conn) => conn.id != closingConnection.id))
+      if (connection === closingConnection) {
+        setConnection(null)
+        // TODO close all tabs related to this connection
+      }
+    }
+  }
+
   //
   // queries
   //
@@ -493,6 +505,10 @@ export default function Sqlighter(props: SqlighterProps) {
         const changedTabs = args.tabs.map((tabElement: ReactElement) => tabs.find((tab) => tabElement.key == tab.id))
         setTabId(args.tabId)
         setTabs(changedTabs)
+        return
+
+      case "closeConnection":
+        await closeConnection(args.connection)
         return
 
       case "deleteBookmarks":
