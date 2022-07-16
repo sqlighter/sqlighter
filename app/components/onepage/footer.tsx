@@ -46,7 +46,6 @@ export function Footer(props: FooterProps) {
         <Stack direction="row" spacing={1} alignItems="center" sx={{ color: "text.secondary", flexGrow: 1 }}>
           <IconButton
             edge="start"
-            color="primary"
             command={{
               command: "openUrl",
               title: "SQLighter",
