@@ -235,7 +235,7 @@ export abstract class DataConnection {
   public async getResult(sql: string, params?: { [key: string]: any }): Promise<QueryExecResult> {
     const results = await this.getResults(sql, params)
     if (results.length > 1) {
-      throw new DataError(`DataConnection.getResult - expected single result, got ${results.length}, sql: ${sql}`)
+      throw new DataError(`DataConnection.getResult - expected single result, got ${results.length}, sql: ${sql}`, {connection: this})
     }
     return results?.length ? results[0] : null
   }
@@ -336,7 +336,7 @@ export class DataError extends Error {
   readonly configs?: DataConfig
   constructor(message: string, options?: DataErrorOptions) {
     super(message, options)
-    this.connection = options.connection
-    this.configs = options.configs
+    this.connection = options?.connection
+    this.configs = options?.configs
   }
 }

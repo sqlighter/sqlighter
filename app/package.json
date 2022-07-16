@@ -94,6 +94,7 @@
     "@swc-node/jest": "^1.5.2",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
+    "@types/gtag.js": "^0.0.10",
     "@types/jest": "^28.1.2",
     "@types/node": "^18.0.0",
     "@types/papaparse": "^5.3.2",

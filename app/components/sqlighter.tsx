@@ -11,6 +11,7 @@ import { Command } from "../lib/commands"
 import { DataConnection, DataFormat } from "../lib/data/connections"
 import { DataConnectionFactory } from "../lib/data/factory"
 import { Query, QueryRun } from "../lib/items/query"
+import { trackEvent } from "../lib/analytics"
 
 // hooks
 import { useSqljs } from "./hooks/usedb"
@@ -28,8 +29,6 @@ import { PanelElement, PanelProps } from "./navigation/panel"
 import { TablePanel } from "./panels/tablepanel"
 import { QueryPanel } from "./panels/querypanel"
 import { TabsLayout } from "./navigation/tabslayout"
-
-const delay = (ms) => new Promise((res) => setTimeout(res, ms))
 
 /** Data model for opened tabs */
 type TabModel = { id: string; component: "home" | "database" | "table" | "query"; args?: any }
@@ -82,15 +81,23 @@ export default function Sqlighter(props: SqlighterProps) {
   /** Will open a connection, if needed, then make it the current connection */
   async function openConnection(connection: DataConnection) {
     if (connection) {
+      const startedOn = performance.now()
       if (!connection.isConnected) {
         await connection.connect(sqljs)
       }
+
       const hasConnection = connections && connections.find((conn) => conn.id == connection.id)
       if (!hasConnection) {
         setConnections([connection, ...(connections || [])])
       }
       setConnection(connection)
       openDatabase(connection)
+
+      // track only anonymous, non identifiable data
+      trackEvent("open_connection", {
+        connection_client: connection.configs?.client, // type of databaase client
+        connection_elapsed: performance.now() - startedOn, // time to connect
+      })
     }
   }
 
@@ -123,6 +130,7 @@ export default function Sqlighter(props: SqlighterProps) {
   async function openFile(file?: File | FileSystemFileHandle): Promise<DataConnection> {
     console.debug(`Sqlighter.openFile`, file)
     try {
+      const startedOn = performance.now()
       if (!file) {
         // let user pick a database file to open
         const pickerOpts = {
@@ -142,8 +150,17 @@ export default function Sqlighter(props: SqlighterProps) {
       }
 
       let connection = null
+      const fileExtension = file.name.split(".").pop().toLowerCase()
+      const fileSize = await (file instanceof FileSystemFileHandle ? (await file.getFile()).size : file.size)
 
-      if (file.name.toLowerCase().endsWith(".db") || file.name.toLowerCase().endsWith(".sqlite")) {
+      // track only anonymous, non identifiable data
+      trackEvent("open_file", {
+        file_extension: fileExtension,
+        file_size: fileSize,
+        file_elapsed: performance.now() - startedOn, // time to open file
+      })
+
+      if (fileExtension === "db" || fileExtension === "sqlite") {
         const config = { client: "sqlite3", connection: { file } }
         connection = DataConnectionFactory.create(config)
         await connection.connect(sqljs)
@@ -157,12 +174,11 @@ export default function Sqlighter(props: SqlighterProps) {
         connection = DataConnectionFactory.create(config)
         await connection.connect(sqljs)
 
-        const fromFormat = file.name.split(".").pop().toLowerCase()
-        if (connection.canImport(fromFormat)) {
+        if (connection.canImport(fileExtension)) {
           if (file instanceof FileSystemFileHandle) {
             file = await file.getFile()
           }
-          const importResult = await connection.import(fromFormat, file)
+          const importResult = await connection.import(fileExtension, file)
 
           setConnection(connection)
           setConnections([connection, ...(connections || [])])
@@ -283,6 +299,7 @@ export default function Sqlighter(props: SqlighterProps) {
     console.debug(`Sqlighter.runQuery - ${query.id}, ${query.sql}`, query)
 
     // create a tab that is shown while the query is being executed to display progress, etc.
+    const startedOn = performance.now()
     const running = new QueryRun()
     running.parentId = query.id
     running.query = query
@@ -301,9 +318,6 @@ export default function Sqlighter(props: SqlighterProps) {
       query = { ...query }
       const queryResults = await connection.getResults(query.sql)
 
-      // TODO remove artificial delay used only to develop "in progress" updates
-      await delay(200)
-
       // first query completed normally
       // TODO replace running, do not modify object
       running.status = "completed"
@@ -311,7 +325,14 @@ export default function Sqlighter(props: SqlighterProps) {
       running.rowsModified = await connection.getRowsModified()
       running.columns = queryResults?.[0]?.columns
       running.values = queryResults?.[0]?.values
-      // console.debug(`QueryPanel.runQuery - completed`, running)
+
+      // track only anonymous, non identifiable data
+      trackEvent("run_query", {
+        query_results: queryResults?.length, // number of result sets
+        query_columns: running.columns?.length,
+        query_rows: running.values?.length,
+        query_elapsed: performance.now() - startedOn,
+      })
 
       if (queryResults.length > 1) {
         const baseTitle = running.title
@@ -331,6 +352,14 @@ export default function Sqlighter(props: SqlighterProps) {
 
           // add tab to runs
           query.runs.splice(i, 0, additionalRun)
+
+          // track only anonymous, non identifiable data
+          trackEvent("run_query", {
+            query_results: queryResults?.length, // number of result sets
+            query_columns: additionalRun.columns?.length,
+            query_rows: additionalRun.values?.length,
+            query_elapsed: performance.now() - startedOn,
+          })
         }
       }
     } catch (exception) {
@@ -455,10 +484,21 @@ export default function Sqlighter(props: SqlighterProps) {
   ) {
     if (connection.canExport(format, database, table, sql)) {
       // convert export results into a downloadable file blob
+      const startedOn = performance.now()
       filename = filename || connection.title
       const results = await connection.export(format, database, table, sql)
       const blob = new File([results.data], filename, { type: results.type })
       console.debug(`Sqlighter.exportData - ${filename}`, blob)
+
+      // track only anonymous, non identifiable data
+      trackEvent("export", {
+        export_client: connection.configs?.client, // type of data source
+        export_format: format,
+        export_table: Boolean(table), // export of entire table?
+        export_sql: Boolean(sql), // export of specific query?
+        export_size: blob.size,
+        export_elapsed: performance.now() - startedOn,
+      })
 
       // create downloadable link and click on it to initiate download
       var link = document.createElement("a")
