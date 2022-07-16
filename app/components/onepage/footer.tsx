@@ -8,10 +8,12 @@ import Link from "@mui/material/Link"
 import Stack from "@mui/material/Stack"
 import { Area } from "./area"
 import { IconButton } from "../ui/iconbutton"
+import { useWideScreen } from "../hooks/usewidescreen"
 
 const Footer_SxProps: SxProps<Theme> = {
   paddingTop: 4,
   paddingBottom: 4,
+  width: 1,
 
   display: "flex",
   justifyContent: "center",
@@ -35,9 +37,11 @@ interface FooterProps {
 
 /** Page footer with usual links */
 export function Footer(props: FooterProps) {
+  const [isWideScreen] = useWideScreen()
+
   return (
     <Area className="Footer-root" background="gray">
-      <Box sx={Footer_SxProps}>
+      <Box className="Footer-box" sx={Footer_SxProps}>
         <Stack direction="row" spacing={1} alignItems="center" sx={{ color: "text.secondary", flexGrow: 1 }}>
           <IconButton
             edge="start"
@@ -46,14 +50,14 @@ export function Footer(props: FooterProps) {
               command: "openUrl",
               title: "SQLighter",
               icon: "sqlighter",
-              args: { href: "/" },
+              args: { href: "/site" },
             }}
           />
           <Link href="/privacy" variant="body2" underline="none" color="inherit">
-            Privacy Policy
+            {isWideScreen ? "Privacy Policy" : "Privacy"}
           </Link>
           <Link href="/terms" variant="body2" underline="none" color="inherit">
-            Terms of Service
+            {isWideScreen ? "Terms of Service" : "Terms"}
           </Link>
         </Stack>
         <Stack direction="row" spacing={1} alignItems="top">
