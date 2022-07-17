@@ -1,13 +1,14 @@
 {
   "name": "sqlighter",
-  "author": "Gionata Mettifogo <gmettifogo@gmail.com>",
-  "version": "2.0.0",
+  "author": "SQLighter <info@sqlighter.com>",
+  "version": "0.24.0-alpha",
   "packageManager": "yarn@3.2.0",
   "keywords": [
     "SQLite",
     "SQLighter",
     "SQL",
-    "Database"
+    "Database",
+    "Next.js"
   ],
   "private": true,
   "scripts": {
