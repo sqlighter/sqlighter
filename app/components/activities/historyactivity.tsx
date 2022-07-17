@@ -2,11 +2,11 @@
 // HistoryActivity.tsx - sidebar activity with queries history
 //
 
-import { isSameDay } from "date-fns"
 import { Theme, SxProps } from "@mui/material/styles"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 
+import { isSameDay } from "../../lib/client"
 import { Command } from "../../lib/commands"
 import { Query } from "../../lib/items/query"
 
@@ -61,9 +61,7 @@ export function HistoryActivity(props: HistoryActivityProps) {
   /** Returns an empty state or your query history as a TreeView */
   function renderItems() {
     if (!props.queries || props.queries.length < 1) {
-      return (
-        <Empty title="No queries yet" description="History will appear when you run your queries" icon="history" />
-      )
+      return <Empty title="No queries yet" description="History will appear when you run your queries" icon="history" />
     }
     const historyTrees = getHistoryTrees(props.queries)
     return <TreeView items={historyTrees || []} onCommand={handleCommand} />
