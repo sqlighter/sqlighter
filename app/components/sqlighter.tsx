@@ -651,7 +651,6 @@ export default function Sqlighter(props: SqlighterProps) {
               id={HOME_PANEL_ID}
               title="Home"
               icon="home"
-              connection={connection}
               connections={connections}
               onCommand={handleCommand}
             />
@@ -680,13 +679,19 @@ export default function Sqlighter(props: SqlighterProps) {
             />
           )
         case "query":
+          // retrieve connection used by the query (or use first available one)
           const query = tab.args.query
+          const queryConnection = connections?.find((c) => c.id == query.connectionId)
+          if (!queryConnection && connections?.length > 0) {
+            changeQuery({ ...query, connectionId: connections[0].id })
+          }
           return (
             <QueryPanel
               key={tab.id}
               id={query.id}
               title={query.title}
               icon="code"
+              connection={queryConnection}
               connections={connections}
               query={query}
               onCommand={handleCommand}
@@ -694,19 +699,6 @@ export default function Sqlighter(props: SqlighterProps) {
           )
       }
     })
-  }
-
-  function renderEmpty() {
-    if (!connections) {
-      return (
-        <Empty icon="fileOpen" title="Open a database file to get started" description="or drag and drop it here">
-          <Button variant="outlined" sx={{ mt: 2 }} onClick={(e) => openFile()}>
-            Open File
-          </Button>
-        </Empty>
-      )
-    }
-    return null
   }
 
   return (
@@ -724,7 +716,6 @@ export default function Sqlighter(props: SqlighterProps) {
           icon: "add",
         },
       ]}
-      empty={renderEmpty()}
       user={props.user}
       onCommand={handleCommand}
     />

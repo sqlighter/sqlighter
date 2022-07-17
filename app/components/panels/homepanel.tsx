@@ -77,8 +77,6 @@ const HomePanel_SxProps: SxProps<Theme> = {
 }
 
 export interface HomePanelProps extends PanelProps {
-  /** Currently selected connection */
-  connection?: DataConnection
   /** All available data connections */
   connections?: DataConnection[]
 }
@@ -207,7 +205,7 @@ export function HomePanel(props: HomePanelProps) {
       </Box>
       <img src="/branding/logo.png" alt="SQLite Browser" height="40" />
       <Typography variant="caption" color="text.secondary" sx={{ position: "relative", left: "36px", top: "-6px" }}>
-        alpha version
+        Database Browser for SQLite (alpha)
       </Typography>
       {props.connections && renderConnections()}
       {renderActions()}

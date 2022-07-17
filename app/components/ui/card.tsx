@@ -16,6 +16,7 @@ import { Icon } from "./icon"
 import { IconButtonGroup, IconButtonGroupCommands } from "./iconbuttongroup"
 
 const Card_SxProps: SxProps<Theme> = {
+
   ".Card-media": {
     height: 120,
 
@@ -93,7 +94,6 @@ export function Card(props: CommandCardProps) {
     <MuiCard
       className={className}
       variant="outlined"
-      square
       onClick={(event) => onCommand(event, command)}
       sx={Card_SxProps}
       {...cardProps}

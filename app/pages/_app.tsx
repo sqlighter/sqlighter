@@ -192,6 +192,7 @@ export default function App({ Component, pageProps }: { Component: any; pageProp
                 function gtag(){window.dataLayer.push(arguments);}
                 gtag('js', new Date());
                 gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}', {
+                  debug_mode: location.hostname === "localhost" || location.hostname === "127.0.0.1",
                   page_path: window.location.pathname,
                 });
               `}

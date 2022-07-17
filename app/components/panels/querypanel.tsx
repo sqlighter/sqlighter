@@ -108,6 +108,8 @@ const QueryPanel_SxProps: SxProps<Theme> = {
 }
 
 export interface QueryPanelProps extends PanelProps {
+  /** Connection to use for query */
+  connection?: DataConnection
   /** All available data connections */
   connections?: DataConnection[]
   /** Query data model, includes query runs shown in tabs */
@@ -118,12 +120,7 @@ export interface QueryPanelProps extends PanelProps {
 export function QueryPanel(props: QueryPanelProps) {
   // data model for the query
   const query = props.query
-
-  // connection used by the query
-  const connection = props.connections?.find((c) => c.id == query.connectionId)
-  if (!connection) {
-    console.error(`QueryPanel - connection ${query.connectionId} not found`)
-  }
+  const connection = props.connection
 
   //
   // state

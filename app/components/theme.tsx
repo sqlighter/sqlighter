@@ -82,7 +82,7 @@ export function customTheme(): Theme {
 
   const customTheme = createTheme(baseTheme, {
     shape: {
-      borderRadius: 8,
+      borderRadius: 4,
     },
 
     palette: {

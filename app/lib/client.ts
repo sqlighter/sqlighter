@@ -1,3 +1,5 @@
+import * as dateFsn from "date-fns"
+
 //
 // client.ts - client only utility methods
 //
@@ -34,6 +36,34 @@ export async function getStream(file?: File | FileSystemFileHandle) {
   if (file instanceof File) {
     return file.stream()
   }
+}
+
+//
+// Dates
+//
+
+/**
+ * Return true if both dates are on the same day
+ * @param date1 First Date as object or ISO string
+ * @param date2 Second date, defaults to now()
+ * @returns True if same day
+ */
+export function isSameDay(date1: Date | string, date2?: Date | string) {
+  if (!date1) {
+    console.warn(`isSameDay - should pass date1`, date1, date2)
+    return false
+  }
+  if (typeof date1 === "string") {
+    date1 = dateFsn.parseISO(date1)
+  }
+  if (!date2) {
+    date2 = new Date() // local timezone
+  } else {
+    if (typeof date2 === "string") {
+      date2 = dateFsn.parseISO(date2)
+    }
+  }
+  return dateFsn.isSameDay(date1, date2)
 }
 
 //
