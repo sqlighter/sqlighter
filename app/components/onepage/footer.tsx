@@ -53,10 +53,10 @@ export function Footer(props: FooterProps) {
               args: { href: "/" },
             }}
           />
-          <Link href="/privacy" variant="body2" underline="none" color="inherit">
+          <Link href="/privacy" variant="body2" underline="none" color="inherit" target="_blank">
             {isWideScreen ? "Privacy Policy" : "Privacy"}
           </Link>
-          <Link href="/terms" variant="body2" underline="none" color="inherit">
+          <Link href="/terms" variant="body2" underline="none" color="inherit" target="_blank">
             {isWideScreen ? "Terms of Service" : "Terms"}
           </Link>
         </Stack>
