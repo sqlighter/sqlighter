@@ -19,6 +19,7 @@ import { CommandEvent } from "../../lib/commands"
 import { DataConnection } from "../../lib/data/connections"
 import { Icon } from "../ui/icon"
 import { ConnectionIcon } from "./connectionicon"
+import { IconButton } from "../ui/iconbutton"
 
 export const CONNECTIONPICKER_MIN_WIDTH = 140
 export const CONNECTIONPICKER_MAX_WIDTH = 240
@@ -262,12 +263,22 @@ export function ConnectionPicker(props: ConnectionPickerProps) {
     )
   }
 
-  // TODO more gracious empty state for connection picker
+  // empty state for connection picker
   if (!props.connection) {
     return (
-      <Button className="ConnectionPicker-root" variant={props.buttonVariant || "text"} onClick={handleOpenFile}>
-        Open File
-      </Button>
+      <IconButton
+        onCommand={props.onCommand}
+        command={{
+          command: "openFile",
+          title: "Open",
+          description: "Open a database or .csv file",
+          icon: "fileOpen",
+          args: {
+            label: true,
+            color: "primary",
+          },
+        }}
+      />
     )
   }
 
