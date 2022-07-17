@@ -77,8 +77,6 @@ const HomePanel_SxProps: SxProps<Theme> = {
 }
 
 export interface HomePanelProps extends PanelProps {
-  /** Currently selected connection */
-  connection?: DataConnection
   /** All available data connections */
   connections?: DataConnection[]
 }
