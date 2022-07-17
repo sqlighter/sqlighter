@@ -1,7 +1,7 @@
 {
   "name": "sqlighter",
   "author": "SQLighter <info@sqlighter.com>",
-  "version": "0.24.0-alpha",
+  "version": "v0.24.0-alpha",
   "packageManager": "yarn@3.2.0",
   "keywords": [
     "SQLite",
