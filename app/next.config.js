@@ -1,5 +1,6 @@
 /**
  * @type {import('next').NextConfig}
+ * https://nextjs.org/docs/advanced-features/compiler
  */
 const nextConfig = {
   // https://nextjs.org/docs/advanced-features/i18n-routing
@@ -26,6 +27,7 @@ const nextConfig = {
       "sqlighter.com",
       "www.sqlighter.com",
       "api.sqlighter.com",
+      "dev.sqlighter.com",
       "sqlighter.vercel.app",
       "storage.googleapis.com",
       "localhost",
