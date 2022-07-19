@@ -4,7 +4,6 @@
 
 // libs
 import React, { useState, useEffect, ReactElement } from "react"
-import Button from "@mui/material/Button"
 
 // model
 import { Command } from "../lib/commands"
@@ -23,7 +22,6 @@ import { DatabaseActivity } from "./activities/databaseactivity"
 import { HistoryActivity } from "./activities/historyactivity"
 import { BookmarksActivity, BOOKMARKS_FOLDER } from "./activities/bookmarksactivity"
 import { DatabasePanel } from "./panels/databasepanel"
-import { Empty } from "./ui/empty"
 import { HomePanel, HOME_PANEL_ID } from "./panels/homepanel"
 import { PanelElement, PanelProps } from "./navigation/panel"
 import { TablePanel } from "./panels/tablepanel"
