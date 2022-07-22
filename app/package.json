@@ -30,7 +30,7 @@
     "@mui/icons-material": "^5.8.4",
     "@mui/lab": "^5.0.0-alpha.90",
     "@mui/material": "^5.9.0",
-    "@mui/x-data-grid": "^5.13.0",
+    "@mui/x-data-grid": "^5.13.1",
     "@types/sql.js": "^1.4.3",
     "allotment": "^1.14.1",
     "assert-strict": "^0.0.2",
