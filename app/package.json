@@ -106,7 +106,7 @@
     "babel-jest": "^28.1.0",
     "babel-loader": "^8.2.5",
     "eslint": "^8.16.0",
-    "eslint-config-next": "^12.1.6",
+    "eslint-config-next": "^12.2.3",
     "eslint-plugin-prettier": "^4.0.0",
     "jest": "27.5.1",
     "jest-environment-jsdom": "27.5.1",
