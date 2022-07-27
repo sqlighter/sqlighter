@@ -8,6 +8,7 @@ import { useState } from "react"
 import { Theme, SxProps, Typography } from "@mui/material"
 import Box from "@mui/material/Box"
 import Grid from "@mui/material/Grid"
+import Link from "@mui/material/Link"
 
 // model
 import { DataConnection, DataConfig } from "../../lib/data/connections"
@@ -73,7 +74,7 @@ const HomePanel_SxProps: SxProps<Theme> = {
   ".Footer-box": {
     paddingTop: 2,
     paddingBottom: 0,
-    marginBottom: -2
+    marginBottom: -2,
   },
 }
 
@@ -204,9 +205,9 @@ export function HomePanel(props: HomePanelProps) {
       <Box className="HomePanel-icon">
         <Icon>sqlighter</Icon>
       </Box>
-      <img src="/branding/logo.png" alt="SQLite Browser" height="40" />
-      <Typography variant="caption" color="text.secondary" sx={{ position: "relative", left: "36px", top: "-6px" }}>
-        Database Browser for SQLite (alpha)
+      <img src="/branding/logo.png" alt="SQLighter" height="40" />
+      <Typography variant="subtitle2" color="text.secondary" sx={{ position: "relative", left: "36px", top: "-6px" }}>
+        <Link href="/site" target="_blank" underline="hover">Database Explorer for SQLite</Link> (alpha)
       </Typography>
       {props.connections && renderConnections()}
       {renderActions()}
