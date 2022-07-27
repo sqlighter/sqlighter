@@ -62,6 +62,10 @@ const Chapter_Left_SxProps = (props: ChapterProps): SxProps<Theme> => {
       justifyContent: "middle",
     },
 
+    ".Chapter-contents": {
+      paddingRight: 4,
+    },
+
     ".Chapter-title": {
       marginTop: 2,
       fontWeight: "bold",
@@ -179,7 +183,7 @@ export function Chapter(props: ChapterProps) {
       <Box className={className} sx={Chapter_Left_SxProps(props)}>
         <Container className="Chapter-container" maxWidth="lg">
           <Grid container spacing={2} alignItems="center">
-            <Grid item xs={12} md={6}>
+            <Grid className="Chapter-contents" item xs={12} md={6}>
               <Spacer />
               {props.icon && (
                 <Box className="Chapter-icon">
