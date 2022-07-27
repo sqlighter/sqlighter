@@ -143,7 +143,7 @@ export default function SitePage() {
         </Area>
         <Chapter
           icon={openSourceProjects}
-          title="100% Open Source"
+          title="100% Open source"
           description="Built on many popular open source projects"
           text="We owe to a rich collection of projects built by a dedicated community of thousands of contibutors. SQLighter welcomes your contribution and embraces open source with a full MIT license. Please get in touch for comments, feature requests, pull requests, suggestions, etc."
           buttons={<ContributeButton />}
