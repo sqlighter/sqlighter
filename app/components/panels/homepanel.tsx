@@ -73,6 +73,7 @@ const HomePanel_SxProps: SxProps<Theme> = {
   ".Footer-box": {
     paddingTop: 2,
     paddingBottom: 0,
+    marginBottom: -2
   },
 }
 
