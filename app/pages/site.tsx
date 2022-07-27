@@ -2,8 +2,10 @@
 // index.tsx - one pager site
 //
 
+import Image from "next/image"
 import { SxProps, Theme } from "@mui/material"
 import Box from "@mui/material/Box"
+import Stack from "@mui/material/Stack"
 
 import { OnePageLayout } from "../components/onepage/onepagelayout"
 import { Area } from "../components/onepage/area"
@@ -26,14 +28,34 @@ const Site_SxProps: SxProps<Theme> = {
 }
 
 export default function SitePage() {
+  const openSourceProjects = (
+    <Stack direction="row" spacing={3} alignItems="center">
+      <a href="https://nextjs.org/" target="_blank">
+        <img src="/logos/nextjs.svg" height={44} title="Next.js" />
+      </a>
+      <a href="https://mui.com/" target="_blank">
+        <img src="/logos/mui.svg" height={36} title="Material UI" />
+      </a>
+      <a href="https://sql.js.org/" target="_blank">
+        <img src="/logos/sqljs.png" height={36} title="SQL.js" />
+      </a>
+      <a href="https://reactjs.org/" target="_blank">
+        <img src="/logos/react.svg" height={36} title="React" />
+      </a>
+      <a href="https://www.sqlite.org/" target="_blank">
+        <img src="/logos/sqlite.gif" height={36} title="SQLite" />
+      </a>
+    </Stack>
+  )
+
   return (
     <OnePageLayout description="lighter, faster" actions={<TryButton />}>
       <Box className="Site-root" sx={Site_SxProps}>
         <Chapter
           className="Site-hero"
           icon="/branding/mark-primary.png"
-          title="Secure, smart, and easy to use email"
-          description="Get more done with Gmail. Now integrated with Google Chat, Google Meet, and more, all in one place."
+          title="SQLite comes alive, right in your browser"
+          description="Open your database or create one, edit, import, export, run your queries, learn SQL and more. All within your browser with no downloads needed."
           buttons={<TryButton variant="contained" />}
           image="/site/hero.webp"
           variant="left"
@@ -100,28 +122,29 @@ export default function SitePage() {
               {
                 title: "Works with other tools",
                 description:
-                  "Gmail works great with desktop clients like Microsoft Outlook, Apple Mail and Mozilla Thunderbird, including contact and event sync.",
+                  "Run a query and export your data to Excel or csv. SQLighter works great with other desktop clients and tools.",
                 icon: "check",
               },
               {
                 title: "Stay productive, even offline",
                 description:
-                  "Gmail offline lets you read, reply, delete, and search your Gmail messages when you’re not connected to the internet.",
+                  "Your queries run locally and your data never leaves the page. SQLighter works even when you’re not connected to the internet.",
                 icon: "wifioff",
               },
               {
-                title: "Experience Gmail on any device",
-                description: "Enjoy the ease and simplicity of Gmail, wherever you are.",
+                title: "Experience on any device",
+                description:
+                  "Development tools give their best on desktops but you can run SQLighter on devices and tablets as well.",
                 icon: "devices",
               },
             ]}
           />
         </Area>
         <Chapter
-          icon="/site/family.svg"
+          icon={openSourceProjects}
           title="100% Open Source"
-          description="Collaborate faster, from any device, anytime, all in one place."
-          text="Google Workspace is a set of productivity and collaboration tools that helps individuals, teams, and businesses stay on top of everything. It is a flexible, innovative solution that includes all your favorite apps like Gmail, Calendar, Drive, Docs, Meet, and more."
+          description="Built on many popular open source projects"
+          text="We owe to a rich collection of projects built by a dedicated community of thousands of contibutors. SQLighter embraces open source with a full MIT license and we welcome your contributions. Get in touch for comments, feature requests, pull requests, suggestions, etc."
           buttons={<ContributeButton />}
           variant="center"
         />
@@ -130,26 +153,20 @@ export default function SitePage() {
             title="FAQs"
             faqs={[
               {
-                title: "How does Gmail keep my email communications secure and private?",
+                title: "How do you keep my data secure and private?",
                 description:
-                  "Gmail has always had strong security as a foundation. We work hard to protect you from spam, phishing, and malware, before they reach your inbox. Our AI-enhanced spam-filtering capabilities block nearly 10 million spam emails every minute.",
+                  "SQLighter opens your database right in your browser. When you run a query, it runs right in the page with no server components and no need to move your data anywhere. Your data never leaves your desk unless you want to.",
+              },
+              {
+                title: "What if I want to use SQLighter for work or my business?",
+                description:
+                  "SQLighter is free for any use and fully MIT licensed. If you'd like to support our work, please add a star to our Github project or become a sponsor, thanks!",
               },
               {
                 title: "Do you use my email for ads?",
                 description:
-                  "No. While you may see ads in your no-cost Gmail account, your emails are private. Google does not scan or process Gmail content for advertising purposes.",
-              },
-              {
-                title: "How can I keep my emails even more safe and secure?",
-                description:
-                  "While Gmail’s features are secure enough for most users, some accounts may require additional layers of safety. Google's Advanced Protection Program safeguards users with high visibility and sensitive information, who are at risk of targeted online attacks.",
-                link: "https://landing.google.com/advancedprotection/",
-              },
-              {
-                title: "What if I want to use Gmail for work or my business?",
-                description:
-                  "Gmail is part of Google Workspace where you can choose from different plans. In addition to what you love about Gmail, you get a custom email address (@yourcompany.com), unlimited group email addresses, 99.9% guaranteed uptime, twice the storage of personal Gmail, zero ads, 24/7 support, Google Workspace Sync for Microsoft Outlook, and more.",
-                link: "https://workspace.google.com/?utm_source=gmailforwork&utm_medium=et&utm_campaign=body&utm_content=learnmore",
+                  "No. If you signin with your email, we use your email to store bookmarks and customize your experience. Your email or other data is never sold or transferred, see our Privacy Policy.",
+                link: "https://sqlighter.com/privacy",
               },
             ]}
           />
