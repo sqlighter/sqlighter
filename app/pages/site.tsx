@@ -30,8 +30,8 @@ const Site_SxProps: SxProps<Theme> = {
 export default function SitePage() {
   const openSourceProjects = (
     <Stack direction="row" spacing={3} alignItems="center">
-      <a href="https://nextjs.org/" target="_blank">
-        <img src="/logos/nextjs.svg" height={44} title="Next.js" />
+      <a href="https://www.sqlite.org/" target="_blank">
+        <img src="/logos/sqlite.svg" height={36} title="SQLite" />
       </a>
       <a href="https://mui.com/" target="_blank">
         <img src="/logos/mui.svg" height={36} title="Material UI" />
@@ -42,20 +42,20 @@ export default function SitePage() {
       <a href="https://reactjs.org/" target="_blank">
         <img src="/logos/react.svg" height={36} title="React" />
       </a>
-      <a href="https://www.sqlite.org/" target="_blank">
-        <img src="/logos/sqlite.svg" height={36} title="SQLite" />
+      <a href="https://nextjs.org/" target="_blank">
+        <img src="/logos/nextjs.svg" height={44} title="Next.js" />
       </a>
     </Stack>
   )
 
   return (
-    <OnePageLayout description="lighter, faster" actions={<TryButton />}>
+    <OnePageLayout description="lighter, faster" actions={<TryButton height={50} />}>
       <Box className="Site-root" sx={Site_SxProps}>
         <Chapter
           className="Site-hero"
           icon="/branding/mark-primary.png"
-          title="SQLite comes alive, right in your browser"
-          description="Open your database or create one, edit, import, export, run your queries, learn SQL and more... All within your browser with no downloads needed."
+          title="SQLite comes alive in your browser"
+          description="Open your database or create one, import data, run your queries, share results, learn SQL and more... All within your browser. No downloads required."
           buttons={<TryButton variant="contained" />}
           image="/site/hero.webp"
           variant="left"
@@ -63,29 +63,29 @@ export default function SitePage() {
         />
         <Area background="gray">
           <TabSet
-            title="Email that's secure, private, and puts you in control"
+            title="A database explorer that's secure, private, and easy to use"
             tabs={[
               {
-                title: "We never use your Gmail content for any ads purposes",
+                title: "Data viewer and editor",
                 description:
-                  "Gmail uses industry-leading encryption for all messages you receive and send. We never use your Gmail content to personalize ads.",
+                  "Drag and drop any SQLite database on the page to see its data. That's all it takes, really. You can filter your data and run custom queries on your results.",
                 image: "/site/carousel-1-1.webp",
               },
               {
-                title: "Gmail keeps over a billion people safe every day",
-                description: "Gmail blocks 99.9% of spam, malware, and dangerous links from ever reaching your inbox.",
+                title: "Tab based interface",
+                description: "Open lots of tabs and work on multiple queries at once without changing windows. Table definitions, query results, schemas each have their own tabs.",
                 image: "/site/carousel-1-2.webp",
               },
               {
-                title: "The most advanced phishing protections available",
+                title: "Modern SQL editor",
                 description:
-                  "When a suspicious email arrives that could be legitimate, Gmail lets you know, keeping you in control",
-                image: "/site/carousel-1-2.webp",
+                  "IntelliSense provides smart code completions for your SQL queries as you type with syntax highlighting and validation. Type faster and make fewer mistakes. Pretty print on demand.",
+                image: "/site/carousel-1-3.webp",
               },
               {
-                title: "Best-in-class controls over emails you send",
+                title: "Save queries and results",
                 description:
-                  "Confidential Mode lets you set expirations and require recipients to verify by text. You can also remove options to forward, copy, download and print.",
+                  "Bookmark your queries in your user profile and access them anywhere from multiple computers. Access a query's history to see all its versions and modifications.",
                 image: "/site/carousel-1-4.webp",
               },
             ]}
@@ -94,23 +94,23 @@ export default function SitePage() {
         <Area>
           <TabSet
             variant="right"
-            title="Get more done with Gmail"
+            title="Get more done with SQLighter"
             tabs={[
               {
-                title: "Stay connected and get organized",
+                title: "Learn SQL in your browser",
                 description:
-                  "Start a Chat, jump into a video call with Meet, or collaborate in a Doc, all right from Gmail.",
-                image: "/site/carousel-2-1.webp",
-              },
-              {
-                title: "Get more done faster",
-                description:
-                  "Write emails and messages faster with features like Smart Compose to spend more time doing what you love",
+                  "Open one of a variety of community provided databases to explore live data and learn SQL structures. See how data is organized, try your queries, and learn about the database's schema.",
                 image: "/site/carousel-2-2.webp",
               },
               {
-                title: "Never forget to reply",
-                description: "Gentle nudges help you stay on top of everything",
+                title: "Import CSV data into your database",
+                description:
+                  "Drag and drop your .csv files on the page to create a blank database and import your data. You can edit data, add or delete rows, then share your results as a SQLite database or exported .csv file.",
+                image: "/site/carousel-2-1.webp",
+              },
+              {
+                title: "Export as .csv, open in Excel, or share",
+                description: "Take an entire database, a single table or the results of a filtered SQL query and export its data. Easily open in Excel or share your results with others.",
                 image: "/site/carousel-2-2.webp",
               },
             ]}
@@ -153,6 +153,10 @@ export default function SitePage() {
             title="FAQs"
             faqs={[
               {
+                title: "What is SQLighter?",
+                description: "SQLighter is a database explorer for SQLite databases that runs in your browser.",
+              },
+              {
                 title: "How do you keep my data secure and private?",
                 description:
                   "SQLighter opens your database right in your browser. When you run a query, it runs right in the page with no server components and no need to move your data anywhere. Your data never leaves your desk unless you want to.",
@@ -166,7 +170,7 @@ export default function SitePage() {
                 title: "Do you use my email for ads?",
                 description:
                   "No. If you signin with your email, we use your email to store bookmarks and customize your experience. Your email or other data is never sold or transferred, see our Privacy Policy.",
-                link: "https://sqlighter.com/privacy",
+                link: "/privacy",
               },
             ]}
           />
