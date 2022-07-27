@@ -94,7 +94,7 @@ interface ChapterProps {
   /** Classname applied to component and subcomponents */
   className?: string
   /** Icon, defaults to logo */
-  icon?: any
+  icon?: string | any
   /** Title for section */
   title: any
   /** Description for section */
@@ -140,14 +140,17 @@ export function Chapter(props: ChapterProps) {
   //
 
   function renderCenter() {
+    let icon = props.icon
+    if (typeof icon === "string") {
+      icon = <img src={props.icon} alt={props.title} />
+    }
+
     return (
       <Box className={className} sx={Chapter_Center_SxProps(props)}>
         <Container className="Chapter-container" maxWidth="lg">
           <Spacer />
           {props.icon && (
-            <Box className="Chapter-icon">
-              <img src={props.icon} alt={props.title} />
-            </Box>
+            <Box className="Chapter-icon">{icon}</Box>
           )}
           <Typography className="Chapter-title" variant={titleVariant} color="text.primary">
             {props.title}
