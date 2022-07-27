@@ -1,8 +1,7 @@
 //
-// index.tsx - one pager site
+// site.tsx - one pager site
 //
 
-import Image from "next/image"
 import { SxProps, Theme } from "@mui/material"
 import Box from "@mui/material/Box"
 import Stack from "@mui/material/Stack"
@@ -73,13 +72,14 @@ export default function SitePage() {
               },
               {
                 title: "Tab based interface",
-                description: "Open lots of tabs and work on multiple queries at once without changing windows. Table definitions, query results, schemas each have their own tabs.",
+                description:
+                  "Open lots of tabs and work on multiple queries at once without changing windows. Table definitions, query results, schemas each have their own tabs.",
                 image: "/site/carousel-1-2.webp",
               },
               {
                 title: "Modern SQL editor",
                 description:
-                  "IntelliSense provides smart code completions for your SQL queries as you type with syntax highlighting and validation. Type faster and make fewer mistakes. Pretty print on demand.",
+                  "IntelliSense provides smart code completions for your queries with syntax highlighting and validation. Type faster with fewer mistakes. Pretty print on demand.",
                 image: "/site/carousel-1-3.webp",
               },
               {
@@ -103,14 +103,15 @@ export default function SitePage() {
                 image: "/site/carousel-2-2.webp",
               },
               {
-                title: "Import CSV data into your database",
+                title: "Import CSV data to your database",
                 description:
                   "Drag and drop your .csv files on the page to create a blank database and import your data. You can edit data, add or delete rows, then share your results as a SQLite database or exported .csv file.",
                 image: "/site/carousel-2-1.webp",
               },
               {
                 title: "Export as .csv, open in Excel, or share",
-                description: "Take an entire database, a single table or the results of a filtered SQL query and export its data. Easily open in Excel or share your results with others.",
+                description:
+                  "Take an entire database, a single table or the results of a filtered SQL query and export its data. Open easily in Excel or share your results with others.",
                 image: "/site/carousel-2-2.webp",
               },
             ]}
@@ -169,7 +170,7 @@ export default function SitePage() {
               {
                 title: "Do you use my email for ads?",
                 description:
-                  "No. If you signin with your email, we use your email to store bookmarks and customize your experience. Your email or other data is never sold or transferred, see our Privacy Policy.",
+                  "No. If you signin with your email, we use it to store bookmarks and customize your experience. Your email or other data is never sold or transferred, see our Privacy Policy.",
                 link: "/privacy",
               },
             ]}
