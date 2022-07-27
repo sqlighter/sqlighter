@@ -43,7 +43,7 @@ export default function SitePage() {
         <img src="/logos/react.svg" height={36} title="React" />
       </a>
       <a href="https://www.sqlite.org/" target="_blank">
-        <img src="/logos/sqlite.gif" height={36} title="SQLite" />
+        <img src="/logos/sqlite.svg" height={36} title="SQLite" />
       </a>
     </Stack>
   )
