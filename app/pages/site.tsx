@@ -55,7 +55,7 @@ export default function SitePage() {
           className="Site-hero"
           icon="/branding/mark-primary.png"
           title="SQLite comes alive, right in your browser"
-          description="Open your database or create one, edit, import, export, run your queries, learn SQL and more. All within your browser with no downloads needed."
+          description="Open your database or create one, edit, import, export, run your queries, learn SQL and more... All within your browser with no downloads needed."
           buttons={<TryButton variant="contained" />}
           image="/site/hero.webp"
           variant="left"
@@ -122,7 +122,7 @@ export default function SitePage() {
               {
                 title: "Works with other tools",
                 description:
-                  "Run a query and export your data to Excel or csv. SQLighter works great with other desktop clients and tools.",
+                  "SQLighter works great with other desktop clients and tools. Run a query and export your data to Excel or csv.",
                 icon: "check",
               },
               {
@@ -144,7 +144,7 @@ export default function SitePage() {
           icon={openSourceProjects}
           title="100% Open Source"
           description="Built on many popular open source projects"
-          text="We owe to a rich collection of projects built by a dedicated community of thousands of contibutors. SQLighter embraces open source with a full MIT license and we welcome your contributions. Get in touch for comments, feature requests, pull requests, suggestions, etc."
+          text="We owe to a rich collection of projects built by a dedicated community of thousands of contibutors. SQLighter welcomes your contribution and embraces open source with a full MIT license. Please get in touch for comments, feature requests, pull requests, suggestions, etc."
           buttons={<ContributeButton />}
           variant="center"
         />
