@@ -8,5 +8,7 @@ updates:
     schedule:
       interval: "weekly"
       day: "friday"
+    target-branch: 
+      - "dev"
     assignees:
       - "gionatamettifogo"
