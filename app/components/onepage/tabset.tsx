@@ -19,7 +19,7 @@ const TabSet_SxProps: SxProps<Theme> = {
   ".TabSet-contents": {
     maxWidth: 560,
   },
-  
+
   ".TabSet-title": {
     fontWeight: "bold",
     marginBottom: 4,
@@ -30,9 +30,9 @@ const TabSet_SxProps: SxProps<Theme> = {
   },
 
   ".TabSet-tabDescription": {
-   marginTop: 1,
+    marginTop: 1,
   },
-  
+
   ".TabSet-image": {
     display: "flex",
     justifyContent: "center",
@@ -47,18 +47,18 @@ const TabSet_SxProps: SxProps<Theme> = {
   ".MuiTabs-root": {
     borderRight: "none",
   },
-  
+
   ".MuiTabs-indicator": {
     right: null,
     left: 0,
     width: 4,
   },
-  
+
   ".MuiButtonBase-root": {
     justifyContent: "start",
     textAlign: "left",
   },
-  
+
   ".MuiTab-root": {
     textTransform: "none",
     alignItems: "start",
@@ -76,7 +76,7 @@ interface TabSetProps {
   /** Main title for carousel */
   title?: string
   /** Contents of tabs shown */
-  tabs: { title: string; description: string; image: string }[]
+  tabs: { title: string; description: string; image: string | any }[]
   /** Image height, default 600px */
   imageHeight?: number
   /** Tabs on the left or the right (default is left) */
@@ -144,13 +144,21 @@ export function TabSet(props: TabSetProps) {
     )
   }
 
+  function renderImage() {
+    const imageSrc = props.tabs[value].image
+    if (typeof imageSrc === "string") {
+      return <img src={imageSrc} title={props.tabs[value].title} />
+    }
+    return imageSrc
+  }
+
   return (
     <Box className={className} sx={TabSet_SxProps}>
       <Spacer />
       <Grid container spacing={2}>
         {props.variant !== "right" && renderContents()}
         <Grid className="TabSet-image" item xs={12} md={6}>
-          <img src={props.tabs[value].image} title={props.tabs[value].title} />
+          {renderImage()}
         </Grid>
         {props.variant === "right" && renderContents()}
       </Grid>

@@ -2,6 +2,7 @@
 // site.tsx - one pager site
 //
 
+import Image from "next/image"
 import { SxProps, Theme } from "@mui/material"
 import Box from "@mui/material/Box"
 import Stack from "@mui/material/Stack"
@@ -68,25 +69,25 @@ export default function SitePage() {
                 title: "Data viewer and editor",
                 description:
                   "Drag and drop any SQLite database on the page to see its data. That's all it takes, really. You can filter your data and run custom queries on your results.",
-                image: "/site/carousel-1-1.webp",
+                image: <Image width={1720} height={1300} src="/site/carousel-1-1.webp" />,
               },
               {
                 title: "Tab based interface",
                 description:
                   "Open lots of tabs and work on multiple queries at once without changing windows. Table definitions, query results, schemas each have their own tabs.",
-                image: "/site/carousel-1-2.webp",
+                image: <Image width={1720} height={1300} src="/site/carousel-1-2.webp" />,
               },
               {
                 title: "Modern SQL editor",
                 description:
                   "IntelliSense provides smart code completions for your queries with syntax highlighting and validation. Type faster with fewer mistakes. Pretty print on demand.",
-                image: "/site/carousel-1-3.webp",
+                image: <Image width={1720} height={1300} src="/site/carousel-1-3.webp" />,
               },
               {
                 title: "Save queries and results",
                 description:
                   "Bookmark your queries in your user profile and access them anywhere from multiple computers. Access a query's history to see all its versions and modifications.",
-                image: "/site/carousel-1-4.webp",
+                image: <Image width={1720} height={1300} src="/site/carousel-1-4.webp" />,
               },
             ]}
           />
@@ -100,19 +101,19 @@ export default function SitePage() {
                 title: "Learn SQL in your browser",
                 description:
                   "Open one of a variety of community provided databases to explore live data and learn SQL structures. See how data is organized, try your queries, and learn about the database's schema.",
-                image: "/site/carousel-2-2.webp",
+                image: <Image width={1720} height={1300} src="/site/carousel-2-1.webp" />,
               },
               {
                 title: "Import CSV data to your database",
                 description:
                   "Drag and drop your .csv files on the page to create a blank database and import your data. You can edit data, add or delete rows, then share your results as a SQLite database or exported .csv file.",
-                image: "/site/carousel-2-1.webp",
+                image: <Image width={1720} height={1300} src="/site/carousel-2-2.webp" />,
               },
               {
                 title: "Export as .csv, open in Excel, or share",
                 description:
                   "Take an entire database, a single table or the results of a filtered SQL query and export its data. Open easily in Excel or share your results with others.",
-                image: "/site/carousel-2-2.webp",
+                image: <Image width={1720} height={1300} src="/site/carousel-2-3.webp" />,
               },
             ]}
           />
