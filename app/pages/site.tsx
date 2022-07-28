@@ -24,6 +24,14 @@ import carousel21 from "../public/site/carousel-2-1.webp"
 import carousel22 from "../public/site/carousel-2-2.webp"
 import carousel23 from "../public/site/carousel-2-3.webp"
 
+import logoSqlite from "../public/logos/sqlite.svg"
+import logoMui from "../public/logos/mui.svg"
+import logoSqljs from "../public/logos/sqljs.png"
+import logoReact from "../public/logos/react.svg"
+import logoNextjs from "../public/logos/nextjs.svg"
+
+import markPrimary from "../public/branding/mark-primary.png"
+
 const Site_SxProps: SxProps<Theme> = {
   // theme color for background
   // backgroundColor: (theme: any) => alpha(theme.palette.primary.lightest, 0.40),
@@ -39,19 +47,19 @@ export default function SitePage() {
   const openSourceProjects = (
     <Stack direction="row" spacing={3} alignItems="center">
       <a href="https://www.sqlite.org/" target="_blank">
-        <img src="/logos/sqlite.svg" height={36} title="SQLite" />
+        <Image src={logoSqlite} alt="SQLite" height={36} width={72} objectFit="contain" />
       </a>
       <a href="https://mui.com/" target="_blank">
-        <img src="/logos/mui.svg" height={36} title="Material UI" />
+        <Image src={logoMui} height={36} width={36} objectFit="contain" alt="Material UI" />
       </a>
       <a href="https://sql.js.org/" target="_blank">
-        <img src="/logos/sqljs.png" height={36} title="SQL.js" />
+        <Image src={logoSqljs} height={36} width={36} objectFit="contain" alt="SQL.js" />
       </a>
       <a href="https://reactjs.org/" target="_blank">
-        <img src="/logos/react.svg" height={36} title="React" />
+        <Image src={logoReact} height={36} width={36} objectFit="contain" alt="React" />
       </a>
       <a href="https://nextjs.org/" target="_blank">
-        <img src="/logos/nextjs.svg" height={44} title="Next.js" />
+        <Image src={logoNextjs} height={44} width={72} objectFit="contain" alt="Next.js" />
       </a>
     </Stack>
   )
@@ -61,7 +69,7 @@ export default function SitePage() {
       <Box className="Site-root" sx={Site_SxProps}>
         <Chapter
           className="Site-hero"
-          icon="/branding/mark-primary.png"
+          icon={<Image src={markPrimary} alt="SQLighter" />}
           title="SQLite comes alive in your browser"
           description="Open your database or create one, import data, run your queries, share results, learn SQL and more... All within your browser. No downloads required."
           buttons={<TryButton variant="contained" />}
@@ -186,7 +194,7 @@ export default function SitePage() {
           />
         </Area>
         <Chapter
-          icon="/branding/mark-primary.png"
+          icon={<Image src={markPrimary} alt="SQLighter" />}
           title="Show the world how it’s done"
           description="Get started with a more powerful tool today"
           image="/site/closing.webp"

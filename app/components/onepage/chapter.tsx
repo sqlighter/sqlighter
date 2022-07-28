@@ -153,9 +153,7 @@ export function Chapter(props: ChapterProps) {
       <Box className={className} sx={Chapter_Center_SxProps(props)}>
         <Container className="Chapter-container" maxWidth="lg">
           <Spacer />
-          {props.icon && (
-            <Box className="Chapter-icon">{icon}</Box>
-          )}
+          {props.icon && <Box className="Chapter-icon">{icon}</Box>}
           <Typography className="Chapter-title" variant={titleVariant} color="text.primary">
             {props.title}
           </Typography>
@@ -179,17 +177,18 @@ export function Chapter(props: ChapterProps) {
   }
 
   function renderLeft() {
+    let icon = props.icon || "/branding/logo.png"
+    if (typeof icon === "string") {
+      icon = <img src={props.icon} alt={props.title} />
+    }
+
     return (
       <Box className={className} sx={Chapter_Left_SxProps(props)}>
         <Container className="Chapter-container" maxWidth="lg">
           <Grid container spacing={2} alignItems="center">
             <Grid className="Chapter-contents" item xs={12} md={6}>
               <Spacer />
-              {props.icon && (
-                <Box className="Chapter-icon">
-                  <img src={props.icon || "/branding/logo.png"} alt={props.title} />
-                </Box>
-              )}
+              {props.icon && <Box className="Chapter-icon">{icon}</Box>}
               <Typography className="Chapter-title" variant={titleVariant} color="text.primary">
                 {props.title}
               </Typography>
