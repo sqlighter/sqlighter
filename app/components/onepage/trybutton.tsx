@@ -9,7 +9,7 @@ export function TryButton(props) {
   const variant = props.variant || "outlined"
   return (
     <Button variant={variant} href="/" size="large" startIcon={<Icon>sqlighter</Icon>} sx={{ height: 36 }}>
-      Try Today
+      Try&nbsp;Today
     </Button>
   )
 }
