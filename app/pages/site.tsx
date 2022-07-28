@@ -16,6 +16,14 @@ import { Chapter } from "../components/onepage/chapter"
 import { TryButton } from "../components/onepage/trybutton"
 import { ContributeButton } from "../components/onepage/contributebutton"
 
+import carousel11 from "../public/site/carousel-1-1.webp"
+import carousel12 from "../public/site/carousel-1-2.webp"
+import carousel13 from "../public/site/carousel-1-3.webp"
+import carousel14 from "../public/site/carousel-1-4.webp"
+import carousel21 from "../public/site/carousel-2-1.webp"
+import carousel22 from "../public/site/carousel-2-2.webp"
+import carousel23 from "../public/site/carousel-2-3.webp"
+
 const Site_SxProps: SxProps<Theme> = {
   // theme color for background
   // backgroundColor: (theme: any) => alpha(theme.palette.primary.lightest, 0.40),
@@ -69,25 +77,25 @@ export default function SitePage() {
                 title: "Data viewer and editor",
                 description:
                   "Drag and drop any SQLite database on the page to see its data. That's all it takes, really. You can filter your data and run custom queries on your results.",
-                image: <Image width={1720} height={1300} src="/site/carousel-1-1.webp" />,
+                image: <Image src={carousel11} alt="Data viewer and editor" />,
               },
               {
                 title: "Tab based interface",
                 description:
                   "Open lots of tabs and work on multiple queries at once without changing windows. Table definitions, query results, schemas each have their own tabs.",
-                image: <Image width={1720} height={1300} src="/site/carousel-1-2.webp" />,
+                image: <Image src={carousel12} alt="Tab based interface" />,
               },
               {
                 title: "Modern SQL editor",
                 description:
                   "IntelliSense provides smart code completions for your queries with syntax highlighting and validation. Type faster with fewer mistakes. Pretty print on demand.",
-                image: <Image width={1720} height={1300} src="/site/carousel-1-3.webp" />,
+                image: <Image src={carousel13} alt="Modern SQL editor" />,
               },
               {
                 title: "Save queries and results",
                 description:
                   "Bookmark your queries in your user profile and access them anywhere from multiple computers. Access a query's history to see all its versions and modifications.",
-                image: <Image width={1720} height={1300} src="/site/carousel-1-4.webp" />,
+                image: <Image src={carousel14} alt="Save queries and results" />,
               },
             ]}
           />
@@ -101,19 +109,19 @@ export default function SitePage() {
                 title: "Learn SQL in your browser",
                 description:
                   "Open one of a variety of community provided databases to explore live data and learn SQL structures. See how data is organized, try your queries, and learn about the database's schema.",
-                image: <Image width={1720} height={1300} src="/site/carousel-2-1.webp" />,
+                image: <Image src={carousel21} alt="Learn SQL in your browser" />,
               },
               {
                 title: "Import CSV data to your database",
                 description:
                   "Drag and drop your .csv files on the page to create a blank database and import your data. You can edit data, add or delete rows, then share your results as a SQLite database or exported .csv file.",
-                image: <Image width={1720} height={1300} src="/site/carousel-2-2.webp" />,
+                image: <Image src={carousel22} alt="Import CSV data to your database" />,
               },
               {
                 title: "Export as .csv, open in Excel, or share",
                 description:
                   "Take an entire database, a single table or the results of a filtered SQL query and export its data. Open easily in Excel or share your results with others.",
-                image: <Image width={1720} height={1300} src="/site/carousel-2-3.webp" />,
+                image: <Image src={carousel23} alt="Export as .csv, open in Excel, or share" />,
               },
             ]}
           />
