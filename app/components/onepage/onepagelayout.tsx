@@ -3,12 +3,14 @@
 //
 
 import Head from "next/head"
+import Image from "next/image"
 import { SxProps, Theme, alpha } from "@mui/material"
 import Container from "@mui/material/Container"
 import AppBar from "@mui/material/AppBar"
 import Box from "@mui/material/Box"
 
 import { Footer } from "./footer"
+import logo from "../../public/branding/logo.png"
 
 export const TITLE = "SQLighter"
 export const HEADER_HEIGHT = 64
@@ -84,7 +86,7 @@ export function OnePageLayout(props: OnePageLayoutProps) {
             sx={{ display: "flex", alignItems: "center" }}
           >
             <Box sx={{ flexGrow: 1 }}>
-              <img src="/branding/logo.png" alt="sqlighter" height={28} />
+              <Image src={logo} alt="SQLighter" height={28} objectFit="contain" objectPosition="left center" />
             </Box>
             {props.actions}
           </Container>

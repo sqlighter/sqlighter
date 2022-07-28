@@ -69,7 +69,7 @@ export default function SitePage() {
       <Box className="Site-root" sx={Site_SxProps}>
         <Chapter
           className="Site-hero"
-          icon={<Image src={markPrimary} alt="SQLighter" />}
+          icon={<Image src={markPrimary} width={80} height={80} alt="SQLighter" />}
           title="SQLite comes alive in your browser"
           description="Open your database or create one, import data, run your queries, share results, learn SQL and more... All within your browser. No downloads required."
           buttons={<TryButton variant="contained" />}
@@ -194,7 +194,7 @@ export default function SitePage() {
           />
         </Area>
         <Chapter
-          icon={<Image src={markPrimary} alt="SQLighter" />}
+          icon={<Image src={markPrimary} width={80} height={80} alt="SQLighter" />}
           title="Show the world how it’s done"
           description="Get started with a more powerful tool today"
           image="/site/closing.webp"
