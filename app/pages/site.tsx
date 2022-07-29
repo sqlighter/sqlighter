@@ -16,7 +16,7 @@ import { Chapter } from "../components/onepage/chapter"
 import { TryButton } from "../components/onepage/trybutton"
 import { ContributeButton } from "../components/onepage/contributebutton"
 
-import carousel11 from "../public/site/carousel-1-1.webp"
+import carousel11 from "../public/site/carousel-1-1.png"
 import carousel12 from "../public/site/carousel-1-2.webp"
 import carousel13 from "../public/site/carousel-1-3.webp"
 import carousel14 from "../public/site/carousel-1-4.webp"
