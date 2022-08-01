@@ -73,7 +73,7 @@ export default function SitePage() {
           title="SQLite comes alive in your browser"
           description="Open your database or create one, import data, run your queries, share results, learn SQL and more... All within your browser. No downloads required."
           buttons={<TryButton variant="contained" />}
-          image="/site/hero.webp"
+          image="/site/hero.png"
           variant="left"
           size="large"
         />
@@ -197,7 +197,7 @@ export default function SitePage() {
           icon={<Image src={markPrimary} width={80} height={80} alt="SQLighter" />}
           title="Show the world how it’s done"
           description="Get started with a more powerful tool today"
-          image="/site/closing.webp"
+          image="/site/closing.png"
           buttons={<TryButton />}
           variant="center"
         />
