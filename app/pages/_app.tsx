@@ -4,6 +4,7 @@
 
 import Script from "next/script"
 import { useRouter } from "next/router"
+import Head from "next/head"
 
 // allotment styles + global overrides
 import "allotment/dist/style.css"
@@ -169,25 +170,29 @@ export default function App({ Component, pageProps }: { Component: any; pageProp
   //
 
   return (
-    <CssBaseline>
-      <ThemeProvider theme={customTheme()}>
-        <Context.Provider value={context}>
-          <DndProvider backend={HTML5Backend}>
-            <Component {...pageProps} user={user} onCommand={handleCommand} />
-            {showingSigninDialog && <SigninDialog onCommand={handleCommand} />}
-            <Script
-              key="google-signin"
-              src="https://accounts.google.com/gsi/client"
-              strategy="lazyOnload"
-              onLoad={handleGoogleSigninScriptLoaded}
-            />
-            {/* Global Site Tag (gtag.js) - Google Analytics */}
-            <Script
-              src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
-              strategy="afterInteractive"
-            />
-            <Script id="google-analytics" strategy="afterInteractive">
-              {`
+    <>
+      <Head>
+        <meta name="viewport" content="initial-scale=1, width=device-width" />
+      </Head>
+      <CssBaseline>
+        <ThemeProvider theme={customTheme()}>
+          <Context.Provider value={context}>
+            <DndProvider backend={HTML5Backend}>
+              <Component {...pageProps} user={user} onCommand={handleCommand} />
+              {showingSigninDialog && <SigninDialog onCommand={handleCommand} />}
+              <Script
+                key="google-signin"
+                src="https://accounts.google.com/gsi/client"
+                strategy="lazyOnload"
+                onLoad={handleGoogleSigninScriptLoaded}
+              />
+              {/* Global Site Tag (gtag.js) - Google Analytics */}
+              <Script
+                src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
+                strategy="afterInteractive"
+              />
+              <Script id="google-analytics" strategy="afterInteractive">
+                {`
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){window.dataLayer.push(arguments);}
                 gtag('js', new Date());
@@ -196,10 +201,11 @@ export default function App({ Component, pageProps }: { Component: any; pageProp
                   page_path: window.location.pathname,
                 });
               `}
-            </Script>
-          </DndProvider>
-        </Context.Provider>
-      </ThemeProvider>
-    </CssBaseline>
+              </Script>
+            </DndProvider>
+          </Context.Provider>
+        </ThemeProvider>
+      </CssBaseline>
+    </>
   )
 }

@@ -97,16 +97,16 @@ export function customTheme(): Theme {
 
     typography: {
       h1: {
-        fontWeight: REGULAR_WEIGHT,     
-        lineHeight: 1,   
+        fontWeight: REGULAR_WEIGHT,
+        lineHeight: 1,
       },
       h2: {
         fontWeight: REGULAR_WEIGHT,
-        lineHeight: 1,   
+        lineHeight: 1,
       },
       h3: {
         fontWeight: REGULAR_WEIGHT,
-        lineHeight: 1,   
+        lineHeight: 1,
       },
       h4: {
         fontWeight: REGULAR_WEIGHT,
@@ -142,6 +142,14 @@ export function customTheme(): Theme {
     },
 
     components: {
+      MuiButton: {
+        styleOverrides: {
+          root: {
+            fontWeight: BOLD_WEIGHT,
+          },
+        },
+      },
+
       MuiIcon: {
         defaultProps: {
           // Replace the `material-icons` default value.

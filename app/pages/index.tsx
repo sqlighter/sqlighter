@@ -3,8 +3,11 @@
 //
 
 import * as React from "react"
+import { Suspense } from "react"
 import Script from "next/script"
 import dynamic from "next/dynamic"
+
+import { Empty } from "../components/ui/empty"
 
 // import { Main  } from "../../components/sqlighter/main"
 // TODO load using <Suspense /> that shows a loading screen
@@ -13,10 +16,13 @@ import dynamic from "next/dynamic"
 const MainComponentWithoutSSR = dynamic(() => import("../components/sqlighter"), { ssr: false })
 
 export default function AppPage(props) {
+  const empty = <Empty icon="sqlighter" title="Loading..." />
   return (
     <>
-      <Script type="module" strategy="beforeInteractive" src="/sql-loader.js" />
-      <MainComponentWithoutSSR {...props} />
+      <Suspense fallback={empty}>
+        <Script type="module" strategy="beforeInteractive" src="/sql-loader.js" />
+        <MainComponentWithoutSSR {...props} />
+      </Suspense>
     </>
   )
 }

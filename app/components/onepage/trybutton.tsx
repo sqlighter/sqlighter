@@ -8,8 +8,8 @@ import { Icon } from "../ui/icon"
 export function TryButton(props) {
   const variant = props.variant || "outlined"
   return (
-    <Button variant={variant} href="/app" size="large" startIcon={<Icon>sqlighter</Icon>}>
-      Try Today
+    <Button variant={variant} href="/" size="large" startIcon={<Icon>sqlighter</Icon>} sx={{ height: 36 }}>
+      Try&nbsp;Today
     </Button>
   )
 }

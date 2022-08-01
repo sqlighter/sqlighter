@@ -1,9 +1,11 @@
 //
-// index.tsx - one pager site
+// site.tsx - one pager site
 //
 
+import Image from "next/image"
 import { SxProps, Theme } from "@mui/material"
 import Box from "@mui/material/Box"
+import Stack from "@mui/material/Stack"
 
 import { OnePageLayout } from "../components/onepage/onepagelayout"
 import { Area } from "../components/onepage/area"
@@ -13,6 +15,22 @@ import { Faq } from "../components/onepage/faq"
 import { Chapter } from "../components/onepage/chapter"
 import { TryButton } from "../components/onepage/trybutton"
 import { ContributeButton } from "../components/onepage/contributebutton"
+
+import carousel11 from "../public/site/carousel-1-1.png"
+import carousel12 from "../public/site/carousel-1-2.png"
+import carousel13 from "../public/site/carousel-1-3.png"
+import carousel14 from "../public/site/carousel-1-4.png"
+import carousel21 from "../public/site/carousel-2-1.png"
+import carousel22 from "../public/site/carousel-2-2.png"
+import carousel23 from "../public/site/carousel-2-3.png"
+
+import logoSqlite from "../public/logos/sqlite.svg"
+import logoMui from "../public/logos/mui.svg"
+import logoSqljs from "../public/logos/sqljs.png"
+import logoReact from "../public/logos/react.svg"
+import logoNextjs from "../public/logos/nextjs.svg"
+
+import markPrimary from "../public/branding/mark-primary.png"
 
 const Site_SxProps: SxProps<Theme> = {
   // theme color for background
@@ -26,45 +44,66 @@ const Site_SxProps: SxProps<Theme> = {
 }
 
 export default function SitePage() {
+  const openSourceProjects = (
+    <Stack direction="row" spacing={3} alignItems="center">
+      <a href="https://www.sqlite.org/" target="_blank">
+        <Image src={logoSqlite} alt="SQLite" height={36} width={72} objectFit="contain" />
+      </a>
+      <a href="https://mui.com/" target="_blank">
+        <Image src={logoMui} height={36} width={36} objectFit="contain" alt="Material UI" />
+      </a>
+      <a href="https://sql.js.org/" target="_blank">
+        <Image src={logoSqljs} height={36} width={36} objectFit="contain" alt="SQL.js" />
+      </a>
+      <a href="https://reactjs.org/" target="_blank">
+        <Image src={logoReact} height={36} width={36} objectFit="contain" alt="React" />
+      </a>
+      <a href="https://nextjs.org/" target="_blank">
+        <Image src={logoNextjs} height={44} width={72} objectFit="contain" alt="Next.js" />
+      </a>
+    </Stack>
+  )
+
   return (
-    <OnePageLayout description="lighter, faster" actions={<TryButton />}>
+    <OnePageLayout description="lighter, faster" actions={<TryButton height={50} />}>
       <Box className="Site-root" sx={Site_SxProps}>
         <Chapter
           className="Site-hero"
-          icon="/branding/mark-primary.png"
-          title="Secure, smart, and easy to use email"
-          description="Get more done with Gmail. Now integrated with Google Chat, Google Meet, and more, all in one place."
+          icon={<Image src={markPrimary} width={80} height={80} alt="SQLighter" />}
+          title="SQLite comes alive in your browser"
+          description="Open your database or create one, import data, run your queries, share results, learn SQL and more... All within your browser. No downloads required."
           buttons={<TryButton variant="contained" />}
-          image="/site/hero.webp"
+          image="/site/hero.png"
           variant="left"
           size="large"
         />
         <Area background="gray">
           <TabSet
-            title="Email that's secure, private, and puts you in control"
+            title="A database explorer that's secure, private, and easy to use"
             tabs={[
               {
-                title: "We never use your Gmail content for any ads purposes",
+                title: "Data viewer and editor",
                 description:
-                  "Gmail uses industry-leading encryption for all messages you receive and send. We never use your Gmail content to personalize ads.",
-                image: "/site/carousel-1-1.webp",
+                  "Drag and drop any SQLite database on the page to see its data. That's all it takes, really. You can filter your data and run custom queries on your results.",
+                image: <Image src={carousel11} alt="Data viewer and editor" />,
               },
               {
-                title: "Gmail keeps over a billion people safe every day",
-                description: "Gmail blocks 99.9% of spam, malware, and dangerous links from ever reaching your inbox.",
-                image: "/site/carousel-1-2.webp",
+                title: "Tab based interface",
+                description:
+                  "Open lots of tabs and work on multiple queries at once without changing windows. Table definitions, query results, schemas each have their own tabs.",
+                image: <Image src={carousel12} alt="Tab based interface" />,
               },
               {
-                title: "The most advanced phishing protections available",
+                title: "Modern SQL editor",
                 description:
-                  "When a suspicious email arrives that could be legitimate, Gmail lets you know, keeping you in control",
-                image: "/site/carousel-1-2.webp",
+                  "IntelliSense provides smart code completions for your queries with syntax highlighting and validation. Type faster with fewer mistakes. Pretty print on demand.",
+                image: <Image src={carousel13} alt="Modern SQL editor" />,
               },
               {
-                title: "Best-in-class controls over emails you send",
+                title: "Save queries and results",
                 description:
-                  "Confidential Mode lets you set expirations and require recipients to verify by text. You can also remove options to forward, copy, download and print.",
-                image: "/site/carousel-1-4.webp",
+                  "Bookmark your queries in your user profile and access them anywhere from multiple computers. Access a query's history to see all its versions and modifications.",
+                image: <Image src={carousel14} alt="Save queries and results" />,
               },
             ]}
           />
@@ -72,24 +111,25 @@ export default function SitePage() {
         <Area>
           <TabSet
             variant="right"
-            title="Get more done with Gmail"
+            title="Get more done with SQLighter"
             tabs={[
               {
-                title: "Stay connected and get organized",
+                title: "Learn SQL in your browser",
                 description:
-                  "Start a Chat, jump into a video call with Meet, or collaborate in a Doc, all right from Gmail.",
-                image: "/site/carousel-2-1.webp",
+                  "Open one of a variety of community provided databases to explore live data and learn SQL structures. See how data is organized, try your queries, and learn about the database's schema.",
+                image: <Image src={carousel21} alt="Learn SQL in your browser" />,
               },
               {
-                title: "Get more done faster",
+                title: "Import CSV data to your database",
                 description:
-                  "Write emails and messages faster with features like Smart Compose to spend more time doing what you love",
-                image: "/site/carousel-2-2.webp",
+                  "Drag and drop your .csv files on the page to create a blank database and import your data. You can edit data, add or delete rows, then share your results as a SQLite database or exported .csv file.",
+                image: <Image src={carousel22} alt="Import CSV data to your database" />,
               },
               {
-                title: "Never forget to reply",
-                description: "Gentle nudges help you stay on top of everything",
-                image: "/site/carousel-2-2.webp",
+                title: "Export as .csv, open in Excel, or share",
+                description:
+                  "Take an entire database, a single table or the results of a filtered SQL query and export its data. Open easily in Excel or share your results with others.",
+                image: <Image src={carousel23} alt="Export as .csv, open in Excel, or share" />,
               },
             ]}
           />
@@ -100,28 +140,29 @@ export default function SitePage() {
               {
                 title: "Works with other tools",
                 description:
-                  "Gmail works great with desktop clients like Microsoft Outlook, Apple Mail and Mozilla Thunderbird, including contact and event sync.",
+                  "SQLighter works great with other desktop clients and tools. Run a query and export your data to Excel or csv.",
                 icon: "check",
               },
               {
                 title: "Stay productive, even offline",
                 description:
-                  "Gmail offline lets you read, reply, delete, and search your Gmail messages when you’re not connected to the internet.",
+                  "Your queries run locally and your data never leaves the page. SQLighter works even when you’re not connected to the internet.",
                 icon: "wifioff",
               },
               {
-                title: "Experience Gmail on any device",
-                description: "Enjoy the ease and simplicity of Gmail, wherever you are.",
+                title: "Experience on any device",
+                description:
+                  "Development tools give their best on desktops but you can run SQLighter on devices and tablets as well.",
                 icon: "devices",
               },
             ]}
           />
         </Area>
         <Chapter
-          icon="/site/family.svg"
-          title="100% Open Source"
-          description="Collaborate faster, from any device, anytime, all in one place."
-          text="Google Workspace is a set of productivity and collaboration tools that helps individuals, teams, and businesses stay on top of everything. It is a flexible, innovative solution that includes all your favorite apps like Gmail, Calendar, Drive, Docs, Meet, and more."
+          icon={openSourceProjects}
+          title="100% Open source"
+          description="Built on many popular open source projects"
+          text="We owe to a rich collection of projects built by a dedicated community of thousands of contibutors. SQLighter welcomes your contribution and embraces open source with a full MIT license. Please get in touch for comments, feature requests, pull requests, suggestions, etc."
           buttons={<ContributeButton />}
           variant="center"
         />
@@ -130,35 +171,33 @@ export default function SitePage() {
             title="FAQs"
             faqs={[
               {
-                title: "How does Gmail keep my email communications secure and private?",
+                title: "What is SQLighter?",
+                description: "SQLighter is a database explorer for SQLite databases that runs in your browser.",
+              },
+              {
+                title: "How do you keep my data secure and private?",
                 description:
-                  "Gmail has always had strong security as a foundation. We work hard to protect you from spam, phishing, and malware, before they reach your inbox. Our AI-enhanced spam-filtering capabilities block nearly 10 million spam emails every minute.",
+                  "SQLighter opens your database right in your browser. When you run a query, it runs right in the page with no server components and no need to move your data anywhere. Your data never leaves your desk unless you want to.",
+              },
+              {
+                title: "What if I want to use SQLighter for work or my business?",
+                description:
+                  "SQLighter is free for any use and fully MIT licensed. If you'd like to support our work, please add a star to our Github project or become a sponsor, thanks!",
               },
               {
                 title: "Do you use my email for ads?",
                 description:
-                  "No. While you may see ads in your no-cost Gmail account, your emails are private. Google does not scan or process Gmail content for advertising purposes.",
-              },
-              {
-                title: "How can I keep my emails even more safe and secure?",
-                description:
-                  "While Gmail’s features are secure enough for most users, some accounts may require additional layers of safety. Google's Advanced Protection Program safeguards users with high visibility and sensitive information, who are at risk of targeted online attacks.",
-                link: "https://landing.google.com/advancedprotection/",
-              },
-              {
-                title: "What if I want to use Gmail for work or my business?",
-                description:
-                  "Gmail is part of Google Workspace where you can choose from different plans. In addition to what you love about Gmail, you get a custom email address (@yourcompany.com), unlimited group email addresses, 99.9% guaranteed uptime, twice the storage of personal Gmail, zero ads, 24/7 support, Google Workspace Sync for Microsoft Outlook, and more.",
-                link: "https://workspace.google.com/?utm_source=gmailforwork&utm_medium=et&utm_campaign=body&utm_content=learnmore",
+                  "No. If you signin with your email, we use it to store bookmarks and customize your experience. Your email or other data is never sold or transferred, see our Privacy Policy.",
+                link: "/privacy",
               },
             ]}
           />
         </Area>
         <Chapter
-          icon="/branding/mark-primary.png"
+          icon={<Image src={markPrimary} width={80} height={80} alt="SQLighter" />}
           title="Show the world how it’s done"
           description="Get started with a more powerful tool today"
-          image="/site/closing.webp"
+          image="/site/closing.png"
           buttons={<TryButton />}
           variant="center"
         />

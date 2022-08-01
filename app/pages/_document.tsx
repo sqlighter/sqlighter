@@ -14,8 +14,6 @@ export default function Document() {
       <Head>
         <link rel="icon" href="/favicon.png" />
         <meta property="og:image" content="/branding/banner.png" />
-
-        <meta name="viewport" content="initial-scale=1, width=device-width" />
         <meta name="theme-color" content={PRIMARY_LIGHTEST} />
         <meta name="google_id" content={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID} />
 

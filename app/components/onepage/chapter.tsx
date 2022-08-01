@@ -62,6 +62,10 @@ const Chapter_Left_SxProps = (props: ChapterProps): SxProps<Theme> => {
       justifyContent: "middle",
     },
 
+    ".Chapter-contents": {
+      paddingRight: 4,
+    },
+
     ".Chapter-title": {
       marginTop: 2,
       fontWeight: "bold",
@@ -94,7 +98,7 @@ interface ChapterProps {
   /** Classname applied to component and subcomponents */
   className?: string
   /** Icon, defaults to logo */
-  icon?: any
+  icon?: string | any
   /** Title for section */
   title: any
   /** Description for section */
@@ -140,15 +144,16 @@ export function Chapter(props: ChapterProps) {
   //
 
   function renderCenter() {
+    let icon = props.icon
+    if (typeof icon === "string") {
+      icon = <img src={props.icon} alt={props.title} />
+    }
+
     return (
       <Box className={className} sx={Chapter_Center_SxProps(props)}>
         <Container className="Chapter-container" maxWidth="lg">
           <Spacer />
-          {props.icon && (
-            <Box className="Chapter-icon">
-              <img src={props.icon} alt={props.title} />
-            </Box>
-          )}
+          {props.icon && <Box className="Chapter-icon">{icon}</Box>}
           <Typography className="Chapter-title" variant={titleVariant} color="text.primary">
             {props.title}
           </Typography>
@@ -172,17 +177,18 @@ export function Chapter(props: ChapterProps) {
   }
 
   function renderLeft() {
+    let icon = props.icon || "/branding/logo.png"
+    if (typeof icon === "string") {
+      icon = <img src={props.icon} alt={props.title} />
+    }
+
     return (
       <Box className={className} sx={Chapter_Left_SxProps(props)}>
         <Container className="Chapter-container" maxWidth="lg">
           <Grid container spacing={2} alignItems="center">
-            <Grid item xs={12} md={6}>
+            <Grid className="Chapter-contents" item xs={12} md={6}>
               <Spacer />
-              {props.icon && (
-                <Box className="Chapter-icon">
-                  <img src={props.icon || "/branding/logo.png"} alt={props.title} />
-                </Box>
-              )}
+              {props.icon && <Box className="Chapter-icon">{icon}</Box>}
               <Typography className="Chapter-title" variant={titleVariant} color="text.primary">
                 {props.title}
               </Typography>
