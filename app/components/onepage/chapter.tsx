@@ -41,14 +41,14 @@ const Chapter_Center_SxProps = (props: ChapterProps): SxProps<Theme> => {
     },
 
     ".Chapter-image": {
-      height: 240,
+      height: 182,
       width: 1,
       maxWidth: 1,
 
       backgroundImage: props.image ? `url("${props.image}")` : undefined,
       backgroundPosition: "center bottom",
       backgroundRepeat: "no-repeat",
-      backgroundSize: "cover",
+      backgroundSize: "contain",
     },
   }
 }
@@ -82,14 +82,14 @@ const Chapter_Left_SxProps = (props: ChapterProps): SxProps<Theme> => {
     },
 
     ".Chapter-image": {
-      height: 480,
+      height: 360,
       maxHeight: 480,
       width: 1,
 
       backgroundImage: props.image ? `url("${props.image}")` : undefined,
       backgroundPosition: "center center",
       backgroundRepeat: "no-repeat",
-      backgroundSize: "cover",
+      backgroundSize: "contain",
     },
   }
 }
