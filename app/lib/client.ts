@@ -1,10 +1,8 @@
-import * as dateFsn from "date-fns"
-
 //
 // client.ts - client only utility methods
 //
 
-import { formatDistance, differenceInMilliseconds } from "date-fns"
+import * as dateFsn from "date-fns"
 
 //
 // math
@@ -75,11 +73,18 @@ export function isSameDay(date1: Date | string, date2?: Date | string) {
  * @param start Start date
  * @param end End date, will use now if not specified
  */
-export function formatSeconds(start: Date, end?: Date): string {
+export function formatSeconds(start: Date | string, end?: Date | string): string {
+  if (typeof start === "string") {
+    start = dateFsn.parseISO(start)
+  }
   if (!end) {
     end = new Date()
+  } else {
+    if (typeof end === "string") {
+      end = dateFsn.parseISO(end)
+    }
   }
-  const elapsedMs = differenceInMilliseconds(end, start)
+  const elapsedMs = dateFsn.differenceInMilliseconds(end, start)
   return (elapsedMs / 1000).toLocaleString() + " s"
 }
 
@@ -91,14 +96,21 @@ export function formatSeconds(start: Date, end?: Date): string {
  * @see https://date-fns.org/v2.28.0/docs/formatDuration
  */
 export function formatDuration(start: Date, end?: Date, showMs?: boolean): string {
+  if (typeof start === "string") {
+    start = dateFsn.parseISO(start)
+  }
   if (!end) {
     end = new Date()
+  } else {
+    if (typeof end === "string") {
+      end = dateFsn.parseISO(end)
+    }
   }
   if (showMs) {
-    const elapsedMs = differenceInMilliseconds(end, start)
+    const elapsedMs = dateFsn.differenceInMilliseconds(end, start)
     if (elapsedMs < 120 * 1000) {
       return (elapsedMs / 1000).toLocaleString() + " s"
     }
   }
-  return formatDistance(start, end, { includeSeconds: true })
+  return dateFsn.formatDistance(start, end, { includeSeconds: true })
 }

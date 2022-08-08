@@ -8,7 +8,8 @@ import { getDatabase, ItemsTable, unpackItem } from "./database"
 describe("database.ts", () => {
   // table used to test database
   let itemsTable = null
-
+  jest.setTimeout(60 * 1000)
+  
   // start each test with an empty table
   beforeEach(async () => {
     itemsTable = new ItemsTable()

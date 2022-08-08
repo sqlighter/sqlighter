@@ -48,11 +48,11 @@ export class Item {
   /** Type of item, eg. 'user', 'query', 'transaction', etc... */
   type?: string
 
-  /** Time when item was originally created */
-  createdAt?: Date
+  /** Time when item was originally created (ISO date string) */
+  createdAt?: string
 
-  /** Time when item was last updated */
-  updatedAt?: Date;
+  /** Time when item was last updated (ISO date string) */
+  updatedAt?: string;
 
   /** Item's generic, open ended attributes */
   [key: string]: ItemAttribute

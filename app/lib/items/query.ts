@@ -18,7 +18,7 @@ export class Query extends Item {
     super()
     this.id = generateId(QUERY_PREFIX)
     this.type = QUERY_TYPE
-    this.createdAt = new Date()
+    this.createdAt = new Date().toISOString()
     this.title = `Untitled, ${format(new Date(), "LLLL d, yyyy")}`
   }
 
@@ -65,9 +65,11 @@ export class QueryRun extends Item {
     super()
     this.id = generateId(QUERY_RUN_PREFIX)
     this.type = QUERY_RUN_TYPE
-    this.createdAt = new Date()
-    this.title = this.createdAt.toLocaleTimeString()
     this.status = "created"
+
+    const now = new Date()
+    this.createdAt = now.toISOString()
+    this.title = now.toLocaleTimeString()
   }
 
   /** Query that was executed */

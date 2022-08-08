@@ -75,15 +75,15 @@ export const fake_query1 = new Query()
 fake_query1.connectionId = fake_connection1.id
 fake_query1.sql = "SELECT\n  *\nFROM\n  customers"
 fake_query1.title = "All customers (from 2000)"
-fake_query1.createdAt = parseISO("2022-06-02 07:02:15")
+fake_query1.createdAt = "2022-06-02 07:02:15"
 
 // QueryRun (completed)
 export const fake_queryCompletedSmall = new QueryRun()
 fake_queryCompletedSmall.query = fake_query1
 fake_queryCompletedSmall.sql = fake_query1.sql
 fake_queryCompletedSmall.status = "completed"
-fake_queryCompletedSmall.createdAt = parseISO("2022-06-02 13:02:15")
-fake_queryCompletedSmall.updatedAt = parseISO("2022-06-02 13:02:18.141592")
+fake_queryCompletedSmall.createdAt = "2022-06-02 13:02:15"
+fake_queryCompletedSmall.updatedAt = "2022-06-02 13:02:18.141592"
 fake_queryCompletedSmall.columns = ["FirstName", "LastName"]
 fake_queryCompletedSmall.values = [
   ["John", "Jane"],
@@ -95,8 +95,8 @@ export const fake_queryCompletedLarge = new QueryRun()
 fake_queryCompletedLarge.query = fake_query1
 fake_queryCompletedLarge.sql = fakeCustomers.sql
 fake_queryCompletedLarge.status = "completed"
-fake_queryCompletedLarge.createdAt = parseISO("2022-06-02 13:02:15")
-fake_queryCompletedLarge.updatedAt = parseISO("2022-06-02 13:02:18.141592")
+fake_queryCompletedLarge.createdAt = "2022-06-02 13:02:15"
+fake_queryCompletedLarge.updatedAt = "2022-06-02 13:02:18.141592"
 fake_queryCompletedLarge.columns = fakeCustomers.columns
 fake_queryCompletedLarge.values = fakeCustomers.values
 
@@ -105,7 +105,7 @@ export const fake_queryRunning1 = new QueryRun()
 fake_queryRunning1.query = fake_query1
 fake_queryRunning1.sql = fake_query1.sql
 fake_queryRunning1.status = "running"
-fake_queryRunning1.createdAt = new Date()
+fake_queryRunning1.createdAt = new Date().toISOString()
 
 // QueryRun (error)
 export const fake_queryError1 = new QueryRun()
@@ -279,8 +279,8 @@ for (let i = 0; i < 100; i++) {
     connection: fake_connection1,
     database: "main",
     sql: `select\n  *\nfrom\n  ${fake_tables[i % fake_tables.length]}`,
-    createdAt: add(fake_today, { hours: -1 * i }),
-    updatedAt: add(fake_today, { hours: -1 * i }),
+    createdAt: add(fake_today, { hours: -1 * i }).toISOString(),
+    updatedAt: add(fake_today, { hours: -1 * i }).toISOString(),
   })
 }
 
@@ -298,8 +298,8 @@ export const fake_bookmark: Query = {
   database: "main",
   folder: BOOKMARKS_FOLDER,
   sql: `select\n  *\nfrom\n CustomersOrders`,
-  createdAt: fake_today,
-  updatedAt: fake_today,
+  createdAt: fake_today.toISOString(),
+  updatedAt: fake_today.toISOString(),
 }
 
 export const fake_activities = [
