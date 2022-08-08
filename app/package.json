@@ -99,7 +99,7 @@
     "@types/gtag.js": "^0.0.10",
     "@types/jest": "^28.1.2",
     "@types/node": "^18.0.0",
-    "@types/papaparse": "^5.3.2",
+    "@types/papaparse": "^5.3.3",
     "@types/passport": "^1.0.7",
     "@types/react": "^18.0.15",
     "@types/showdown": "^2.0.0",

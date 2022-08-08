@@ -6292,12 +6292,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/papaparse@npm:^5.3.2":
-  version: 5.3.2
-  resolution: "@types/papaparse@npm:5.3.2"
+"@types/papaparse@npm:^5.3.3":
+  version: 5.3.3
+  resolution: "@types/papaparse@npm:5.3.3"
   dependencies:
     "@types/node": "*"
-  checksum: e8f7f5c251a952b97507cc89e76f69b67876a771b23827013701f6b9c6d9a062a75a2925e7f9ad68f063aad8f98089c76187e22223fa35dffa02283bd8665b96
+  checksum: 66f1fb878f46e685dd80bffaad76fdcb71a600152e12be6502c90e7e6b50a6e285dedd5dca8c05af373fb2428a1aabd9afc96ade21cfe4fbf5220251caa89873
   languageName: node
   linkType: hard
 
@@ -19179,7 +19179,7 @@ __metadata:
     "@types/gtag.js": ^0.0.10
     "@types/jest": ^28.1.2
     "@types/node": ^18.0.0
-    "@types/papaparse": ^5.3.2
+    "@types/papaparse": ^5.3.3
     "@types/passport": ^1.0.7
     "@types/react": ^18.0.15
     "@types/showdown": ^2.0.0
