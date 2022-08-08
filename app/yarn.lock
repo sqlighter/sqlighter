@@ -11883,6 +11883,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"github-buttons@npm:^2.21.1":
+  version: 2.21.1
+  resolution: "github-buttons@npm:2.21.1"
+  checksum: 5c90dc19a9301cfd5cedbb6adcd62725a7a013d5a564d15383c8cd92090beb3a5290fbdf0dd370b94e4a81e61a417b68f7b5df98da411b7df7453c2012d9a37a
+  languageName: node
+  linkType: hard
+
 "github-from-package@npm:0.0.0":
   version: 0.0.0
   resolution: "github-from-package@npm:0.0.0"
@@ -17666,6 +17673,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-github-btn@npm:^1.3.0":
+  version: 1.3.0
+  resolution: "react-github-btn@npm:1.3.0"
+  dependencies:
+    github-buttons: ^2.21.1
+  checksum: 8ad3193d7fd12857cac82d7e90cce8ae1114649871db69ced9bb7378d40a0c68b59c334c1148d7d1af60e7e7c185d9b5f49ecb8f7068c0ff8343474ec4835434
+  languageName: node
+  linkType: hard
+
 "react-inspector@npm:^5.1.0":
   version: 5.1.1
   resolution: "react-inspector@npm:5.1.1"
@@ -19204,6 +19220,7 @@ __metadata:
     react-dnd: ^16.0.1
     react-dnd-html5-backend: ^16.0.1
     react-dom: ^18.1.0
+    react-github-btn: ^1.3.0
     react-router-dom: ^6.3.0
     react-uploader-hook: ^1.1.2
     set-clustering: ^1.1.0
