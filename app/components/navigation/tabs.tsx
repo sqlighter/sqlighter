@@ -191,17 +191,23 @@ export function Tabs(props: TabsProps) {
   }
 
   /** Tab is starting to be dragged to a new position */
-  function handleTabDragStart(e) {
-    const draggedTabId = e.target.getAttribute("aria-label")
+  function handleTabDragStart(event) {
+    const draggedTabId = event.target.getAttribute("aria-label")
     const draggedTabIndex = props.tabs.findIndex((tab) => tab.props.id == draggedTabId)
-    e.dataTransfer.setData("tabId", draggedTabId)
-    e.dataTransfer.setData("tabIndex", draggedTabIndex)
+    event.dataTransfer.setData("tabId", draggedTabId)
+    event.dataTransfer.setData("tabIndex", draggedTabIndex)
     console.debug(`Tabs.handleTabDragStart - dragging tab: ${draggedTabId}, fromIndex: ${draggedTabIndex}`)
+  
+    // we need to stop the propagation of the drag event
+    // otherwise the dnd handler in _app will take over but
+    // we don't prevent the default behavior because we want the
+    // tab to be shown dragging in the tab list
+    event.stopPropagation()
   }
 
   /** Returns index where tab being dragged should be dropped to based on mouse position */
-  function getTabDropIndex(e): number {
-    const tabList = e.target.closest("div[role='tablist']") as HTMLElement
+  function getTabDropIndex(event): number {
+    const tabList = event.target.closest("div[role='tablist']") as HTMLElement
     if (tabList) {
       // position in tab list where the tab should be dropped to
       let toIndex = 0
@@ -209,7 +215,7 @@ export function Tabs(props: TabsProps) {
         const childTab = tabList.childNodes[i] as HTMLElement
         const childTabRect = childTab.getBoundingClientRect()
         const childTabMiddle = childTabRect.left + childTabRect.width / 2
-        if (e.pageX > childTabMiddle) {
+        if (event.pageX > childTabMiddle) {
           toIndex = i + 1
         }
       }
@@ -218,12 +224,14 @@ export function Tabs(props: TabsProps) {
     return -1
   }
 
-  function handleTagDragOver(e) {
-    e.preventDefault()
+  function handleTagDragOver(event) {
+    event.stopPropagation()
+    event.preventDefault()
   }
 
   /** Rearrange tabs and notify parent when a tab is dropped in a new position */
   function handleTabDrop(event) {
+    event.stopPropagation()
     event.preventDefault()
 
     const tabList = event.target.closest("div[role='tablist']") as HTMLElement
