@@ -2661,6 +2661,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@corex/deepmerge@npm:^4.0.29":
+  version: 4.0.29
+  resolution: "@corex/deepmerge@npm:4.0.29"
+  checksum: 78626fd29cb9cbd2953ce5a06f963132c9b4837bb76397982d255131533b61c3ef447f0d295f300aa6b2c3ead182a6fe2e4763181e06a2124df28c08205de1d2
+  languageName: node
+  linkType: hard
+
 "@cspotcode/source-map-support@npm:^0.8.0":
   version: 0.8.1
   resolution: "@cspotcode/source-map-support@npm:0.8.1"
@@ -15739,6 +15746,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"next-sitemap@npm:^3.1.16":
+  version: 3.1.16
+  resolution: "next-sitemap@npm:3.1.16"
+  dependencies:
+    "@corex/deepmerge": ^4.0.29
+    minimist: ^1.2.6
+  peerDependencies:
+    "@next/env": "*"
+    next: "*"
+  bin:
+    next-sitemap: bin/next-sitemap.mjs
+    next-sitemap-cjs: bin/next-sitemap.cjs
+  checksum: 4292a95134dffa4623c0c091a2698d273c696b91e055844b9d7915b36f950ae7487ec25d60ee9a873af788b118d41ac498b2af906f1765689567bbf24e1160a5
+  languageName: node
+  linkType: hard
+
 "next@npm:^12.2.3":
   version: 12.2.3
   resolution: "next@npm:12.2.3"
@@ -19208,6 +19231,7 @@ __metadata:
     mysql2: ^2.3.3
     next: ^12.2.3
     next-connect: ^0.13.0
+    next-sitemap: ^3.1.16
     node-html-parser: ^5.3.3
     papaparse: ^5.3.2
     passport: 0.5.3
