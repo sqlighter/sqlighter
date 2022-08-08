@@ -9588,10 +9588,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dayjs@npm:^1.11.3":
-  version: 1.11.3
-  resolution: "dayjs@npm:1.11.3"
-  checksum: c87e06b562a51ae6568cc5b840c7579d82a0f8af7163128c858fe512d3d71d07bd8e8e464b8cc41b8698a9e26b80ab2c082d14a1cd4c33df5692d77ccdfc5a43
+"dayjs@npm:^1.11.4":
+  version: 1.11.4
+  resolution: "dayjs@npm:1.11.4"
+  checksum: 478c8a2db9e3fc752db9f02ef23f00e12308eebbeb85569913731ea78e8d5616f2335e14f25af48e9f16bbcbd796653092eca4d2f42c0218a948402c31735f59
   languageName: node
   linkType: hard
 
@@ -19191,7 +19191,7 @@ __metadata:
     babel-loader: ^8.2.5
     cookie: ^0.5.0
     date-fns: ^2.28.0
-    dayjs: ^1.11.3
+    dayjs: ^1.11.4
     dotenv: ^16.0.1
     eslint: ^8.16.0
     eslint-config-next: ^12.2.3
