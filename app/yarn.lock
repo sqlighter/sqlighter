@@ -15730,12 +15730,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next-connect@npm:^0.12.2":
-  version: 0.12.2
-  resolution: "next-connect@npm:0.12.2"
+"next-connect@npm:^0.13.0":
+  version: 0.13.0
+  resolution: "next-connect@npm:0.13.0"
   dependencies:
     trouter: ^3.2.0
-  checksum: 1870ba44dad28114e8bd7308969346727dfd3a6bf9f29167aae0fb46fe36619c72421338996f76db1327840019a24a876a213ab7276d0381391af8334fc89432
+  checksum: 1c63c17eafc94e6c18f2c08d201a81e69f3b24ddc3ba83449204832b4ec2b7b79df9a6cea53d44e7982b1f9e7214053d880b9fea302b8027de6cd49e2877c9b5
   languageName: node
   linkType: hard
 
@@ -19207,7 +19207,7 @@ __metadata:
     mdi-material-ui: ^7.3.0
     mysql2: ^2.3.3
     next: ^12.2.3
-    next-connect: ^0.12.2
+    next-connect: ^0.13.0
     node-html-parser: ^5.3.3
     papaparse: ^5.3.2
     passport: 0.5.3
