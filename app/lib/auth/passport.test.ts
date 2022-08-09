@@ -14,6 +14,7 @@ function sleep(ms) {
 describe("passport.ts", () => {
   // table used to test database
   let itemsTable: ItemsTable = null
+  jest.setTimeout(60 * 1000)
 
   // start each test with an empty table
   beforeEach(async () => {
@@ -96,7 +97,7 @@ describe("passport.ts", () => {
     const john1 = await getUser(mockUserJon().id)
     console.log(john1)
     expect(john1).toBeTruthy()
-    const updated1 = john1.updatedAt.toISOString()
+    const updated1 = john1.updatedAt
 
     // sleep so we can get different updatedAt timestamps even with second resolution
     await sleep(2000)
@@ -114,7 +115,7 @@ describe("passport.ts", () => {
       expect(john2.passport.displayName).toBe(`John v${v}.0`)
 
       // updatedAt should have been updated
-      const updated2 = john2.updatedAt.toISOString()
+      const updated2 = john2.updatedAt
       expect(updated2 > updated1).toBeTruthy()
     }
   })

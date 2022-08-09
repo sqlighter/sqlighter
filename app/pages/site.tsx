@@ -6,7 +6,12 @@ import Image from "next/image"
 import { SxProps, Theme } from "@mui/material"
 import Box from "@mui/material/Box"
 import Stack from "@mui/material/Stack"
+import useScrollTrigger from "@mui/material/useScrollTrigger"
+import GitHubButton from "react-github-btn"
+import Slide from "@mui/material/Slide"
 
+import showYourLove from "../public/site/showyourlove.png"
+import { useWideScreen } from "../components/hooks/usewidescreen"
 import { OnePageLayout } from "../components/onepage/onepagelayout"
 import { Area } from "../components/onepage/area"
 import { TabSet } from "../components/onepage/tabset"
@@ -44,6 +49,10 @@ const Site_SxProps: SxProps<Theme> = {
 }
 
 export default function SitePage() {
+  // show your love button with github stars shown only where there's enough space and page scrolled at top
+  const isScrolled = useScrollTrigger({ disableHysteresis: true, threshold: 100 })
+  const [isWideScreen] = useWideScreen("sm")
+
   const openSourceProjects = (
     <Stack direction="row" spacing={3} alignItems="center">
       <a href="https://www.sqlite.org/" target="_blank">
@@ -64,13 +73,38 @@ export default function SitePage() {
     </Stack>
   )
 
+  let actions = <TryButton height={50} />
+  if (isWideScreen) {
+    actions = (
+      <>
+        <Slide direction="down" in={!isScrolled}>
+          <Box sx={{ position: "relative", width: 120, minWidth: 120, top: 20, left: 32 }}>
+            <Image src={showYourLove} alt="Star SQLighter on GitHub" />
+          </Box>
+        </Slide>
+        <Slide direction="down" in={!isScrolled && isWideScreen}>
+          <Box sx={{ width: 88, mt: 1, mr: 2, display: "flex", alignItems: "center" }}>
+            <GitHubButton
+              href="https://github.com/sqlighter/sqlighter"
+              data-show-count="true"
+              aria-label="Star on GitHub"
+            >
+              Star
+            </GitHubButton>
+          </Box>
+        </Slide>
+        {actions}
+      </>
+    )
+  }
+
   return (
-    <OnePageLayout description="lighter, faster" actions={<TryButton height={50} />}>
+    <OnePageLayout description="lighter, faster" actions={actions}>
       <Box className="Site-root" sx={Site_SxProps}>
         <Chapter
           className="Site-hero"
           icon={<Image src={markPrimary} width={80} height={80} alt="SQLighter" />}
-          title="SQLite comes alive in your browser"
+          title={"SQLite comes alive in your browser"}
           description="Open your database or create one, import data, run your queries, share results, learn SQL and more... All within your browser. No downloads required."
           buttons={<TryButton variant="contained" />}
           image="/site/hero.png"

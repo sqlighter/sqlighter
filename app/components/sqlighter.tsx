@@ -319,7 +319,7 @@ export default function Sqlighter(props: SqlighterProps) {
       // first query completed normally
       // TODO replace running, do not modify object
       running.status = "completed"
-      running.updatedAt = new Date()
+      running.updatedAt = new Date().toISOString()
       running.rowsModified = await connection.getRowsModified()
       running.columns = queryResults?.[0]?.columns
       running.values = queryResults?.[0]?.values
@@ -342,7 +342,7 @@ export default function Sqlighter(props: SqlighterProps) {
           additionalRun.query = running.query
           additionalRun.title = `${baseTitle} (${i + 1})`
           additionalRun.createdAt = running.createdAt
-          additionalRun.updatedAt = new Date()
+          additionalRun.updatedAt = new Date().toISOString()
           additionalRun.status = "completed"
           additionalRun.sql = running.sql
           additionalRun.columns = queryResults[i].columns
@@ -374,6 +374,8 @@ export default function Sqlighter(props: SqlighterProps) {
   /** A query was executed or somehow modified. Update tabs, history, bookmarks... */
   function changeQuery(query: Query) {
     console.assert(query)
+
+    query.updatedAt = new Date().toISOString()
     console.debug(`Sqlighter.changeQuery - ${query.id}`, query)
 
     // refresh query tab if found

@@ -85,9 +85,10 @@ export function OnePageLayout(props: OnePageLayoutProps) {
             maxWidth={props.maxWidth || "lg"}
             sx={{ display: "flex", alignItems: "center" }}
           >
-            <Box sx={{ flexGrow: 1 }}>
-              <Image src={logo} alt="SQLighter" height={28} objectFit="contain" objectPosition="left center" />
+            <Box sx={{ height: 28, width: 120, minWidth: 120 }}>
+              <Image src={logo} alt="SQLighter" objectFit="contain" objectPosition="left center" />
             </Box>
+            <Box sx={{ flexGrow: 1 }}>&nbsp;</Box>
             {props.actions}
           </Container>
         </AppBar>

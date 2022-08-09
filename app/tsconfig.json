@@ -17,5 +17,5 @@
     "sourceMap": true
   },
   "exclude": ["node_modules", "stories"],
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "jest.config.js"]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "jest.config.js", "next-sitemap.config.js"]
 }
