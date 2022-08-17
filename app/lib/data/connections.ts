@@ -49,7 +49,9 @@ export interface DataConfig {
      * or FileSystemFileHandle passed by file picker or drag and drop.
      * These two classes are not implemented in node.js and are ignored.
      */
-    file?: Buffer | any // File | FileSystemFileHandle
+    file?: Buffer | any // File
+    /** A file system handle directly from File System Access API (optional) */
+    fileHandle?: FileSystemFileHandle
   }
 
   /** Additional metadata for this connection (optional) */
@@ -168,9 +170,6 @@ export abstract class DataConnection {
         if (connection.file instanceof File) {
           connection.filename = connection.file.name
         }
-        if (connection.file instanceof FileSystemFileHandle) {
-          connection.filename = connection.file.name
-        }
       } catch (error) {
         // File and FileSystemFileHandle do not exist when running on the server
         // silence this issue so we can share code between client and server side
@@ -235,7 +234,9 @@ export abstract class DataConnection {
   public async getResult(sql: string, params?: { [key: string]: any }): Promise<QueryExecResult> {
     const results = await this.getResults(sql, params)
     if (results.length > 1) {
-      throw new DataError(`DataConnection.getResult - expected single result, got ${results.length}, sql: ${sql}`, {connection: this})
+      throw new DataError(`DataConnection.getResult - expected single result, got ${results.length}, sql: ${sql}`, {
+        connection: this,
+      })
     }
     return results?.length ? results[0] : null
   }

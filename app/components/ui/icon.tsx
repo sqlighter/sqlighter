@@ -60,6 +60,8 @@ import PrintOutlinedIcon from "@mui/icons-material/PrintOutlined"
 import PushPinOutlinedIcon from "@mui/icons-material/PushPinOutlined"
 import QuestionMarkIcon from "@mui/icons-material/QuestionMarkOutlined"
 import RefreshOutlinedIcon from "@mui/icons-material/RefreshOutlined"
+import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined"
+import SaveAsOutlinedIcon from "@mui/icons-material/SaveAsOutlined"
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined"
 import SettingsOutlined from "@mui/icons-material/SettingsOutlined"
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined"
@@ -87,7 +89,7 @@ import { ImageText } from "mdi-material-ui"
 import { SqliteIcon } from "./icons/sqliteicon"
 import { FireIcon } from "./icons/fireicon"
 import { SqlighterIcon } from "./icons/sqlightericon"
-import { MediumIcon } from "./icons/mediumicon"
+import { MediumIcon } from "./icons/mediumicon"
 
 // Font Awesome
 // https://fontawesome.com/icons/server?s=regular
@@ -221,6 +223,10 @@ export function Icon(props: IconProps) {
         return <TableRowsOutlinedIcon {...props} />
       case "run":
         return <DirectionsRunOutlinedIcon {...props} />
+      case "save":
+        return <SaveOutlinedIcon {...props} />
+      case "saveAs":
+        return <SaveAsOutlinedIcon {...props} />
       case "signin":
         return <LoginOutlinedIcon {...props} />
       case "signout":

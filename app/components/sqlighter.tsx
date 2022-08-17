@@ -4,7 +4,7 @@
 
 // libs
 import React, { useState, useEffect, ReactElement } from "react"
-import { fileOpen, FileWithHandle, FirstFileOpenOptions } from "browser-fs-access"
+import { fileOpen, fileSave, FileWithHandle, FirstFileOpenOptions } from "browser-fs-access"
 
 // model
 import { Command } from "../lib/commands"
@@ -483,6 +483,10 @@ export default function Sqlighter(props: SqlighterProps) {
     }
   }
 
+  //
+  // export/saving
+  //
+
   /**
    * Handles export of an entire database in native format, a specific table in a database
    * or the results of a sql query on a given connection. Data is converted and then user is
@@ -528,6 +532,48 @@ export default function Sqlighter(props: SqlighterProps) {
     } else {
       console.warn(`Sqlighter.exportData - ${format} not supported`)
     }
+  }
+
+  /**
+   * Save SQLite database directly to the user's computer as a file.
+   * @param connection Connection to save to file
+   */
+  async function saveFile(connection: DataConnection) {
+    const fileHandle = connection.configs.connection.fileHandle
+    const fileName = connection.configs?.connection?.filename
+
+    if (!connection.canExport() || !fileHandle) {
+      console.warn(`Sqlighter.saveFile - not supported`, connection)
+    }
+
+    const startedOn = performance.now()
+
+    // save entire database to blob
+    const results = await connection.export()
+    const blob = new File([results.data], fileName, { type: results.type })
+
+    try {
+      await fileSave(
+        blob,
+        {
+          fileName,
+          description: "SQLite file",
+          extensions: [".db"],
+        },
+        fileHandle || null
+      )
+    } catch (exception) {
+      console.error(`Sqlighter.saveFile - saving failed`, exception, connection)
+    }
+
+    // track only anonymous, non identifiable data
+    trackEvent("save", {
+      export_client: connection.configs?.client, // type of data source
+      export_size: blob.size,
+      export_elapsed: performance.now() - startedOn,
+    })
+
+    // TODO show completion toast?
   }
 
   //
@@ -629,6 +675,10 @@ export default function Sqlighter(props: SqlighterProps) {
 
       case "runQuery":
         await runQuery(args.query, args.connection)
+        return
+
+      case "save":
+        await saveFile(args.connection)
         return
     }
 

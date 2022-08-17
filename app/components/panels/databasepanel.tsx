@@ -109,8 +109,10 @@ export function DatabasePanel(props: DatabasePanelProps) {
 
   /** Commands are used as actions but also to show metadata */
   function renderCommands() {
-    // can download entire database?
+    // can download entire database? can save directly to fileHandle?
     const canDownload = props.connection.canExport()
+    const canSave = canDownload && props.connection?.configs?.connection?.fileHandle
+
     const commands = []
 
     if (schema) {
@@ -168,17 +170,35 @@ export function DatabasePanel(props: DatabasePanelProps) {
     })
 
     if (canDownload) {
-      commands.push("divider")
+      if (!canSave) {
+        commands.push("divider")
+      }
+
       commands.push({
         command: "export",
         title: "Download",
         description: "Download Database",
         icon: "download",
         args: {
-          label: true,
-          color: "primary",
+          label: canSave ? undefined : true,
+          color: canSave ? undefined : "primary",
           format: null, // native format
           filename: props.connection.title,
+          connection: props.connection,
+        },
+      })
+    }
+
+    if (canSave) {
+      commands.push("divider")
+      commands.push({
+        command: "save",
+        title: "Save",
+        description: "Save",
+        icon: "save",
+        args: {
+          label: true,
+          color: "primary",
           connection: props.connection,
         },
       })

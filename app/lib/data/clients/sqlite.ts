@@ -69,7 +69,7 @@ export class SqliteDataConnection extends DataConnection {
         try {
           // reading FileSystemFileHandle?
           if (configs.connection.file instanceof FileSystemFileHandle) {
-            // TODO preserve handle a create a writeable connection?
+            // TODO preserve handle to create a writeable connection?
             const file = await configs.connection.file.getFile()
             const data = await file.arrayBuffer()
             buffer = new Uint8Array(data) as Buffer
