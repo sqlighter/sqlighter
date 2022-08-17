@@ -1,7 +1,7 @@
 {
   "name": "sqlighter",
   "author": "SQLighter <info@sqlighter.com>",
-  "version": "v0.24.0-alpha",
+  "version": "v0.29.0-alpha",
   "packageManager": "yarn@3.2.0",
   "keywords": [
     "SQLite",
@@ -35,6 +35,7 @@
     "@types/sql.js": "^1.4.3",
     "allotment": "^1.14.1",
     "assert-strict": "^0.0.2",
+    "browser-fs-access": "^0.31.0",
     "cookie": "^0.5.0",
     "date-fns": "^2.28.0",
     "dayjs": "^1.11.4",

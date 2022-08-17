@@ -8207,6 +8207,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"browser-fs-access@npm:^0.31.0":
+  version: 0.31.0
+  resolution: "browser-fs-access@npm:0.31.0"
+  checksum: d1b6682415c2ee4c05dc44cd95daaa1a4f3f59d1ec723bde0d384bf44b71c804a665ca24a3805d0a76d7f2626541d4a777df4f45ae4a7439a8b76e20897d301d
+  languageName: node
+  linkType: hard
+
 "browser-process-hrtime@npm:^1.0.0":
   version: 1.0.0
   resolution: "browser-process-hrtime@npm:1.0.0"
@@ -19212,6 +19219,7 @@ __metadata:
     assert-strict: ^0.0.2
     babel-jest: ^28.1.0
     babel-loader: ^8.2.5
+    browser-fs-access: ^0.31.0
     cookie: ^0.5.0
     date-fns: ^2.28.0
     dayjs: ^1.11.4

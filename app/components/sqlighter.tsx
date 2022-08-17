@@ -4,6 +4,7 @@
 
 // libs
 import React, { useState, useEffect, ReactElement } from "react"
+import { fileOpen, FileWithHandle, FirstFileOpenOptions } from "browser-fs-access"
 
 // model
 import { Command } from "../lib/commands"
@@ -125,31 +126,54 @@ export default function Sqlighter(props: SqlighterProps) {
    * the user to select a local file that should be opened. If the connection is opened
    * succesfully it added to list of current connections and selected.
    */
-  async function openFile(file?: File | FileSystemFileHandle): Promise<DataConnection> {
-    console.debug(`Sqlighter.openFile`, file)
-    try {
-      const startedOn = performance.now()
-      if (!file) {
-        // let user pick a database file to open
-        const pickerOpts = {
-          types: [{ description: "SQLite", accept: { "application/*": [".db", ".sqlite", ".csv"] } }],
-          excludeAcceptAllOption: true,
-          multiple: false,
-        }
+  async function openFile(fileOrHandle?: File | FileSystemFileHandle): Promise<DataConnection> {
+    const startedOn = performance.now()
 
+    try {
+      let file = null
+      let fileHandle = null
+
+      if (fileOrHandle) {
+        console.debug(`Sqlighter.openFile`, fileOrHandle)
+        if (fileOrHandle instanceof File) {
+          file = fileOrHandle as File
+        } else {
+          // we need to try/catch this check because not all browsers support FileSystemFileHandle
+          try {
+            if (file instanceof FileSystemFileHandle) {
+              fileHandle = file
+              file = await file.getFile()
+            }
+          } catch (exception) {
+            // console.warn(`Sqlighter.openFile - FileSystemFileHandle not supported?`, exception)
+          }
+        }
+      } else {
         try {
-          // TODO need to use regular file input for for Firefox and other browsers
-          // https://developer.mozilla.org/en-US/docs/Web/API/Window/showOpenFilePicker
-          file = (await (window as any).showOpenFilePicker(pickerOpts))[0]
+          // pick a file using the File System Access API where implemented, for example
+          // in Chrome so we can get a fileHandle that can be used to write the file out later.
+          // if the API is not implemented, fall back to standard HTML5 File API.
+          const pickerOptions: FirstFileOpenOptions<boolean> = {
+            description: "SQLite or .csv files",
+            mimeTypes: ["application/*"],
+            extensions: [".db", ".sqlite", ".csv"],
+            multiple: false,
+            startIn: "downloads", // suggest browser where to start
+            id: "openFile", // user agent can remember different directories for different IDs
+          }
+
+          const fileWithHandle = (await fileOpen(pickerOptions)) as FileWithHandle // single file, not an array
+          file = fileWithHandle
+          fileHandle = fileWithHandle.handle
         } catch (exception) {
-          console.warn(`Sqlighter.openFile - user cancelled open file picker`, exception)
+          // console.warn(`Sqlighter.openFile - user cancelled open file picker`, exception)
           return
         }
       }
 
       let connection = null
+      const fileSize = file.size
       const fileExtension = file.name.split(".").pop().toLowerCase()
-      const fileSize = await (file instanceof FileSystemFileHandle ? (await file.getFile()).size : file.size)
 
       // track only anonymous, non identifiable data
       trackEvent("open_file", {
@@ -159,7 +183,7 @@ export default function Sqlighter(props: SqlighterProps) {
       })
 
       if (fileExtension === "db" || fileExtension === "sqlite") {
-        const config = { client: "sqlite3", connection: { file } }
+        const config = { client: "sqlite3", connection: { file, fileHandle } }
         connection = DataConnectionFactory.create(config)
         await connection.connect(sqljs)
 
@@ -173,11 +197,7 @@ export default function Sqlighter(props: SqlighterProps) {
         await connection.connect(sqljs)
 
         if (connection.canImport(fileExtension)) {
-          if (file instanceof FileSystemFileHandle) {
-            file = await file.getFile()
-          }
           const importResult = await connection.import(fileExtension, file)
-
           setConnection(connection)
           setConnections([connection, ...(connections || [])])
           openTable({
