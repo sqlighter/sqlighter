@@ -151,9 +151,9 @@ export default function Sqlighter(props: SqlighterProps) {
         } else {
           // we need to try/catch this check because not all browsers support FileSystemFileHandle
           try {
-            if (file instanceof FileSystemFileHandle) {
-              fileHandle = file
-              file = await file.getFile()
+            if (fileOrHandle instanceof FileSystemFileHandle) {
+              fileHandle = fileOrHandle
+              file = await fileHandle.getFile()
             }
           } catch (exception) {
             // console.warn(`Sqlighter.openFile - FileSystemFileHandle not supported?`, exception)
