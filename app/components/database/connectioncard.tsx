@@ -15,6 +15,8 @@ export interface ConnectionCardProps extends MuiCardProps {
   connection: DataConnection
   /** If true adds action to download database */
   canExport?: boolean
+  /** If true adds action to save database to disk */
+  canSave?: boolean
   /** Show configure connection button so connection can be modified (default false) */
   canConfigure?: boolean
   /** Show close connection action? */
@@ -45,6 +47,17 @@ export function ConnectionCard(props: ConnectionCardProps) {
       args: {
         format: null, // native format
         filename: props.connection.title,
+        connection: props.connection,
+      },
+    })
+  }
+  if (props.canSave) {
+    actions.push({
+      command: "save",
+      title: "Save",
+      description: "Save",
+      icon: "save",
+      args: {
         connection: props.connection,
       },
     })
