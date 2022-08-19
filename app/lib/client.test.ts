@@ -2,7 +2,7 @@
 // client.test.ts
 //
 
-import { formatDuration, formatSeconds } from "./client"
+import { formatDuration, formatSeconds, getFilenameExtension, replaceFilenameExtension } from "./client"
 import parseISO from "date-fns/parseISO"
 
 describe("client.ts", () => {
@@ -92,5 +92,37 @@ describe("client.ts", () => {
     date1 = parseISO("2022-06-01 07:08:00")
     duration = formatDuration(date1)
     expect(duration).toBe("1 day")
+  })
+
+  test("getFilenameExtension", () => {
+    // no extension
+    expect(getFilenameExtension("mickey")).toBeUndefined()
+
+    // no extension
+    expect(getFilenameExtension("mickey.")).toBeUndefined()
+
+    // valid extension
+    expect(getFilenameExtension("mickey.pdf")).toBe("pdf")
+
+    // mixed case extension
+    expect(getFilenameExtension("mickey.Pdf")).toBe("pdf")
+    expect(getFilenameExtension("mickey.PDF")).toBe("pdf")
+
+    // double extension
+    expect(getFilenameExtension("mickey.csv.pdf")).toBe("pdf")
+  })
+
+  test("replaceFilenameExtension", () => {
+    // no filename
+    expect(replaceFilenameExtension(undefined, "pdf")).toBeUndefined()
+
+    // no extension
+    expect(replaceFilenameExtension("mickey", "pdf")).toBe("mickey.pdf")
+
+    // valid extension
+    expect(replaceFilenameExtension("mickey.csv", "db")).toBe("mickey.db")
+
+    // double extension
+    expect(replaceFilenameExtension("mickey.csv.pdf", "db")).toBe("mickey.csv.db")
   })
 })

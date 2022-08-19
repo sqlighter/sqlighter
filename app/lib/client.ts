@@ -114,3 +114,42 @@ export function formatDuration(start: Date, end?: Date, showMs?: boolean): strin
   }
   return dateFsn.formatDistance(start, end, { includeSeconds: true })
 }
+
+//
+// filenames
+//
+
+/**
+ * Returns a filename's extension in lowercase (if any)
+ * @param filename A valid filename, eg. sales.pdf
+ * @returns The filename extension, eg. 'pdf' or undefined
+ */
+export function getFilenameExtension(filename: string): string {
+  if (filename) {
+    let lastIndex = filename.lastIndexOf(".")
+    if (lastIndex >= 0) {
+      const extension = filename.substring(lastIndex + 1).toLowerCase()
+      if (extension && extension.length > 0) {
+        return extension
+      }
+    }
+  }
+}
+
+/**
+ * Replace filename extension
+ * @param filename A valid filename, eg. sales.pdf
+ * @param extension The extension to be applied, eg. 'zip'
+ * @returns The changed filename, eg. sales.zip
+ */
+export function replaceFilenameExtension(filename: string, extension: string): string {
+  console.assert(!extension.startsWith("."), "replaceFilenameExtension - extension should not include starting dot")
+  if (filename) {
+    const filenameExtension = getFilenameExtension(filename)
+    if (filenameExtension) {
+      return filename.substring(0, filename.length - filenameExtension.length) + extension
+    } else {
+      return filename + "." + extension
+    }
+  }
+}

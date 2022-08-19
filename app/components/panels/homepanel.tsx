@@ -106,11 +106,13 @@ export function HomePanel(props: HomePanelProps) {
           <Grid container spacing={2}>
             {props.connections.map((connection: DataConnection) => {
               const canExport = connection.canExport()
+              const canSave = !!(canExport && connection.configs?.connection?.fileHandle)
               return (
                 <Grid item key={connection.id} xs={12} sm={6} md={4}>
                   <ConnectionCard
                     connection={connection}
                     canExport={canExport}
+                    canSave={canSave}
                     canClose={true}
                     onCommand={props.onCommand}
                   />

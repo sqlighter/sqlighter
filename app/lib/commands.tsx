@@ -10,7 +10,7 @@ export type CommandType =
   | "bookmarkQuery"
   /** Change selected activity @param id Activity unique id */
   | "changeActivity"
-  /** Select data connection @param connection selected connection */
+  /** Data connection model has been changed @param connection selected connection */
   | "changeConnection"
   /** Tabs have been opened, closed, rearranged, etc @param tabId Currently selected tab @param tabs List of tabs */
   | "changeTabs"
@@ -60,6 +60,8 @@ export type CommandType =
   | "runQuery"
   /** Pin item in tree view */
   | "pin"
+  /** Select data connection @param connection selected connection */
+  | "setConnection"
   /** Open signing page or prompt user for signin */
   | "signin"
   /** Sign out from user session @params redirectUrl Optional url where to go when signed out */

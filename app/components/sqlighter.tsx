@@ -4,6 +4,7 @@
 
 // libs
 import React, { useState, useEffect, ReactElement } from "react"
+import { fileOpen, fileSave, FileWithHandle, FirstFileOpenOptions } from "browser-fs-access"
 
 // model
 import { Command } from "../lib/commands"
@@ -11,6 +12,7 @@ import { DataConnection, DataFormat } from "../lib/data/connections"
 import { DataConnectionFactory } from "../lib/data/factory"
 import { Query, QueryRun } from "../lib/items/query"
 import { trackEvent } from "../lib/analytics"
+import { getFilenameExtension, replaceFilenameExtension } from "../lib/client"
 
 // hooks
 import { useSqljs } from "./hooks/usedb"
@@ -27,6 +29,7 @@ import { PanelElement, PanelProps } from "./navigation/panel"
 import { TablePanel } from "./panels/tablepanel"
 import { QueryPanel } from "./panels/querypanel"
 import { TabsLayout } from "./navigation/tabslayout"
+import { useForceUpdate } from "./hooks/useforceupdate"
 
 /** Data model for opened tabs */
 type TabModel = { id: string; component: "home" | "database" | "table" | "query"; args?: any }
@@ -61,6 +64,9 @@ export default function Sqlighter(props: SqlighterProps) {
   // cloud stored bookmarks
   const { bookmarks, setBookmarks } = useBookmarks(props.user)
 
+  // force a refresh (eg. when models update)
+  const forceUpdate = useForceUpdate()
+
   //
   // temporary code while we work out the connection setup panels, etc
   //
@@ -71,6 +77,12 @@ export default function Sqlighter(props: SqlighterProps) {
       console.log("Sqlighter - has sqljs")
     }
   }, [sqljs])
+
+  useEffect(() => {
+    if (sqljs) {
+      console.log("Sqlighter - has sqljs")
+    }
+  }, [connection])
 
   //
   // actions
@@ -125,31 +137,54 @@ export default function Sqlighter(props: SqlighterProps) {
    * the user to select a local file that should be opened. If the connection is opened
    * succesfully it added to list of current connections and selected.
    */
-  async function openFile(file?: File | FileSystemFileHandle): Promise<DataConnection> {
-    console.debug(`Sqlighter.openFile`, file)
-    try {
-      const startedOn = performance.now()
-      if (!file) {
-        // let user pick a database file to open
-        const pickerOpts = {
-          types: [{ description: "SQLite", accept: { "application/*": [".db", ".sqlite", ".csv"] } }],
-          excludeAcceptAllOption: true,
-          multiple: false,
-        }
+  async function openFile(fileOrHandle?: File | FileSystemFileHandle): Promise<DataConnection> {
+    const startedOn = performance.now()
 
+    try {
+      let file = null
+      let fileHandle = null
+
+      if (fileOrHandle) {
+        console.debug(`Sqlighter.openFile`, fileOrHandle)
+        if (fileOrHandle instanceof File) {
+          file = fileOrHandle as File
+        } else {
+          // we need to try/catch this check because not all browsers support FileSystemFileHandle
+          try {
+            if (fileOrHandle instanceof FileSystemFileHandle) {
+              fileHandle = fileOrHandle
+              file = await fileHandle.getFile()
+            }
+          } catch (exception) {
+            // console.warn(`Sqlighter.openFile - FileSystemFileHandle not supported?`, exception)
+          }
+        }
+      } else {
         try {
-          // TODO need to use regular file input for for Firefox and other browsers
-          // https://developer.mozilla.org/en-US/docs/Web/API/Window/showOpenFilePicker
-          file = (await (window as any).showOpenFilePicker(pickerOpts))[0]
+          // pick a file using the File System Access API where implemented, for example
+          // in Chrome so we can get a fileHandle that can be used to write the file out later.
+          // if the API is not implemented, fall back to standard HTML5 File API.
+          const pickerOptions: FirstFileOpenOptions<boolean> = {
+            description: "SQLite or .csv files",
+            mimeTypes: ["application/*"],
+            extensions: [".db", ".sqlite", ".csv"],
+            multiple: false,
+            startIn: "downloads", // suggest browser where to start
+            id: "openFile", // user agent can remember different directories for different IDs
+          }
+
+          const fileWithHandle = (await fileOpen(pickerOptions)) as FileWithHandle // single file, not an array
+          file = fileWithHandle
+          fileHandle = fileWithHandle.handle
         } catch (exception) {
-          console.warn(`Sqlighter.openFile - user cancelled open file picker`, exception)
+          // console.warn(`Sqlighter.openFile - user cancelled open file picker`, exception)
           return
         }
       }
 
       let connection = null
-      const fileExtension = file.name.split(".").pop().toLowerCase()
-      const fileSize = await (file instanceof FileSystemFileHandle ? (await file.getFile()).size : file.size)
+      const fileSize = file.size
+      const fileExtension = getFilenameExtension(file.name)
 
       // track only anonymous, non identifiable data
       trackEvent("open_file", {
@@ -159,7 +194,7 @@ export default function Sqlighter(props: SqlighterProps) {
       })
 
       if (fileExtension === "db" || fileExtension === "sqlite") {
-        const config = { client: "sqlite3", connection: { file } }
+        const config = { client: "sqlite3", connection: { file, fileHandle } }
         connection = DataConnectionFactory.create(config)
         await connection.connect(sqljs)
 
@@ -168,16 +203,13 @@ export default function Sqlighter(props: SqlighterProps) {
         openDatabase(connection)
       } else {
         // see if we can import this file instead
-        const config = { client: "sqlite3", title: file.name, connection: {} }
+        const title = replaceFilenameExtension(file.name, "db")
+        const config = { client: "sqlite3", title, connection: {} }
         connection = DataConnectionFactory.create(config)
         await connection.connect(sqljs)
 
         if (connection.canImport(fileExtension)) {
-          if (file instanceof FileSystemFileHandle) {
-            file = await file.getFile()
-          }
           const importResult = await connection.import(fileExtension, file)
-
           setConnection(connection)
           setConnections([connection, ...(connections || [])])
           openTable({
@@ -463,6 +495,10 @@ export default function Sqlighter(props: SqlighterProps) {
     }
   }
 
+  //
+  // export/saving
+  //
+
   /**
    * Handles export of an entire database in native format, a specific table in a database
    * or the results of a sql query on a given connection. Data is converted and then user is
@@ -486,6 +522,8 @@ export default function Sqlighter(props: SqlighterProps) {
       // convert export results into a downloadable file blob
       const startedOn = performance.now()
       filename = filename || connection.title
+      filename = replaceFilenameExtension(filename, format || "db")
+
       const results = await connection.export(format, database, table, sql)
       const blob = new File([results.data], filename, { type: results.type })
       console.debug(`Sqlighter.exportData - ${filename}`, blob)
@@ -508,6 +546,48 @@ export default function Sqlighter(props: SqlighterProps) {
     } else {
       console.warn(`Sqlighter.exportData - ${format} not supported`)
     }
+  }
+
+  /**
+   * Save SQLite database directly to the user's computer as a file.
+   * @param connection Connection to save to file
+   */
+  async function saveFile(connection: DataConnection) {
+    const fileHandle = connection.configs.connection.fileHandle
+    const fileName = connection.configs?.connection?.filename
+
+    if (!connection.canExport() || !fileHandle) {
+      console.warn(`Sqlighter.saveFile - not supported`, connection)
+    }
+
+    const startedOn = performance.now()
+
+    // save entire database to blob
+    const results = await connection.export()
+    const blob = new File([results.data], fileName, { type: results.type })
+
+    try {
+      await fileSave(
+        blob,
+        {
+          fileName,
+          description: "SQLite file",
+          extensions: [".db"],
+        },
+        fileHandle || null
+      )
+    } catch (exception) {
+      console.error(`Sqlighter.saveFile - saving failed`, exception, connection)
+    }
+
+    // track only anonymous, non identifiable data
+    trackEvent("save", {
+      export_client: connection.configs?.client, // type of data source
+      export_size: blob.size,
+      export_elapsed: performance.now() - startedOn,
+    })
+
+    // TODO show completion toast?
   }
 
   //
@@ -533,8 +613,10 @@ export default function Sqlighter(props: SqlighterProps) {
         return
 
       case "changeConnection":
-        setConnection(args.item)
-        break
+        // force a refresh after the data model for a connection has changed
+        // for example because we updated the connection title in DatabasePanel
+        forceUpdate()
+        return
 
       case "changeQuery":
         changeQuery(args.query)
@@ -609,6 +691,14 @@ export default function Sqlighter(props: SqlighterProps) {
 
       case "runQuery":
         await runQuery(args.query, args.connection)
+        return
+
+      case "setConnection":
+        setConnection(args.connection)
+        return
+
+      case "save":
+        await saveFile(args.connection)
         return
     }
 

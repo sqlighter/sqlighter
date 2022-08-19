@@ -20,6 +20,7 @@ import { PanelProps } from "../navigation/panel"
 import { TablesSchemaPanel, IndexesSchemaPanel, TriggersSchemaPanel } from "./schemapanels"
 import { Section } from "../ui/section"
 import { Tabs } from "../navigation/tabs"
+import { TitleField } from "../ui/titlefield"
 
 // styles applied to main and subcomponents
 const DatabasePanel_SxProps: SxProps<Theme> = {
@@ -96,10 +97,20 @@ export function DatabasePanel(props: DatabasePanelProps) {
       case "changeTabs":
         setTabId(command.args.tabId)
         return
+
+      case "changeTitle":
+        if (props.onCommand) {
+          props.connection.title = command.args.title
+          await props.onCommand(event, {
+            command: "changeConnection",
+            args: { connection: props.connection },
+          })
+        }
+        return
     }
 
     if (props.onCommand) {
-      props.onCommand(event, command)
+      await props.onCommand(event, command)
     }
   }
 
@@ -109,8 +120,10 @@ export function DatabasePanel(props: DatabasePanelProps) {
 
   /** Commands are used as actions but also to show metadata */
   function renderCommands() {
-    // can download entire database?
+    // can download entire database? can save directly to fileHandle?
     const canDownload = props.connection.canExport()
+    const canSave = canDownload && props.connection?.configs?.connection?.fileHandle
+
     const commands = []
 
     if (schema) {
@@ -168,17 +181,35 @@ export function DatabasePanel(props: DatabasePanelProps) {
     })
 
     if (canDownload) {
-      commands.push("divider")
+      if (!canSave) {
+        commands.push("divider")
+      }
+
       commands.push({
         command: "export",
         title: "Download",
         description: "Download Database",
         icon: "download",
         args: {
-          label: true,
-          color: "primary",
+          label: canSave ? undefined : true,
+          color: canSave ? undefined : "primary",
           format: null, // native format
           filename: props.connection.title,
+          connection: props.connection,
+        },
+      })
+    }
+
+    if (canSave) {
+      commands.push("divider")
+      commands.push({
+        command: "save",
+        title: "Save",
+        description: "Save",
+        icon: "save",
+        args: {
+          label: true,
+          color: "primary",
           connection: props.connection,
         },
       })
@@ -233,11 +264,14 @@ export function DatabasePanel(props: DatabasePanelProps) {
     ]
   }
 
+  // editable connection title
+  const title = <TitleField className="DatabasePanel-title" value={props.connection.title} onCommand={handleCommand} />
+
   return (
     <Box className="DatabasePanel-root" sx={DatabasePanel_SxProps}>
       <Section
         className="DatabasePanel-section"
-        title={capitalize(props.connection.title)}
+        title={title}
         description={`A ${props.connection.configs.client} database`}
         commands={renderCommands()}
         variant="large"
