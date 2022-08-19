@@ -170,7 +170,8 @@ export function QueryPanel(props: QueryPanelProps) {
         setVariant(variant == "bottom" ? "right" : "bottom")
         return
 
-      case "changeConnection":
+      // new "current connection" has been picked
+      case "setConnection":
         props.onCommand(event, {
           command: "changeQuery",
           args: { query: { ...query, connectionId: command.args?.item?.id } },

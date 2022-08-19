@@ -148,6 +148,10 @@ export abstract class DataConnection {
   public get title(): string {
     return this._configs?.title
   }
+  public set title(title: string) {
+    // clone configs object to help react with refreshes if needed
+    this._configs = { ...this._configs, title }
+  }
 
   /** Configuration used to open this data connection */
   protected _configs: DataConfig

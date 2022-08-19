@@ -20,6 +20,7 @@ import { PanelProps } from "../navigation/panel"
 import { TablesSchemaPanel, IndexesSchemaPanel, TriggersSchemaPanel } from "./schemapanels"
 import { Section } from "../ui/section"
 import { Tabs } from "../navigation/tabs"
+import { TitleField } from "../ui/titlefield"
 
 // styles applied to main and subcomponents
 const DatabasePanel_SxProps: SxProps<Theme> = {
@@ -96,10 +97,20 @@ export function DatabasePanel(props: DatabasePanelProps) {
       case "changeTabs":
         setTabId(command.args.tabId)
         return
+
+      case "changeTitle":
+        if (props.onCommand) {
+          props.connection.title = command.args.title
+          await props.onCommand(event, {
+            command: "changeConnection",
+            args: { connection: props.connection },
+          })
+        }
+        return
     }
 
     if (props.onCommand) {
-      props.onCommand(event, command)
+      await props.onCommand(event, command)
     }
   }
 
@@ -253,11 +264,14 @@ export function DatabasePanel(props: DatabasePanelProps) {
     ]
   }
 
+  // editable connection title
+  const title = <TitleField className="DatabasePanel-title" value={props.connection.title} onCommand={handleCommand} />
+
   return (
     <Box className="DatabasePanel-root" sx={DatabasePanel_SxProps}>
       <Section
         className="DatabasePanel-section"
-        title={capitalize(props.connection.title)}
+        title={title}
         description={`A ${props.connection.configs.client} database`}
         commands={renderCommands()}
         variant="large"

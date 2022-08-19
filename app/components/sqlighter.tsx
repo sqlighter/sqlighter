@@ -29,6 +29,7 @@ import { PanelElement, PanelProps } from "./navigation/panel"
 import { TablePanel } from "./panels/tablepanel"
 import { QueryPanel } from "./panels/querypanel"
 import { TabsLayout } from "./navigation/tabslayout"
+import { useForceUpdate } from "./hooks/useforceupdate"
 
 /** Data model for opened tabs */
 type TabModel = { id: string; component: "home" | "database" | "table" | "query"; args?: any }
@@ -63,6 +64,9 @@ export default function Sqlighter(props: SqlighterProps) {
   // cloud stored bookmarks
   const { bookmarks, setBookmarks } = useBookmarks(props.user)
 
+  // force a refresh (eg. when models update)
+  const forceUpdate = useForceUpdate()
+
   //
   // temporary code while we work out the connection setup panels, etc
   //
@@ -73,6 +77,12 @@ export default function Sqlighter(props: SqlighterProps) {
       console.log("Sqlighter - has sqljs")
     }
   }, [sqljs])
+
+  useEffect(() => {
+    if (sqljs) {
+      console.log("Sqlighter - has sqljs")
+    }
+  }, [connection])
 
   //
   // actions
@@ -603,8 +613,10 @@ export default function Sqlighter(props: SqlighterProps) {
         return
 
       case "changeConnection":
-        setConnection(args.item)
-        break
+        // force a refresh after the data model for a connection has changed
+        // for example because we updated the connection title in DatabasePanel
+        forceUpdate()
+        return
 
       case "changeQuery":
         changeQuery(args.query)
@@ -679,6 +691,10 @@ export default function Sqlighter(props: SqlighterProps) {
 
       case "runQuery":
         await runQuery(args.query, args.connection)
+        return
+
+      case "setConnection":
+        setConnection(args.connection)
         return
 
       case "save":
