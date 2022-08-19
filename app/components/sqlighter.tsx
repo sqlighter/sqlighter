@@ -12,6 +12,7 @@ import { DataConnection, DataFormat } from "../lib/data/connections"
 import { DataConnectionFactory } from "../lib/data/factory"
 import { Query, QueryRun } from "../lib/items/query"
 import { trackEvent } from "../lib/analytics"
+import { getFilenameExtension, replaceFilenameExtension } from "../lib/client"
 
 // hooks
 import { useSqljs } from "./hooks/usedb"
@@ -173,7 +174,7 @@ export default function Sqlighter(props: SqlighterProps) {
 
       let connection = null
       const fileSize = file.size
-      const fileExtension = file.name.split(".").pop().toLowerCase()
+      const fileExtension = getFilenameExtension(file.name)
 
       // track only anonymous, non identifiable data
       trackEvent("open_file", {
@@ -192,7 +193,8 @@ export default function Sqlighter(props: SqlighterProps) {
         openDatabase(connection)
       } else {
         // see if we can import this file instead
-        const config = { client: "sqlite3", title: file.name, connection: {} }
+        const title = replaceFilenameExtension(file.name, "db")
+        const config = { client: "sqlite3", title, connection: {} }
         connection = DataConnectionFactory.create(config)
         await connection.connect(sqljs)
 
@@ -510,6 +512,8 @@ export default function Sqlighter(props: SqlighterProps) {
       // convert export results into a downloadable file blob
       const startedOn = performance.now()
       filename = filename || connection.title
+      filename = replaceFilenameExtension(filename, format || "db")
+
       const results = await connection.export(format, database, table, sql)
       const blob = new File([results.data], filename, { type: results.type })
       console.debug(`Sqlighter.exportData - ${filename}`, blob)
