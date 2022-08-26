@@ -24,7 +24,7 @@
   "dependencies": {
     "@date-io/dayjs": "^2.14.0",
     "@emotion/react": "^11.9.0",
-    "@emotion/styled": "^11.8.1",
+    "@emotion/styled": "^11.10.0",
     "@google-cloud/storage": "^6.4.1",
     "@hapi/iron": "^7.0.0",
     "@monaco-editor/react": "^4.4.5",
