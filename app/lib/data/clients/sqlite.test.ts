@@ -31,7 +31,7 @@ describe("sqlite.ts (node env)", () => {
 
     expect(result.values.length).toBe(1)
     expect(result.values[0].length).toBe(1)
-    expect(result.values[0][0]).toBe("3.38.5")
+    expect(result.values[0][0]).toBe("3.39.3")
   })
 
   test("getResults (multiple selects)", async () => {
