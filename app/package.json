@@ -22,7 +22,7 @@
     "test-storybook": "test-storybook"
   },
   "dependencies": {
-    "@date-io/dayjs": "^2.14.0",
+    "@date-io/dayjs": "^2.16.0",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.10.4",
     "@google-cloud/storage": "^6.4.1",
