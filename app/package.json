@@ -66,7 +66,7 @@
     "react-router-dom": "^6.3.0",
     "react-uploader-hook": "^1.1.2",
     "set-clustering": "^1.1.0",
-    "sharp": "^0.30.7",
+    "sharp": "^0.31.1",
     "showdown": "^2.1.0",
     "sql-formatter": "^7.0.2",
     "sql.js": "^1.6.2",
