@@ -129,20 +129,5 @@
     "trailingComma": "es5",
     "semi": false,
     "tabWidth": 2
-  },
-  "jest": {
-    "setupFilesAfterEnv": [
-      "<rootDir>/jest.setup.js"
-    ],
-    "reporters": [
-      "default",
-      "github-actions"
-    ],
-    "testTimeout": 6000,
-    "transform": {
-      "^.+\\.(t|j)sx?$": [
-        "@swc-node/jest"
-      ]
-    }
   }
 }
