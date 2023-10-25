@@ -48,7 +48,7 @@
     "knex": "^2.5.1",
     "mdi-material-ui": "^7.7.0",
     "mysql2": "^3.6.0",
-    "next": "^13.4.19",
+    "next": "^13.5.0",
     "next-connect": "^1.0.0",
     "next-sitemap": "^4.2.2",
     "node-html-parser": "^6.1.6",
